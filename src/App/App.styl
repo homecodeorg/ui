@@ -1,0 +1,43 @@
+@import '~theme'
+
+.root
+  display flex
+  height 100vh
+  max-width 800px
+  margin 0 auto
+
+.nav
+  position relative
+  display flex
+  flex-direction column
+  min-width 200px
+  padding 100px 0
+  box-shadow inset -2px 0 0 var(--accent-color)
+  overflow-y auto
+
+  &::before
+  &::after
+    content ''
+    position absolute
+    left 0
+    right 2px
+    height 100px
+    pointer-events none
+    z-index 1
+
+  &::before
+    top 0
+    background-image linear-gradient(var(--bg-color), transparent)
+
+  &::after
+    bottom 0
+    background-image linear-gradient(transparent, var(--bg-color))
+
+.navItem
+  text-align right
+  padding var(--indent-s) var(--indent-l) 0
+  font-size 20px
+
+.content
+  flex-grow 1
+  overflow-x auto

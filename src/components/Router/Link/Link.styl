@@ -1,0 +1,70 @@
+@import '~theme'
+
+.root
+  position relative
+  display inline-flex
+  align-items center
+  padding 5px
+
+  white-space nowrap
+  color var(--link-color)
+  text-decoration none
+
+  cursor pointer
+  outline none
+  transition color .1s ease-out
+
+  &:before
+    content ''
+    position absolute
+    bottom 0
+    left 5px
+    right 5px
+    height 2px
+    background-color var(--active-color)
+    transform scale(0)
+    transition transform .1s ease-out
+    pointer-events none
+
+  &.clear::before
+    content none;
+
+  &.clearPadding
+    padding 0
+
+    &::before
+      left 0
+      right 0
+      bottom -2px
+
+  &.exact
+    color var(--accent-color)
+
+  &.external::before
+    background-color var(--accent-color)
+
+  &:hover
+  &:active
+  &:focus
+    color var(--active-color)
+
+    &.external
+      color var(--accent-color)
+
+    &::selection
+      color var(--accent-color)
+
+    &::before
+      transform scale(1)
+
+  &.disabled
+    pointer-events none
+    color var(--accent-color)
+    opacity .5
+
+&.externalIcon
+  height 1em
+  width 1em
+  display inline-block
+  margin-left 3px
+  margin-bottom -2px

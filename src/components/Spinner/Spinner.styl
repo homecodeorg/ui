@@ -1,0 +1,22 @@
+@import '../../theme.styl'
+
+.root
+  display inline-block
+  animation .5s 'spin' linear infinite
+  color inherit
+
+.size-s
+  height 16px
+  width @height
+.size-m
+  height 20px
+  width @height
+.size-l
+  height 30px
+  width @height
+
+@keyframes :global(spin)
+  0%
+    transform rotateZ(0deg)
+  100%
+    transform rotateZ(360deg)
