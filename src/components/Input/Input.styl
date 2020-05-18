@@ -1,0 +1,220 @@
+@import '~src/theme'
+json('./Input.constants.json')
+
+$controlHeight = 34px
+$paddingSide = 12px
+
+.root
+  color $accent-color
+
+.main
+  position relative
+  display flex
+  max-width 100%
+  border-radius inherit
+
+  .size-s &
+    controlSize('s')
+    border-radius $border-radius-m
+  .size-m &
+    controlSize('m')
+    border-radius $border-radius-m
+  .size-l &
+    controlSize('l')
+    border-radius $border-radius-l
+
+  .isTextArea &
+    height auto
+    min-height 3em
+
+.border
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  controlBorder($accent-color)
+
+  transition 0.15s ease-out
+  transition-property box-shadow, border-color //, clip-path
+  border-radius inherit
+  pointer-events none
+
+  .root:hover &
+  .isFocused &
+    controlBorder($active-color)
+
+  .isFocused &
+    controlFocused()
+
+  .hasError &
+    controlBorder($danger-color)
+    animation error-flash .4s ease-out
+
+  .isFocused.hasError &
+    controlFocus($danger-color)
+
+  .isClear &
+  .isDisabled &
+    controlBorder(false, !important)
+    controlFocus(false, !important)
+
+  .isDisabled &
+    opacity .6
+    background-color $accent-color-light
+
+@keyframes error-flash
+  0%
+    controlFocus($danger-color, 0px)
+  30%
+    controlFocus($danger-color, 6px)
+
+.size-s
+  controlFontSize('s')
+.size-m
+  controlFontSize('m')
+.size-l
+  controlFontSize('l')
+
+.isDisabled
+  color $accent-color-light
+
+.control
+.adornmentLeft
+.adornmentRight
+  font-size inherit
+  font-weight normal
+
+.label.onTop
+.labelGap
+  .size-s &
+    font-size 'calc(12px / %s)' % LABEL_MULTIPLIER
+  .size-m &
+    font-size 'calc(14px / %s)' % LABEL_MULTIPLIER
+  .size-l &
+    font-size 'calc(16px / %s)' % LABEL_MULTIPLIER
+
+.labelGap
+  position absolute
+  opacity 0
+  pointer-events none
+
+.label
+  position absolute
+  display flex
+  align-items center
+  max-width 100%
+  height 100%
+
+  color $accent-color-light
+  white-space nowrap
+  text-overflow ellipsis
+
+  transition transform .2s ease-out
+  transform-origin top left
+  backface-visibility hidden
+
+  pointer-events none
+  user-select none
+
+  &.onTop
+    color $accent-color
+    transform scale(LABEL_MULTIPLIER) translate3d(0, -53%, 0)
+
+  .hasError:not(.isDisabled) &
+    color $danger-color
+
+  .isDisabled &
+    color $accent-color-light
+
+    &::before
+      z-index -1
+      content ''
+      position absolute
+      left -6px
+      right -6px
+      height 1.4em
+      background-color $bg-color
+      border-radius 4px
+
+.control
+  filter none // remove browser(Frefox) autofill-styles
+  appearance none
+  display inline-flex
+  flex-grow 1
+  position relative
+  width 30px
+  min-width 50%
+  height 100%
+  box-shadow none
+  background none
+  color inherit
+  outline none
+  transition border-color 0.15s ease-in-out 0s
+
+  .isTextArea &
+    margin 8px 0
+
+  // remove browser(Chrome) autofill-styles
+  &:-internal-autofill-selected
+  &:-webkit-autofill
+    animation-name clearBg
+    animation-fill-mode both
+
+  &::placeholder
+    color $accent-color-light
+
+  &::selection
+    color $bg-color
+
+@-webkit-keyframes clearBg
+  to
+    background transparent
+
+.adornmentLeft
+.adornmentRight
+  display inline-flex
+  align-items center
+  user-select none
+  z-index 1
+  min-width 0 // to enable ellipsis work in flex
+
+  .size-s &
+    min-width 'calc(%s * 1.5)' % $indent-s
+  .size-m &
+    min-width $indent-m
+  .size-l &
+    min-width $indent-l
+
+  & > span
+    white-space nowrap
+    text-overflow ellipsis
+    overflow hidden
+
+
+.adornmentLeft
+  margin-right $paddingSide
+.adornmentRight
+  margin-left $paddingSide
+
+.requiredStar
+  position absolute
+  pointer-events none
+  height 8px
+  width 8px
+  border-radius 50%
+  background-color $danger-color
+
+  .size-s &
+    right 4px
+    top 4px
+  .size-m &
+    right 6px
+    top 6px
+  .size-l &
+    right 8px
+    top 8px
+
+.isDisabled
+  pointer-events none
+  user-select none

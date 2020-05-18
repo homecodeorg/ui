@@ -1,0 +1,41 @@
+@import '~src/theme.styl'
+
+.root
+  width 100%
+  max-width 100%
+  margin 0 auto
+
+.isLoading
+  opacity .8
+  pointer-events none
+  transition opacity .2s ease-out
+
+.field
+  position relative
+
+  & + &
+    margin-top 10px
+
+    &.clearMargins
+      margin-top 0
+
+  &.isChanged::after
+    content ''
+    position absolute
+    right -2px
+    top -2px
+    height 6px
+    width 6px
+    border-radius 50%
+    background-color $primaryColor
+    box-shadow 0 0 0 1px rgba(255,255,255,.8)
+    z-index 1
+    pointer-events none
+
+.isHidden
+  display none
+
+.error
+  margin 5px
+  color #e91b20
+  font-size 80%

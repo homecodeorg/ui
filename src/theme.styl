@@ -1,0 +1,77 @@
+$indent-s = var(--indent-s)
+$indent-m = var(--indent-m)
+$indent-l = var(--indent-l)
+
+$border-radius-s = var(--border-radius-s)
+$border-radius-m = var(--border-radius-m)
+$border-radius-l = var(--border-radius-l)
+
+$accent-color = var(--accent-color)
+$accent-color-light = var(--accent-color-light)
+$bg-color = var(--bg-color)
+$bg-color-light = var(--bg-color-light)
+$active-color = var(--active-color)
+$active-color-light = var(--active-color-light)
+$active-text-color = var(--active-text-color)
+$danger-color = var(--danger-color)
+$link-color = var(--link-color)
+
+controlBorder(color = $accent-color, size = 2px, rest...)
+  if color
+    box-shadow inset 0 0 0 size color rest
+  else
+    box-shadow none rest
+
+control()
+  appearance none
+  outline none
+  border-radius $border-radius-m
+  box-sizing border-box
+  controlBorder($accent-color)
+  background-color $bg-color
+  transition .2s ease-out
+  transition-property box-shadow, opacity
+
+  &:hover
+    controlBorder($active-color)
+
+controlFocused(args...)
+  controlBorder($active-color, 1px, args)
+
+controlDisabled()
+  controlBorder($accent-color)
+  color $accent-color
+  cursor not-allowed
+  opacity .5
+
+controlSize(size)
+  if size == 's'
+    height 30px
+    min-height 30px
+    max-height 30px
+    min-width 30px
+    controlPaddingSize('s')
+    font-size 12px
+  if size == 'm'
+    height 40px
+    min-height 40px
+    max-height 40px
+    min-width 40px
+    controlPaddingSize('m')
+    font-size 16px
+  if size == 'l'
+    height 50px
+    min-height 50px
+    max-height 50px
+    min-width 50px
+    controlPaddingSize('l')
+    font-size 20px
+
+controlPaddingSize(size)
+  if size == 's'
+    padding 0 10px
+  if size == 'm'
+    padding 0 12px
+  if size == 'l'
+    padding 0 14px
+

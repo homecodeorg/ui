@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "baseUrl": "src",
+    "incremental": true,
+    "rootDir": "./src",
+    "outDir": "./dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "src/**/*.stories.*", "src/**/*.stories-*"]
+}

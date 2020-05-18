@@ -1,0 +1,83 @@
+@import '~src/theme.styl'
+
+$width = 300px
+$height = 80px
+$duration = 200ms
+
+.root
+  z-index 10
+  position absolute
+  top $indent-s
+  left 100%
+  bottom $indent-s
+  max-width 100%
+
+.icon
+  height 50px
+  width 50px
+  background no-repeat center
+  margin-right $indent-s
+  fill #d5d5d5
+
+.item
+  position relative
+  right $indent-s
+  height 0
+  width $width
+  margin-left -($width)
+  transform translateX(110%)
+  transform translate3d(110%, 0, 0)
+  transition all $duration ease-out
+
+  & + &
+    margin-top $indent-s
+
+
+  &.visible
+    height $height
+    transform translateX(0)
+    box-shadow 0 10px 20px rgba(0,0,0,.3)
+
+.itemInner
+  display flex
+  align-items center
+  height $height
+  padding $indent-s
+  box-sizing border-box
+  border-radius 5px
+  background-color rgba(6,6,6,.95)
+  color $accent-color
+  opacity .8
+  transition $duration ease-out
+  transition-property transform, opacity
+
+  .item:hover &
+    opacity 1
+
+.type-danger .itemInner
+  color $danger-color
+
+.text
+  display flex
+  flex-direction column
+  flex-grow 1
+
+.title
+  padding-right 50px
+
+.content
+  font-size 80%
+
+.close
+  position absolute
+  right 5px
+  top 5px
+  height 40px
+  width @height
+  color inherit
+  cursor pointer
+  opacity .8
+  transition opacity .3s ease-out
+
+  &:hover
+    opacity 1
