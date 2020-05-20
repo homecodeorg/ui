@@ -1,22 +1,7 @@
-$indent-s = var(--indent-s)
-$indent-m = var(--indent-m)
-$indent-l = var(--indent-l)
+shadow()
+  box-shadow 0 10px 20px var(--accent-color)
 
-$border-radius-s = var(--border-radius-s)
-$border-radius-m = var(--border-radius-m)
-$border-radius-l = var(--border-radius-l)
-
-$accent-color = var(--accent-color)
-$accent-color-light = var(--accent-color-light)
-$bg-color = var(--bg-color)
-$bg-color-light = var(--bg-color-light)
-$active-color = var(--active-color)
-$active-color-light = var(--active-color-light)
-$active-text-color = var(--active-text-color)
-$danger-color = var(--danger-color)
-$link-color = var(--link-color)
-
-controlBorder(color = $accent-color, size = 2px, rest...)
+controlBorder(color = var(--accent-color), size = 2px, rest...)
   if color
     box-shadow inset 0 0 0 size color rest
   else
@@ -25,22 +10,22 @@ controlBorder(color = $accent-color, size = 2px, rest...)
 control()
   appearance none
   outline none
-  border-radius $border-radius-m
+  border-radius var(--border-radius-m)
   box-sizing border-box
-  controlBorder($accent-color)
-  background-color $bg-color
+  controlBorder(var(--accent-color))
+  background-color var(--bg-color)
   transition .2s ease-out
   transition-property box-shadow, opacity
 
   &:hover
-    controlBorder($active-color)
+    controlBorder(var(--active-color))
 
 controlFocused(args...)
-  controlBorder($active-color, 1px, args)
+  controlBorder(var(--active-color), 1px, args)
 
 controlDisabled()
-  controlBorder($accent-color)
-  color $accent-color
+  controlBorder(var(--accent-color))
+  color var(--accent-color)
   cursor not-allowed
   opacity .5
 
@@ -52,6 +37,7 @@ controlSize(size)
     min-width 30px
     controlPaddingSize('s')
     font-size 12px
+
   if size == 'm'
     height 40px
     min-height 40px
@@ -59,6 +45,7 @@ controlSize(size)
     min-width 40px
     controlPaddingSize('m')
     font-size 16px
+
   if size == 'l'
     height 50px
     min-height 50px

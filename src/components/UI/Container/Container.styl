@@ -1,0 +1,39 @@
+@import '~src/theme.styl';
+
+.root
+  display flex
+  margin 0 auto
+
+  @media(min-width: $tablet)
+    padding var(--indent-m)
+
+  @media(min-width: $desktop)
+    padding var(--indent-l)
+
+.size-s
+  padding var(--indent-s)
+.size-m
+  padding var(--indent-m)
+.size-l
+  padding var(--indent-l)
+
+.vertical
+  flex-direction column
+
+.centered
+.centeredV.vertical
+.centeredH:not(.vertical)
+  justify-content center
+.centered
+.centeredV:not(.vertical)
+.centeredH.vertical
+  align-items center
+
+.fullHeight
+  height 100%
+  width 100%
+
+.scrolledX
+  overflow-x auto
+.scrolledY
+  overflow-y auto

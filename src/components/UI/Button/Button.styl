@@ -1,0 +1,64 @@
+@import '~theme'
+
+.root
+  control()
+  display inline-flex
+  align-items center
+  justify-content center
+  box-sizing border-box
+
+  line-height 1em
+  text-decoration none
+  color inherit
+
+  cursor pointer
+  user-select none
+
+  &:active
+  &:focus
+    controlFocused()
+
+  &:active
+    color var(--active-color)
+    opacity .7
+
+  &.isLoading
+    pointer-events none
+
+  &.isChecked
+    background-color var(--accent-color)
+    color var(--bg-color)
+
+    path
+      fill var(--bg-color)
+
+.size-s
+  controlSize('s')
+
+  &.isSquare
+    width @height
+
+.size-m
+  controlSize('m')
+
+  &.isSquare
+    width @height
+
+.size-l
+  controlSize('l')
+
+  &.isSquare
+    width @height
+
+.isSquare
+  padding 0
+  justify-content center
+
+.variant-clear
+  controlBorder(false, null, !important)
+.variant-primary
+  background-color var(--active-color)
+  color var(--active-text-color)
+
+.spinner
+  margin-left var(--indent-s)

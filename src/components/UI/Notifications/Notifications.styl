@@ -1,0 +1,120 @@
+@import '~theme'
+
+$width = 300px
+$height = 80px
+$duration = 200ms
+
+.root
+  z-index 20
+  position absolute
+  top 10px
+  left calc(100% - 10px)
+  bottom 10px
+  max-width 100%
+  transition top .3s ease-out
+
+.paddingTop
+  top 92px
+
+.item
+.itemInner
+  border-radius var(--border-radius-l)
+
+.item
+  right 10px
+  max-height 0 // animate `height:auto` – https://stackoverflow.com/a/8331169/2131453
+  width $width
+  margin-left -($width)
+  transform translateX(110%)
+  transform translate3d(110%, 0, 0)
+  transition all $duration ease-out
+  backface-visibility hidden
+
+  & + &
+    margin-top 10px
+
+  &:active
+    transform scale(.99)
+
+.visible
+  max-height 500px
+  transform translateX(0)
+
+.itemInner
+  position relative
+  display flex
+  align-items center
+  padding 16px 32px 16px 20px
+  box-sizing border-box
+  background-color var(--accent-color)
+  color var(--bg-color)
+  transition transform $duration ease-out
+
+  &::before
+    content ''
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    opacity 0
+    transition opacity .3s ease-out
+    border-radius 20%
+    shadow()
+    pointer-events none
+
+    .type-warning &
+      background-color var(--warning-color)
+
+    .type-danger &
+      background-color var(--danger-color)
+
+    .visible &
+      opacity .2
+
+.icon
+  height 24px
+  width 24px
+  min-width 24px
+  background no-repeat center
+  margin-right 10px
+
+.type-loading .icon
+  transform translateY(-20px)
+
+.text
+  display flex
+  flex-direction column
+  flex-grow 1
+  z-index 1
+
+.title
+  font-size 16px
+  font-weight bold
+
+.content
+  font-size 12px
+  margin-top 'calc(%s / 2)' % var(--indent-s)
+
+  &:first-child
+    margin-top 0
+
+.close
+  position absolute
+  right -2px
+  top -2px
+  height 40px
+  width @height
+  border-radius 50%
+  transition opacity .1s ease-out
+  background-color transparent
+  cursor pointer
+  opacity .8
+
+  &
+  &:hover
+    [role=img]
+      color $primary-color
+
+  &:hover
+    opacity 1

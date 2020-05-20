@@ -1,0 +1,135 @@
+@import '~src/theme'
+
+$itemHeight = 34px
+$gap = 5px
+$levelGap = 10px
+
+.root
+  width 100%
+
+.input
+  z-index 1
+
+.options
+  max-height 200px
+  overflow-y auto
+
+.presetPanel
+  display flex
+  padding 5px
+
+.presetButton
+  flex-grow 1
+  justify-content center
+
+  & + &
+    margin-left 8px
+
+.option
+  position relative
+  display flex
+  align-items center
+  min-height $itemHeight
+  width 100%
+  padding 0 12px
+  color var(--bg-color)
+  cursor pointer
+  user-select none
+  animation fadeIn .3s ease-out
+
+  &:first-child
+    border-top-left-radius 2px
+    border-top-right-radius 2px
+  &:last-child
+    border-bottom-left-radius 2px
+    border-bottom-right-radius 2px
+
+  .isTree &
+    padding-left 30px
+
+  &.isGroup
+    color $accentColor
+    font-weight 500
+    background var(--bg-color-200)
+    pointer-events none
+
+  .isExpanded > &
+    display flex
+
+  &:hover
+    background-color var(--active-color-500)
+
+  &::before
+    content ''
+    display inline-block
+  &.level-0::before
+    content none
+  &.level-1::before
+    width $levelGap
+  &.level-2::before
+    width $levelGap * 2
+  &.level-3::before
+    width $levelGap * 3
+  &.level-4::before
+    width $levelGap * 4
+  &.level-5::before
+    width $levelGap * 5
+  &.level-6::before
+    width $levelGap * 6
+
+  &.isSelected
+  &.isIndeterminate
+    background-color var(--active-color-500)
+
+  &:active
+  &.isSelected
+    color $active-olor
+
+@keyframes fadeIn
+  0%
+    opacity 0
+  10%
+    opacity 0
+  100%
+    opacity 1
+
+.expandButton
+  position relative
+  display flex
+  justify-content flex-end
+  width 30px
+  min-height 100%
+  max-height 100%
+  padding 0
+  overflow visible
+  background-color transparent !important
+
+  .size-s &
+    margin-left 'calc(%s * -2)' % var(--indent-s)
+  .size-m &
+    margin-left 'calc(%s * -2)' % var(--indent-m)
+  .size-l &
+    margin-left 'calc(%s * -2)' % var(--indent-l)
+
+  &::before // extend clickable area
+    content ''
+    position absolute
+    right 100%
+    display block
+    width 100px
+    height 100%
+
+.expandIcon
+  margin-right .5em
+  color var(--bg-color)
+  opacity .8
+
+  transition .1s ease-out
+  transition-property transform, opacity
+  backface-visibility hidden
+
+  .isExpanded &
+    transform rotateZ(90deg) translateZ(0)
+
+.expandButton:hover .expandIcon
+  opacity 1
