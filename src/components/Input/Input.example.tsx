@@ -56,9 +56,9 @@ export default () => (
             <Title text="Props:" />
             <Field
               name="size"
+              label="Size"
               component={Select}
               options={SIZE_OPTIONS}
-              label="Size"
             />
             <Field name="label" label="Label" />
             <Field name="placeholder" label="Placeholder" />
@@ -75,8 +75,8 @@ export default () => (
               options={ADORNMENT_OPTIONS}
             />
             <Field name="error" label="Error message" />
-            <Field name="disabled" component={Checkbox} label="Disabled" />
-            <Field name="required" component={Checkbox} label="Required" />
+            <Field name="disabled" label="Disabled" component={Checkbox} />
+            <Field name="required" label="Required" component={Checkbox} />
           </Container>
           <Container style={{ width: '50%' }} vertical size="s">
             <Title text="Result:" />

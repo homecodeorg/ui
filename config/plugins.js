@@ -9,7 +9,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const isProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
-  new webpack.NamedModulesPlugin(),
   new CleanWebpackPlugin(),
   new webpack.ProvidePlugin({
     h: ['preact', 'h'],

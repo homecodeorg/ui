@@ -1,6 +1,7 @@
-import { Size } from '../Input/Input.types';
-import { InputProps } from '../Input/Input';
-import { PopupProps } from '../Popup/Popup';
+import { RefObject, ReactChild, ReactNode } from 'react';
+import { Size } from 'components/Input/Input.types';
+import { InputProps } from 'components/Input/Input';
+import { PopupProps } from 'components/Popup/Popup';
 
 export type Id = string | number;
 
@@ -9,6 +10,7 @@ export type Option = {
   isGroupHeader?: boolean;
   parentId?: Id;
   label: any;
+  sortingKey: string | number;
   children?: Option[];
   render?: (label: string) => string;
 };
@@ -20,7 +22,7 @@ type Preset = {
 
 export type PresetButtonProps = {
   key: string;
-  children: JSX.Element;
+  children: ReactChild;
   onClick: () => void;
 };
 
@@ -36,12 +38,21 @@ type SelectPopupProps = Omit<
 > &
   Partial<{ direction: PopupProps['direction'] }>;
 
+type Selected = { [id: string]: true | Id[] };
+
 export type Props = {
   className?: string;
+  isOpen?: boolean;
+  optionsClassName?: string;
+  optionClassName?: string;
   name?: string;
   label?: string;
+  additionalLabel?: ReactNode;
   size?: Size;
   options: Option[];
+  limit?: number;
+  selectTree?: any; // typeof OptionsTree
+  isOnlyLeafs?: boolean; // select only leafs
   additionalOptions?: Option[];
   presets?: Preset[];
   clearButton?: boolean;
@@ -49,25 +60,43 @@ export type Props = {
   sortBy?: string;
   groupBy?: string;
   value?: Id | Id[] | null;
+  onApi?: (optionsTree: any) => void;
+  getInputVal?: (params: {
+    isFocused: boolean;
+    searchVal: string;
+    selected: Selected;
+  }) => string;
+  expandSelected?: boolean;
   onChange: (value: Id | Id[]) => void;
   onFocus?: InputProps['onFocus'];
   onBlur?: InputProps['onBlur'];
   onOpen?: () => void;
   onClose?: () => void;
+  isSearchable?: boolean;
   inputProps?: Omit<
     InputProps,
     'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
   >;
+  disableTrigger?: boolean;
+  disableTriggerArrow?: boolean;
+  triggerProps?: any;
   popupProps?: SelectPopupProps;
-  hideRequiredStart?: boolean;
-} & Pick<InputProps, 'required' | 'error'>;
+  hideRequiredStar?: boolean;
+  hideErrorMessage?: boolean;
+  independentSelection?: boolean;
+  groupSelectedLeafs?: boolean;
+} & Partial<Pick<InputProps, 'required' | 'error' | 'disabled'>>;
 
 export type State = {
   isFocused: boolean;
   isOpen: boolean;
-  selected: { [id: string]: true | Id[] };
+  isSelectionLimited: boolean;
+  selected: Selected;
   expanded: { [id: string]: boolean };
   searchVal: string;
+  options: Option[];
+  labelClipPath: string;
+  optionsTreeUpd: number; // store in state to receive updates
 };
 
 export type OptionElemProps = {
@@ -75,5 +104,5 @@ export type OptionElemProps = {
   key: Option['id'];
   onMouseDown: () => void;
   onMouseUp: () => void;
-  ref?: Ref<HTMLDivElement>;
+  ref?: RefObject<HTMLDivElement>;
 };

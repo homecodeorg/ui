@@ -6,12 +6,13 @@ module.exports = [
     test: /\.(j|t)sx?$/,
     loader: 'babel-loader',
     include: paths.src,
-    exclude: paths.modules,
+    // exclude: paths.modules,
   },
   {
     test: /\.styl$/,
     use: [
       'style-loader',
+      { loader: 'css-modules-typescript-loader' },
       {
         loader: 'css-loader',
         options: {
@@ -23,16 +24,16 @@ module.exports = [
       {
         loader: 'postcss-loader',
         options: {
-          config: {
-            path: path.resolve(__dirname, './postcss.config.js'),
+          postcssOptions: {
+            ident: 'postcss',
+            plugins: [
+              ['postcss-preset-env', { stage: 3, autoprefixer: true }],
+            ],
           },
         },
       },
       {
         loader: 'stylus-loader',
-        options: {
-          preferPathResolver: 'webpack',
-        },
       },
     ],
   },
@@ -41,7 +42,7 @@ module.exports = [
     exclude: paths.modules,
     oneOf: [
       {
-        issuer: /\.(j|t)sx?$/,
+        issuer: /\.(t|j)sx?$/,
         use: [
           {
             loader: 'babel-loader',

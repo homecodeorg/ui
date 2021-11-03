@@ -1,4 +1,4 @@
-@import '../../theme'
+@import '~theme'
 json('./Input.constants.json')
 
 $controlHeight = 34px
@@ -25,7 +25,7 @@ $paddingSide = 12px
 
   .isTextArea &
     height auto
-    min-height 3em
+    max-height unset
 
 .border
   position absolute
@@ -41,13 +41,13 @@ $paddingSide = 12px
   pointer-events none
 
   .root:hover &
-    controlBorder(var(--active-color-mix-accent-300))
-
-  .root.isFocused &
+  .isFocused &
     controlBorder(var(--active-color))
 
+  .isFocused &
+    controlFocused()
+
   .hasError &
-  .hasError:hover &
     controlBorder(var(--danger-color))
     animation error-flash .4s ease-out
 
@@ -58,7 +58,6 @@ $paddingSide = 12px
   .isDisabled &
     controlBorder(false, !important)
     controlFocus(false, !important)
-
 
   .isDisabled &
     opacity .6
@@ -125,6 +124,9 @@ $paddingSide = 12px
   .hasError:not(.isDisabled) &
     color var(--danger-color)
 
+  .isTextArea &
+    max-height 40px
+
   .isDisabled &
     color var(--accent-color-alpha-500)
 
@@ -166,10 +168,7 @@ $paddingSide = 12px
     color var(--accent-color-alpha-500)
 
   &::selection
-    color var(--bg-color)
-
-    .hasError &
-      background-color var(--danger-color)
+    background-color var(--active-color-alpha-300)
 
 @-webkit-keyframes clearBg
   to
@@ -225,6 +224,4 @@ $paddingSide = 12px
 
 .isDisabled
   pointer-events none
-
-  .control
-    user-select none
+  user-select none

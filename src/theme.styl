@@ -1,3 +1,9 @@
+$tablet = 700px
+$desktop = 1200px
+
+borderRadius(mod = 1)
+  border-radius mod * 4px
+
 shadow()
   box-shadow 0 10px 20px var(--accent-color)
 
@@ -19,6 +25,9 @@ control()
 
   &:hover
     controlBorder(var(--active-color))
+
+controlFocused(args...)
+  controlBorder(var(--active-color), 2px, args)
 
 controlDisabled()
   controlBorder(var(--accent-color))
@@ -59,3 +68,18 @@ controlPaddingSize(size)
   if size == 'l'
     padding 0 14px
 
+borderRadiusSize(size)
+  if size == 's'
+    border-radius 4px
+  if size == 'm'
+    border-radius 6px
+  if size == 'l'
+    border-radius 8px
+  if size == 'xl'
+    border-radius 10px
+
+mapButton()
+  color var(--accent-color) !important
+  background-color var(--bg-color-alpha-800) !important
+  border-radius 50%
+  controlBorder(var(--accent-color), 2px, !important)

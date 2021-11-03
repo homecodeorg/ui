@@ -9,11 +9,14 @@ import * as H from './Button.helpers';
 type Props = {
   className?: string;
   children: JSX.Element | JSX.Element[];
-  variant: 'clear' | 'default' | 'primary';
-  size: 's' | 'm' | 'l';
-  type: HTMLButtonElement['type'];
+  variant?: 'clear' | 'default' | 'primary';
+  size?: 's' | 'm' | 'l';
+  type?: HTMLButtonElement['type'];
+  disabled?: boolean;
   isLoading: boolean;
-  isChecked: boolean;
+  isChecked?: boolean;
+  isSquare?: boolean;
+  onMouseUp?: (e: MouseEvent) => void;
 };
 
 export type ButtonProps = Props;

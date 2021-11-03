@@ -2,23 +2,28 @@ import { Component, createRef, Fragment } from 'preact';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
+import omit from 'lodash.omit';
+import { createStore } from 'justorm/preact';
 
 import Time from 'timen';
-import { scrollIntoView } from 'tools/dom';
+import { scrollIntoView } from 'tools/scroll';
 
-import { Icon } from '../Icon/Icon';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Popup } from '../Popup/Popup';
-import { AssistiveText } from '../AssistiveText/AssistiveText';
+import { Icon } from 'components/Icon/Icon';
+import { Button } from 'components/Button/Button';
+import { Input } from 'components/Input/Input';
+import { Label } from 'components/Label/Label';
+import { Popup } from 'components/Popup/Popup';
+import { AssistiveText } from 'components/AssistiveText/AssistiveText';
 
 import * as T from './Select.types';
 import * as H from './Select.helpers';
 import S from './Select.styl';
 
 export class Select extends Component<T.Props, T.State> {
+  store;
   inputRef = createRef<Input>();
   selectedElem = createRef<HTMLDivElement>();
+  triggerInputRef = createRef<HTMLDivElement>();
 
   timers = Time.create();
   isFirstSelectedMeet = false;
@@ -43,18 +48,19 @@ export class Select extends Component<T.Props, T.State> {
     this.ids = H.mapById(options);
     this.optionsTree = H.buildOptionsTree(options, this.ids);
 
-    this.state = {
+    this.store = createStore(this, {
       searchVal: '',
       isOpen: false,
       isFocused: false,
       selected: this.getDefaultSelected(),
-      expanded: {},
-    };
+      expanded: this.getDefaultExpanded(props.value),
+      labelClipPath: '',
+    });
   }
 
   componentDidUpdate(prevProps) {
     if (!compare(this.props.value, prevProps.value)) {
-      this.setState({ selected: this.getDefaultSelected() });
+      this.store.selected = this.getDefaultSelected();
     }
   }
 
@@ -67,6 +73,28 @@ export class Select extends Component<T.Props, T.State> {
 
     if (isNumber) return parseFloat(id);
     return id;
+  }
+
+  getDefaultExpanded(value) {
+    const { expandSelected } = this.props;
+    const { items } = this.ids;
+
+    if (!expandSelected) return {};
+    if (!value) return {};
+
+    const result = {};
+    const stack = [...(this.isMultiple() ? value : [value])];
+
+    while (stack.length) {
+      const pointerId = stack.shift();
+      const item = items[pointerId];
+      if (item.parentId) {
+        result[item.parentId] = true;
+        stack.push(item.parentId);
+      }
+    }
+
+    return result;
   }
 
   getDefaultSelected() {
@@ -101,14 +129,14 @@ export class Select extends Component<T.Props, T.State> {
     const { onFocus } = this.props;
 
     this.setSearchVal('');
-    this.setState({ isFocused: true });
+    this.store.isFocused = true;
     if (onFocus) onFocus(e);
   };
 
   onBlur = e => {
     const { onBlur } = this.props;
 
-    this.setState({ isFocused: false });
+    this.store.isFocused = false;
 
     if (onBlur) onBlur(e);
   };
@@ -118,12 +146,11 @@ export class Select extends Component<T.Props, T.State> {
   };
 
   onExpandClick(e, id) {
-    const { ...expanded } = this.state.expanded;
+    const { expanded } = this.store;
 
     e.preventDefault();
     e.stopPropagation();
-    expanded[id] = !expanded[id];
-    this.setState({ expanded });
+    this.store.expanded[id] = !expanded[id];
   }
 
   onItemClick(id) {
@@ -132,15 +159,16 @@ export class Select extends Component<T.Props, T.State> {
 
   onChange(selected) {
     const { onChange } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen } = this.store;
     const isRemoved =
-      Object.keys(selected).length < Object.keys(this.state.selected).length;
+      Object.keys(selected).length < Object.keys(this.store.selected).length;
 
-    this.setState({ selected }, () => {
-      onChange(this.getValue());
-      if (isOpen && isRemoved) this.updateSelectedScroll();
-    });
+    this.store.selected = selected;
+    onChange(this.getValue());
+    if (isOpen && isRemoved) this.updateSelectedScroll();
   }
+
+  onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
 
   onPopupOpen = () => {
     const { onOpen } = this.props;
@@ -156,11 +184,15 @@ export class Select extends Component<T.Props, T.State> {
     if (onClose) onClose();
   };
 
+  toggle = () => {
+    this.store.isOpen = !this.store.isOpen;
+  };
+
   hookPopupClose = () => this.preventClose;
 
   setSearchVal(searchVal) {
     this.searchValLower = searchVal.toLowerCase();
-    this.setState({ searchVal });
+    this.store.searchVal = searchVal;
   }
 
   freezePopup = () => {
@@ -190,11 +222,11 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   isErrorVisible() {
-    return !this.state.isOpen && Boolean(this.props.error);
+    return !this.store.isOpen && Boolean(this.props.error);
   }
 
   isSelected(id): boolean | 'indeterminate' {
-    const { selected } = this.state;
+    const { selected } = this.store;
     const parentId = this.getParentId(id);
     const hasParent = parentId !== undefined;
 
@@ -307,7 +339,7 @@ export class Select extends Component<T.Props, T.State> {
 
   getNewSelected(id): T.State['selected'] {
     const { required } = this.props;
-    const selected = JSON.parse(JSON.stringify(this.state.selected));
+    const selected = JSON.parse(JSON.stringify(this.store.selected));
 
     if (this.isSelected(id)) {
       if (
@@ -324,7 +356,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getValue() {
-    const { selected } = this.state;
+    const { selected } = this.store;
     const entries = Object.entries(selected);
 
     if (this.isMultiple()) {
@@ -342,7 +374,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getInputVal() {
-    const { isFocused, searchVal, selected } = this.state;
+    const { isFocused, searchVal, selected } = this.store;
 
     if (isFocused) return searchVal;
 
@@ -363,25 +395,149 @@ export class Select extends Component<T.Props, T.State> {
     return selectedPlain.map(id => this.ids.items[id].label).join(', ');
   }
 
+  getLabel(id) {
+    const { label, render } = Object(this.ids.items[id]);
+
+    if (render) return render(label);
+    return label;
+  }
+
+  getFieldLabel(label, value) {
+    if (this.isMultiple(value) && value.length)
+      return `${label} (${value.length})`;
+    return label;
+  }
+
+  getSelectedLabel(): string {
+    const { value } = this.props;
+
+    if (!this.isMultiple()) return this.getLabel(value);
+    if (!value) return '';
+    return value
+      .reduce((acc, id) => {
+        const label = this.getLabel(id);
+        return label ? [...acc, label] : acc;
+      }, [] as string[])
+      .join(', ');
+  }
+
   filterOption({ label }) {
     return label.toLowerCase().includes(this.searchValLower);
   }
 
-  renderInput() {
-    const { inputProps, required, hideRequiredStart, ...rest } = this.props;
+  getTriggerProps() {
+    const { triggerProps } = this.props;
+
+    return {
+      ...pick(this.props, [
+        'name',
+        'label',
+        'size',
+        'disabled',
+        // 'inputProps',
+        // 'required',
+        'autocomplete',
+        // 'hideRequiredStar',
+      ]),
+      ...triggerProps,
+    };
+  }
+
+  renderAdditionalLabel() {
+    const { additionalLabel } = this.props;
+
+    if (!additionalLabel) return null;
+    return <div className={S.additionalLabel}>{additionalLabel}</div>;
+  }
+
+  renderTriggerInput() {
+    const { inputProps, value, label } = this.props;
     const props = {
-      ...pick(['name', 'label', 'size'], rest),
+      ...this.getTriggerProps(),
       ...inputProps,
       error: this.isErrorVisible(),
       // adornmentLeft: this.renderSelectedItems(),
+      adornmentRight: this.renderTriggerArrow(),
       value: this.getInputVal(),
-      onChange: this.onSearchChange,
-      onFocus: this.onFocus,
-      onBlur: this.onBlur,
-      ref: this.inputRef,
+      onChange: this.setSearchVal,
+      ref: this.triggerInputRef,
+      label: this.getFieldLabel(label, value),
     } as T.Props['inputProps'] & { onBlur: T.Props['onBlur'] };
 
-    return <Input className={S.input} {...props} />;
+    return <Input {...props} />;
+  }
+
+  renderTriggerButton() {
+    const { size, disabled, value } = this.props;
+    const { labelClipPath, isFocused } = this.store;
+    const { label, className, ...rest } = this.getTriggerProps();
+    const props = omit(rest, ['name', 'inputProps']);
+    const selectedLabel = [
+      this.getSelectedLabel(),
+      this.renderAdditionalLabel(),
+    ].filter(Boolean);
+    const hasSelected = selectedLabel.length > 0;
+    const displayLabel = hasSelected ? selectedLabel : '  ';
+    const title = hasSelected ? selectedLabel : null;
+    const triggerArrow = this.renderTriggerArrow();
+    const classes = cn(
+      S.triggerButton,
+      triggerArrow && S.hasTriggerArrow,
+      className
+    );
+
+    return (
+      <div>
+        <Button
+          className={classes}
+          variant="default-primary"
+          {...props}
+          onClick={this.toggle}
+          style={{ clipPath: labelClipPath }}
+          title={title?.join?.(', ')}
+        >
+          {[displayLabel, triggerArrow]}
+        </Button>
+        <Label
+          size={size}
+          disabled={disabled}
+          isOnTop={hasSelected}
+          isFocused={isFocused}
+          onClipPathChange={this.onLabelClipPathChange}
+        >
+          {this.getFieldLabel(label, value)}
+        </Label>
+      </div>
+    );
+  }
+
+  renderTriggerArrow() {
+    const { disableTriggerArrow } = this.props;
+    const { isOpen } = this.store;
+    if (disableTriggerArrow) return null;
+
+    return (
+      <Icon
+        type="arrow-down"
+        className={cn(S.triggerArrow, isOpen && S.isOpen)}
+        size="s"
+      />
+    );
+  }
+
+  renderTrigger() {
+    const { isSearchable, required, hideRequiredStar, size } = this.props;
+
+    const trigger = isSearchable
+      ? this.renderTriggerInput()
+      : this.renderTriggerButton();
+
+    return (
+      <div className={S.trigger}>
+        {trigger}
+        {required && !hideRequiredStar && <RequiredStar size={size} />}
+      </div>
+    );
   }
 
   renderFoldButton(id) {
@@ -400,7 +556,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderOption = (item, level = 0) => {
-    const { expanded } = this.state;
+    const { expanded } = this.store;
     const { id, children, isGroup } = item;
     const selectedState = this.isSelected(id);
 
@@ -536,7 +692,7 @@ export class Select extends Component<T.Props, T.State> {
           autoClose={!this.isMultiple()}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
-          trigger={this.renderInput()}
+          trigger={this.renderTrigger()}
           content={this.renderOptionsList()}
         />
         {this.isErrorVisible() && (
@@ -548,4 +704,3 @@ export class Select extends Component<T.Props, T.State> {
     );
   }
 }
-

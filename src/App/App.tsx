@@ -6,7 +6,7 @@ import { watchControllerFlag } from 'tools/dom';
 import { Router, Link } from 'components/Router/Router';
 import { Lazy } from 'components/Lazy/Lazy';
 
-import Theme from './theme';
+import Theme from './Theme';
 import NAV_CONFIG from './navigation';
 import S from './App.styl';
 

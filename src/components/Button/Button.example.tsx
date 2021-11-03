@@ -1,7 +1,7 @@
 import { Title } from 'helpers';
 
 import { Form } from 'components/Form/Form';
-import { AssistiveText } from 'components/AssistiveText/AssistiveText';
+// import { AssistiveText } from 'components/AssistiveText/AssistiveText';
 import { Container } from 'components/Container/Container';
 import { Checkbox } from 'components/Checkbox/Checkbox';
 import { Select } from 'components/Select/Select';

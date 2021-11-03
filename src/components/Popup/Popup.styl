@@ -1,4 +1,4 @@
-@import '~src/theme'
+@import '~theme'
 
 $openTransform = scale3d(1, 1, 1)
 $hideTransform = scale3d(.5, .5, .5)
@@ -7,38 +7,71 @@ $hideTransform = scale3d(.5, .5, .5)
   position relative
   display inline-block
 
-.trigger
-  // display flex
-  cursor pointer
-
-  &.disabled
-    pointer-events none
-
 .contentWrapper
   pointer-events none
+  position absolute
+
+  &.inline.isOpen
+    position relative
 
   &:not(.inline)
-  &:not(.open)
     &
     & > .content
       position absolute
 
-.content
+.paranja
   z-index 10
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  pointer-events none
+  transition background-color .2s ease-out
+
+  &.isOpen
+    background-color var(--accent-color-alpha-800)
+    pointer-events all
+
+.trigger
+  cursor pointer
+
+  &.isOpen
+    position relative
+    z-index 11
+
+  &.disabled
+    pointer-events none
+
+.content
+  position relative
+  z-index 11
   min-width 100%
-  border-radius 4px
-  color var(--bg-color)
+  background-color var(--accent-color)
   opacity 0
   transform-origin top center
-  background-color var(--accent-color)
   transform $hideTransform
   transition .1s ease-out
   transition-property opacity, transform
   backface-visibility hidden
   overflow hidden
   pointer-events none
+  color var(--bg-color)
 
-  &::after
+  &.size-s
+    borderRadiusSize('s')
+  &.size-m
+    borderRadiusSize('m')
+  &.size-l
+    borderRadiusSize('l')
+
+  &.elevation-1
+    elevation1()
+
+  &.elevation-2
+    elevation2()
+
+  &.outlined::after
     content ''
     position absolute
     top 0
@@ -47,10 +80,9 @@ $hideTransform = scale3d(.5, .5, .5)
     bottom 0
     border-radius inherit
     pointer-events none
-    background-color var(--accent-color)
-    z-index -1
+    box-shadow inset 0 0 0 1px var(--bg-color)
 
-  &.open
+  &.isOpen
     pointer-events all
     transform $openTransform
     opacity 1
@@ -90,7 +122,7 @@ $hideTransform = scale3d(.5, .5, .5)
     left 50%
     transform $hideTransform translateX(-50%)
 
-    &.open
+    &.isOpen
       transform $openTransform translateX(-50%)
 
 .axis-left
@@ -99,7 +131,7 @@ $hideTransform = scale3d(.5, .5, .5)
     top 50%
     transform $hideTransform translateY(-50%)
 
-    &.open
+    &.isOpen
       transform $openTransform translateY(-50%)
 
 .axis-top

@@ -3,15 +3,17 @@
 $width = 300px
 $height = 80px
 $duration = 200ms
+$padding = 10px
 
 .root
   z-index 20
   position absolute
   top 10px
-  left calc(100% - 10px)
-  bottom 10px
-  max-width 100%
+  right 0
+  width calc(300px + 40px)
+  padding 0 0 30px 30px
   transition top .3s ease-out
+  overflow hidden
 
 .paddingTop
   top 92px
@@ -22,11 +24,10 @@ $duration = 200ms
 
 .item
   right 10px
-  max-height 0 // animate `height:auto` – https://stackoverflow.com/a/8331169/2131453
+  max-height 0 // animate `height:auto` – https://stackoverflow.com/a/8331169/2131453
   width $width
-  margin-left -($width)
-  transform translateX(110%)
-  transform translate3d(110%, 0, 0)
+  transform translateX(100%)
+  transform translate3d(100%, 0, 0)
   transition all $duration ease-out
   backface-visibility hidden
 

@@ -2,11 +2,12 @@ import { Component, createRef } from 'preact';
 import { createPortal } from 'preact/compat';
 import cn from 'classnames';
 import { bind } from 'decko';
-import Time from 'timen';
 import { createStore } from 'justorm/preact';
 
+import throttle from 'tools/throttle';
 import { hasParent, getCoords } from 'tools/dom';
-import { getScrollParent } from 'tools/getScrollParent';
+import { getScrollParent } from 'tools/scroll';
+import Time from 'timen';
 
 import S from './Popup.styl';
 import * as T from './Popup.types';
@@ -32,12 +33,18 @@ export class Popup extends Component<T.Props> {
   store;
   timers = Time.create();
 
+  static defaultProps = {
+    size: 'm',
+  };
+
   constructor(props) {
     super(props);
 
+    const isOpen = Boolean(props.isOpen);
+
     this.store = createStore(this, {
-      isOpen: props.isOpen || false,
-      isContentVisible: false,
+      isOpen,
+      isContentVisible: isOpen,
     } as T.State);
 
     this.afterClose = this.afterClose.bind(this);
@@ -136,23 +143,34 @@ export class Popup extends Component<T.Props> {
 
     this._mousePressed = false;
 
+    if (this._focused) {
+      this.open();
+      return;
+    }
+
     if (!isOpen || hasParent(e.target, this.triggerElem.current)) return;
 
     if (!e.target.closest(`.${S.content}`) || autoClose) this.close();
   }
 
   onFocus = () => {
+    const { controllable, onFocus } = this.props;
+
     this._focused = true;
-    this.open();
+    if (!controllable && !this._mousePressed) this.open();
+    if (onFocus) onFocus();
   };
 
   onBlur = () => {
+    const { controllable, onBlur } = this.props;
+
     this._focused = false;
 
-    if (this._mousePressed) return;
-
-    // give time to fire clicks inside popup
-    this.timers.after(80, this.close);
+    if (onBlur) onBlur();
+    if (!controllable && !this._mousePressed) {
+      // give time to fire clicks inside popup
+      this.timers.after(80, this.close);
+    }
   };
 
   open = () => {
@@ -185,15 +203,15 @@ export class Popup extends Component<T.Props> {
   };
 
   renderTrigger() {
-    const {
-      trigger,
-      content,
-      disabled,
-      controllable,
-      hoverControl,
-    } = this.props;
+    const { trigger, content, disabled, controllable, hoverControl } =
+      this.props;
+    const { isOpen } = this.store;
     const disableTrigger = disabled || !content;
-    const classesTrigger = cn(S.trigger, disableTrigger && S.disabled);
+    const classesTrigger = cn(
+      S.trigger,
+      isOpen && S.isOpen,
+      disableTrigger && S.disabled
+    );
     const triggerProps = {} as any;
 
     if (!trigger) return null;
@@ -228,9 +246,12 @@ export class Popup extends Component<T.Props> {
       content,
       contentProps = {},
       wrapperProps = {},
+      size,
       disabled,
       inline,
-      flat,
+      outlined,
+      paranja,
+      elevation,
       clearTargetMargin,
       direction,
     } = this.props;
@@ -244,16 +265,18 @@ export class Popup extends Component<T.Props> {
     const wrapperClasses = cn(
       S.contentWrapper,
       inline && S.inline,
-      isOpen && S.open,
+      isOpen && S.isOpen,
       wrapperProps.className
     );
 
     const [axis, float] = direction.split('-');
     const classes = cn(
       S.content,
-      !disabled && isOpen && S.open,
+      !disabled && isOpen && S.isOpen,
       !clearTargetMargin && S.hasMargin,
-      flat && S.flat,
+      outlined && S.outlined,
+      elevation && S[`elevation-${elevation}`],
+      S[`size-${size}`],
       S[`axis-${axis}`],
       S[`float-${float || 'middle'}`],
       contentProps.className
@@ -271,6 +294,11 @@ export class Popup extends Component<T.Props> {
 
     const contentNode = (
       <div {...wrapperProps} className={wrapperClasses}>
+        {paranja &&
+          createPortal(
+            <div className={cn(S.paranja, isOpen && S.isOpen)} />,
+            target
+          )}
         <div {...contentProps} ref={this.containerElem} className={classes}>
           {isContentVisible && content}
         </div>

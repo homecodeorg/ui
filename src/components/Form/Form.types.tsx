@@ -23,7 +23,7 @@ export type FormApi = {
   touched: FieldsFlags;
   changed: FieldsFlags;
   errors: FieldsErrors;
-  // Field: React.ComponentType;
+  Field: React.ComponentType;
   setValue: (field: string, val: any) => void;
   setValues: (values: FormValues) => void;
   reset: () => void;

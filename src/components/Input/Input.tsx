@@ -1,154 +1,144 @@
 import { Component, createRef } from 'preact';
 import cn from 'classnames';
-import omit from 'lodash.omit';
 import { createStore } from 'justorm/preact';
+import omit from 'lodash.omit';
 
 import { capitalize } from 'tools/string';
+import { generateUID } from 'tools/uid';
 
-import { Icon } from 'components/Icon/Icon';
+import { Label } from 'components/Label/Label';
+import { RequiredStar } from 'components/RequiredStar/RequiredStar';
 import { AssistiveText } from 'components/AssistiveText/AssistiveText';
+import { Button } from 'components/Button/Button';
+import { Icon } from 'components/Icon/Icon';
 
-import { LABEL_MULTIPLIER, LABEL_PADDING } from './Input.constants.json';
 import S from './Input.styl';
 import * as T from './Input.types';
-
-function getLabelClipPath(left, width) {
-  const offset = 10;
-  const A = left - LABEL_PADDING;
-  // @ts-ignore
-  const B = width === 0 ? 0 : left + width * LABEL_MULTIPLIER + LABEL_PADDING;
-  const cutWidth = 5;
-  const min = `-${offset}px`;
-  const max = `calc(100% + ${offset}px)`;
-
-  return `polygon(${min} ${min}, ${min} ${max}, ${max} ${max}, ${max} ${min}, ${B}px ${min}, ${B}px ${cutWidth}px, ${A}px ${cutWidth}px, ${A}px ${min})`;
-}
-
-export type InputProps = T.Props;
 
 export class Input extends Component<T.Props> {
   inputRef = createRef<HTMLInputElement>();
 
-  labelElem = createRef<HTMLDivElement>();
-
-  store;
+  isClearPressed = false;
   cursorPos = 0;
-
-  isTextArea = false;
-  isNumber = false;
-  isFile = false;
-  hasValue = false;
-
   prevLabelText = '';
+  store;
+  uid = generateUID();
 
   static defaultProps = {
+    type: 'text',
     size: 'm',
   };
 
   constructor(props) {
     super(props);
 
-    const { type } = props;
+    const inputValue = props.value || '';
+    const hasValue = this.hasValue(inputValue);
 
-    this.isNumber = type === 'number';
-    this.isFile = type === 'file';
-    this.isTextArea = type === 'textarea';
     this.store = createStore(this, {
       isFocused: false,
+      isLabelOnTop: this.isLabelOnTop(hasValue),
+      inputValue,
+      hasValue,
       labelClipPath: '',
+      autoComplete: null,
     });
-
-    this.updateHasValue();
   }
 
   componentDidMount() {
-    this.updateLabelWidth();
     document.addEventListener('keyup', this.onDocKeyUp, true);
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      label,
-      forceLabelOnTop,
-      size,
-      type,
-      adornmentLeft,
-      value,
-      disabled,
-    } = this.props;
-    const { isFocused } = this.store;
-
-    const labelElem = this.labelElem.current;
-    const labelChanged =
-      prevProps.label !== label ||
-      (!isFocused && prevProps.forceLabelOnTop !== forceLabelOnTop) ||
-      (labelElem && labelElem.innerText !== this.prevLabelText);
+    const { value } = this.props;
     const valueChanged = prevProps.value !== value;
-    const sizeChanged = prevProps.size !== size;
-    const disabledChanged = prevProps.disabled !== disabled;
-    const adornmentChanged =
-      Boolean(prevProps.adornmentLeft) !== Boolean(adornmentLeft);
 
-    const needUpdateWidth =
-      valueChanged ||
-      labelChanged ||
-      sizeChanged ||
-      disabledChanged ||
-      adornmentChanged;
+    this.updateSelection();
+    this.updateAutoComplete();
 
-    this.setSelection();
-    if (valueChanged) this.updateHasValue();
-    if (needUpdateWidth) this.updateLabelWidth();
+    if (valueChanged) {
+      this.store.inputValue = value;
+      this.updateHasValue();
+      this.updateLabelPosition();
+    }
   }
 
-  updateHasValue() {
-    const { value, defaultValue } = this.props;
-    this.hasValue = this.isNumber || Boolean(value || defaultValue);
+  updateAutoComplete() {
+    const form = this.inputRef.current?.closest('form');
+    const val = form?.getAttribute('autocomplete');
+
+    if (this.store.autoComplete !== val) this.store.autoComplete = val;
   }
 
-  updateLabelWidth() {
-    const labelElem = this.labelElem.current;
-    if (!labelElem) return;
-
-    // @ts-ignore
-    const { disabled } = this.props;
-    const { isFocused } = this.store;
-    const { offsetLeft, offsetWidth, innerText } = labelElem;
-    const labelWidth =
-      !disabled && this.isLabelOnTop(isFocused) ? offsetWidth : 0;
-
-    this.prevLabelText = innerText;
-    this.store.labelClipPath = getLabelClipPath(offsetLeft, labelWidth);
-  }
-
-  isLabelOnTop() {
-    const { forceLabelOnTop, adornmentLeft } = this.props;
-    const { isFocused } = this.store;
-
-    return (
-      forceLabelOnTop || this.hasValue || isFocused || Boolean(adornmentLeft)
-    );
-  }
-
-  getValue() {
-    const val = this.inputRef.current.value;
-
-    if (this.isNumber) return val ? parseFloat(val) : 0;
-    return val;
-  }
-
-  setSelection() {
+  updateSelection() {
     const { type } = this.props;
+    const { isFocused } = this.store;
     const elem = this.inputRef.current;
 
-    if (!elem || type !== 'text') return;
+    if (!isFocused || !elem || type !== 'text') return;
 
     elem.selectionStart = this.cursorPos;
     elem.selectionEnd = this.cursorPos;
   }
 
+  updateLabelPosition() {
+    this.store.isLabelOnTop = this.isLabelOnTop();
+  }
+
+  updateHasValue() {
+    this.store.hasValue = this.hasValue();
+  }
+
+  hasValue(value = this.store.inputValue) {
+    const { type, defaultValue } = this.props;
+
+    return type === 'number' || Boolean(value || defaultValue);
+  }
+
+  isLabelOnTop(hasValue = this.store?.hasValue) {
+    const { forceLabelOnTop, adornmentLeft } = this.props;
+
+    return (
+      forceLabelOnTop ||
+      Boolean(adornmentLeft) ||
+      hasValue ||
+      this.store?.isFocused
+    );
+  }
+
+  getValue(val = this.store.inputValue) {
+    const { type, isNullable } = this.props;
+
+    if (type === 'number') {
+      if (val) return parseFloat(val);
+      if (isNullable && val === '') return null;
+      return 0;
+    }
+    return val;
+  }
+
+  clear = () => {
+    const { onChange, onClear } = this.props;
+
+    if (onClear) onClear();
+    if (onChange) onChange('');
+    // this.inputRef.current?.focus();
+    this.isClearPressed = false;
+  };
+
+  onClearMouseDown = () => {
+    this.isClearPressed = true;
+  };
+
   onDocKeyUp = e => {
+    const { changeOnEnd } = this.props;
     const { isFocused } = this.store;
+
+    if (changeOnEnd && e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      this.onTypingEnd();
+    }
 
     if (isFocused && e.key === 'Escape') {
       e.preventDefault();
@@ -158,79 +148,89 @@ export class Input extends Component<T.Props> {
   };
 
   onChange = e => {
+    const { onChange, changeOnEnd, type } = this.props;
+    const value = this.getValue(e.target.value);
+    const isNumber = type === 'number';
+
+    // @ts-ignore
+    if (!isNumber) this.cursorPos = this.inputRef.current.selectionStart;
+
+    if (changeOnEnd) {
+      this.store.inputValue = value;
+      this.updateHasValue();
+    } else if (onChange) onChange(value);
+  };
+
+  onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
+
+  onTypingEnd = () => {
     const { onChange } = this.props;
     const value = this.getValue();
 
-    // @ts-ignore
-    if (!this.isNumber) this.cursorPos = this.inputRef.current.selectionStart;
-    if (onChange && onChange(e, value) === false) return;
-
-    this.hasValue = this.isNumber || Boolean(value);
+    if (onChange) onChange(value);
   };
 
   onFocus = e => {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
-    this.updateLabelWidth();
+    this.updateLabelPosition();
     if (onFocus) onFocus(e);
   };
 
   onBlur = e => {
+    if (this.props.changeOnEnd) this.onTypingEnd();
+    if (this.isClearPressed) {
+      e.preventDefault();
+      return;
+    }
+
     const { onBlur, onChange, value, checkAutofill } = this.props;
-    const val = this.getValue();
+    const val = this.getValue(e.target.value);
 
     this.store.isFocused = false;
-    this.updateLabelWidth();
+    this.updateLabelPosition();
     // some browsers not fire `onchange` after autofill
     if (checkAutofill && onChange && !value && val) onChange(e, val);
     if (onBlur) onBlur(e);
   };
 
   getControlProps(): T.ControlProps {
-    const { value, placeholder } = this.props;
-    const { isFocused } = this.store;
+    const { type, value, label, isNullable, placeholder } = this.props;
+    const { autoComplete, isLabelOnTop } = this.store;
 
     const props = {
       ...omit(this.props, [
         'className',
         'clear',
+        'onClear',
+        'hasClear',
         'size',
         'label',
-        // 'value',
         'error',
         'checkAutofill',
         'placeholder',
         'adornmentLeft',
         'adornmentRight',
         'forceLabelOnTop',
+        'changeOnEnd',
       ]),
       onChange: this.onChange,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
     };
 
-    if (placeholder && !value && isFocused) props.placeholder = placeholder;
+    // @ts-ignore
+    if (value === null && !isNullable) props.value = type === 'number' ? 0 : '';
+    if (placeholder && !value && (!label || isLabelOnTop))
+      props.placeholder = placeholder;
+    if (!autoComplete) {
+      props.autoComplete = this.uid;
+      delete props.name;
+    }
+    if (props.value === undefined) props.value = '';
 
     return props;
-  }
-
-  renderLabel() {
-    const { label } = this.props;
-
-    if (!label) return null;
-
-    const isOnTop = this.isLabelOnTop();
-    const labelClasses = cn(S.label, isOnTop && S.onTop);
-
-    return [
-      <div className={labelClasses} key="label-text">
-        {label}
-      </div>,
-      <div className={S.labelGap} ref={this.labelElem} key="label-gap">
-        {label}
-      </div>,
-    ];
   }
 
   renderAdornment(type) {
@@ -255,29 +255,32 @@ export class Input extends Component<T.Props> {
     const {
       className,
       size,
-      // variant,
-      clear,
+      type,
+      label,
       error,
+      clear,
+      hasClear,
       required,
       disabled,
-      adornmentLeft,
-      adornmentRight,
-      adornmentRightClassName,
     } = this.props;
-    const { isFocused, labelClipPath } = this.store;
+    const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
 
-    const Control = this.isTextArea ? 'textarea' : 'input';
+    const isTextArea = type === 'textarea';
+    const Control = isTextArea ? 'textarea' : 'input';
     const controlProps = this.getControlProps();
     const classes = cn(
       S.root,
-      this.isTextArea && S.isTextArea,
+      isTextArea && S.isTextArea,
       S[`size-${size}`],
-      // S[`variant-${variant}`],
       isFocused && S.isFocused,
-      disabled && S.isDisabled,
       error && S.hasError,
+      clear && S.isClear,
+      hasClear && S.hasClear,
+      disabled && S.isDisabled,
       className
     );
+
+    console.log(name, '|', label);
 
     return (
       <div className={classes}>
@@ -294,11 +297,30 @@ export class Input extends Component<T.Props> {
             {...controlProps}
             ref={this.inputRef}
             key="control"
-            autoComplete="off"
           />
+          <Label
+            className={S.label}
+            size={size}
+            isOnTop={isLabelOnTop}
+            isError={Boolean(error)}
+            onClipPathChange={this.onLabelClipPathChange}
+          >
+            {label}
+          </Label>
           {this.renderAdornment('right')}
-          {this.renderLabel()}
-          {required && <div className={S.requiredStar} key="required-icon" />}
+          {hasClear && hasValue && (
+            <Button
+              className={S.clearButton}
+              variant="clear"
+              size={size}
+              square
+              onMouseDownCapture={this.onClearMouseDown}
+              onClick={this.clear}
+            >
+              <Icon className={S.clearIcon} type="clear" />
+            </Button>
+          )}
+          {required && <RequiredStar size={size} />}
         </label>
         {!disabled && typeof error === 'string' && (
           <AssistiveText variant="danger" size={size}>
@@ -309,3 +331,5 @@ export class Input extends Component<T.Props> {
     );
   }
 }
+
+export type InputProps = T.Props;

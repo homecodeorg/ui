@@ -1,18 +1,43 @@
-@import '~src/theme'
+@import '~theme'
+json('../Select/Select.constants.json')
 
 $itemHeight = 34px
-$gap = 5px
-$levelGap = 10px
+$levelGap = 24px
 
 .root
   width 100%
+  position relative // for RequiredStart
 
-.input
+  &.disabled
+    pointer-events none
+
+.additionalLabel
+  flex-grow 1
+  text-align left
+  overflow hidden
+  text-overflow ellipsis
+
+.trigger
   z-index 1
+  position relative
 
-.options
-  max-height 200px
-  overflow-y auto
+.triggerArrow
+  width 14px !important
+  transition transform .2s ease-out
+  transform rotateX(-180deg)
+
+  &.isOpen
+    transform rotateX(0deg)
+
+  .disabled &
+    color var(--text3-color)
+
+.triggerButton
+  justify-content space-between
+  width 100%
+
+  &.hasTriggerArrow > span
+    max-width calc(100% - 22px)
 
 .presetPanel
   display flex
@@ -25,17 +50,44 @@ $levelGap = 10px
   & + &
     margin-left 8px
 
+.options
+  max-height 200px
+  overflow-y auto
+
 .option
-  position relative
   display flex
   align-items center
-  min-height $itemHeight
+
   width 100%
-  padding 0 12px
-  color var(--bg-color)
+  padding-top 0 !important
+  padding-bottom 0 !important
+
   cursor pointer
+  color var(--bg-color)
+  text-align left
   user-select none
   animation fadeIn .3s ease-out
+
+  .isTree & // TODO: remove?
+    min-height 36px
+
+  .size-s &
+    controlPaddingSize('s')
+    controlFontSize('s')
+    height '%spx' % ITEM_HEIGHT_BY_SIZE-s
+  .size-m &
+    controlPaddingSize('m')
+    controlFontSize('m')
+    height '%spx' % ITEM_HEIGHT_BY_SIZE-m
+  .size-l &
+    controlPaddingSize('l')
+    controlFontSize('l')
+    height '%spx' % ITEM_HEIGHT_BY_SIZE-l
+  .size-xl &
+    controlPaddingSize('xl')
+    controlFontSize('xl')
+    height '%spx' % ITEM_HEIGHT_BY_SIZE-xl
+
 
   &:first-child
     border-top-left-radius 2px
@@ -48,7 +100,7 @@ $levelGap = 10px
     padding-left 30px
 
   &.isGroup
-    color $accentColor
+    color var(--accent-color)
     font-weight 500
     background var(--bg-color-alpha-200)
     pointer-events none
@@ -56,8 +108,13 @@ $levelGap = 10px
   .isExpanded > &
     display flex
 
+  & > span
+    white-space nowrap
+    text-overflow ellipsis
+    overflow hidden
+
   &:hover
-    background-color var(--active-color-alpha-500)
+    background-color var(--active-color-alpha-100)
 
   &::before
     content ''
@@ -66,16 +123,22 @@ $levelGap = 10px
     content none
   &.level-1::before
     width $levelGap
+    min-width @width
   &.level-2::before
     width $levelGap * 2
+    min-width @width
   &.level-3::before
     width $levelGap * 3
+    min-width @width
   &.level-4::before
     width $levelGap * 4
+    min-width @width
   &.level-5::before
     width $levelGap * 5
+    min-width @width
   &.level-6::before
     width $levelGap * 6
+    min-width @width
 
   &.isSelected
   &.isIndeterminate
@@ -83,7 +146,7 @@ $levelGap = 10px
 
   &:active
   &.isSelected
-    color $active-olor
+    color var(--active-color)
 
 @keyframes fadeIn
   0%
@@ -98,38 +161,39 @@ $levelGap = 10px
   display flex
   justify-content flex-end
   width 30px
-  min-height 100%
-  max-height 100%
+  height 100%
   padding 0
   overflow visible
   background-color transparent !important
 
-  .size-s &
-    margin-left 'calc(%s * -2)' % var(--indent-s)
-  .size-m &
-    margin-left 'calc(%s * -2)' % var(--indent-m)
-  .size-l &
-    margin-left 'calc(%s * -2)' % var(--indent-l)
-
   &::before // extend clickable area
     content ''
     position absolute
-    right 100%
+    top -10
+    right 0
     display block
     width 100px
-    height 100%
+    height calc(100% + 20px)
+
+  .size-m &
+    margin-left -36px
+  .size-l &
+    margin-left -44px
 
 .expandIcon
-  margin-right .5em
-  color var(--bg-color)
-  opacity .8
-
-  transition .1s ease-out
-  transition-property transform, opacity
+  transition transform .1s ease-out
   backface-visibility hidden
+  color var(--text1-color) !important
+
+  .size-m &
+    height 14px !important
+    width @height
+  .size-l &
+    height 18px !important
+    width @height
 
   .isExpanded &
     transform rotateZ(90deg) translateZ(0)
 
 .expandButton:hover .expandIcon
-  opacity 1
+  color var(--primary-color)

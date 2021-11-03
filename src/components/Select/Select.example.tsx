@@ -1,7 +1,7 @@
 import { Fragment } from 'preact';
 import { State, getRandomItem } from 'helpers';
 
-import { Container } from '../Container/Container';
+import { Container } from 'components/Container/Container';
 
 import { Select } from './Select';
 import * as H from './Select.example-helpers';
@@ -12,7 +12,7 @@ const PRESET_LETER = getRandomItem(OPTIONS).label[0];
 const OPTIONS_PRESET = OPTIONS.filter(({ label }) =>
   new RegExp(`^${PRESET_LETER}`).test(label)
 );
-const GROUPED_OPTIONS = (function() {
+const GROUPED_OPTIONS = (function () {
   let goroupCount = 1;
 
   return OPTIONS.reduce((acc, item, i) => {

@@ -1,0 +1,83 @@
+@import '~theme'
+json('../Label/Label.constants.json')
+
+.size-s
+  controlPaddingSize('s')
+  controlFontSize('s')
+.size-m
+  controlPaddingSize('m')
+  controlFontSize('m')
+.size-l
+  controlPaddingSize('l')
+  controlFontSize('l')
+.size-xl
+  controlPaddingSize('xl')
+  controlFontSize('xl')
+  padding-right 10px
+
+.root
+  z-index 1
+  position absolute
+  top 0
+  left 0
+  display flex
+  align-items center
+  max-width 100%
+  height 100%
+  padding-top 0
+  padding-bottom 0
+
+  color var(--text2-color)
+
+  pointer-events none
+  user-select none
+
+  & > div
+    height 100%
+    max-width 100%
+
+.view > div
+.gap
+  max-width 100%
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
+
+.view
+  display flex
+  align-items center
+  height 100%
+  max-width 100%
+  transition transform .15s ease-out
+  transform-origin top left
+  transform translateZ(0)
+  backface-visibility hidden
+
+  .onTop &
+    transform scale(LABEL_MULTIPLIER) translate3d(0, -53%, 0)
+
+  .isFocused &
+    color var(--primary-color)
+
+  .isError &
+    color var(--danger-color)
+
+  .disabled &
+    color var(--text3-color)
+
+
+.gapWrap
+  position absolute
+  opacity 0
+  pointer-events none
+  max-width 100%
+  padding inherit
+
+  &::before
+    z-index -1
+    content ''
+    position absolute
+    left -6px
+    right -6px
+    height 1.4em
+    border-radius 4px

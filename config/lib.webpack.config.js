@@ -1,9 +1,10 @@
+const merge = require('webpack-merge');
 const path = require('path');
 const paths = require('./paths');
 const config = require('./webpack.config');
 
 module.exports = (env, argv) => {
-  return Object.assign(config, {
+  return merge(config, {
     entry: [`${paths.src}/index.ts`],
     output: {
       path: paths.dist,

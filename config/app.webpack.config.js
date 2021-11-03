@@ -14,8 +14,9 @@ module.exports = (env, argv) => {
       devtool: 'source-map',
       devServer: {
         hot: true,
-        port: 9696,
+        port: 8181,
         historyApiFallback: true,
+        open: true,
       },
     });
   }
@@ -26,20 +27,22 @@ module.exports = (env, argv) => {
       path: paths.build,
     },
     plugins: [
-      new CopyWebpackPlugin([
-        {
-          from: `${paths.assets}/*.css`,
-          to: paths.build,
-        },
-        {
-          from: `${paths.assets}/fonts`,
-          to: `${paths.build}/fonts`,
-        },
-        {
-          from: `${paths.assets}/logo.svg`,
-          to: paths.build,
-        },
-      ]),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: `${paths.assets}/*.css`,
+            to: paths.build,
+          },
+          {
+            from: `${paths.assets}/fonts`,
+            to: `${paths.build}/fonts`,
+          },
+          {
+            from: `${paths.assets}/logo.svg`,
+            to: paths.build,
+          },
+        ],
+      }),
       new HtmlWebpackPlugin({
         // lang: PAGE_LANG,
         // title: PAGE_TITLE,
