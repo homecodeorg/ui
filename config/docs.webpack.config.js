@@ -35,7 +35,7 @@ module.exports = (env, argv) => {
           },
           {
             from: `${paths.assets}/fonts`,
-            to: `${paths.docs}/fonts`,
+            to: `${paths.docs}/assets/fonts`,
           },
           {
             from: `${paths.assets}/logo.svg`,
