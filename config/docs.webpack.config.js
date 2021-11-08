@@ -24,22 +24,22 @@ module.exports = (env, argv) => {
   return merge(config, {
     entry: [`${paths.src}/App/index.js`],
     output: {
-      path: paths.build,
+      path: paths.docs,
     },
     plugins: [
       new CopyWebpackPlugin({
         patterns: [
           {
             from: `${paths.assets}/*.css`,
-            to: paths.build,
+            to: paths.docs,
           },
           {
             from: `${paths.assets}/fonts`,
-            to: `${paths.build}/fonts`,
+            to: `${paths.docs}/fonts`,
           },
           {
             from: `${paths.assets}/logo.svg`,
-            to: paths.build,
+            to: paths.docs,
           },
         ],
       }),

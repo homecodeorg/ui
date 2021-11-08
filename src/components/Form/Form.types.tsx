@@ -45,11 +45,12 @@ export type Props = {
   initialValues: FormValues;
   validationSchema?: FormValidationSchema;
   onFormChange?: (values: FormValues) => void;
-  onSubmit: (values: FormValues) => void;
+  onSubmit?: (values: FormValues) => void;
   markEdited?: boolean;
 } & Omit<HTMLFormElement, 'contentEditable'>;
 
 export type FieldParams = {
+  name: string;
   handleChange: (name: string, val: any) => void;
   handleBlur: (name: string) => void;
   markEdited?: Props['markEdited'];

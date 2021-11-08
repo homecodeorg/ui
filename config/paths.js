@@ -11,7 +11,7 @@ module.exports = {
   config: resolvePath('config'),
   src: resolvePath('src'),
   server: resolvePath('server'),
-  build: resolvePath('build'),
+  docs: resolvePath('docs'),
   dist: resolvePath('dist'),
   assets: resolvePath('assets'),
   modules: resolvePath('node_modules'),

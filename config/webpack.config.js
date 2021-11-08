@@ -11,6 +11,8 @@ const config = {
     alias: {
       src: paths.src,
       theme: `${paths.src}/theme.styl`,
+      react: 'preact/compat',
+      'react-dom': 'preact/compat',
     },
   },
   module: {
