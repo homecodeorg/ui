@@ -35,7 +35,7 @@ module.exports = (env, argv) => {
           },
           {
             from: `${paths.assets}/fonts`,
-            to: `${paths.docs}/fonts`,
+            to: `${paths.docs}/assets/fonts`,
           },
           {
             from: `${paths.assets}/logo.svg`,
@@ -46,6 +46,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         // lang: PAGE_LANG,
         // title: PAGE_TITLE,
+        baseUrl: isDev ? '/' : '/uilib/',
         filename: 'index.html',
         template: `${paths.assets}/index.html`,
         minify: {
