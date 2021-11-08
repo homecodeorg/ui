@@ -1,0 +1,8 @@
+src
+.babelrc
+webpack.config.js
+node_modules/
+yarn-error.log
+*.sublime-*
+index.js.*
+preact.js.*

@@ -1,19 +1,40 @@
 {
-  "name": "uilib",
+  "name": "@truerenton/uilib",
   "version": "0.0.1",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "sideEffects": false,
+  "description": "Preact UI components library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sb": "start-storybook -p 6006 --ci",
     "ts": "tsc --noUnusedLocals",
     "dev": "webpack-dev-server --mode=development --config ./config/app.webpack.config.js --progress",
-    "dist": "NODE_ENV=production webpack --mode=production --config ./config/lib.webpack.config.js --progress"
+    "dist": "NODE_ENV=production webpack --mode=production --config ./config/lib.webpack.config.js --progress",
+    "release": "standard-version",
+    "release:patch": "yarn release -- --release-as patch",
+    "release:minor": "yarn release -- --release-as minor",
+    "release:major": "yarn release -- --release-as major"
   },
-  "author": "Oleg Apostol <truerenton@gmail.com>",
+  "standard-version": {
+    "scripts": {
+      "postchangelog": "replace ' (SB-\\d+)' ' [`$1`](https://tracker.yandex.ru/$1)' CHANGELOG.md"
+    }
+  },
+  "author": "Oleg Apostol",
   "license": "ISC",
+  "keywords": [
+    "preact",
+    "react",
+    "ui",
+    "components",
+    "library"
+  ],
+  "homepage": "https://github.com/apostololeg/uilib#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apostololeg/uilib.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
   "dependencies": {
     "classnames": "^2.2.6",
     "compareq": "^1.1.0",
@@ -24,6 +45,8 @@
     "lodash.pick": "^4.4.0",
     "nanoid": "^3.1.6",
     "path-parser": "^6.1.0",
+    "replace": "^1.2.1",
+    "standard-version": "^9.3.2",
     "timen": "^0.0.5",
     "webpack-dev-server": "^4.4.0"
   },
