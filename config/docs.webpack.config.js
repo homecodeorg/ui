@@ -46,6 +46,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         // lang: PAGE_LANG,
         // title: PAGE_TITLE,
+        baseUrl: isDev ? '/' : '/uilib/',
         filename: 'index.html',
         template: `${paths.assets}/index.html`,
         minify: {
