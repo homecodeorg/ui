@@ -1,5 +1,3 @@
-const path = require('path');
-
 const paths = require('./paths');
 const rules = require('./rules');
 const plugins = require('./plugins');
@@ -21,6 +19,7 @@ const config = {
   plugins: plugins,
   optimization: {
     moduleIds: 'named',
+    minimize: false,
   },
 };
 

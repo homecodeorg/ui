@@ -13,3 +13,4 @@ export * from './Router/Router';
 export * from './Select/Select';
 export * from './Spinner/Spinner';
 export * from './Theme/Theme';
+export * from './VH/VH';

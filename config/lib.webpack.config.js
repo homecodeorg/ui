@@ -5,19 +5,29 @@ const config = require('./webpack.config');
 
 module.exports = (env, argv) => {
   return merge(config, {
+    mode: 'production',
     entry: [`${paths.src}/index.ts`],
     output: {
       path: paths.dist,
       filename: 'index.js',
       libraryTarget: 'umd',
-      library: 'ui-components',
+      library: '@truerenton/uilib',
     },
-    externals: {
-      preact: 'commonjs2 preact',
-      justorm: 'commonjs2 justorm',
+    externals: /preact|justorm|lodash|classnames/i,
+    // externalsType: 'module',
+    experiments: {
+      outputModule: true,
     },
+    // externals: {
+    //   preact: 'commonjs preact',
+    //   justorm: 'commonjs justorm',
+    //   'lodash.omit': 'commonjs lodash.omit',
+    // },
     optimization: {
+      // minimize: true,
       usedExports: true,
+      innerGraph: true,
+      sideEffects: true,
     },
   });
 };

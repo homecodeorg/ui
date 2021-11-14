@@ -40,7 +40,7 @@ function Item(props: T.Props) {
     pause,
     unpause,
     close,
-    LinkComponentt,
+    LinkComponent,
   } = props;
   const classes = cn(S.item, S[`type-${type}`], visible && S.visible);
 
@@ -60,7 +60,7 @@ function Item(props: T.Props) {
             {title && <div className={S.title}>{title}</div>}
             {content && (
               <div className={S.content}>
-                {getContent(content, links, LinkComponentt)}
+                {getContent(content, links, LinkComponent)}
               </div>
             )}
           </div>

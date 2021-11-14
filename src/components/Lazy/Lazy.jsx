@@ -1,10 +1,15 @@
 import { Component } from 'preact';
+
 import omit from 'lodash.omit';
 
 import { Container } from 'components/Container/Container';
 import { Spinner } from 'components/Spinner/Spinner';
 
-export class Lazy extends Component {
+function compare(cb1, cb2) {
+  return cb1?.toString() === cb2?.toString();
+}
+
+export default class Lazy extends Component {
   state = { loading: false };
 
   componentDidMount() {
@@ -12,22 +17,22 @@ export class Lazy extends Component {
   }
 
   componentDidUpdate({ loading }) {
-    if (this.props.loading !== loading) this.update();
+    if (!compare(this.props.loading, loading)) this.update();
   }
 
   update() {
-    const { loading, name } = this.props;
+    const { loading } = this.props;
 
     this.setState({ loading: true });
     loading().then(m => {
-      if (loading !== this.props.loading) return;
-      this.C = name ? m.default[name] : m.default;
+      if (!compare(this.props.loading, loading)) return;
+      this.C = m.default;
       this.setState({ loading: false });
     });
   }
 
   render() {
-    if (this.state.loading || !this.C) {
+    if (this.state.loading) {
       return (
         <Container centered fullHeight>
           <Spinner size="l" />
