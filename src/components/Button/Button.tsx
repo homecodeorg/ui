@@ -11,12 +11,13 @@ type Props = {
   children: JSX.Element | JSX.Element[];
   variant?: 'clear' | 'default' | 'primary';
   size?: 's' | 'm' | 'l';
-  type?: HTMLButtonElement['type'];
+  type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   isLoading: boolean;
   isChecked?: boolean;
   isSquare?: boolean;
   onMouseUp?: (e: MouseEvent) => void;
+  tabIndex?: number;
 };
 
 export type ButtonProps = Props;
@@ -44,9 +45,9 @@ export function Button(props: Props) {
     isSquare && S.isSquare,
     className
   );
-  const buttonRef = useRef(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-  function handleMouseUp(e) {
+  function handleMouseUp(e: MouseEvent) {
     if (onMouseUp) onMouseUp(e);
     H.focusOnClick(buttonRef.current);
   }

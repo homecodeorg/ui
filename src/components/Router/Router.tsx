@@ -1,4 +1,4 @@
-import { Component, cloneElement } from 'preact';
+import { Component, cloneElement } from 'react';
 import { withStore } from 'justorm/preact';
 import { Path } from 'path-parser';
 import omit from 'lodash.omit';

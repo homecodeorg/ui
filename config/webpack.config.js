@@ -1,6 +1,6 @@
-const paths = require('./paths');
-const rules = require('./rules');
-const plugins = require('./plugins');
+const paths = require('./paths.js');
+const rules = require('./rules.js');
+const plugins = require('./plugins.js');
 
 const config = {
   resolve: {
@@ -11,6 +11,7 @@ const config = {
       theme: `${paths.src}/theme.styl`,
       react: 'preact/compat',
       'react-dom': 'preact/compat',
+      'justorm/react': 'justorm/preact',
     },
   },
   module: {

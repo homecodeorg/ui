@@ -5,7 +5,6 @@ function buildVar(name, val) {
 }
 
 export function Theme({ config = {} }) {
-export function Theme({ config = {} }) {
   const vars = Object.entries(config)
     .map(([name, val]) => buildVar(name, val))
     .join('\n');

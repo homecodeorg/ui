@@ -1,26 +1,24 @@
-const postcssPresetEnv = require('postcss-preset-env');
-const cssnano = require('cssnano');
+import postcssPresetEnv from 'postcss-preset-env';
+import cssnano from 'cssnano';
 
 const isProduction = process.env.NODE_ENV === 'production';
 
-module.exports = {
-  exec: true,
-  sourceMap: isProduction ? false : 'inline',
-  minimize: isProduction,
-  plugins: [
-    postcssPresetEnv({
-      stage: 3,
-    }),
-    isProduction &&
-      cssnano({
-        preset: [
-          'default',
-          {
-            discardComments: {
-              removeAll: true,
-            },
+export const exec = true;
+export const sourceMap = isProduction ? false : 'inline';
+export const minimize = isProduction;
+export const plugins = [
+  postcssPresetEnv({
+    stage: 3,
+  }),
+  isProduction &&
+    cssnano({
+      preset: [
+        'default',
+        {
+          discardComments: {
+            removeAll: true,
           },
-        ],
-      }),
-  ],
-};
+        },
+      ],
+    }),
+];

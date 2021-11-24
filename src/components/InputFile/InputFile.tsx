@@ -1,4 +1,4 @@
-import { Component, createRef } from 'preact';
+import { Component, createRef } from 'react';
 import cn from 'classnames';
 
 import S from './InputFile.styl';

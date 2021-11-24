@@ -1,10 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const { realpathSync } = require('fs');
+const { resolve } = require('path');
 
-const APP_PATH = fs.realpathSync(process.cwd());
+const APP_PATH = realpathSync(process.cwd());
 
 function resolvePath(relativePath) {
-  return path.resolve(APP_PATH, relativePath);
+  return resolve(APP_PATH, relativePath);
 }
 
 module.exports = {
@@ -15,4 +15,4 @@ module.exports = {
   dist: resolvePath('dist'),
   assets: resolvePath('assets'),
   modules: resolvePath('node_modules'),
-};
+}

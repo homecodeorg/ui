@@ -1,28 +1,36 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "downlevelIteration": true,
-    "jsx": "react-jsx",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
-    "jsxImportSource": "preact",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "experimentalDecorators": true,
     "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    // "allowSyntheticDefaultImports": true,
+    // "downlevelIteration": true,
+    "jsx": "react-jsx",
+    "target": "esnext",
+    // "lib": ["esnext", "dom"],
+    // "lib": ["dom", "dom.iterable", "esnext"],
+    // "experimentalDecorators": true,
+    // "skipLibCheck": true,
+    // "esModuleInterop": true,
+    // "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    // "resolveJsonModule": true,
+    // "isolatedModules": true,
     "strict": true,
-    "noImplicitAny": false,
-    "baseUrl": "src",
-    "incremental": true,
-    "rootDir": "./src"
+    // "noImplicitAny": false,
+    "baseUrl": ".",
+    // "incremental": true,
+    // "rootDir": "./src",
+    // "declaration": true,
+    // "declarationDir": "./src",
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "customMatcher": "\\.styl$"
+        }
+      }
+    ]
   },
-  "include": ["src"],
+  "include": ["src", "index.ts"],
   "exclude": ["node_modules"]
 }

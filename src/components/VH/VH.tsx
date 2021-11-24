@@ -1,7 +1,9 @@
-import { Component } from 'preact';
+import { Component } from 'react';
 
-export class VH extends Component {
-  constructor(props) {
+type State = { vh: number };
+
+export class VH extends Component<any, State> {
+  constructor(props: any) {
     super(props);
     this.state = { vh: this.getVH() };
   }

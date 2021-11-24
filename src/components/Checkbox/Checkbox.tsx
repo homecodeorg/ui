@@ -1,11 +1,31 @@
-import { Component } from 'preact';
+import { Component, ComponentChild } from 'react';
 import cn from 'classnames';
 import { nanoid } from 'nanoid';
 import { createStore } from 'justorm/preact';
 
+import { Button } from 'components/Button/Button';
+import { Size } from 'types';
 import S from './Checkbox.styl';
 
-export class Checkbox extends Component {
+type Props = {
+  className?: string;
+  label?: ComponentChild;
+  checked?: boolean;
+  size: Size;
+  onFocus?: (e: FocusEvent) => void;
+  onBlur?: (e: FocusEvent) => void;
+};
+
+export class Checkbox extends Component<Props> {
+  id;
+  store;
+
+  private defaultProps = {
+    size: 's',
+    label: '',
+    checked: false,
+  };
+
   constructor(props) {
     super(props);
     this.id = props.id || nanoid();
@@ -71,9 +91,3 @@ export class Checkbox extends Component {
     );
   }
 }
-
-Checkbox.defaultProps = {
-  size: 's',
-  label: '',
-  checked: false,
-};

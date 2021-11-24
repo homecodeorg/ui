@@ -40,7 +40,7 @@ export function Container(props: Props) {
     fullWidth && S.fullWidth,
     className
   );
-  const stylesObj = { ...style };
+  const stylesObj = { ...style } as any;
 
   return (
     <div className={classes} {...rest} style={stylesObj}>

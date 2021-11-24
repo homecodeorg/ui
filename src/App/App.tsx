@@ -1,10 +1,10 @@
-import { Fragment } from 'preact';
+import { Fragment } from 'react';
 
-import { capitalize } from 'tools/string';
-import { watchControllerFlag } from 'tools/dom';
+import { capitalize } from '../tools/string';
+import { watchControllerFlag } from '../tools/dom';
 
-import { Router, Link } from 'components/Router/Router';
-import { Lazy } from 'components/Lazy/Lazy';
+import { Router, Link } from '../components/Router/Router';
+import Lazy from '../components/Lazy/Lazy';
 
 import Theme from './Theme';
 import NAV_CONFIG from './navigation';

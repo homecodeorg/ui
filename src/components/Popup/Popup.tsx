@@ -1,4 +1,4 @@
-import { Component, createRef } from 'preact';
+import { Component, createRef } from 'react';
 import { createPortal } from 'preact/compat';
 import cn from 'classnames';
 import { bind } from 'decko';

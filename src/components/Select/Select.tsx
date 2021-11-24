@@ -1,4 +1,4 @@
-import { Component, createRef, Fragment } from 'preact';
+import { Component, createRef, Fragment } from 'react';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
