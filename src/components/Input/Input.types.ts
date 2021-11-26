@@ -1,4 +1,4 @@
-import { ReactChild, HTMLProps, ChangeEvent } from 'react';
+import { ReactChild, HTMLProps } from 'react';
 
 export type Size = 's' | 'm' | 'l' | 'xl';
 
@@ -12,12 +12,16 @@ export type Props = Omit<ControlProps, 'ref'> & {
   forceLabelOnTop?: boolean;
   error?: string | boolean;
   clear?: boolean; // render without borders and outline
+  hasClear?: boolean;
+  isNullable?: boolean;
+  changeOnEnd?: boolean;
   placeholder?: string;
   adornmentLeft?: string | JSX.Element;
   adornmentLeftClassName?: string;
   adornmentRight?: string | JSX.Element;
   adornmentRightClassName?: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>, value: Value) => void | boolean;
+  onChange?: (value: Value) => void | boolean;
+  onClear?: () => void;
   controlProps?: ControlProps & { className?: string };
   checkAutofill?: boolean;
 };

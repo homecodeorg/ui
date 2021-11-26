@@ -1,4 +1,4 @@
-import { Fragment } from 'preact';
+import { Fragment } from 'react';
 import cn from 'classnames';
 
 import { State } from 'src/helpers';

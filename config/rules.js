@@ -1,5 +1,5 @@
 const path = require('path');
-const paths = require('./paths');
+const paths = require('./paths.js');
 
 module.exports = [
   {
@@ -26,9 +26,7 @@ module.exports = [
         options: {
           postcssOptions: {
             ident: 'postcss',
-            plugins: [
-              ['postcss-preset-env', { stage: 3, autoprefixer: true }],
-            ],
+            plugins: [['postcss-preset-env', { stage: 3, autoprefixer: true }]],
           },
         },
       },

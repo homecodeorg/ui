@@ -9,6 +9,7 @@ type Props = {
   centered?: boolean;
   vertical?: boolean;
   fullHeight?: boolean | string;
+  fullWidth?: boolean | string;
   scrolledX?: boolean;
   scrolledY?: boolean;
   style?: Partial<CSSStyleDeclaration>;
@@ -22,6 +23,7 @@ export function Container(props: Props) {
     centered,
     vertical,
     fullHeight,
+    fullWidth,
     scrolledX,
     scrolledY,
     style,
@@ -35,9 +37,10 @@ export function Container(props: Props) {
     scrolledX && S.scrolledX,
     scrolledY && S.scrolledY,
     fullHeight && S.fullHeight,
+    fullWidth && S.fullWidth,
     className
   );
-  const stylesObj = { ...style };
+  const stylesObj = { ...style } as any;
 
   return (
     <div className={classes} {...rest} style={stylesObj}>

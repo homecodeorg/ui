@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { Component } from 'react';
 import { createStore } from 'justorm/preact';
 import cn from 'classnames';
 import compare from 'compareq';

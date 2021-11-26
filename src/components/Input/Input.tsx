@@ -1,16 +1,17 @@
-import { Component, createRef } from 'preact';
+import { ChangeEvent } from 'react-types';
+import { Component, createRef } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/preact';
 import omit from 'lodash.omit';
 
-import { capitalize } from 'tools/string';
-import { generateUID } from 'tools/uid';
+import { capitalize } from '../../tools/string';
+import { generateUID } from '../../tools/uid';
 
-import { Label } from 'components/Label/Label';
-import { RequiredStar } from 'components/RequiredStar/RequiredStar';
-import { AssistiveText } from 'components/AssistiveText/AssistiveText';
-import { Button } from 'components/Button/Button';
-import { Icon } from 'components/Icon/Icon';
+import { Label } from '../Label/Label';
+import { RequiredStar } from '../RequiredStar/RequiredStar';
+import { AssistiveText } from '../AssistiveText/AssistiveText';
+import { Button } from '../Button/Button';
+import { Icon } from '../Icon/Icon';
 
 import S from './Input.styl';
 import * as T from './Input.types';
@@ -21,7 +22,7 @@ export class Input extends Component<T.Props> {
   isClearPressed = false;
   cursorPos = 0;
   prevLabelText = '';
-  store;
+  store: any;
   uid = generateUID();
 
   static defaultProps = {
@@ -29,7 +30,7 @@ export class Input extends Component<T.Props> {
     size: 'm',
   };
 
-  constructor(props) {
+  constructor(props: T.Props) {
     super(props);
 
     const inputValue = props.value || '';
@@ -49,7 +50,7 @@ export class Input extends Component<T.Props> {
     document.addEventListener('keyup', this.onDocKeyUp, true);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: T.Props) {
     const { value } = this.props;
     const valueChanged = prevProps.value !== value;
 
@@ -121,7 +122,7 @@ export class Input extends Component<T.Props> {
     const { onChange, onClear } = this.props;
 
     if (onClear) onClear();
-    if (onChange) onChange('');
+    if (onChange) onChange('' as any);
     // this.inputRef.current?.focus();
     this.isClearPressed = false;
   };
@@ -130,7 +131,7 @@ export class Input extends Component<T.Props> {
     this.isClearPressed = true;
   };
 
-  onDocKeyUp = e => {
+  onDocKeyUp = (e: KeyboardEvent) => {
     const { changeOnEnd } = this.props;
     const { isFocused } = this.store;
 
@@ -147,7 +148,7 @@ export class Input extends Component<T.Props> {
     }
   };
 
-  onChange = e => {
+  onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { onChange, changeOnEnd, type } = this.props;
     const value = this.getValue(e.target.value);
     const isNumber = type === 'number';
@@ -161,7 +162,8 @@ export class Input extends Component<T.Props> {
     } else if (onChange) onChange(value);
   };
 
-  onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
+  onLabelClipPathChange = (clipPath: string) =>
+    (this.store.labelClipPath = clipPath);
 
   onTypingEnd = () => {
     const { onChange } = this.props;
@@ -170,7 +172,7 @@ export class Input extends Component<T.Props> {
     if (onChange) onChange(value);
   };
 
-  onFocus = e => {
+  onFocus = (e: FocusEvent) => {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
@@ -178,20 +180,21 @@ export class Input extends Component<T.Props> {
     if (onFocus) onFocus(e);
   };
 
-  onBlur = e => {
+  onBlur = (e: FocusEvent) => {
     if (this.props.changeOnEnd) this.onTypingEnd();
     if (this.isClearPressed) {
       e.preventDefault();
       return;
     }
 
+    // @ts-ignore
+    const val = this.getValue(e?.target?.value);
     const { onBlur, onChange, value, checkAutofill } = this.props;
-    const val = this.getValue(e.target.value);
 
     this.store.isFocused = false;
     this.updateLabelPosition();
     // some browsers not fire `onchange` after autofill
-    if (checkAutofill && onChange && !value && val) onChange(e, val);
+    if (checkAutofill && onChange && !value && val) onChange(val);
     if (onBlur) onBlur(e);
   };
 
@@ -233,19 +236,21 @@ export class Input extends Component<T.Props> {
     return props;
   }
 
-  renderAdornment(type) {
+  renderAdornment(type: 'right' | 'left') {
     const name = `adornment${capitalize(type)}`;
     const content = this.props[name];
 
     if (!content) return null;
 
     const props = {
+      // @ts-ignore
       className: cn(S[name], this.props[`${name}ClassName`]),
       key: name,
     };
     const isString = typeof content === 'string';
     const elem = isString ? <span>{content}</span> : content;
 
+    // @ts-ignore
     if (isString) props.title = content;
 
     return <div {...props}>{elem}</div>;
@@ -279,8 +284,6 @@ export class Input extends Component<T.Props> {
       disabled && S.isDisabled,
       className
     );
-
-    console.log(name, '|', label);
 
     return (
       <div className={classes}>

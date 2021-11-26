@@ -5,9 +5,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # production
-dist
 lib
 
 # typescript
 tsconfig.tsbuildinfo
 src/***/*.d.ts
+!src/declaration.d.ts

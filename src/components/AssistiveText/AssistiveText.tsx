@@ -1,12 +1,14 @@
-import S from './AssistiveText.styl';
+import { ComponentChild } from 'react';
 import cn from 'classnames';
+
+import S from './AssistiveText.styl';
 
 type Props = {
   className?: string;
   size?: 's' | 'm' | 'l';
   variant?: 'default' | 'danger';
-  children: JSX.Node;
-  style?: JSX.HTMLAttributes['style'];
+  children: ComponentChild;
+  // style?: HTMLAttributes['style'];
 };
 
 export type AssistiveTextProps = Props;

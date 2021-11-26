@@ -1,4 +1,4 @@
-import { Fragment } from 'preact';
+import { Fragment } from 'react';
 import { State, getRandomItem } from 'helpers';
 
 import { Container } from 'components/Container/Container';

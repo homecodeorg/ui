@@ -1,4 +1,4 @@
-import { Component } from 'preact';
+import { Component } from 'react';
 import { createStore } from 'justorm/preact';
 
 import { AssistiveText } from 'components/AssistiveText/AssistiveText';
