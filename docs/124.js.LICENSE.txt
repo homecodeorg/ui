@@ -1,5 +1,0 @@
-/*! exports provided: create, at, after, every, tick, nextTick */
-
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
