@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk_truerenton_uilib"] = self["webpackChunk_truerenton_uilib"] || []).push([[797],{
+(self["webpackChunk_truerenton_uilib"] = self["webpackChunk_truerenton_uilib"] || []).push([[834],{
 
 /***/ "./src/components/Button/Button.example.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12,6 +12,11 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ Button_example)
 });
 
+// EXTERNAL MODULE: ./src/helpers.tsx
+var helpers = __webpack_require__("./src/helpers.tsx");
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js
+var get_own_property_symbols = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js");
+var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js
 var define_property = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/define-property.js");
 var define_property_default = /*#__PURE__*/__webpack_require__.n(define_property);
@@ -33,22 +38,69 @@ var symbol_default = /*#__PURE__*/__webpack_require__.n(symbol);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js
 var iterator = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js");
 var iterator_default = /*#__PURE__*/__webpack_require__.n(iterator);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/promise.js
+var promise = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/promise.js");
+var promise_default = /*#__PURE__*/__webpack_require__.n(promise);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js
+var get_own_property_descriptor = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js");
+var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptors.js
+var get_own_property_descriptors = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptors.js");
+var get_own_property_descriptors_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptors);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js
+var define_properties = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js");
+var define_properties_default = /*#__PURE__*/__webpack_require__.n(define_properties);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
+var is_array = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
+var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
+var from = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/array/from.js");
+var from_default = /*#__PURE__*/__webpack_require__.n(from);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/regenerator/index.js
+var regenerator = __webpack_require__("./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/assign.js
+var object_assign = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/assign.js");
+var assign_default = /*#__PURE__*/__webpack_require__.n(object_assign);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/keys.js
+var object_keys = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/keys.js");
+var keys_default = /*#__PURE__*/__webpack_require__.n(object_keys);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/entries.js
+var object_entries = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/entries.js");
+var entries_default = /*#__PURE__*/__webpack_require__.n(object_entries);
 // EXTERNAL MODULE: ./node_modules/preact/compat/dist/compat.module.js
 var compat_module = __webpack_require__("./node_modules/preact/compat/dist/compat.module.js");
 // EXTERNAL MODULE: ./node_modules/justorm/preact.js
 var preact = __webpack_require__("./node_modules/justorm/preact.js");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/keys.js
-var object_keys = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/keys.js");
-var keys_default = /*#__PURE__*/__webpack_require__.n(object_keys);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js
-var get_own_property_symbols = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-symbols.js");
-var get_own_property_symbols_default = /*#__PURE__*/__webpack_require__.n(get_own_property_symbols);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/assign.js
-var object_assign = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/assign.js");
-var assign_default = /*#__PURE__*/__webpack_require__.n(object_assign);
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
 var classnames = __webpack_require__("./node_modules/classnames/index.js");
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
+// EXTERNAL MODULE: ./node_modules/compareq/index.js
+var compareq = __webpack_require__("./node_modules/compareq/index.js");
+var compareq_default = /*#__PURE__*/__webpack_require__.n(compareq);
+// EXTERNAL MODULE: ./node_modules/lodash.pick/index.js
+var lodash_pick = __webpack_require__("./node_modules/lodash.pick/index.js");
+var lodash_pick_default = /*#__PURE__*/__webpack_require__.n(lodash_pick);
+// EXTERNAL MODULE: ./node_modules/lodash.omit/index.js
+var lodash_omit = __webpack_require__("./node_modules/lodash.omit/index.js");
+var lodash_omit_default = /*#__PURE__*/__webpack_require__.n(lodash_omit);
+// EXTERNAL MODULE: ./src/tools/object.ts
+var object = __webpack_require__("./src/tools/object.ts");
+// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/parse-float.js
+var parse_float = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/parse-float.js");
+var parse_float_default = /*#__PURE__*/__webpack_require__.n(parse_float);
+// EXTERNAL MODULE: ./src/tools/string.ts
+var string = __webpack_require__("./src/tools/string.ts");
+// EXTERNAL MODULE: ./node_modules/nanoid/index.prod.js
+var index_prod = __webpack_require__("./node_modules/nanoid/index.prod.js");
+;// CONCATENATED MODULE: ./src/tools/uid.ts
+
+function generateUID() {
+  return (0,index_prod/* nanoid */.x0)().replace(/(^\d+|-|_)/g, '');
+}
+// EXTERNAL MODULE: ./node_modules/timen/index.js
+var timen = __webpack_require__("./node_modules/timen/index.js");
+var timen_default = /*#__PURE__*/__webpack_require__.n(timen);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__("./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 var injectStylesIntoStyleTag_default = /*#__PURE__*/__webpack_require__.n(injectStylesIntoStyleTag);
@@ -67,9 +119,9 @@ var insertStyleElement_default = /*#__PURE__*/__webpack_require__.n(insertStyleE
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/styleTagTransform.js
 var styleTagTransform = __webpack_require__("./node_modules/style-loader/dist/runtime/styleTagTransform.js");
 var styleTagTransform_default = /*#__PURE__*/__webpack_require__.n(styleTagTransform);
-// EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/AssistiveText/AssistiveText.styl
-var AssistiveText = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/AssistiveText/AssistiveText.styl");
-;// CONCATENATED MODULE: ./src/components/AssistiveText/AssistiveText.styl
+// EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Label/Label.styl
+var Label = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Label/Label.styl");
+;// CONCATENATED MODULE: ./src/components/Label/Label.styl
 
       
       
@@ -91,43 +143,31 @@ options.setAttributes = (setAttributesWithoutAttributes_default());
 options.domAPI = (styleDomAPI_default());
 options.insertStyleElement = (insertStyleElement_default());
 
-var update = injectStylesIntoStyleTag_default()(AssistiveText/* default */.Z, options);
+var update = injectStylesIntoStyleTag_default()(Label/* default */.Z, options);
 
 
 
 
-       /* harmony default export */ const AssistiveText_AssistiveText = (AssistiveText/* default */.Z && AssistiveText/* default.locals */.Z.locals ? AssistiveText/* default.locals */.Z.locals : undefined);
+       /* harmony default export */ const Label_Label = (Label/* default */.Z && Label/* default.locals */.Z.locals ? Label/* default.locals */.Z.locals : undefined);
 
-;// CONCATENATED MODULE: ./src/components/AssistiveText/AssistiveText.tsx
-/* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
+;// CONCATENATED MODULE: ./src/components/Label/Label.constants.json
+const Label_constants_namespaceObject = {"c":0.7,"v":5};
+;// CONCATENATED MODULE: ./src/components/Label/Label.helpers.ts
 
-
-
-var _excluded = ["className", "size", "variant", "children"];
-
-function _extends() { _extends = (assign_default()) || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if ((get_own_property_symbols_default())) { var sourceSymbolKeys = get_own_property_symbols_default()(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = keys_default()(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-
-
-function AssistiveText_AssistiveText_AssistiveText(props) {
-  var className = props.className,
-      _props$size = props.size,
-      size = _props$size === void 0 ? 'm' : _props$size,
-      _props$variant = props.variant,
-      variant = _props$variant === void 0 ? 'default' : _props$variant,
-      children = props.children,
-      rest = _objectWithoutProperties(props, _excluded);
-
-  return h("div", _extends({
-    className: classnames_default()(AssistiveText_AssistiveText.root, AssistiveText_AssistiveText["size-".concat(size)], AssistiveText_AssistiveText["variant-".concat(variant)], className)
-  }, rest), children);
+function getLabelClipPath(left, width) {
+  var offset = 10;
+  var A = left - Label_constants_namespaceObject.v;
+  var B = width === 0 ? 0 : left + width * Label_constants_namespaceObject.c + Label_constants_namespaceObject.v;
+  var cutWidth = 5;
+  var min = "-".concat(offset, "px");
+  var max = "calc(100% + ".concat(offset, "px)");
+  var points = [[min, min], [min, max], [max, max], [max, min], ["".concat(B, "px"), min], ["".concat(B, "px"), "".concat(cutWidth - 1, "px")], ["".concat(B - 1, "px"), "".concat(cutWidth, "px")], ["".concat(A + 1, "px"), "".concat(cutWidth, "px")], ["".concat(A, "px"), "".concat(cutWidth - 1, "px")], ["".concat(A, "px"), min]].map(function (coords) {
+    return coords.join(' ');
+  }).join(', ');
+  return "polygon(".concat(points, ")");
 }
-;// CONCATENATED MODULE: ./src/helpers.tsx
-/* provided dependency */ var helpers_h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
+;// CONCATENATED MODULE: ./src/components/Label/Label.tsx
+/* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof (symbol_default()) === "function" && typeof (iterator_default()) === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof (symbol_default()) === "function" && obj.constructor === (symbol_default()) && obj !== (symbol_default()).prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
@@ -163,216 +203,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { define_property_de
 
 
 
-var State = function (_Component) {
-  _inherits(State, _Component);
-
-  var _super = _createSuper(State);
-
-  function State(props) {
-    var _this;
-
-    _classCallCheck(this, State);
-
-    _this = _super.call(this, props);
-
-    _defineProperty(_assertThisInitialized(_this), "store", void 0);
-
-    _this.store = (0,preact.createStore)(_assertThisInitialized(_this), props.initial);
-    return _this;
-  }
-
-  _createClass(State, [{
-    key: "render",
-    value: function render(_ref) {
-      var children = _ref.children;
-      return children(this.store);
-    }
-  }]);
-
-  return State;
-}(compat_module/* Component */.wA);
-function Title(_ref2) {
-  var text = _ref2.text;
-  return helpers_h(AssistiveText_AssistiveText_AssistiveText, {
-    style: {
-      marginBottom: 10
-    }
-  }, text);
-}
-var LOREM_IPSUM_SHORT = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
-var LOREM_IPSUM_LONG = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
-function getRandomImageUrl() {
-  var width = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 400;
-  var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 300;
-  var id = Math.round(Math.random() * 500);
-  return "https://picsum.photos/id/".concat(id, "/").concat(width, "/").concat(height, ".jpg");
-}
-function getRandomItem(arr) {
-  var index = Math.round(Math.random() * (arr.length - 1));
-  var item = arr[index];
-  return item;
-}
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/promise.js
-var promise = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/promise.js");
-var promise_default = /*#__PURE__*/__webpack_require__.n(promise);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js
-var get_own_property_descriptor = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptor.js");
-var get_own_property_descriptor_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptor);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptors.js
-var get_own_property_descriptors = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/get-own-property-descriptors.js");
-var get_own_property_descriptors_default = /*#__PURE__*/__webpack_require__.n(get_own_property_descriptors);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js
-var define_properties = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js");
-var define_properties_default = /*#__PURE__*/__webpack_require__.n(define_properties);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js
-var is_array = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/array/is-array.js");
-var is_array_default = /*#__PURE__*/__webpack_require__.n(is_array);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/array/from.js
-var from = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/array/from.js");
-var from_default = /*#__PURE__*/__webpack_require__.n(from);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/regenerator/index.js
-var regenerator = __webpack_require__("./node_modules/@babel/runtime-corejs2/regenerator/index.js");
-var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/object/entries.js
-var object_entries = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/object/entries.js");
-var entries_default = /*#__PURE__*/__webpack_require__.n(object_entries);
-// EXTERNAL MODULE: ./node_modules/compareq/index.js
-var compareq = __webpack_require__("./node_modules/compareq/index.js");
-var compareq_default = /*#__PURE__*/__webpack_require__.n(compareq);
-// EXTERNAL MODULE: ./node_modules/lodash.pick/index.js
-var lodash_pick = __webpack_require__("./node_modules/lodash.pick/index.js");
-var lodash_pick_default = /*#__PURE__*/__webpack_require__.n(lodash_pick);
-// EXTERNAL MODULE: ./node_modules/lodash.omit/index.js
-var lodash_omit = __webpack_require__("./node_modules/lodash.omit/index.js");
-var lodash_omit_default = /*#__PURE__*/__webpack_require__.n(lodash_omit);
-// EXTERNAL MODULE: ./src/tools/object.ts
-var object = __webpack_require__("./src/tools/object.ts");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/parse-float.js
-var parse_float = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/parse-float.js");
-var parse_float_default = /*#__PURE__*/__webpack_require__.n(parse_float);
-// EXTERNAL MODULE: ./src/tools/string.ts
-var string = __webpack_require__("./src/tools/string.ts");
-// EXTERNAL MODULE: ./node_modules/nanoid/index.prod.js
-var index_prod = __webpack_require__("./node_modules/nanoid/index.prod.js");
-;// CONCATENATED MODULE: ./src/tools/uid.ts
-
-function generateUID() {
-  return (0,index_prod/* nanoid */.x0)().replace(/(^\d+|-|_)/g, '');
-}
-// EXTERNAL MODULE: ./node_modules/timen/index.js
-var timen = __webpack_require__("./node_modules/timen/index.js");
-var timen_default = /*#__PURE__*/__webpack_require__.n(timen);
-// EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Label/Label.styl
-var Label = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Label/Label.styl");
-;// CONCATENATED MODULE: ./src/components/Label/Label.styl
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var Label_options = {};
-
-Label_options.styleTagTransform = (styleTagTransform_default());
-Label_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      Label_options.insert = insertBySelector_default().bind(null, "head");
-    
-Label_options.domAPI = (styleDomAPI_default());
-Label_options.insertStyleElement = (insertStyleElement_default());
-
-var Label_update = injectStylesIntoStyleTag_default()(Label/* default */.Z, Label_options);
-
-
-
-
-       /* harmony default export */ const Label_Label = (Label/* default */.Z && Label/* default.locals */.Z.locals ? Label/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ./src/components/Label/Label.constants.json
-const Label_constants_namespaceObject = {"c":0.7,"v":5};
-;// CONCATENATED MODULE: ./src/components/Label/Label.helpers.ts
-
-function getLabelClipPath(left, width) {
-  var offset = 10;
-  var A = left - Label_constants_namespaceObject.v;
-  var B = width === 0 ? 0 : left + width * Label_constants_namespaceObject.c + Label_constants_namespaceObject.v;
-  var cutWidth = 5;
-  var min = "-".concat(offset, "px");
-  var max = "calc(100% + ".concat(offset, "px)");
-  var points = [[min, min], [min, max], [max, max], [max, min], ["".concat(B, "px"), min], ["".concat(B, "px"), "".concat(cutWidth - 1, "px")], ["".concat(B - 1, "px"), "".concat(cutWidth, "px")], ["".concat(A + 1, "px"), "".concat(cutWidth, "px")], ["".concat(A, "px"), "".concat(cutWidth - 1, "px")], ["".concat(A, "px"), min]].map(function (coords) {
-    return coords.join(' ');
-  }).join(', ');
-  return "polygon(".concat(points, ")");
-}
-;// CONCATENATED MODULE: ./src/components/Label/Label.tsx
-/* provided dependency */ var Label_h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
-function Label_typeof(obj) { "@babel/helpers - typeof"; if (typeof (symbol_default()) === "function" && typeof (iterator_default()) === "symbol") { Label_typeof = function _typeof(obj) { return typeof obj; }; } else { Label_typeof = function _typeof(obj) { return obj && typeof (symbol_default()) === "function" && obj.constructor === (symbol_default()) && obj !== (symbol_default()).prototype ? "symbol" : typeof obj; }; } return Label_typeof(obj); }
-
-
-
-
-
-
-
-
-
-function Label_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Label_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; define_property_default()(target, descriptor.key, descriptor); } }
-
-function Label_createClass(Constructor, protoProps, staticProps) { if (protoProps) Label_defineProperties(Constructor.prototype, protoProps); if (staticProps) Label_defineProperties(Constructor, staticProps); return Constructor; }
-
-function Label_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = create_default()(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Label_setPrototypeOf(subClass, superClass); }
-
-function Label_setPrototypeOf(o, p) { Label_setPrototypeOf = (set_prototype_of_default()) || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Label_setPrototypeOf(o, p); }
-
-function Label_createSuper(Derived) { var hasNativeReflectConstruct = Label_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = Label_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = Label_getPrototypeOf(this).constructor; result = construct_default()(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return Label_possibleConstructorReturn(this, result); }; }
-
-function Label_possibleConstructorReturn(self, call) { if (call && (Label_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return Label_assertThisInitialized(self); }
-
-function Label_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function Label_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !(construct_default())) return false; if ((construct_default()).sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct_default()(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function Label_getPrototypeOf(o) { Label_getPrototypeOf = (set_prototype_of_default()) ? (get_prototype_of_default()) : function _getPrototypeOf(o) { return o.__proto__ || get_prototype_of_default()(o); }; return Label_getPrototypeOf(o); }
-
-function Label_defineProperty(obj, key, value) { if (key in obj) { define_property_default()(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
 
 
 var Label_Label_Label = function (_Component) {
-  Label_inherits(Label, _Component);
+  _inherits(Label, _Component);
 
-  var _super = Label_createSuper(Label);
+  var _super = _createSuper(Label);
 
   function Label(props) {
     var _this;
 
-    Label_classCallCheck(this, Label);
+    _classCallCheck(this, Label);
 
     _this = _super.call(this, props);
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "gapWrapRef", (0,compat_module/* createRef */.Vf)());
+    _defineProperty(_assertThisInitialized(_this), "gapWrapRef", (0,compat_module/* createRef */.Vf)());
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "gapRef", (0,compat_module/* createRef */.Vf)());
+    _defineProperty(_assertThisInitialized(_this), "gapRef", (0,compat_module/* createRef */.Vf)());
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "timers", void 0);
+    _defineProperty(_assertThisInitialized(_this), "timers", void 0);
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "state", {
+    _defineProperty(_assertThisInitialized(_this), "state", {
       clipPath: ''
     });
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "labelWidth", 0);
+    _defineProperty(_assertThisInitialized(_this), "labelWidth", 0);
 
-    Label_defineProperty(Label_assertThisInitialized(_this), "updateClipPath", function () {
+    _defineProperty(_assertThisInitialized(_this), "updateClipPath", function () {
       var _this$gapWrapRef, _this$gapRef;
 
       var _this$props = _this.props,
@@ -395,7 +252,7 @@ var Label_Label_Label = function (_Component) {
     return _this;
   }
 
-  Label_createClass(Label, [{
+  _createClass(Label, [{
     key: "componentDidMount",
     value: function componentDidMount() {
       this.updateClipPath();
@@ -424,14 +281,14 @@ var Label_Label_Label = function (_Component) {
           children = _this$props3.children;
       var classes = classnames_default()(Label_Label.root, Label_Label["size-".concat(size)], disabled && Label_Label.disabled, isOnTop && Label_Label.onTop, isFocused && Label_Label.isFocused, isError && Label_Label.isError, className);
       if (!children) return null;
-      return Label_h("div", {
+      return h("div", {
         className: classes
-      }, Label_h("div", {
+      }, h("div", {
         className: Label_Label.view
-      }, Label_h("div", null, children)), Label_h("div", {
+      }, h("div", null, children)), h("div", {
         className: Label_Label.gapWrap,
         ref: this.gapWrapRef
-      }, Label_h("div", {
+      }, h("div", {
         className: Label_Label.gap,
         ref: this.gapRef
       }, children)));
@@ -441,7 +298,7 @@ var Label_Label_Label = function (_Component) {
   return Label;
 }(compat_module/* Component */.wA);
 
-Label_defineProperty(Label_Label_Label, "defaultProps", {
+_defineProperty(Label_Label_Label, "defaultProps", {
   size: 'm'
 });
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/RequiredStar/RequiredStar.styl
@@ -486,6 +343,8 @@ function RequiredStar_RequiredStar_RequiredStar(_ref) {
     className: classnames_default()(components_RequiredStar_RequiredStar.root, components_RequiredStar_RequiredStar["size-".concat(size)], className)
   });
 }
+// EXTERNAL MODULE: ./src/components/AssistiveText/AssistiveText.tsx + 1 modules
+var AssistiveText = __webpack_require__("./src/components/AssistiveText/AssistiveText.tsx");
 // EXTERNAL MODULE: ./node_modules/preact/hooks/dist/hooks.module.js
 var hooks_module = __webpack_require__("./node_modules/preact/hooks/dist/hooks.module.js");
 // EXTERNAL MODULE: ./src/components/Spinner/Spinner.tsx + 2 modules
@@ -536,13 +395,13 @@ function focusOnClick(buttonElem) {
 
 
 
-var Button_excluded = ["className", "isLoading", "isChecked", "isSquare", "onMouseUp", "children", "type", "variant", "size"];
+var _excluded = ["className", "isLoading", "isChecked", "isSquare", "onMouseUp", "children", "type", "variant", "size"];
 
-function Button_extends() { Button_extends = (assign_default()) || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Button_extends.apply(this, arguments); }
+function _extends() { _extends = (assign_default()) || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
-function Button_objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = Button_objectWithoutPropertiesLoose(source, excluded); var key, i; if ((get_own_property_symbols_default())) { var sourceSymbolKeys = get_own_property_symbols_default()(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if ((get_own_property_symbols_default())) { var sourceSymbolKeys = get_own_property_symbols_default()(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
-function Button_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = keys_default()(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = keys_default()(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -562,7 +421,7 @@ function Button_Button_Button(props) {
       variant = _props$variant === void 0 ? 'default' : _props$variant,
       _props$size = props.size,
       size = _props$size === void 0 ? 's' : _props$size,
-      rest = Button_objectWithoutProperties(props, Button_excluded);
+      rest = _objectWithoutProperties(props, _excluded);
 
   var disabled = props.disabled;
   var classes = classnames_default()(Button_Button.root, Button_Button["size-".concat(size)], Button_Button["variant-".concat(variant)], isLoading && Button_Button.isLoading, isChecked && Button_Button.isChecked, isSquare && Button_Button.isSquare, className);
@@ -580,7 +439,7 @@ function Button_Button_Button(props) {
     if (!disabled || !activeElement) return;
     if ((buttonRef === null || buttonRef === void 0 ? void 0 : buttonRef.current) === activeElement) activeElement === null || activeElement === void 0 ? void 0 : activeElement.blur();
   }, [disabled]);
-  return Button_h("button", Button_extends({
+  return Button_h("button", _extends({
     className: classes
   }, rest, {
     type: type,
@@ -1143,7 +1002,7 @@ var Input_Input_Input = function (_Component) {
         type: "clear"
       })), required && Input_h(RequiredStar_RequiredStar_RequiredStar, {
         size: size
-      })), !disabled && typeof error === 'string' && Input_h(AssistiveText_AssistiveText_AssistiveText, {
+      })), !disabled && typeof error === 'string' && Input_h(AssistiveText/* AssistiveText */.T, {
         variant: "danger",
         size: size
       }, error));
@@ -1804,172 +1663,8 @@ var Form_Form_Form = function (_Component) {
 
 // EXTERNAL MODULE: ./src/components/Container/Container.tsx + 1 modules
 var Container = __webpack_require__("./src/components/Container/Container.tsx");
-// EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Checkbox/Checkbox.styl
-var Checkbox = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Checkbox/Checkbox.styl");
-;// CONCATENATED MODULE: ./src/components/Checkbox/Checkbox.styl
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var Checkbox_options = {};
-
-Checkbox_options.styleTagTransform = (styleTagTransform_default());
-Checkbox_options.setAttributes = (setAttributesWithoutAttributes_default());
-
-      Checkbox_options.insert = insertBySelector_default().bind(null, "head");
-    
-Checkbox_options.domAPI = (styleDomAPI_default());
-Checkbox_options.insertStyleElement = (insertStyleElement_default());
-
-var Checkbox_update = injectStylesIntoStyleTag_default()(Checkbox/* default */.Z, Checkbox_options);
-
-
-
-
-       /* harmony default export */ const Checkbox_Checkbox = (Checkbox/* default */.Z && Checkbox/* default.locals */.Z.locals ? Checkbox/* default.locals */.Z.locals : undefined);
-
-;// CONCATENATED MODULE: ./src/components/Checkbox/Checkbox.tsx
-/* provided dependency */ var Checkbox_h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
-function Checkbox_typeof(obj) { "@babel/helpers - typeof"; if (typeof (symbol_default()) === "function" && typeof (iterator_default()) === "symbol") { Checkbox_typeof = function _typeof(obj) { return typeof obj; }; } else { Checkbox_typeof = function _typeof(obj) { return obj && typeof (symbol_default()) === "function" && obj.constructor === (symbol_default()) && obj !== (symbol_default()).prototype ? "symbol" : typeof obj; }; } return Checkbox_typeof(obj); }
-
-
-
-
-
-
-
-
-
-
-var Checkbox_excluded = ["className", "label", "size"];
-
-
-function Checkbox_extends() { Checkbox_extends = (assign_default()) || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return Checkbox_extends.apply(this, arguments); }
-
-function Checkbox_objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = Checkbox_objectWithoutPropertiesLoose(source, excluded); var key, i; if ((get_own_property_symbols_default())) { var sourceSymbolKeys = get_own_property_symbols_default()(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
-
-function Checkbox_objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = keys_default()(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-function Checkbox_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function Checkbox_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; define_property_default()(target, descriptor.key, descriptor); } }
-
-function Checkbox_createClass(Constructor, protoProps, staticProps) { if (protoProps) Checkbox_defineProperties(Constructor.prototype, protoProps); if (staticProps) Checkbox_defineProperties(Constructor, staticProps); return Constructor; }
-
-function Checkbox_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = create_default()(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) Checkbox_setPrototypeOf(subClass, superClass); }
-
-function Checkbox_setPrototypeOf(o, p) { Checkbox_setPrototypeOf = (set_prototype_of_default()) || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return Checkbox_setPrototypeOf(o, p); }
-
-function Checkbox_createSuper(Derived) { var hasNativeReflectConstruct = Checkbox_isNativeReflectConstruct(); return function _createSuperInternal() { var Super = Checkbox_getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = Checkbox_getPrototypeOf(this).constructor; result = construct_default()(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return Checkbox_possibleConstructorReturn(this, result); }; }
-
-function Checkbox_possibleConstructorReturn(self, call) { if (call && (Checkbox_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return Checkbox_assertThisInitialized(self); }
-
-function Checkbox_assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function Checkbox_isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !(construct_default())) return false; if ((construct_default()).sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(construct_default()(Boolean, [], function () {})); return true; } catch (e) { return false; } }
-
-function Checkbox_getPrototypeOf(o) { Checkbox_getPrototypeOf = (set_prototype_of_default()) ? (get_prototype_of_default()) : function _getPrototypeOf(o) { return o.__proto__ || get_prototype_of_default()(o); }; return Checkbox_getPrototypeOf(o); }
-
-function Checkbox_defineProperty(obj, key, value) { if (key in obj) { define_property_default()(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-var Checkbox_Checkbox_Checkbox = function (_Component) {
-  Checkbox_inherits(Checkbox, _Component);
-
-  var _super = Checkbox_createSuper(Checkbox);
-
-  function Checkbox(props) {
-    var _this;
-
-    Checkbox_classCallCheck(this, Checkbox);
-
-    _this = _super.call(this, props);
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "id", void 0);
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "store", void 0);
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "defaultProps", {
-      size: 's',
-      label: '',
-      checked: false
-    });
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "onMouseDown", function (e) {
-      _this.store.isActive = true;
-    });
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "onMouseUp", function (e) {
-      _this.store.isActive = false;
-    });
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "onFocus", function (e) {
-      var onFocus = _this.props.onFocus;
-      _this.store.isFocused = true;
-      if (onFocus) onFocus(e);
-    });
-
-    Checkbox_defineProperty(Checkbox_assertThisInitialized(_this), "onBlur", function (e) {
-      var onBlur = _this.props.onBlur;
-      _this.store.isFocused = false;
-      if (onBlur) onBlur(e);
-    });
-
-    _this.id = props.id || (0,index_prod/* nanoid */.x0)();
-    _this.store = (0,preact.createStore)(Checkbox_assertThisInitialized(_this), {
-      isActive: false,
-      isFocused: false
-    });
-    return _this;
-  }
-
-  Checkbox_createClass(Checkbox, [{
-    key: "render",
-    value: function render() {
-      var _this$props = this.props,
-          className = _this$props.className,
-          label = _this$props.label,
-          size = _this$props.size,
-          props = Checkbox_objectWithoutProperties(_this$props, Checkbox_excluded);
-
-      var checked = props.checked;
-      var _this$store = this.store,
-          isActive = _this$store.isActive,
-          isFocused = _this$store.isFocused;
-      var classes = classnames_default()(Checkbox_Checkbox.root, Checkbox_Checkbox["size-".concat(size)], checked && Checkbox_Checkbox.isChecked, isActive && Checkbox_Checkbox.isActive, isFocused && Checkbox_Checkbox.isFocused, className);
-      return Checkbox_h("label", {
-        className: classes,
-        onMouseDown: this.onMouseDown,
-        onMouseUp: this.onMouseUp
-      }, Checkbox_h("div", {
-        className: Checkbox_Checkbox.controlWrapper
-      }, Checkbox_h("input", Checkbox_extends({
-        className: Checkbox_Checkbox.control
-      }, props, {
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
-        id: this.id,
-        type: "checkbox",
-        tabIndex: 0
-      })), Checkbox_h("div", {
-        className: Checkbox_Checkbox.checkmark
-      })), label);
-    }
-  }]);
-
-  return Checkbox;
-}(compat_module/* Component */.wA);
+// EXTERNAL MODULE: ./src/components/Checkbox/Checkbox.tsx + 1 modules
+var Checkbox = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime-corejs2/core-js/json/stringify.js
 var stringify = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/json/stringify.js");
 var stringify_default = /*#__PURE__*/__webpack_require__.n(stringify);
@@ -3503,7 +3198,7 @@ var Select_Select_Select = function (_Component) {
         onClose: this.onPopupClose,
         trigger: this.renderTrigger(),
         content: this.renderOptionsList()
-      })), this.isErrorVisible() && Select_h(AssistiveText_AssistiveText_AssistiveText, {
+      })), this.isErrorVisible() && Select_h(AssistiveText/* AssistiveText */.T, {
         variant: "danger",
         size: size
       }, error));
@@ -3567,7 +3262,7 @@ var INITIAL_PROPS = {
         flexGrow: 1
       },
       size: "s"
-    }, Button_example_h(Title, {
+    }, Button_example_h(helpers/* Title */.Dx, {
       text: "Props:"
     }), Button_example_h(Field, {
       name: "size",
@@ -3581,7 +3276,7 @@ var INITIAL_PROPS = {
       label: "Variant"
     }), Button_example_h(Field, {
       name: "isLoading",
-      component: Checkbox_Checkbox_Checkbox,
+      component: Checkbox/* Checkbox */.X,
       label: "isLoading"
     })), Button_example_h(Container/* Container */.W, {
       style: {
@@ -3589,40 +3284,11 @@ var INITIAL_PROPS = {
       },
       vertical: true,
       size: "s"
-    }, Button_example_h(Title, {
+    }, Button_example_h(helpers/* Title */.Dx, {
       text: "Result:"
     }), Button_example_h(Button_Button_Button, values, "I'm a button")));
   });
 });
-
-/***/ }),
-
-/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/AssistiveText/AssistiveText.styl":
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/css-loader/dist/runtime/noSourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".AssistiveText__root___cSHdG{font-size:80%;line-height:1.5em;margin-bottom:.2em}.AssistiveText__size-s___sg6UA{padding:0 10px}.AssistiveText__size-m___w72z5{padding:0 12px}.AssistiveText__size-l___dDjcL{padding:0 14px}.AssistiveText__variant-danger___sGG9z{color:var(--danger-color)}", ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"root": "AssistiveText__root___cSHdG",
-	"size-s": "AssistiveText__size-s___sg6UA",
-	"size-m": "AssistiveText__size-m___w72z5",
-	"size-l": "AssistiveText__size-l___dDjcL",
-	"variant-danger": "AssistiveText__variant-danger___sGG9z"
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
 
 /***/ }),
 
@@ -3655,40 +3321,6 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"variant-default": "Button__variant-default___PQpaK",
 	"variant-primary": "Button__variant-primary___BXK7j",
 	"spinner": "Button__spinner___C6awX"
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Checkbox/Checkbox.styl":
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/css-loader/dist/runtime/noSourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Checkbox__root___yjgqm{cursor:pointer;display:inline-flex;align-items:center;box-sizing:border-box;text-decoration:none;color:inherit;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--accent-color);position:relative;display:block;border-radius:var(--border-radius-m);transition:.2s ease-out;transition-property:opacity,box-shadow}.Checkbox__root___yjgqm:hover .Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--active-color-mix-accent-300)}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp,.Checkbox__isFocused___HkJHG .Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--active-color) !important}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp{opacity:.7;background-color:var(--active-color-alpha-100)}.Checkbox__size-s___XyW5Z .Checkbox__controlWrapper___lEqgp{height:30px;width:30px;margin-right:var(--indent-s)}.Checkbox__size-m___AVv83 .Checkbox__controlWrapper___lEqgp{height:40px;width:40px;margin-right:var(--indent-m)}.Checkbox__size-l___YVv5L .Checkbox__controlWrapper___lEqgp{height:50px;width:50px;margin-right:var(--indent-l)}.Checkbox__control___nAhML{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;border-radius:var(--border-radius-m);box-sizing:border-box;box-shadow:inset 0 0 0 2px var(--accent-color);background-color:var(--bg-color);transition:.2s ease-out;transition-property:box-shadow,opacity;transition:.1s ease-out;transition-property:background-color,color;cursor:pointer;border-radius:var(--border-radius-s)}.Checkbox__control___nAhML:hover{box-shadow:inset 0 0 0 2px var(--active-color)}.Checkbox__checkmark___gqVb4{position:absolute;left:0;top:6px;height:100%;width:100%;opacity:0;transform:scale(.8) rotateZ(-45deg);transform-origin:center;transition:.1s ease-in;transition-property:transform,opacity;pointer-events:none}.Checkbox__checkmark___gqVb4::before,.Checkbox__checkmark___gqVb4::after{content:'';position:absolute;width:3px;background-color:var(--accent-color);border-radius:var(--border-radius-s)}.Checkbox__checkmark___gqVb4::before{z-index:1;left:calc(50% - 2px);height:16px;transform:rotateZ(9deg)}.Checkbox__checkmark___gqVb4::after{top:3px;left:21px;height:20px;transform:rotateZ(-103deg)}.Checkbox__isChecked___VknOz .Checkbox__checkmark___gqVb4{opacity:1}", ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"root": "Checkbox__root___yjgqm",
-	"controlWrapper": "Checkbox__controlWrapper___lEqgp",
-	"isActive": "Checkbox__isActive___DxpuE",
-	"isFocused": "Checkbox__isFocused___HkJHG",
-	"size-s": "Checkbox__size-s___XyW5Z",
-	"size-m": "Checkbox__size-m___AVv83",
-	"size-l": "Checkbox__size-l___YVv5L",
-	"control": "Checkbox__control___nAhML",
-	"checkmark": "Checkbox__checkmark___gqVb4",
-	"isChecked": "Checkbox__isChecked___VknOz"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

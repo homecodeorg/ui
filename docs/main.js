@@ -4933,7 +4933,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("16d6334979a3b15304e8")
+/******/ 		__webpack_require__.h = () => ("57e7ffe8487b64fe972f")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6421,7 +6421,7 @@ var lodash_omit_default = /*#__PURE__*/__webpack_require__.n(lodash_omit);
 var Container = __webpack_require__("./src/components/Container/Container.tsx");
 // EXTERNAL MODULE: ./src/components/Spinner/Spinner.tsx + 2 modules
 var Spinner = __webpack_require__("./src/components/Spinner/Spinner.tsx");
-;// CONCATENATED MODULE: ./src/components/Lazy/Lazy.jsx
+;// CONCATENATED MODULE: ./src/components/Lazy/Lazy.tsx
 /* provided dependency */ var Lazy_h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 function Lazy_typeof(obj) { "@babel/helpers - typeof"; if (typeof (symbol_default()) === "function" && typeof (iterator_default()) === "symbol") { Lazy_typeof = function _typeof(obj) { return typeof obj; }; } else { Lazy_typeof = function _typeof(obj) { return obj && typeof (symbol_default()) === "function" && obj.constructor === (symbol_default()) && obj !== (symbol_default()).prototype ? "symbol" : typeof obj; }; } return Lazy_typeof(obj); }
 
@@ -6483,6 +6483,8 @@ var Lazy = function (_Component) {
     Lazy_defineProperty(Lazy_assertThisInitialized(_this), "state", {
       loading: false
     });
+
+    Lazy_defineProperty(Lazy_assertThisInitialized(_this), "C", void 0);
 
     return _this;
   }
@@ -6751,7 +6753,12 @@ var STORE = (0,preact.createStore)('theme', Theme_objectSpread({
 /* harmony default export */ const navigation = ([{
   name: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(810), __webpack_require__.e(797)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(810), __webpack_require__.e(864), __webpack_require__.e(834)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
+  }
+}, {
+  name: 'checkbox',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(864), __webpack_require__.e(186)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Checkbox/Checkbox.example.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/App/App.styl
