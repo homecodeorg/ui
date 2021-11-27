@@ -1,15 +1,21 @@
-import { Component, ComponentChild } from 'react';
+import {
+  Component,
+  ReactNode,
+  MouseEventHandler,
+  FocusEventHandler,
+} from 'react';
 import cn from 'classnames';
 import { nanoid } from 'nanoid';
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 
-import { Button } from 'components/Button/Button';
-import { Size } from 'types';
+import { Button } from '../Button/Button';
+import { Size } from '../../types';
 import S from './Checkbox.styl';
 
 type Props = {
+  id?: string;
   className?: string;
-  label?: ComponentChild;
+  label?: ReactNode;
   checked?: boolean;
   size: Size;
   onFocus?: (e: FocusEvent) => void;
@@ -20,34 +26,34 @@ export class Checkbox extends Component<Props> {
   id;
   store;
 
-  private defaultProps = {
+  static defaultProps = {
     size: 's',
     label: '',
     checked: false,
   };
 
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
     this.id = props.id || nanoid();
     this.store = createStore(this, { isActive: false, isFocused: false });
   }
 
-  onMouseDown = e => {
+  onMouseDown = () => {
     this.store.isActive = true;
   };
 
-  onMouseUp = e => {
+  onMouseUp = () => {
     this.store.isActive = false;
   };
 
-  onFocus = e => {
+  onFocus = (e: any) => {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
     if (onFocus) onFocus(e);
   };
 
-  onBlur = e => {
+  onBlur = (e: any) => {
     const { onBlur } = this.props;
 
     this.store.isFocused = false;

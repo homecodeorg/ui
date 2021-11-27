@@ -3,10 +3,10 @@ export default [
     name: 'button',
     loader: () => import('../components/Button/Button.example'),
   },
-  // {
-  //   name: 'checkbox',
-  //   loader: () => import('../components/Checkbox/Checkbox.example'),
-  // },
+  {
+    name: 'checkbox',
+    loader: () => import('../components/Checkbox/Checkbox.example'),
+  },
   // {
   //   name: 'input',
   //   loader: () => import('../components/Input/Input.example'),
