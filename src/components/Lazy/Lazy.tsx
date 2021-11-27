@@ -2,21 +2,26 @@ import { Component } from 'react';
 
 import omit from 'lodash.omit';
 
-import { Container } from 'components/Container/Container';
-import { Spinner } from 'components/Spinner/Spinner';
+import { Container } from '../Container/Container';
+import { Spinner } from '../Spinner/Spinner';
 
-function compare(cb1, cb2) {
+type Loader = () => Promise<void>;
+type Props = { loading: Loader };
+type State = { loading: boolean };
+
+function compare(cb1: Loader, cb2: Loader) {
   return cb1?.toString() === cb2?.toString();
 }
 
-export default class Lazy extends Component {
+export default class Lazy extends Component<Props, State> {
   state = { loading: false };
+  C: any;
 
   componentDidMount() {
     this.update();
   }
 
-  componentDidUpdate({ loading }) {
+  componentDidUpdate({ loading }: Props) {
     if (!compare(this.props.loading, loading)) this.update();
   }
 
@@ -24,7 +29,7 @@ export default class Lazy extends Component {
     const { loading } = this.props;
 
     this.setState({ loading: true });
-    loading().then(m => {
+    loading().then((m: any) => {
       if (!compare(this.props.loading, loading)) return;
       this.C = m.default;
       this.setState({ loading: false });
