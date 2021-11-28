@@ -4,16 +4,16 @@ import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/preact';
-
 import Time from 'timen';
-import { scrollIntoView } from 'tools/scroll';
 
-import { Icon } from 'components/Icon/Icon';
-import { Button } from 'components/Button/Button';
-import { Input } from 'components/Input/Input';
-import { Label } from 'components/Label/Label';
-import { Popup } from 'components/Popup/Popup';
-import { AssistiveText } from 'components/AssistiveText/AssistiveText';
+import { scrollIntoView } from '../../tools/scroll';
+
+import { Icon } from '../Icon/Icon';
+import { Button } from '../Button/Button';
+import { Input } from '../Input/Input';
+import { Label } from '../Label/Label';
+import { Popup } from '../Popup/Popup';
+import { AssistiveText } from '../AssistiveText/AssistiveText';
 
 import * as T from './Select.types';
 import * as H from './Select.helpers';
