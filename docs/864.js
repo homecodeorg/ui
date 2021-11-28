@@ -362,7 +362,7 @@ _defineProperty(Checkbox_Checkbox_Checkbox, "defaultProps", {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("./node_modules/preact/compat/dist/compat.module.js");
 /* harmony import */ var justorm_preact__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./node_modules/justorm/preact.js");
 /* harmony import */ var justorm_preact__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(justorm_preact__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var components_AssistiveText_AssistiveText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("./src/components/AssistiveText/AssistiveText.tsx");
+/* harmony import */ var _components_AssistiveText_AssistiveText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("./src/components/AssistiveText/AssistiveText.tsx");
 /* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) === "function" && typeof (_babel_runtime_corejs2_core_js_symbol_iterator__WEBPACK_IMPORTED_MODULE_1___default()) === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) === "function" && obj.constructor === (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) && obj !== (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default().prototype) ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -429,7 +429,7 @@ var State = function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_7__/* .Component */ .wA);
 function Title(_ref2) {
   var text = _ref2.text;
-  return h(components_AssistiveText_AssistiveText__WEBPACK_IMPORTED_MODULE_9__/* .AssistiveText */ .T, {
+  return h(_components_AssistiveText_AssistiveText__WEBPACK_IMPORTED_MODULE_9__/* .AssistiveText */ .T, {
     style: {
       marginBottom: 10
     }

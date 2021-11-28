@@ -2980,11 +2980,13 @@ module.exports = function (i) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body{background-color:var(--decent-color)}.App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto}.App__configBar___GiZrC{padding:10px;margin-bottom:30px}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body{background-color:var(--decent-color)}.App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto}.App__configBar___GiZrC{display:flex;padding:10px;margin-bottom:30px}.App__colorPicker___Ih6xt{display:none}.App__activeColor___hKyEw{background-color:var(--active-color);height:20px;width:20px;border-radius:inherit}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "App__root___Cu9id",
 	"configBar": "App__configBar___GiZrC",
+	"colorPicker": "App__colorPicker___Ih6xt",
+	"activeColor": "App__activeColor___hKyEw",
 	"nav": "App__nav___hdx6r",
 	"navItem": "App__navItem___PxTWl",
 	"content": "App__content___js6S4",
@@ -4638,6 +4640,7 @@ module.exports = omit;
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "I4": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.I4),
+/* harmony export */   "sO": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.sO),
 /* harmony export */   "Vf": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createRef),
 /* harmony export */   "HY": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Fragment),
 /* harmony export */   "wA": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Component),
@@ -5084,7 +5087,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("83127f7ea8ca6ed528f2")
+/******/ 		__webpack_require__.h = () => ("2f692c2cf35d1d617f73")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6881,7 +6884,7 @@ var colors = {
   disable: '#f1f1f2',
   link: '#3089fe'
 };
-var config = {
+var defaultConfig = {
   'indent-s': '10px',
   'indent-m': '20px',
   'indent-l': '30px',
@@ -6889,16 +6892,16 @@ var config = {
   'border-radius-m': '4px',
   'border-radius-l': '6px'
 };
-/* harmony default export */ const App_theme = ({
-  light: theme_objectSpread(theme_objectSpread({}, config), theme_colorsConfigToVars(theme_objectSpread(theme_objectSpread({}, colors), {}, {
+var config = {
+  light: theme_objectSpread(theme_objectSpread({}, defaultConfig), theme_colorsConfigToVars(theme_objectSpread(theme_objectSpread({}, colors), {}, {
     accent: darkColor,
     decent: lightColor
   }))),
-  dark: theme_objectSpread(theme_objectSpread({}, config), theme_colorsConfigToVars(theme_objectSpread(theme_objectSpread({}, colors), {}, {
+  dark: theme_objectSpread(theme_objectSpread({}, defaultConfig), theme_colorsConfigToVars(theme_objectSpread(theme_objectSpread({}, colors), {}, {
     accent: lightColor,
     decent: darkColor
   })))
-});
+};
 ;// CONCATENATED MODULE: ./src/App/navigation.ts
 /* harmony default export */ const navigation = ([{
   name: 'button',
@@ -6973,7 +6976,7 @@ function App_defineProperty(obj, key, value) { if (key in obj) { define_property
 var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !== null && _localStorage$getItem !== void 0 ? _localStorage$getItem : 'dark';
 (0,preact.createStore)('app', {
   theme: initialThemeType,
-  activeColor: (_localStorage$getItem2 = localStorage.getItem('activeColor')) !== null && _localStorage$getItem2 !== void 0 ? _localStorage$getItem2 : App_theme[initialThemeType].active
+  activeColor: (_localStorage$getItem2 = localStorage.getItem('activeColor')) !== null && _localStorage$getItem2 !== void 0 ? _localStorage$getItem2 : config[initialThemeType].active
 });
 (0,dom/* watchControllerFlag */.GZ)();
 /* harmony default export */ const src_App_App = ((0,preact.withStore)('app')(function App(_ref) {
@@ -6982,15 +6985,24 @@ var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !
       theme = _store$app.theme,
       activeColor = _store$app.activeColor;
   var isDark = theme === 'dark';
+  var colorPicker = (0,compat_module/* useRef */.sO)();
   var toggleTheme = (0,compat_module/* useCallback */.I4)(function () {
     var nextTheme = theme === 'dark' ? 'light' : 'dark';
     store.app.theme = nextTheme;
     localStorage.setItem('theme', nextTheme);
   }, [theme]);
+  var pickActiveColor = (0,compat_module/* useCallback */.I4)(function () {
+    colorPicker.current.click();
+  }, []);
+  var setActiveColor = (0,compat_module/* useCallback */.I4)(function (e) {
+    var color = e.target.value;
+    store.app.activeColor = color;
+    localStorage.setItem('activeColor', color);
+  }, []);
 
-  var themeConfig = App_objectSpread(App_objectSpread({}, App_theme[theme]), {}, {
-    active: activeColor
-  });
+  var currThemeConfig = App_objectSpread(App_objectSpread({}, config[theme]), colorsConfigToVars({
+    active: [activeColor, colors.active[1]]
+  }));
 
   return App_h(compat_module/* Fragment */.HY, null, App_h("div", {
     className: App_App.root
@@ -7004,7 +7016,21 @@ var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !
     size: "l",
     isSquare: true,
     onClick: toggleTheme
-  }, isDark ? '🌙' : '🌕')), navigation.map(function (_ref2) {
+  }, isDark ? '🌙' : '🌕'), App_h(Button/* Button */.z, {
+    className: App_App.cfgButton,
+    variant: "clear",
+    size: "l",
+    isSquare: true,
+    onClick: pickActiveColor
+  }, App_h("div", {
+    className: App_App.activeColor
+  }), App_h("input", {
+    type: "color",
+    ref: colorPicker,
+    className: App_App.colorPicker,
+    onChange: setActiveColor,
+    value: activeColor
+  }))), navigation.map(function (_ref2) {
     var name = _ref2.name;
     return App_h("div", {
       className: App_App.navItem
@@ -7023,7 +7049,7 @@ var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !
       key: name
     });
   })))), App_h(Theme, {
-    config: themeConfig
+    config: currThemeConfig
   }));
 }));
 ;// CONCATENATED MODULE: ./src/App/index.js
