@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { createStore } from 'justorm/preact';
 
-import { AssistiveText } from 'components/AssistiveText/AssistiveText';
+import { AssistiveText } from './components/AssistiveText/AssistiveText';
 
 export class State extends Component {
   store;

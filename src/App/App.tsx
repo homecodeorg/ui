@@ -1,5 +1,6 @@
-import { Fragment, useCallback } from 'react';
+import { Fragment, useCallback, useRef } from 'react';
 import { createStore, withStore } from 'justorm/preact';
+import cn from 'classnames';
 
 import { capitalize } from '../tools/string';
 import { watchControllerFlag } from '../tools/dom';
@@ -7,9 +8,9 @@ import { watchControllerFlag } from '../tools/dom';
 import { Router, Link } from '../components/Router/Router';
 import Lazy from '../components/Lazy/Lazy';
 import { Button } from '../components/Button/Button';
-import { Theme } from '../components/Theme/Theme';
+import { Theme, ThemeHelpers } from '../components/Theme/Theme';
 
-import THEME_CONFIG from './theme';
+import { config as themeConfig, colors } from './theme';
 import NAV_CONFIG from './navigation';
 import S from './App.styl';
 
@@ -18,8 +19,7 @@ const initialThemeType = localStorage.getItem('theme') ?? 'dark';
 createStore('app', {
   theme: initialThemeType,
   activeColor:
-    localStorage.getItem('activeColor') ??
-    THEME_CONFIG[initialThemeType].active,
+    localStorage.getItem('activeColor') ?? themeConfig[initialThemeType].active,
 });
 watchControllerFlag();
 
@@ -27,20 +27,29 @@ export default withStore('app')(function App({ store }) {
   const { theme, activeColor } = store.app;
   const isDark = theme === 'dark';
 
+  const colorPicker = useRef();
+
   const toggleTheme = useCallback(() => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     store.app.theme = nextTheme;
     localStorage.setItem('theme', nextTheme);
   }, [theme]);
 
-  // TODO: use ColorPicker from lib
-  // const pickActiveColor = useCallback(() => {
-  //   const nextActiveColor = theme === 'dark' ? 'light' : 'dark';
-  //   store.app.theme = nextActiveColor;
-  //   localStorage.setItem('activeColor', nextActiveColor);
-  // }, [activeColor]);
+  const pickActiveColor = useCallback(() => {
+    colorPicker.current.click();
+  }, []);
+  const setActiveColor = useCallback(e => {
+    const color = e.target.value;
+    store.app.activeColor = color;
+    localStorage.setItem('activeColor', color);
+  }, []);
 
-  const themeConfig = { ...THEME_CONFIG[theme], active: activeColor };
+  const currThemeConfig = {
+    ...themeConfig[theme],
+    ...ThemeHelpers.colorsConfigToVars({
+      active: [activeColor, colors.active[1]],
+    }),
+  };
 
   return (
     <Fragment>
@@ -57,14 +66,22 @@ export default withStore('app')(function App({ store }) {
               {isDark ? '🌙' : '🌕'}
             </Button>
 
-            {/*<Button
+            <Button
               className={S.cfgButton}
               variant="clear"
               size="l"
               isSquare
-              onClick={toggleTheme}
-              style={{ backgroundColor: activeColor }}
-            ></Button>*/}
+              onClick={pickActiveColor}
+            >
+              <div className={S.activeColor} />
+              <input
+                type="color"
+                ref={colorPicker}
+                className={S.colorPicker}
+                onChange={setActiveColor}
+                value={activeColor}
+              />
+            </Button>
           </div>
 
           {NAV_CONFIG.map(({ name }) => (
@@ -84,7 +101,7 @@ export default withStore('app')(function App({ store }) {
         </div>
       </div>
 
-      <Theme config={themeConfig} />
+      <Theme config={currThemeConfig} />
     </Fragment>
   );
 });
