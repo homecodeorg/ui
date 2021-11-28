@@ -4,7 +4,8 @@ const { colorsConfigToVars } = ThemeHelpers;
 
 const darkColor = ['#171717', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
 const lightColor = ['#e6e6e6', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
-const colors = {
+
+export const colors = {
   active: ['#6d447f', { alpha: [100, 300, 500, 800] }],
   warning: ['#ffa31a', { alpha: [200, 500] }],
   danger: ['#da3749', { alpha: [100, 300, 500] }],
@@ -12,7 +13,7 @@ const colors = {
   link: '#3089fe',
 };
 
-const config = {
+const defaultConfig = {
   'indent-s': '10px',
   'indent-m': '20px',
   'indent-l': '30px',
@@ -21,13 +22,13 @@ const config = {
   'border-radius-l': '6px',
 };
 
-export default {
+export const config = {
   light: {
-    ...config,
+    ...defaultConfig,
     ...colorsConfigToVars({ ...colors, accent: darkColor, decent: lightColor }),
   },
   dark: {
-    ...config,
+    ...defaultConfig,
     ...colorsConfigToVars({ ...colors, accent: lightColor, decent: darkColor }),
   },
 };
