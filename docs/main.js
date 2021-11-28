@@ -5087,7 +5087,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("2f692c2cf35d1d617f73")
+/******/ 		__webpack_require__.h = () => ("39a6605779e5daa9653b")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6976,7 +6976,7 @@ function App_defineProperty(obj, key, value) { if (key in obj) { define_property
 var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !== null && _localStorage$getItem !== void 0 ? _localStorage$getItem : 'dark';
 (0,preact.createStore)('app', {
   theme: initialThemeType,
-  activeColor: (_localStorage$getItem2 = localStorage.getItem('activeColor')) !== null && _localStorage$getItem2 !== void 0 ? _localStorage$getItem2 : config[initialThemeType].active
+  activeColor: (_localStorage$getItem2 = localStorage.getItem('activeColor')) !== null && _localStorage$getItem2 !== void 0 ? _localStorage$getItem2 : config[initialThemeType]['active-color']
 });
 (0,dom/* watchControllerFlag */.GZ)();
 /* harmony default export */ const src_App_App = ((0,preact.withStore)('app')(function App(_ref) {
