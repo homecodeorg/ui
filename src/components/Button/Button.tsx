@@ -1,3 +1,4 @@
+import { ReactChild } from 'react';
 import { useEffect, useRef } from 'preact/hooks';
 import cn from 'classnames';
 
@@ -8,16 +9,18 @@ import * as H from './Button.helpers';
 
 type Props = {
   className?: string;
-  children: JSX.Element | JSX.Element[];
+  children: ReactChild;
   variant?: 'clear' | 'default' | 'primary';
   size?: 's' | 'm' | 'l';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
   isChecked?: boolean;
   isSquare?: boolean;
   onMouseUp?: (e: MouseEvent) => void;
+  onClick?: (e: MouseEvent) => void;
   tabIndex?: number;
+  style?: Partial<CSSStyleDeclaration>;
 };
 
 export type ButtonProps = Props;
@@ -64,6 +67,7 @@ export function Button(props: Props) {
   }, [disabled]);
 
   return (
+    // @ts-ignore
     <button className={classes} {...rest} type={type} ref={buttonRef}>
       {children}
       {isLoading && <Spinner className={S.spinner} size={size} />}

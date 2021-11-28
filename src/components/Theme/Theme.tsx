@@ -2,7 +2,7 @@ import { getRGB } from './Theme.helpers';
 
 type ThemeConfig = {
   [name: string]: string;
-}
+};
 
 function buildVar(name: string, val: string) {
   return `--${name}: ${val};`;

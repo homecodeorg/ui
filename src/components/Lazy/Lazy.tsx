@@ -6,7 +6,7 @@ import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
 
 type Loader = () => Promise<void>;
-type Props = { loading: Loader };
+type Props = { loader: Loader };
 type State = { loading: boolean };
 
 function compare(cb1: Loader, cb2: Loader) {
@@ -21,16 +21,16 @@ export default class Lazy extends Component<Props, State> {
     this.update();
   }
 
-  componentDidUpdate({ loading }: Props) {
-    if (!compare(this.props.loading, loading)) this.update();
+  componentDidUpdate({ loader }: Props) {
+    if (!compare(this.props.loader, loader)) this.update();
   }
 
   update() {
-    const { loading } = this.props;
+    const { loader } = this.props;
 
     this.setState({ loading: true });
-    loading().then((m: any) => {
-      if (!compare(this.props.loading, loading)) return;
+    loader().then((m: any) => {
+      if (!compare(this.props.loader, loader)) return;
       this.C = m.default;
       this.setState({ loading: false });
     });
