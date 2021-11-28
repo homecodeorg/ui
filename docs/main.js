@@ -2980,7 +2980,7 @@ module.exports = function (i) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto;background-color:var(--decent-color)}.App__configBar___GiZrC{padding:10px;margin-bottom:30px}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body{background-color:var(--decent-color)}.App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto}.App__configBar___GiZrC{padding:10px;margin-bottom:30px}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "App__root___Cu9id",
@@ -5084,7 +5084,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("1226e4fe400d006c4591")
+/******/ 		__webpack_require__.h = () => ("83127f7ea8ca6ed528f2")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
