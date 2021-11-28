@@ -19,7 +19,8 @@ const initialThemeType = localStorage.getItem('theme') ?? 'dark';
 createStore('app', {
   theme: initialThemeType,
   activeColor:
-    localStorage.getItem('activeColor') ?? themeConfig[initialThemeType].active,
+    localStorage.getItem('activeColor') ??
+    themeConfig[initialThemeType]['active-color'],
 });
 watchControllerFlag();
 
