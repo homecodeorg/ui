@@ -52,7 +52,13 @@ const colorMods = {
   ],
 };
 
-export function colorsConfigToVars(config) {
+type ColorMods = { [name: string]: number[] };
+type ColorConfig = [color: string, mods: ColorMods];
+type ColorsConfig = {
+  [name: string]: ColorConfig;
+};
+
+export function colorsConfigToVars(config: ColorsConfig) {
   return Object.entries(config).reduce((acc, [name, val]) => {
     const colorName = `${name}-color`;
 
