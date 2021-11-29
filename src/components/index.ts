@@ -1,7 +1,7 @@
 export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
 export * from './Checkbox/Checkbox';
-// export * from './Container/Container';
+export * from './Container/Container';
 // export * from './Form/Form';
 // export * from './Icon/Icon';
 // export * from './Input/Input';
