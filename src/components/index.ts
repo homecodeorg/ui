@@ -1,4 +1,3 @@
-// export * from './ButtonTest';
 // export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
 export * from './Checkbox/Checkbox';
@@ -12,6 +11,6 @@ export * from './Lazy/Lazy';
 // export * from './Notifications/Notifications';
 // export * from './Router/Router';
 // export * from './Select/Select';
-// export * from './Spinner/Spinner';
+export * from './Spinner/Spinner';
 export * from './Theme/Theme';
 export * from './VH/VH';
