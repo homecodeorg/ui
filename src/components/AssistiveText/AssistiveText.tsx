@@ -1,4 +1,4 @@
-import { ComponentChild } from 'react';
+import { ReactChild } from 'react';
 import cn from 'classnames';
 
 import S from './AssistiveText.styl';
@@ -7,7 +7,7 @@ type Props = {
   className?: string;
   size?: 's' | 'm' | 'l';
   variant?: 'default' | 'danger';
-  children: ComponentChild;
+  children: ReactChild;
   // style?: HTMLAttributes['style'];
 };
 

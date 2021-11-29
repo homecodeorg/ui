@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    // "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true,
     // "downlevelIteration": true,
     "jsx": "react-jsx",
     "target": "esnext",
@@ -13,7 +13,7 @@
     // "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
-    // "resolveJsonModule": true,
+    "resolveJsonModule": true,
     // "isolatedModules": true,
     "strict": false,
     // "noImplicitAny": false,

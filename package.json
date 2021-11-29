@@ -40,6 +40,7 @@
   "dependencies": {
     "@guanghechen/postcss-modules-dts": "^1.8.4",
     "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-json": "^4.1.0",
     "fastest-validator": "^1.4.1",
     "path-parser": "^6.1.0",
     "rollup-plugin-cleaner": "^1.0.0",

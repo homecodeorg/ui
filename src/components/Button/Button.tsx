@@ -1,4 +1,4 @@
-import { ReactChild } from 'react';
+import { ReactChild, ButtonHTMLAttributes } from 'react';
 import { useEffect, useRef } from 'preact/hooks';
 import cn from 'classnames';
 
@@ -7,7 +7,7 @@ import { Spinner } from '../Spinner/Spinner';
 import S from './Button.styl';
 import * as H from './Button.helpers';
 
-type Props = {
+type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
   children: ReactChild;
   variant?: 'clear' | 'default' | 'primary';
@@ -17,8 +17,6 @@ type Props = {
   isLoading?: boolean;
   isChecked?: boolean;
   isSquare?: boolean;
-  onMouseUp?: (e: MouseEvent) => void;
-  onClick?: (e: MouseEvent) => void;
   tabIndex?: number;
   style?: Partial<CSSStyleDeclaration>;
 };
@@ -50,7 +48,7 @@ export function Button(props: Props) {
   );
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  function handleMouseUp(e: MouseEvent) {
+  function handleMouseUp(e) {
     if (onMouseUp) onMouseUp(e);
     H.focusOnClick(buttonRef.current);
   }

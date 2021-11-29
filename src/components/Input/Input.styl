@@ -85,14 +85,14 @@ $paddingSide = 12px
   font-size inherit
   font-weight normal
 
-.label.onTop
-.labelGap
-  .size-s &
-    font-size 'calc(12px / %s)' % LABEL_MULTIPLIER
-  .size-m &
-    font-size 'calc(14px / %s)' % LABEL_MULTIPLIER
-  .size-l &
-    font-size 'calc(16px / %s)' % LABEL_MULTIPLIER
+// .label.onTop
+// .labelGap
+//   .size-s &
+//     font-size 'calc(12px / %s)' % LABEL_MULTIPLIER
+//   .size-m &
+//     font-size 'calc(14px / %s)' % LABEL_MULTIPLIER
+//   .size-l &
+//     font-size 'calc(16px / %s)' % LABEL_MULTIPLIER
 
 .labelGap
   position absolute
@@ -100,45 +100,8 @@ $paddingSide = 12px
   pointer-events none
 
 .label
-  position absolute
-  display flex
-  align-items center
-  max-width 100%
-  height 100%
-
-  color var(--accent-color-alpha-500)
-  white-space nowrap
-  text-overflow ellipsis
-
-  transition transform .2s ease-out
-  transform-origin top left
-  backface-visibility hidden
-
-  pointer-events none
-  user-select none
-
-  &.onTop
-    color var(--accent-color)
-    transform scale(LABEL_MULTIPLIER) translate3d(0, -53%, 0)
-
-  .hasError:not(.isDisabled) &
-    color var(--danger-color)
-
   .isTextArea &
     max-height 40px
-
-  .isDisabled &
-    color var(--accent-color-alpha-500)
-
-    &::before
-      z-index -1
-      content ''
-      position absolute
-      left -6px
-      right -6px
-      height 1.4em
-      background-color var(--bg-color)
-      border-radius 4px
 
 .control
   filter none // remove browser(Frefox) autofill-styles
@@ -228,3 +191,34 @@ $paddingSide = 12px
 .isDisabled
   pointer-events none
   user-select none
+
+.clearButton
+  z-index 1
+  position absolute
+  top 1px
+  right 0
+  bottom 1px
+  height auto
+  margin-right 8px
+
+.clearIcon
+  opacity .2
+  transition opacity .2s ease-out
+
+  .clearButton:hover &
+    opacity .5
+  .clearButton:active &
+    opacity .7
+
+  .size-s &
+    height 10px
+    width @height
+  .size-m &
+    height 12px
+    width @height
+  .size-l &
+    height 14px
+    width @height
+  .size-xl &
+    height 16px
+    width @height

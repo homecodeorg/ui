@@ -7,10 +7,10 @@ export default [
     name: 'checkbox',
     loader: () => import('../components/Checkbox/Checkbox.example'),
   },
-  // {
-  //   name: 'input',
-  //   loader: () => import('../components/Input/Input.example'),
-  // },
+  {
+    name: 'input',
+    loader: () => import('../components/Input/Input.example'),
+  },
   // {
   //   name: 'icon',
   //   loader: () => import('../components/Icon/Icon.example'),
