@@ -1,4 +1,4 @@
-// export * from './AssistiveText/AssistiveText';
+export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
 export * from './Checkbox/Checkbox';
 // export * from './Container/Container';
