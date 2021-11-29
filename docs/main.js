@@ -5087,7 +5087,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("39a6605779e5daa9653b")
+/******/ 		__webpack_require__.h = () => ("ecb85ca8dc51e6d03562")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6822,18 +6822,18 @@ function colorsConfigToVars(config) {
     var colorName = "".concat(name, "-color");
 
     if (is_array_default()(val)) {
-      var color = val[0];
-      var mods = val[1];
-      acc[colorName] = color;
+      var _color = val[0];
+      var _mods = val[1];
+      acc[colorName] = _color;
 
-      if (Theme_helpers_typeof(mods) === 'object' && mods !== null) {
-        entries_default()(mods || {}).forEach(function (_ref5) {
+      if (Theme_helpers_typeof(_mods) === 'object' && _mods !== null) {
+        entries_default()(_mods || {}).forEach(function (_ref5) {
           var _ref6 = Theme_helpers_slicedToArray(_ref5, 2),
               mod = _ref6[0],
               vals = _ref6[1];
 
           vals.forEach(function (val) {
-            var _colorMods$mod = colorMods[mod](color, val, config),
+            var _colorMods$mod = colorMods[mod](_color, val, config),
                 _colorMods$mod2 = Theme_helpers_slicedToArray(_colorMods$mod, 2),
                 res = _colorMods$mod2[0],
                 prefix = _colorMods$mod2[1];
@@ -6906,12 +6906,17 @@ var config = {
 /* harmony default export */ const navigation = ([{
   name: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(187), __webpack_require__.e(864), __webpack_require__.e(74)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(187), __webpack_require__.e(864), __webpack_require__.e(273), __webpack_require__.e(606)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
   }
 }, {
   name: 'checkbox',
   loader: function loader() {
     return Promise.all(/* import() */[__webpack_require__.e(864), __webpack_require__.e(186)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Checkbox/Checkbox.example.tsx"));
+  }
+}, {
+  name: 'input',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(187), __webpack_require__.e(864), __webpack_require__.e(273), __webpack_require__.e(845)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Input/Input.example.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/App/App.styl
