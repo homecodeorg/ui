@@ -10,7 +10,7 @@ type Props = {
   size?: string;
   children: string;
   isOnTop: boolean;
-  isFocused: boolean;
+  isFocused?: boolean;
   disabled?: boolean;
   isError?: boolean;
   onClipPathChange?: (clipPath: string) => void;
@@ -20,7 +20,7 @@ export class Label extends Component<Props> {
   gapWrapRef = createRef<HTMLDivElement>();
   gapRef = createRef<HTMLDivElement>();
 
-  timers;
+  timers: any;
   state = { clipPath: '' };
   labelWidth = 0;
 
@@ -49,7 +49,7 @@ export class Label extends Component<Props> {
   }
 
   updateClipPath = () => {
-    const { children, isOnTop, onClipPathChange } = this.props;
+    const { children, isOnTop, onClipPathChange, size } = this.props;
     const gapWrapElem = this.gapWrapRef?.current;
     const gapElem = this.gapRef?.current;
 
@@ -64,7 +64,7 @@ export class Label extends Component<Props> {
 
     this.labelWidth = labelWidth;
 
-    const clipPath = H.getLabelClipPath(offsetLeft, labelWidth);
+    const clipPath = H.getLabelClipPath(offsetLeft, labelWidth, size);
 
     onClipPathChange(clipPath);
   };

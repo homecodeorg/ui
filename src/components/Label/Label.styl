@@ -27,7 +27,7 @@ json('../Label/Label.constants.json')
   padding-top 0
   padding-bottom 0
 
-  color var(--text2-color)
+  color var(--accent-color-alpha-500)
 
   pointer-events none
   user-select none
@@ -54,16 +54,17 @@ json('../Label/Label.constants.json')
   backface-visibility hidden
 
   .onTop &
+    color var(--accent-color)
     transform scale(LABEL_MULTIPLIER) translate3d(0, -53%, 0)
 
   .isFocused &
-    color var(--primary-color)
+    color var(--active-color)
 
-  .isError &
+  .isError:not(.disabled) &
     color var(--danger-color)
 
   .disabled &
-    color var(--text3-color)
+    color var(--disable-color)
 
 
 .gapWrap

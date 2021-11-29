@@ -1,5 +1,9 @@
-import { ChangeEvent } from 'react-types';
-import { Component, createRef } from 'react';
+import {
+  Component,
+  createRef,
+  ChangeEvent,
+  HTMLInputTypeAttribute,
+} from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/preact';
 import omit from 'lodash.omit';
@@ -172,7 +176,7 @@ export class Input extends Component<T.Props> {
     if (onChange) onChange(value);
   };
 
-  onFocus = (e: FocusEvent) => {
+  onFocus = e => {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
@@ -180,7 +184,7 @@ export class Input extends Component<T.Props> {
     if (onFocus) onFocus(e);
   };
 
-  onBlur = (e: FocusEvent) => {
+  onBlur = e => {
     if (this.props.changeOnEnd) this.onTypingEnd();
     if (this.isClearPressed) {
       e.preventDefault();
@@ -298,14 +302,17 @@ export class Input extends Component<T.Props> {
           <Control
             className={S.control}
             {...controlProps}
+            // @ts-ignore
             ref={this.inputRef}
             key="control"
           />
           <Label
             className={S.label}
             size={size}
+            disabled={disabled}
             isOnTop={isLabelOnTop}
             isError={Boolean(error)}
+            isFocused={isFocused}
             onClipPathChange={this.onLabelClipPathChange}
           >
             {label}
@@ -316,7 +323,7 @@ export class Input extends Component<T.Props> {
               className={S.clearButton}
               variant="clear"
               size={size}
-              square
+              isSquare
               onMouseDownCapture={this.onClearMouseDown}
               onClick={this.clear}
             >

@@ -1,12 +1,18 @@
 import C from './Label.constants.json';
 
-export function getLabelClipPath(left, width) {
+function getBottomOffset(size = 's') {
+  if (size === 'l') return 4;
+  if (size === 'm') return 2;
+  return 0;
+}
+
+export function getLabelClipPath(left, width, size = 's') {
   const offset = 10;
   const A = left - C.LABEL_PADDING;
   // @ts-ignore
   const B =
     width === 0 ? 0 : left + width * C.LABEL_MULTIPLIER + C.LABEL_PADDING;
-  const cutWidth = 5;
+  const cutWidth = 5 + getBottomOffset(size);
   const min = `-${offset}px`;
   const max = `calc(100% + ${offset}px)`;
   const points = [
@@ -22,7 +28,9 @@ export function getLabelClipPath(left, width) {
     [`${A}px`, min],
   ]
     .map(coords => coords.join(' '))
-    .join(', ');
+    .join(', \n');
+
+  console.log(points);
 
   return `polygon(${points})`;
 }

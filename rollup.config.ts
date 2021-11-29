@@ -15,6 +15,7 @@ import styles from 'rollup-plugin-styles';
 // import stylusCssModules from 'rollup-plugin-stylus-css-modules';
 // import svg from 'rollup-plugin-svg';
 import svgr from '@svgr/rollup';
+import json from '@rollup/plugin-json';
 
 // import { babel } from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
@@ -67,6 +68,8 @@ export default {
     externals({ deps: true }),
     resolve(),
     commonjs(),
+
+    json(),
 
     svgr(),
     styles({ modules: true }),
