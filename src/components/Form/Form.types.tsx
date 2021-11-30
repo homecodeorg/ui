@@ -1,3 +1,4 @@
+import { FormHTMLAttributes } from 'react';
 import { ValidationSchema } from 'fastest-validator';
 
 export type FormValidationSchema = ValidationSchema;
@@ -39,17 +40,23 @@ export type FormValidationRule = {
   messages?: { [id: string]: string };
 };
 
-export type Props = {
+export type Props = Omit<
+  FormHTMLAttributes<HTMLFormElement>,
+  'onSubmit' | 'onChange'
+> & {
   className?: string;
-  children: (api: FormApi) => JSX.Element | JSX.Element[];
+  defaultValues?: FormValues;
+  defaultDisabled?: FieldsFlags;
   initialValues: FormValues;
   validationSchema?: FormValidationSchema;
-  onFormChange?: (values: FormValues) => void;
-  onSubmit?: (values: FormValues) => void;
   markEdited?: boolean;
-} & Omit<HTMLFormElement, 'contentEditable'>;
+  children: (api: FormApi) => JSX.Element | JSX.Element[];
+  onInit?: (api: FormApi) => boolean | void;
+  onChange?: (values: FormValues) => void;
+  onSubmit?: (values: FormValues) => Promise<void>;
+};
 
-export type FieldParams = {
+export type FieldProps = {
   name: string;
   handleChange: (name: string, val: any) => void;
   handleBlur: (name: string) => void;

@@ -30,7 +30,5 @@ export function getLabelClipPath(left, width, size = 's') {
     .map(coords => coords.join(' '))
     .join(', \n');
 
-  console.log(points);
-
   return `polygon(${points})`;
 }

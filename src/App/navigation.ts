@@ -11,18 +11,18 @@ export default [
     name: 'input',
     loader: () => import('../components/Input/Input.example'),
   },
-  // {
-  //   name: 'icon',
-  //   loader: () => import('../components/Icon/Icon.example'),
-  // },
+  {
+    name: 'icon',
+    loader: () => import('../components/Icon/Icon.example'),
+  },
   // {
   //   name: 'menu',
   //   loader: () => import('../components/Menu/Menu.example'),
   // },
-  // {
-  //   name: 'popup',
-  //   loader: () => import('../components/Popup/Popup.example'),
-  // },
+  {
+    name: 'popup',
+    loader: () => import('../components/Popup/Popup.example'),
+  },
   // {
   //   name: 'notifications',
   //   loader: () => import('../components/Notifications/Notifications.example'),

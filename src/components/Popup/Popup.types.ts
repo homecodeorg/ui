@@ -1,9 +1,15 @@
-export type WrapperPropsType = {
+import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { Size } from '../../types';
+
+export type WrapperPropsType = DetailedHTMLProps<
+  HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
   className?: string;
-  style?: CSSStyleDeclaration & {
-    height?: number;
-    width?: number;
-  };
+  // style?: CSSStyleDeclaration & {
+  //   height?: number;
+  //   width?: number;
+  // };
 };
 
 export type Direction =
@@ -30,6 +36,9 @@ export type Props = {
   outlined?: boolean;
   inline?: boolean;
   flat?: boolean;
+  paranja?: boolean;
+  size: Size;
+  elevation?: 1 | 2;
   clearTargetMargin?: boolean;
   direction: Direction;
   trigger?: JSX.Element | JSX.Element[];
@@ -38,6 +47,8 @@ export type Props = {
   wrapperProps?: WrapperPropsType;
   onOpen?: () => void;
   onClose?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   hookBeforeOpen?: () => boolean | void;
   hookBeforeClose?: () => boolean | void;
   onTriggerFocus?: (e?: any) => boolean;

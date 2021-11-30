@@ -1,11 +1,6 @@
-import {
-  Component,
-  createRef,
-  ChangeEvent,
-  HTMLInputTypeAttribute,
-} from 'react';
+import { Component, createRef, ChangeEvent } from 'react';
 import cn from 'classnames';
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 
 import { capitalize } from '../../tools/string';
@@ -163,7 +158,7 @@ export class Input extends Component<T.Props> {
     if (changeOnEnd) {
       this.store.inputValue = value;
       this.updateHasValue();
-    } else if (onChange) onChange(value);
+    } else if (onChange) onChange(value, e);
   };
 
   onLabelClipPathChange = (clipPath: string) =>

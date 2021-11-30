@@ -48,6 +48,7 @@ export default withStore('app')(function App({ store }) {
   const currThemeConfig = {
     ...themeConfig[theme],
     ...ThemeHelpers.colorsConfigToVars({
+      ...colors,
       active: [activeColor, colors.active[1]],
     }),
   };
