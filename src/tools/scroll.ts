@@ -31,7 +31,7 @@ export function scrollTo(elem, left, top) {
   elem.scrollTo(left, top);
 }
 
-export function scrollIntoView(elem, { horizontal } = {}) {
+export function scrollIntoView(elem, { horizontal } = { horizontal: false }) {
   if (!elem) return;
 
   const scrollParent = getScrollParent(elem);

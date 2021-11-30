@@ -1,10 +1,10 @@
-import { ReactChild, HTMLProps, InputHTMLAttributes } from 'react';
+import { ReactChild, ChangeEvent, HTMLProps, InputHTMLAttributes } from 'react';
 
 export type Size = 's' | 'm' | 'l' | 'xl';
 
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;
-export type Props = InputHTMLAttributes<HTMLInputElement> &
+export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
   Omit<ControlProps, 'ref'> & {
     className?: string;
     name?: string;
@@ -21,7 +21,7 @@ export type Props = InputHTMLAttributes<HTMLInputElement> &
     adornmentLeftClassName?: string;
     adornmentRight?: string | JSX.Element;
     adornmentRightClassName?: string;
-    onChange?: (value: Value) => void | boolean;
+    onChange?: (value: Value, e?: ChangeEvent) => void | boolean;
     onClear?: () => void;
     controlProps?: ControlProps & { className?: string };
     checkAutofill?: boolean;

@@ -1,10 +1,19 @@
 import { Component, createRef } from 'react';
 import cn from 'classnames';
 
+import { InputProps } from '../Input/Input';
+import { ComponentType } from '../../types';
+
 import S from './InputFile.styl';
 
-class InputFile extends Component {
-  controlEl = createRef();
+type Props = ComponentType &
+  InputProps & {
+    onClick: (e: MouseEvent) => void;
+    isLoading?: boolean;
+  };
+
+class InputFile extends Component<Props> {
+  controlEl = createRef<HTMLInputElement>();
 
   state = {
     fileName: '',
@@ -30,9 +39,13 @@ class InputFile extends Component {
   };
 
   render() {
-    const { className, loading, label, ...props } = this.props;
+    const { className, isLoading, label, ...props } = this.props;
     const { fileName } = this.state;
-    const classes = cn(S.control, loading && S.loading, fileName && S.hasValue);
+    const classes = cn(
+      S.control,
+      isLoading && S.loading,
+      fileName && S.hasValue
+    );
 
     return (
       <div className={className}>
@@ -41,7 +54,7 @@ class InputFile extends Component {
             {label}
           </label>
         )}
-        <div // eslint-disable-line
+        <div
           // className={this.styles.decor}
           onClick={this.onClick}
           alt={fileName}

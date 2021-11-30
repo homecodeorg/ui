@@ -1,13 +1,13 @@
 import { Component, createRef } from 'react';
-import { createPortal } from 'preact/compat';
+import { createPortal } from 'react-dom';
 import cn from 'classnames';
 import { bind } from 'decko';
-import { createStore } from 'justorm/preact';
-
-import throttle from 'tools/throttle';
-import { hasParent, getCoords } from 'tools/dom';
-import { getScrollParent } from 'tools/scroll';
 import Time from 'timen';
+import { createStore } from 'justorm/react';
+
+import throttle from '../../tools/throttle';
+import { hasParent, getCoords } from '../../tools/dom';
+import { getScrollParent } from '../../tools/scroll';
 
 import S from './Popup.styl';
 import * as T from './Popup.types';
@@ -117,8 +117,7 @@ export class Popup extends Component<T.Props> {
     doc.removeEventListener('mouseup', this.onMouseUp);
   };
 
-  @bind
-  onDocKeyUp(e) {
+  onDocKeyUp = e => {
     if (this.store.isOpen && e.key === 'Escape') {
       e.stopPropagation();
       this.close();
@@ -130,14 +129,13 @@ export class Popup extends Component<T.Props> {
       e.stopPropagation();
       this.toggle();
     }
-  }
+  };
 
   onMouseDown = () => {
     this._mousePressed = true;
   };
 
-  @bind
-  onMouseUp(e) {
+  onMouseUp = e => {
     const { autoClose } = this.props;
     const { isOpen } = this.store;
 
@@ -151,7 +149,7 @@ export class Popup extends Component<T.Props> {
     if (!isOpen || hasParent(e.target, this.triggerElem.current)) return;
 
     if (!e.target.closest(`.${S.content}`) || autoClose) this.close();
-  }
+  };
 
   onFocus = () => {
     const { controllable, onFocus } = this.props;

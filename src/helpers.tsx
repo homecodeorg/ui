@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 
 import { AssistiveText } from './components/AssistiveText/AssistiveText';
 

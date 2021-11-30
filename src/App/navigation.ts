@@ -19,10 +19,10 @@ export default [
   //   name: 'menu',
   //   loader: () => import('../components/Menu/Menu.example'),
   // },
-  // {
-  //   name: 'popup',
-  //   loader: () => import('../components/Popup/Popup.example'),
-  // },
+  {
+    name: 'popup',
+    loader: () => import('../components/Popup/Popup.example'),
+  },
   // {
   //   name: 'notifications',
   //   loader: () => import('../components/Notifications/Notifications.example'),

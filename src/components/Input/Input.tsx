@@ -158,7 +158,7 @@ export class Input extends Component<T.Props> {
     if (changeOnEnd) {
       this.store.inputValue = value;
       this.updateHasValue();
-    } else if (onChange) onChange(value);
+    } else if (onChange) onChange(value, e);
   };
 
   onLabelClipPathChange = (clipPath: string) =>

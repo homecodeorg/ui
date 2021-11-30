@@ -6,7 +6,10 @@ const darkColor = ['#171717', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
 const lightColor = ['#e6e6e6', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
 
 export const colors = {
-  active: ['#6d447f', { alpha: [100, 300, 500, 800] }],
+  active: [
+    '#6d447f',
+    { alpha: [100, 300, 500, 800] /* mix: [['accent', 300]] */ },
+  ],
   warning: ['#ffa31a', { alpha: [200, 500] }],
   danger: ['#da3749', { alpha: [100, 300, 500] }],
   disable: '#f1f1f2',
@@ -32,3 +35,22 @@ export const config = {
     ...colorsConfigToVars({ ...colors, accent: lightColor, decent: darkColor }),
   },
 };
+
+function getColorsByTheme(theme: 'dark' | 'light') {
+  if (theme === 'dark') return { accent: lightColor, decent: darkColor };
+  return { accent: darkColor, decent: lightColor };
+}
+
+export function getThemeConfig(theme: 'dark' | 'light', additionalColors = {}) {
+  const currColorsConfig = {
+    ...colors,
+    ...additionalColors,
+    ...getColorsByTheme(theme),
+  };
+
+  return {
+    ...defaultConfig,
+    // @ts-ignore
+    ...colorsConfigToVars(currColorsConfig),
+  };
+}

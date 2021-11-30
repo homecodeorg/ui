@@ -1,4 +1,4 @@
-function hexToRGB(str) {
+function hexToRGB(str: string) {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
   const hex = str.replace(shorthandRegex, function (m, r, g, b) {
