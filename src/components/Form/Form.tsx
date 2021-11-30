@@ -1,13 +1,13 @@
-import { Component } from 'react';
-import { createStore } from 'justorm/preact';
+import { Component, FormEventHandler } from 'react';
+import { createStore } from 'justorm/react';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 
-import { clone } from 'tools/object';
+import { clone } from '../../tools/object';
 
-import { Input } from 'components/Input/Input';
+import { Input } from '../Input/Input';
 
 import S from './Form.styl';
 import * as H from './Form.helpers';
@@ -86,15 +86,13 @@ function Field(props) {
  * @property {JSX} children
  */
 export class Form extends Component<T.Props> {
-  store;
+  store: any;
 
-  field;
+  field = props => <Field {...this.getFieldProps(props)} />;
 
-  check;
+  validationSchema: T.FormValidationSchema;
 
-  validationSchema;
-
-  constructor(props) {
+  constructor(props: T.Props) {
     super(props);
 
     const { defaultValues, initialValues, defaultDisabled } = props;
@@ -113,8 +111,6 @@ export class Form extends Component<T.Props> {
       isEmpty: Object.keys(notEmpty).length === 0,
     });
   }
-
-  field = props => <Field {...this.getFieldProps(props)} />;
 
   componentDidMount() {
     this.calcChangedAll();
@@ -157,7 +153,7 @@ export class Form extends Component<T.Props> {
     return true;
   }
 
-  getFieldProps(props) {
+  getFieldProps(props): T.FieldProps {
     const { name } = props;
     const { values, changed, touched, errors } = this.store.originalObject;
 
@@ -285,7 +281,7 @@ export class Form extends Component<T.Props> {
     return {};
   }
 
-  calcChanged(field, val) {
+  calcChanged(field: string, val: any) {
     const { initialValues } = this.props;
     const defaultValues = this.props.defaultValues || initialValues;
     const { changed, notEmpty } = this.store;
@@ -350,7 +346,7 @@ export class Form extends Component<T.Props> {
     this.store.isLoading = false;
   };
 
-  onChange = (field, val) => {
+  onChange = (field: string, val: any) => {
     const { onChange } = this.props;
     const { values, touched } = this.store;
 
@@ -358,6 +354,7 @@ export class Form extends Component<T.Props> {
 
     const newValues = { ...values.originalObject, [field]: val };
 
+    // @ts-ignore
     if (onChange && onChange(newValues) === false) return;
 
     values[field] = val;
@@ -365,11 +362,11 @@ export class Form extends Component<T.Props> {
     this.handleChange(field, val);
   };
 
-  onBlur = name => {
+  onBlur = (name: string) => {
     this.store.touched[name] = true;
   };
 
-  handleChange(field, val) {
+  handleChange(field: string, val: any) {
     this.calcChanged(field, val);
     this.validate();
   }
@@ -377,7 +374,7 @@ export class Form extends Component<T.Props> {
   render() {
     const { className, children, ...rest } = this.props;
     const { isLoading } = this.store;
-    const classes = cn(S.root, className, isLoading && S.loading);
+    const classes = cn(S.root, className, isLoading && S.isLoading);
     const formProps = omit(rest, [
       'defaultValues',
       'defaultDisabled',

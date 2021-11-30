@@ -1,6 +1,6 @@
 // import Icon from 'components/Icon/Icon';
 // import { IconType } from 'components/Icon/Icon.types';
-import { Button, ButtonProps } from 'components/Button/Button';
+import { Button, ButtonProps } from '../../Button/Button';
 
 import S from './SubmitButtons.styl';
 

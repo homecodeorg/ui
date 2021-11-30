@@ -1,12 +1,12 @@
 import omit from 'lodash.omit';
 
-import { Title } from 'helpers';
+import { Title } from '../../helpers';
 
-import { Container } from 'components/Container/Container';
-import { Checkbox } from 'components/Checkbox/Checkbox';
-import { Select } from 'components/Select/Select';
-import { Form } from 'components/Form/Form';
-import { Icon } from 'components/Icon/Icon';
+import { Container } from '../Container/Container';
+import { Checkbox } from '../Checkbox/Checkbox';
+import { Select } from '../Select/Select';
+import { Form } from '../Form/Form';
+import { Icon } from '../Icon/Icon';
 
 import { Input } from './Input';
 
