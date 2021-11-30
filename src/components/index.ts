@@ -12,6 +12,7 @@ export * from './Lazy/Lazy';
 // export * from './Router/Router';
 export * from './Popup/Popup';
 // export * from './Select/Select';
+export * from './Scroll/Scroll';
 export * from './Spinner/Spinner';
 export * from './Theme/Theme';
 export * from './VH/VH';

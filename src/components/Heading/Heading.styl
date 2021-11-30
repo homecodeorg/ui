@@ -1,0 +1,23 @@
+.root
+  position relative
+  margin 1em 0
+
+  &
+  & > a
+    color var(--accent-color) !important
+
+.link
+  position absolute
+  display block
+  bottom 0
+  left -1.7em
+  right 1.7em
+  min-height 100%
+  padding .8em 1em 0
+  transition all .2s ease-out
+  opacity 0
+  text-decoration none
+
+.root:hover .link
+  opacity 1
+  transform translateX(-5px)

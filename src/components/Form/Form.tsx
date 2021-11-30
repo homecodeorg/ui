@@ -30,6 +30,7 @@ function Field(props: T.FormFieldProps) {
   const {
     value,
     error,
+    markEdited,
     isChanged,
     isTouched,
     component: Control = Input,
@@ -48,7 +49,7 @@ function Field(props: T.FormFieldProps) {
     className,
     S.field,
     isHidden && S.hidden,
-    isChanged && S.changed
+    markEdited && isChanged && S.changed
   );
 
   function handleFieldChange(e, val) {
@@ -73,7 +74,7 @@ function Field(props: T.FormFieldProps) {
   return (
     <div className={classes}>
       {/* @ts-ignore */}
-      <Control {...controlProps} key={name} />
+      <Control {...controlProps} />
       {children}
     </div>
   );
@@ -152,21 +153,6 @@ export class Form extends Component<T.Props> {
     return true;
   }
 
-  getFieldProps(props): T.FormFieldProps {
-    const { name } = props;
-    const { values, changed, touched, errors } = this.store.originalObject;
-
-    return {
-      ...props,
-      value: values[name],
-      isChanged: changed[name],
-      isTouched: touched[name],
-      error: errors?.[name],
-      handleChange: this.onChange,
-      handleBlur: this.onBlur,
-    };
-  }
-
   cloneValue(val) {
     if (typeof val === 'object' && val !== null) {
       // date
@@ -235,10 +221,29 @@ export class Form extends Component<T.Props> {
     this.store.touched = H.getInitialTouched(initialValues);
   };
 
+  field = (props: T.FieldProps) => <Field {...this.getFieldProps(props)} />;
+
+  getFieldProps(props): T.FormFieldProps {
+    const { markEdited } = this.props;
+    const { name } = props;
+    const { values, changed, touched, errors } = this.store.originalObject;
+
+    return {
+      ...props,
+      value: values[name],
+      markEdited,
+      isChanged: changed[name],
+      isTouched: touched[name],
+      error: errors?.[name],
+      handleChange: this.onChange,
+      handleBlur: this.onBlur,
+    };
+  }
+
   getFormAPI(): T.FormApi {
     return {
       ...pick(this.store.originalObject, STORE_FIELDS_EXPOSED),
-      Field: (props: T.FieldProps) => <Field {...this.getFieldProps(props)} />,
+      Field: this.field,
       setValue: this.setValue,
       setValues: this.setValues,
       setDisabled: this.setDisabled,
