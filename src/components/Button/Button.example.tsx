@@ -1,10 +1,10 @@
-import { Title } from 'helpers';
+import { Title } from '../../helpers';
 
-import { Form } from 'components/Form/Form';
-// import { AssistiveText } from 'components/AssistiveText/AssistiveText';
-import { Container } from 'components/Container/Container';
-import { Checkbox } from 'components/Checkbox/Checkbox';
-import { Select } from 'components/Select/Select';
+import { Form } from '../Form/Form';
+// import { AssistiveText } from '../AssistiveText/AssistiveText';
+import { Container } from '../Container/Container';
+import { Checkbox } from '../Checkbox/Checkbox';
+import { Select } from '../Select/Select';
 import { Button } from './Button';
 
 const SIZES = [
@@ -21,6 +21,7 @@ const INITIAL_PROPS = {
   size: 'm',
   variant: 'default',
   isLoading: false,
+  isChecked: false,
 };
 
 export default () => (
@@ -37,6 +38,7 @@ export default () => (
             label="Variant"
           />
           <Field name="isLoading" component={Checkbox} label="isLoading" />
+          <Field name="isChecked" component={Checkbox} label="isChecked" />
         </Container>
         <Container style={{ flexGrow: 1 }} vertical size="s">
           <Title text="Result:" />

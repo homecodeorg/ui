@@ -26,7 +26,7 @@ const STORE_FIELDS_EXPOSED = [
   'disabled',
 ];
 
-function Field(props) {
+function Field(props: T.FormFieldProps) {
   const {
     value,
     error,
@@ -72,6 +72,7 @@ function Field(props) {
 
   return (
     <div className={classes}>
+      {/* @ts-ignore */}
       <Control {...controlProps} key={name} />
       {children}
     </div>
@@ -87,8 +88,6 @@ function Field(props) {
  */
 export class Form extends Component<T.Props> {
   store: any;
-
-  field = props => <Field {...this.getFieldProps(props)} />;
 
   validationSchema: T.FormValidationSchema;
 
@@ -153,7 +152,7 @@ export class Form extends Component<T.Props> {
     return true;
   }
 
-  getFieldProps(props): T.FieldProps {
+  getFieldProps(props): T.FormFieldProps {
     const { name } = props;
     const { values, changed, touched, errors } = this.store.originalObject;
 
@@ -239,7 +238,7 @@ export class Form extends Component<T.Props> {
   getFormAPI(): T.FormApi {
     return {
       ...pick(this.store.originalObject, STORE_FIELDS_EXPOSED),
-      Field: this.field,
+      Field: (props: T.FieldProps) => <Field {...this.getFieldProps(props)} />,
       setValue: this.setValue,
       setValues: this.setValues,
       setDisabled: this.setDisabled,
