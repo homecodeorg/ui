@@ -3013,7 +3013,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Button__root___JVFRJ{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;border-radius:var(--border-radius-m);box-sizing:border-box;box-shadow:inset 0 0 0 2px var(--accent-color);background-color:var(--bg-color);transition:.2s ease-out;transition-property:box-shadow,opacity;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;line-height:1em;text-decoration:none;color:inherit;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Button__root___JVFRJ:hover{box-shadow:inset 0 0 0 2px var(--active-color)}.Button__root___JVFRJ:active{opacity:.7}.Button__root___JVFRJ.Button__isLoading___Wwyxo{pointer-events:none}.Button__root___JVFRJ.Button__isChecked___GR487{background-color:var(--accent-color);color:var(--bg-color)}.Button__root___JVFRJ.Button__isChecked___GR487 path{fill:var(--bg-color)}.Button__size-s___uiu0H{height:30px;min-height:30px;max-height:30px;min-width:30px;padding:0 10px;font-size:12px}.Button__size-s___uiu0H.Button__isSquare___ktJU_{width:30px}.Button__size-m___SHuPC{height:40px;min-height:40px;max-height:40px;min-width:40px;padding:0 12px;font-size:16px}.Button__size-m___SHuPC.Button__isSquare___ktJU_{width:40px}.Button__size-l___YhqIi{height:50px;min-height:50px;max-height:50px;min-width:50px;padding:0 14px;font-size:20px}.Button__size-l___YhqIi.Button__isSquare___ktJU_{width:50px}.Button__isSquare___ktJU_{padding:0;justify-content:center}.Button__variant-clear___AzTU6{box-shadow:none !important}.Button__variant-clear___AzTU6:hover{background-color:var(--active-color-alpha-300)}.Button__variant-default___PQpaK:hover{box-shadow:inset 0 0 0 2px var(--active-color-mix-accent-300)}.Button__variant-default___PQpaK:focus{box-shadow:inset 0 0 0 2px var(--active-color)}.Button__variant-default___PQpaK:active{background-color:var(--active-color-alpha-100)}.Button__variant-primary___BXK7j{background-color:var(--active-color);color:var(--accent-color-alpha-900);box-shadow:none}.Button__spinner___C6awX{margin-left:var(--indent-s)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Button__root___JVFRJ{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;border-radius:var(--border-radius-m);box-sizing:border-box;box-shadow:inset 0 0 0 2px var(--accent-color);background-color:var(--bg-color);transition:.2s ease-out;transition-property:box-shadow,opacity;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;line-height:1em;text-decoration:none;color:inherit;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Button__root___JVFRJ:hover{box-shadow:inset 0 0 0 2px var(--active-color)}.Button__root___JVFRJ:active{opacity:.7}.Button__root___JVFRJ.Button__isLoading___Wwyxo{pointer-events:none}.Button__root___JVFRJ.Button__isChecked___GR487{background-color:var(--accent-color);color:var(--decent-color)}.Button__root___JVFRJ.Button__isChecked___GR487 path{fill:var(--decent-color)}.Button__size-s___uiu0H{height:30px;min-height:30px;max-height:30px;min-width:30px;padding:0 10px;font-size:12px}.Button__size-s___uiu0H.Button__isSquare___ktJU_{width:30px}.Button__size-m___SHuPC{height:40px;min-height:40px;max-height:40px;min-width:40px;padding:0 12px;font-size:16px}.Button__size-m___SHuPC.Button__isSquare___ktJU_{width:40px}.Button__size-l___YhqIi{height:50px;min-height:50px;max-height:50px;min-width:50px;padding:0 14px;font-size:20px}.Button__size-l___YhqIi.Button__isSquare___ktJU_{width:50px}.Button__isSquare___ktJU_{padding:0;justify-content:center}.Button__variant-clear___AzTU6{box-shadow:none !important}.Button__variant-clear___AzTU6:hover{background-color:var(--active-color-alpha-300)}.Button__variant-default___PQpaK:hover{background-color:var(--active-color-alpha-100)}.Button__variant-default___PQpaK:focus{box-shadow:inset 0 0 0 2px var(--active-color)}.Button__variant-default___PQpaK:active{background-color:var(--active-color-alpha-100)}.Button__variant-primary___BXK7j{background-color:var(--active-color);color:var(--accent-color-alpha-900);box-shadow:none}.Button__spinner___C6awX{margin-left:var(--indent-s)}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Button__root___JVFRJ",
@@ -5087,7 +5087,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("ecb85ca8dc51e6d03562")
+/******/ 		__webpack_require__.h = () => ("3144eaaae4e7a28d61df")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6902,21 +6902,50 @@ var config = {
     decent: darkColor
   })))
 };
+
+function getColorsByTheme(theme) {
+  if (theme === 'dark') return {
+    accent: lightColor,
+    decent: darkColor
+  };
+  return {
+    accent: darkColor,
+    decent: lightColor
+  };
+}
+
+function getThemeConfig(theme) {
+  var additionalColors = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  var currColorsConfig = theme_objectSpread(theme_objectSpread(theme_objectSpread({}, colors), additionalColors), getColorsByTheme(theme));
+
+  return theme_objectSpread(theme_objectSpread({}, defaultConfig), theme_colorsConfigToVars(currColorsConfig));
+}
 ;// CONCATENATED MODULE: ./src/App/navigation.ts
 /* harmony default export */ const navigation = ([{
   name: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(187), __webpack_require__.e(864), __webpack_require__.e(273), __webpack_require__.e(606)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(928), __webpack_require__.e(821), __webpack_require__.e(606)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
   }
 }, {
   name: 'checkbox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(864), __webpack_require__.e(186)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Checkbox/Checkbox.example.tsx"));
+    return __webpack_require__.e(/* import() */ 21).then(__webpack_require__.bind(__webpack_require__, "./src/components/Checkbox/Checkbox.example.tsx"));
   }
 }, {
   name: 'input',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(187), __webpack_require__.e(864), __webpack_require__.e(273), __webpack_require__.e(845)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Input/Input.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(928), __webpack_require__.e(821), __webpack_require__.e(845)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Input/Input.example.tsx"));
+  }
+}, {
+  name: 'icon',
+  loader: function loader() {
+    return __webpack_require__.e(/* import() */ 313).then(__webpack_require__.bind(__webpack_require__, "./src/components/Icon/Icon.example.tsx"));
+  }
+}, {
+  name: 'popup',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(928), __webpack_require__.e(572)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Popup/Popup.example.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/App/App.styl
@@ -7005,9 +7034,9 @@ var initialThemeType = (_localStorage$getItem = localStorage.getItem('theme')) !
     localStorage.setItem('activeColor', color);
   }, []);
 
-  var currThemeConfig = App_objectSpread(App_objectSpread({}, config[theme]), colorsConfigToVars({
+  var currThemeConfig = App_objectSpread(App_objectSpread({}, config[theme]), colorsConfigToVars(App_objectSpread(App_objectSpread({}, colors), {}, {
     active: [activeColor, colors.active[1]]
-  }));
+  })));
 
   return App_h(compat_module/* Fragment */.HY, null, App_h("div", {
     className: App_App.root

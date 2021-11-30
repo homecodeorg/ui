@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk_truerenton_uilib"] = self["webpackChunk_truerenton_uilib"] || []).push([[864],{
+(self["webpackChunk_truerenton_uilib"] = self["webpackChunk_truerenton_uilib"] || []).push([[21],{
 
 /***/ "./src/components/AssistiveText/AssistiveText.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -99,6 +99,42 @@ function AssistiveText_AssistiveText_AssistiveText(props) {
     className: classnames_default()(AssistiveText_AssistiveText.root, AssistiveText_AssistiveText["size-".concat(size)], AssistiveText_AssistiveText["variant-".concat(variant)], className)
   }, rest), children);
 }
+
+/***/ }),
+
+/***/ "./src/components/Checkbox/Checkbox.example.tsx":
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var src_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/helpers.tsx");
+/* harmony import */ var _Container_Container__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./src/components/Container/Container.tsx");
+/* harmony import */ var _Checkbox__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
+/* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
+  return h(_Container_Container__WEBPACK_IMPORTED_MODULE_0__/* .Container */ .W, {
+    centered: true,
+    fullHeight: true,
+    size: "l"
+  }, h(src_helpers__WEBPACK_IMPORTED_MODULE_1__/* .State */ .ZM, {
+    initial: {
+      checked: true
+    }
+  }, function (store) {
+    return h(_Checkbox__WEBPACK_IMPORTED_MODULE_2__/* .Checkbox */ .X, {
+      label: "i'm a checkbutton",
+      onChange: function onChange() {
+        return store.checked = !store.checked;
+      },
+      checked: store.checked
+    });
+  }));
+});
 
 /***/ }),
 
@@ -360,8 +396,8 @@ _defineProperty(Checkbox_Checkbox_Checkbox, "defaultProps", {
 /* harmony import */ var _babel_runtime_corejs2_core_js_symbol_iterator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@babel/runtime-corejs2/core-js/symbol/iterator.js");
 /* harmony import */ var _babel_runtime_corejs2_core_js_symbol_iterator__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_symbol_iterator__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("./node_modules/preact/compat/dist/compat.module.js");
-/* harmony import */ var justorm_preact__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./node_modules/justorm/preact.js");
-/* harmony import */ var justorm_preact__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(justorm_preact__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var justorm_react__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./node_modules/justorm/preact.js");
+/* harmony import */ var justorm_react__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(justorm_react__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _components_AssistiveText_AssistiveText__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("./src/components/AssistiveText/AssistiveText.tsx");
 /* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) === "function" && typeof (_babel_runtime_corejs2_core_js_symbol_iterator__WEBPACK_IMPORTED_MODULE_1___default()) === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) === "function" && obj.constructor === (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default()) && obj !== (_babel_runtime_corejs2_core_js_symbol__WEBPACK_IMPORTED_MODULE_0___default().prototype) ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -413,7 +449,7 @@ var State = function (_Component) {
 
     _defineProperty(_assertThisInitialized(_this), "store", void 0);
 
-    _this.store = (0,justorm_preact__WEBPACK_IMPORTED_MODULE_8__.createStore)(_assertThisInitialized(_this), props.initial);
+    _this.store = (0,justorm_react__WEBPACK_IMPORTED_MODULE_8__.createStore)(_assertThisInitialized(_this), props.initial);
     return _this;
   }
 
@@ -495,7 +531,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Checkbox__root___yjgqm{cursor:pointer;display:inline-flex;align-items:center;box-sizing:border-box;text-decoration:none;color:inherit;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--accent-color);position:relative;display:block;border-radius:var(--border-radius-m);transition:.2s ease-out;transition-property:opacity,box-shadow}.Checkbox__root___yjgqm:hover .Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--active-color-mix-accent-300)}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp,.Checkbox__isFocused___HkJHG .Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--active-color) !important}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp{opacity:.7;background-color:var(--active-color-alpha-100)}.Checkbox__size-s___XyW5Z .Checkbox__controlWrapper___lEqgp{height:30px;width:30px;margin-right:var(--indent-s)}.Checkbox__size-m___AVv83 .Checkbox__controlWrapper___lEqgp{height:40px;width:40px;margin-right:var(--indent-m)}.Checkbox__size-l___YVv5L .Checkbox__controlWrapper___lEqgp{height:50px;width:50px;margin-right:var(--indent-l)}.Checkbox__control___nAhML{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;border-radius:var(--border-radius-m);box-sizing:border-box;box-shadow:inset 0 0 0 2px var(--accent-color);background-color:var(--bg-color);transition:.2s ease-out;transition-property:box-shadow,opacity;transition:.1s ease-out;transition-property:background-color,color;cursor:pointer;border-radius:var(--border-radius-s)}.Checkbox__control___nAhML:hover{box-shadow:inset 0 0 0 2px var(--active-color)}.Checkbox__checkmark___gqVb4{position:absolute;left:0;top:6px;height:100%;width:100%;opacity:0;transform:scale(.8) rotateZ(-45deg);transform-origin:center;transition:.1s ease-in;transition-property:transform,opacity;pointer-events:none}.Checkbox__checkmark___gqVb4::before,.Checkbox__checkmark___gqVb4::after{content:'';position:absolute;width:3px;background-color:var(--accent-color);border-radius:var(--border-radius-s)}.Checkbox__checkmark___gqVb4::before{z-index:1;left:calc(50% - 2px);height:16px;transform:rotateZ(9deg)}.Checkbox__checkmark___gqVb4::after{top:3px;left:21px;height:20px;transform:rotateZ(-103deg)}.Checkbox__isChecked___VknOz .Checkbox__checkmark___gqVb4{opacity:1}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Checkbox__root___yjgqm{cursor:pointer;display:inline-flex;align-items:center;box-sizing:border-box;text-decoration:none;color:inherit;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--accent-color);position:relative;display:block;border-radius:var(--border-radius-m);transition:.2s ease-out;transition-property:opacity,box-shadow}.Checkbox__root___yjgqm:hover .Checkbox__controlWrapper___lEqgp{background-color:var(--active-color-alpha-100)}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp,.Checkbox__isFocused___HkJHG .Checkbox__controlWrapper___lEqgp{box-shadow:inset 0 0 0 2px var(--active-color) !important}.Checkbox__isActive___DxpuE .Checkbox__controlWrapper___lEqgp{opacity:.7;background-color:var(--active-color-alpha-100)}.Checkbox__size-s___XyW5Z .Checkbox__controlWrapper___lEqgp{height:30px;width:30px;margin-right:var(--indent-s)}.Checkbox__size-m___AVv83 .Checkbox__controlWrapper___lEqgp{height:40px;width:40px;margin-right:var(--indent-m)}.Checkbox__size-l___YVv5L .Checkbox__controlWrapper___lEqgp{height:50px;width:50px;margin-right:var(--indent-l)}.Checkbox__control___nAhML{-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;border-radius:var(--border-radius-m);box-sizing:border-box;box-shadow:inset 0 0 0 2px var(--accent-color);background-color:var(--bg-color);transition:.2s ease-out;transition-property:box-shadow,opacity;transition:.1s ease-out;transition-property:background-color,color;cursor:pointer;border-radius:var(--border-radius-s)}.Checkbox__control___nAhML:hover{box-shadow:inset 0 0 0 2px var(--active-color)}.Checkbox__checkmark___gqVb4{position:absolute;left:0;top:6px;height:100%;width:100%;opacity:0;transform:scale(.8) rotateZ(-45deg);transform-origin:center;transition:.1s ease-in;transition-property:transform,opacity;pointer-events:none}.Checkbox__checkmark___gqVb4::before,.Checkbox__checkmark___gqVb4::after{content:'';position:absolute;width:3px;background-color:var(--accent-color);border-radius:var(--border-radius-s)}.Checkbox__checkmark___gqVb4::before{z-index:1;left:calc(50% - 2px);height:16px;transform:rotateZ(9deg)}.Checkbox__checkmark___gqVb4::after{top:3px;left:21px;height:20px;transform:rotateZ(-103deg)}.Checkbox__isChecked___VknOz .Checkbox__checkmark___gqVb4{opacity:1}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Checkbox__root___yjgqm",
@@ -510,6 +546,54 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"isChecked": "Checkbox__isChecked___VknOz"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/nanoid/index.prod.js":
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "x0": () => (/* binding */ nanoid)
+/* harmony export */ });
+/* unused harmony exports customAlphabet, customRandom, random */
+
+if (false) {}
+let random = bytes => crypto.getRandomValues(new Uint8Array(bytes))
+let customRandom = (alphabet, size, getRandom) => {
+  let mask = (2 << (Math.log(alphabet.length - 1) / Math.LN2)) - 1
+  let step = -~((1.6 * mask * size) / alphabet.length)
+  return () => {
+    let id = ''
+    while (true) {
+      let bytes = getRandom(step)
+      let j = step
+      while (j--) {
+        id += alphabet[bytes[j] & mask] || ''
+        if (id.length === size) return id
+      }
+    }
+  }
+}
+let customAlphabet = (alphabet, size) => customRandom(alphabet, size, random)
+let nanoid = (size = 21) => {
+  let id = ''
+  let bytes = crypto.getRandomValues(new Uint8Array(size))
+  while (size--) {
+    let byte = bytes[size] & 63
+    if (byte < 36) {
+      id += byte.toString(36)
+    } else if (byte < 62) {
+      id += (byte - 26).toString(36).toUpperCase()
+    } else if (byte < 63) {
+      id += '_'
+    } else {
+      id += '-'
+    }
+  }
+  return id
+}
+
 
 
 /***/ })

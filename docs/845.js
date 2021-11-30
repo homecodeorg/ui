@@ -24,12 +24,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_corejs2_core_js_object_assign__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_core_js_object_assign__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("./node_modules/lodash.omit/index.js");
 /* harmony import */ var lodash_omit__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(lodash_omit__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var helpers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("./src/helpers.tsx");
-/* harmony import */ var components_Container_Container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("./src/components/Container/Container.tsx");
-/* harmony import */ var components_Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
-/* harmony import */ var components_Select_Select__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("./src/components/Select/Select.tsx");
-/* harmony import */ var components_Form_Form__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("./src/components/Form/Form.tsx");
-/* harmony import */ var components_Icon_Icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./src/components/Icon/Icon.tsx");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("./src/helpers.tsx");
+/* harmony import */ var _Container_Container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("./src/components/Container/Container.tsx");
+/* harmony import */ var _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
+/* harmony import */ var _Select_Select__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("./src/components/Select/Select.tsx");
+/* harmony import */ var _Form_Form__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("./src/components/Form/Form.tsx");
+/* harmony import */ var _Icon_Icon__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("./src/components/Icon/Icon.tsx");
 /* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("./src/components/Input/Input.tsx");
 /* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 
@@ -86,7 +86,7 @@ var ADORNMENT_OPTIONS = [{
 
 function getAdorment(type, size) {
   if (type === 'text') return 'texttexttexttexttexttexttexttexttexttexttexttexttexttexttexttextte';
-  if (type === 'icon') return h(components_Icon_Icon__WEBPACK_IMPORTED_MODULE_8__/* .Icon */ .J, {
+  if (type === 'icon') return h(_Icon_Icon__WEBPACK_IMPORTED_MODULE_8__/* .Icon */ .J, {
     type: "close",
     size: size
   });
@@ -94,7 +94,7 @@ function getAdorment(type, size) {
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
-  return h(components_Form_Form__WEBPACK_IMPORTED_MODULE_9__/* .Form */ .l0, {
+  return h(_Form_Form__WEBPACK_IMPORTED_MODULE_9__/* .Form */ .l0, {
     initialValues: INITIAL_PROPS
   }, function (_ref) {
     var Field = _ref.Field,
@@ -108,23 +108,23 @@ function getAdorment(type, size) {
       adornmentRight: getAdorment(adornmentRight, size)
     });
 
-    return h(components_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
+    return h(_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
       style: {
         maxWidth: 600
       },
       size: "l"
-    }, h(components_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
+    }, h(_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
       style: {
         width: '50%'
       },
       vertical: true,
       size: "s"
-    }, h(helpers__WEBPACK_IMPORTED_MODULE_11__/* .Title */ .Dx, {
+    }, h(_helpers__WEBPACK_IMPORTED_MODULE_11__/* .Title */ .Dx, {
       text: "Props:"
     }), h(Field, {
       name: "size",
       label: "Size",
-      component: components_Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
+      component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: SIZE_OPTIONS
     }), h(Field, {
       name: "label",
@@ -135,12 +135,12 @@ function getAdorment(type, size) {
     }), h(Field, {
       name: "adornmentLeft",
       label: "Adornment Left",
-      component: components_Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
+      component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: ADORNMENT_OPTIONS
     }), h(Field, {
       name: "adornmentRight",
       label: "Adornment Right",
-      component: components_Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
+      component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: ADORNMENT_OPTIONS
     }), h(Field, {
       name: "error",
@@ -148,18 +148,18 @@ function getAdorment(type, size) {
     }), h(Field, {
       name: "disabled",
       label: "Disabled",
-      component: components_Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
+      component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
     }), h(Field, {
       name: "required",
       label: "Required",
-      component: components_Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
-    })), h(components_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
+      component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
+    })), h(_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {
       style: {
         width: '50%'
       },
       vertical: true,
       size: "s"
-    }, h(helpers__WEBPACK_IMPORTED_MODULE_11__/* .Title */ .Dx, {
+    }, h(_helpers__WEBPACK_IMPORTED_MODULE_11__/* .Title */ .Dx, {
       text: "Result:"
     }), h(_Input__WEBPACK_IMPORTED_MODULE_14__/* .Input */ .I, _extends({}, props, {
       defaultValue: "Alise"
