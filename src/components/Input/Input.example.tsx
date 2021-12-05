@@ -1,6 +1,6 @@
 import omit from 'lodash.omit';
 
-import { Title } from '../../helpers';
+import { Title, State } from '../../helpers';
 
 import { Container } from '../Container/Container';
 import { Checkbox } from '../Checkbox/Checkbox';
@@ -56,27 +56,40 @@ export default () => (
             <Title text="Props:" />
             <Field
               name="size"
+              key="size"
               label="Size"
               component={Select}
               options={SIZE_OPTIONS}
             />
-            <Field name="label" label="Label" />
-            <Field name="placeholder" label="Placeholder" />
+            <Field name="label" key="label" label="Label" />
+            <Field name="placeholder" key="placeholder" label="Placeholder" />
             <Field
               name="adornmentLeft"
+              key="adornmentLeft"
               label="Adornment Left"
               component={Select}
               options={ADORNMENT_OPTIONS}
             />
             <Field
               name="adornmentRight"
+              key="adornmentRight"
               label="Adornment Right"
               component={Select}
               options={ADORNMENT_OPTIONS}
             />
-            <Field name="error" label="Error message" />
-            <Field name="disabled" label="Disabled" component={Checkbox} />
-            <Field name="required" label="Required" component={Checkbox} />
+            <Field name="error" key="error" label="Error message" />
+            <Field
+              name="disabled"
+              key="disabled"
+              label="Disabled"
+              component={Checkbox}
+            />
+            <Field
+              name="required"
+              key="required"
+              label="Required"
+              component={Checkbox}
+            />
           </Container>
           <Container style={{ width: '50%' }} vertical size="s">
             <Title text="Result:" />

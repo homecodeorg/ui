@@ -1,0 +1,116 @@
+$hoverSize = 5px
+$offset = 8px
+
+.root
+  position relative
+  overflow hidden
+  display flex
+
+.inner
+  width 100%
+  overflow hidden
+  -webkit-overflow-scrolling touch
+
+  // hide scrollbars
+  -ms-overflow-style none  // IE and Edge
+  scrollbar-width none  // Firefox
+  &::-webkit-scrollbar // for Chrome, Safari and Opera
+    display none
+
+  .y &
+    overflow-y auto
+  .x &
+    overflow-x auto
+
+.thumb
+  position absolute
+  background-color var(--active-color)
+  border-radius 1px
+  transition all .1s ease-out
+  transform-origin center
+
+  &:active
+    transition none
+
+  .y > &
+    top 0
+    left 50%
+    width 1px
+
+  .x > &
+    left 0
+    top 50%
+    height 1px
+
+.bar
+  z-index 2
+  position absolute
+  transition .3s opacity .1s ease-out
+  cursor pointer
+  overflow hidden
+
+  .autoHide &
+    opacity 0
+
+  .isScrolling &
+  &:hover
+    transition-delay 0
+    opacity 1
+
+  &::before
+    content ''
+    position absolute
+    opacity 0
+    transition .1s opacity .3s ease-out
+    background-color var(--accent-color-alpha-100)
+
+  &:hover
+  &.isActive
+    z-index 1
+
+    &::before
+      opacity 1
+      transition-delay 0s
+
+    .thumb
+      transition-delay 0s
+
+  &.y
+    right 0
+    top $offset
+    bottom @top
+    width 16px
+
+    .isTouch &
+      width 32px
+
+    &::before
+      left 50%
+      width 1px
+      height 100%
+
+    &:hover
+    &.isActive
+      .thumb
+        width $hoverSize
+        left calc(50% - 2px)
+
+  &.x
+    bottom 0
+    right $offset
+    left @right
+    height 16px
+
+    .isTouch &
+      height 32px
+
+    &::before
+      top 50%
+      height 1px
+      width 100%
+
+    &:hover
+    &.isActive
+      .thumb
+        height $hoverSize
+        top calc(50% - 2px)

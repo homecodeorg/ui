@@ -1,5 +1,10 @@
-import { FormHTMLAttributes } from 'react';
-import { ValidationSchema } from 'fastest-validator';
+import {
+  ChangeEvent,
+  FormHTMLAttributes,
+  ReactElement,
+  ReactNode,
+} from 'react';
+import { ValidationSchema, ValidationError } from 'fastest-validator';
 
 export type FormValidationSchema = ValidationSchema;
 
@@ -58,7 +63,21 @@ export type Props = Omit<
 
 export type FieldProps = {
   name: string;
+  className?: string;
+  onChange: (e: ChangeEvent, value: any) => void | boolean;
+  onBlur;
+  markEdited?: Props['markEdited'];
+  value: any;
+  isHidden: boolean;
+  component?: (props: FormFieldProps) => ReactNode;
+  children?: ReactNode;
+};
+
+export type FormFieldProps = FieldProps & {
+  value: any;
+  error: ValidationError;
+  isChanged: boolean;
+  isTouched: boolean;
   handleChange: (name: string, val: any) => void;
   handleBlur: (name: string) => void;
-  markEdited?: Props['markEdited'];
 };

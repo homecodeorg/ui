@@ -23,6 +23,10 @@ export default [
     name: 'popup',
     loader: () => import('../components/Popup/Popup.example'),
   },
+  {
+    name: 'scroll',
+    loader: () => import('../components/Scroll/Scroll.example'),
+  },
   // {
   //   name: 'notifications',
   //   loader: () => import('../components/Notifications/Notifications.example'),

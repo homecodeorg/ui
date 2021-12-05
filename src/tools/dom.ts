@@ -32,3 +32,7 @@ export function watchControllerFlag() {
 
   classes.add('mouse');
 }
+
+export function isTouch() {
+  return 'ontouchstart' in window;
+}

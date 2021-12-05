@@ -26,10 +26,11 @@ const STORE_FIELDS_EXPOSED = [
   'disabled',
 ];
 
-function Field(props) {
+function Field(props: T.FormFieldProps) {
   const {
     value,
     error,
+    markEdited,
     isChanged,
     isTouched,
     component: Control = Input,
@@ -48,7 +49,7 @@ function Field(props) {
     className,
     S.field,
     isHidden && S.hidden,
-    isChanged && S.changed
+    markEdited && isChanged && S.changed
   );
 
   function handleFieldChange(e, val) {
@@ -72,7 +73,8 @@ function Field(props) {
 
   return (
     <div className={classes}>
-      <Control {...controlProps} key={name} />
+      {/* @ts-ignore */}
+      <Control {...controlProps} />
       {children}
     </div>
   );
@@ -87,8 +89,6 @@ function Field(props) {
  */
 export class Form extends Component<T.Props> {
   store: any;
-
-  field = props => <Field {...this.getFieldProps(props)} />;
 
   validationSchema: T.FormValidationSchema;
 
@@ -151,21 +151,6 @@ export class Form extends Component<T.Props> {
     }
 
     return true;
-  }
-
-  getFieldProps(props): T.FieldProps {
-    const { name } = props;
-    const { values, changed, touched, errors } = this.store.originalObject;
-
-    return {
-      ...props,
-      value: values[name],
-      isChanged: changed[name],
-      isTouched: touched[name],
-      error: errors?.[name],
-      handleChange: this.onChange,
-      handleBlur: this.onBlur,
-    };
   }
 
   cloneValue(val) {
@@ -235,6 +220,25 @@ export class Form extends Component<T.Props> {
     this.setValues(initialValues);
     this.store.touched = H.getInitialTouched(initialValues);
   };
+
+  field = (props: T.FieldProps) => <Field {...this.getFieldProps(props)} />;
+
+  getFieldProps(props): T.FormFieldProps {
+    const { markEdited } = this.props;
+    const { name } = props;
+    const { values, changed, touched, errors } = this.store.originalObject;
+
+    return {
+      ...props,
+      value: values[name],
+      markEdited,
+      isChanged: changed[name],
+      isTouched: touched[name],
+      error: errors?.[name],
+      handleChange: this.onChange,
+      handleBlur: this.onBlur,
+    };
+  }
 
   getFormAPI(): T.FormApi {
     return {
