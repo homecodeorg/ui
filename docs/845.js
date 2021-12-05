@@ -123,34 +123,42 @@ function getAdorment(type, size) {
       text: "Props:"
     }), h(Field, {
       name: "size",
+      key: "size",
       label: "Size",
       component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: SIZE_OPTIONS
     }), h(Field, {
       name: "label",
+      key: "label",
       label: "Label"
     }), h(Field, {
       name: "placeholder",
+      key: "placeholder",
       label: "Placeholder"
     }), h(Field, {
       name: "adornmentLeft",
+      key: "adornmentLeft",
       label: "Adornment Left",
       component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: ADORNMENT_OPTIONS
     }), h(Field, {
       name: "adornmentRight",
+      key: "adornmentRight",
       label: "Adornment Right",
       component: _Select_Select__WEBPACK_IMPORTED_MODULE_12__/* .Select */ .P,
       options: ADORNMENT_OPTIONS
     }), h(Field, {
       name: "error",
+      key: "error",
       label: "Error message"
     }), h(Field, {
       name: "disabled",
+      key: "disabled",
       label: "Disabled",
       component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
     }), h(Field, {
       name: "required",
+      key: "required",
       label: "Required",
       component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_13__/* .Checkbox */ .X
     })), h(_Container_Container__WEBPACK_IMPORTED_MODULE_10__/* .Container */ .W, {

@@ -8,11 +8,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./src/helpers.tsx");
-/* harmony import */ var components_Form_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./src/components/Form/Form.tsx");
-/* harmony import */ var components_Container_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/components/Container/Container.tsx");
-/* harmony import */ var components_Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
-/* harmony import */ var components_Select_Select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./src/components/Select/Select.tsx");
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./src/helpers.tsx");
+/* harmony import */ var _Form_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./src/components/Form/Form.tsx");
+/* harmony import */ var _Container_Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./src/components/Container/Container.tsx");
+/* harmony import */ var _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("./src/components/Checkbox/Checkbox.tsx");
+/* harmony import */ var _Select_Select__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./src/components/Select/Select.tsx");
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("./src/components/Button/Button.tsx");
 /* provided dependency */ var h = __webpack_require__("./node_modules/preact/dist/preact.module.js")["h"];
 
@@ -44,49 +44,54 @@ var VARIANTS = [{
 var INITIAL_PROPS = {
   size: 'm',
   variant: 'default',
-  isLoading: false
+  isLoading: false,
+  isChecked: false
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (function () {
-  return h(components_Form_Form__WEBPACK_IMPORTED_MODULE_0__/* .Form */ .l0, {
+  return h(_Form_Form__WEBPACK_IMPORTED_MODULE_0__/* .Form */ .l0, {
     initialValues: INITIAL_PROPS
   }, function (_ref) {
     var Field = _ref.Field,
         values = _ref.values;
-    return h(components_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
+    return h(_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
       style: {
         maxWidth: 600
       },
       centeredH: true,
       size: "l"
-    }, h(components_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
+    }, h(_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
       vertical: true,
       style: {
         flexGrow: 1
       },
       size: "s"
-    }, h(helpers__WEBPACK_IMPORTED_MODULE_2__/* .Title */ .Dx, {
+    }, h(_helpers__WEBPACK_IMPORTED_MODULE_2__/* .Title */ .Dx, {
       text: "Props:"
     }), h(Field, {
       name: "size",
-      component: components_Select_Select__WEBPACK_IMPORTED_MODULE_3__/* .Select */ .P,
+      component: _Select_Select__WEBPACK_IMPORTED_MODULE_3__/* .Select */ .P,
       options: SIZES,
       label: "Size"
     }), h(Field, {
       name: "variant",
-      component: components_Select_Select__WEBPACK_IMPORTED_MODULE_3__/* .Select */ .P,
+      component: _Select_Select__WEBPACK_IMPORTED_MODULE_3__/* .Select */ .P,
       options: VARIANTS,
       label: "Variant"
     }), h(Field, {
       name: "isLoading",
-      component: components_Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_4__/* .Checkbox */ .X,
+      component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_4__/* .Checkbox */ .X,
       label: "isLoading"
-    })), h(components_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
+    }), h(Field, {
+      name: "isChecked",
+      component: _Checkbox_Checkbox__WEBPACK_IMPORTED_MODULE_4__/* .Checkbox */ .X,
+      label: "isChecked"
+    })), h(_Container_Container__WEBPACK_IMPORTED_MODULE_1__/* .Container */ .W, {
       style: {
         flexGrow: 1
       },
       vertical: true,
       size: "s"
-    }, h(helpers__WEBPACK_IMPORTED_MODULE_2__/* .Title */ .Dx, {
+    }, h(_helpers__WEBPACK_IMPORTED_MODULE_2__/* .Title */ .Dx, {
       text: "Result:"
     }), h(_Button__WEBPACK_IMPORTED_MODULE_5__/* .Button */ .z, values, "I'm a button")));
   });

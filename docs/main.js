@@ -539,7 +539,8 @@ var Spinner_Spinner_Spinner = function Spinner(_ref) {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "r7": () => (/* binding */ getCoords),
 /* harmony export */   "IY": () => (/* binding */ hasParent),
-/* harmony export */   "GZ": () => (/* binding */ watchControllerFlag)
+/* harmony export */   "GZ": () => (/* binding */ watchControllerFlag),
+/* harmony export */   "T": () => (/* binding */ isTouch)
 /* harmony export */ });
 function getCoords(elem) {
   var box = elem.getBoundingClientRect();
@@ -568,6 +569,9 @@ function watchControllerFlag() {
     classes.add('keyboard');
   });
   classes.add('mouse');
+}
+function isTouch() {
+  return 'ontouchstart' in window;
 }
 
 /***/ }),
@@ -2980,7 +2984,7 @@ module.exports = function (i) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "body{background-color:var(--decent-color)}.App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto}.App__configBar___GiZrC{display:flex;padding:10px;margin-bottom:30px}.App__colorPicker___Ih6xt{display:none}.App__activeColor___hKyEw{background-color:var(--active-color);height:20px;width:20px;border-radius:inherit}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "body{background-color:var(--decent-color)}.App__root___Cu9id{display:flex;height:100vh;max-width:800px;margin:0 auto}.App__configBar___GiZrC{display:flex;padding:10px;margin-bottom:30px}.App__colorPicker___Ih6xt{display:none}.App__activeColor___hKyEw{background-color:var(--active-color);height:20px;width:20px;border-radius:inherit}.App__nav___hdx6r{position:relative;display:flex;flex-direction:column;min-width:200px;padding-bittom:100px;box-shadow:inset -2px 0 0 var(--accent-color);overflow-y:auto}.App__nav___hdx6r::before,.App__nav___hdx6r::after{content:'';position:absolute;left:0;right:2px;height:100px;pointer-events:none;z-index:1}.App__nav___hdx6r::before{top:0;background-image:linear-gradient(var(--bg-color),transparent)}.App__nav___hdx6r::after{bottom:0;background-image:linear-gradient(transparent,var(--bg-color))}.App__navItem___PxTWl{text-align:right;padding:var(--indent-s) var(--indent-l) 0;font-size:20px}.App__content___js6S4{flex-grow:1;overflow-x:auto;padding-left:50px}.App__cfgButton___pG9GK{border-radius:50%}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "App__root___Cu9id",
@@ -4640,6 +4644,7 @@ module.exports = omit;
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "I4": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.I4),
+/* harmony export */   "d4": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.d4),
 /* harmony export */   "sO": () => (/* reexport safe */ preact_hooks__WEBPACK_IMPORTED_MODULE_0__.sO),
 /* harmony export */   "Vf": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.createRef),
 /* harmony export */   "HY": () => (/* reexport safe */ preact__WEBPACK_IMPORTED_MODULE_1__.Fragment),
@@ -5087,7 +5092,7 @@ module.exports = styleTagTransform;
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("3144eaaae4e7a28d61df")
+/******/ 		__webpack_require__.h = () => ("37b2119fcdc93139beef")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -6925,7 +6930,7 @@ function getThemeConfig(theme) {
 /* harmony default export */ const navigation = ([{
   name: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(928), __webpack_require__.e(821), __webpack_require__.e(606)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(551), __webpack_require__.e(566), __webpack_require__.e(821), __webpack_require__.e(606)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Button/Button.example.tsx"));
   }
 }, {
   name: 'checkbox',
@@ -6935,7 +6940,7 @@ function getThemeConfig(theme) {
 }, {
   name: 'input',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(928), __webpack_require__.e(821), __webpack_require__.e(845)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Input/Input.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(526), __webpack_require__.e(551), __webpack_require__.e(566), __webpack_require__.e(821), __webpack_require__.e(845)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Input/Input.example.tsx"));
   }
 }, {
   name: 'icon',
@@ -6945,7 +6950,12 @@ function getThemeConfig(theme) {
 }, {
   name: 'popup',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(928), __webpack_require__.e(572)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Popup/Popup.example.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(184), __webpack_require__.e(566), __webpack_require__.e(154)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Popup/Popup.example.tsx"));
+  }
+}, {
+  name: 'scroll',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(433), __webpack_require__.e(551), __webpack_require__.e(531)]).then(__webpack_require__.bind(__webpack_require__, "./src/components/Scroll/Scroll.example.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/App/App.styl
