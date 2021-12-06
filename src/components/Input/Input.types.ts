@@ -1,6 +1,6 @@
 import { ReactChild, ChangeEvent, HTMLProps, InputHTMLAttributes } from 'react';
 
-export type Size = 's' | 'm' | 'l' | 'xl';
+import { Size } from '../../types';
 
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;

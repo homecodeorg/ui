@@ -13,6 +13,7 @@ import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
 import { Label } from '../Label/Label';
 import { Popup } from '../Popup/Popup';
+import { RequiredStar } from '../RequiredStar/RequiredStar';
 import { AssistiveText } from '../AssistiveText/AssistiveText';
 
 import * as T from './Select.types';
@@ -402,9 +403,11 @@ export class Select extends Component<T.Props, T.State> {
     return label;
   }
 
-  getFieldLabel(label, value) {
-    if (this.isMultiple(value) && value.length)
-      return `${label} (${value.length})`;
+  getFieldLabel(label) {
+    // @ts-ignore
+    const length = this.props.value?.length;
+
+    if (this.isMultiple() && length) return `${label} (${length})`;
     return label;
   }
 
@@ -413,12 +416,15 @@ export class Select extends Component<T.Props, T.State> {
 
     if (!this.isMultiple()) return this.getLabel(value);
     if (!value) return '';
-    return value
-      .reduce((acc, id) => {
-        const label = this.getLabel(id);
-        return label ? [...acc, label] : acc;
-      }, [] as string[])
-      .join(', ');
+    return (
+      value
+        // @ts-ignore
+        .reduce((acc, id) => {
+          const label = this.getLabel(id);
+          return label ? [...acc, label] : acc;
+        }, [] as string[])
+        .join(', ')
+    );
   }
 
   filterOption({ label }) {
@@ -461,7 +467,7 @@ export class Select extends Component<T.Props, T.State> {
       value: this.getInputVal(),
       onChange: this.setSearchVal,
       ref: this.triggerInputRef,
-      label: this.getFieldLabel(label, value),
+      label: this.getFieldLabel(label),
     } as T.Props['inputProps'] & { onBlur: T.Props['onBlur'] };
 
     return <Input {...props} />;
@@ -505,7 +511,7 @@ export class Select extends Component<T.Props, T.State> {
           isFocused={isFocused}
           onClipPathChange={this.onLabelClipPathChange}
         >
-          {this.getFieldLabel(label, value)}
+          {this.getFieldLabel(label)}
         </Label>
       </div>
     );
@@ -550,7 +556,7 @@ export class Select extends Component<T.Props, T.State> {
         className={S.expandButton}
         onMouseUpCapture={e => this.onExpandClick(e, id)}
       >
-        <Icon type="chevron-right" size={size} className={S.expandIcon} />
+        <Icon type="arrow-right" size={size} className={S.expandIcon} />
       </Button>
     );
   }
@@ -657,7 +663,7 @@ export class Select extends Component<T.Props, T.State> {
     return (
       <div className={S.presetPanel} key="preset-panel">
         {items.map(props => (
-          <Button className={S.presetButton} clear {...props} />
+          <Button className={S.presetButton} variant="clear" {...props} />
         ))}
       </div>
     );

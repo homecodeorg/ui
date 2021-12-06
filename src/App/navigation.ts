@@ -24,6 +24,10 @@ export default [
     loader: () => import('../components/Popup/Popup.example'),
   },
   {
+    name: 'select',
+    loader: () => import('../components/Select/Select.example'),
+  },
+  {
     name: 'scroll',
     loader: () => import('../components/Scroll/Scroll.example'),
   },

@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
-import { State, getRandomItem } from 'helpers';
+import { State, getRandomItem } from '../../helpers';
 
-import { Container } from 'components/Container/Container';
+import { Container } from '../Container/Container';
+import { Heading } from '../Heading/Heading';
 
 import { Select } from './Select';
 import * as H from './Select.example-helpers';
@@ -25,6 +26,8 @@ const GROUPED_OPTIONS = (function () {
   }, []);
 })();
 
+console.log('OPTIONS', OPTIONS);
+
 export default () => (
   <Fragment>
     <Container fullHeight>
@@ -32,7 +35,7 @@ export default () => (
         {state => (
           <Select
             label="Lorem Ipsum"
-            options={OPTIONS}
+            options={[...OPTIONS]}
             value={state.value}
             onChange={value => (state.value = value)}
           />
@@ -45,7 +48,7 @@ export default () => (
           <Select
             key="list1"
             inputProps={{ placeholder: 'List 1' }}
-            options={OPTIONS}
+            options={[...OPTIONS]}
             value={state.lang}
             onChange={value => (state.value = value)}
             popupProps={{ inline: true }}
@@ -54,7 +57,7 @@ export default () => (
           <Select
             key="list2"
             inputProps={{ placeholder: 'List 2' }}
-            options={OPTIONS}
+            options={[...OPTIONS]}
             value={state.cluster}
             onChange={value => (state.value = value)}
             popupProps={{ inline: true }}
@@ -91,7 +94,7 @@ export default () => (
         {state => (
           <Select
             label="Lorem Ipsum"
-            options={OPTIONS}
+            options={[...OPTIONS]}
             value={state.value}
             onChange={value => (state.value = value)}
           />
@@ -103,7 +106,7 @@ export default () => (
         {state => (
           <Select
             label="Lorem Ipsum"
-            options={OPTIONS}
+            options={[...OPTIONS]}
             value={state.value}
             onChange={value => (state.value = value)}
             presets={[
