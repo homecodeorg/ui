@@ -29,7 +29,14 @@
           "customMatcher": "\\.styl$"
         }
       }
-    ]
+    ],
+    "paths": {
+      "helpers": ["src/helpers"],
+      "helpers/*": ["src/helpers/*"],
+      "components/*": ["src/components/*"],
+      "tools/*": ["src/tools/*"],
+      "@foreverido/uilib": ["src"]
+    }
   },
   "include": ["src", "index.ts"],
   "exclude": ["node_modules"]

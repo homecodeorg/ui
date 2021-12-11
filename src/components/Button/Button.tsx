@@ -1,4 +1,4 @@
-import { ReactChild, ButtonHTMLAttributes } from 'react';
+import { ReactNode, ButtonHTMLAttributes } from 'react';
 import { useEffect, useRef } from 'preact/hooks';
 import cn from 'classnames';
 
@@ -9,7 +9,7 @@ import * as H from './Button.helpers';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
-  children: ReactChild;
+  children: ReactNode;
   variant?: 'clear' | 'default' | 'primary';
   size?: 's' | 'm' | 'l';
   type?: 'button' | 'submit' | 'reset';

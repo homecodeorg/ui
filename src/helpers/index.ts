@@ -1,24 +1,8 @@
-import { Component } from 'react';
-import { createStore } from 'justorm/react';
+// Helpers for documentation app
 
-import { AssistiveText } from './components/AssistiveText/AssistiveText';
-
-export class State extends Component {
-  store;
-
-  constructor(props) {
-    super(props);
-    this.store = createStore(this, props.initial);
-  }
-
-  render({ children }) {
-    return children(this.store);
-  }
-}
-
-export function Title({ text }) {
-  return <AssistiveText style={{ marginBottom: 10 }}>{text}</AssistiveText>;
-}
+export * from './State';
+export * from './Title';
+// export * from './Code';
 
 export const LOREM_IPSUM_SHORT =
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';

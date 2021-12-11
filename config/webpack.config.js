@@ -8,6 +8,7 @@ const config = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.css', '.styl'],
     alias: {
       src: paths.src,
+      '@foreverido/uilib': paths.src,
       theme: `${paths.src}/theme.styl`,
       react: 'preact/compat',
       'react-dom': 'preact/compat',

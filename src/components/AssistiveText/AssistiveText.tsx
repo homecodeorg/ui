@@ -1,9 +1,9 @@
-import { ReactChild } from 'react';
+import { ReactChild, HTMLAttributes } from 'react';
 import cn from 'classnames';
 
 import S from './AssistiveText.styl';
 
-type Props = {
+type AssistiveTextProps = HTMLAttributes<HTMLDivElement> & {
   className?: string;
   size?: 's' | 'm' | 'l';
   variant?: 'default' | 'danger';
@@ -11,8 +11,7 @@ type Props = {
   // style?: HTMLAttributes['style'];
 };
 
-export type AssistiveTextProps = Props;
-export function AssistiveText(props: Props) {
+export function AssistiveText(props: AssistiveTextProps) {
   const {
     className,
     size = 'm',

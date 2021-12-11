@@ -31,6 +31,10 @@ export default [
     name: 'scroll',
     loader: () => import('../components/Scroll/Scroll.example'),
   },
+  {
+    name: 'virtualized',
+    loader: () => import('../components/Virtualized/Virtualized.example'),
+  },
   // {
   //   name: 'notifications',
   //   loader: () => import('../components/Notifications/Notifications.example'),

@@ -121,7 +121,7 @@ export class Input extends Component<T.Props> {
     const { onChange, onClear } = this.props;
 
     if (onClear) onClear();
-    if (onChange) onChange('' as any);
+    if (onChange) onChange(null, '');
     // this.inputRef.current?.focus();
     this.isClearPressed = false;
   };
@@ -158,7 +158,7 @@ export class Input extends Component<T.Props> {
     if (changeOnEnd) {
       this.store.inputValue = value;
       this.updateHasValue();
-    } else if (onChange) onChange(value, e);
+    } else if (onChange) onChange(e, value);
   };
 
   onLabelClipPathChange = (clipPath: string) =>
@@ -168,7 +168,7 @@ export class Input extends Component<T.Props> {
     const { onChange } = this.props;
     const value = this.getValue();
 
-    if (onChange) onChange(value);
+    if (onChange) onChange(null, value);
   };
 
   onFocus = e => {
@@ -193,7 +193,7 @@ export class Input extends Component<T.Props> {
     this.store.isFocused = false;
     this.updateLabelPosition();
     // some browsers not fire `onchange` after autofill
-    if (checkAutofill && onChange && !value && val) onChange(val);
+    if (checkAutofill && onChange && !value && val) onChange(null, val);
     if (onBlur) onBlur(e);
   };
 
