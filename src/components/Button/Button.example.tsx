@@ -1,4 +1,4 @@
-import { Title } from '../../helpers';
+import Title from 'helpers/Title';
 
 import { Form } from '../Form/Form';
 // import { AssistiveText } from '../AssistiveText/AssistiveText';

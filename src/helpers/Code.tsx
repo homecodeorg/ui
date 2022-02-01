@@ -1,13 +1,32 @@
 import { Sandpack } from '@codesandbox/sandpack-react';
-// import 'style-loader!@codesandbox/sandpack-react/dist/index.css';
+import sandpackCSS from '!!raw-loader!@codesandbox/sandpack-react/dist/index.css'; // TODO: use Vite instead of Webpack
+import helpers from '!!raw-loader!helpers';
 
-export function Code({ files }) {
+const style = document.createElement('style');
+style.innerText = sandpackCSS;
+document.body.appendChild(style);
+
+const commonFiles = {
+  '/helpers.ts': helpers,
+};
+
+const customSetup = {
+  dependencies: { '@foreverido/uilib': 'latest' },
+  entry: '/index.tsx',
+  main: '/App.tsx',
+};
+
+export default function Code({ files }) {
   return (
     <Sandpack
       template="react-ts"
-      files={files}
-      options={{ initMode: 'user-visible' }}
-      // customSetup={{ entry: '/index.tsx', main: '/index.tsx' }}
+      files={{ ...commonFiles, ...files }}
+      customSetup={customSetup}
+      options={{
+        showTabs: true,
+        openPaths: Object.keys(files),
+        initMode: 'user-visible',
+      }}
     />
   );
 }

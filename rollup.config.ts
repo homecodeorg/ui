@@ -17,6 +17,9 @@ import styles from 'rollup-plugin-styles';
 import svgr from '@svgr/rollup';
 import json from '@rollup/plugin-json';
 
+// import dts from '@guanghechen/postcss-modules-dts';
+import dts from 'rollup-plugin-dts';
+
 // import { babel } from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 
@@ -34,66 +37,78 @@ glob.sync('src/**/*.styl').forEach(css => {
     );
 });
 
-export default {
-  // preserveModules: true,
-  input: 'index.ts',
-  output: [
-    // {
-    //   dir: pkg.main,
-    //   format: 'cjs',
-    //   // exports: 'named',
-    // },
-    {
-      dir: pkg.module,
-      format: 'es',
-      // format: 'iife',
-      // exports: 'named',
-      preserveModules: true,
-    },
-  ],
-  external: [
-    'react',
-    'react',
-    'timen',
-    'justorm',
-    'compareq',
-    'classnames',
-    'nanoid',
-    'lodash.omit',
-    'lodash.pick',
-  ],
-  plugins: [
-    del({ targets: './lib/*' }),
+export default [
+  {
+    // preserveModules: true,
+    input: 'index.ts',
+    output: [
+      // {
+      //   dir: pkg.main,
+      //   format: 'cjs',
+      //   name: 'uilib',
+      //   sourcemap: true,
+      //   // exports: 'named',
+      // },
+      {
+        dir: pkg.module,
+        format: 'esm',
+        // format: 'iife',
+        // exports: 'named',
+        sourcemap: true,
+        preserveModules: true,
+      },
+    ],
+    external: [
+      'react',
+      'react/jsx-runtime',
+      'preact',
+      'timen',
+      'justorm',
+      'compareq',
+      'classnames',
+      'nanoid',
+      'lodash.omit',
+      'lodash.pick',
+    ],
+    plugins: [
+      del({ targets: './dist/*' }),
 
-    externals({ deps: true }),
-    resolve(),
-    commonjs(),
+      externals({ deps: true }),
+      resolve(),
+      commonjs(),
 
-    json(),
+      json(),
 
-    svgr(),
-    styles({ modules: true }),
-    // stylusCssModules({ output: 'index.css' }),
-    // postcss({
-    //   // minimize: true,
-    //   modules: true,
-    //   // use: {
-    //   //   sass: null,
-    //   //   stylus: null,
-    //   //   less: null,
-    //   // },
-    //   // extract: true,
-    // }),
+      svgr(),
+      styles({ modules: true }),
+      // stylusCssModules({ output: 'index.css' }),
 
-    typescript({
-      useTsconfigDeclarationDir: true,
-      tsconfig: 'tsconfig.json',
-    }),
-    // babel({
-    //   babelHelpers: 'bundled',
-    //   include: path.resolve('src/components'),
-    //   extensions: ['.js', '.ts', '.jsx', '.tsx'],
-    // }),
-    uglify(),
-  ],
-};
+      typescript({
+        useTsconfigDeclarationDir: true,
+        tsconfig: 'tsconfig.json',
+      }),
+      // postcss({
+      //   // minimize: true,
+      //   modules: true,
+      //   // use: {
+      //   //   sass: null,
+      //   //   stylus: null,
+      //   //   less: null,
+      //   // },
+      //   // extract: true,
+      // }),
+      // babel({
+      //   babelHelpers: 'bundled',
+      //   include: path.resolve('src/components'),
+      //   extensions: ['.js', '.ts', '.jsx', '.tsx'],
+      // }),
+      uglify(),
+    ],
+  },
+  // {
+  //   input: 'dist/esm/types/index.d.ts',
+  //   output: [{ file: 'dist/index.d.ts', format: 'esm' }],
+  //   plugins: [dts()],
+  //   // external: [/\.css$/],
+  // },
+];

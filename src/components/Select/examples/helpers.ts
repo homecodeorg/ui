@@ -1,4 +1,4 @@
-import { getRandomItem } from 'helpers';
+import { getRandomItem } from './helpers';
 import { Option } from './Select.types';
 
 const TEXT = [
@@ -46,3 +46,5 @@ export function generateTreeOptions(level = 0, parentId = ''): Option[] {
 
   return items;
 }
+
+export default {};

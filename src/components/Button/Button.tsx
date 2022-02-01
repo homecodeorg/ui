@@ -1,5 +1,4 @@
-import { ReactNode, ButtonHTMLAttributes } from 'react';
-import { useEffect, useRef } from 'preact/hooks';
+import { ReactNode, ButtonHTMLAttributes, useEffect, useRef } from 'react';
 import cn from 'classnames';
 
 import { Spinner } from '../Spinner/Spinner';

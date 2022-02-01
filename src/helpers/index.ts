@@ -1,9 +1,5 @@
 // Helpers for documentation app
 
-export * from './State';
-export * from './Title';
-// export * from './Code';
-
 export const LOREM_IPSUM_SHORT =
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';
 

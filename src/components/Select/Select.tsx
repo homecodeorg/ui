@@ -20,6 +20,8 @@ import * as T from './Select.types';
 import * as H from './Select.helpers';
 import S from './Select.styl';
 
+export const SelectHelpers = H;
+
 export class Select extends Component<T.Props, T.State> {
   store;
   inputRef = createRef<Input>();

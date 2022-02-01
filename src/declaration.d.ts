@@ -7,3 +7,13 @@ declare module 'lodash.omit';
 declare module 'compareq';
 declare module 'timen';
 declare module 'nanoid';
+declare module '!!raw-loader!*' {
+  const contents: string;
+  export default contents;
+}
+
+// to remove warnings from examples:
+declare module '@foreverido/uilib' {
+  const contents: object; // TODO: use types from `/dist/types`
+  export default contents;
+}

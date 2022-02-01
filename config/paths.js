@@ -12,7 +12,7 @@ module.exports = {
   src: resolvePath('src'),
   server: resolvePath('server'),
   docs: resolvePath('docs'),
-  lib: resolvePath('lib'),
+  dist: resolvePath('dist'),
   assets: resolvePath('assets'),
   modules: resolvePath('node_modules'),
 };

@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import cn from 'classnames';
 
-import { State } from 'src/helpers';
+import State from 'helpers/State';
 
 import { Container } from '../Container/Container';
 import { Button } from '../Button/Button';

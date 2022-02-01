@@ -1,6 +1,14 @@
-src
+-lib/
+/index.*
+bin/
+config/
+src/
+assets/
 node_modules/
+.npmrc
 .eslintrc
 *config.*
 yarn-error.log
 *.sublime-*
+.vscode/
+*.tgz

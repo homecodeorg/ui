@@ -1,7 +1,8 @@
 import { Component, Fragment } from 'react';
 import omit from 'lodash.omit';
 
-import { State, Title } from 'helpers';
+import State from 'helpers/State';
+import Title from 'helpers/Title';
 
 import { Form, SubmitButtons } from 'components/Form/Form';
 import { Container } from 'components/Container/Container';

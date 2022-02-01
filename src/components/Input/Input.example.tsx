@@ -1,6 +1,7 @@
 import omit from 'lodash.omit';
 
-import { Title, State } from '../../helpers';
+import Title from 'helpers/Title';
+import State from 'helpers/State';
 
 import { Container } from '../Container/Container';
 import { Checkbox } from '../Checkbox/Checkbox';

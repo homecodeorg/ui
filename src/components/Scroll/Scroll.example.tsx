@@ -1,6 +1,8 @@
 import { Fragment } from 'react';
 
-import { LOREM_IPSUM_LONG, State, Title } from '../../helpers';
+import { LOREM_IPSUM_LONG } from 'helpers';
+import Title from 'helpers/Title';
+import State from 'helpers/State';
 
 import { Heading } from '../Heading/Heading';
 import { Input } from '../Input/Input';

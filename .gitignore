@@ -5,8 +5,9 @@ yarn-debug.log*
 yarn-error.log*
 
 # production
-lib
+dist
 docs
+*.tgz
 
 # typescript
 tsconfig.tsbuildinfo
