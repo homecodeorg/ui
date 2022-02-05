@@ -1,4 +1,4 @@
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 
 export default createStore('router', {
   path: location.pathname,

@@ -14,6 +14,11 @@ export function Icon(props: T.Props) {
   };
   const LocalIcon = ICONS[type];
 
+  if (!LocalIcon) {
+    console.warn(`Icon: type="${type}" is unknown`);
+    return null;
+  }
+
   return <LocalIcon {...iconProps} />;
 }
 

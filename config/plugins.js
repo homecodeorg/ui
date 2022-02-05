@@ -1,16 +1,14 @@
 const { ProvidePlugin } = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const TerserPlugin = require('terser-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-// const BabelMinifyPlugin = require('babel-minify-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
 const plugins = [
   new CleanWebpackPlugin(),
   new ProvidePlugin({
-    h: ['preact', 'h'],
+    React: 'react',
   }),
   new MiniCssExtractPlugin({
     filename: isProduction ? '[name].[hash].css' : '[name].css',

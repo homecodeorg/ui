@@ -4,12 +4,15 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# production
-dist
-docs
-*.tgz
-
 # typescript
 tsconfig.tsbuildinfo
 src/***/*.d.ts
 !src/declaration.d.ts
+
+# development
+src/localLib.json
+
+# production
+dist
+docs
+*.tgz

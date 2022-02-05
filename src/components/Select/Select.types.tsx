@@ -80,7 +80,6 @@ export type Props = {
     'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
   >;
   disableTrigger?: boolean;
-  disableTriggerArrow?: boolean;
   triggerProps?: any;
   popupProps?: SelectPopupProps;
   hideRequiredStar?: boolean;

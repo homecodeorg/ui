@@ -1,4 +1,3 @@
-const path = require('path');
 const paths = require('./paths.js');
 
 module.exports = [
@@ -50,7 +49,7 @@ module.exports = [
             loader: 'babel-loader',
           },
           {
-            loader: 'preact-svg-loader',
+            loader: 'react-svg-loader',
           },
         ],
       },

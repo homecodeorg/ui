@@ -6,7 +6,6 @@
     // "incremental": true,
     "allowSyntheticDefaultImports": true,
     // "downlevelIteration": true,
-
     "jsx": "react-jsx",
     "target": "es5",
     // "target": "esnext",
@@ -15,19 +14,16 @@
     "resolveJsonModule": true,
     // "isolatedModules": true,
     "esModuleInterop": true,
-
     // "lib": ["esnext", "dom"],
     // "lib": ["dom", "dom.iterable", "esnext"],
     // "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-
     "outDir": "dist",
     // "baseUrl": "./src",
     "rootDir": "./src",
     "declaration": true,
     "declarationDir": "dist/esm/src",
-
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
@@ -35,14 +31,14 @@
           "customMatcher": "\\.styl$"
         }
       }
-    ]
-    // "paths": {
-    //   "helpers": ["src/helpers"],
-    //   "helpers/*": ["src/helpers/*"],
-    //   "components/*": ["src/components/*"],
-    //   "tools/*": ["src/tools/*"],
-    //   "@foreverido/uilib": ["dist"]
-    // }
+    ],
+    "paths": {
+      "helpers": ["./src/helpers"],
+      "helpers/*": ["./src/helpers/*"],
+      "components/*": ["./src/components/*"],
+      "tools/*": ["./src/tools/*"],
+      "@foreverido/uilib": ["./src"]
+    }
   },
   "include": ["src"],
   "exclude": [

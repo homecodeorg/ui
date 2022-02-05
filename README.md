@@ -2,7 +2,7 @@
 
 # UILIB
 
-React/Preact UI components library
+React UI components library
 
 ## Roadmap
 

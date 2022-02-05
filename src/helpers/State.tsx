@@ -9,7 +9,7 @@ export default class State extends Component {
     this.store = createStore(this, props.initial);
   }
 
-  render({ children }) {
-    return children(this.store);
+  render() {
+    return this.props.children(this.store);
   }
 }

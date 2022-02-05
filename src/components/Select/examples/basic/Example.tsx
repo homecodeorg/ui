@@ -4,7 +4,7 @@ import { Select } from '@foreverido/uilib';
 
 const OPTIONS = generateOptions();
 
-export default function Example() {
+export default () => {
   const [value, setValue] = useState(OPTIONS[0].id);
 
   return (
@@ -15,4 +15,4 @@ export default function Example() {
       onChange={value => setValue(value)}
     />
   );
-}
+};

@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { withStore } from 'justorm/preact';
+import { withStore } from 'justorm/react';
 
 import { Icon } from '../Icon/Icon';
 import { Button } from '../Button/Button';

@@ -1,4 +1,4 @@
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 import { nanoid } from 'nanoid';
 import Time from 'timen';
 

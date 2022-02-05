@@ -3,7 +3,7 @@ import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
-import { createStore } from 'justorm/preact';
+import { createStore } from 'justorm/react';
 import Time from 'timen';
 
 import { scrollIntoView } from '../../tools/scroll';
@@ -40,7 +40,7 @@ export class Select extends Component<T.Props, T.State> {
   };
 
   static defaultProps = {
-    size: 'm',
+    size: 's',
   };
 
   constructor(props) {
@@ -520,9 +520,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
-    const { disableTriggerArrow } = this.props;
     const { isOpen } = this.store;
-    if (disableTriggerArrow) return null;
 
     return (
       <Icon

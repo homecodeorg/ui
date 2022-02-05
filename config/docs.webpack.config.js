@@ -1,9 +1,9 @@
+const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const merge = require('webpack-merge');
-const path = require('path');
-const { src, docs, assets } = require('./paths.js');
+const { merge } = require('webpack-merge');
+const paths = require('./paths.js');
 const config = require('./webpack.config.js');
 
 module.exports = (env, argv) => {
@@ -22,24 +22,27 @@ module.exports = (env, argv) => {
   }
 
   return merge(config, {
-    entry: [`${src}/App/index.js`],
+    entry: [`${paths.src}/App/index.js`],
     output: {
-      path: docs,
+      path: paths.docs,
     },
     plugins: [
+      new webpack.DefinePlugin({
+        isDEV: JSON.stringify(isDev),
+      }),
       new CopyWebpackPlugin({
         patterns: [
           {
-            from: `${assets}/*.css`,
-            to: docs,
+            from: `${paths.assets}/*.css`,
+            to: paths.docs,
           },
           {
-            from: `${assets}/fonts`,
-            to: `${docs}/assets/fonts`,
+            from: `${paths.assets}/fonts`,
+            to: `${paths.docs}/assets/fonts`,
           },
           {
-            from: `${assets}/logo.svg`,
-            to: docs,
+            from: `${paths.assets}/logo.svg`,
+            to: paths.docs,
           },
         ],
       }),
@@ -47,8 +50,8 @@ module.exports = (env, argv) => {
         // lang: PAGE_LANG,
         // title: PAGE_TITLE,
         baseUrl: isDev ? '/' : '/uilib/',
-        filename: 'index.html',
-        template: `${assets}/index.html`,
+        // filename: 'index.html',
+        template: `${paths.assets}/index.html`,
         minify: {
           removeComments: true,
           collapseWhitespace: true,

@@ -30,7 +30,8 @@ import BasicExample from './examples/basic';
 
 // console.log('OPTIONS', OPTIONS);
 
-export default () => <BasicExample />;
+// export default () => <div>123123</div>;
+export default BasicExample;
 
 // export default () => (
 //   <Fragment>

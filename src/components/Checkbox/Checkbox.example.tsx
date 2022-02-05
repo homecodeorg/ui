@@ -1,5 +1,3 @@
-import { createStore } from 'justorm/preact';
-
 import State from 'helpers/State';
 import { Container } from '../Container/Container';
 import { Checkbox } from './Checkbox';

@@ -1,5 +1,5 @@
-import { useRef } from 'preact/hooks';
-import { withStore } from 'justorm/preact';
+import { useRef } from 'react';
+import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
 import store from '../store';

@@ -1,5 +1,6 @@
 import fs from 'fs';
 import glob from 'glob';
+import pick from 'lodash.pick';
 // import path from 'path';
 
 // import cleaner from 'rollup-plugin-cleaner';
@@ -37,6 +38,19 @@ glob.sync('src/**/*.styl').forEach(css => {
     );
 });
 
+const external = [
+  'react',
+  'react/jsx-runtime',
+  'preact',
+  'timen',
+  'justorm',
+  'compareq',
+  'classnames',
+  'nanoid',
+  'lodash.omit',
+  'lodash.pick',
+];
+
 export default [
   {
     // preserveModules: true,
@@ -58,18 +72,7 @@ export default [
         preserveModules: true,
       },
     ],
-    external: [
-      'react',
-      'react/jsx-runtime',
-      'preact',
-      'timen',
-      'justorm',
-      'compareq',
-      'classnames',
-      'nanoid',
-      'lodash.omit',
-      'lodash.pick',
-    ],
+    external,
     plugins: [
       del({ targets: './dist/*' }),
 
@@ -102,7 +105,10 @@ export default [
       //   include: path.resolve('src/components'),
       //   extensions: ['.js', '.ts', '.jsx', '.tsx'],
       // }),
-      uglify(),
+
+      // uglify(),
+
+      generateLocalLib(),
     ],
   },
   // {
@@ -112,3 +118,22 @@ export default [
   //   // external: [/\.css$/],
   // },
 ];
+
+function generateLocalLib() {
+  return {
+    name: 'generate-local-lib',
+    writeBundle: (options, bundle) => {
+      const libJSON = Object.entries(bundle).reduce(
+        (acc, [path, { code }]) => ({
+          ...acc,
+          [`/node_modules/@foreverido/uilib/${path}`]: code,
+        }),
+        {
+          '/package.json': JSON.stringify(pick(pkg, ['name', 'dependencies'])),
+        }
+      );
+
+      fs.writeFile('src/localLib.json', JSON.stringify(libJSON), () => {});
+    },
+  };
+}

@@ -14,7 +14,7 @@ function compare(cb1: Loader, cb2: Loader) {
 }
 
 export default class Lazy extends Component<Props, State> {
-  state = { loading: false };
+  state = { loading: true };
   C: any;
 
   componentDidMount() {

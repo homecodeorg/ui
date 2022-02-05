@@ -1,6 +1,6 @@
+import { hot } from 'react-hot-loader/root';
 import { Fragment, useCallback, useRef } from 'react';
-import { createStore, withStore } from 'justorm/preact';
-import cn from 'classnames';
+import { createStore, withStore } from 'justorm/react';
 
 import { capitalize } from '../tools/string';
 import { watchControllerFlag } from '../tools/dom';
@@ -24,7 +24,7 @@ createStore('app', {
 });
 watchControllerFlag();
 
-export default withStore('app')(function App({ store }) {
+function App({ store }) {
   const { theme, activeColor } = store.app;
   const isDark = theme === 'dark';
 
@@ -106,4 +106,6 @@ export default withStore('app')(function App({ store }) {
       <Theme config={currThemeConfig} />
     </Fragment>
   );
-});
+}
+
+export default hot(withStore('app')(App));
