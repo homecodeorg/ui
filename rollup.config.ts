@@ -129,11 +129,11 @@ function generateLocalLib() {
           [`/node_modules/@foreverido/uilib/${path}`]: code,
         }),
         {
-          '/package.json': JSON.stringify(pick(pkg, ['name', 'dependencies'])),
+          '/package.json': JSON.stringify(pkg),
         }
       );
 
-      fs.writeFile('src/localLib.json', JSON.stringify(libJSON), () => {});
+      fs.writeFile('src/docs/localLib.json', JSON.stringify(libJSON), () => {});
     },
   };
 }

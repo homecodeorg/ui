@@ -10,9 +10,9 @@ src/***/*.d.ts
 !src/declaration.d.ts
 
 # development
-src/localLib.json
+src/docs/localLib.json
 
 # production
 dist
-docs
+build
 *.tgz

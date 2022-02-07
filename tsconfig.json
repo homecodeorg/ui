@@ -33,11 +33,10 @@
       }
     ],
     "paths": {
-      "helpers": ["./src/helpers"],
-      "helpers/*": ["./src/helpers/*"],
       "components/*": ["./src/components/*"],
       "tools/*": ["./src/tools/*"],
-      "@foreverido/uilib": ["./src"]
+      "helpers/*": ["./src/docs/helpers/*"]
+      // "@foreverido/uilib": ["./src"]
     }
   },
   "include": ["src"],
