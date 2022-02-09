@@ -5,7 +5,7 @@ import omit from 'lodash.omit';
 import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
 
-type Loader = () => Promise<void>;
+type Loader = () => Promise<any>;
 type Props = { loader: Loader };
 type State = { loading: boolean };
 
@@ -13,7 +13,7 @@ function compare(cb1: Loader, cb2: Loader) {
   return cb1?.toString() === cb2?.toString();
 }
 
-export default class Lazy extends Component<Props, State> {
+export class Lazy extends Component<Props, State> {
   state = { loading: true };
   C: any;
 

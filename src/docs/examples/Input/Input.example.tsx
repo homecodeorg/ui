@@ -3,13 +3,13 @@ import omit from 'lodash.omit';
 import Title from 'helpers/Title';
 import State from 'helpers/State';
 
-import { Container } from '../Container/Container';
-import { Checkbox } from '../Checkbox/Checkbox';
-import { Select } from '../Select/Select';
-import { Form } from '../Form/Form';
-import { Icon } from '../Icon/Icon';
+import { Container } from '../../../components/Container/Container';
+import { Checkbox } from '../../../components/Checkbox/Checkbox';
+import { Select } from '../../../components/Select/Select';
+import { Form } from '../../../components/Form/Form';
+import { Icon } from '../../../components/Icon/Icon';
 
-import { Input } from './Input';
+import { Input } from '../../../components/Input/Input';
 
 const INITIAL_PROPS = {
   size: 'm',

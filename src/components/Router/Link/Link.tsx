@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import store from '../store';
 import ExternalIcon from './icons/external.svg';
-import s from './Link.styl';
+import S from './Link.styl';
 
 const defaultProps = {
   isClear: false,
@@ -14,6 +14,7 @@ const defaultProps = {
 
 export const Link = withStore({ router: true })(function ({
   className,
+  exactClassName,
   children,
   isClear,
   isClearPadding,
@@ -29,12 +30,12 @@ export const Link = withStore({ router: true })(function ({
   const isExact = href === pathname;
 
   const classes = cn(
-    s.root,
-    isDisabled && s.disabled,
-    isExternal && s.external,
-    isExact && s.exact,
-    isClear && s.clear,
-    isClearPadding && s.clearPadding,
+    S.root,
+    isDisabled && S.disabled,
+    isExternal && S.external,
+    isExact && cn(S.exact, exactClassName),
+    isClear && S.clear,
+    isClearPadding && S.clearPadding,
     className
   );
 
@@ -66,7 +67,7 @@ export const Link = withStore({ router: true })(function ({
       ref={domElem}
     >
       {children}
-      {isExternal && <ExternalIcon class={s.externalIcon} />}
+      {isExternal && <ExternalIcon class={S.externalIcon} />}
     </a>
   );
 });

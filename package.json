@@ -5,13 +5,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "tsc --noUnusedLocals",
-    "dev": "NODE_ENV=development webpack-dev-server --mode=development --config ./config/docs.webpack.config.js --progress",
+    "dev": "NODE_ENV=development webpack-dev-server --mode=development --config ./src/docs/config/webpack.config.js --progress",
     "build": "rollup -c rollup.config.ts",
     "release": "standard-version",
     "release:patch": "yarn release -- --release-as patch",
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
-    "docs:build": "NODE_ENV=production webpack --mode=production --config ./config/docs.webpack.config.js --progress",
+    "docs:build": "NODE_ENV=production webpack --mode=production --config ./src/docs/config/webpack.config.js --progress",
     "docs:deploy": "./bin/deploy-docs.sh"
   },
   "standard-version": {
@@ -39,6 +39,7 @@
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.16.7",
     "@codesandbox/sandpack-react": "^0.13.10",
     "@foreverido/uilib": "^0.0.11",
     "@rollup/plugin-commonjs": "^21.0.1",
@@ -69,6 +70,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
+    "react-live": "^2.4.1",
     "react-svg-loader": "^3.0.3",
     "rollup": "^2.67.0",
     "rollup-plugin-delete": "^2.0.0",

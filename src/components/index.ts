@@ -9,7 +9,7 @@ export * from './Input/Input';
 export * from './Lazy/Lazy';
 // export * from './Menu/Menu';
 // export * from './Notifications/Notifications';
-// export * from './Router/Router';
+export * from './Router/Router';
 export * from './Popup/Popup';
 export * from './Select/Select';
 export * from './Scroll/Scroll';

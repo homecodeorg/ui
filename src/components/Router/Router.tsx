@@ -1,51 +1,19 @@
-import { Component, cloneElement } from 'react';
+import { Component, cloneElement, ReactNode, PropsWithChildren, ReactChild, ReactComponentElement } from 'react';
 import { withStore } from 'justorm/react';
-import { Path } from 'path-parser';
-import omit from 'lodash.omit';
 
 import './store';
+import { parseRouteParams } from './Router.helpers';
 
-function parseRouteParams(routes) {
-  const items = [];
-  const exactItems = [];
-
-  function parse(route) {
-    if (!route) {
-      return;
-    }
-
-    if (Array.isArray(route)) {
-      route.forEach(parse);
-      return;
-    }
-
-    const { path, exact, children } = route.props;
-
-    if (children) {
-      children.forEach(parse);
-      return;
-    }
-
-    const defaultParams = { path, exact, Elem: route };
-
-    if (!path) {
-      exactItems.unshift(defaultParams);
-      return;
-    }
-
-    (exact ? exactItems : items).push({
-      ...defaultParams,
-      parsed: new Path(path),
-    });
-  }
-
-  parse(routes);
-
-  return [...exactItems, ...items];
+type Props = {
+  store?: any;
+  children: ReactNode;
 }
 
 @withStore({ router: ['path'] })
-export class Router extends Component {
+export class Router extends Component<Props> {
+  store;
+  routes;
+
   constructor(props) {
     super(props);
     this.rebuildRoutes(props.children);
@@ -78,12 +46,21 @@ export class Router extends Component {
   getRoute() {
     let params;
     const { router } = this.props.store;
+    const notExactRoutes = [];
     const route =
-      this.routes.find(({ path, exact, parsed }) => {
-        if (exact && path === router.path) return true;
+      this.routes.find(route => {
+        const { path, exact, parsed } = route;
+
+        if (exact) {
+          if (path === router.path) return true;
+        } else {
+          notExactRoutes.push(route);
+        }
+
         if (parsed) params = parsed.test(router.path);
+
         return Boolean(params);
-      }) || this.routes[0];
+      }) || notExactRoutes[0];
 
     return [route, params];
   }
@@ -91,6 +68,8 @@ export class Router extends Component {
   render() {
     const { router } = this.props.store;
     const [route, params] = this.getRoute();
+
+    if (!route) return null;
 
     return cloneElement(route.Elem, { ...params, router });
   }

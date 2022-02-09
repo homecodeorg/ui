@@ -40,7 +40,7 @@ export class Select extends Component<T.Props, T.State> {
   };
 
   static defaultProps = {
-    size: 's',
+    size: 'm',
   };
 
   constructor(props) {

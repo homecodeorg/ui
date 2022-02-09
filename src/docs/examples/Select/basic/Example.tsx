@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { generateOptions } from './select-helpers';
-import { Select } from '@foreverido/uilib';
-
-const OPTIONS = generateOptions();
+import { Select } from 'uilib';
+import { OPTIONS } from 'helpers';
 
 export default () => {
   const [value, setValue] = useState(OPTIONS[0].id);
@@ -12,7 +10,7 @@ export default () => {
       label="Lorem Ipsum"
       options={OPTIONS}
       value={value}
-      onChange={value => setValue(value)}
+      onChange={val => setValue(val)}
     />
   );
 };

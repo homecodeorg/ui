@@ -2,7 +2,9 @@ import { Component } from 'react';
 
 import STORE from '../store';
 
-export default class Redirect extends Component {
+type Props = { to: string };
+
+export default class Redirect extends Component<Props> {
   constructor(props) {
     super(props);
     STORE.navigate(this.props.to, { replace: true });

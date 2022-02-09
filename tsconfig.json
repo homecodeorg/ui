@@ -16,7 +16,7 @@
     "esModuleInterop": true,
     // "lib": ["esnext", "dom"],
     // "lib": ["dom", "dom.iterable", "esnext"],
-    // "experimentalDecorators": true,
+    "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
@@ -33,10 +33,11 @@
       }
     ],
     "paths": {
+      "uilib": ["./src"],
+      "uilib/*": ["./src/*"],
       "components/*": ["./src/components/*"],
       "tools/*": ["./src/tools/*"],
-      "helpers/*": ["./src/docs/helpers/*"]
-      // "@foreverido/uilib": ["./src"]
+      "docs/*": ["./src/docs/*"]
     }
   },
   "include": ["src"],

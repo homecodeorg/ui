@@ -1,13 +1,17 @@
 import { Fragment } from 'react';
-import { State, getRandomItem } from '../../helpers';
+import { State, getRandomItem } from 'helpers';
+import { Router, Lazy } from 'uilib';
 
-import { Container } from '../Container/Container';
-import { Heading } from '../Heading/Heading';
+import { Container } from 'components/Container/Container';
+import { Heading } from 'components/Heading/Heading';
 
-import { Select } from './Select';
-import * as H from './Select.example-helpers';
+import { Select } from 'components/Select/Select';
+import * as H from './helpers';
 
-import BasicExample from './examples/basic';
+import BasicExample from './basic';
+import { Title } from 'uilib/docs/components';
+
+import NAV_CONFIG from './navigation';
 
 // const OPTIONS = H.generateOptions();
 // const TREE_OPTIONS = H.generateTreeOptions();
@@ -30,8 +34,24 @@ import BasicExample from './examples/basic';
 
 // console.log('OPTIONS', OPTIONS);
 
+function API() {
+  return <>
+    <Title text='API' />
+
+    
+  </>
+}
+
 // export default () => <div>123123</div>;
-export default BasicExample;
+export default () => (
+  <>
+    <Router>
+      {NAV_CONFIG.map(({ slug, loader }) => (
+        <Lazy path={`/select/${slug}`} loader={loader} key={slug} exact />
+      ))}
+    </Router>
+  </>
+);
 
 // export default () => (
 //   <Fragment>

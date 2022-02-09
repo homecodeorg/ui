@@ -1,5 +1,5 @@
-import { getRandomItem } from './helpers';
-import { Option } from './Select.types';
+import { getRandomItem } from 'helpers';
+import { Option } from 'components/Select/Select.types';
 
 const TEXT = [
   'Aenean',
@@ -24,9 +24,7 @@ function generateOption(id): Option {
   return { id, label: getRandomItem(TEXT) };
 }
 
-export function generateOptions() {
-  return new Array(15).fill(1).map((n, i) => generateOption(i));
-}
+export const OPTIONS = new Array(15).fill(1).map((n, i) => generateOption(i));
 
 export function generateTreeOptions(level = 0, parentId = ''): Option[] {
   const length = level ? randomInt(10) : 10;

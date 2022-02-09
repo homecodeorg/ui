@@ -1,6 +1,6 @@
 import State from 'helpers/State';
-import { Container } from '../Container/Container';
-import { Checkbox } from './Checkbox';
+import { Container } from '../../../components/Container/Container';
+import { Checkbox } from '../../../components/Checkbox/Checkbox';
 
 export default () => (
   <Container centered fullHeight size="l">
