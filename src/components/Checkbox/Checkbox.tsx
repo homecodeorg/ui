@@ -1,16 +1,10 @@
-import {
-  Component,
-  ReactNode,
-  MouseEventHandler,
-  FocusEventHandler,
-} from 'react';
+import { Component, ReactNode } from 'react';
 import cn from 'classnames';
-import { nanoid } from 'nanoid';
 import { createStore } from 'justorm/react';
 
-import { Button } from '../Button/Button';
 import { Size } from '../../types';
 import S from './Checkbox.styl';
+import { generateUID } from 'uilib/tools/uid';
 
 type Props = {
   id?: string;
@@ -34,7 +28,7 @@ export class Checkbox extends Component<Props> {
 
   constructor(props: Props) {
     super(props);
-    this.id = props.id || nanoid();
+    this.id = props.id || generateUID();
     this.store = createStore(this, { isActive: false, isFocused: false });
   }
 

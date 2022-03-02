@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import pick from 'lodash.pick';
-import { nanoid } from 'nanoid';
+import { withStore } from 'justorm/react';
 import cn from 'classnames';
+
+import vsDark from 'prism-react-renderer/themes/vsDark';
+import vsLight from 'prism-react-renderer/themes/vsLight';
 
 import pkg from '/package.json';
 import * as uilib from '/src';
@@ -49,11 +52,10 @@ const DEFAULT_FILES = {
   },
 };
 
-const useId = () => useMemo(nanoid, []);
 const SCOPE = { uilib, React };
 
-export function Code({ code, scope }) {
-  const id = useId();
+export const Code = withStore({ app: 'theme' })(({ code, scope, store }) => {
+  const { theme } = store.app;
   const currScope = useMemo(() => ({ ...SCOPE, ...scope }), [scope]);
   const [editedCode, updateCode] = useState(code);
 
@@ -63,6 +65,7 @@ export function Code({ code, scope }) {
         className={cn(S.editor, S.user)}
         code={editedCode}
         language="typescript"
+        theme={theme === 'dark' ? vsDark : vsLight}
         onChange={updateCode}
       />
       <LiveProvider
@@ -76,4 +79,4 @@ export function Code({ code, scope }) {
       </LiveProvider>
     </>
   );
-}
+});

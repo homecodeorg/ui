@@ -32,8 +32,19 @@ createStore('app', {
 
   setTheme(theme) {
     this.theme = theme;
-    this.currThemeConfig = getThemeConfig(theme, this.activeColor);
+    this.updateTheme(theme);
 
     localStorage.setItem('theme', theme);
+  },
+
+  setActiveColor(color) {
+    this.activeColor = color;
+    this.updateTheme();
+
+    localStorage.setItem('activeColor', color);
+  },
+
+  updateTheme(theme = this.theme) {
+    this.currThemeConfig = getThemeConfig(theme, this.activeColor);
   },
 });

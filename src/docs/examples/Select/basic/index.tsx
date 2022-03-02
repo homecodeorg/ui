@@ -6,6 +6,6 @@ import * as helpers from '../helpers';
 export default () => (
   <>
     <Title text="Basic" />
-    <Code scope={{ helpers }} code={example} />;
+    <Code scope={{ helpers }} code={example} />
   </>
 );

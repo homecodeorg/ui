@@ -1,8 +1,8 @@
 import { createStore } from 'justorm/react';
-import { nanoid } from 'nanoid';
 import Time from 'timen';
 
 import { sliceWhere } from 'tools/array';
+import { generateUID } from 'uilib/tools/uid';
 
 const SHOW_TIME = 5000;
 const ANIMATION_DURATION = 200;
@@ -15,7 +15,7 @@ const STORE = createStore('notifications', {
   data: {},
   paused: false,
   show(data) {
-    const id = nanoid();
+    const id = generateUID();
 
     this.items.push(id);
     this.data[id] = {

@@ -30,17 +30,32 @@
 .size-s
   controlSize('s')
 
+  & > svg:first-child
+    margin-right var(--indent-s)
+  & > svg:last-child
+    margin-left var(--indent-s)
+
   &.isSquare
     width @height
 
 .size-m
   controlSize('m')
 
+  & > svg:first-child
+    margin-right var(--indent-m)
+  & > svg:last-child
+    margin-left var(--indent-m)
+
   &.isSquare
     width @height
 
 .size-l
   controlSize('l')
+
+  & > svg:first-child
+    margin-right var(--indent-l)
+  & > svg:last-child
+    margin-left var(--indent-l)
 
   &.isSquare
     width @height
@@ -70,3 +85,4 @@
 
 .spinner
   margin-left var(--indent-s)
+

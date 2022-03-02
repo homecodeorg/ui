@@ -30,10 +30,6 @@ class App extends Component<{ store?: any }> {
     this.store.setTheme(this.isDarkTheme() ? 'light' : 'dark');
   };
 
-  setActiveColor = color => {
-    this.store.activeColor = color;
-  };
-
   // @ts-ignore
   pickActiveColor = () => this.colorPickerRef.current.click();
 
@@ -67,7 +63,7 @@ class App extends Component<{ store?: any }> {
                   type="color"
                   ref={this.colorPickerRef}
                   className={S.colorPicker}
-                  onChange={this.setActiveColor}
+                  onChange={e => this.store.setActiveColor(e.target.value)}
                   value={activeColor}
                 />
               </Button>
