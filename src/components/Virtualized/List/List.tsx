@@ -3,7 +3,7 @@ import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { zero } from 'tools/number';
+import { zero } from 'uilib/tools/number';
 
 import Virtualized from '../Virtualized';
 import * as T from '../Virtualized.types';

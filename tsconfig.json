@@ -36,7 +36,7 @@
       "uilib": ["./src"],
       "uilib/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "tools/*": ["./src/tools/*"],
+      "tools/*": ["src/docs/tools/*"],
       "docs/*": ["./src/docs/*"]
     }
   },

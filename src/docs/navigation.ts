@@ -26,10 +26,10 @@ export default [
   // //   name: 'menu',
   // //   loader: () => import('./examples/Menu/Menu'),
   // // },
-  // {
-  //   name: 'popup',
-  //   loader: () => import('./examples/Popup/Popup'),
-  // },
+  {
+    slug: 'popup',
+    loader: () => import('./examples/Popup/Popup'),
+  },
   {
     slug: 'select',
     loader: () => import('./examples/Select/Select'),

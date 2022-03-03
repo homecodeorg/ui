@@ -26,6 +26,14 @@ module.exports = (env, argv) => {
     output: {
       path: paths.docs,
     },
+    resolve: {
+      // modules: ['node_modules', paths.docs],
+      alias: {
+        uilib: `${paths.src}/components`,
+        helpers: `${paths.docs}/helpers`,
+        theme: `${paths.src}/theme.styl`,
+      },
+    },
     plugins: [
       new webpack.DefinePlugin({
         isDEV: JSON.stringify(isDev),

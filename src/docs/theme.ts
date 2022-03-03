@@ -1,4 +1,4 @@
-import { ThemeHelpers } from '../components/Theme/Theme';
+import { ThemeHelpers } from 'uilib';
 
 const { colorsConfigToVars } = ThemeHelpers;
 

@@ -14,3 +14,5 @@ export function getRandomItem(arr) {
   const item = arr[index];
   return item;
 }
+
+export { default as State } from './State';

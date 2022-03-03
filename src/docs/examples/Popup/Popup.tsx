@@ -1,14 +1,11 @@
 import { Fragment } from 'react';
 import cn from 'classnames';
 
-import State from 'helpers/State';
+import { State } from 'helpers';
 
-import { Container } from '../Container/Container';
-import { Button } from '../Button/Button';
-import { Icon } from '../Icon/Icon';
+import { Popup, Container, Button, Icon } from 'uilib';
 
-import { Popup } from './Popup';
-import S from './Popup.stories.styl';
+import S from './Popup.styl';
 
 const TEST_TEXT =
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';

@@ -1,7 +1,7 @@
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { sliceWhere } from 'tools/array';
+import { sliceWhere } from 'uilib/tools/array';
 import { generateUID } from 'uilib/tools/uid';
 
 const SHOW_TIME = 5000;
