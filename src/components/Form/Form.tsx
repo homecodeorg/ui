@@ -33,6 +33,7 @@ function Field(props: T.FormFieldProps) {
     markEdited,
     isChanged,
     isTouched,
+    clearMargins,
     component: Control = Input,
     className,
     onChange,
@@ -49,6 +50,7 @@ function Field(props: T.FormFieldProps) {
     className,
     S.field,
     isHidden && S.hidden,
+    clearMargins && S.clearMargins,
     markEdited && isChanged && S.changed
   );
 

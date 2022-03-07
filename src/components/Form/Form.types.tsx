@@ -78,6 +78,7 @@ export type FormFieldProps = FieldProps & {
   error: ValidationError;
   isChanged: boolean;
   isTouched: boolean;
+  clearMargins: boolean;
   handleChange: (name: string, val: any) => void;
   handleBlur: (name: string) => void;
 };
