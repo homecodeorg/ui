@@ -259,7 +259,7 @@ export class Form extends Component<T.Props> {
 
     // @ts-ignore
     const schema = Object.entries(this.validationSchema).reduce(
-      (acc, [field, rule]) => {
+      (acc, [field, { ...rule }]) => {
         const { type, check } = rule as T.FormValidationRule;
 
         if (disabled[field]) return acc;

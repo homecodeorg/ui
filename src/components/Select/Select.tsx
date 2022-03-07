@@ -524,7 +524,7 @@ export class Select extends Component<T.Props, T.State> {
 
     return (
       <Icon
-        type="arrow-down"
+        type="arrow-right"
         className={cn(S.triggerArrow, isOpen && S.isOpen)}
         size="s"
       />
