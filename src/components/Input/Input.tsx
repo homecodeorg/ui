@@ -295,8 +295,8 @@ export class Input extends Component<T.Props> {
           />
           {this.renderAdornment('left')}
           <Control
-            className={S.control}
             {...controlProps}
+            className={cn(S.control, controlProps?.className)}
             // @ts-ignore
             ref={this.inputRef}
             key="control"
