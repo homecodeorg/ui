@@ -7,7 +7,8 @@ export default () => {
 
   return (
     <Select
-      label="Lorem Ipsum"
+      isSearchable
+      label="Label"
       options={OPTIONS}
       value={value}
       onChange={val => setValue(val)}

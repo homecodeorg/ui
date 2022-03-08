@@ -1,4 +1,11 @@
-import { Component, cloneElement, ReactNode, PropsWithChildren, ReactChild, ReactComponentElement } from 'react';
+import {
+  Component,
+  cloneElement,
+  ReactNode,
+  PropsWithChildren,
+  ReactChild,
+  ReactComponentElement,
+} from 'react';
 import { withStore } from 'justorm/react';
 
 import './store';
@@ -7,7 +14,7 @@ import { parseRouteParams } from './Router.helpers';
 type Props = {
   store?: any;
   children: ReactNode;
-}
+};
 
 @withStore({ router: ['path'] })
 export class Router extends Component<Props> {
@@ -34,7 +41,9 @@ export class Router extends Component<Props> {
     window.removeEventListener('pushstate', this.updateRouteState);
   }
 
-  updateRouteState = () => {
+  updateRouteState = e => {
+    e.stopPropagation();
+
     const { router } = this.props.store;
     router.path = window.location.pathname;
   };

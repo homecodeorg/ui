@@ -1,17 +1,8 @@
-import { Fragment } from 'react';
-import { State, getRandomItem } from 'helpers';
-import { Router, Lazy } from 'uilib';
+import { Code } from 'docs/components';
 
-import { Container } from 'components/Container/Container';
-import { Heading } from 'components/Heading/Heading';
+import * as helpers from './helpers';
 
-import { Select } from 'components/Select/Select';
-import * as H from './helpers';
-
-import BasicExample from './basic';
-import { Title } from 'uilib/docs/components';
-
-import NAV_CONFIG from './navigation';
+import example from '!!raw-loader!./Example';
 
 // const OPTIONS = H.generateOptions();
 // const TREE_OPTIONS = H.generateTreeOptions();
@@ -34,24 +25,16 @@ import NAV_CONFIG from './navigation';
 
 // console.log('OPTIONS', OPTIONS);
 
-function API() {
-  return <>
-    <Title text='API' />
-
-    
-  </>
-}
+// function API() {
+//   return (
+//     <>
+//       <Title text="API" />
+//     </>
+//   );
+// }
 
 // export default () => <div>123123</div>;
-export default () => (
-  <>
-    <Router>
-      {NAV_CONFIG.map(({ slug, loader }) => (
-        <Lazy path={`/select/${slug}`} loader={loader} key={slug} exact />
-      ))}
-    </Router>
-  </>
-);
+export default () => <Code scope={{ helpers }} code={example} />;
 
 // export default () => (
 //   <Fragment>

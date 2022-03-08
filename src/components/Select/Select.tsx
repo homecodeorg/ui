@@ -133,19 +133,18 @@ export class Select extends Component<T.Props, T.State> {
 
     this.setSearchVal('');
     this.store.isFocused = true;
-    if (onFocus) onFocus(e);
+    onFocus?.(e);
   };
 
   onBlur = e => {
     const { onBlur } = this.props;
 
     this.store.isFocused = false;
-
-    if (onBlur) onBlur(e);
+    onBlur?.(e);
   };
 
-  onSearchChange = e => {
-    this.setSearchVal(e.target.value);
+  onSearchChange = (e, value) => {
+    this.setSearchVal(value);
   };
 
   onExpandClick(e, id) {
@@ -176,15 +175,18 @@ export class Select extends Component<T.Props, T.State> {
   onPopupOpen = () => {
     const { onOpen } = this.props;
 
-    this.setState({ isOpen: true });
+    this.store.isOpen = true;
     this.updateSelectedScroll();
-    if (onOpen) onOpen();
+
+    onOpen?.();
   };
 
   onPopupClose = () => {
     const { onClose } = this.props;
-    this.setState({ isOpen: false });
-    if (onClose) onClose();
+
+    this.store.isOpen = false;
+
+    onClose?.();
   };
 
   toggle = () => {
@@ -459,15 +461,18 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerInput() {
-    const { inputProps, value, label } = this.props;
+    const { inputProps, label } = this.props;
+    const value = this.getInputVal();
     const props = {
       ...this.getTriggerProps(),
       ...inputProps,
       error: this.isErrorVisible(),
       // adornmentLeft: this.renderSelectedItems(),
       adornmentRight: this.renderTriggerArrow(),
-      value: this.getInputVal(),
-      onChange: this.setSearchVal,
+      value,
+      onChange: this.onSearchChange,
+      onFocus: this.onFocus,
+      onBlur: this.onBlur,
       ref: this.triggerInputRef,
       label: this.getFieldLabel(label),
     } as T.Props['inputProps'] & { onBlur: T.Props['onBlur'] };
@@ -520,13 +525,14 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
+    const { size } = this.props;
     const { isOpen } = this.store;
 
     return (
       <Icon
-        type="arrow-right"
+        type="chevronDown"
         className={cn(S.triggerArrow, isOpen && S.isOpen)}
-        size="s"
+        size={size}
       />
     );
   }
@@ -686,6 +692,7 @@ export class Select extends Component<T.Props, T.State> {
 
   render() {
     const { className, popupProps, size, error } = this.props;
+    const { isOpen } = this.store;
     const classes = cn(S.root, className);
 
     return (
@@ -696,6 +703,7 @@ export class Select extends Component<T.Props, T.State> {
           clearTargetMargin
           {...popupProps}
           autoClose={!this.isMultiple()}
+          isOpen={isOpen}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
           trigger={this.renderTrigger()}

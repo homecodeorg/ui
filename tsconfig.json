@@ -20,7 +20,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
-    // "baseUrl": "./src",
+    "baseUrl": "./",
     "rootDir": "./src",
     "declaration": true,
     "declarationDir": "dist/esm/src",
@@ -36,7 +36,7 @@
       "uilib": ["./src"],
       "uilib/*": ["./src/*"],
       "components/*": ["./src/components/*"],
-      "tools/*": ["src/docs/tools/*"],
+      "tools/*": ["./src/docs/tools/*"],
       "docs/*": ["./src/docs/*"]
     }
   },

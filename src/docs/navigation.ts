@@ -6,10 +6,10 @@ export type RouteItem = {
 };
 
 export default [
-  // {
-  //   name: 'button',
-  //   loader: () => import('./examples/Button/Button'),
-  // },
+  {
+    slug: 'button',
+    loader: () => import('./examples/Button'),
+  },
   // {
   //   name: 'checkbox',
   //   loader: () => import('./examples/Checkbox/Checkbox'),
@@ -28,12 +28,12 @@ export default [
   // // },
   {
     slug: 'popup',
-    loader: () => import('./examples/Popup/Popup'),
+    loader: () => import('./examples/Popup'),
   },
   {
     slug: 'select',
     loader: () => import('./examples/Select/Select'),
-    items: () => import('./examples/Select/navigation'),
+    // items: () => import('./examples/Select/navigation'),
   },
   // {
   //   name: 'scroll',

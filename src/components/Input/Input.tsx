@@ -51,12 +51,11 @@ export class Input extends Component<T.Props> {
 
   componentDidUpdate(prevProps: T.Props) {
     const { value } = this.props;
-    const valueChanged = prevProps.value !== value;
 
     this.updateSelection();
     this.updateAutoComplete();
 
-    if (valueChanged) {
+    if (value !== prevProps.value && value !== this.store.inputValue) {
       this.store.inputValue = value;
       this.updateHasValue();
       this.updateLabelPosition();
@@ -208,7 +207,7 @@ export class Input extends Component<T.Props> {
       ...rest
     } = this.props;
 
-    const { autoComplete, isLabelOnTop } = this.store;
+    const { autoComplete, isLabelOnTop, inputValue } = this.store;
 
     const props = {
       ...omit(rest, [
@@ -224,6 +223,7 @@ export class Input extends Component<T.Props> {
         'forceLabelOnTop',
         'changeOnEnd',
       ]),
+      value: inputValue,
       ...controlProps,
       onChange: this.onChange,
       onFocus: this.onFocus,
@@ -232,12 +232,16 @@ export class Input extends Component<T.Props> {
 
     // @ts-ignore
     if (value === null && !isNullable) props.value = type === 'number' ? 0 : '';
-    if (placeholder && !value && (!label || isLabelOnTop))
+
+    if (placeholder && !value && (!label || isLabelOnTop)) {
       props.placeholder = placeholder;
+    }
+
     if (!autoComplete) {
       props.autoComplete = this.uid;
       delete props.name;
     }
+
     if (props.value === undefined) props.value = '';
 
     return props;

@@ -1,9 +1,8 @@
 import cn from 'classnames';
 
-import ICONS from './icons';
-
 import S from './Icon.styl';
 import * as T from './Icon.types';
+import * as ICONS from './icons';
 
 export function Icon(props: T.Props) {
   const { className, type, size, ...rest } = props;

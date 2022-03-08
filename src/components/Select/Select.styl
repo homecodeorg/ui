@@ -23,11 +23,11 @@ $levelGap = 24px
 
 .triggerArrow
   width 14px !important
+  margin-right 0 !important
   transition transform .2s ease-out
-  transform rotateX(-90deg)
 
   &.isOpen
-    transform rotateX(0deg)
+    transform rotateX(-180deg)
 
   .disabled &
     color var(--text3-color)
