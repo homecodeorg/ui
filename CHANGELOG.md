@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/foreverido/uilib/compare/v0.0.19...v0.0.20) (2022-03-08)
+
+
+### Features
+
+* Checkbox example, fix: Input pass props.type ([adfa9f9](https://github.com/foreverido/uilib/commit/adfa9f963333d484aeb5d9cc3c52559902b9e47b))
+
 ### [0.0.19](https://github.com/foreverido/uilib/compare/v0.0.18...v0.0.19) (2022-03-08)
 
 ### [0.0.18](https://github.com/foreverido/uilib/compare/v0.0.17...v0.0.18) (2022-03-08)
