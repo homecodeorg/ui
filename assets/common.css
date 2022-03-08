@@ -17,5 +17,5 @@ body {
 }
 
 *::selection {
-  background-color: var(--active-color);
+  background-color: var(--active-color-alpha-500);
 }

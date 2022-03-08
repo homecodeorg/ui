@@ -197,16 +197,8 @@ export class Input extends Component<T.Props> {
   };
 
   getControlProps(): T.ControlProps {
-    const {
-      type,
-      value,
-      label,
-      isNullable,
-      controlProps,
-      placeholder,
-      ...rest
-    } = this.props;
-
+    const { value, label, isNullable, controlProps, placeholder, ...rest } =
+      this.props;
     const { autoComplete, isLabelOnTop, inputValue } = this.store;
 
     const props = {
@@ -231,7 +223,9 @@ export class Input extends Component<T.Props> {
     };
 
     // @ts-ignore
-    if (value === null && !isNullable) props.value = type === 'number' ? 0 : '';
+    if (value === null && !isNullable) {
+      props.value = rest.type === 'number' ? 0 : '';
+    }
 
     if (placeholder && !value && (!label || isLabelOnTop)) {
       props.placeholder = placeholder;

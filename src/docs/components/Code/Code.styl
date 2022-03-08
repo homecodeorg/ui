@@ -3,13 +3,16 @@
     border-radius var(--border-radius-l)
     border 1px solid var(--accent-color-alpha-100)
 
-.editor.user 
+.editor.user
     border-bottom-left-radius 0
     border-bottom-right-radius 0
     background-color var(--accent-color-alpha-100)
 
     *
         font-family monospace !important
+
+    pre *::selection
+      background-color transparent
 
 .editor.runtime
     display none

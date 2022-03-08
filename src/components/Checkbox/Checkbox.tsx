@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { ChangeEvent, Component, DOMAttributes, ReactNode } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 
@@ -6,15 +6,17 @@ import { Size } from '../../types';
 import S from './Checkbox.styl';
 import { generateUID } from 'uilib/tools/uid';
 
-type Props = {
+type ControlProps = DOMAttributes<HTMLInputElement>;
+
+type Props = ControlProps & {
   id?: string;
   className?: string;
   label?: ReactNode;
   checked?: boolean;
   error?: string | boolean;
   size: Size;
-  onFocus?: (e: FocusEvent) => void;
-  onBlur?: (e: FocusEvent) => void;
+  // onFocus?: (e: FocusEvent) => void;
+  // onBlur?: (e: FocusEvent) => void;
 };
 
 export class Checkbox extends Component<Props> {
@@ -27,7 +29,7 @@ export class Checkbox extends Component<Props> {
     checked: false,
   };
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
     this.id = props.id || generateUID();
     this.store = createStore(this, { isActive: false, isFocused: false });
@@ -45,14 +47,14 @@ export class Checkbox extends Component<Props> {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
-    if (onFocus) onFocus(e);
+    onFocus?.(e);
   };
 
   onBlur = (e: any) => {
     const { onBlur } = this.props;
 
     this.store.isFocused = false;
-    if (onBlur) onBlur(e);
+    onBlur?.(e);
   };
 
   render() {

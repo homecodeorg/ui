@@ -26,6 +26,10 @@ control()
   &:hover
     controlBorder(var(--active-color))
 
+  &[disabled]
+    opacity .8
+    pointer-events none
+
 controlFocused(args...)
   controlBorder(var(--active-color), 2px, args)
 

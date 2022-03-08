@@ -10,20 +10,20 @@ export default [
     slug: 'button',
     loader: () => import('./examples/Button'),
   },
+  {
+    slug: 'checkbox',
+    loader: () => import('./examples/Checkbox'),
+  },
   // {
-  //   name: 'checkbox',
-  //   loader: () => import('./examples/Checkbox/Checkbox'),
-  // },
-  // {
-  //   name: 'input',
+  //   slug: 'input',
   //   loader: () => import('./examples/Input/Input'),
   // },
   // {
-  //   name: 'icon',
+  //   slug: 'icon',
   //   loader: () => import('./examples/Icon/Icon'),
   // },
   // // {
-  // //   name: 'menu',
+  // //   slug: 'menu',
   // //   loader: () => import('./examples/Menu/Menu'),
   // // },
   {
@@ -36,15 +36,15 @@ export default [
     // items: () => import('./examples/Select/navigation'),
   },
   // {
-  //   name: 'scroll',
+  //   slug: 'scroll',
   //   loader: () => import('./examples/Scroll/Scroll'),
   // },
   // {
-  //   name: 'virtualized',
+  //   slug: 'virtualized',
   //   loader: () => import('./examples/Virtualized/Virtualized'),
   // },
   // {
-  //   name: 'notifications',
+  //   slug: 'notifications',
   //   loader: () => import('./examples/Notifications/Notifications'),
   // },
 ] as RouteItem[];
