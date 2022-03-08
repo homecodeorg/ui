@@ -198,25 +198,33 @@ export class Input extends Component<T.Props> {
   };
 
   getControlProps(): T.ControlProps {
-    const { type, value, label, isNullable, placeholder } = this.props;
+    const {
+      type,
+      value,
+      label,
+      isNullable,
+      controlProps,
+      placeholder,
+      ...rest
+    } = this.props;
+
     const { autoComplete, isLabelOnTop } = this.store;
 
     const props = {
-      ...omit(this.props, [
+      ...omit(rest, [
         'className',
         'clear',
         'onClear',
         'hasClear',
         'size',
-        'label',
         'error',
         'checkAutofill',
-        'placeholder',
         'adornmentLeft',
         'adornmentRight',
         'forceLabelOnTop',
         'changeOnEnd',
       ]),
+      ...controlProps,
       onChange: this.onChange,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
