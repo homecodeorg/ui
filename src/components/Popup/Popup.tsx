@@ -20,7 +20,7 @@ function getIframeDoc() {
 export class Popup extends Component<T.Props> {
   rootElem = createRef<HTMLDivElement>();
 
-  triggerElem = createRef<HTMLDivElement>();
+  triggerElem: HTMLDivElement;
 
   containerElem = createRef<HTMLDivElement>();
 
@@ -151,7 +151,7 @@ export class Popup extends Component<T.Props> {
       return;
     }
 
-    if (!isOpen || hasParent(e.target, this.triggerElem.current)) return;
+    if (!isOpen || hasParent(e.target, this.triggerElem)) return;
 
     if (!e.target.closest(`.${S.content}`) || autoClose) this.close();
   };
