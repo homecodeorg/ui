@@ -387,6 +387,7 @@ export class Form extends Component<T.Props> {
       'initialValues',
       'validationSchema',
       'onInit',
+      'onChange',
       'onSubmit',
     ]);
 
