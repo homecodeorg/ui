@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.21](https://github.com/foreverido/uilib/compare/v0.0.20...v0.0.21) (2022-03-08)
+
+
+### Bug Fixes
+
+* Form - omit onChange ([59788ec](https://github.com/foreverido/uilib/commit/59788ec9a37c090abdd2b278bb0d60ede2132cf9))
+
 ### [0.0.20](https://github.com/foreverido/uilib/compare/v0.0.19...v0.0.20) (2022-03-08)
 
 
