@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.24](https://github.com/foreverido/uilib/compare/v0.0.23...v0.0.24) (2022-03-09)
+
+
+### Bug Fixes
+
+* Input: defaultVaue, controllable, +example ([c0e9007](https://github.com/foreverido/uilib/commit/c0e90075fdf6ac6fdc3a8008006cc9f65cbf374d))
+* Popup updatePosition() call ([b087cc8](https://github.com/foreverido/uilib/commit/b087cc87e754a0574e712a94e87440cddb20c626))
+
 ### [0.0.23](https://github.com/foreverido/uilib/compare/v0.0.22...v0.0.23) (2022-03-09)
 
 
