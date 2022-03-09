@@ -18,6 +18,10 @@ export default [
     slug: 'input',
     loader: () => import('./examples/Input'),
   },
+  {
+    slug: 'spinner',
+    loader: () => import('./examples/Spinner'),
+  },
   // {
   //   slug: 'icon',
   //   loader: () => import('./examples/Icon/Icon'),
