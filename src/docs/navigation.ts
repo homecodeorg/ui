@@ -43,8 +43,8 @@ export default [
   //   slug: 'virtualized',
   //   loader: () => import('./examples/Virtualized/Virtualized'),
   // },
-  // {
-  //   slug: 'notifications',
-  //   loader: () => import('./examples/Notifications/Notifications'),
-  // },
+  {
+    slug: 'notifications',
+    loader: () => import('./examples/Notifications'),
+  },
 ] as RouteItem[];

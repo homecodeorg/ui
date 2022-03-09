@@ -1,4 +1,4 @@
-export function indexWhere(arr, val, fieldName) {
+export function indexWhere(arr, val, fieldName?) {
   if (!fieldName) {
     return arr.indexOf(val);
   }
@@ -19,7 +19,7 @@ export function indexWhere(arr, val, fieldName) {
   return index;
 }
 
-export function sliceWhere([...arr], val, fieldName) {
+export function sliceWhere([...arr], val, fieldName?) {
   spliceWhere(arr, val, fieldName);
   return arr;
 }

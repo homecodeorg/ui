@@ -48,7 +48,7 @@ $padding = 10px
   padding 16px 32px 16px 20px
   box-sizing border-box
   background-color var(--accent-color)
-  color var(--bg-color)
+  color var(--decent-color)
   transition transform $duration ease-out
 
   &::before
@@ -61,7 +61,7 @@ $padding = 10px
     opacity 0
     transition opacity .3s ease-out
     border-radius 20%
-    shadow()
+    box-shadow 0 10px 20px var(--decent-color)
     pointer-events none
 
     .type-warning &
@@ -102,10 +102,12 @@ $padding = 10px
 
 .close
   position absolute
-  right -2px
-  top -2px
-  height 40px
+  right -5px
+  top -5px
+  height 40px !important
   width @height
+  max-height @height
+  max-width @width
   border-radius 50%
   transition opacity .1s ease-out
   background-color transparent
@@ -115,7 +117,8 @@ $padding = 10px
   &
   &:hover
     [role=img]
-      color $primary-color
+      color var(--decent-color)
 
   &:hover
     opacity 1
+    background-color var(--decent-color-alpha-100)

@@ -1,21 +1,24 @@
 import React, { useMemo, useState } from 'react';
 import pick from 'lodash.pick';
-import { withStore } from 'justorm/react';
+import * as justorm from 'justorm/react';
 import cn from 'classnames';
+
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
 
-import pkg from '/package.json';
 import * as uilib from '/src';
 // import helpers from '!!raw-loader!helpers';
 
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
-
 import S from './Code.styl';
 
+const { withStore } = justorm;
+
+const SCOPE = { uilib, React, justorm };
 const MAP_LIB_TO_VAR = {
   react: 'React',
+  'jsutorm/react': 'justorm',
 };
 
 function replaceImportLine(line) {
@@ -42,17 +45,6 @@ const Example = ${example};
 render(<Example/>);
 `;
 }
-
-const DEFAULT_FILES = {
-  'package.json': {
-    dependencies: {
-      ...pick(pkg.dependencies, ['react', 'react-dom']),
-      '@foreverido/uilib': pkg.version,
-    },
-  },
-};
-
-const SCOPE = { uilib, React };
 
 export const Code = withStore({ app: 'theme' })(({ code, scope, store }) => {
   const { theme } = store.app;
