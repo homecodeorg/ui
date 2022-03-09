@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.23](https://github.com/foreverido/uilib/compare/v0.0.22...v0.0.23) (2022-03-09)
+
+
+### Bug Fixes
+
+* Checkbox ([5e6c8fd](https://github.com/foreverido/uilib/commit/5e6c8fd3da404b07a69dd19490ed36c683eba568))
+
 ### [0.0.22](https://github.com/foreverido/uilib/compare/v0.0.21...v0.0.22) (2022-03-09)
 
 
