@@ -27,9 +27,9 @@ const show = type => () => NotificationsStore.show(params[type]);
 export default () => (
   <Container centered fullHeight>
     <Notifications />
-    <Button onClick={show('info')}>Info</Button>
-    <Button onClick={show('warning')}>Warning</Button>
-    <Button onClick={show('error')}>Error</Button>
+    <Button onClick={show('info')}>Info</Button>-
+    <Button onClick={show('warning')}>Warning</Button>-
+    <Button onClick={show('error')}>Error</Button>-
     <Button onClick={show('loading')}>Loading</Button>
   </Container>
 );

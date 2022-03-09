@@ -39,10 +39,10 @@ export default [
     loader: () => import('./examples/Select/Select'),
     // items: () => import('./examples/Select/navigation'),
   },
-  // {
-  //   slug: 'scroll',
-  //   loader: () => import('./examples/Scroll/Scroll'),
-  // },
+  {
+    slug: 'scroll',
+    loader: () => import('./examples/Scroll'),
+  },
   // {
   //   slug: 'virtualized',
   //   loader: () => import('./examples/Virtualized/Virtualized'),

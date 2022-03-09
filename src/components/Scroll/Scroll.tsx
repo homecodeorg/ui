@@ -1,4 +1,4 @@
-import { Component, createRef, HTMLAttributes } from 'react';
+import { Component, createRef, HTMLAttributes, HTMLProps } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
@@ -11,8 +11,8 @@ import * as resizeObserver from '../../tools/resizeObserver';
 
 import S from './Scroll.styl';
 
-type OffsetAxis = { before: number; after: number };
-type Props = {
+type OffsetAxis = { before?: number; after?: number };
+type Props = HTMLProps<HTMLDivElement> & {
   className?: string;
   innerClassName?: string;
   thumbClassName?: string;
@@ -20,10 +20,10 @@ type Props = {
   x?: boolean;
   y?: boolean;
   autoHide?: boolean;
-  offset?: { x: OffsetAxis; y: OffsetAxis };
+  offset?: { x?: OffsetAxis; y?: OffsetAxis };
 };
 
-export default class Scroll extends Component<Props> {
+export class Scroll extends Component<Props> {
   innerElem = createRef<HTMLDivElement>();
   thumbELem = {
     x: createRef<HTMLDivElement>(),
