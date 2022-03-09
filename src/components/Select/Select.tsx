@@ -490,7 +490,7 @@ export class Select extends Component<T.Props, T.State> {
       this.renderAdditionalLabel(),
     ].filter(Boolean);
     const hasSelected = selectedLabel.length > 0;
-    const displayLabel = hasSelected ? selectedLabel : '  ';
+    const displayLabel = hasSelected ? selectedLabel : <div></div>;
     const title = hasSelected ? selectedLabel : null;
     const triggerArrow = this.renderTriggerArrow();
     const classes = cn(
