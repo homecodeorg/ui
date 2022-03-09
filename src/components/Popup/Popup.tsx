@@ -180,6 +180,7 @@ export class Popup extends Component<T.Props> {
   };
 
   updatePosition() {
+    if (!this.triggerElem) return;
     this.store.position = getCoords(this.triggerElem);
   }
 
