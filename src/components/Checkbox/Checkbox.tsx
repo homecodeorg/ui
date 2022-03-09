@@ -2,6 +2,8 @@ import { ChangeEvent, Component, DOMAttributes, ReactNode } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 
+import { Icon } from '../Icon/Icon';
+
 import { Size } from '../../types';
 import S from './Checkbox.styl';
 import { generateUID } from 'uilib/tools/uid';
@@ -88,7 +90,7 @@ export class Checkbox extends Component<Props> {
             type="checkbox"
             tabIndex={0}
           />
-          <div className={S.checkmark} />
+          <Icon type="check" className={S.checkmark} />
         </div>
         {label}
       </label>

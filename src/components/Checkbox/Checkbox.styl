@@ -54,38 +54,18 @@
 .checkmark
   position absolute
   left 0px
-  top 6px
+  top 0px
 
   height 100%
   width 100%
 
   opacity 0
-  transform scale(.8) rotateZ(-45deg)
-  transform-origin center
+  transform scale(.7) rotateY(-90deg)
   transition .1s ease-in
   transition-property transform, opacity
   pointer-events none
 
-  &::before
-  &::after
-    content ''
-    position absolute
-    width 3px
-    background-color var(--accent-color)
-    border-radius var(--border-radius-s)
-
-  &::before
-    z-index 1
-    left calc(50% - 2px)
-    height 16px
-    transform rotateZ(9deg)
-
-  &::after
-    top 3px
-    left 21px
-    height 20px
-    transform rotateZ(-103deg)
-
   .isChecked &
     opacity 1
+    transform scale(.7)
 

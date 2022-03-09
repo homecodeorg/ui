@@ -1,3 +1,4 @@
+export { default as check } from './check.svg';
 export { default as close } from './close.svg';
 export { default as chevronUp } from './chevronUp.svg';
 export { default as chevronDown } from './chevronDown.svg';
