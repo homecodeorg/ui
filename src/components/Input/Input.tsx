@@ -32,7 +32,7 @@ export class Input extends Component<T.Props> {
   constructor(props: T.Props) {
     super(props);
 
-    const inputValue = props.value || '';
+    const inputValue = props.value || props.defaultValue || '';
     const hasValue = this.hasValue(inputValue);
 
     this.store = createStore(this, {
@@ -158,6 +158,9 @@ export class Input extends Component<T.Props> {
       this.store.inputValue = value;
       this.updateHasValue();
     } else if (onChange) onChange(e, value);
+    else {
+      this.store.inputValue = value;
+    }
   };
 
   onLabelClipPathChange = (clipPath: string) =>

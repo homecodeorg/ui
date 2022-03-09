@@ -14,10 +14,10 @@ export default [
     slug: 'checkbox',
     loader: () => import('./examples/Checkbox'),
   },
-  // {
-  //   slug: 'input',
-  //   loader: () => import('./examples/Input/Input'),
-  // },
+  {
+    slug: 'input',
+    loader: () => import('./examples/Input'),
+  },
   // {
   //   slug: 'icon',
   //   loader: () => import('./examples/Icon/Icon'),
