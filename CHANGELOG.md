@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.29](https://github.com/foreverido/uilib/compare/v0.0.28...v0.0.29) (2022-03-10)
+
+
+### Bug Fixes
+
+* Router - require store ([3a62c6b](https://github.com/foreverido/uilib/commit/3a62c6b1b9791a80962dff7b592e2b939d1af6a9))
+
 ### [0.0.28](https://github.com/foreverido/uilib/compare/v0.0.27...v0.0.28) (2022-03-10)
 
 
