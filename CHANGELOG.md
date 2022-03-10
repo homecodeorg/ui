@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://github.com/foreverido/uilib/compare/v0.0.24...v0.0.25) (2022-03-10)
+
+
+### Features
+
+* export Label ([384db06](https://github.com/foreverido/uilib/commit/384db06f766a413cabecdf08df655669f60b72f9))
+* Scroll example ([a73c8b4](https://github.com/foreverido/uilib/commit/a73c8b45d36794fd96d5cd953d9fe061726629f2))
+
+
+### Bug Fixes
+
+* Select - empty layout ([864d86d](https://github.com/foreverido/uilib/commit/864d86df99882c7ec1725f5b52d1dd8b2c9e0b3c))
+* Spinner animation, +example ([a6d07d5](https://github.com/foreverido/uilib/commit/a6d07d5597bee0a6b9f9add86ea3f37a09745327))
+
 ### [0.0.24](https://github.com/foreverido/uilib/compare/v0.0.23...v0.0.24) (2022-03-09)
 
 
