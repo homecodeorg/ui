@@ -1,6 +1,6 @@
 {
   "name": "@foreverido/uilib",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "React UI components library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

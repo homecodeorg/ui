@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.31](https://github.com/foreverido/uilib/compare/v0.0.30...v0.0.31) (2022-03-10)
+
+
+### Bug Fixes
+
+* remove preact trails ([a8a2644](https://github.com/foreverido/uilib/commit/a8a2644536e3bb4cbcefa0f460059a191e308d92))
+
 ### [0.0.30](https://github.com/foreverido/uilib/compare/v0.0.29...v0.0.30) (2022-03-10)
 
 
