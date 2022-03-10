@@ -1,7 +1,7 @@
 import { Component, cloneElement, ReactNode } from 'react';
 import { withStore } from 'justorm/react';
 
-import './store';
+require('./store');
 import { parseRouteParams } from './Router.helpers';
 
 type Props = {
