@@ -6,6 +6,7 @@ export * from './Form/Form';
 export * from './Icon/Icon';
 export * from './Input/Input';
 export * from './Label/Label';
+export * from './RequiredStar/RequiredStar';
 // export * from './InputFile/InputFile';
 export * from './Lazy/Lazy';
 // export * from './Menu/Menu';
