@@ -1,17 +1,41 @@
-import { createStore } from 'justorm/react';
+import { createStore } from 'justorm/preact';
 
-type NavigateParams = { replace?: boolean };
-type ReplaceParams = { quiet?: boolean };
+import { addUniq, spliceWhere } from '../../tools/array';
 
-export default createStore('router', {
+const LISTENERS = [];
+
+const STORE = createStore('router', {
   path: location.pathname,
   params: {},
-  navigate(href, { replace }: NavigateParams = {}) {
+  on(cb) {
+    addUniq(LISTENERS, cb);
+  },
+  un(cb) {
+    spliceWhere(LISTENERS, cb);
+  },
+  go(href, { replace } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
     this.path = href;
   },
-  replaceState(href, { quiet }: ReplaceParams = {}) {
+  back() {
+    history.back();
+  },
+  replaceState(href, { quiet } = {}) {
     history.replaceState({}, '', href);
     if (!quiet) this.path = href;
   },
 });
+
+function updateRouteState() {
+  const { pathname } = window.location;
+
+  if (STORE.path === pathname) return;
+
+  STORE.path = pathname;
+  LISTENERS.forEach(cb => cb(pathname));
+}
+
+window.addEventListener('popstate', updateRouteState);
+window.addEventListener('pushstate', updateRouteState);
+
+export default STORE;

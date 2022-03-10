@@ -1,11 +1,4 @@
-import {
-  Component,
-  cloneElement,
-  ReactNode,
-  PropsWithChildren,
-  ReactChild,
-  ReactComponentElement,
-} from 'react';
+import { Component, cloneElement, ReactNode } from 'react';
 import { withStore } from 'justorm/react';
 
 import './store';
@@ -26,27 +19,10 @@ export class Router extends Component<Props> {
     this.rebuildRoutes(props.children);
   }
 
-  componentDidMount() {
-    window.addEventListener('popstate', this.updateRouteState);
-    window.addEventListener('pushstate', this.updateRouteState);
-  }
-
   shouldComponentUpdate(nextProps) {
     this.rebuildRoutes(nextProps.children);
     return true;
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('popstate', this.updateRouteState);
-    window.removeEventListener('pushstate', this.updateRouteState);
-  }
-
-  updateRouteState = e => {
-    e.stopPropagation();
-
-    const { router } = this.props.store;
-    router.path = window.location.pathname;
-  };
 
   rebuildRoutes(items) {
     this.routes = parseRouteParams(items);
@@ -85,4 +61,4 @@ export class Router extends Component<Props> {
 }
 
 export * from './Link/Link';
-export { default as Redirect } from './Redirect/Redirect';
+export * from './Redirect';
