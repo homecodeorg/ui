@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.26](https://github.com/foreverido/uilib/compare/v0.0.25...v0.0.26) (2022-03-10)
+
+
+### Features
+
+* export RequiredStar ([f298925](https://github.com/foreverido/uilib/commit/f2989259d78ef1bf47aebf3e2f95a5f6802ed2d9))
+
 ### [0.0.25](https://github.com/foreverido/uilib/compare/v0.0.24...v0.0.25) (2022-03-10)
 
 
