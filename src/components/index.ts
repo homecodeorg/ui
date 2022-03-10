@@ -5,6 +5,7 @@ export * from './Container/Container';
 export * from './Form/Form';
 export * from './Icon/Icon';
 export * from './Input/Input';
+export * from './Label/Label';
 // export * from './InputFile/InputFile';
 export * from './Lazy/Lazy';
 // export * from './Menu/Menu';
