@@ -13,14 +13,14 @@ const STORE = createStore('router', {
   un(cb) {
     spliceWhere(LISTENERS, cb);
   },
-  go(href, { replace } = {}) {
+  go(href, { replace }: { replace?: boolean } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
     this.path = href;
   },
   back() {
     history.back();
   },
-  replaceState(href, { quiet } = {}) {
+  replaceState(href, { quiet }: { quiet?: boolean } = {}) {
     history.replaceState({}, '', href);
     if (!quiet) this.path = href;
   },
