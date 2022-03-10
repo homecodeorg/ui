@@ -1,7 +1,7 @@
 import { Component, cloneElement, ReactNode } from 'react';
 import { withStore } from 'justorm/react';
 
-require('./store');
+import STORE from './store';
 import { parseRouteParams } from './Router.helpers';
 
 type Props = {
@@ -30,19 +30,18 @@ export class Router extends Component<Props> {
 
   getRoute() {
     let params;
-    const { router } = this.props.store;
     const notExactRoutes = [];
     const route =
       this.routes.find(route => {
         const { path, exact, parsed } = route;
 
         if (exact) {
-          if (path === router.path) return true;
+          if (path === STORE.path) return true;
         } else {
           notExactRoutes.push(route);
         }
 
-        if (parsed) params = parsed.test(router.path);
+        if (parsed) params = parsed.test(STORE.path);
 
         return Boolean(params);
       }) || notExactRoutes[0];
@@ -51,12 +50,11 @@ export class Router extends Component<Props> {
   }
 
   render() {
-    const { router } = this.props.store;
     const [route, params] = this.getRoute();
 
     if (!route) return null;
 
-    return cloneElement(route.Elem, { ...params, router });
+    return cloneElement(route.Elem, { ...params, router: STORE });
   }
 }
 
