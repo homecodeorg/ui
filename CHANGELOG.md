@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.28](https://github.com/foreverido/uilib/compare/v0.0.27...v0.0.28) (2022-03-10)
+
+
+### Bug Fixes
+
+* Router typings ([c0795bf](https://github.com/foreverido/uilib/commit/c0795bfc488b19233afd0ee4a99db3212c5cd409))
+
 ### [0.0.27](https://github.com/foreverido/uilib/compare/v0.0.26...v0.0.27) (2022-03-10)
 
 
