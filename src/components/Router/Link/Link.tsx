@@ -1,8 +1,7 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
-import store from '../store';
 import ExternalIcon from './icons/external.svg';
 import S from './Link.styl';
 
@@ -12,7 +11,7 @@ const defaultProps = {
   isDisabled: false,
 };
 
-export const Link = withStore({ router: true })(function ({
+export const Link = withStore({ router: ['path'] })(function ({
   className,
   exactClassName,
   children,
@@ -21,13 +20,13 @@ export const Link = withStore({ router: true })(function ({
   isDisabled,
   ...props
 }) {
-  const { href } = props;
-  const { pathname } = window.location;
+  const { href, store } = props;
+  const { path } = store.router;
   const domElem = useRef(null);
 
   const isExternal = /\./.test(href);
   const isNested = !/^\//.test(href) && !isExternal;
-  const isExact = href === pathname;
+  const isExact = href === path;
 
   const classes = cn(
     S.root,
@@ -40,7 +39,7 @@ export const Link = withStore({ router: true })(function ({
   );
 
   if (isNested) {
-    props.href = `${pathname.replace(/\/$/, '')}/${href}`;
+    props.href = `${path.replace(/\/$/, '')}/${href}`;
   }
 
   if (isExternal) {
@@ -51,13 +50,16 @@ export const Link = withStore({ router: true })(function ({
     }
   }
 
-  function handleClick(e) {
-    if (!isExternal && window.location.pathname !== props.href) {
-      e.preventDefault();
-      store.navigate(props.href);
-      domElem.current?.blur();
-    }
-  }
+  const handleClick = useCallback(
+    e => {
+      if (!isExternal && path !== href) {
+        e.preventDefault();
+        store.router.go(props.href);
+        domElem.current?.blur();
+      }
+    },
+    [path, href, isExternal]
+  );
 
   return (
     <a /* eslint-disable-line */

@@ -31,17 +31,18 @@ export class Router extends Component<Props> {
   getRoute() {
     let params;
     const notExactRoutes = [];
+    const { path: currPath } = this.props.store.router;
     const route =
       this.routes.find(route => {
         const { path, exact, parsed } = route;
 
         if (exact) {
-          if (path === STORE.path) return true;
+          if (path === currPath) return true;
         } else {
           notExactRoutes.push(route);
         }
 
-        if (parsed) params = parsed.test(STORE.path);
+        if (parsed) params = parsed.test(currPath);
 
         return Boolean(params);
       }) || notExactRoutes[0];
