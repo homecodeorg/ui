@@ -61,3 +61,4 @@ export class Router extends Component<Props> {
 
 export * from './Link/Link';
 export * from './Redirect';
+export const RouterStore = STORE;
