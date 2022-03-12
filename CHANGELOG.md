@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.32](https://github.com/foreverido/uilib/compare/v0.0.31...v0.0.32) (2022-03-12)
+
+
+### Bug Fixes
+
+* export IconTypes ([20f253f](https://github.com/foreverido/uilib/commit/20f253f084569a86c2c1dcd70df6ceebdf2ab012))
+* Router ([464f131](https://github.com/foreverido/uilib/commit/464f13116ef334bf689eeb3edb1db68874e74861))
+
 ### [0.0.31](https://github.com/foreverido/uilib/compare/v0.0.30...v0.0.31) (2022-03-10)
 
 
