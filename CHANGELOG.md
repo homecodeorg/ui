@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.34](https://github.com/foreverido/uilib/compare/v0.0.33...v0.0.34) (2022-03-15)
+
+
+### Bug Fixes
+
+* Form - defaultValues, +examples ([58b58b9](https://github.com/foreverido/uilib/commit/58b58b914a7c4aecd16c260c2769f290e9c166ca))
+* Input clear ([2ee9c96](https://github.com/foreverido/uilib/commit/2ee9c966573fde93cc739fb4e23beca0c44c5035))
+
 ### [0.0.33](https://github.com/foreverido/uilib/compare/v0.0.32...v0.0.33) (2022-03-12)
 
 
