@@ -1,9 +1,4 @@
-import {
-  ChangeEvent,
-  FormHTMLAttributes,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { ChangeEvent, FormHTMLAttributes, ReactNode } from 'react';
 import { ValidationSchema, ValidationError } from 'fastest-validator';
 
 export type FormValidationSchema = ValidationSchema;
@@ -51,8 +46,8 @@ export type Props = Omit<
 > & {
   className?: string;
   defaultValues?: FormValues;
-  defaultDisabled?: FieldsFlags;
   initialValues: FormValues;
+  defaultDisabled?: FieldsFlags;
   validationSchema?: FormValidationSchema;
   markEdited?: boolean;
   children: (api: FormApi) => JSX.Element | JSX.Element[];

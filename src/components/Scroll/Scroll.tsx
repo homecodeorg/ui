@@ -300,6 +300,7 @@ export class Scroll extends Component<Props> {
     const props = omit(this.props, [
       'x',
       'y',
+      'offset',
       'className',
       'innerClassName',
       'innerProps',

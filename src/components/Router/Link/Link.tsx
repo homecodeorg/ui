@@ -12,6 +12,7 @@ const defaultProps = {
 };
 
 export const Link = withStore({ router: ['path'] })(function ({
+  store,
   className,
   exactClassName,
   children,
@@ -20,7 +21,7 @@ export const Link = withStore({ router: ['path'] })(function ({
   isDisabled,
   ...props
 }) {
-  const { href, store } = props;
+  const { href } = props;
   const { path } = store.router;
   const domElem = useRef(null);
 

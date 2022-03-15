@@ -1,17 +1,16 @@
 import { hot } from 'react-hot-loader/root';
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
-import cn from 'classnames';
 import { Router, Lazy, Button, Theme } from 'uilib';
 
-import { watchControllerFlag } from 'uilib/tools/dom';
+import { dom } from 'uilib';
 
 import Sidebar from '../Sidebar/Sidebar';
 import NAV_CONFIG from '../../navigation';
 require('./store');
 import S from './App.styl';
 
-watchControllerFlag();
+dom.watchControllerFlag();
 
 @withStore('app')
 class App extends Component<{ store?: any }> {

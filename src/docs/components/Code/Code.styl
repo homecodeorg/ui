@@ -1,21 +1,33 @@
-.editor
+.root
+  box-shadow 0 0 0 1px var(--accent-color-alpha-100);
+  border-radius var(--border-radius-l)
+  margin 1px
+
+.editorContainer
 .preview
-    border-radius var(--border-radius-l)
-    border 1px solid var(--accent-color-alpha-100)
+  border-radius inherit
 
-.editor.user
-    border-bottom-left-radius 0
-    border-bottom-right-radius 0
-    background-color var(--accent-color-alpha-100)
+.editorContainer
+  max-height 60vh
+  border-bottom-left-radius 0
+  border-bottom-right-radius 0
+  background-color var(--accent-color-alpha-100)
 
-    *
-        font-family monospace !important
+  *
+    font-family monospace !important
 
 .editor.runtime
-    display none
+  display none
+
+.error
+.preview
+  padding 16px
+
+.error
+  white-space break-spaces
+  background-color var(--danger-color-alpha-100)
 
 .preview
-    padding 16px
-    margin-top -1px
-    border-top-left-radius 0
-    border-top-right-radius 0
+  margin-top -1px
+  border-top-left-radius 0
+  border-top-right-radius 0

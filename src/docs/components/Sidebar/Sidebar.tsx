@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState, memo } from 'react';
 import cn from 'classnames';
 
-import { Link } from 'uilib';
-import { capitalize } from 'uilib/tools/string';
+import { Link, string } from 'uilib';
 
 import NAV_CONFIG, { RouteItem } from '../../navigation';
 
@@ -25,7 +24,7 @@ function Item({ slug, parentSlug = '', items }: ItemProps) {
         exactClassName={S.active}
         key={slug}
       >
-        {capitalize(slug)}
+        {string.capitalize(slug)}
       </Link>
       {items?.map(item => (
         <Item parentSlug={slug} slug={item.slug} key={item.slug} />

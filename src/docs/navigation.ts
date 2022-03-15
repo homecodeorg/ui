@@ -22,6 +22,10 @@ export default [
     slug: 'spinner',
     loader: () => import('./examples/Spinner'),
   },
+  {
+    slug: 'form',
+    loader: () => import('./examples/Form'),
+  },
   // {
   //   slug: 'icon',
   //   loader: () => import('./examples/Icon/Icon'),
