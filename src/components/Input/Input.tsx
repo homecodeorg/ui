@@ -116,17 +116,22 @@ export class Input extends Component<T.Props> {
     return val;
   }
 
-  clear = () => {
+  onClearPress = e => {
     const { onChange, onClear } = this.props;
 
-    if (onClear) onClear();
-    if (onChange) onChange(null, '');
-    // this.inputRef.current?.focus();
-    this.isClearPressed = false;
-  };
+    e.preventDefault();
+    e.stopPropagation();
 
-  onClearMouseDown = () => {
-    this.isClearPressed = true;
+    onClear?.();
+
+    if (onChange) {
+      this.onChange('');
+    } else {
+      // @ts-ignore
+      this.inputRef.current.value = '';
+    }
+
+    this.inputRef.current?.focus();
   };
 
   onDocKeyUp = (e: KeyboardEvent) => {
@@ -146,9 +151,14 @@ export class Input extends Component<T.Props> {
     }
   };
 
-  onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, changeOnEnd, type } = this.props;
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = this.getValue(e.target.value);
+
+    this.onChange(value);
+  };
+
+  onChange = (value, e?) => {
+    const { onChange, changeOnEnd, type } = this.props;
     const isNumber = type === 'number';
 
     // @ts-ignore
@@ -220,7 +230,7 @@ export class Input extends Component<T.Props> {
       ]),
       value: inputValue,
       ...controlProps,
-      onChange: this.onChange,
+      onChange: this.handleChange,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
     };
@@ -328,10 +338,10 @@ export class Input extends Component<T.Props> {
               variant="clear"
               size={size}
               isSquare
-              onMouseDownCapture={this.onClearMouseDown}
-              onClick={this.clear}
+              // onMouseDownCapture={this.onClearMouseDown}
+              onClick={this.onClearPress}
             >
-              <Icon className={S.clearIcon} type="clear" />
+              <Icon className={S.clearIcon} size={size} type="close" />
             </Button>
           )}
           {required && <RequiredStar size={size} />}

@@ -525,8 +525,10 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
-    const { size } = this.props;
-    const { isOpen } = this.store;
+    const { size, inputProps } = this.props;
+    const { isOpen, searchVal } = this.store;
+
+    if (inputProps?.hasClear && searchVal) return null;
 
     return (
       <Icon
@@ -562,7 +564,7 @@ export class Select extends Component<T.Props, T.State> {
         className={S.expandButton}
         onMouseUpCapture={e => this.onExpandClick(e, id)}
       >
-        <Icon type="arrow-right" size={size} className={S.expandIcon} />
+        <Icon type="chevronRight" size={size} className={S.expandIcon} />
       </Button>
     );
   }

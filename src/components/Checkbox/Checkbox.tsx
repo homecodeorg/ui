@@ -6,7 +6,7 @@ import { Icon } from '../Icon/Icon';
 
 import { Size } from '../../types';
 import S from './Checkbox.styl';
-import { generateUID } from 'uilib/tools/uid';
+import { uid } from 'uilib';
 
 type ControlProps = DOMAttributes<HTMLInputElement>;
 
@@ -33,7 +33,7 @@ export class Checkbox extends Component<Props> {
 
   constructor(props) {
     super(props);
-    this.id = props.id || generateUID();
+    this.id = props.id || uid.generateUID();
     this.store = createStore(this, { isActive: false, isFocused: false });
   }
 

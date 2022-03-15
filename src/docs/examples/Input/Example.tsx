@@ -1,3 +1,8 @@
+import { useState } from 'react';
 import { Input } from 'uilib';
 
-export default () => <Input defaultValue="Alise" />;
+export default () => {
+  const [value, setValue] = useState('Alice');
+
+  return <Input value={value} onChange={(e, val) => setValue(val)} hasClear />;
+};

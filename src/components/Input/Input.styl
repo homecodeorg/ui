@@ -186,13 +186,16 @@ $paddingSide = 12px
 .clearButton
   z-index 1
   position absolute
-  top 1px
+  top 0
   right 0
   bottom 1px
   height auto
-  margin-right 8px
+
+  &:hover
+    background-color var(--accent-color-alpha-0)
 
 .clearIcon
+  flex-shrink 0
   opacity .2
   transition opacity .2s ease-out
 
