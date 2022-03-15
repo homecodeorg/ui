@@ -72,7 +72,7 @@ function Item(props: T.Props) {
           isSquare
           onClick={() => close(id)}
         >
-          <Icon type="close" size="m" />
+          <Icon type="close" size="s" />
         </Button>
       </div>
     </div>
