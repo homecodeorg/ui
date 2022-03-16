@@ -2,113 +2,117 @@ import React, {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
+  Component,
 } from 'react';
 import * as justorm from 'justorm/react';
 import cn from 'classnames';
+import compare from 'compareq';
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
 
-import { Scroll, uid } from 'uilib';
+import { Scroll, uid, debounce } from 'uilib';
 
 import * as uilib from '/src';
 // import helpers from '!!raw-loader!helpers';
 
+import * as H from './Code.helpers';
 import S from './Code.styl';
 
-const { withStore } = justorm;
+const { withStore, createStore } = justorm;
 
 const SCOPE = { uilib, React, justorm };
-const MAP_LIB_TO_VAR = {
-  react: 'React',
-  'jsutorm/react': 'justorm',
+
+type Props = {
+  store?: any;
+  scope?: object;
+  code: string;
 };
 
-function replaceImportLine(line) {
-  const [, vars, from] = line.match(/^import (.*) from '(.*)';/) ?? [];
+@withStore({ app: 'theme' })
+export class Code extends Component<Props> {
+  store;
 
-  if (!from) return line;
+  id = `editor-${uid.generateUID()}`;
 
-  const sourceVar = MAP_LIB_TO_VAR[from] ?? from;
+  constructor(props) {
+    super(props);
 
-  return `const ${vars} = ${sourceVar};`;
+    const { code } = props;
+
+    this.store = createStore(this, {
+      height: '100%',
+      editedCode: code,
+      execCode: this.getExecCode(code),
+      currScope: this.getScope(),
+    });
+  }
+
+  componentDidMount() {
+    this.updateHeight();
+  }
+
+  componentDidUpdate({ scope }: Props) {
+    if (!compare(scope, this.props.scope)) {
+      this.store.currScope = this.getScope(scope);
+    }
+  }
+
+  getScope = (scope = this.props.scope) => ({ ...SCOPE, ...scope });
+
+  getExecCode = (code = this.store.editedCode) => {
+    return H.wrapExample(code, this.props.scope);
+  };
+
+  updateHeight() {
+    const editorElem = document.getElementById(this.id);
+    this.store.height = H.getPreHeight(editorElem);
+  }
+
+  // updateExecCode = debounce(
+  updateExecCode = code => (this.store.execCode = this.getExecCode(code));
+  //   1000
+  // );
+
+  onChange = code => {
+    this.store.editedCode = code;
+    this.updateHeight();
+    this.updateExecCode(code);
+  };
+
+  render() {
+    const { store } = this.props;
+    const { theme } = store.app;
+    const { height, editedCode, execCode, currScope } =
+      this.store.originalObject;
+
+    return (
+      <div className={S.root}>
+        <style>{`#${this.id} > textarea { height: ${height} !important; }`}</style>
+        <Scroll
+          y
+          className={S.editorContainer}
+          offset={{ y: { before: 20, after: 20 } }}
+        >
+          <LiveEditor
+            className={cn(S.editor, S.user)}
+            id={this.id}
+            code={editedCode}
+            language="typescript"
+            theme={theme === 'dark' ? vsDark : vsLight}
+            onChange={this.onChange}
+          />
+          <div className={S.editorContainerFade} />
+        </Scroll>
+        <LiveProvider noInline code={execCode} scope={currScope}>
+          <LiveEditor className={cn(S.editor, S.runtime)} />
+          <LiveError className={S.error} />
+          <LivePreview className={S.preview} />
+        </LiveProvider>
+      </div>
+    );
+  }
 }
-
-function replaceImports(code) {
-  return code.split('\n').map(replaceImportLine).join('\n');
-}
-
-function wrapExample(code, scope) {
-  const [defines, example] = code.split('export default ');
-  return `
-${replaceImports(defines)}
-
-const Example = ${example};
-
-render(<Example/>);
-`;
-}
-
-function getPreHeight(editorElem) {
-  const height = editorElem?.querySelector('pre')?.offsetHeight;
-
-  if (!height) return '100%';
-  return `${height}px`;
-}
-
-export const Code = withStore({ app: 'theme' })(({ code, scope, store }) => {
-  const { theme } = store.app;
-
-  const id = useMemo(() => `editor-${uid.generateUID()}`, []);
-  const currScope = useMemo(() => ({ ...SCOPE, ...scope }), [scope]);
-
-  const [editedCode, setCode] = useState(code);
-  const [height, setHeight] = useState('100%');
-
-  const updateHeight = useCallback(() => {
-    const editorElem = document.getElementById(id);
-    setHeight(getPreHeight(editorElem));
-  }, []);
-
-  const onChange = useCallback(code => {
-    setCode(code);
-    updateHeight();
-  }, []);
-
-  useEffect(() => {
-    updateHeight();
-  }, []);
-
-  return (
-    <div className={S.root}>
-      <style>{`#${id} > textarea { height: ${height} !important; }`}</style>
-      <Scroll
-        y
-        className={S.editorContainer}
-        offset={{ y: { before: 20, after: 20 } }}
-      >
-        <LiveEditor
-          className={cn(S.editor, S.user)}
-          id={id}
-          code={editedCode}
-          language="typescript"
-          theme={theme === 'dark' ? vsDark : vsLight}
-          onChange={onChange}
-        />
-      </Scroll>
-      <LiveProvider
-        noInline
-        code={wrapExample(editedCode, scope)}
-        scope={currScope}
-      >
-        <LiveEditor className={cn(S.editor, S.runtime)} />
-        <LiveError className={S.error} />
-        <LivePreview className={S.preview} />
-      </LiveProvider>
-    </div>
-  );
-});
