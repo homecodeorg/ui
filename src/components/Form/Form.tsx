@@ -92,22 +92,25 @@ export class Form extends Component<T.Props> {
   constructor(props: T.Props) {
     super(props);
 
-    const { initialValues, defaultDisabled } = props;
+    const { initialValues, validationSchema, defaultDisabled } = props;
 
     this.updateDefaultValues();
 
+    this.validationSchema = validationSchema;
+
+    const values = H.cloneValues(initialValues);
     const notEmpty = H.getNotEmpty(this.defaultValues, initialValues);
+    const disabled = Object(defaultDisabled);
 
     this.store = createStore(this, {
-      values: H.cloneValues(initialValues),
+      values,
       touched: H.getInitialTouched(initialValues),
-      errors: {},
       changed: {},
       notEmpty,
-      disabled: Object(defaultDisabled),
+      disabled,
       isLoading: false,
       isDirty: false,
-      isValid: true,
+      ...this.getValidationState({ values, disabled }),
       isEmpty: Object.keys(notEmpty).length === 0,
     });
   }
@@ -239,8 +242,17 @@ export class Form extends Component<T.Props> {
     };
   }
 
-  getValidationErrors() {
-    const { values, disabled } = this.store.originalObject;
+  getValidationState(store?): T.ValidationState {
+    const errors = this.getValidationErrors(store);
+    const isValid = Object.keys(errors).length === 0;
+
+    return { isValid, errors };
+  }
+
+  getValidationErrors(
+    store: T.ValidationStateParams = this.store.originalObject
+  ) {
+    const { values, disabled } = store;
 
     if (!this.validationSchema) return {};
 
@@ -311,10 +323,7 @@ export class Form extends Component<T.Props> {
   }
 
   validate() {
-    const errors = this.getValidationErrors();
-    const isValid = Object.keys(errors).length === 0;
-
-    Object.assign(this.store, { isValid, errors });
+    Object.assign(this.store, this.getValidationState());
   }
 
   onInit() {

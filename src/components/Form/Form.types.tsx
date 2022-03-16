@@ -16,14 +16,22 @@ type FieldsFlags = { [name: string]: boolean };
 
 type FieldsErrors = { [name: string]: FieldError };
 
-export type FormApi = {
-  isDirty: boolean;
+export type ValidationStateParams = {
+  values: FormValues;
+  disabled: FieldsFlags;
+};
+
+export type ValidationState = {
   isValid: boolean;
+  errors: FieldsErrors;
+};
+
+export type FormApi = ValidationState & {
+  isDirty: boolean;
   isLoading: boolean;
   values: FormValues;
   touched: FieldsFlags;
   changed: FieldsFlags;
-  errors: FieldsErrors;
   Field: React.ComponentType;
   setValue: (field: string, val: any) => void;
   setValues: (values: FormValues) => void;

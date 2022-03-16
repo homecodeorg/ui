@@ -493,8 +493,10 @@ export class Select extends Component<T.Props, T.State> {
     const displayLabel = hasSelected ? selectedLabel : <div></div>;
     const title = hasSelected ? selectedLabel : null;
     const triggerArrow = this.renderTriggerArrow();
+    const isError = this.isErrorVisible();
     const classes = cn(
       S.triggerButton,
+      isError && S.isError,
       triggerArrow && S.hasTriggerArrow,
       className
     );
@@ -516,6 +518,7 @@ export class Select extends Component<T.Props, T.State> {
           disabled={disabled}
           isOnTop={hasSelected}
           isFocused={isFocused}
+          isError={isError}
           onClipPathChange={this.onLabelClipPathChange}
         >
           {this.getFieldLabel(label)}
