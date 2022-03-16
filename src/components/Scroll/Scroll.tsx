@@ -118,6 +118,8 @@ export class Scroll extends Component<Props> {
 
   // TODO: call on resize
   updateCoeff() {
+    if (!this.innerElem.current) return;
+
     const { clientHeight, clientWidth, scrollHeight, scrollWidth } =
       this.innerElem.current;
 
@@ -130,6 +132,8 @@ export class Scroll extends Component<Props> {
   }
 
   updatePos = () => {
+    if (!this.innerElem.current) return;
+
     const { offset } = this.props;
     const xOffsetBefore = offset?.x?.before || 0;
     const xOffsetAfter = offset?.x?.after || 0;
@@ -248,7 +252,7 @@ export class Scroll extends Component<Props> {
     if (coeff[axis] === 1) return null;
 
     const offsetSizeField = `offset${capitalize(sizeField)}`;
-    const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
+    // const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
     const thumbStyle = {
       [sizeField]: `${coeff[axis] * 100}%`,
       [posField]: `${pos[axis]}px`,
