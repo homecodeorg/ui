@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.36](https://github.com/foreverido/uilib/compare/v0.0.35...v0.0.36) (2022-03-16)
+
+
+### Features
+
+* Scroll - sizes; all components - default size - m ([6bc0009](https://github.com/foreverido/uilib/commit/6bc0009b57e8f8b2f4f3c146c373765213913e20))
+
 ### [0.0.35](https://github.com/foreverido/uilib/compare/v0.0.34...v0.0.35) (2022-03-16)
 
 
