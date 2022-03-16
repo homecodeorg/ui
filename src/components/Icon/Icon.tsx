@@ -24,5 +24,5 @@ export function Icon(props: T.Props) {
 }
 
 Icon.defaultProps = {
-  size: 's' as T.IconSize,
+  size: 'm' as T.IconSize,
 };

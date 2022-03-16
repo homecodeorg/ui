@@ -26,7 +26,7 @@ export class Checkbox extends Component<Props> {
   store;
 
   static defaultProps = {
-    size: 's',
+    size: 'm',
     label: '',
     checked: false,
   };

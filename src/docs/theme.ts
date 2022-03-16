@@ -2,8 +2,9 @@ import { ThemeHelpers } from 'uilib';
 
 const { colorsConfigToVars } = ThemeHelpers;
 
-const darkColor = ['#171717', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
-const lightColor = ['#e6e6e6', { alpha: [0, 50, 100, 200, 500, 800, 900] }];
+const colorsAlphaModes = [0, 50, 100, 200, 500, 800, 900];
+const darkColor = ['#171717', { alpha: colorsAlphaModes }];
+const lightColor = ['#e6e6e6', { alpha: colorsAlphaModes }];
 
 export const colors = {
   active: [

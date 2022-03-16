@@ -4,6 +4,7 @@ import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 import Time from 'timen';
 
+import type { Size } from '../../types';
 import { capitalize } from '../../tools/string';
 import { isTouch } from '../../tools/dom';
 import debounce from '../../tools/debounce';
@@ -19,6 +20,7 @@ type Props = HTMLProps<HTMLDivElement> & {
   innerProps?: HTMLAttributes<HTMLDivElement>;
   x?: boolean;
   y?: boolean;
+  size?: Size;
   autoHide?: boolean;
   offset?: { x?: OffsetAxis; y?: OffsetAxis };
 };
@@ -40,6 +42,8 @@ export class Scroll extends Component<Props> {
   prevBoundings = { x: 0, y: 0 };
 
   unsubscribeScrollHeightObserver;
+
+  static defaultProps = { size: 'm' };
 
   constructor(props) {
     super(props);
@@ -259,7 +263,7 @@ export class Scroll extends Component<Props> {
     };
 
     const barProps = {
-      className: cn(S.bar, S[axis], activeAxis && S.isActive),
+      className: cn(S.bar, S[axis], activeAxis === axis && S.isActive),
       style: this.getOffset(axis),
       [this.events.start]: this.onPointerStart.bind(this, axis),
     };
@@ -289,13 +293,14 @@ export class Scroll extends Component<Props> {
   }
 
   render() {
-    const { y, x, autoHide, className } = this.props;
+    const { y, x, size, autoHide, className } = this.props;
     const { coeff, isScrolling, activeAxis } = this.store;
 
     const classes = cn(
       S.root,
       y && S.y,
       x && S.x,
+      S[`size-${size}`],
       autoHide && S.autoHide,
       (isScrolling || activeAxis) && S.isScrolling,
       this.isTouch && S.isTouch,
