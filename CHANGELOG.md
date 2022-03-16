@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.35](https://github.com/foreverido/uilib/compare/v0.0.34...v0.0.35) (2022-03-16)
+
+
+### Bug Fixes
+
+* Form - error state ([8b1bd49](https://github.com/foreverido/uilib/commit/8b1bd49789e14839b6e74a8c9e4c862103b82de2))
+* Notifications - Icon size ([f82072e](https://github.com/foreverido/uilib/commit/f82072ebedfea4dd9993d35e196785fb56c3eee1))
+* Scroll - errors on update ([f72d244](https://github.com/foreverido/uilib/commit/f72d244981eae9c47d36915f2d1804a7b434c1d3))
+
 ### [0.0.34](https://github.com/foreverido/uilib/compare/v0.0.33...v0.0.34) (2022-03-15)
 
 
