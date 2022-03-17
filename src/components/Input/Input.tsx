@@ -332,13 +332,12 @@ export class Input extends Component<T.Props> {
             {label}
           </Label>
           {this.renderAdornment('right')}
-          {hasClear && hasValue && (
+          {hasClear && !disabled && hasValue && (
             <Button
               className={S.clearButton}
               variant="clear"
               size={size}
               isSquare
-              // onMouseDownCapture={this.onClearMouseDown}
               onClick={this.onClearPress}
             >
               <Icon className={S.clearIcon} size={size} type="close" />

@@ -43,6 +43,7 @@ $paddingSide = 12px
   .root:hover &
   .isFocused &
     controlBorder(var(--active-color))
+    background-color var(--active-color-alpha-100)
 
   .isFocused &
     controlFocused()
@@ -50,7 +51,6 @@ $paddingSide = 12px
   .hasError &
   .hasError:hover &
     controlBorder(var(--danger-color))
-    animation error-flash .4s ease-out
 
   .isFocused.hasError &
     controlFocus(var(--danger-color))
@@ -64,11 +64,6 @@ $paddingSide = 12px
     opacity .6
     background-color var(--accent-color-alpha-500)
 
-@keyframes error-flash
-  0%
-    controlFocus(var(--danger-color), 0px)
-  30%
-    controlFocus(var(--danger-color), 6px)
 
 .size-s
   controlFontSize('s')
@@ -193,7 +188,7 @@ $paddingSide = 12px
   height auto
 
   &:hover
-    background-color var(--accent-color-alpha-0)
+    background-color var(--accent-color-alpha-0) !important
 
 .clearIcon
   flex-shrink 0
