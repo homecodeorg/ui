@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.38](https://github.com/foreverido/uilib/compare/v0.0.37...v0.0.38) (2022-03-17)
+
+
+### Features
+
+* RequiredStar redesign, Form - pass 'required' prop to component based on schmea ([dbe55d3](https://github.com/foreverido/uilib/commit/dbe55d3c0c920a593a5c7bf4f5b58f3a16f80dfc))
+
 ### [0.0.37](https://github.com/foreverido/uilib/compare/v0.0.36...v0.0.37) (2022-03-17)
 
 
