@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.41](https://github.com/foreverido/uilib/compare/v0.0.40...v0.0.41) (2022-03-17)
+
+
+### Features
+
+* Button - prefixElem, postfixElem ([b66c168](https://github.com/foreverido/uilib/commit/b66c168e592bacc438d6b804230e7f9f6be75ab3))
+
 ### [0.0.40](https://github.com/foreverido/uilib/compare/v0.0.39...v0.0.40) (2022-03-17)
 
 
