@@ -219,6 +219,7 @@ export class Form extends Component<T.Props> {
     const { values, changed, touched, errors } = this.store.originalObject;
 
     return {
+      required: this.validationSchema[name].empty === false,
       ...props,
       value: values[name],
       markEdited,

@@ -4,3 +4,4 @@ export { default as chevronUp } from './chevronUp.svg';
 export { default as chevronDown } from './chevronDown.svg';
 export { default as chevronRight } from './chevronRight.svg';
 export { default as chevronLeft } from './chevronLeft.svg';
+export { default as requiredStar } from './requiredStar.svg';
