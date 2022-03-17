@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.39](https://github.com/foreverido/uilib/compare/v0.0.38...v0.0.39) (2022-03-17)
+
+
+### Features
+
+* Icon - moreHorizontal, moreVertical ([1dba9bd](https://github.com/foreverido/uilib/commit/1dba9bdcc8c40d91f3943650c3ddabc4c4cc4400))
+
+
+### Bug Fixes
+
+* Input - clearButton UI ([532801d](https://github.com/foreverido/uilib/commit/532801d93f50414c492cea487c7abd26a2f4d8b6))
+* Input - UI and hide clearButton if disabled ([0c6d1e7](https://github.com/foreverido/uilib/commit/0c6d1e7a46208ff35e4682620fb44e5764e71b51))
+
 ### [0.0.38](https://github.com/foreverido/uilib/compare/v0.0.37...v0.0.38) (2022-03-17)
 
 
