@@ -1,9 +1,9 @@
 import {
-  ReactNode,
   ButtonHTMLAttributes,
   useEffect,
   useRef,
   useCallback,
+  ReactNode,
 } from 'react';
 import cn from 'classnames';
 
@@ -23,6 +23,8 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   isChecked?: boolean;
   isSquare?: boolean;
   tabIndex?: number;
+  prefixElem?: JSX.Element;
+  postfixElem?: JSX.Element;
   style?: Partial<CSSStyleDeclaration>;
 };
 
@@ -39,6 +41,8 @@ export function Button(props: Props) {
     type = 'button',
     variant = 'default',
     size = 'm',
+    prefixElem,
+    postfixElem,
     ...rest
   } = props;
   const { disabled } = props;
@@ -74,8 +78,12 @@ export function Button(props: Props) {
   return (
     // @ts-ignore
     <button className={classes} {...rest} type={type} ref={buttonRef}>
-      {children}
-      {isLoading && <Spinner className={S.spinner} size={size} />}
+      {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
+      {typeof children === 'string' ? <span>{children}</span> : children}
+      {postfixElem && <div className={S.postfix}>{postfixElem}</div>}
+      {isLoading && (
+        <Spinner className={cn(S.spinner, S.postfix)} size={size} />
+      )}
     </button>
   );
 }

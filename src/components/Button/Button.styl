@@ -27,16 +27,17 @@
     path
       fill var(--decent-color)
 
+.prefix
+.postfix
+  display flex
+
+.prefix:not(:last-child)
+  margin-right .5em
+.postfix:not(:first-child)
+  margin-left .5em
+
 .size-s
   controlSize('s')
-
-  & > svg:first-child
-    margin-right var(--indent-s)
-  & > svg:last-child
-    margin-left var(--indent-s)
-  & > svg:first-child:last-child
-    margin-left 0
-    margin-right 0
 
   &.isSquare
     width @height
@@ -44,21 +45,11 @@
 .size-m
   controlSize('m')
 
-  & > svg:first-child
-    margin-right var(--indent-m)
-  & > svg:last-child
-    margin-left var(--indent-m)
-
   &.isSquare
     width @height
 
 .size-l
   controlSize('l')
-
-  & > svg:first-child
-    margin-right var(--indent-l)
-  & > svg:last-child
-    margin-left var(--indent-l)
 
   &.isSquare
     width @height
