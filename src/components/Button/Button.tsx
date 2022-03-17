@@ -1,4 +1,10 @@
-import { ReactNode, ButtonHTMLAttributes, useEffect, useRef, useCallback } from 'react';
+import {
+  ReactNode,
+  ButtonHTMLAttributes,
+  useEffect,
+  useRef,
+  useCallback,
+} from 'react';
 import cn from 'classnames';
 
 import { Spinner } from '../Spinner/Spinner';
@@ -32,7 +38,7 @@ export function Button(props: Props) {
     children,
     type = 'button',
     variant = 'default',
-    size = 's',
+    size = 'm',
     ...rest
   } = props;
   const { disabled } = props;
@@ -48,10 +54,13 @@ export function Button(props: Props) {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   // @ts-ignore
-  rest.onMouseUp = useCallback(e => {
-    if (onMouseUp) onMouseUp(e);
-    H.focusOnClick(buttonRef.current);
-  }, [onMouseUp, buttonRef]);
+  rest.onMouseUp = useCallback(
+    e => {
+      if (onMouseUp) onMouseUp(e);
+      H.focusOnClick(buttonRef.current);
+    },
+    [onMouseUp, buttonRef]
+  );
 
   if (disabled) rest.tabIndex = -1;
 
