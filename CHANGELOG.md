@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.40](https://github.com/foreverido/uilib/compare/v0.0.39...v0.0.40) (2022-03-17)
+
+
+### Bug Fixes
+
+* Button - svg margin ([486b317](https://github.com/foreverido/uilib/commit/486b317aa65001f2a49ad9fe05d047dbd38d2c37))
+
 ### [0.0.39](https://github.com/foreverido/uilib/compare/v0.0.38...v0.0.39) (2022-03-17)
 
 
