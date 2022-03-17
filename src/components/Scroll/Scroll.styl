@@ -34,12 +34,10 @@ $sizeL = 9px
 
   .y > &
     top 0
-    left 50%
     width 100%
 
   .x > &
     left 0
-    top 50%
     height 100%
 
 .bar
@@ -87,7 +85,10 @@ $sizeL = 9px
       width 32px
 
     &::before
-      left 50%
+    & .thumb
+      right 30%
+
+    &::before
       height 100%
 
   &.x
@@ -100,7 +101,10 @@ $sizeL = 9px
       height 32px
 
     &::before
-      top 50%
+    & .thumb
+      bottom 30%
+
+    &::before
       width 100%
 
 .bar.x
