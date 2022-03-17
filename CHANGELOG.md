@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.37](https://github.com/foreverido/uilib/compare/v0.0.36...v0.0.37) (2022-03-17)
+
+
+### Bug Fixes
+
+* Button - default size=m ([6640712](https://github.com/foreverido/uilib/commit/6640712f32d41717f44ff06b45b2a166301e3444))
+* Scroll bar position, Spinner default size=m ([ed6d55a](https://github.com/foreverido/uilib/commit/ed6d55aecd30f8052df3e4006559947dce969675))
+
 ### [0.0.36](https://github.com/foreverido/uilib/compare/v0.0.35...v0.0.36) (2022-03-16)
 
 
