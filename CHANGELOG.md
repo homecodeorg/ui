@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.43](https://github.com/foreverido/uilib/compare/v0.0.42...v0.0.43) (2022-03-20)
+
+
+### Bug Fixes
+
+* InputFile - fire onChange after all upload requests are finished ([f730c2a](https://github.com/foreverido/uilib/commit/f730c2a920e0108cab76d6c0c80bf4ee3900e2d4))
+
 ### [0.0.42](https://github.com/foreverido/uilib/compare/v0.0.41...v0.0.42) (2022-03-20)
 
 
