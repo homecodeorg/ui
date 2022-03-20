@@ -86,9 +86,10 @@ export class InputFile extends Component<Props> {
 
   onChange = async e => {
     const { files } = e.target;
-    const { value, maxCount, limit } = this.props;
+    const { value, maxCount, limit, onChange } = this.props;
     const { items } = this.store;
     let index = value.length;
+    const requests = [];
 
     [...files].every(file => {
       if (index >= maxCount) return false;
@@ -103,11 +104,22 @@ export class InputFile extends Component<Props> {
       }
 
       items.push({ ...defaultFileState, index });
-      this.upload(file, items[index]);
+      requests.push(this.upload(file, items[index]));
       index++;
 
       return true;
     });
+
+    await Promise.all(requests);
+
+    const newValue = [...this.props.value];
+
+    requests.forEach((r, _i) => {
+      const i = value.length + _i;
+      newValue[i] = items[i].src;
+    });
+
+    onChange(null, newValue);
   };
 
   onProgress = state => e => {
@@ -131,17 +143,15 @@ export class InputFile extends Component<Props> {
     if (!this._mounted) return;
 
     Object.assign(state, { src, loaded: state.total, xhr: null });
-
-    const newValue = [...this.props.value];
-    newValue[state.index] = state.src;
-
-    onChange(null, newValue);
   }
 
   remove = async value => {
     const { remove, onChange } = this.props;
 
-    if (remove) await remove(value);
+    if (remove) {
+      const res = await remove(value);
+      if (!res) return;
+    }
 
     const { items } = this.store;
 

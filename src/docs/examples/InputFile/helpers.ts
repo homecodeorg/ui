@@ -5,16 +5,11 @@ const simulateLoader = (onProgress, onComplete) => {
   const state = {
     ...defaultState,
     run() {
-      console.log('run', this.loaded);
-
       this.loaded += 250;
       onProgress({ total: this.total, loaded: this.loaded });
       if (this.loaded === this.total) onComplete();
-      else setTimeout(() => this.run(), 400);
+      else setTimeout(() => this.run(), 400 + Math.random() * 1000);
     },
-    // reset() {
-    //   Object.assign(this, defaultState);
-    // },
   };
 
   state.run();
