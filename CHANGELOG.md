@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.42](https://github.com/foreverido/uilib/compare/v0.0.41...v0.0.42) (2022-03-20)
+
+
+### Features
+
+* InputFile, +example ([d041fb6](https://github.com/foreverido/uilib/commit/d041fb6afb231d206a9d3aeb7a5cbaebba3009cf))
+
+
+### Bug Fixes
+
+* Notifications - empty style ([7f7ae54](https://github.com/foreverido/uilib/commit/7f7ae54cce4c329989bd3d9a28113ee595764d57))
+
 ### [0.0.41](https://github.com/foreverido/uilib/compare/v0.0.40...v0.0.41) (2022-03-17)
 
 
