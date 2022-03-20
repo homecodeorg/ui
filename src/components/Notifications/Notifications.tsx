@@ -91,7 +91,7 @@ export const Notifications = withStore({
   const api = { pause, unpause, close };
 
   return (
-    <div className={S.root}>
+    <div className={cn(S.root, items.length === 0 && S.empty)}>
       {items.map(id => (
         <Item {...data[id]} {...api} id={id} key={id} />
       ))}
