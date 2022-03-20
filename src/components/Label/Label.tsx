@@ -49,7 +49,7 @@ export class Label extends Component<Props> {
   }
 
   updateClipPath = () => {
-    const { children, isOnTop, onClipPathChange, size } = this.props;
+    const { isOnTop, onClipPathChange, size } = this.props;
     const gapWrapElem = this.gapWrapRef?.current;
     const gapElem = this.gapRef?.current;
 

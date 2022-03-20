@@ -34,8 +34,7 @@
     ],
     "paths": {
       "uilib": ["./src"],
-      // "components/*": ["./src/components/*"],
-      // "tools/*": ["./src/tools/*"],
+      "uilib/*": ["./src/*"],
       "docs/*": ["./src/docs/*"]
     }
   },

@@ -19,6 +19,10 @@ export default [
     loader: () => import('./examples/Input'),
   },
   {
+    slug: 'inputFile',
+    loader: () => import('./examples/InputFile'),
+  },
+  {
     slug: 'spinner',
     loader: () => import('./examples/Spinner'),
   },

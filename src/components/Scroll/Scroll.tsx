@@ -13,7 +13,7 @@ import * as resizeObserver from '../../tools/resizeObserver';
 import S from './Scroll.styl';
 
 type OffsetAxis = { before?: number; after?: number };
-type Props = HTMLProps<HTMLDivElement> & {
+type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   className?: string;
   innerClassName?: string;
   thumbClassName?: string;

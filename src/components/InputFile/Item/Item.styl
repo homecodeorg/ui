@@ -1,0 +1,60 @@
+.root
+  position relative
+  overflow hidden
+  background-size cover
+  background-position center
+
+  & > .overlay
+  & > img
+    border-radius inherit
+
+.overlay
+  z-index 1
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
+  pointer-events none
+  transition box-shadow .1s ease-out
+
+
+.removeButton
+  z-index 2
+  position absolute
+  right 0
+  bottom 0
+  transition transform .2s ease-out
+  transform translateX(100%)
+  border-radius 0
+  border-top-left-radius inherit
+
+  &
+  &:hover
+    background-color var(--decent-color-alpha-900)
+
+  &:hover
+    color var(--danger-color)
+
+.root:hover
+
+  .overlay
+    background-color var(--active-color-alpha-500)
+
+  .removeButton
+    transform translateX(0)
+
+.progress
+  z-index 1
+  position absolute
+  top 0
+  left 0
+  height 100%
+  width 100%
+
+  background-color var(--decent-color-alpha-800)
+  transition all .2s ease-out
+  pointer-events none
+
+  &.complete
+    opacity 0

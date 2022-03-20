@@ -3,7 +3,7 @@ import cn from 'classnames';
 import pick from 'lodash.pick';
 import compare from 'compareq';
 
-import debounce from 'uilib/tools/debounce';
+import { debounce } from 'uilib';
 import Time from 'timen';
 
 import * as T from './Virtualized.types';

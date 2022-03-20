@@ -3,12 +3,13 @@ import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { zero } from 'uilib/tools/number';
+import { number } from 'uilib';
 
 import Virtualized from '../Virtualized';
 import * as T from '../Virtualized.types';
 import S from './List.styl';
 
+const { zero } = number;
 const CONTENT_BEFORE_SIZE_CHECK_TIMEOUT = 300;
 
 type Props = T.Props & {

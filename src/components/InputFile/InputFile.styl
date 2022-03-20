@@ -1,9 +1,82 @@
+@import '../../theme'
+
+.size-s
+  controlFontSize('s')
+  controlPaddingSize('s')
+.size-m
+  controlFontSize('m')
+  controlPaddingSize('m')
+.size-l
+  controlFontSize('l')
+  controlPaddingSize('l')
+
+$verticalPadding = 10px
+
 .root
   position relative
-  cursor pointer
+  borderRadius()
+  padding-top $verticalPadding
+
+.border
+  position absolute
+  left 0
+  top 0
+  height 100%
+  width 100%
+  controlBorder()
+  pointer-events none
+  border-radius inherit
+
+.label
+  display flex
+  align-items center
+  position absolute
+  height 100%
+
+  .size-s &
+    padding 0 calc(var(--indent-s) / 2)
+  .size-m &
+    padding 0 calc(var(--indent-m) / 2)
+  .size-l &
+    padding 0 calc(var(--indent-l) / 2)
+
+.addButton
+.item
+  borderRadius()
   overflow hidden
 
-.control
-  transform translateX(-100%)
+.items
+  display flex
+  align-items center
+  padding-bottom $verticalPadding
+  font-size 0
+
+.item
+  position relative
+  display inline-flex
+  height 70px
+  width 70px
+
+  & + &
+    margin-left 8px
+
+
+.addButton
+  align-items center
+  justify-content center
+  position relative
+  transition background-color .2s ease-out
+  cursor pointer
+  background-color var(--active-color-alpha-100 )
+
+  &:hover
+    background-color var(--active-color-alpha-500 )
+
+.input
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
   opacity 0
   pointer-events none

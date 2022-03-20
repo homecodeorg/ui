@@ -2,11 +2,11 @@ import { ChangeEvent, Component, DOMAttributes, ReactNode } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 
-import { Icon } from '../Icon/Icon';
+import { uid, Icon } from 'uilib';
 
 import { Size } from '../../types';
+
 import S from './Checkbox.styl';
-import { uid } from 'uilib';
 
 type ControlProps = DOMAttributes<HTMLInputElement>;
 

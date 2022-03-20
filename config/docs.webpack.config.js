@@ -29,7 +29,7 @@ module.exports = (env, argv) => {
     resolve: {
       modules: ['node_modules', paths.src],
       alias: {
-        uilib: `${paths.src}/components`,
+        uilib: paths.src,
         'docs/helpers': `${paths.docs}/helpers`,
         theme: `${paths.src}/theme.styl`,
       },
