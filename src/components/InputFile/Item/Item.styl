@@ -16,8 +16,15 @@
   right 0
   bottom 0
   pointer-events none
-  transition box-shadow .1s ease-out
+  transition background-color .1s ease-out
 
+.root:hover
+
+  .overlay
+    background-color var(--active-color-alpha-500)
+
+  .removeButton
+    transform translateX(0)
 
 .removeButton
   z-index 2
@@ -35,14 +42,6 @@
 
   &:hover
     color var(--danger-color)
-
-.root:hover
-
-  .overlay
-    background-color var(--active-color-alpha-500)
-
-  .removeButton
-    transform translateX(0)
 
 .progress
   z-index 1

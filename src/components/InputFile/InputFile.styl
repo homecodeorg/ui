@@ -40,11 +40,6 @@ $verticalPadding = 10px
   .size-l &
     padding 0 calc(var(--indent-l) / 2)
 
-.addButton
-.item
-  borderRadius()
-  overflow hidden
-
 .items
   display flex
   align-items center
@@ -56,9 +51,14 @@ $verticalPadding = 10px
   display inline-flex
   height 70px
   width 70px
+  borderRadius()
+  overflow hidden
 
   & + &
     margin-left 8px
+
+  .single &
+    width 100%
 
 
 .addButton
