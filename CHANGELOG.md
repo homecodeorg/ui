@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.44](https://github.com/foreverido/uilib/compare/v0.0.43...v0.0.44) (2022-03-21)
+
+
+### Bug Fixes
+
+* InputFile - single - full width ([4aa88fd](https://github.com/foreverido/uilib/commit/4aa88fd966c98a26d0a22cb5f444a6ed76752630))
+* InputFile - state.base64 ([d2d8146](https://github.com/foreverido/uilib/commit/d2d8146a1b0ea9c8b402b6440f3b8bec8fc9c17e))
+
 ### [0.0.43](https://github.com/foreverido/uilib/compare/v0.0.42...v0.0.43) (2022-03-20)
 
 
