@@ -36,6 +36,8 @@ type Props = {
   remove?: (fileName: string) => Promise<boolean>;
 };
 
+export type InputFileProps = Props;
+
 const defaultFileState = {
   total: 1,
   loaded: 0,
@@ -127,12 +129,11 @@ export class InputFile extends Component<Props> {
   };
 
   async upload(file, state) {
-    const { upload, onChange } = this.props;
+    const { upload } = this.props;
 
     Object.assign(state, defaultFileState);
 
-    const str = await _file.toBase64(file);
-    state.base64 = str;
+    state.base64 = await _file.toBase64(file);
 
     const src = await upload(
       file,
