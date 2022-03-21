@@ -43,6 +43,10 @@ export default [
     loader: () => import('./examples/Popup'),
   },
   {
+    slug: 'gallery',
+    loader: () => import('./examples/Gallery'),
+  },
+  {
     slug: 'select',
     loader: () => import('./examples/Select/Select'),
     // items: () => import('./examples/Select/navigation'),

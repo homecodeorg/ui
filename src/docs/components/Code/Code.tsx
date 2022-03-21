@@ -17,14 +17,14 @@ import vsLight from 'prism-react-renderer/themes/vsLight';
 import { Scroll, uid, debounce } from 'uilib';
 
 import * as uilib from '/src';
-// import helpers from '!!raw-loader!helpers';
+import * as helpers from 'helpers';
 
 import * as H from './Code.helpers';
 import S from './Code.styl';
 
 const { withStore, createStore } = justorm;
 
-const SCOPE = { uilib, React, justorm };
+const SCOPE = { uilib, React, justorm, helpers };
 
 type Props = {
   store?: any;

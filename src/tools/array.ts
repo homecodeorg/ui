@@ -67,3 +67,18 @@ export function groupByField(arr, fieldName) {
     return acc;
   }, {});
 }
+
+export function getIndexCircular(arr: any[], index: number) {
+  const l = arr.length;
+  return arr[((index % l) + l) % l];
+}
+
+export function circularSlice(arr: any[], startIndex: number, count: number) {
+  const newArr = [];
+
+  for (let i = 0; i < count; i++) {
+    newArr.push(getIndexCircular(arr, startIndex + i));
+  }
+
+  return newArr;
+}
