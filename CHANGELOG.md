@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.49](https://github.com/foreverido/uilib/compare/v0.0.48...v0.0.49) (2022-03-22)
+
+
+### Bug Fixes
+
+* Gallery - single item style ([66ebd3e](https://github.com/foreverido/uilib/commit/66ebd3ef0f0bf565b13eff0be0a7161274f3019e))
+
 ### [0.0.48](https://github.com/foreverido/uilib/compare/v0.0.47...v0.0.48) (2022-03-22)
 
 
