@@ -1,13 +1,19 @@
-import { Component } from 'react';
+import { Component, CSSProperties } from 'react';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 import compare from 'compareq';
 import cn from 'classnames';
 
-import { Button, Icon, throttle, array } from 'uilib';
+import { Button, Icon, throttle, array, Spinner } from 'uilib';
 import type { Size } from 'uilib/types';
 
 import S from './Gallery.styl';
+
+const DURATION = 200;
+const DIR_NAME = {
+  '1': 'left',
+  '-1': 'right',
+};
 
 function getInitialState(items, startIndex) {
   const state = [...items.slice(startIndex, 3)];
@@ -29,18 +35,34 @@ function Arr({ className, size, icon, ...rest }) {
   );
 }
 
-const DURATION = 200;
-const DIR_NAME = {
-  '1': 'left',
-  '-1': 'right',
-};
+function Item({ src, size, isLoaded, isError, onLoad, onError }) {
+  const style = {};
+
+  if (isLoaded) style.backgroundImage = `url(${src})`;
+
+  return (
+    <div className={S.item} style={style}>
+      {!isLoaded &&
+        (isError ? (
+          <Icon type="brokenImage" className={S.brokenImage} />
+        ) : (
+          <>
+            <img src={src} onLoad={onLoad} onError={onError} />
+            <Spinner size={size} />
+          </>
+        ))}
+    </div>
+  );
+}
 
 type Props = {
+  className?: string;
   items: string[];
   size?: Size;
   animation?: boolean;
   startIndex?: number;
   onChange?: (item: string) => void;
+  style?: CSSProperties;
 };
 
 export class Gallery extends Component<Props> {
@@ -62,6 +84,8 @@ export class Gallery extends Component<Props> {
       items: getInitialState(items, startIndex),
       index: startIndex,
       movingDirection: 0,
+      loading: {}, // [src]: boolean
+      errors: {}, // [src]: boolean
     });
   }
 
@@ -91,7 +115,7 @@ export class Gallery extends Component<Props> {
     document.addEventListener('keydown', this.onKeyDown);
   }
 
-  isSingle = () => this.store.items.length < 2;
+  isSingle = () => this.props.items.length < 2;
 
   onKeyDown = e => {
     if (this.isSingle()) return;
@@ -113,40 +137,55 @@ export class Gallery extends Component<Props> {
         3
       );
       this.store.movingDirection = 0;
+
+      const { items, loading } = this.store;
+
+      items.forEach(src => {
+        if (typeof loading[src] !== 'boolean') loading[src] = false;
+      });
     });
   }, DURATION);
 
   render() {
-    const { size, items: _, animation, ...rest } = this.props;
-    const { items, movingDirection } = this.store;
+    const { className, size, items: _, animation, ...rest } = this.props;
+    const { items, movingDirection, loading, errors } = this.store;
     const dirName = DIR_NAME[movingDirection];
+    const isSingle = this.isSingle();
 
-    const classes = cn(S.root, this.isSingle() && S.single);
+    const classes = cn(S.root, isSingle && S.single, className);
     const innerClasses = cn(S.inner, animation && S.animation, S[dirName]);
 
     return (
       <div className={classes} {...rest}>
         <div className={innerClasses}>
           {items.map(src => (
-            <div
-              className={S.item}
-              style={{ backgroundImage: `url(${src})` }}
+            <Item
+              src={src}
+              size={size}
+              isLoaded={loading[src]}
+              isError={errors[src]}
+              onLoad={() => (loading[src] = true)}
+              onError={() => (errors[src] = true)} // TODO: add retry
             />
           ))}
         </div>
 
-        <Arr
-          className={S.left}
-          size={size}
-          icon="chevronLeft"
-          onClick={() => this.move(1)}
-        />
-        <Arr
-          className={S.right}
-          size={size}
-          icon="chevronRight"
-          onClick={() => this.move(-1)}
-        />
+        {!isSingle && (
+          <>
+            <Arr
+              className={S.left}
+              size={size}
+              icon="chevronLeft"
+              onClick={() => this.move(1)}
+            />
+            <Arr
+              className={S.right}
+              size={size}
+              icon="chevronRight"
+              onClick={() => this.move(-1)}
+            />
+          </>
+        )}
       </div>
     );
   }

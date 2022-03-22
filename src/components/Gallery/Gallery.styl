@@ -32,9 +32,22 @@
     transform translate3d(calc(-100% / 3 * 2), 0, 0)
 
 .item
+  display flex
+  align-items center
+  justify-content center
   background-size contain
   background-position center
   background-repeat no-repeat
+
+  & > img
+    opacity 0
+    position absolute
+    pointer-events none
+
+.brokenImage
+  height 50%
+  width 50%
+  opacity .2
 
 .arr
   position absolute
