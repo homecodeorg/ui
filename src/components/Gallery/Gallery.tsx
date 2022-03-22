@@ -3,6 +3,7 @@ import { createStore } from 'justorm/react';
 import Time from 'timen';
 import compare from 'compareq';
 import cn from 'classnames';
+import omit from 'lodash.omit';
 
 import { Button, Icon, throttle, array, Spinner } from 'uilib';
 import type { Size } from 'uilib/types';
@@ -36,7 +37,7 @@ function Arr({ className, size, icon, ...rest }) {
 }
 
 function Item({ src, size, isLoaded, isError, onLoad, onError }) {
-  const style = {};
+  const style = {} as CSSProperties;
 
   if (isLoaded) style.backgroundImage = `url(${src})`;
 
@@ -144,10 +145,10 @@ export class Gallery extends Component<Props> {
         if (typeof loading[src] !== 'boolean') loading[src] = false;
       });
     });
-  }, DURATION);
+  }, DURATION) as (duration: -1 | 1) => void;
 
   render() {
-    const { className, size, items: _, animation, ...rest } = this.props;
+    const { className, size, animation, ...rest } = this.props;
     const { items, movingDirection, loading, errors } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
@@ -156,7 +157,7 @@ export class Gallery extends Component<Props> {
     const innerClasses = cn(S.inner, animation && S.animation, S[dirName]);
 
     return (
-      <div className={classes} {...rest}>
+      <div className={classes} {...omit(rest, ['items', 'onChange'])}>
         <div className={innerClasses}>
           {items.map(src => (
             <Item
