@@ -47,6 +47,10 @@ export default [
     loader: () => import('./examples/Gallery'),
   },
   {
+    slug: 'lightbox',
+    loader: () => import('./examples/LightBox'),
+  },
+  {
     slug: 'select',
     loader: () => import('./examples/Select/Select'),
     // items: () => import('./examples/Select/navigation'),

@@ -16,6 +16,7 @@ export * from './Router/Router';
 export * from './Popup/Popup';
 export * from './Paranja/Paranja';
 export * from './Gallery/Gallery';
+export * from './LightBox/LightBox';
 export * from './Select/Select';
 export * from './Scroll/Scroll';
 export * from './Spinner/Spinner';

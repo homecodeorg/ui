@@ -1,0 +1,25 @@
+.root
+  display flex
+  align-items center
+  justify-content center
+  pointer-events none
+  opacity 0
+  transition opacity .2s ease-out
+
+.open
+  pointer-events all
+  opacity 1
+
+.close
+  z-index 1
+  position absolute
+  right 0
+  top 0
+  width 100px
+  height 100px
+  min-height @height
+  border-radius 0
+
+  &:hover
+    background-color var(--decent-color-alpha-200)
+    color var(--active-color)
