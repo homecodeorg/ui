@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.50](https://github.com/foreverido/uilib/compare/v0.0.49...v0.0.50) (2022-03-22)
+
+
+### Bug Fixes
+
+* package.json - types ([b1d81cf](https://github.com/foreverido/uilib/commit/b1d81cff1b092a6a75cffba3e6ba82433116b7c1))
+* Router - getRoute() - root = '/' ([1aabe92](https://github.com/foreverido/uilib/commit/1aabe9214368eb87aeb62a4ec7488989be8a6309))
+
 ### [0.0.49](https://github.com/foreverido/uilib/compare/v0.0.48...v0.0.49) (2022-03-22)
 
 
