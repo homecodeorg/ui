@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.46](https://github.com/foreverido/uilib/compare/v0.0.45...v0.0.46) (2022-03-22)
+
+
+### Features
+
+* Gallery - image loading state ([84a9285](https://github.com/foreverido/uilib/commit/84a928588e21286dc1dca0f54c73279f981ed103))
+* Gallery, +examples ([39f7fce](https://github.com/foreverido/uilib/commit/39f7fce21533d43ad0682b2ae1dadc0e48560c41))
+* Icon - avatar ([098db9e](https://github.com/foreverido/uilib/commit/098db9ee14dda642b81ef2dc6391910ceac87e39))
+* Icon - brokenImage ([746b8cd](https://github.com/foreverido/uilib/commit/746b8cdeef852ec2787c1d0a137c7e295a5de6f6))
+* LightBox, Paranja, +examples ([b4b8cd0](https://github.com/foreverido/uilib/commit/b4b8cd0ab73f7e5e27ffaffa8bfe5f1c76257ca9))
+
 ### [0.0.45](https://github.com/foreverido/uilib/compare/v0.0.44...v0.0.45) (2022-03-21)
 
 ### [0.0.44](https://github.com/foreverido/uilib/compare/v0.0.43...v0.0.44) (2022-03-21)
