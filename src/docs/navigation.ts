@@ -43,6 +43,10 @@ export default [
     loader: () => import('./examples/Popup'),
   },
   {
+    slug: 'popupMenu',
+    loader: () => import('./examples/PopupMenu'),
+  },
+  {
     slug: 'gallery',
     loader: () => import('./examples/Gallery'),
   },
