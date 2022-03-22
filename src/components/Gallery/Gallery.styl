@@ -11,11 +11,18 @@
 .inner
   position absolute
   display flex
-  width 300%
   height 100%
+  width 300%
+  transform translate3d(calc(-100% / 3), 0, 0)
 
-  &:not(.single)
-    transform translate3d(calc(-100% / 3), 0, 0)
+.single
+
+  .inner
+    width 100%
+    transform unset
+
+  .item
+    width 100%
 
 .animation
   transition transform 0s ease-out
@@ -38,6 +45,7 @@
   background-size contain
   background-position center
   background-repeat no-repeat
+  width calc(100%/3)
 
   & > img
     opacity 0
