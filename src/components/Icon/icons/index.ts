@@ -1,4 +1,5 @@
 export { default as avatar } from './avatar.svg';
+export { default as brokenImage } from './brokenImage.svg';
 export { default as check } from './check.svg';
 export { default as close } from './close.svg';
 export { default as chevronUp } from './chevronUp.svg';
