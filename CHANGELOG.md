@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.52](https://github.com/foreverido/uilib/compare/v0.0.51...v0.0.52) (2022-03-22)
+
+
+### Bug Fixes
+
+* Paranja - bg - no alpha ([71bcaba](https://github.com/foreverido/uilib/commit/71bcaba1fc6bd45a287a13296a7c516f5a562723))
+
 ### [0.0.51](https://github.com/foreverido/uilib/compare/v0.0.50...v0.0.51) (2022-03-22)
 
 
