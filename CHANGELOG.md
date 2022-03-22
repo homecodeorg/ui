@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.48](https://github.com/foreverido/uilib/compare/v0.0.47...v0.0.48) (2022-03-22)
+
+
+### Bug Fixes
+
+* .npmignore ([1a2d275](https://github.com/foreverido/uilib/commit/1a2d2755745d7b4794c0276492b2b3badf197c8c))
+
 ### [0.0.47](https://github.com/foreverido/uilib/compare/v0.0.46...v0.0.47) (2022-03-22)
 
 
