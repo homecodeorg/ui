@@ -34,7 +34,7 @@
   },
   "main": "dist/cjs",
   "module": "dist/esm",
-  "types": "dist/index.d.ts",
+  "types": "dist/esm/src/types.d.ts",
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.16.0",
