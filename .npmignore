@@ -2,12 +2,16 @@
 /index.*
 bin/
 config/
+*.config.*
+.editorconfig
+tsconfig.json
+.babelrc
 src/
+dist/esm/src/docs/
 assets/
 node_modules/
 .npmrc
 .eslintrc
-*config.*
 yarn-error.log
 *.sublime-*
 .vscode/
