@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.47](https://github.com/foreverido/uilib/compare/v0.0.46...v0.0.47) (2022-03-22)
+
+
+### Bug Fixes
+
+* Gallery - typings ([69dfc91](https://github.com/foreverido/uilib/commit/69dfc915a3606eb3b7ed7c622ce4538db0f26efc))
+* Icon - check - stroke-width ([d0bf030](https://github.com/foreverido/uilib/commit/d0bf030d55d73791845d6d5a6d5b815ad2e20d6f))
+
 ### [0.0.46](https://github.com/foreverido/uilib/compare/v0.0.45...v0.0.46) (2022-03-22)
 
 
