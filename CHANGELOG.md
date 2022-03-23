@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.60](https://github.com/foreverido/uilib/compare/v0.0.59...v0.0.60) (2022-03-23)
+
+
+### Features
+
+* InputFile - full width if single item ([944afe1](https://github.com/foreverido/uilib/commit/944afe1be0e0925c8e358fe9fdf028b1a33d487c))
+* mobile layout ([07c50a6](https://github.com/foreverido/uilib/commit/07c50a6f76c3d55a87a075eca5aa8418e3c557cc))
+* Notifications - mobile layout & swipe to close ([e6e86e3](https://github.com/foreverido/uilib/commit/e6e86e303f1ceda726bfbb8da7b967f4d4b28fa2))
+
 ### [0.0.59](https://github.com/foreverido/uilib/compare/v0.0.58...v0.0.59) (2022-03-23)
 
 
