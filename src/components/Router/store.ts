@@ -18,31 +18,32 @@ const STORE = createStore('router', {
   },
   go(href, { replace }: { replace?: boolean } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
-    this.path = href.replace(/\?.+/, '') || '/';
-    onRouteChange();
+    onRouteChange(href);
   },
   back() {
     history.back();
+    onRouteChange();
   },
   replaceState(href, { quiet }: { quiet?: boolean } = {}) {
     history.replaceState({}, '', href);
-    if (!quiet) this.path = href;
+    if (!quiet) onRouteChange(href);
   },
 });
 
-function onRouteChange() {
+function onRouteChange(href = window.location.pathname) {
   STORE.queryString = location.search;
   STORE.query = parseQueryParams();
+  STORE.path = href.replace(/\?.+/, '') || '/';
+
   LISTENERS.forEach(cb => cb(STORE.path));
 }
 
 function updateRouteState() {
-  const { pathname } = window.location;
-
-  if (STORE.path === pathname && STORE.queryString === location.search) return;
-
-  STORE.path = pathname;
-  onRouteChange();
+  if (
+    STORE.path !== window.location.pathname ||
+    STORE.queryString !== location.search
+  )
+    onRouteChange();
 }
 
 window.addEventListener('popstate', updateRouteState);
