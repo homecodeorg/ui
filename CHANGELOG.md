@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.56](https://github.com/foreverido/uilib/compare/v0.0.55...v0.0.56) (2022-03-23)
+
+
+### Bug Fixes
+
+* Router - store.path - must not include ?query ([21097c0](https://github.com/foreverido/uilib/commit/21097c0165fcb2202860141ad7af61abc0cb3850))
+
 ### [0.0.55](https://github.com/foreverido/uilib/compare/v0.0.54...v0.0.55) (2022-03-23)
 
 
