@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.53](https://github.com/foreverido/uilib/compare/v0.0.52...v0.0.53) (2022-03-23)
+
+
+### Features
+
+* PopupMenu, +examples ([c73df87](https://github.com/foreverido/uilib/commit/c73df8701ea127ec4c544bc06d28f4b05ae29d50))
+
+
+### Bug Fixes
+
+* control sizes ([6145e3f](https://github.com/foreverido/uilib/commit/6145e3f6f5e158de7c0411cb732d80a0d5365b91))
+
 ### [0.0.52](https://github.com/foreverido/uilib/compare/v0.0.51...v0.0.52) (2022-03-22)
 
 
