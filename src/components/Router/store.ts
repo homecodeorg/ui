@@ -9,6 +9,7 @@ const STORE = createStore('router', {
   path: location.pathname,
   params: {},
   query: {},
+  queryString: location.search,
   on(cb) {
     addUniq(LISTENERS, cb);
   },
@@ -30,6 +31,7 @@ const STORE = createStore('router', {
 });
 
 function onRouteChange() {
+  STORE.queryString = location.search;
   STORE.query = parseQueryParams();
   LISTENERS.forEach(cb => cb(STORE.path));
 }
@@ -37,7 +39,7 @@ function onRouteChange() {
 function updateRouteState() {
   const { pathname } = window.location;
 
-  if (STORE.path === pathname) return;
+  if (STORE.path === pathname && STORE.queryString === location.search) return;
 
   STORE.path = pathname;
   onRouteChange();
