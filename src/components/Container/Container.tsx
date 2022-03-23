@@ -6,7 +6,8 @@ type Props = {
   className?: string;
   size?: 's' | 'm' | 'l';
   children: any;
-  centered?: boolean;
+  alignItemsCenter?: boolean;
+  justifyContentCenter?: boolean;
   vertical?: boolean;
   fullHeight?: boolean | string;
   fullWidth?: boolean | string;
@@ -20,7 +21,8 @@ export function Container(props: Props) {
     className,
     children,
     size,
-    centered,
+    alignItemsCenter,
+    justifyContentCenter,
     vertical,
     fullHeight,
     fullWidth,
@@ -32,7 +34,8 @@ export function Container(props: Props) {
   const classes = cn(
     S.root,
     size && S[`size-${size}`],
-    centered && S.centered,
+    alignItemsCenter && S.alignItemsCenter,
+    justifyContentCenter && S.justifyContentCenter,
     vertical && S.vertical,
     scrolledX && S.scrolledX,
     scrolledY && S.scrolledY,

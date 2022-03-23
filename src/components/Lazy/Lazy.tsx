@@ -39,7 +39,7 @@ export class Lazy extends Component<Props, State> {
   render() {
     if (this.state.loading) {
       return (
-        <Container centered fullHeight>
+        <Container fullHeight>
           <Spinner size="l" />
         </Container>
       );
