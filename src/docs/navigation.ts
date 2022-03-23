@@ -51,7 +51,7 @@ export default [
     loader: () => import('./examples/Gallery'),
   },
   {
-    slug: 'lightbox',
+    slug: 'lightBox',
     loader: () => import('./examples/LightBox'),
   },
   {

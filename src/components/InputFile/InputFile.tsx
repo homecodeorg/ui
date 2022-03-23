@@ -181,6 +181,7 @@ export class InputFile extends Component<Props> {
 
         <Label
           isOnTop
+          size={size}
           className={S.label}
           onClipPathChange={clipPath => (this.store.labelClipPath = clipPath)}
         >

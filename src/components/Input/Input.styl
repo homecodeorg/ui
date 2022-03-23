@@ -13,16 +13,6 @@ $paddingSide = 12px
   max-width 100%
   border-radius inherit
 
-  .size-s &
-    controlSize('s')
-    border-radius var(--border-radius-m)
-  .size-m &
-    controlSize('m')
-    border-radius var(--border-radius-m)
-  .size-l &
-    controlSize('l')
-    border-radius var(--border-radius-l)
-
   .isTextArea &
     height auto
     max-height unset
@@ -67,10 +57,30 @@ $paddingSide = 12px
 
 .size-s
   controlFontSize('s')
+
+  .main
+    controlSize('s')
+    controlFontSize('s')
+    borderRadiusSize('s')
+    controlPaddingSize('s')
+
 .size-m
   controlFontSize('m')
+
+  .main
+    controlSize('m')
+    controlFontSize('m')
+    borderRadiusSize('m')
+    controlPaddingSize('m')
+
 .size-l
   controlFontSize('l')
+
+  .main
+    controlSize('l')
+    controlFontSize('l')
+    borderRadiusSize('l')
+    controlPaddingSize('l')
 
 .isDisabled
   color var(--accent-color-alpha-500)

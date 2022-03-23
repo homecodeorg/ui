@@ -6,7 +6,8 @@ export default () => {
 
   return (
     <Checkbox
-      label="i'm a checkbutton"
+      size="m"
+      label="I'm a checkbutton"
       onChange={() => setChecked(!checked)}
       checked={checked}
     />

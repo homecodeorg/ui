@@ -16,6 +16,7 @@
   border-radius var(--border-radius-m)
   transition .2s ease-out
   transition-property opacity, box-shadow
+  margin-right 1em
 
   .root:hover &
     background-color var(--active-color-alpha-100)
@@ -31,25 +32,11 @@
     opacity .7
     background-color var(--active-color-alpha-100)
 
-  .size-s &
-    height 30px
-    width @height
-    margin-right var(--indent-s)
-  .size-m &
-    height 40px
-    width @height
-    margin-right var(--indent-m)
-  .size-l &
-    height 50px
-    width @height
-    margin-right var(--indent-l)
-
 .control
   control()
   transition .1s ease-out
   transition-property background-color, color
   cursor pointer
-  border-radius var(--border-radius-s)
 
 .checkmark
   position absolute
@@ -60,12 +47,32 @@
   width 100%
 
   opacity 0
-  transform scale(.7) rotateY(-90deg)
+  transform scale(.6) rotateY(-90deg)
   transition .1s ease-in
   transition-property transform, opacity
   pointer-events none
 
   .isChecked &
     opacity 1
-    transform scale(.7)
+    transform scale(.6)
 
+.size-s
+  controlFontSize('s')
+
+  .controlWrapper
+    controlSize('s')
+    borderRadiusSize('s')
+
+.size-m
+  controlFontSize('m')
+
+  .controlWrapper
+    controlSize('m')
+    borderRadiusSize('m')
+
+.size-l
+  controlFontSize('l')
+
+  .controlWrapper
+    controlSize('l')
+    borderRadiusSize('l')

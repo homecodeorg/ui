@@ -37,7 +37,7 @@ export type Props = {
   inline?: boolean;
   flat?: boolean;
   paranja?: boolean;
-  size: Size;
+  size?: Size;
   elevation?: 1 | 2;
   clearTargetMargin?: boolean;
   direction: Direction;

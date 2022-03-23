@@ -1,21 +1,7 @@
 @import '../../theme'
 
-.size-s
-  controlFontSize('s')
-  controlPaddingSize('s')
-.size-m
-  controlFontSize('m')
-  controlPaddingSize('m')
-.size-l
-  controlFontSize('l')
-  controlPaddingSize('l')
-
-$verticalPadding = 10px
-
 .root
   position relative
-  borderRadius()
-  padding-top $verticalPadding
 
 .border
   position absolute
@@ -33,25 +19,14 @@ $verticalPadding = 10px
   position absolute
   height 100%
 
-  .size-s &
-    padding 0 calc(var(--indent-s) / 2)
-  .size-m &
-    padding 0 calc(var(--indent-m) / 2)
-  .size-l &
-    padding 0 calc(var(--indent-l) / 2)
-
 .items
   display flex
   align-items center
-  padding-bottom $verticalPadding
   font-size 0
 
 .item
   position relative
   display inline-flex
-  height 70px
-  width 70px
-  borderRadius()
   overflow hidden
 
   & + &
@@ -80,3 +55,52 @@ $verticalPadding = 10px
   bottom 0
   opacity 0
   pointer-events none
+
+
+.size-s
+  controlFontSize('s')
+  controlPaddingSize('s')
+  padding-top $controlPaddingS
+
+  .border
+  .item
+    borderRadiusSize('s')
+
+  .item
+    height 50px
+    width 50px
+
+  .items
+    padding-bottom $controlPaddingS
+
+.size-m
+  controlFontSize('m')
+  controlPaddingSize('m')
+  padding-top $controlPaddingM
+
+  .border
+  .item
+    borderRadiusSize('m')
+
+  .item
+    height 70px
+    width 70px
+
+  .items
+    padding-bottom $controlPaddingM
+
+.size-l
+  controlFontSize('l')
+  controlPaddingSize('l')
+  padding-top $controlPaddingL
+
+  .border
+  .item
+    borderRadiusSize('l')
+
+  .item
+    height 100px
+    width 100px
+
+  .items
+    padding-bottom $controlPaddingL

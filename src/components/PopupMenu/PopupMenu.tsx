@@ -1,30 +1,39 @@
-import { ReactNode } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { Button, Popup } from 'uilib';
-import type { ButtonProps } from 'uilib';
+import type { ButtonProps, PopupProps } from 'uilib';
+import cn from 'classnames';
 
 type Item = Pick<ButtonProps, 'onClick'> & {
   id: string;
   title: ReactNode;
+  className?: string;
 };
-type Props = {
+type Props = Omit<PopupProps, 'content'> & {
   trigger: ReactNode;
   items: Item[];
+  onClose?: () => void;
 };
 
 import S from './PopupMenu.styl';
 
-export function PopupMenu({ trigger, items, ...props }: Props) {
-  if (items.list === 0) return null;
+export function PopupMenu({ items, onClose, ...props }: Props) {
+  if (items.length === 0) return null;
+
+  const { size } = props;
 
   return (
     <Popup
       {...props}
-      direction="bottom-left"
-      trigger={trigger}
       content={
         <div className={S.list}>
-          {items.map(({ id, title, ...rest }) => (
-            <Button variant="clear" {...rest} key={id}>
+          {items.map(({ id, title, className, ...rest }) => (
+            <Button
+              variant="clear"
+              size={size}
+              {...rest}
+              className={cn(S.item, className)}
+              key={id}
+            >
               {title}
             </Button>
           ))}

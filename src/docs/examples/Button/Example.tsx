@@ -1,12 +1,14 @@
 import { Button, Icon } from 'uilib';
 
 export default () => {
+  const size = 'm';
+
   return (
     <Button
-      size="l"
+      size={size}
       // isSquare
       variant="default"
-      prefixElem={<Icon type="check" size="l" />}
+      prefixElem={<Icon type="check" size={size} />}
     >
       I'm a button
     </Button>
