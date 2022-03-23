@@ -4,7 +4,7 @@ import S from './Container.styl';
 
 type Props = {
   className?: string;
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | 'xl';
   children: any;
   alignItemsCenter?: boolean;
   justifyContentCenter?: boolean;

@@ -1,14 +1,14 @@
 import { hot } from 'react-hot-loader/root';
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
-import { Router, Lazy, Button, Theme } from 'uilib';
-
-import { dom } from 'uilib';
+import cn from 'classnames';
+import { Router, Lazy, Button, Theme, dom, Icon } from 'uilib';
 
 import Sidebar from '../Sidebar/Sidebar';
 import NAV_CONFIG from '../../navigation';
 require('./store');
 import S from './App.styl';
+import { Container, Paranja } from 'uilib/components';
 
 dom.watchControllerFlag();
 
@@ -29,17 +29,28 @@ class App extends Component<{ store?: any }> {
     this.store.setTheme(this.isDarkTheme() ? 'light' : 'dark');
   };
 
+  toggleMenu = () => (this.store.isMenuOpen = !this.store.isMenuOpen);
+
   // @ts-ignore
   pickActiveColor = () => this.colorPickerRef.current.click();
 
   render() {
-    const { currThemeConfig, activeColor } = this.store;
+    const { currThemeConfig, activeColor, isMenuOpen } = this.store;
 
     return (
       <>
         <div className={S.root}>
-          <div className={S.nav}>
+          <div className={cn(S.nav, isMenuOpen && S.open)}>
+            <Button
+              className={S.menuButton}
+              variant="clear"
+              size="l"
+              onClick={this.toggleMenu}
+            >
+              <Icon type="menu" size="l" />
+            </Button>
             <div className={S.configBar}>
+              <span className={S.version}>v{VERSION}</span>
               <Button
                 className={S.cfgButton}
                 variant="clear"
@@ -67,18 +78,19 @@ class App extends Component<{ store?: any }> {
                 />
               </Button>
             </div>
-
             <Sidebar />
           </div>
 
-          <div className={S.content}>
+          <Paranja className={cn(S.paranja, isMenuOpen && S.visible)} />
+
+          <Container size="xl">
             <Router>
               {NAV_CONFIG.map(({ slug, loader }) => (
                 // @ts-ignore
                 <Lazy path={`/${slug}`} loader={loader} key={slug} />
               ))}
             </Router>
-          </div>
+          </Container>
         </div>
 
         <Theme config={currThemeConfig.originalObject} />

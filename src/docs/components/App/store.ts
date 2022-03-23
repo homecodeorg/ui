@@ -25,7 +25,8 @@ function getThemeConfig(theme, activeColor) {
 
 const initialActiveColor = getInitialActiveColor();
 
-createStore('app', {
+export default createStore('app', {
+  isMenuOpen: false,
   theme: initialThemeType,
   currThemeConfig: getThemeConfig(initialThemeType, initialActiveColor),
   activeColor: initialActiveColor,

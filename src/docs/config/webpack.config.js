@@ -5,6 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+const pkg = require('../../../package.json');
 const paths = require('./paths.js');
 
 module.exports = (env, argv) => {
@@ -117,6 +118,7 @@ module.exports = (env, argv) => {
 
       new webpack.DefinePlugin({
         isDEV: JSON.stringify(isDev),
+        VERSION: JSON.stringify(pkg.version),
       }),
 
       new CopyWebpackPlugin({

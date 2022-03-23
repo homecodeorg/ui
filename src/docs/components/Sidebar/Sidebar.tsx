@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState, memo } from 'react';
 import cn from 'classnames';
 
-import { Link, string } from 'uilib';
+import { Link, Scroll, string } from 'uilib';
 
+import app from '../App/store';
 import NAV_CONFIG, { RouteItem } from '../../navigation';
 
 type ItemProps = {
@@ -22,6 +23,7 @@ function Item({ slug, parentSlug = '', items }: ItemProps) {
         href={href}
         className={cn(S.link, parentSlug && S.sub)}
         exactClassName={S.active}
+        onClick={() => (app.isMenuOpen = false)}
         key={slug}
       >
         {string.capitalize(slug)}
@@ -54,10 +56,12 @@ export default memo(function Sidebar() {
   });
 
   return (
-    <div className={S.root}>
-      {NAV_CONFIG.map(({ slug }) => (
-        <Item slug={slug} items={subItems[slug]} />
-      ))}
-    </div>
+    <Scroll y size="s">
+      <div className={S.root}>
+        {NAV_CONFIG.map(({ slug }) => (
+          <Item slug={slug} items={subItems[slug]} />
+        ))}
+      </div>
+    </Scroll>
   );
 });

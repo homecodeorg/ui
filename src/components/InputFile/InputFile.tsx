@@ -168,12 +168,7 @@ export class InputFile extends Component<Props> {
     const { className, size, label, accept, maxCount } = this.props;
     const { items, labelClipPath } = this.store;
 
-    const classes = cn(
-      S.root,
-      className,
-      S[`size-${size}`],
-      maxCount === 1 && S.single
-    );
+    const classes = cn(S.root, className, S[`size-${size}`]);
 
     return (
       <div className={classes}>
