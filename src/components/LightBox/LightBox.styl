@@ -1,3 +1,5 @@
+@import '../../theme'
+
 .root
   display flex
   align-items center
@@ -15,11 +17,20 @@
   position absolute
   right 0
   top 0
-  width 100px
-  height 100px
+  width 60px
+  height 60px
   min-height @height
   border-radius 0
+  color var(--accent-color)
 
   &:hover
     background-color var(--decent-color-alpha-200)
     color var(--active-color)
+
+@media(min-width: $tablet) {
+  .close {
+    width 100px
+    height 100px
+    min-height 100px
+  }
+}
