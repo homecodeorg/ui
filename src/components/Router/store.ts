@@ -3,6 +3,7 @@ import { createStore } from 'justorm/react';
 import { addUniq, spliceWhere } from '../../tools/array';
 
 const LISTENERS = [];
+const fireListeners = path => LISTENERS.forEach(cb => cb(path));
 
 const STORE = createStore('router', {
   path: location.pathname,
@@ -16,6 +17,7 @@ const STORE = createStore('router', {
   go(href, { replace }: { replace?: boolean } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
     this.path = href || '/';
+    fireListeners(this.path);
   },
   back() {
     history.back();
@@ -32,7 +34,7 @@ function updateRouteState() {
   if (STORE.path === pathname) return;
 
   STORE.path = pathname;
-  LISTENERS.forEach(cb => cb(pathname));
+  fireListeners(pathname);
 }
 
 window.addEventListener('popstate', updateRouteState);
