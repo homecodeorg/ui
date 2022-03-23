@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.54](https://github.com/foreverido/uilib/compare/v0.0.53...v0.0.54) (2022-03-23)
+
+
+### Bug Fixes
+
+* Router - fire subscribers no only pop/push state, but go() too ([36c770f](https://github.com/foreverido/uilib/commit/36c770f4e5a2829e785ac2405f3e3229cd3764e2))
+
 ### [0.0.53](https://github.com/foreverido/uilib/compare/v0.0.52...v0.0.53) (2022-03-23)
 
 
