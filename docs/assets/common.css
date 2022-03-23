@@ -12,10 +12,10 @@
 
 body {
   font-size: 16px;
-  background-color: var(--bg-color);
+  background-color: var(--decent-color);
   color: var(--accent-color);
 }
 
 *::selection {
-  background-color: var(--active-color);
+  background-color: var(--active-color-alpha-500);
 }
