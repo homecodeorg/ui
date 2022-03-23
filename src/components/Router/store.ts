@@ -17,7 +17,7 @@ const STORE = createStore('router', {
   },
   go(href, { replace }: { replace?: boolean } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
-    this.path = href || '/';
+    this.path = href.replace(/\?.+/, '') || '/';
     onRouteChange();
   },
   back() {
