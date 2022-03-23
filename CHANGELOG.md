@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.59](https://github.com/foreverido/uilib/compare/v0.0.58...v0.0.59) (2022-03-23)
+
+
+### Features
+
+* Container - deptecate 'centere', add 'alignItemsCenter, justifyContentCenter' ([7758726](https://github.com/foreverido/uilib/commit/7758726e135df71e4aba59749f438e4ecc9e1620))
+
+
+### Bug Fixes
+
+* LightBox - close button size for mobile - 60px ([250c389](https://github.com/foreverido/uilib/commit/250c389d7525eadb60da8c4f6062699f0d350491))
+
 ### [0.0.58](https://github.com/foreverido/uilib/compare/v0.0.57...v0.0.58) (2022-03-23)
 
 
