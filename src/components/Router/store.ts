@@ -1,13 +1,14 @@
 import { createStore } from 'justorm/react';
 
-import { addUniq, spliceWhere } from '../../tools/array';
+import { addUniq, spliceWhere } from 'uilib/tools/array';
+import { parseQueryParams } from 'uilib/tools/queryParams';
 
 const LISTENERS = [];
-const fireListeners = path => LISTENERS.forEach(cb => cb(path));
 
 const STORE = createStore('router', {
   path: location.pathname,
   params: {},
+  query: {},
   on(cb) {
     addUniq(LISTENERS, cb);
   },
@@ -17,7 +18,7 @@ const STORE = createStore('router', {
   go(href, { replace }: { replace?: boolean } = {}) {
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
     this.path = href || '/';
-    fireListeners(this.path);
+    onRouteChange();
   },
   back() {
     history.back();
@@ -28,13 +29,18 @@ const STORE = createStore('router', {
   },
 });
 
+function onRouteChange() {
+  STORE.query = parseQueryParams();
+  LISTENERS.forEach(cb => cb(STORE.path));
+}
+
 function updateRouteState() {
   const { pathname } = window.location;
 
   if (STORE.path === pathname) return;
 
   STORE.path = pathname;
-  fireListeners(pathname);
+  onRouteChange();
 }
 
 window.addEventListener('popstate', updateRouteState);
