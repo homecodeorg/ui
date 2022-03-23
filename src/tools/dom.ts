@@ -33,6 +33,4 @@ export function watchControllerFlag() {
   classes.add('mouse');
 }
 
-export function isTouch() {
-  return 'ontouchstart' in window;
-}
+export const isTouch = () => 'ontouchstart' in window;

@@ -125,3 +125,20 @@ $padding = 10px
   &:hover
     opacity 1
     background-color var(--decent-color-alpha-100)
+
+@media (max-width: $tablet)
+  .root
+  .item
+    width 100%
+
+  .root
+    padding-left var(--indent-s)
+    padding-right var(--indent-s)
+
+  .title
+    font-size 20px
+  .content
+    font-size 16px
+
+  .close
+    transform scale(1.2)

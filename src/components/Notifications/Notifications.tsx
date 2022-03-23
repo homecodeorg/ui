@@ -1,6 +1,8 @@
-import { Component } from 'react';
+import { Component, useCallback, useEffect } from 'react';
 import cn from 'classnames';
 import { withStore } from 'justorm/react';
+
+import { isTouch } from 'uilib/tools/dom';
 
 import { Icon } from '../Icon/Icon';
 import { Button } from '../Button/Button';
@@ -30,53 +32,84 @@ function getContent(content, links, LinkComponent) {
   return items;
 }
 
-function Item(props: T.Props) {
-  const {
-    id,
-    type = 'default',
-    title,
-    content,
-    links,
-    visible,
-    pause,
-    unpause,
-    close,
-    LinkComponent,
-  } = props;
-  const classes = cn(S.item, S[`type-${type}`], visible && S.visible);
+class Item extends Component<T.Props> {
+  isTouchStarted = false;
 
-  return (
-    <div
-      className={classes}
-      onMouseOver={pause}
-      onFocus={pause}
-      onTouchStart={pause}
-      onMouseOut={unpause}
-      onBlur={unpause}
-      onTouchEnd={unpause}
-    >
-      <div className={S.itemInner}>
-        {(title || content) && (
-          <div className={S.text}>
-            {title && <div className={S.title}>{title}</div>}
-            {content && (
-              <div className={S.content}>
-                {getContent(content, links, LinkComponent)}
-              </div>
-            )}
-          </div>
-        )}
-        <Button
-          className={S.close}
-          variant="clear"
-          isSquare
-          onClick={() => close(id)}
-        >
-          <Icon type="close" size="s" />
-        </Button>
+  onTouchStart = () => {
+    this.isTouchStarted = true;
+  };
+
+  onTouchMove = e => {
+    const { unpause } = this.props;
+
+    // e.preventDefault();
+    e.stopPropagation();
+    unpause();
+    this.closeMe();
+  };
+
+  onTouchEnd = () => {
+    const { unpause } = this.props;
+
+    unpause();
+    this.isTouchStarted = false;
+  };
+
+  onTouchCancel = () => (this.isTouchStarted = false);
+
+  closeMe = () => {
+    const { id, close } = this.props;
+    close(id);
+  };
+
+  render() {
+    const {
+      type = 'default',
+      title,
+      content,
+      links,
+      visible,
+      pause,
+      unpause,
+      LinkComponent,
+    } = this.props;
+    const classes = cn(S.item, S[`type-${type}`], visible && S.visible);
+
+    return (
+      <div
+        className={classes}
+        onMouseOver={pause}
+        onFocus={pause}
+        onTouchStart={pause}
+        onTouchMove={this.onTouchMove}
+        onMouseOut={unpause}
+        onBlur={unpause}
+        onTouchEnd={this.onTouchEnd}
+        onTouchCancel={this.onTouchCancel}
+      >
+        <div className={S.itemInner}>
+          {(title || content) && (
+            <div className={S.text}>
+              {title && <div className={S.title}>{title}</div>}
+              {content && (
+                <div className={S.content}>
+                  {getContent(content, links, LinkComponent)}
+                </div>
+              )}
+            </div>
+          )}
+          <Button
+            className={S.close}
+            variant="clear"
+            isSquare
+            onClick={this.closeMe}
+          >
+            <Icon type="close" size="s" />
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 type Props = { store?: any };
