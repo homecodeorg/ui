@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.58](https://github.com/foreverido/uilib/compare/v0.0.57...v0.0.58) (2022-03-23)
+
+
+### Bug Fixes
+
+* Router - rebuild state after .back() and .replaceState() ([f1c96c6](https://github.com/foreverido/uilib/commit/f1c96c6c868365400835923446c6abb0c8f8ceb3))
+
 ### [0.0.57](https://github.com/foreverido/uilib/compare/v0.0.56...v0.0.57) (2022-03-23)
 
 
