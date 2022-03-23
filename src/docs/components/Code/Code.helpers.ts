@@ -1,6 +1,6 @@
 const MAP_LIB_TO_VAR = {
   react: 'React',
-  'jsutorm/react': 'justorm',
+  'justorm/react': 'justorm',
 };
 
 export function replaceImportLine(line) {

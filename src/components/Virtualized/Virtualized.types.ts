@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export type IndexesType = {
   first: number;
@@ -16,6 +16,7 @@ export type DefaultProps = {
 };
 
 export type State = IndexesType & {
+  id: string;
   height: number;
   isFreezed: boolean;
 };
@@ -24,7 +25,7 @@ type RenderProps = {
   className?: string;
   state: IndexesType & Pick<State, 'height'>;
   items: ReactNode[];
-  onScroll: () => void;
+  onScroll: (e: MouseEvent) => void;
 };
 
 type GetItemPropsParams = {
@@ -33,21 +34,27 @@ type GetItemPropsParams = {
   offsetAfter?: number;
 };
 
+type ScrollCallbackState = IndexesType & {
+  scrollTop: number;
+};
+
 export type Props = {
+  id?: any; // change to fire render
   className?: string;
   wrapElem: Element | null;
   itemHeight: number;
   itemsCount: number;
   totalCount: number;
   overlapCount?: number;
+  pageSize?: number; // every `pageSize` will be called `onScrollEnd`
   offsetBefore?: number;
   offsetAfter?: number;
   initialScrollTop?: number;
   scrollTop?: number; // change to update list scrollTop
-  onScroll?: (scrollTop: number) => void;
-  onScrollEnd: () => void;
+  onScroll?: (args: ScrollCallbackState) => void;
+  onScrollEnd?: () => void;
   children: (props: RenderProps) => ReactNode;
-  renderItem: (props: ItemProps) => React.ReactNode;
+  renderItem: (props: ItemProps) => ReactElement;
   getItemProps: (params: GetItemPropsParams) => { [key: string]: any };
   style?: any;
 } & Readonly<DefaultProps>;

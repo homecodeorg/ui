@@ -83,7 +83,7 @@ class App extends Component<{ store?: any }> {
 
           <Paranja className={cn(S.paranja, isMenuOpen && S.visible)} />
 
-          <Container size="xl">
+          <Container size="xl" fullWidth>
             <Router>
               {NAV_CONFIG.map(({ slug, loader }) => (
                 // @ts-ignore
