@@ -1,5 +1,10 @@
-import { ReactChild, ButtonHTMLAttributes } from 'react';
-import { useEffect, useRef } from 'preact/hooks';
+import {
+  ButtonHTMLAttributes,
+  useEffect,
+  useRef,
+  useCallback,
+  ReactNode,
+} from 'react';
 import cn from 'classnames';
 
 import { Spinner } from '../Spinner/Spinner';
@@ -9,7 +14,7 @@ import * as H from './Button.helpers';
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   className?: string;
-  children: ReactChild;
+  children: ReactNode;
   variant?: 'clear' | 'default' | 'primary';
   size?: 's' | 'm' | 'l';
   type?: 'button' | 'submit' | 'reset';
@@ -18,6 +23,8 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   isChecked?: boolean;
   isSquare?: boolean;
   tabIndex?: number;
+  prefixElem?: JSX.Element;
+  postfixElem?: JSX.Element;
   style?: Partial<CSSStyleDeclaration>;
 };
 
@@ -33,7 +40,9 @@ export function Button(props: Props) {
     children,
     type = 'button',
     variant = 'default',
-    size = 's',
+    size = 'm',
+    prefixElem,
+    postfixElem,
     ...rest
   } = props;
   const { disabled } = props;
@@ -48,13 +57,15 @@ export function Button(props: Props) {
   );
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  function handleMouseUp(e) {
-    if (onMouseUp) onMouseUp(e);
-    H.focusOnClick(buttonRef.current);
-  }
-
   // @ts-ignore
-  rest.onMouseUp = handleMouseUp;
+  rest.onMouseUp = useCallback(
+    e => {
+      if (onMouseUp) onMouseUp(e);
+      H.focusOnClick(buttonRef.current);
+    },
+    [onMouseUp, buttonRef]
+  );
+
   if (disabled) rest.tabIndex = -1;
 
   useEffect(() => {
@@ -67,8 +78,12 @@ export function Button(props: Props) {
   return (
     // @ts-ignore
     <button className={classes} {...rest} type={type} ref={buttonRef}>
-      {children}
-      {isLoading && <Spinner className={S.spinner} size={size} />}
+      {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
+      {typeof children === 'string' ? <span>{children}</span> : children}
+      {postfixElem && <div className={S.postfix}>{postfixElem}</div>}
+      {isLoading && (
+        <Spinner className={cn(S.spinner, S.postfix)} size={size} />
+      )}
     </button>
   );
 }

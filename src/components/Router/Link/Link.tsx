@@ -1,10 +1,9 @@
-import { useRef } from 'preact/hooks';
-import { withStore } from 'justorm/preact';
+import { useCallback, useRef } from 'react';
+import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
-import store from '../store';
 import ExternalIcon from './icons/external.svg';
-import s from './Link.styl';
+import S from './Link.styl';
 
 const defaultProps = {
   isClear: false,
@@ -12,8 +11,10 @@ const defaultProps = {
   isDisabled: false,
 };
 
-export const Link = withStore({ router: true })(function ({
+export const Link = withStore({ router: ['path'] })(function ({
+  store,
   className,
+  exactClassName,
   children,
   isClear,
   isClearPadding,
@@ -21,25 +22,25 @@ export const Link = withStore({ router: true })(function ({
   ...props
 }) {
   const { href } = props;
-  const { pathname } = window.location;
+  const { path } = store.router;
   const domElem = useRef(null);
 
   const isExternal = /\./.test(href);
   const isNested = !/^\//.test(href) && !isExternal;
-  const isExact = href === pathname;
+  const isExact = href === path;
 
   const classes = cn(
-    s.root,
-    isDisabled && s.disabled,
-    isExternal && s.external,
-    isExact && s.exact,
-    isClear && s.clear,
-    isClearPadding && s.clearPadding,
+    S.root,
+    isDisabled && S.disabled,
+    isExternal && S.external,
+    isExact && cn(S.exact, exactClassName),
+    isClear && S.clear,
+    isClearPadding && S.clearPadding,
     className
   );
 
   if (isNested) {
-    props.href = `${pathname.replace(/\/$/, '')}/${href}`;
+    props.href = `${path.replace(/\/$/, '')}/${href}`;
   }
 
   if (isExternal) {
@@ -50,13 +51,16 @@ export const Link = withStore({ router: true })(function ({
     }
   }
 
-  function handleClick(e) {
-    if (!isExternal && window.location.pathname !== props.href) {
-      e.preventDefault();
-      store.navigate(props.href);
-      domElem.current?.blur();
-    }
-  }
+  const handleClick = useCallback(
+    e => {
+      if (!isExternal && path !== href) {
+        e.preventDefault();
+        store.router.go(props.href);
+        domElem.current?.blur();
+      }
+    },
+    [path, href, isExternal]
+  );
 
   return (
     <a /* eslint-disable-line */
@@ -66,7 +70,7 @@ export const Link = withStore({ router: true })(function ({
       ref={domElem}
     >
       {children}
-      {isExternal && <ExternalIcon class={s.externalIcon} />}
+      {isExternal && <ExternalIcon class={S.externalIcon} />}
     </a>
   );
 });

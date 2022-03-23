@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import { Size } from '../../types';
 
 export type WrapperPropsType = DetailedHTMLProps<
@@ -37,12 +37,12 @@ export type Props = {
   inline?: boolean;
   flat?: boolean;
   paranja?: boolean;
-  size: Size;
+  size?: Size;
   elevation?: 1 | 2;
   clearTargetMargin?: boolean;
   direction: Direction;
-  trigger?: JSX.Element | JSX.Element[];
-  content: JSX.Element | JSX.Element[];
+  trigger?: ReactNode;
+  content: ReactNode;
   contentProps?: any;
   wrapperProps?: WrapperPropsType;
   onOpen?: () => void;

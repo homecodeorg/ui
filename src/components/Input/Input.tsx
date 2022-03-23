@@ -32,7 +32,7 @@ export class Input extends Component<T.Props> {
   constructor(props: T.Props) {
     super(props);
 
-    const inputValue = props.value || '';
+    const inputValue = props.value || props.defaultValue || '';
     const hasValue = this.hasValue(inputValue);
 
     this.store = createStore(this, {
@@ -51,12 +51,11 @@ export class Input extends Component<T.Props> {
 
   componentDidUpdate(prevProps: T.Props) {
     const { value } = this.props;
-    const valueChanged = prevProps.value !== value;
 
     this.updateSelection();
     this.updateAutoComplete();
 
-    if (valueChanged) {
+    if (value !== prevProps.value && value !== this.store.inputValue) {
       this.store.inputValue = value;
       this.updateHasValue();
       this.updateLabelPosition();
@@ -117,17 +116,22 @@ export class Input extends Component<T.Props> {
     return val;
   }
 
-  clear = () => {
+  onClearPress = e => {
     const { onChange, onClear } = this.props;
 
-    if (onClear) onClear();
-    if (onChange) onChange('' as any);
-    // this.inputRef.current?.focus();
-    this.isClearPressed = false;
-  };
+    e.preventDefault();
+    e.stopPropagation();
 
-  onClearMouseDown = () => {
-    this.isClearPressed = true;
+    onClear?.();
+
+    if (onChange) {
+      this.onChange('');
+    } else {
+      // @ts-ignore
+      this.inputRef.current.value = '';
+    }
+
+    this.inputRef.current?.focus();
   };
 
   onDocKeyUp = (e: KeyboardEvent) => {
@@ -147,9 +151,14 @@ export class Input extends Component<T.Props> {
     }
   };
 
-  onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, changeOnEnd, type } = this.props;
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = this.getValue(e.target.value);
+
+    this.onChange(value);
+  };
+
+  onChange = (value, e?) => {
+    const { onChange, changeOnEnd, type } = this.props;
     const isNumber = type === 'number';
 
     // @ts-ignore
@@ -158,7 +167,10 @@ export class Input extends Component<T.Props> {
     if (changeOnEnd) {
       this.store.inputValue = value;
       this.updateHasValue();
-    } else if (onChange) onChange(value, e);
+    } else if (onChange) onChange(e, value);
+    else {
+      this.store.inputValue = value;
+    }
   };
 
   onLabelClipPathChange = (clipPath: string) =>
@@ -168,7 +180,7 @@ export class Input extends Component<T.Props> {
     const { onChange } = this.props;
     const value = this.getValue();
 
-    if (onChange) onChange(value);
+    if (onChange) onChange(null, value);
   };
 
   onFocus = e => {
@@ -193,43 +205,50 @@ export class Input extends Component<T.Props> {
     this.store.isFocused = false;
     this.updateLabelPosition();
     // some browsers not fire `onchange` after autofill
-    if (checkAutofill && onChange && !value && val) onChange(val);
+    if (checkAutofill && onChange && !value && val) onChange(null, val);
     if (onBlur) onBlur(e);
   };
 
   getControlProps(): T.ControlProps {
-    const { type, value, label, isNullable, placeholder } = this.props;
-    const { autoComplete, isLabelOnTop } = this.store;
+    const { value, label, isNullable, controlProps, placeholder, ...rest } =
+      this.props;
+    const { autoComplete, isLabelOnTop, inputValue } = this.store;
 
     const props = {
-      ...omit(this.props, [
+      ...omit(rest, [
         'className',
         'clear',
         'onClear',
         'hasClear',
         'size',
-        'label',
         'error',
         'checkAutofill',
-        'placeholder',
         'adornmentLeft',
         'adornmentRight',
         'forceLabelOnTop',
         'changeOnEnd',
       ]),
-      onChange: this.onChange,
+      value: inputValue,
+      ...controlProps,
+      onChange: this.handleChange,
       onFocus: this.onFocus,
       onBlur: this.onBlur,
     };
 
     // @ts-ignore
-    if (value === null && !isNullable) props.value = type === 'number' ? 0 : '';
-    if (placeholder && !value && (!label || isLabelOnTop))
+    if (value === null && !isNullable) {
+      props.value = rest.type === 'number' ? 0 : '';
+    }
+
+    if (placeholder && !value && (!label || isLabelOnTop)) {
       props.placeholder = placeholder;
+    }
+
     if (!autoComplete) {
       props.autoComplete = this.uid;
       delete props.name;
     }
+
     if (props.value === undefined) props.value = '';
 
     return props;
@@ -295,8 +314,8 @@ export class Input extends Component<T.Props> {
           />
           {this.renderAdornment('left')}
           <Control
-            className={S.control}
             {...controlProps}
+            className={cn(S.control, controlProps?.className)}
             // @ts-ignore
             ref={this.inputRef}
             key="control"
@@ -313,16 +332,15 @@ export class Input extends Component<T.Props> {
             {label}
           </Label>
           {this.renderAdornment('right')}
-          {hasClear && hasValue && (
+          {hasClear && !disabled && hasValue && (
             <Button
               className={S.clearButton}
               variant="clear"
               size={size}
               isSquare
-              onMouseDownCapture={this.onClearMouseDown}
-              onClick={this.clear}
+              onClick={this.onClearPress}
             >
-              <Icon className={S.clearIcon} type="clear" />
+              <Icon className={S.clearIcon} size={size} type="close" />
             </Button>
           )}
           {required && <RequiredStar size={size} />}

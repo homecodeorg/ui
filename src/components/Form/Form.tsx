@@ -33,6 +33,7 @@ function Field(props: T.FormFieldProps) {
     markEdited,
     isChanged,
     isTouched,
+    clearMargins,
     component: Control = Input,
     className,
     onChange,
@@ -49,6 +50,7 @@ function Field(props: T.FormFieldProps) {
     className,
     S.field,
     isHidden && S.hidden,
+    clearMargins && S.clearMargins,
     markEdited && isChanged && S.changed
   );
 
@@ -80,34 +82,35 @@ function Field(props: T.FormFieldProps) {
   );
 }
 
-/**
- * Form
- *
- * @property {Object} initialValues
- * @property {Object} validationSchema
- * @property {JSX} children
- */
 export class Form extends Component<T.Props> {
   store: any;
 
   validationSchema: T.FormValidationSchema;
 
+  defaultValues: T.FormValues = {};
+
   constructor(props: T.Props) {
     super(props);
 
-    const { defaultValues, initialValues, defaultDisabled } = props;
-    const notEmpty = H.getNotEmpty(defaultValues, initialValues);
+    const { initialValues, validationSchema, defaultDisabled } = props;
+
+    this.updateDefaultValues();
+
+    this.validationSchema = validationSchema;
+
+    const values = H.cloneValues(initialValues);
+    const notEmpty = H.getNotEmpty(this.defaultValues, initialValues);
+    const disabled = Object(defaultDisabled);
 
     this.store = createStore(this, {
-      values: { ...initialValues },
+      values,
       touched: H.getInitialTouched(initialValues),
-      errors: {},
       changed: {},
       notEmpty,
-      disabled: Object(defaultDisabled),
+      disabled,
       isLoading: false,
       isDirty: false,
-      isValid: true,
+      ...this.getValidationState({ values, disabled }),
       isEmpty: Object.keys(notEmpty).length === 0,
     });
   }
@@ -119,8 +122,8 @@ export class Form extends Component<T.Props> {
   }
 
   shouldComponentUpdate({
-    initialValues,
     defaultValues,
+    initialValues,
     validationSchema,
   }: T.Props) {
     const validationChanged = !compare(
@@ -142,6 +145,8 @@ export class Form extends Component<T.Props> {
       this.setInitialVals(initialValues);
     }
 
+    if (defaultValsChanged) this.updateDefaultValues();
+
     if (initialValsChanged || defaultValsChanged) {
       this.calcChangedAll(initialValues);
     }
@@ -153,29 +158,14 @@ export class Form extends Component<T.Props> {
     return true;
   }
 
-  cloneValue(val) {
-    if (typeof val === 'object' && val !== null) {
-      // date
-      if (val?._isAMomentObject) return val.clone();
-      // date-range
-      if (Object.keys(val).some(key => /^(startDate|endDate)$/.test(key))) {
-        return {
-          startDate: val.startDate?.clone(),
-          endDate: val.endDate?.clone(),
-        };
-      }
+  updateDefaultValues(props = this.props) {
+    const { defaultValues, initialValues } = props;
 
-      return clone(val);
-    }
-
-    return val;
+    return defaultValues || H.cloneValues(initialValues);
   }
 
   setInitialVals(initialValues = {}) {
-    this.store.values = Object.entries(initialValues).reduce(
-      (acc, [name, val]) => ({ ...acc, [name]: this.cloneValue(val) }),
-      {}
-    );
+    this.store.values = H.cloneValues(initialValues);
 
     this.validate();
     this.onInit();
@@ -229,6 +219,7 @@ export class Form extends Component<T.Props> {
     const { values, changed, touched, errors } = this.store.originalObject;
 
     return {
+      required: this.validationSchema[name].empty === false,
       ...props,
       value: values[name],
       markEdited,
@@ -252,14 +243,23 @@ export class Form extends Component<T.Props> {
     };
   }
 
-  getValidationErrors() {
-    const { values, disabled } = this.store.originalObject;
+  getValidationState(store?): T.ValidationState {
+    const errors = this.getValidationErrors(store);
+    const isValid = Object.keys(errors).length === 0;
+
+    return { isValid, errors };
+  }
+
+  getValidationErrors(
+    store: T.ValidationStateParams = this.store.originalObject
+  ) {
+    const { values, disabled } = store;
 
     if (!this.validationSchema) return {};
 
     // @ts-ignore
     const schema = Object.entries(this.validationSchema).reduce(
-      (acc, [field, rule]) => {
+      (acc, [field, { ...rule }]) => {
         const { type, check } = rule as T.FormValidationRule;
 
         if (disabled[field]) return acc;
@@ -287,7 +287,6 @@ export class Form extends Component<T.Props> {
 
   calcChanged(field: string, val: any) {
     const { initialValues } = this.props;
-    const defaultValues = this.props.defaultValues || initialValues;
     const { changed, notEmpty } = this.store;
 
     if (compare(val, initialValues[field])) {
@@ -296,7 +295,7 @@ export class Form extends Component<T.Props> {
       changed[field] = true;
     }
 
-    if (compare(val, defaultValues[field])) {
+    if (compare(val, this.defaultValues[field])) {
       delete notEmpty[field];
     } else {
       notEmpty[field] = true;
@@ -309,9 +308,8 @@ export class Form extends Component<T.Props> {
   }
 
   calcChangedAll(initialValues = this.props.initialValues) {
-    const defaultValues = this.props.defaultValues || initialValues;
     const { values } = this.store.originalObject;
-    const notEmpty = H.getNotEmpty(defaultValues, values);
+    const notEmpty = H.getNotEmpty(this.defaultValues, values);
     const changed = Object.entries(values).reduce(
       (acc, [field, val]) =>
         compare(initialValues[field], val) ? acc : { ...acc, [field]: true },
@@ -326,10 +324,7 @@ export class Form extends Component<T.Props> {
   }
 
   validate() {
-    const errors = this.getValidationErrors();
-    const isValid = Object.keys(errors).length === 0;
-
-    Object.assign(this.store, { isValid, errors });
+    Object.assign(this.store, this.getValidationState());
   }
 
   onInit() {
@@ -385,6 +380,7 @@ export class Form extends Component<T.Props> {
       'initialValues',
       'validationSchema',
       'onInit',
+      'onChange',
       'onSubmit',
     ]);
 

@@ -13,16 +13,6 @@ $paddingSide = 12px
   max-width 100%
   border-radius inherit
 
-  .size-s &
-    controlSize('s')
-    border-radius var(--border-radius-m)
-  .size-m &
-    controlSize('m')
-    border-radius var(--border-radius-m)
-  .size-l &
-    controlSize('l')
-    border-radius var(--border-radius-l)
-
   .isTextArea &
     height auto
     max-height unset
@@ -43,13 +33,14 @@ $paddingSide = 12px
   .root:hover &
   .isFocused &
     controlBorder(var(--active-color))
+    background-color var(--active-color-alpha-100)
 
   .isFocused &
     controlFocused()
 
   .hasError &
+  .hasError:hover &
     controlBorder(var(--danger-color))
-    animation error-flash .4s ease-out
 
   .isFocused.hasError &
     controlFocus(var(--danger-color))
@@ -63,18 +54,33 @@ $paddingSide = 12px
     opacity .6
     background-color var(--accent-color-alpha-500)
 
-@keyframes error-flash
-  0%
-    controlFocus(var(--danger-color), 0px)
-  30%
-    controlFocus(var(--danger-color), 6px)
 
 .size-s
   controlFontSize('s')
+
+  .main
+    controlSize('s')
+    controlFontSize('s')
+    borderRadiusSize('s')
+    controlPaddingSize('s')
+
 .size-m
   controlFontSize('m')
+
+  .main
+    controlSize('m')
+    controlFontSize('m')
+    borderRadiusSize('m')
+    controlPaddingSize('m')
+
 .size-l
   controlFontSize('l')
+
+  .main
+    controlSize('l')
+    controlFontSize('l')
+    borderRadiusSize('l')
+    controlPaddingSize('l')
 
 .isDisabled
   color var(--accent-color-alpha-500)
@@ -186,20 +192,21 @@ $paddingSide = 12px
 .clearButton
   z-index 1
   position absolute
-  top 1px
+  top 0
   right 0
   bottom 1px
   height auto
-  margin-right 8px
+
+  &:hover
+    background-color var(--accent-color-alpha-0) !important
 
 .clearIcon
-  opacity .2
+  flex-shrink 0
+  opacity .3
   transition opacity .2s ease-out
 
   .clearButton:hover &
-    opacity .5
-  .clearButton:active &
-    opacity .7
+    opacity .8
 
   .size-s &
     height 10px

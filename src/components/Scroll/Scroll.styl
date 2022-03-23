@@ -1,5 +1,8 @@
-$hoverSize = 5px
 $offset = 8px
+
+$sizeS = 1px
+$sizeM = 5px
+$sizeL = 9px
 
 .root
   position relative
@@ -24,23 +27,18 @@ $offset = 8px
 
 .thumb
   position absolute
-  background-color var(--active-color)
+  background-color var(--accent-color-alpha-100)
   border-radius 1px
   transition all .1s ease-out
   transform-origin center
 
-  &:active
-    transition none
-
   .y > &
     top 0
-    left 50%
-    width 1px
+    width 100%
 
   .x > &
     left 0
-    top 50%
-    height 1px
+    height 100%
 
 .bar
   z-index 2
@@ -61,8 +59,9 @@ $offset = 8px
     content ''
     position absolute
     opacity 0
-    transition .1s opacity .3s ease-out
+    transition .2s opacity .3s ease-out
     background-color var(--accent-color-alpha-100)
+    border-radius 2px
 
   &:hover
   &.isActive
@@ -72,8 +71,9 @@ $offset = 8px
       opacity 1
       transition-delay 0s
 
-    .thumb
-      transition-delay 0s
+  &:hover .thumb
+  &.isActive .thumb
+    background-color var(--active-color)
 
   &.y
     right 0
@@ -85,15 +85,11 @@ $offset = 8px
       width 32px
 
     &::before
-      left 50%
-      width 1px
-      height 100%
+    & .thumb
+      right 30%
 
-    &:hover
-    &.isActive
-      .thumb
-        width $hoverSize
-        left calc(50% - 2px)
+    &::before
+      height 100%
 
   &.x
     bottom 0
@@ -105,12 +101,36 @@ $offset = 8px
       height 32px
 
     &::before
-      top 50%
-      height 1px
+    & .thumb
+      bottom 30%
+
+    &::before
       width 100%
 
-    &:hover
-    &.isActive
-      .thumb
-        height $hoverSize
-        top calc(50% - 2px)
+.bar.x
+  height 32px
+
+  &::before
+  & .thumb
+    .size-s &
+      height $sizeS
+    .size-m &
+      height $sizeM
+      border-radius 'calc(%s / 2)' % $sizeM
+    .size-l &
+      height $sizeL
+      border-radius 'calc(%s / 2)' % $sizeL
+
+.bar.y
+  width 32px
+
+  &::before
+  & .thumb
+    .size-s &
+      width $sizeS
+    .size-m &
+      width $sizeM
+      border-radius 'calc(%s / 2)' % $sizeM
+    .size-l &
+      width $sizeL
+      border-radius 'calc(%s / 2)' % $sizeL

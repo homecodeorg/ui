@@ -1,9 +1,10 @@
-import { Component, createRef, HTMLAttributes } from 'react';
+import { Component, createRef, HTMLAttributes, HTMLProps } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 import Time from 'timen';
 
+import type { Size } from '../../types';
 import { capitalize } from '../../tools/string';
 import { isTouch } from '../../tools/dom';
 import debounce from '../../tools/debounce';
@@ -11,19 +12,20 @@ import * as resizeObserver from '../../tools/resizeObserver';
 
 import S from './Scroll.styl';
 
-type OffsetAxis = { before: number; after: number };
-type Props = {
+type OffsetAxis = { before?: number; after?: number };
+type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   className?: string;
   innerClassName?: string;
   thumbClassName?: string;
   innerProps?: HTMLAttributes<HTMLDivElement>;
   x?: boolean;
   y?: boolean;
+  size?: Size;
   autoHide?: boolean;
-  offset?: { x: OffsetAxis; y: OffsetAxis };
+  offset?: { x?: OffsetAxis; y?: OffsetAxis };
 };
 
-export default class Scroll extends Component<Props> {
+export class Scroll extends Component<Props> {
   innerElem = createRef<HTMLDivElement>();
   thumbELem = {
     x: createRef<HTMLDivElement>(),
@@ -40,6 +42,8 @@ export default class Scroll extends Component<Props> {
   prevBoundings = { x: 0, y: 0 };
 
   unsubscribeScrollHeightObserver;
+
+  static defaultProps = { size: 'm' };
 
   constructor(props) {
     super(props);
@@ -118,6 +122,8 @@ export default class Scroll extends Component<Props> {
 
   // TODO: call on resize
   updateCoeff() {
+    if (!this.innerElem.current) return;
+
     const { clientHeight, clientWidth, scrollHeight, scrollWidth } =
       this.innerElem.current;
 
@@ -130,6 +136,8 @@ export default class Scroll extends Component<Props> {
   }
 
   updatePos = () => {
+    if (!this.innerElem.current) return;
+
     const { offset } = this.props;
     const xOffsetBefore = offset?.x?.before || 0;
     const xOffsetAfter = offset?.x?.after || 0;
@@ -248,14 +256,14 @@ export default class Scroll extends Component<Props> {
     if (coeff[axis] === 1) return null;
 
     const offsetSizeField = `offset${capitalize(sizeField)}`;
-    const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
+    // const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
     const thumbStyle = {
       [sizeField]: `${coeff[axis] * 100}%`,
       [posField]: `${pos[axis]}px`,
     };
 
     const barProps = {
-      className: cn(S.bar, S[axis], activeAxis && S.isActive),
+      className: cn(S.bar, S[axis], activeAxis === axis && S.isActive),
       style: this.getOffset(axis),
       [this.events.start]: this.onPointerStart.bind(this, axis),
     };
@@ -285,13 +293,14 @@ export default class Scroll extends Component<Props> {
   }
 
   render() {
-    const { y, x, autoHide, className } = this.props;
+    const { y, x, size, autoHide, className } = this.props;
     const { coeff, isScrolling, activeAxis } = this.store;
 
     const classes = cn(
       S.root,
       y && S.y,
       x && S.x,
+      S[`size-${size}`],
       autoHide && S.autoHide,
       (isScrolling || activeAxis) && S.isScrolling,
       this.isTouch && S.isTouch,
@@ -300,6 +309,7 @@ export default class Scroll extends Component<Props> {
     const props = omit(this.props, [
       'x',
       'y',
+      'offset',
       'className',
       'innerClassName',
       'innerProps',

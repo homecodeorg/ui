@@ -1,59 +1,22 @@
-import { Component, cloneElement } from 'react';
-import { withStore } from 'justorm/preact';
-import { Path } from 'path-parser';
-import omit from 'lodash.omit';
+import { Component, cloneElement, ReactNode } from 'react';
+import { withStore } from 'justorm/react';
 
-import './store';
+import STORE from './store';
+import { parseRouteParams } from './Router.helpers';
 
-function parseRouteParams(routes) {
-  const items = [];
-  const exactItems = [];
-
-  function parse(route) {
-    if (!route) {
-      return;
-    }
-
-    if (Array.isArray(route)) {
-      route.forEach(parse);
-      return;
-    }
-
-    const { path, exact, children } = route.props;
-
-    if (children) {
-      children.forEach(parse);
-      return;
-    }
-
-    const defaultParams = { path, exact, Elem: route };
-
-    if (!path) {
-      exactItems.unshift(defaultParams);
-      return;
-    }
-
-    (exact ? exactItems : items).push({
-      ...defaultParams,
-      parsed: new Path(path),
-    });
-  }
-
-  parse(routes);
-
-  return [...exactItems, ...items];
-}
+type Props = {
+  store?: any;
+  children: ReactNode;
+};
 
 @withStore({ router: ['path'] })
-export class Router extends Component {
+export class Router extends Component<Props> {
+  store;
+  routes;
+
   constructor(props) {
     super(props);
     this.rebuildRoutes(props.children);
-  }
-
-  componentDidMount() {
-    window.addEventListener('popstate', this.updateRouteState);
-    window.addEventListener('pushstate', this.updateRouteState);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -61,40 +24,41 @@ export class Router extends Component {
     return true;
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('popstate', this.updateRouteState);
-    window.removeEventListener('pushstate', this.updateRouteState);
-  }
-
-  updateRouteState = () => {
-    const { router } = this.props.store;
-    router.path = window.location.pathname;
-  };
-
   rebuildRoutes(items) {
     this.routes = parseRouteParams(items);
   }
 
   getRoute() {
     let params;
-    const { router } = this.props.store;
+    const notExactRoutes = [];
+    const currPath = this.props.store.router.path;
     const route =
-      this.routes.find(({ path, exact, parsed }) => {
-        if (exact && path === router.path) return true;
-        if (parsed) params = parsed.test(router.path);
+      this.routes.find(route => {
+        const { path, exact, parsed } = route;
+
+        if (exact) {
+          if (path === currPath) return true;
+        } else {
+          notExactRoutes.push(route);
+        }
+
+        if (parsed) params = parsed.test(currPath);
+
         return Boolean(params);
-      }) || this.routes[0];
+      }) || notExactRoutes[0];
 
     return [route, params];
   }
 
   render() {
-    const { router } = this.props.store;
     const [route, params] = this.getRoute();
 
-    return cloneElement(route.Elem, { ...params, router });
+    if (!route) return null;
+
+    return cloneElement(route.Elem, { ...params, router: STORE });
   }
 }
 
 export * from './Link/Link';
-export { default as Redirect } from './Redirect/Redirect';
+export * from './Redirect';
+export const RouterStore = STORE;

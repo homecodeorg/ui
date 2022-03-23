@@ -1,27 +1,29 @@
 {
   "compilerOptions": {
+    "strict": false,
     "allowJs": true,
+    // "noImplicitAny": false,
+    // "incremental": true,
     "allowSyntheticDefaultImports": true,
     // "downlevelIteration": true,
     "jsx": "react-jsx",
-    "target": "esnext",
-    // "lib": ["esnext", "dom"],
-    // "lib": ["dom", "dom.iterable", "esnext"],
-    // "experimentalDecorators": true,
-    // "skipLibCheck": true,
-    // "esModuleInterop": true,
-    // "forceConsistentCasingInFileNames": true,
+    "target": "es5",
+    // "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     // "isolatedModules": true,
-    "strict": false,
-    // "noImplicitAny": false,
-    "baseUrl": ".",
-    // "incremental": true,
-    // "rootDir": "./src",
-    // "declaration": true,
-    // "declarationDir": "./src",
+    "esModuleInterop": true,
+    // "lib": ["esnext", "dom"],
+    // "lib": ["dom", "dom.iterable", "esnext"],
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "baseUrl": "./",
+    "rootDir": "./src",
+    "declaration": true,
+    "declarationDir": "dist/esm/src",
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
@@ -29,8 +31,19 @@
           "customMatcher": "\\.styl$"
         }
       }
-    ]
+    ],
+    "paths": {
+      "uilib": ["./src"],
+      "uilib/*": ["./src/*"],
+      "docs/*": ["./src/docs/*"]
+    }
   },
-  "include": ["src", "index.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src"],
+  "exclude": [
+    "node_modules",
+    "config",
+    "src/**/*.example.*",
+    "src/App",
+    "src/helpers"
+  ]
 }

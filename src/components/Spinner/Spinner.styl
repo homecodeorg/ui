@@ -2,8 +2,8 @@
 
 .root
   display inline-block
-  animation .5s 'spin' linear infinite
   color inherit
+  animation spin .5s linear infinite
 
 .size-s
   height 16px
@@ -15,8 +15,11 @@
   height 30px
   width @height
 
-@keyframes :global(spin)
-  0%
+@keyframes spin {
+  0% {
     transform rotateZ(0deg)
-  100%
+  }
+  100% {
     transform rotateZ(360deg)
+  }
+}

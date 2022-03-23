@@ -1,20 +1,11 @@
-[![npm](https://img.shields.io/npm/dm/@truerenton/uilib?style=flat-square)](https://www.npmjs.com/package/@truerenton/uilib)
-
+[![npm](https://img.shields.io/npm/dm/@foreverido/uilib?style=flat-square)](https://www.npmjs.com/package/@foreverido/uilib)
 
 # UILIB
 
-React/Preact UI components library
-
-## Installation 
-
-`npm i @truerenton/uilib` 
-
-or 
-
-`yarn add @truerenton/uilib`
+React UI components library
 
 ## Roadmap
 
-* build and publish typings
-* uncomment rest components and fix typings
-* documentation for every component
+- build and publish typings
+- uncomment rest components and fix typings
+- documentation for every component / sandpack

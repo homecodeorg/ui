@@ -1,7 +1,9 @@
 import { RefObject, ReactChild, ReactNode } from 'react';
-import { Size } from 'components/Input/Input.types';
-import { InputProps } from 'components/Input/Input';
-import { PopupProps } from 'components/Popup/Popup';
+
+import { Size } from '../../types';
+
+import { InputProps } from '../Input/Input';
+import { PopupProps } from '../Popup/Popup';
 
 export type Id = string | number;
 
@@ -10,7 +12,7 @@ export type Option = {
   isGroupHeader?: boolean;
   parentId?: Id;
   label: any;
-  sortingKey: string | number;
+  sortingKey?: string | number;
   children?: Option[];
   render?: (label: string) => string;
 };
@@ -78,7 +80,6 @@ export type Props = {
     'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
   >;
   disableTrigger?: boolean;
-  disableTriggerArrow?: boolean;
   triggerProps?: any;
   popupProps?: SelectPopupProps;
   hideRequiredStar?: boolean;

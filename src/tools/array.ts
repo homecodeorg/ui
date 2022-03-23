@@ -1,4 +1,4 @@
-export function indexWhere(arr, val, fieldName) {
+export function indexWhere(arr, val, fieldName?) {
   if (!fieldName) {
     return arr.indexOf(val);
   }
@@ -19,7 +19,7 @@ export function indexWhere(arr, val, fieldName) {
   return index;
 }
 
-export function sliceWhere([...arr], val, fieldName) {
+export function sliceWhere([...arr], val, fieldName?) {
   spliceWhere(arr, val, fieldName);
   return arr;
 }
@@ -66,4 +66,19 @@ export function groupByField(arr, fieldName) {
     acc[field].push(item);
     return acc;
   }, {});
+}
+
+export function getIndexCircular(arr: any[], index: number) {
+  const l = arr.length;
+  return arr[((index % l) + l) % l];
+}
+
+export function circularSlice(arr: any[], startIndex: number, count: number) {
+  const newArr = [];
+
+  for (let i = 0; i < count; i++) {
+    newArr.push(getIndexCircular(arr, startIndex + i));
+  }
+
+  return newArr;
 }

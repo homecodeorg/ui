@@ -1,7 +1,6 @@
 import { Component, createRef } from 'react';
 import { createPortal } from 'react-dom';
 import cn from 'classnames';
-import { bind } from 'decko';
 import Time from 'timen';
 import { createStore } from 'justorm/react';
 
@@ -21,7 +20,7 @@ function getIframeDoc() {
 export class Popup extends Component<T.Props> {
   rootElem = createRef<HTMLDivElement>();
 
-  triggerElem = createRef<HTMLDivElement>();
+  triggerElem: HTMLDivElement;
 
   containerElem = createRef<HTMLDivElement>();
 
@@ -45,6 +44,7 @@ export class Popup extends Component<T.Props> {
     this.store = createStore(this, {
       isOpen,
       isContentVisible: isOpen,
+      position: { top: 0, left: 0 },
     } as T.State);
 
     this.afterClose = this.afterClose.bind(this);
@@ -117,6 +117,11 @@ export class Popup extends Component<T.Props> {
     doc.removeEventListener('mouseup', this.onMouseUp);
   };
 
+  onTriggerRef = elem => {
+    this.triggerElem = elem;
+    this.updatePosition();
+  };
+
   onDocKeyUp = e => {
     if (this.store.isOpen && e.key === 'Escape') {
       e.stopPropagation();
@@ -146,7 +151,7 @@ export class Popup extends Component<T.Props> {
       return;
     }
 
-    if (!isOpen || hasParent(e.target, this.triggerElem.current)) return;
+    if (!isOpen || hasParent(e.target, this.triggerElem)) return;
 
     if (!e.target.closest(`.${S.content}`) || autoClose) this.close();
   };
@@ -155,8 +160,10 @@ export class Popup extends Component<T.Props> {
     const { controllable, onFocus } = this.props;
 
     this._focused = true;
+
     if (!controllable && !this._mousePressed) this.open();
-    if (onFocus) onFocus();
+
+    onFocus?.();
   };
 
   onBlur = () => {
@@ -164,12 +171,18 @@ export class Popup extends Component<T.Props> {
 
     this._focused = false;
 
-    if (onBlur) onBlur();
+    onBlur?.();
+
     if (!controllable && !this._mousePressed) {
       // give time to fire clicks inside popup
       this.timers.after(80, this.close);
     }
   };
+
+  updatePosition() {
+    if (!this.triggerElem) return;
+    this.store.position = getCoords(this.triggerElem);
+  }
 
   open = () => {
     const { onOpen } = this.props;
@@ -179,6 +192,8 @@ export class Popup extends Component<T.Props> {
     this.timers.clear(this.afterClose);
 
     Object.assign(this.store, { isOpen: true, isContentVisible: true });
+    this.updatePosition();
+
     if (onOpen) Time.nextTick(onOpen);
   };
 
@@ -233,7 +248,7 @@ export class Popup extends Component<T.Props> {
     }
 
     return (
-      <div className={classesTrigger} {...triggerProps} ref={this.triggerElem}>
+      <div className={classesTrigger} {...triggerProps} ref={this.onTriggerRef}>
         {trigger}
       </div>
     );
@@ -253,9 +268,8 @@ export class Popup extends Component<T.Props> {
       clearTargetMargin,
       direction,
     } = this.props;
-    const { isOpen, isContentVisible } = this.store;
+    const { isOpen, isContentVisible, position } = this.store;
 
-    const trigger = this.triggerElem.current;
     const target = document.getElementById('app-modal');
 
     if (!target) return null;
@@ -280,13 +294,13 @@ export class Popup extends Component<T.Props> {
       contentProps.className
     );
 
-    if (trigger && !inline) {
-      const { offsetHeight, offsetWidth } = trigger;
+    if (this.triggerElem && !inline) {
+      const { offsetHeight, offsetWidth } = this.triggerElem;
 
       wrapperProps.style = {
         minHeight: offsetHeight,
         minWidth: offsetWidth,
-        ...getCoords(trigger),
+        ...position,
       } as any;
     }
 

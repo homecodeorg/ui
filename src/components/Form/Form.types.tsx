@@ -1,9 +1,4 @@
-import {
-  ChangeEvent,
-  FormHTMLAttributes,
-  ReactElement,
-  ReactNode,
-} from 'react';
+import { ChangeEvent, FormHTMLAttributes, ReactNode } from 'react';
 import { ValidationSchema, ValidationError } from 'fastest-validator';
 
 export type FormValidationSchema = ValidationSchema;
@@ -21,14 +16,22 @@ type FieldsFlags = { [name: string]: boolean };
 
 type FieldsErrors = { [name: string]: FieldError };
 
-export type FormApi = {
-  isDirty: boolean;
+export type ValidationStateParams = {
+  values: FormValues;
+  disabled: FieldsFlags;
+};
+
+export type ValidationState = {
   isValid: boolean;
+  errors: FieldsErrors;
+};
+
+export type FormApi = ValidationState & {
+  isDirty: boolean;
   isLoading: boolean;
   values: FormValues;
   touched: FieldsFlags;
   changed: FieldsFlags;
-  errors: FieldsErrors;
   Field: React.ComponentType;
   setValue: (field: string, val: any) => void;
   setValues: (values: FormValues) => void;
@@ -51,8 +54,8 @@ export type Props = Omit<
 > & {
   className?: string;
   defaultValues?: FormValues;
-  defaultDisabled?: FieldsFlags;
   initialValues: FormValues;
+  defaultDisabled?: FieldsFlags;
   validationSchema?: FormValidationSchema;
   markEdited?: boolean;
   children: (api: FormApi) => JSX.Element | JSX.Element[];
@@ -78,6 +81,7 @@ export type FormFieldProps = FieldProps & {
   error: ValidationError;
   isChanged: boolean;
   isTouched: boolean;
+  clearMargins: boolean;
   handleChange: (name: string, val: any) => void;
   handleBlur: (name: string) => void;
 };

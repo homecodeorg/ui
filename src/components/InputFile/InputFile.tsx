@@ -1,81 +1,218 @@
-import { Component, createRef } from 'react';
+import { ChangeEvent, Component, HTMLProps } from 'react';
+import { createStore } from 'justorm/react';
 import cn from 'classnames';
+import pick from 'lodash.pick';
+import compare from 'compareq';
 
-import { InputProps } from '../Input/Input';
-import { ComponentType } from '../../types';
+import { Label, Icon, Scroll, file as _file } from 'uilib';
 
 import S from './InputFile.styl';
+import Item from './Item/Item';
+import { array } from 'uilib/tools';
 
-type Props = ComponentType &
-  InputProps & {
-    onClick: (e: MouseEvent) => void;
-    isLoading?: boolean;
+type ProgressParams = {
+  loaded: number;
+  total: number;
+};
+
+type Value = string[];
+
+type Props = {
+  className?: string;
+  label?: string;
+  size?: string;
+  upload: (
+    file: File,
+    onProgress: (params: ProgressParams) => void,
+    getXHR?: (xhr: XMLHttpRequest) => void
+  ) => Promise<string>;
+  rootUrl: string; // folder in cloud storage
+  accept?: HTMLProps<HTMLInputElement>['accept'];
+  limit?: number; // megabytes
+  maxCount?: number; // max files count
+  value?: Value; // url
+  onSelect?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>, value: Value) => void; // upload complete
+  remove?: (fileName: string) => Promise<boolean>;
+};
+
+export type InputFileProps = Props;
+
+const defaultFileState = {
+  total: 1,
+  loaded: 0,
+  error: null,
+  base64: '',
+};
+
+function stateFromProps(value, maxCount) {
+  return value.slice(0, maxCount).map((src, index) => ({
+    ...defaultFileState,
+    loaded: 1,
+    index,
+    src,
+  }));
+}
+
+export class InputFile extends Component<Props> {
+  store;
+  _mounted = false;
+
+  constructor(props) {
+    super(props);
+
+    const { value, maxCount } = props;
+    const items = stateFromProps(value, maxCount);
+
+    this.store = createStore(this, { items, labelClipPath: '' });
+  }
+
+  static defaultProps = { rootUrl: '', size: 'm', maxCount: 1 };
+
+  componentDidMount() {
+    this._mounted = true;
+  }
+
+  componentWillUnmount() {
+    this._mounted = false;
+    this.store.items.forEach(({ xhr }) => xhr?.abort());
+  }
+
+  componentDidUpdate(prevProps) {
+    const { value, maxCount } = this.props;
+
+    if (!compare(prevProps.value, value) || prevProps.maxCount !== maxCount) {
+      this.store.items = stateFromProps(value, maxCount);
+    }
+  }
+
+  onChange = async e => {
+    const { files } = e.target;
+    const { value, maxCount, limit, onChange } = this.props;
+    const { items } = this.store;
+    let index = value.length;
+    const requests = [];
+
+    [...files].every(file => {
+      if (index >= maxCount) return false;
+
+      if (limit) {
+        const sizeMb = file.size / 1024 / 1024;
+
+        if (sizeMb > limit) {
+          console.error(`Max file size - ${limit}Mb`, file);
+          return false;
+        }
+      }
+
+      items.push({ ...defaultFileState, index });
+      requests.push(this.upload(file, items[index]));
+      index++;
+
+      return true;
+    });
+
+    await Promise.all(requests);
+
+    const newValue = [...this.props.value];
+
+    requests.forEach((r, _i) => {
+      const i = value.length + _i;
+      newValue[i] = items[i].src;
+    });
+
+    onChange(null, newValue);
   };
 
-class InputFile extends Component<Props> {
-  controlEl = createRef<HTMLInputElement>();
-
-  state = {
-    fileName: '',
+  onProgress = state => e => {
+    Object.assign(state, pick(e, ['total', 'loaded']));
   };
 
-  onClick = e => {
-    const { onClick } = this.props;
+  async upload(file, state) {
+    const { upload } = this.props;
 
-    const input = this.controlEl.current;
+    Object.assign(state, defaultFileState);
 
-    input.click();
-    input.focus();
+    state.base64 = await _file.toBase64(file);
 
-    if (onClick) onClick(e);
-  };
+    const src = await upload(
+      file,
+      this.onProgress(state),
+      xhr => (state.xhr = xhr)
+    );
 
-  onChange = e => {
-    const { onChange } = this.props;
-    const fileName = e.target.files[0];
+    if (!this._mounted) return;
 
-    this.setState({ fileName });
-    onChange(e, fileName);
+    Object.assign(state, { src, loaded: state.total, xhr: null });
+  }
+
+  remove = async value => {
+    const { remove, onChange } = this.props;
+
+    if (remove) {
+      const res = await remove(value);
+      if (!res) return;
+    }
+
+    const { items } = this.store;
+
+    array.spliceWhere(items, value, 'src');
+
+    onChange(
+      null,
+      items.map(({ src }) => src)
+    );
   };
 
   render() {
-    const { className, isLoading, label, ...props } = this.props;
-    const { fileName } = this.state;
-    const classes = cn(
-      S.control,
-      isLoading && S.loading,
-      fileName && S.hasValue
-    );
+    const { className, size, label, accept, maxCount } = this.props;
+    const { items, labelClipPath } = this.store;
+
+    const classes = cn(S.root, className, S[`size-${size}`]);
 
     return (
-      <div className={className}>
-        {label && (
-          <label htmlFor={props.name} className={S.label}>
-            {label}
-          </label>
-        )}
-        <div
-          // className={this.styles.decor}
-          onClick={this.onClick}
-          alt={fileName}
+      <div className={classes}>
+        <div className={S.border} style={{ clipPath: labelClipPath }} />
+
+        <Label
+          isOnTop
+          size={size}
+          className={S.label}
+          onClipPathChange={clipPath => (this.store.labelClipPath = clipPath)}
         >
-          <input
-            {...props}
-            type="file"
-            id={props.name}
-            className={classes}
-            ref={this.controlEl}
-            onChange={this.onChange}
-          />
-          <div className={S.filePlaceholder}>
-            <div className={S.filePlaceholderInner}>
-              {fileName || 'Choose file'}
-            </div>
-          </div>
-        </div>
+          {label}
+        </Label>
+
+        <Scroll x size="s" innerClassName={S.items}>
+          {items.map(({ base64, src, loaded, total }) => {
+            const url = base64 || src;
+
+            return (
+              <Item
+                key={url}
+                className={S.item}
+                img={url}
+                loaded={loaded}
+                total={total}
+                onRemove={() => this.remove(url)}
+              />
+            );
+          })}
+
+          {items.length < maxCount && (
+            <label className={cn(S.item, S.addButton)} key="add-button">
+              <Icon type="plus" />
+              <input
+                className={S.input}
+                type="file"
+                multiple
+                accept={accept}
+                onChange={this.onChange}
+              />
+            </label>
+          )}
+        </Scroll>
       </div>
     );
   }
 }
-
-export default InputFile;

@@ -1,0 +1,114 @@
+@import 'theme'
+
+body
+  background-color var(--decent-color)
+
+.root
+  display flex
+  height 100vh
+  width 1000px
+  max-width 100%
+  margin 0 auto
+
+.configBar
+  display flex
+  justify-content flex-evenly
+  align-items center
+  padding 0 16px
+
+.version
+  font-weight bold
+
+.colorPicker
+  display none
+
+.activeColor
+  background-color var(--active-color)
+  height 20px
+  width 20px
+  border-radius inherit
+
+.menuButton
+  position absolute
+  top 0
+  left 100%
+  border-radius 0
+  border-bottom-right-radius var(--indent-s)
+  opacity 0
+  transition all .5s ease-out
+
+  .open &
+    left calc(100% - 11px)
+
+    &:before
+      content ''
+      position absolute
+      top 0
+      left 0
+      height 100vh
+      width 100vw
+
+.nav
+  position relative
+  display flex
+  flex-direction column
+  min-width 200px
+  padding-bittom 100px
+  background-color var(--decent-color-alpha-800)
+  // box-shadow 2px 0 0 var(--decent-color)
+
+  &::before
+  &::after
+    content ''
+    position absolute
+    left 0
+    right 2px
+    height 100px
+    pointer-events none
+    z-index 1
+
+  &::before
+    top 0
+    background-image linear-gradient(var(--bg-color), transparent)
+
+  &::after
+    bottom 0
+    background-image linear-gradient(transparent, var(--bg-color))
+
+.navItem
+  text-align right
+  padding var(--indent-s) var(--indent-l) 0
+  font-size 20px
+
+.content
+  flex-grow 1
+  overflow-x auto
+  padding 0 20px 0 50px
+  margin-top 50px
+
+.cfgButton
+  border-radius 50%
+
+.paranja
+  pointer-events none
+  opacity 0
+  transition opacity .2s ease-out
+
+  &.visible
+    pointer-events auto
+    opacity .9
+
+@media(max-width: $tablet)
+  .nav
+    z-index 100
+    position absolute
+    height 100%
+    backdrop-filter blur(10px)
+    transform translateX(-100%)
+    transition transform .2s ease-out
+
+    &.open
+      transform translateX(0)
+
+    .menuButton
+      opacity 1

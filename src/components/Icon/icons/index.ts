@@ -1,9 +1,14 @@
-import CloseIcon from './close.svg';
-import ArrowLeftIcon from './arrow-left.svg';
-import ArrowRightIcon from './arrow-right.svg';
-
-export default {
-  close: CloseIcon,
-  'arrow-left': ArrowLeftIcon,
-  'arrow-right': ArrowRightIcon,
-};
+export { default as avatar } from './avatar.svg';
+export { default as brokenImage } from './brokenImage.svg';
+export { default as check } from './check.svg';
+export { default as close } from './close.svg';
+export { default as chevronUp } from './chevronUp.svg';
+export { default as chevronDown } from './chevronDown.svg';
+export { default as chevronRight } from './chevronRight.svg';
+export { default as chevronLeft } from './chevronLeft.svg';
+export { default as delete } from './delete.svg';
+export { default as menu } from './menu.svg';
+export { default as moreVertical } from './moreVertical.svg';
+export { default as moreHorizontal } from './moreHorizontal.svg';
+export { default as plus } from './plus.svg';
+export { default as requiredStar } from './requiredStar.svg';

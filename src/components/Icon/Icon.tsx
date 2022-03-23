@@ -1,9 +1,10 @@
 import cn from 'classnames';
 
-import ICONS from './icons';
-
 import S from './Icon.styl';
 import * as T from './Icon.types';
+import * as ICONS from './icons';
+
+export type { IconType } from './Icon.types';
 
 export function Icon(props: T.Props) {
   const { className, type, size, ...rest } = props;
@@ -14,9 +15,14 @@ export function Icon(props: T.Props) {
   };
   const LocalIcon = ICONS[type];
 
+  if (!LocalIcon) {
+    console.warn(`Icon: type="${type}" is unknown`);
+    return null;
+  }
+
   return <LocalIcon {...iconProps} />;
 }
 
 Icon.defaultProps = {
-  size: 's' as T.IconSize,
+  size: 'm' as T.IconSize,
 };

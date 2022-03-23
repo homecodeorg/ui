@@ -1,9 +1,106 @@
+@import '../../theme'
+
 .root
   position relative
-  cursor pointer
+
+.border
+  position absolute
+  left 0
+  top 0
+  height 100%
+  width 100%
+  controlBorder()
+  pointer-events none
+  border-radius inherit
+
+.label
+  display flex
+  align-items center
+  position absolute
+  height 100%
+
+.items
+  display flex
+  align-items center
+  font-size 0
+
+.item
+  position relative
+  display inline-flex
   overflow hidden
 
-.control
-  transform translateX(-100%)
+  & + &
+    margin-left 8px
+
+  &:first-child:last-child
+    width 100%
+
+
+.addButton
+  align-items center
+  justify-content center
+  position relative
+  transition background-color .2s ease-out
+  cursor pointer
+  background-color var(--active-color-alpha-100)
+
+  &:hover
+    background-color var(--active-color-alpha-500)
+
+.input
+  position absolute
+  top 0
+  left 0
+  right 0
+  bottom 0
   opacity 0
   pointer-events none
+
+
+.size-s
+  controlFontSize('s')
+  controlPaddingSize('s')
+  padding-top $controlPaddingS
+
+  .border
+  .item
+    borderRadiusSize('s')
+
+  .item
+    height 50px
+    width 50px
+
+  .items
+    padding-bottom $controlPaddingS
+
+.size-m
+  controlFontSize('m')
+  controlPaddingSize('m')
+  padding-top $controlPaddingM
+
+  .border
+  .item
+    borderRadiusSize('m')
+
+  .item
+    height 70px
+    width 70px
+
+  .items
+    padding-bottom $controlPaddingM
+
+.size-l
+  controlFontSize('l')
+  controlPaddingSize('l')
+  padding-top $controlPaddingL
+
+  .border
+  .item
+    borderRadiusSize('l')
+
+  .item
+    height 100px
+    width 100px
+
+  .items
+    padding-bottom $controlPaddingL

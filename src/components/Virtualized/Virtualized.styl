@@ -1,0 +1,23 @@
+.root
+  display block
+  position relative
+  overflow-y auto
+  height 100%
+  max-height 100%
+
+.item
+  animation show .1s ease-out
+  transform translateZ(0)
+  backface-visibility hidden
+
+.freezeClicks .item
+  pointer-events none
+
+@keyframes show {
+  0% {
+    opacity 0
+  }
+  100% {
+    opacity 1
+  }
+}

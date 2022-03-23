@@ -27,20 +27,35 @@
     path
       fill var(--decent-color)
 
+.prefix
+.postfix
+  display flex
+
+.prefix:not(:last-child)
+  margin-right .5em
+.postfix:not(:first-child)
+  margin-left .5em
+
 .size-s
   controlSize('s')
+  controlFontSize('s')
+  controlPaddingSize('s')
 
   &.isSquare
     width @height
 
 .size-m
   controlSize('m')
+  controlFontSize('m')
+  controlPaddingSize('m')
 
   &.isSquare
     width @height
 
 .size-l
   controlSize('l')
+  controlFontSize('l')
+  controlPaddingSize('l')
 
   &.isSquare
     width @height
@@ -70,3 +85,4 @@
 
 .spinner
   margin-left var(--indent-s)
+

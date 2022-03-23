@@ -1,25 +1,24 @@
-import {
-  Component,
-  ReactNode,
-  MouseEventHandler,
-  FocusEventHandler,
-} from 'react';
+import { ChangeEvent, Component, DOMAttributes, ReactNode } from 'react';
 import cn from 'classnames';
-import { nanoid } from 'nanoid';
 import { createStore } from 'justorm/react';
 
-import { Button } from '../Button/Button';
+import { uid, Icon } from 'uilib';
+
 import { Size } from '../../types';
+
 import S from './Checkbox.styl';
 
-type Props = {
+type ControlProps = DOMAttributes<HTMLInputElement>;
+
+type Props = ControlProps & {
   id?: string;
   className?: string;
   label?: ReactNode;
   checked?: boolean;
+  error?: string | boolean;
   size: Size;
-  onFocus?: (e: FocusEvent) => void;
-  onBlur?: (e: FocusEvent) => void;
+  // onFocus?: (e: FocusEvent) => void;
+  // onBlur?: (e: FocusEvent) => void;
 };
 
 export class Checkbox extends Component<Props> {
@@ -27,14 +26,14 @@ export class Checkbox extends Component<Props> {
   store;
 
   static defaultProps = {
-    size: 's',
+    size: 'm',
     label: '',
     checked: false,
   };
 
-  constructor(props: Props) {
+  constructor(props) {
     super(props);
-    this.id = props.id || nanoid();
+    this.id = props.id || uid.generateUID();
     this.store = createStore(this, { isActive: false, isFocused: false });
   }
 
@@ -50,18 +49,18 @@ export class Checkbox extends Component<Props> {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
-    if (onFocus) onFocus(e);
+    onFocus?.(e);
   };
 
   onBlur = (e: any) => {
     const { onBlur } = this.props;
 
     this.store.isFocused = false;
-    if (onBlur) onBlur(e);
+    onBlur?.(e);
   };
 
   render() {
-    const { className, label, size, ...props } = this.props;
+    const { className, label, size, error, ...props } = this.props;
     const { checked } = props;
     const { isActive, isFocused } = this.store;
 
@@ -69,6 +68,7 @@ export class Checkbox extends Component<Props> {
       S.root,
       S[`size-${size}`],
       checked && S.isChecked,
+      error && S.hasError,
       isActive && S.isActive,
       isFocused && S.isFocused,
       className
@@ -90,7 +90,7 @@ export class Checkbox extends Component<Props> {
             type="checkbox"
             tabIndex={0}
           />
-          <div className={S.checkmark} />
+          <Icon type="check" className={S.checkmark} />
         </div>
         {label}
       </label>
