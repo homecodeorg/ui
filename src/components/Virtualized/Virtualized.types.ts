@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 export type IndexesType = {
   first: number;
@@ -45,9 +45,9 @@ export type Props = {
   initialScrollTop?: number;
   scrollTop?: number; // change to update list scrollTop
   onScroll?: (scrollTop: number) => void;
-  onScrollEnd: () => void;
+  onScrollEnd?: () => void;
   children: (props: RenderProps) => ReactNode;
-  renderItem: (props: ItemProps) => React.ReactNode;
+  renderItem: (props: ItemProps) => ReactElement;
   getItemProps: (params: GetItemPropsParams) => { [key: string]: any };
   style?: any;
 } & Readonly<DefaultProps>;

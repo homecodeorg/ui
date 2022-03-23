@@ -294,7 +294,7 @@ export class Scroll extends Component<Props> {
 
   render() {
     const { y, x, size, autoHide, className } = this.props;
-    const { coeff, isScrolling, activeAxis } = this.store;
+    const { isScrolling, activeAxis } = this.store;
 
     const classes = cn(
       S.root,

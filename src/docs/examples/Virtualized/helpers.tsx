@@ -1,11 +1,10 @@
 import React from 'react';
-// import { path } from 'ramda';
 import cn from 'classnames';
+import Time from 'timen';
 
-import { getRandomImageUrl, getRandomItem } from 'helpers';
+import { getRandomImageUrl, getRandomItem } from 'docs/helpers';
 
-import { Icon } from 'components/Icon/Icon';
-import { Button } from 'components/Button/Button';
+import { Icon, Button } from 'uilib';
 // import Card from 'components/Card/Card';
 
 // import * as TH from '../Table/Table.stories-helpers';
@@ -32,6 +31,19 @@ import S from './Virtualized.example.styl';
 //     'Events 478',
 //   ],
 // };
+
+export function loadData(getItemData, totalCount, itemsCount, pageSize) {
+  const data = [];
+  const indexTill = Math.min(totalCount, itemsCount + pageSize);
+
+  return new Promise(resolve => {
+    for (let i = itemsCount; i < indexTill; i++) {
+      data.push(getItemData(i));
+    }
+
+    Time.after(500, () => resolve(data));
+  });
+}
 
 export function getSimpleItemData(i) {
   return `Item ${i + 1}`;

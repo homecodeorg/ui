@@ -3,7 +3,7 @@ import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { number } from 'uilib';
+import { number, Scroll } from 'uilib';
 
 import Virtualized from '../Virtualized';
 import * as T from '../Virtualized.types';
@@ -12,7 +12,7 @@ import S from './List.styl';
 const { zero } = number;
 const CONTENT_BEFORE_SIZE_CHECK_TIMEOUT = 300;
 
-type Props = T.Props & {
+type Props = Omit<T.ViewProps, 'wrapElem' | 'children'> & {
   contentBefore?: ReactNode;
   contentAfter?: ReactNode;
 };
@@ -75,7 +75,11 @@ class List extends Component<Props> {
   };
 
   getProps() {
-    const props = omit(this.props, ['contentBefore', 'contentAfter']);
+    const props = omit(this.props, [
+      'contentBefore',
+      'contentAfter',
+      'scrollProps',
+    ]);
     const { contentBeforeHeight } = this.store;
 
     const offsetBefore =
@@ -106,7 +110,7 @@ class List extends Component<Props> {
 
   renderLayout = ({ state, items, ...rest }) => {
     const { contentBefore, contentAfter } = this.props;
-    const { height, offsetBefore, offsetAfter } = state;
+    const { height, offsetAfter } = state;
     const props = omit(rest, [
       'contentBefore',
       'contentAfter',
@@ -124,7 +128,7 @@ class List extends Component<Props> {
     ]);
 
     return (
-      <div {...props} ref={this.onWrapRef}>
+      <div y {...props} ref={this.onWrapRef}>
         {contentBefore && (
           <div ref={this.contentBeforeElem} key="contentBefore">
             {contentBefore}
