@@ -123,7 +123,12 @@ class List extends Component<Props> {
   };
 
   onWrapRef = (ref: Element) => {
-    const { getRef } = this.props.customWrapElem;
+    if (!ref) {
+      console.log('NO REF');
+      return;
+    }
+
+    const { getRef } = this.props;
 
     this.wrapElem = getRef?.(ref) || ref;
     this.store.hasWrap = true;
@@ -148,10 +153,10 @@ class List extends Component<Props> {
       'offsetBefore',
     ]);
 
-    const Elem = customWrapElem.component || 'div';
+    const Elem = customWrapElem || 'div';
 
     return (
-      <Elem {...customWrapElem.props} {...props} ref={this.onWrapRef}>
+      <Elem {...props} ref={this.onWrapRef}>
         {contentBefore && (
           <div ref={this.contentBeforeElem} key="contentBefore">
             {contentBefore}

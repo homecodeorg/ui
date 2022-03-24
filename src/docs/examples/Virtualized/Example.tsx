@@ -4,7 +4,7 @@ import { VirtualizedListScroll, VirtualizedList } from 'uilib';
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
 
 const PAGE_SIZE = 20;
-const totalCount = 500;
+const totalCount = 100;
 
 export default function Example() {
   const [data, setData] = useState([]);
@@ -19,14 +19,15 @@ export default function Example() {
   }, [itemsCount]);
 
   useEffect(() => {
+    console.log('Example mounted');
+
     loadNextData();
-  });
+  }, []);
 
   return (
-    <VirtualizedList
-      // <VirtualizedListScroll
-      //   scrollProps={{ y: true }}
-      //   style={{ minHeight: 200 }}
+    // <VirtualizedList
+    <VirtualizedListScroll
+      scrollProps={{ y: true }}
       totalCount={totalCount}
       itemsCount={itemsCount}
       overlapCount={10}
@@ -34,7 +35,7 @@ export default function Example() {
       renderItem={itemProps =>
         renderSimpleItems(itemProps, data[itemProps.key])
       }
-      onScrollEnd={() => {}}
+      onScrollEnd={loadNextData}
     />
   );
 }

@@ -10,6 +10,7 @@ $sizeL = 9px
   display flex
 
 .inner
+  position relative
   width 100%
   overflow hidden
   -webkit-overflow-scrolling touch
@@ -21,8 +22,10 @@ $sizeL = 9px
     display none
 
   .y &
+    height 100%
     overflow-y auto
   .x &
+    width 100%
     overflow-x auto
 
 .thumb

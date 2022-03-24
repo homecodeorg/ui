@@ -24,7 +24,7 @@ type RenderProps = {
   className?: string;
   state: IndexesType & Pick<State, 'height'>;
   items: ReactNode[];
-  onScroll: () => void;
+  onScroll: (e: MouseEvent) => void;
 };
 
 type GetItemPropsParams = {

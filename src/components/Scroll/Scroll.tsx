@@ -23,6 +23,7 @@ export type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   size?: Size;
   autoHide?: boolean;
   offset?: { x?: OffsetAxis; y?: OffsetAxis };
+  onScroll?: (e: MouseEvent) => void;
 };
 
 export class Scroll extends Component<Props> {
@@ -182,7 +183,10 @@ export class Scroll extends Component<Props> {
   };
 
   onInnerScroll = e => {
+    const { onScroll } = this.props;
     const { activeAxis, isScrolling } = this.store;
+
+    onScroll?.(e);
 
     if (!activeAxis) this.updatePos();
 

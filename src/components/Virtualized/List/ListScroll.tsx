@@ -1,3 +1,5 @@
+import { forwardRef } from 'react';
+
 import { Scroll } from 'uilib';
 import List from './List';
 
@@ -8,27 +10,27 @@ type Props = ListProps & {
   scrollProps: ScrollProps;
 };
 
-export default function ListScroll({ scrollProps, ...rest }: Props) {
+export default function ListScroll({ scrollProps, onScroll, ...rest }: Props) {
   return (
     <List
       {...rest}
-      // customWrapElem={props => (
-      //   <Scroll
-      //     {...scrollProps}
-      //     {...props}
-      //     ref={ref => {
-      //       console.log('ref', ref);
-
-      //       // debugger;
-      //       return ref?.innerElem.current;
-      //     }}
-      //   />
-      // )}
-      customWrapElem={{
-        component: Scroll,
-        props: scrollProps,
-        getRef: ref => ref.innerElem.current,
-      }}
+      getRef={ref => ref?.innerElem.current}
+      customWrapElem={forwardRef((props, ref) => (
+        <Scroll
+          {...scrollProps}
+          {...props}
+          onScroll={onScroll}
+          ref={ref}
+          // ref={ref => {
+          //   rest.ref(ref?.innerElem.current);
+          // }}
+        />
+      ))}
+      // customWrapElem={{
+      //   component: Scroll,
+      //   props: scrollProps,
+      //   getRef: ref => ref.innerElem.current,
+      // }}
     />
   );
 }

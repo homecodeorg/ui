@@ -27,8 +27,8 @@ class Virtualized extends Component<T.Props, T.State> {
       isFreezed: false,
     };
 
-    this.onScroll = debounce(this.onScroll.bind(this), 150);
-    this.checkIfEnd = debounce(this.checkIfEnd.bind(this), 200);
+    this.onScroll = debounce(this.onScroll, 150);
+    this.checkIfEnd = debounce(this.checkIfEnd, 200);
   }
 
   static getDerivedStateFromProps(props, { height }) {
@@ -41,6 +41,7 @@ class Virtualized extends Component<T.Props, T.State> {
   componentDidMount() {
     const indexes = this.getIndexes();
     this.setState(indexes); // eslint-disable-line
+    document.addEventListener('scroll', this.onScroll);
   }
 
   getSnapshotBeforeUpdate(prevProps) {
@@ -129,8 +130,11 @@ class Virtualized extends Component<T.Props, T.State> {
     });
   }
 
-  onScroll() {
+  onScroll = e => {
     const { onScroll, wrapElem } = this.props;
+
+    if (e.target !== wrapElem) return;
+
     const indexes = this.getIndexes() as T.State;
 
     if (onScroll) onScroll(wrapElem.scrollTop);
@@ -141,16 +145,16 @@ class Virtualized extends Component<T.Props, T.State> {
       this.setState({ ...indexes });
 
     this.unfreeze();
-  }
+  };
 
-  checkIfEnd() {
+  checkIfEnd = () => {
     const { wrapElem, itemsCount, itemHeight, overlapCount, onScrollEnd } =
       this.props;
     const { scrollTop, clientHeight } = wrapElem;
 
     if ((scrollTop + clientHeight) / itemHeight + overlapCount >= itemsCount)
       onScrollEnd?.();
-  }
+  };
 
   unfreeze = () => {
     this.clearUnfreezeTimer?.();
