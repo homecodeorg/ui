@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { VirtualizedList } from 'uilib';
+import { VirtualizedListScroll, VirtualizedList } from 'uilib';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
 
@@ -24,6 +24,9 @@ export default function Example() {
 
   return (
     <VirtualizedList
+      // <VirtualizedListScroll
+      //   scrollProps={{ y: true }}
+      //   style={{ minHeight: 200 }}
       totalCount={totalCount}
       itemsCount={itemsCount}
       overlapCount={10}
@@ -32,8 +35,6 @@ export default function Example() {
         renderSimpleItems(itemProps, data[itemProps.key])
       }
       onScrollEnd={() => {}}
-      style={{ minHeight: 200 }}
-      // scrollProps={{ style: { minHeight: 100 } }}
     />
   );
 }

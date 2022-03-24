@@ -56,7 +56,7 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { scrollTop, wrapElem, itemsCount, initialScrollTop } = this.props;
+    const { wrapElem } = this.props;
     const state = {} as T.State;
 
     if (wrapElem) {
@@ -94,7 +94,7 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   getNewScrollTop(prevProps, snapshot) {
-    const { initialScrollTop, scrollTop, itemsCount, wrapElem } = this.props;
+    const { initialScrollTop, scrollTop, itemsCount } = this.props;
 
     if (!this.scrollTopInited) {
       const scrollValue = initialScrollTop ?? scrollTop;
@@ -195,8 +195,8 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   render() {
-    const { children, className, style, ...rest } = this.props;
-    const { height, first, last, isFreezed } = this.state;
+    const { children, className, ...rest } = this.props;
+    const { isFreezed } = this.state;
     const state = {
       ...pick(this.state, ['first', 'last', 'height']),
       ...pick(this.props, ['offsetBefore', 'offsetAfter']),
@@ -208,7 +208,6 @@ class Virtualized extends Component<T.Props, T.State> {
       className: cn(S.root, isFreezed && S.freezeClicks, className),
       onScroll: this.onScroll,
       items: this.renderItems(),
-      style,
     });
   }
 }

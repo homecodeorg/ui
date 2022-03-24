@@ -1,4 +1,11 @@
-import { Component, createRef, ReactNode } from 'react';
+import {
+  Component,
+  createRef,
+  ReactComponentElement,
+  ReactElement,
+  ReactNode,
+  RefObject,
+} from 'react';
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
@@ -12,18 +19,30 @@ import S from './List.styl';
 const { zero } = number;
 const CONTENT_BEFORE_SIZE_CHECK_TIMEOUT = 300;
 
-type Props = Omit<T.ViewProps, 'wrapElem' | 'children'> & {
+type CustomWrapElemParams = {
+  component: Component;
+  getProps: () => object;
+  getRef: (ref: RefObject<ReactElement>) => Element;
+};
+
+export type Props = Omit<T.ViewProps, 'wrapElem' | 'children'> & {
   contentBefore?: ReactNode;
   contentAfter?: ReactNode;
+  // customWrapElem?: (props) => ReactNode;
+  customWrapElem?: CustomWrapElemParams;
 };
 
 class List extends Component<Props> {
   store;
-  wrapElem;
+  wrapElem: Element;
   contentBeforeElem;
   contentAfterElem;
   timers = Time.create();
   unsubscribeContentBeforeResize;
+
+  static defaultProps = {
+    customWrapElem: {},
+  };
 
   constructor(props) {
     super(props);
@@ -34,7 +53,7 @@ class List extends Component<Props> {
       hasWrap: false,
     });
 
-    this.wrapElem = createRef<HTMLDivElement>();
+    // this.wrapElem = createRef<HTMLDivElement>();
     this.contentBeforeElem = createRef<HTMLDivElement>();
     this.contentAfterElem = createRef<HTMLDivElement>();
   }
@@ -78,7 +97,7 @@ class List extends Component<Props> {
     const props = omit(this.props, [
       'contentBefore',
       'contentAfter',
-      'scrollProps',
+      'customWrapElem',
     ]);
     const { contentBeforeHeight } = this.store;
 
@@ -103,13 +122,15 @@ class List extends Component<Props> {
     };
   };
 
-  onWrapRef = ref => {
-    this.wrapElem = ref;
+  onWrapRef = (ref: Element) => {
+    const { getRef } = this.props.customWrapElem;
+
+    this.wrapElem = getRef?.(ref) || ref;
     this.store.hasWrap = true;
   };
 
   renderLayout = ({ state, items, ...rest }) => {
-    const { contentBefore, contentAfter } = this.props;
+    const { contentBefore, contentAfter, customWrapElem } = this.props;
     const { height, offsetAfter } = state;
     const props = omit(rest, [
       'contentBefore',
@@ -127,8 +148,10 @@ class List extends Component<Props> {
       'offsetBefore',
     ]);
 
+    const Elem = customWrapElem.component || 'div';
+
     return (
-      <div y {...props} ref={this.onWrapRef}>
+      <Elem {...customWrapElem.props} {...props} ref={this.onWrapRef}>
         {contentBefore && (
           <div ref={this.contentBeforeElem} key="contentBefore">
             {contentBefore}
@@ -146,7 +169,7 @@ class List extends Component<Props> {
             {contentAfter}
           </div>
         )}
-      </div>
+      </Elem>
     );
   };
 
