@@ -1,4 +1,4 @@
-import { Component, HTMLProps } from 'react';
+import { Component, createRef, HTMLProps } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
@@ -18,6 +18,7 @@ type Props = HTMLProps<HTMLAnchorElement> & {
 
 @withStore({ router: ['path'] })
 export class Link extends Component<Props> {
+  domElem = createRef<HTMLAnchorElement>();
   rootPath = '';
 
   static contextType = Context;
@@ -43,14 +44,24 @@ export class Link extends Component<Props> {
     if (!this.isExternal() && router.path !== href) {
       e.preventDefault();
       router.go(href);
+      this.domElem.current?.blur();
     }
   };
 
   isExact(href = this.getHref()) {
     const { store, isPartialExact } = this.props;
     const { path } = store.router;
+    const pathSections = path.split('/');
+    const hrefSections = href.split('/');
+    const minLength = Math.min(pathSections.length, hrefSections.length);
 
-    if (isPartialExact) return new RegExp(`^${href}`).test(path);
+    if (isPartialExact) {
+      return (
+        hrefSections.slice(0, minLength).join('/') ===
+        pathSections.slice(0, minLength).join('/')
+      );
+    }
+
     return path === href;
   }
 
@@ -63,6 +74,7 @@ export class Link extends Component<Props> {
       isClearPadding,
       isDisabled,
       store,
+      isPartialExact,
       ...rest
     } = this.props;
     const { path } = store.router;
@@ -97,6 +109,7 @@ export class Link extends Component<Props> {
         className={classes}
         {...props}
         onClick={this.onClick}
+        ref={this.domElem}
       >
         {children}
         {isExternal && <ExternalIcon class={S.externalIcon} />}
@@ -106,6 +119,5 @@ export class Link extends Component<Props> {
 
   render() {
     return this.renderLink();
-    // return <Context.Consumer>{this.renderLink}</Context.Consumer>;
   }
 }

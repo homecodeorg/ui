@@ -35,8 +35,6 @@ export class Router extends Component<Props> {
       isFirstMonted = true;
     } else if (!rootPath) this.rootPath = router.path;
 
-    console.log(this.rootPath, props.children);
-
     this.rebuildRoutes(props.children);
   }
 
@@ -79,7 +77,7 @@ export class Router extends Component<Props> {
 
       return false;
     });
-    const weightestRoute = getWeightestRoute(routes);
+    const weightestRoute = getWeightestRoute(routes, currPath);
     const route = weightestRoute || notExactRoutes[0];
 
     return route;

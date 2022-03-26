@@ -9,12 +9,11 @@ import NAV_CONFIG, { RouteItem } from '../../navigation';
 type ItemProps = {
   slug: RouteItem['slug'];
   parentSlug?: RouteItem['slug'];
-  items?: ItemProps[];
 };
 
 import S from './Sidebar.styl';
 
-function Item({ slug, parentSlug = '', items }: ItemProps) {
+function Item({ slug, parentSlug = '' }: ItemProps) {
   const href = parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`;
 
   return (
@@ -29,9 +28,6 @@ function Item({ slug, parentSlug = '', items }: ItemProps) {
       >
         {string.capitalize(slug)}
       </Link>
-      {items?.map(item => (
-        <Item parentSlug={slug} slug={item.slug} key={item.slug} />
-      ))}
     </>
   );
 }
