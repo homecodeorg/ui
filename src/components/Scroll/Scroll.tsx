@@ -13,7 +13,7 @@ import * as resizeObserver from '../../tools/resizeObserver';
 import S from './Scroll.styl';
 
 type OffsetAxis = { before?: number; after?: number };
-type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
+export type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   className?: string;
   innerClassName?: string;
   thumbClassName?: string;
@@ -23,6 +23,7 @@ type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   size?: Size;
   autoHide?: boolean;
   offset?: { x?: OffsetAxis; y?: OffsetAxis };
+  onScroll?: (e: MouseEvent) => void;
 };
 
 export class Scroll extends Component<Props> {
@@ -78,6 +79,7 @@ export class Scroll extends Component<Props> {
   }
 
   componentWillUnmount() {
+    // console.log('Scroll UN-mount');
     this.unsubscribeScrollHeightObserver?.();
     document.removeEventListener(this.events.move, this.onPointerMove);
     document.removeEventListener(this.events.end, this.onPointerEnd);
@@ -182,7 +184,10 @@ export class Scroll extends Component<Props> {
   };
 
   onInnerScroll = e => {
+    const { onScroll } = this.props;
     const { activeAxis, isScrolling } = this.store;
+
+    onScroll?.(e);
 
     if (!activeAxis) this.updatePos();
 
@@ -294,7 +299,7 @@ export class Scroll extends Component<Props> {
 
   render() {
     const { y, x, size, autoHide, className } = this.props;
-    const { coeff, isScrolling, activeAxis } = this.store;
+    const { isScrolling, activeAxis } = this.store;
 
     const classes = cn(
       S.root,

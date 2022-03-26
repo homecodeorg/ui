@@ -21,6 +21,7 @@ function Item({ slug, parentSlug = '', items }: ItemProps) {
     <>
       <Link
         href={href}
+        isPartialExact
         className={cn(S.link, parentSlug && S.sub)}
         exactClassName={S.active}
         onClick={() => (app.isMenuOpen = false)}
@@ -53,7 +54,7 @@ export default memo(function Sidebar() {
 
   useEffect(() => {
     loadSubItems();
-  });
+  }, []);
 
   return (
     <Scroll y size="s">

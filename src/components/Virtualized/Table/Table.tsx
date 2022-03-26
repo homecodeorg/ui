@@ -45,14 +45,8 @@ class Table extends Component<Props> {
 
   @bind
   renderLayout({ state, items, onScroll, ...props }) {
-    const {
-      className,
-      thead,
-      tfoot,
-      maxHeight,
-      totalCount,
-      itemHeight,
-    } = this.props;
+    const { className, thead, tfoot, maxHeight, totalCount, itemHeight } =
+      this.props;
     const { colsWidth } = this.state;
     const { first, last } = state;
     const beforeHeight = first * itemHeight;

@@ -1,3 +1,4 @@
+import Time from 'timen';
 import { Container, Button, Notifications, NotificationsStore } from 'uilib';
 
 const params = {
@@ -22,14 +23,27 @@ const params = {
   },
 };
 
-const show = type => () => NotificationsStore.show(params[type]);
+const show = type => NotificationsStore.show(params[type]);
+const showAll = () => {
+  let delay = 0;
+  ['info', 'warning', 'error', 'loading'].forEach(type =>
+    Time.after((delay += Math.random() * 1000), () => show(type))
+  );
+};
 
 export default () => (
   <Container centered fullHeight>
-    <Notifications />
-    <Button onClick={show('info')}>Info</Button>-
-    <Button onClick={show('warning')}>Warning</Button>-
-    <Button onClick={show('error')}>Error</Button>-
-    <Button onClick={show('loading')}>Loading</Button>
+    <Notifications style={{ maxWidth: '60%' }} />
+    <div>
+      <Button onClick={() => show('info')}>Info</Button>
+      <br />
+      <Button onClick={() => show('warning')}>Warning</Button>
+      <br />
+      <Button onClick={() => show('error')}>Error</Button>
+      <br />
+      <Button onClick={() => show('loading')}>Loading</Button>
+      <br />
+      <Button onClick={showAll}>All</Button>
+    </div>
   </Container>
 );

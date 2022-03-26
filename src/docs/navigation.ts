@@ -34,10 +34,6 @@ export default [
   //   slug: 'icon',
   //   loader: () => import('./examples/Icon/Icon'),
   // },
-  // // {
-  // //   slug: 'menu',
-  // //   loader: () => import('./examples/Menu/Menu'),
-  // // },
   {
     slug: 'popup',
     loader: () => import('./examples/Popup'),
@@ -63,12 +59,16 @@ export default [
     slug: 'scroll',
     loader: () => import('./examples/Scroll'),
   },
-  // {
-  //   slug: 'virtualized',
-  //   loader: () => import('./examples/Virtualized/Virtualized'),
-  // },
+  {
+    slug: 'virtualized',
+    loader: () => import('./examples/Virtualized'),
+  },
   {
     slug: 'notifications',
     loader: () => import('./examples/Notifications'),
+  },
+  {
+    slug: 'router',
+    loader: () => import('./examples/Router'),
   },
 ] as RouteItem[];

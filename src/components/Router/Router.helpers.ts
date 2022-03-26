@@ -38,3 +38,15 @@ export function parseRouteParams(routes) {
 
   return [...exactItems, ...items];
 }
+
+const getRouteWeight = route => route.path.split('/').length;
+
+export function getWeightestRoute(routes) {
+  return routes.sort((a, b) =>
+    getRouteWeight(a) > getRouteWeight(b)
+      ? -1
+      : getRouteWeight(b) > getRouteWeight(a)
+      ? 1
+      : 0
+  )[0];
+}

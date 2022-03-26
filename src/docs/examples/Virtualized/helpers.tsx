@@ -1,17 +1,16 @@
 import React from 'react';
-// import { path } from 'ramda';
 import cn from 'classnames';
+import Time from 'timen';
 
-import { getRandomImageUrl, getRandomItem } from 'helpers';
+import { getRandomImageUrl, getRandomItem } from 'docs/helpers';
 
-import { Icon } from 'components/Icon/Icon';
-import { Button } from 'components/Button/Button';
+import { Icon, Button } from 'uilib';
 // import Card from 'components/Card/Card';
 
 // import * as TH from '../Table/Table.stories-helpers';
 // import { Column } from '../Table/Table.types';
 
-import S from './Virtualized.example.styl';
+import S from './helpers.styl';
 
 // const CARD_DATA = {
 //   image: [
@@ -33,6 +32,18 @@ import S from './Virtualized.example.styl';
 //   ],
 // };
 
+export function loadData(first, last, getItemData, delay = 200) {
+  const data = [];
+
+  return new Promise(resolve => {
+    for (let i = first; i < last; i++) {
+      data.push(getItemData(i));
+    }
+
+    Time.after(delay, () => resolve(data));
+  });
+}
+
 export function getSimpleItemData(i) {
   return `Item ${i + 1}`;
 }
@@ -53,6 +64,7 @@ export function getSimpleItemData(i) {
 // }
 
 export function renderSimpleItems(props, data) {
+  if (!data) return null;
   return <div {...props}>{data}</div>;
 }
 

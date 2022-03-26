@@ -1,11 +1,8 @@
-import { Component, useCallback, useEffect } from 'react';
+import { Component } from 'react';
 import cn from 'classnames';
 import { withStore } from 'justorm/react';
 
-import { isTouch } from 'uilib/tools/dom';
-
-import { Icon } from '../Icon/Icon';
-import { Button } from '../Button/Button';
+import { Icon, Button, Scroll } from 'uilib';
 
 import STORE from './store';
 import S from './Notifications.styl';
@@ -32,30 +29,52 @@ function getContent(content, links, LinkComponent) {
   return items;
 }
 
-class Item extends Component<T.Props> {
-  isTouchStarted = false;
+function getTouchPos(e) {
+  const { clientX: x, clientY: y } = e.targetTouches[0];
+  return { x, y };
+}
 
-  onTouchStart = () => {
-    this.isTouchStarted = true;
+function getDeltaPos(p1, p2) {
+  return {
+    x: Math.abs(p2.x - p1.x),
+    y: Math.abs(p2.y - p1.y),
+  };
+}
+
+const TOUCH_MOVE_TRESHOLD = 50;
+
+class Item extends Component<T.Props> {
+  startPos = null;
+
+  onTouchStart = e => {
+    this.startPos = getTouchPos(e);
   };
 
   onTouchMove = e => {
     const { unpause } = this.props;
 
+    if (!this.startPos) return;
+
     // e.preventDefault();
     e.stopPropagation();
-    unpause();
-    this.closeMe();
+
+    const pos = getTouchPos(e);
+    const delta = getDeltaPos(this.startPos, pos);
+
+    if (delta.x > delta.y && delta.x > TOUCH_MOVE_TRESHOLD) {
+      unpause();
+      this.closeMe();
+    }
   };
 
   onTouchEnd = () => {
     const { unpause } = this.props;
 
     unpause();
-    this.isTouchStarted = false;
+    this.startPos = null;
   };
 
-  onTouchCancel = () => (this.isTouchStarted = false);
+  onTouchCancel = () => (this.startPos = null);
 
   closeMe = () => {
     const { id, close } = this.props;
@@ -80,7 +99,7 @@ class Item extends Component<T.Props> {
         className={classes}
         onMouseOver={pause}
         onFocus={pause}
-        onTouchStart={pause}
+        onTouchStart={this.onTouchStart}
         onTouchMove={this.onTouchMove}
         onMouseOut={unpause}
         onBlur={unpause}
@@ -117,17 +136,18 @@ type Props = { store?: any };
 export const NotificationsStore = STORE;
 
 export const Notifications = withStore({
-  notifications: ['items', 'data'],
-})(function Notifications({ store }: Props) {
+  notifications: ['items', 'data', 'paused'],
+})(function Notifications({ store, ...rest }: Props) {
   const { notifications } = store;
-  const { items, data, pause, unpause, close } = notifications;
+  const { items, data, paused, pause, unpause, close } = notifications;
   const api = { pause, unpause, close };
+  const classes = cn(S.root, items.length === 0 && S.empty, paused && S.paused);
 
   return (
-    <div className={cn(S.root, items.length === 0 && S.empty)}>
+    <Scroll {...rest} y size="s" className={classes}>
       {items.map(id => (
         <Item {...data[id]} {...api} id={id} key={id} />
       ))}
-    </div>
+    </Scroll>
   );
 });
