@@ -1,78 +1,111 @@
-import { useCallback, useRef } from 'react';
+import { Component, HTMLProps } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
 import ExternalIcon from './icons/external.svg';
+import Context from '../context';
 import S from './Link.styl';
 
-const defaultProps = {
-  isClear: false,
-  isClearPadding: false,
-  isDisabled: false,
+type Props = HTMLProps<HTMLAnchorElement> & {
+  store?: any;
+  className?: string;
+  exactClassName?: string;
+  isPartialExact?: boolean;
+  isDisabled?: boolean;
+  isClear?: boolean;
+  isClearPadding?: boolean;
 };
 
-export const Link = withStore({ router: ['path'] })(function ({
-  store,
-  className,
-  exactClassName,
-  children,
-  isClear,
-  isClearPadding,
-  isDisabled,
-  ...props
-}) {
-  const { href } = props;
-  const { path } = store.router;
-  const domElem = useRef(null);
+@withStore({ router: ['path'] })
+export class Link extends Component<Props> {
+  rootPath = '';
 
-  const isExternal = /\./.test(href);
-  const isNested = !/^\//.test(href) && !isExternal;
-  const isExact = href === path;
+  static contextType = Context;
+  static defaultProps = {
+    isClear: false,
+    isClearPadding: false,
+    isDisabled: false,
+  };
 
-  const classes = cn(
-    S.root,
-    isDisabled && S.disabled,
-    isExternal && S.external,
-    isExact && cn(S.exact, exactClassName),
-    isClear && S.clear,
-    isClearPadding && S.clearPadding,
-    className
-  );
+  getHref() {
+    const { href } = this.props;
+    const { rootPath = '' } = this.context;
 
-  if (isNested) {
-    props.href = `${path.replace(/\/$/, '')}/${href}`;
+    return `${rootPath}${href === '/' ? '' : href}`;
   }
 
-  if (isExternal) {
-    props.target = '_blank';
+  isExternal = () => /\./.test(this.getHref());
 
-    if (!/^http/.test(href)) {
-      props.href = `http://${href}`;
+  onClick = e => {
+    const { router } = this.props.store;
+    const href = this.getHref();
+
+    if (!this.isExternal() && router.path !== href) {
+      e.preventDefault();
+      router.go(href);
     }
+  };
+
+  isExact(href = this.getHref()) {
+    const { store, isPartialExact } = this.props;
+    const { path } = store.router;
+
+    if (isPartialExact) return new RegExp(`^${href}`).test(path);
+    return path === href;
   }
 
-  const handleClick = useCallback(
-    e => {
-      if (!isExternal && path !== href) {
-        e.preventDefault();
-        store.router.go(props.href);
-        domElem.current?.blur();
-      }
-    },
-    [path, href, isExternal]
-  );
+  renderLink = () => {
+    const {
+      className,
+      exactClassName,
+      children,
+      isClear,
+      isClearPadding,
+      isDisabled,
+      store,
+      ...rest
+    } = this.props;
+    const { path } = store.router;
+    const href = this.getHref();
+    const props = { ...rest, href } as HTMLProps<HTMLAnchorElement>;
 
-  return (
-    <a /* eslint-disable-line */
-      className={classes}
-      {...props}
-      onClick={handleClick}
-      ref={domElem}
-    >
-      {children}
-      {isExternal && <ExternalIcon class={S.externalIcon} />}
-    </a>
-  );
-});
+    const isExternal = /\./.test(href);
+    const isNested = !/^\//.test(href) && !isExternal;
+    const isExact = this.isExact();
 
-Link.defaultProps = defaultProps;
+    const classes = cn(
+      S.root,
+      isDisabled && S.disabled,
+      isExternal && S.external,
+      isExact && cn(S.exact, exactClassName),
+      isClear && S.clear,
+      isClearPadding && S.clearPadding,
+      className
+    );
+
+    if (isNested) {
+      props.href = `${path.replace(/\/$/, '')}/${href}`;
+    }
+
+    if (isExternal) {
+      props.target = '_blank';
+      if (!/^http/.test(href)) props.href = `http://${href}`;
+    }
+
+    return (
+      <a /* eslint-disable-line */
+        className={classes}
+        {...props}
+        onClick={this.onClick}
+      >
+        {children}
+        {isExternal && <ExternalIcon class={S.externalIcon} />}
+      </a>
+    );
+  };
+
+  render() {
+    return this.renderLink();
+    // return <Context.Consumer>{this.renderLink}</Context.Consumer>;
+  }
+}

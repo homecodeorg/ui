@@ -67,4 +67,8 @@ export default [
     slug: 'notifications',
     loader: () => import('./examples/Notifications'),
   },
+  {
+    slug: 'router',
+    loader: () => import('./examples/Router'),
+  },
 ] as RouteItem[];
