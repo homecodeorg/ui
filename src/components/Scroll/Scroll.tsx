@@ -79,6 +79,7 @@ export class Scroll extends Component<Props> {
   }
 
   componentWillUnmount() {
+    // console.log('Scroll UN-mount');
     this.unsubscribeScrollHeightObserver?.();
     document.removeEventListener(this.events.move, this.onPointerMove);
     document.removeEventListener(this.events.end, this.onPointerEnd);

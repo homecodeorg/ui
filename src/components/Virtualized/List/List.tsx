@@ -1,7 +1,6 @@
 import {
   Component,
   createRef,
-  ReactComponentElement,
   ReactElement,
   ReactNode,
   RefObject,
@@ -40,15 +39,11 @@ class List extends Component<Props> {
   timers = Time.create();
   unsubscribeContentBeforeResize;
 
-  static defaultProps = {
-    customWrapElem: {},
-  };
-
   constructor(props) {
     super(props);
 
     this.store = createStore(this, {
-      mouned: false,
+      mounted: false,
       contentBeforeHeight: 0,
       hasWrap: false,
     });
@@ -60,7 +55,7 @@ class List extends Component<Props> {
 
   componentDidMount() {
     // update, to pass actual wrapElem to Virtualized props
-    this.store.mounted = true;
+    // this.store.mounted = true;
 
     if (this.props.contentBefore) this.subscribeContentBeforeResize();
   }
@@ -123,15 +118,10 @@ class List extends Component<Props> {
   };
 
   onWrapRef = (ref: Element) => {
-    if (!ref) {
-      console.log('NO REF');
-      return;
-    }
+    if (!ref) return;
 
-    const { getRef } = this.props;
-
-    this.wrapElem = getRef?.(ref) || ref;
-    this.store.hasWrap = true;
+    this.wrapElem = this.props.customWrapElem?.getRef?.(ref) || ref;
+    if (!this.store.hasWrap) this.store.hasWrap = true;
   };
 
   renderLayout = ({ state, items, ...rest }) => {
@@ -153,10 +143,8 @@ class List extends Component<Props> {
       'offsetBefore',
     ]);
 
-    const Elem = customWrapElem || 'div';
-
-    return (
-      <Elem {...props} ref={this.onWrapRef}>
+    const content = (
+      <>
         {contentBefore && (
           <div ref={this.contentBeforeElem} key="contentBefore">
             {contentBefore}
@@ -174,6 +162,19 @@ class List extends Component<Props> {
             {contentAfter}
           </div>
         )}
+      </>
+    );
+
+    let Elem = 'div';
+
+    if (customWrapElem) {
+      Elem = customWrapElem.component;
+      Object.assign(props, customWrapElem?.props);
+    }
+
+    return (
+      <Elem {...props} ref={this.onWrapRef}>
+        {content}
       </Elem>
     );
   };

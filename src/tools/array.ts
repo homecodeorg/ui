@@ -49,23 +49,12 @@ export function unshiftUniq(arr, val, fieldName) {
   _addUniq({ arr, val, fieldName }, value => arr.unshift(value));
 }
 
-export function sortByField(arr, fieldName, f = str => str) {
-  return arr.sort((a, b) =>
-    f(a[fieldName]) > f(b[fieldName])
-      ? 1
-      : f(b[fieldName]) > f(a[fieldName])
-      ? -1
-      : 0
-  );
-}
-
-export function groupByField(arr, fieldName) {
-  return arr.reduce((acc, item) => {
-    const field = item[fieldName];
-    if (!acc[field]) acc[field] = [];
-    acc[field].push(item);
-    return acc;
-  }, {});
+export function insert(baseArr: any[], targetArr: any[], startIndex: number) {
+  return [
+    ...baseArr.slice(0, startIndex),
+    ...targetArr,
+    ...baseArr.slice(startIndex + targetArr.length),
+  ];
 }
 
 export function getIndexCircular(arr: any[], index: number) {

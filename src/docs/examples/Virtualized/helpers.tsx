@@ -32,16 +32,15 @@ import S from './Virtualized.example.styl';
 //   ],
 // };
 
-export function loadData(getItemData, totalCount, itemsCount, pageSize) {
+export function loadData(first, last, getItemData) {
   const data = [];
-  const indexTill = Math.min(totalCount, itemsCount + pageSize);
 
   return new Promise(resolve => {
-    for (let i = itemsCount; i < indexTill; i++) {
+    for (let i = first; i < last; i++) {
       data.push(getItemData(i));
     }
 
-    Time.after(500, () => resolve(data));
+    Time.after(1000, () => resolve(data));
   });
 }
 
@@ -65,6 +64,7 @@ export function getSimpleItemData(i) {
 // }
 
 export function renderSimpleItems(props, data) {
+  if (!data) return null;
   return <div {...props}>{data}</div>;
 }
 

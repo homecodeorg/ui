@@ -13,14 +13,18 @@ import S from './Virtualized.styl';
 class Virtualized extends Component<T.Props, T.State> {
   clearUnfreezeTimer;
   scrollTopInited = false;
+  scrollElem: Element;
+  lastScrollEndIndex = 0;
 
   static defaultProps = {
     overlapCount: 10,
+    pageSize: 20,
   };
 
   constructor(props) {
     super(props);
     this.state = {
+      id: null,
       height: H.getHeight(props),
       first: 0,
       last: 0,
@@ -39,31 +43,49 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   componentDidMount() {
-    const indexes = this.getIndexes();
-    this.setState(indexes); // eslint-disable-line
-    document.addEventListener('scroll', this.onScroll);
+    Time.after(100, () => {
+      const indexes = this.getIndexes();
+      this.setState(indexes); // eslint-disable-line
+    });
+    // document.addEventListener('scroll', this.onScroll, true);
   }
 
   getSnapshotBeforeUpdate(prevProps) {
-    const { itemHeight, itemsCount, wrapElem } = this.props;
+    const { itemHeight, itemsCount } = this.props;
 
     if (itemsCount === 0 && itemsCount !== prevProps.itemsCount) return 0;
-    if (wrapElem) {
+    if (this.scrollElem) {
       if (itemHeight !== prevProps.itemHeight)
-        return (itemHeight / prevProps.itemHeight) * wrapElem.scrollTop;
+        return (itemHeight / prevProps.itemHeight) * this.scrollElem.scrollTop;
     }
 
     return null;
   }
 
+  shouldComponentUpdate(
+    nextProps: Readonly<T.Props>,
+    nextState: Readonly<T.State>
+  ): boolean {
+    if (nextProps.id !== this.props.id) return true;
+    if (nextProps.itemsCount !== this.props.itemsCount) return true;
+    if (!compare(nextState, this.state)) return true;
+
+    return false;
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
-    const { wrapElem } = this.props;
     const state = {} as T.State;
 
-    if (wrapElem) {
+    if (this.scrollElem !== this.props.wrapElem)
+      this.scrollElem = this.props.wrapElem;
+
+    if (this.scrollElem) {
       const newScrollTop = this.getNewScrollTop(prevProps, snapshot);
-      if (typeof newScrollTop === 'number') wrapElem.scrollTop = newScrollTop;
+      if (typeof newScrollTop === 'number')
+        this.scrollElem.scrollTop = newScrollTop;
     }
+
+    if (prevProps.id !== this.props.id) state.id = this.props.id;
 
     if (this.needUpdateIndexes(prevProps))
       Object.assign(state, this.getIndexes());
@@ -79,11 +101,11 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   needUpdateIndexes(prevProps) {
-    const { wrapElem } = this.props;
+    // const { wrapElem } = this.props;
 
-    if (!prevProps.wrapElem && wrapElem) return true;
+    // if (!prevProps.wrapElem && wrapElem) return true;
 
-    return ['itemsCount', 'totalCount', 'overlapCount'].some(
+    return ['id', 'itemsCount', 'totalCount', 'overlapCount'].some(
       key => prevProps[key] !== this.props[key]
     );
   }
@@ -117,11 +139,11 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   getIndexes(): T.IndexesType | null {
-    const { wrapElem } = this.props;
+    // const { wrapElem } = this.props;
 
-    if (!wrapElem) return null;
+    if (!this.scrollElem) return null;
 
-    const { scrollTop, clientHeight } = wrapElem;
+    const { scrollTop, clientHeight } = this.scrollElem;
 
     return H.getIndexes({
       scrollTop,
@@ -131,13 +153,13 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   onScroll = e => {
-    const { onScroll, wrapElem } = this.props;
+    this.scrollElem = e.target;
 
-    if (e.target !== wrapElem) return;
-
+    const { onScroll } = this.props;
     const indexes = this.getIndexes() as T.State;
+    const { scrollTop } = this.scrollElem;
 
-    if (onScroll) onScroll(wrapElem.scrollTop);
+    if (onScroll) onScroll({ scrollTop, ...indexes });
 
     this.checkIfEnd();
 
@@ -148,12 +170,13 @@ class Virtualized extends Component<T.Props, T.State> {
   };
 
   checkIfEnd = () => {
-    const { wrapElem, itemsCount, itemHeight, overlapCount, onScrollEnd } =
-      this.props;
-    const { scrollTop, clientHeight } = wrapElem;
+    const { itemsCount, totalCount, pageSize, onScrollEnd } = this.props;
 
-    if ((scrollTop + clientHeight) / itemHeight + overlapCount >= itemsCount)
-      onScrollEnd?.();
+    if (itemsCount === totalCount) return;
+    if (itemsCount < this.lastScrollEndIndex) return;
+
+    this.lastScrollEndIndex = itemsCount + pageSize;
+    onScrollEnd?.();
   };
 
   unfreeze = () => {
@@ -199,7 +222,7 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   render() {
-    const { children, className, ...rest } = this.props;
+    const { children, className, pageSize, ...rest } = this.props;
     const { isFreezed } = this.state;
     const state = {
       ...pick(this.state, ['first', 'last', 'height']),

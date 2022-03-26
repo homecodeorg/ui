@@ -33,18 +33,24 @@ type GetItemPropsParams = {
   offsetAfter?: number;
 };
 
+type ScrollCallbackState = IndexesType & {
+  scrollTop: number;
+};
+
 export type Props = {
+  id?: any; // change to fire render
   className?: string;
   wrapElem: Element | null;
   itemHeight: number;
   itemsCount: number;
   totalCount: number;
   overlapCount?: number;
+  pageSize?: number; // every `pageSize` will be called `onScrollEnd`
   offsetBefore?: number;
   offsetAfter?: number;
   initialScrollTop?: number;
   scrollTop?: number; // change to update list scrollTop
-  onScroll?: (scrollTop: number) => void;
+  onScroll?: (args: ScrollCallbackState) => void;
   onScrollEnd?: () => void;
   children: (props: RenderProps) => ReactNode;
   renderItem: (props: ItemProps) => ReactElement;

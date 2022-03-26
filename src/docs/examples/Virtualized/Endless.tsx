@@ -1,44 +1,52 @@
-import { useCallback, useEffect, useState } from 'react';
-import { VirtualizedListScroll, VirtualizedList } from 'uilib';
+import { Component } from 'react';
+import { VirtualizedListScroll, VirtualizedList, array, uid } from 'uilib';
+import { createStore, withStore } from 'justorm/react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
 
 const PAGE_SIZE = 20;
 const totalCount = 100;
+const store = createStore('example', { data: [] });
 
-export default function Example() {
-  const [data, setData] = useState([]);
-  const itemsCount = data.length;
+const loadNextData = (first, last) => loadData(first, last, getSimpleItemData);
 
-  const loadNextData = useCallback(() => {
-    loadData(getSimpleItemData, totalCount, itemsCount, PAGE_SIZE).then(
-      nextData => {
-        setData(data.concat(nextData));
-      }
-    );
-  }, [itemsCount]);
-
-  useEffect(() => {
-    console.log('Example mounted');
-
-    loadNextData();
-  }, []);
-
-  return (
-    // <VirtualizedList
-    <VirtualizedListScroll
-      scrollProps={{ y: true }}
-      totalCount={totalCount}
-      itemsCount={itemsCount}
-      overlapCount={10}
-      itemHeight={40}
-      renderItem={itemProps =>
-        renderSimpleItems(itemProps, data[itemProps.key])
-      }
-      onScrollEnd={loadNextData}
-    />
-  );
+function setData(nextData, startIndex = store.data.length) {
+  store.data = array.insert(store.data, nextData, startIndex);
 }
+
+export default withStore('example')(
+  class Example extends Component {
+    componentDidMount() {
+      loadNextData(0, PAGE_SIZE).then(setData);
+    }
+
+    onScrollEnd() {
+      const count = store.data.length;
+      loadNextData(count, count + PAGE_SIZE).then(setData);
+    }
+
+    render() {
+      const { data } = store.originalObject;
+      const itemsCount = data.length;
+
+      return (
+        <VirtualizedList
+          // <VirtualizedListScroll
+          // scrollProps={{ y: true }}
+          totalCount={totalCount}
+          itemsCount={itemsCount}
+          overlapCount={10}
+          itemHeight={40}
+          renderItem={itemProps =>
+            renderSimpleItems(itemProps, data[itemProps.key])
+          }
+          onScrollEnd={() => this.onScrollEnd()}
+          pageSize={PAGE_SIZE}
+        />
+      );
+    }
+  }
+);
 
 // import { Component, Fragment } from 'react';
 // import omit from 'lodash.omit';
