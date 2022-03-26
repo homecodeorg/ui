@@ -1,4 +1,4 @@
-(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[174],{
+(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[801],{
 
 /***/ "./src/docs/components/Code/Code.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -98,7 +98,7 @@ __webpack_require__.d(src_namespaceObject, {
   "VH": () => (VH),
   "Virtualized": () => (components_Virtualized_Virtualized),
   "VirtualizedList": () => (Virtualized_List_List),
-  "VirtualizedListScroll": () => (ListScroll),
+  "VirtualizedListScroll": () => (ListScroll_ListScroll),
   "VirtualizedTypes": () => (Virtualized_types_namespaceObject),
   "array": () => (array),
   "config": () => (config),
@@ -4823,20 +4823,60 @@ var List_List_List = /*#__PURE__*/function (_Component) {
 }(react.Component);
 
 /* harmony default export */ const Virtualized_List_List = (List_List_List);
+// EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Virtualized/List/ListScroll.styl
+var ListScroll = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Virtualized/List/ListScroll.styl");
+;// CONCATENATED MODULE: ./src/components/Virtualized/List/ListScroll.styl
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var ListScroll_options = {};
+
+ListScroll_options.styleTagTransform = (styleTagTransform_default());
+ListScroll_options.setAttributes = (setAttributesWithoutAttributes_default());
+
+      ListScroll_options.insert = insertBySelector_default().bind(null, "head");
+    
+ListScroll_options.domAPI = (styleDomAPI_default());
+ListScroll_options.insertStyleElement = (insertStyleElement_default());
+
+var ListScroll_update = injectStylesIntoStyleTag_default()(ListScroll/* default */.Z, ListScroll_options);
+
+
+
+
+       /* harmony default export */ const List_ListScroll = (ListScroll/* default */.Z && ListScroll/* default.locals */.Z.locals ? ListScroll/* default.locals */.Z.locals : undefined);
+
 ;// CONCATENATED MODULE: ./src/components/Virtualized/List/ListScroll.tsx
 /* provided dependency */ var ListScroll_React = __webpack_require__("./node_modules/react/index.js");
+
 
 var ListScroll_excluded = ["scrollProps"];
 
 
-function ListScroll(_ref) {
+
+
+function ListScroll_ListScroll(_ref) {
   var scrollProps = _ref.scrollProps,
       rest = (0,objectWithoutProperties/* default */.Z)(_ref, ListScroll_excluded);
+
+  var innerClassName = classnames_default()(List_ListScroll.inner, scrollProps.x && List_ListScroll.x, scrollProps.y && List_ListScroll.y);
+
+  var props = (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, scrollProps), {}, {
+    innerClassName: innerClassName
+  });
 
   return /*#__PURE__*/ListScroll_React.createElement(Virtualized_List_List, Object.assign({}, rest, {
     customWrapElem: {
       component: Scroll/* Scroll */.X,
-      props: scrollProps,
+      props: props,
       // @ts-ignore
       getRef: function getRef(ref) {
         return ref.innerElem.current;
@@ -5833,6 +5873,33 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Virtualized/List/ListScroll.styl":
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/css-loader/dist/runtime/noSourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ".ListScroll__x___aL6WJ{width:100%}.ListScroll__y___D_5g_{height:100%}", ""]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"x": "ListScroll__x___aL6WJ",
+	"y": "ListScroll__y___D_5g_"
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Virtualized/Virtualized.styl":
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -5878,7 +5945,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Code__root___aJQw4{display:flex;flex-direction:column;width:100%;max-height:calc(100vh - 100px);margin:1px;box-shadow:0 0 0 1px var(--accent-color-alpha-100);border-radius:var(--border-radius-l)}.Code__editorContainer___hKAb0,.Code__editorResult____Y8II{border-radius:inherit;flex:1}.Code__editorContainer___hKAb0{position:relative;max-height:60vh;border-bottom-left-radius:0;border-bottom-right-radius:0}.Code__error___pxycX,.Code__editorContainer___hKAb0 *{font-family:monospace !important}.Code__editorResult____Y8II{position:relative}.Code__editorResult____Y8II::before{content:'';position:absolute;bottom:100%;left:0;width:100%;height:24px;background-image:linear-gradient(to top,var(--decent-color),var(--decent-color-alpha-0));pointer-events:none}.Code__editor___JRByv{padding-bottom:16px;background-color:unset !important}@media (max-width:700px){.Code__editor___JRByv,.Code__error___pxycX{font-size:80%}}.Code__editor___JRByv.Code__runtime___ptkHa{display:none}.Code__error___pxycX,.Code__preview___YxPS0{padding:16px}.Code__error___pxycX{white-space:break-spaces;background-color:var(--danger-color-alpha-100)}.Code__preview___YxPS0{margin-top:-1px;padding-top:24px;border-top-left-radius:0;border-top-right-radius:0}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Code__root___aJQw4{display:flex;flex-direction:column;width:100%;max-height:calc(100vh - 100px);margin:1px;box-shadow:0 0 0 1px var(--accent-color-alpha-100);border-radius:var(--border-radius-l)}.Code__editorContainer___hKAb0,.Code__editorResult____Y8II{border-radius:inherit;flex:1}.Code__editorContainer___hKAb0{position:relative;max-height:60vh;border-bottom-left-radius:0;border-bottom-right-radius:0}.Code__error___pxycX,.Code__editorContainer___hKAb0 *{font-family:monospace !important}.Code__editorResult____Y8II{display:flex;position:relative}.Code__editorResult____Y8II::before{content:'';position:absolute;bottom:100%;left:0;width:100%;height:24px;background-image:linear-gradient(to top,var(--decent-color),var(--decent-color-alpha-0));pointer-events:none}.Code__editor___JRByv{padding-bottom:16px;background-color:unset !important}@media (max-width:700px){.Code__editor___JRByv,.Code__error___pxycX{font-size:80%}}.Code__editor___JRByv.Code__runtime___ptkHa{display:none}.Code__error___pxycX,.Code__preview___YxPS0{padding:16px}.Code__error___pxycX{white-space:break-spaces;background-color:var(--danger-color-alpha-100)}.Code__preview___YxPS0{flex:1;margin-top:-1px;padding-top:24px;border-top-left-radius:0;border-top-right-radius:0}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Code__root___aJQw4",

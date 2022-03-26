@@ -1144,7 +1144,7 @@ var update = injectStylesIntoStyleTag_default()(Link/* default */.Z, options);
 
 
 
-var Link_excluded = ["className", "exactClassName", "children", "isClear", "isClearPadding", "isDisabled", "store"];
+var Link_excluded = ["className", "exactClassName", "children", "isClear", "isClearPadding", "isDisabled", "store", "isPartialExact"];
 
 var _dec, _class, _class2;
 
@@ -1171,6 +1171,7 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
     }
 
     _this = _super.call.apply(_super, [this].concat(args));
+    _this.domElem = /*#__PURE__*/(0,react.createRef)();
     _this.rootPath = '';
 
     _this.isExternal = function () {
@@ -1183,8 +1184,11 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
       var href = _this.getHref();
 
       if (!_this.isExternal() && router.path !== href) {
+        var _this$domElem$current;
+
         e.preventDefault();
         router.go(href);
+        (_this$domElem$current = _this.domElem.current) === null || _this$domElem$current === void 0 ? void 0 : _this$domElem$current.blur();
       }
     };
 
@@ -1197,6 +1201,7 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
           isClearPadding = _this$props.isClearPadding,
           isDisabled = _this$props.isDisabled,
           store = _this$props.store,
+          isPartialExact = _this$props.isPartialExact,
           rest = (0,objectWithoutProperties/* default */.Z)(_this$props, Link_excluded);
 
       var path = store.router.path;
@@ -1227,7 +1232,8 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
         /* eslint-disable-line */
         className: classes
       }, props, {
-        onClick: _this.onClick
+        onClick: _this.onClick,
+        ref: _this.domElem
       }), children, isExternal && /*#__PURE__*/React.createElement(external, {
         "class": Link_Link.externalIcon
       }));
@@ -1252,13 +1258,20 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
           store = _this$props2.store,
           isPartialExact = _this$props2.isPartialExact;
       var path = store.router.path;
-      if (isPartialExact) return new RegExp("^".concat(href)).test(path);
+      var pathSections = path.split('/');
+      var hrefSections = href.split('/');
+      var minLength = Math.min(pathSections.length, hrefSections.length);
+
+      if (isPartialExact) {
+        return hrefSections.slice(0, minLength).join('/') === pathSections.slice(0, minLength).join('/');
+      }
+
       return path === href;
     }
   }, {
     key: "render",
     value: function render() {
-      return this.renderLink(); // return <Context.Consumer>{this.renderLink}</Context.Consumer>;
+      return this.renderLink();
     }
   }]);
 
@@ -2287,7 +2300,12 @@ var getRouteWeight = function getRouteWeight(route) {
   return route.path.split('/').length;
 };
 
-function getWeightestRoute(routes) {
+function getWeightestRoute(routes, currPath) {
+  var exactMatch = routes.find(function (_ref) {
+    var path = _ref.path;
+    return path === currPath;
+  });
+  if (exactMatch) return exactMatch;
   return routes.sort(function (a, b) {
     return getRouteWeight(a) > getRouteWeight(b) ? -1 : getRouteWeight(b) > getRouteWeight(a) ? 1 : 0;
   })[0];
@@ -2372,8 +2390,6 @@ var Router = (_dec = (0,justorm_react.withStore)({
       isFirstMonted = true;
     } else if (!rootPath) _this.rootPath = router.path;
 
-    console.log(_this.rootPath, props.children);
-
     _this.rebuildRoutes(props.children);
 
     return _this;
@@ -2419,7 +2435,7 @@ var Router = (_dec = (0,justorm_react.withStore)({
         notExactRoutes.push(route);
         return false;
       });
-      var weightestRoute = getWeightestRoute(routes);
+      var weightestRoute = getWeightestRoute(routes, currPath);
       var route = weightestRoute || notExactRoutes[0];
       return route;
     }
@@ -8310,7 +8326,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("b8106cf13964fa4c9b19")
+/******/ 		__webpack_require__.h = () => ("b2cd6c0ada048c4f505e")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -8564,32 +8580,32 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 /* harmony default export */ const navigation = ([{
   slug: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
   }
 }, {
   slug: 'checkbox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
   }
 }, {
   slug: 'input',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
   }
 }, {
   slug: 'inputFile',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(288)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(288)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
   }
 }, {
   slug: 'spinner',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
   }
 }, {
   slug: 'form',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
   }
 }, // {
 //   slug: 'icon',
@@ -8598,48 +8614,48 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 {
   slug: 'popup',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
   }
 }, {
   slug: 'popupMenu',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
   }
 }, {
   slug: 'gallery',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
   }
 }, {
   slug: 'lightBox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
   }
 }, {
   slug: 'select',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
   } // items: () => import('./examples/Select/navigation'),
 
 }, {
   slug: 'scroll',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
   }
 }, {
   slug: 'virtualized',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(856)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(856)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
   }
 }, {
   slug: 'notifications',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
   }
 }, {
   slug: 'router',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(174), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
@@ -8708,8 +8724,7 @@ var update = injectStylesIntoStyleTag_default()(Sidebar/* default */.Z, options)
 function Item(_ref) {
   var slug = _ref.slug,
       _ref$parentSlug = _ref.parentSlug,
-      parentSlug = _ref$parentSlug === void 0 ? '' : _ref$parentSlug,
-      items = _ref.items;
+      parentSlug = _ref$parentSlug === void 0 ? '' : _ref$parentSlug;
   var href = parentSlug ? "/".concat(parentSlug, "/").concat(slug) : "/".concat(slug);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Link/* Link */.r, {
     href: href,
@@ -8720,13 +8735,7 @@ function Item(_ref) {
       return store["default"].isMenuOpen = false;
     },
     key: slug
-  }, string.capitalize(slug)), items === null || items === void 0 ? void 0 : items.map(function (item) {
-    return /*#__PURE__*/React.createElement(Item, {
-      parentSlug: slug,
-      slug: item.slug,
-      key: item.slug
-    });
-  }));
+  }, string.capitalize(slug)));
 }
 
 function loadExampleRoutes(_x) {
@@ -8926,7 +8935,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
         className: App_App.configBar
       }, /*#__PURE__*/App_React.createElement("span", {
         className: App_App.version
-      }, "v", "1.0.0"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
+      }, "v", "1.0.1"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
         className: App_App.cfgButton,
         variant: "clear",
         size: "l",

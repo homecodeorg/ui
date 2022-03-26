@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ InputFile)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 59 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 60 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/InputFile/Example.tsx
 /* harmony default export */ const Example = ("import { useState } from 'react';\nimport { InputFile } from 'uilib';\n\nexport default () => {\n  const [value, setValue] = useState([]);\n\n  return (\n    <InputFile\n      size=\"m\"\n      label=\"Photos\"\n      value={value}\n      onChange={(e, val) => setValue(val)}\n      // @ts-ignore\n      upload={upload}\n      maxCount={5}\n      accept=\"image/png, image/jpeg\"\n    />\n  );\n};\n");

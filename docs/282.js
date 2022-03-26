@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ Scroll)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 59 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 60 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Scroll/Example.tsx
 /* harmony default export */ const Example = ("import { getLongText } from 'helpers';\n\nimport { Scroll } from 'uilib';\n\nexport default () => (\n  <Scroll\n    x\n    y\n    style={{\n      height: 200,\n      width: 200,\n      color: `var(--accent-color-alpha-100)`,\n    }}\n    offset={{\n      x: { after: 20 },\n      y: { before: 50, after: 20 },\n    }}\n  >\n    <div style={{ width: 1000 }}>{getLongText(5)}</div>\n  </Scroll>\n);\n");
