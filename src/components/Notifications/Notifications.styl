@@ -4,6 +4,7 @@ $width = 300px
 $height = 80px
 $duration = 200ms
 $padding = 10px
+$paddingBottom = 30px
 
 .root
   z-index 20
@@ -11,31 +12,34 @@ $padding = 10px
   top 10px
   right 0
   width calc(300px + 40px)
-  padding 0 0 30px 30px
-  transition top .3s ease-out
+  padding-left var(--indent-s)
+  padding-right var(--indent-s)
+  transition transform .3s ease-out
   overflow hidden
+  max-height calc(100% - 20px)
+
+  &.paused
+    transform translateX(-3px)
 
 .empty
   pointer-events none
-
-.paddingTop
-  top 92px
 
 .item
 .itemInner
   border-radius var(--border-radius-l)
 
 .item
-  right 10px
+  padding-right 10px
   max-height 0 // animate `height:auto` – https://stackoverflow.com/a/8331169/2131453
   width $width
+  max-width 100%
   transform translateX(100%)
   transform translate3d(100%, 0, 0)
   transition all $duration ease-out
   backface-visibility hidden
 
   & + &
-    margin-top 10px
+    padding-top 10px
 
   &:active
     transform scale(.99)
@@ -131,9 +135,6 @@ $padding = 10px
   .item
     width 100%
 
-  .root
-    padding-left var(--indent-s)
-    padding-right var(--indent-s)
 
   .title
     font-size 20px
