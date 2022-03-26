@@ -20,11 +20,13 @@
   border-bottom-left-radius 0
   border-bottom-right-radius 0
 
+
 .error
 .editorContainer *
   font-family monospace !important
 
 .editorResult
+  display flex
   position relative
 
   &::before
@@ -58,6 +60,7 @@
   background-color var(--danger-color-alpha-100)
 
 .preview
+  flex 1
   margin-top -1px
   padding-top 24px
   border-top-left-radius 0
