@@ -1,3 +1,5 @@
+@import 'theme'
+
 .root
   display flex
   flex-direction column
@@ -8,7 +10,7 @@
   border-radius var(--border-radius-l)
 
 .editorContainer
-.preview
+.editorResult
   border-radius inherit
   flex 1
 
@@ -18,21 +20,31 @@
   border-bottom-left-radius 0
   border-bottom-right-radius 0
 
-  *
-    font-family monospace !important
+.error
+.editorContainer *
+  font-family monospace !important
 
-.editorContainerFade
-  position absolute
-  bottom 0
-  left 0
-  width 100%
-  height 24px
-  background-image linear-gradient(to top, var(--decent-color), var(--decent-color-alpha-0))
-  pointer-events none
+.editorResult
+  position relative
+
+  &::before
+    content ''
+    position absolute
+    bottom 100%
+    left 0
+    width 100%
+    height 24px
+    background-image linear-gradient(to top, var(--decent-color), var(--decent-color-alpha-0))
+    pointer-events none
 
 .editor
   padding-bottom 16px
   background-color unset !important
+
+@media(max-width: $tablet)
+  .editor
+  .error
+    font-size 80%
 
 .editor.runtime
   display none
@@ -50,3 +62,4 @@
   padding-top 24px
   border-top-left-radius 0
   border-top-right-radius 0
+

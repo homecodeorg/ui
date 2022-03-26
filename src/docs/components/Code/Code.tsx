@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as justorm from 'justorm/react';
+import timen from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
 
@@ -18,7 +19,7 @@ import S from './Code.styl';
 
 const { withStore, createStore } = justorm;
 
-const SCOPE = { uilib, React, justorm, helpers };
+const SCOPE = { uilib, React, justorm, timen, helpers };
 
 type Props = {
   store?: any;
@@ -101,11 +102,13 @@ export class Code extends Component<Props> {
           />
           <div className={S.editorContainerFade} />
         </Scroll>
-        <LiveProvider noInline code={execCode} scope={currScope}>
-          <LiveEditor className={cn(S.editor, S.runtime)} />
-          <LiveError className={S.error} />
-          <LivePreview className={S.preview} />
-        </LiveProvider>
+        <div className={S.editorResult}>
+          <LiveProvider noInline code={execCode} scope={currScope}>
+            <LiveEditor className={cn(S.editor, S.runtime)} />
+            <LiveError className={S.error} />
+            <LivePreview className={S.preview} />
+          </LiveProvider>
+        </div>
       </div>
     );
   }

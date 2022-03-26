@@ -35,18 +35,24 @@ body
   border-radius 0
   border-bottom-right-radius var(--indent-s)
   opacity 0
+  background-color var(--decent-color-alpha-900) !important
   transition all .5s ease-out
+
+  &:hover
+    color var(--active-color)
 
   .open &
     left calc(100% - 11px)
 
-    &:before
+    &::before
+      z-index -1
       content ''
       position absolute
       top 0
       left 0
       height 100vh
       width 100vw
+      background-color var(--decent-color-alpha-900)
 
 .nav
   position relative
@@ -55,6 +61,7 @@ body
   min-width 200px
   padding-bittom 100px
   background-color var(--decent-color-alpha-800)
+  background-image linear-gradient(to left, var(--decent-color-alpha-500), var(--decent-color-alpha-50));
   // box-shadow 2px 0 0 var(--decent-color)
 
   &::before
@@ -80,12 +87,6 @@ body
   padding var(--indent-s) var(--indent-l) 0
   font-size 20px
 
-.content
-  flex-grow 1
-  overflow-x auto
-  padding 0 20px 0 50px
-  margin-top 50px
-
 .cfgButton
   border-radius 50%
 
@@ -97,6 +98,10 @@ body
   &.visible
     pointer-events auto
     opacity .9
+
+@media(min-width: $tablet)
+  .content
+    margin-left -20px
 
 @media(max-width: $tablet)
   .nav
@@ -112,3 +117,7 @@ body
 
     .menuButton
       opacity 1
+
+  .content
+    padding-left 20px
+    padding-right 20px
