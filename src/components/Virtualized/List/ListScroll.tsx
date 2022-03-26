@@ -1,22 +1,32 @@
-import { forwardRef, memo, useCallback, useEffect } from 'react';
-
+import cn from 'classnames';
 import { Scroll } from 'uilib';
 import List from './List';
 
 import type { Props as ScrollProps } from 'uilib';
 import type { Props as ListProps } from './List';
 
+import S from './ListScroll.styl';
+
 type Props = ListProps & {
   scrollProps: ScrollProps;
 };
 
 export default function ListScroll({ scrollProps, ...rest }: Props) {
+  const innerClassName = cn(
+    S.inner,
+    scrollProps.x && S.x,
+    scrollProps.y && S.y
+  );
+  const props = {
+    ...scrollProps,
+    innerClassName,
+  };
   return (
     <List
       {...rest}
       customWrapElem={{
         component: Scroll,
-        props: scrollProps,
+        props,
         // @ts-ignore
         getRef: ref => ref.innerElem.current,
       }}

@@ -41,7 +41,11 @@ export function parseRouteParams(routes) {
 
 const getRouteWeight = route => route.path.split('/').length;
 
-export function getWeightestRoute(routes) {
+export function getWeightestRoute(routes, currPath) {
+  const exactMatch = routes.find(({ path }) => path === currPath);
+
+  if (exactMatch) return exactMatch;
+
   return routes.sort((a, b) =>
     getRouteWeight(a) > getRouteWeight(b)
       ? -1

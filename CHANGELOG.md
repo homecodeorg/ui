@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/foreverido/uilib/compare/v1.0.0...v1.0.1) (2022-03-26)
+
+
+### Bug Fixes
+
+* Router - match, Link - isExact ([dec8d9f](https://github.com/foreverido/uilib/commit/dec8d9f430b2f44ca92809de406f1c5771c39fef))
+* Vistrualized - full width/height, +example ([594afc2](https://github.com/foreverido/uilib/commit/594afc2635cb4bd181af685ef0e775477cbefd51))
+
 ## [1.0.0](https://github.com/foreverido/uilib/compare/v0.0.60...v1.0.0) (2022-03-26)
 
 
