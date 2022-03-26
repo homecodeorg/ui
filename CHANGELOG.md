@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/foreverido/uilib/compare/v0.0.60...v1.0.0) (2022-03-26)
+
+
+### Features
+
+* App - ui fixes, touch/modile improvements ([a41dab8](https://github.com/foreverido/uilib/commit/a41dab8f2454073f20b701443956ef0231e32f8d))
+* Notifications - swipe, ui, <Scroll>, +example ([e3a61fc](https://github.com/foreverido/uilib/commit/e3a61fc8067c4f63eb5392f3aea574eee06c36ff))
+* Router - nested, +examples ([2d678f8](https://github.com/foreverido/uilib/commit/2d678f891196eb3fd92dd040335229d41e3c4d36))
+* Virtualized ([937f305](https://github.com/foreverido/uilib/commit/937f305826b30a64186a73f5630b97472c389b64))
+
 ### [0.0.60](https://github.com/foreverido/uilib/compare/v0.0.59...v0.0.60) (2022-03-23)
 
 
