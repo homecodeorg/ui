@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ Popup)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 48 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 59 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Popup/Example.tsx
 /* harmony default export */ const Example = ("import { useCallback, useState } from 'react';\nimport { Popup, Button } from 'uilib';\n\nexport default () => {\n  const [isOpen, setOpen] = useState(true);\n  const toggle = useCallback(() => setOpen(!isOpen), [isOpen]);\n  const size = 'm';\n\n  return (\n    <Popup\n      isOpen={isOpen}\n      size={size}\n      controllable\n      direction=\"bottom\"\n      trigger={\n        <Button size={size} onClick={toggle}>\n          Open Popup\n        </Button>\n      }\n      content={<div style={{ padding: 10 }}>Popup content</div>}\n    />\n  );\n};\n");

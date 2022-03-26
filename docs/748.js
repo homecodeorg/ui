@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ LightBox)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 48 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 59 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/LightBox/Example.tsx
 /* harmony default export */ const Example = ("import { useState } from 'react';\nimport { LightBox, Button, Gallery } from 'uilib';\n\nconst { getRandomImageUrl } = helpers;\nconst items = [\n  getRandomImageUrl(),\n  getRandomImageUrl(),\n  getRandomImageUrl(),\n  getRandomImageUrl(),\n  getRandomImageUrl(),\n];\n\nexport default () => {\n  const [isOpen, setOpen] = useState(false);\n\n  return (\n    <>\n      <Button onClick={() => setOpen(true)}>Open {`<LightBox />`}</Button>\n      <LightBox isOpen={isOpen} onClose={() => setOpen(false)}>\n        <Gallery items={items} style={{ height: 400 }} />\n      </LightBox>\n    </>\n  );\n};\n");
