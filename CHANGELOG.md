@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.6](https://github.com/foreverido/uilib/compare/v1.0.5...v1.0.6) (2022-03-27)
+
+
+### Bug Fixes
+
+* Scroll - thumb min length ([990b0ed](https://github.com/foreverido/uilib/commit/990b0eda5958294cdfb2c567283ea3bf7a550d94))
+* Virtualized - contentBefore height calculation ([d2801a2](https://github.com/foreverido/uilib/commit/d2801a2caffbc0893efbd50ac33ab91fb5dca37c))
+
 ### [1.0.5](https://github.com/foreverido/uilib/compare/v1.0.4...v1.0.5) (2022-03-27)
 
 
