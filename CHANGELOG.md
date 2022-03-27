@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/foreverido/uilib/compare/v1.0.4...v1.0.5) (2022-03-27)
+
+
+### Bug Fixes
+
+* Virtualized - getLastIndex() - 'total-1' ([1ee5e49](https://github.com/foreverido/uilib/commit/1ee5e49da6be01895fdbcaf9c06682abcd4fdad1))
+
 ### [1.0.4](https://github.com/foreverido/uilib/compare/v1.0.2...v1.0.4) (2022-03-27)
 
 
