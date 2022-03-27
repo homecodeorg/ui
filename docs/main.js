@@ -2412,6 +2412,7 @@ var Router = (_dec = (0,justorm_react.withStore)({
       var _this2 = this;
 
       var currPath = this.getPath();
+      var currPathWithoutRoot = currPath.replace(new RegExp("^".concat(this.rootPath, "/")), '/');
       var notExactRoutes = []; // const sorted = this.routes.sort((a, b) =>
       //   a.exact && !b.exact ? -1 : b.exact && !a.exact ? 1 : 0
       // );
@@ -2425,17 +2426,17 @@ var Router = (_dec = (0,justorm_react.withStore)({
         var sourceTested = parsed && new RegExp(parsed.source).test(currPath);
 
         if (parsed) {
-          var currLocalPath = currPath.replace(new RegExp("^".concat(_this2.rootPath, "/")), '/').split('/').slice(0, path.split('/').length).join('/');
+          var currLocalPath = currPathWithoutRoot.split('/').slice(0, path.split('/').length).join('/');
           route.params = parsed.test(currLocalPath);
           if (sourceTested) return true;
         } else {
           if (exact && currPath === fullPath) return true;
         }
 
-        notExactRoutes.push(route);
+        if (!exact) notExactRoutes.push(route);
         return false;
       });
-      var weightestRoute = getWeightestRoute(routes, currPath);
+      var weightestRoute = getWeightestRoute(routes, currPathWithoutRoot);
       var route = weightestRoute || notExactRoutes[0];
       return route;
     }
@@ -8326,7 +8327,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("b2cd6c0ada048c4f505e")
+/******/ 		__webpack_require__.h = () => ("77a75d61e04832c4ead8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -8645,7 +8646,7 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 }, {
   slug: 'virtualized',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(856)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(672)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
   }
 }, {
   slug: 'notifications',
@@ -8935,7 +8936,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
         className: App_App.configBar
       }, /*#__PURE__*/App_React.createElement("span", {
         className: App_App.version
-      }, "v", "1.0.1"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
+      }, "v", "1.0.2"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
         className: App_App.cfgButton,
         variant: "clear",
         size: "l",

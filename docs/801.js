@@ -4250,8 +4250,8 @@ var VH = /*#__PURE__*/function (_Component) {
 // EXTERNAL MODULE: ./src/tools/debounce.ts
 var debounce = __webpack_require__("./src/tools/debounce.ts");
 ;// CONCATENATED MODULE: ./src/components/Virtualized/Virtualized.helpers.ts
-function getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount) {
-  return Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount);
+function getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount, totalCount) {
+  return Math.min(totalCount, Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount));
 } // Returns indexes of first and last items to be rendered
 
 function Virtualized_helpers_getIndexes(_ref) {
@@ -4259,9 +4259,10 @@ function Virtualized_helpers_getIndexes(_ref) {
       clientHeight = _ref.clientHeight,
       itemHeight = _ref.itemHeight,
       itemsCount = _ref.itemsCount,
+      totalCount = _ref.totalCount,
       overlapCount = _ref.overlapCount;
   var first = Math.max(0, Math.floor(scrollTop / itemHeight - overlapCount));
-  var last = Math.min(Math.max(first, itemsCount + overlapCount - 1), getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount));
+  var last = Math.min(Math.max(first, itemsCount + overlapCount - 1), getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount, totalCount));
   return {
     first: first,
     last: last
@@ -4348,6 +4349,7 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
       var indexes = _this.getIndexes();
 
       var scrollTop = _this.scrollElem.scrollTop;
+      console.log('indexes', indexes);
       if (onScroll) onScroll((0,objectSpread2/* default */.Z)({
         scrollTop: scrollTop
       }, indexes));
@@ -4423,14 +4425,11 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
   (0,createClass/* default */.Z)(Virtualized, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this3 = this;
-
-      timen_default().after(100, function () {
-        var indexes = _this3.getIndexes();
-
-        _this3.setState(indexes); // eslint-disable-line
-
-      }); // document.addEventListener('scroll', this.onScroll, true);
+      // Time.after(100, () => {
+      var indexes = this.getIndexes();
+      this.setState(indexes); // eslint-disable-line
+      // });
+      // document.addEventListener('scroll', this.onScroll, true);
     }
   }, {
     key: "getSnapshotBeforeUpdate",
@@ -4480,21 +4479,21 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
   }, {
     key: "needUpdateIndexes",
     value: function needUpdateIndexes(prevProps) {
-      var _this4 = this;
+      var _this3 = this;
 
       // const { wrapElem } = this.props;
       // if (!prevProps.wrapElem && wrapElem) return true;
       return ['id', 'itemsCount', 'totalCount', 'overlapCount'].some(function (key) {
-        return prevProps[key] !== _this4.props[key];
+        return prevProps[key] !== _this3.props[key];
       });
     }
   }, {
     key: "needUpdateHeight",
     value: function needUpdateHeight(prevProps) {
-      var _this5 = this;
+      var _this4 = this;
 
       return ['totalCount', 'offsetAfter'].some(function (key) {
-        return prevProps[key] !== _this5.props[key];
+        return prevProps[key] !== _this4.props[key];
       });
     }
   }, {
@@ -4530,7 +4529,7 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
       return Virtualized_helpers_getIndexes((0,objectSpread2/* default */.Z)({
         scrollTop: scrollTop,
         clientHeight: clientHeight
-      }, lodash_pick_default()(this.props, ['itemsCount', 'itemHeight', 'overlapCount'])));
+      }, lodash_pick_default()(this.props, ['itemsCount', 'totalCount', 'itemHeight', 'overlapCount'])));
     }
   }, {
     key: "renderItems",
@@ -4867,7 +4866,7 @@ function ListScroll_ListScroll(_ref) {
   var scrollProps = _ref.scrollProps,
       rest = (0,objectWithoutProperties/* default */.Z)(_ref, ListScroll_excluded);
 
-  var innerClassName = classnames_default()(List_ListScroll.inner, scrollProps.x && List_ListScroll.x, scrollProps.y && List_ListScroll.y);
+  var innerClassName = classnames_default()(scrollProps.x && List_ListScroll.x, scrollProps.y && List_ListScroll.y);
 
   var props = (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, scrollProps), {}, {
     innerClassName: innerClassName
@@ -5639,7 +5638,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Notifications__root___q4Zar{z-index:20;position:absolute;top:10px;right:0;width:calc(300px + 40px);padding-left:var(--indent-s);padding-right:var(--indent-s);transition:transform .3s ease-out;overflow:hidden;max-height:calc(100% - 20px)}.Notifications__root___q4Zar.Notifications__paused___oD7LG{transform:translateX(-3px)}.Notifications__empty___ujLOM{pointer-events:none}.Notifications__item___Slrcd,.Notifications__itemInner____PSAo{border-radius:var(--border-radius-l)}.Notifications__item___Slrcd{padding-right:10px;max-height:0;width:300px;max-width:100%;transform:translateX(100%);transform:translate3d(100%,0,0);transition:all 200ms ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Notifications__item___Slrcd + .Notifications__item___Slrcd{padding-top:10px}.Notifications__item___Slrcd:active{transform:scale(.99)}.Notifications__visible___ptGR5{max-height:500px;transform:translateX(0)}.Notifications__itemInner____PSAo{position:relative;display:flex;align-items:center;padding:16px 32px 16px 20px;box-sizing:border-box;background-color:var(--accent-color);color:var(--decent-color);transition:transform 200ms ease-out}.Notifications__itemInner____PSAo::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s ease-out;border-radius:20%;box-shadow:0 10px 20px var(--decent-color);pointer-events:none}.Notifications__type-warning___qelS5 .Notifications__itemInner____PSAo::before{background-color:var(--warning-color)}.Notifications__type-danger___m8r2V .Notifications__itemInner____PSAo::before{background-color:var(--danger-color)}.Notifications__visible___ptGR5 .Notifications__itemInner____PSAo::before{opacity:.2}.Notifications__icon___TgQ_8{height:24px;width:24px;min-width:24px;background:no-repeat center;margin-right:10px}.Notifications__type-loading___D_sGK .Notifications__icon___TgQ_8{transform:translateY(-20px)}.Notifications__text___YgVir{display:flex;flex-direction:column;flex-grow:1;z-index:1}.Notifications__title___ZaopM{font-size:16px;font-weight:bold}.Notifications__content___pHpva{font-size:12px;margin-top:calc(var(--indent-s) / 2)}.Notifications__content___pHpva:first-child{margin-top:0}.Notifications__close___SK0U5{position:absolute;right:-5px;top:-5px;height:40px !important;width:40px !important;max-height:40px !important;max-width:40px !important;border-radius:50%;transition:opacity .1s ease-out;background-color:transparent;cursor:pointer;opacity:.8}.Notifications__close___SK0U5 [role=img],.Notifications__close___SK0U5:hover [role=img]{color:var(--decent-color)}.Notifications__close___SK0U5:hover{opacity:1;background-color:var(--decent-color-alpha-100)}@media (max-width:700px){.Notifications__root___q4Zar,.Notifications__item___Slrcd{width:100%}.Notifications__title___ZaopM{font-size:20px}.Notifications__content___pHpva{font-size:16px}.Notifications__close___SK0U5{transform:scale(1.2)}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Notifications__root___q4Zar{z-index:20;position:absolute;top:10px;right:0;width:300px;padding-left:var(--indent-s);padding-right:var(--indent-s);transition:transform .3s ease-out;overflow:hidden;max-height:calc(100% - 20px)}.Notifications__root___q4Zar.Notifications__paused___oD7LG{transform:translateX(-3px)}.Notifications__empty___ujLOM{pointer-events:none}.Notifications__item___Slrcd,.Notifications__itemInner____PSAo{border-radius:var(--border-radius-l)}.Notifications__item___Slrcd{padding-right:10px;max-height:0;width:300px;max-width:100%;transform:translateX(100%);transform:translate3d(100%,0,0);transition:all 200ms ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Notifications__item___Slrcd + .Notifications__item___Slrcd{padding-top:10px}.Notifications__item___Slrcd:active{transform:scale(.99)}.Notifications__visible___ptGR5{max-height:500px;transform:translateX(0)}.Notifications__itemInner____PSAo{position:relative;display:flex;align-items:center;padding:16px 32px 16px 20px;box-sizing:border-box;background-color:var(--accent-color);color:var(--decent-color);transition:transform 200ms ease-out}.Notifications__itemInner____PSAo::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s ease-out;border-radius:20%;box-shadow:0 10px 20px var(--decent-color);pointer-events:none}.Notifications__type-warning___qelS5 .Notifications__itemInner____PSAo::before{background-color:var(--warning-color)}.Notifications__type-danger___m8r2V .Notifications__itemInner____PSAo::before{background-color:var(--danger-color)}.Notifications__visible___ptGR5 .Notifications__itemInner____PSAo::before{opacity:.2}.Notifications__icon___TgQ_8{height:24px;width:24px;min-width:24px;background:no-repeat center;margin-right:10px}.Notifications__type-loading___D_sGK .Notifications__icon___TgQ_8{transform:translateY(-20px)}.Notifications__text___YgVir{display:flex;flex-direction:column;flex-grow:1;z-index:1}.Notifications__title___ZaopM{font-size:16px;font-weight:bold}.Notifications__content___pHpva{font-size:12px;margin-top:calc(var(--indent-s) / 2)}.Notifications__content___pHpva:first-child{margin-top:0}.Notifications__close___SK0U5{position:absolute;right:-5px;top:-5px;height:40px !important;width:40px !important;max-height:40px !important;max-width:40px !important;border-radius:50%;transition:opacity .1s ease-out;background-color:transparent;cursor:pointer;opacity:.8}.Notifications__close___SK0U5 [role=img],.Notifications__close___SK0U5:hover [role=img]{color:var(--decent-color)}.Notifications__close___SK0U5:hover{opacity:1;background-color:var(--decent-color-alpha-100)}@media (max-width:700px){.Notifications__root___q4Zar,.Notifications__item___Slrcd{width:100%}.Notifications__title___ZaopM{font-size:20px}.Notifications__content___pHpva{font-size:16px}.Notifications__close___SK0U5{transform:scale(1.2)}}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Notifications__root___q4Zar",
