@@ -2,9 +2,13 @@ export function getLastIndex(
   scrollTop,
   clientHeight,
   itemHeight,
-  overlapCount
+  overlapCount,
+  totalCount
 ) {
-  return Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount);
+  return Math.min(
+    totalCount,
+    Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount)
+  );
 }
 
 // Returns indexes of first and last items to be rendered
@@ -13,12 +17,13 @@ export function getIndexes({
   clientHeight,
   itemHeight,
   itemsCount,
+  totalCount,
   overlapCount,
 }) {
   const first = Math.max(0, Math.floor(scrollTop / itemHeight - overlapCount));
   const last = Math.min(
     Math.max(first, itemsCount + overlapCount - 1),
-    getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount)
+    getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount, totalCount)
   );
 
   return { first, last };
