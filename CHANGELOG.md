@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/foreverido/uilib/compare/v1.0.6...v1.0.7) (2022-03-27)
+
+
+### Features
+
+* Scroll - extraWide prop ([7dbd3d7](https://github.com/foreverido/uilib/commit/7dbd3d7a805c832998dc5705e2af40606c0dd160))
+
 ### [1.0.6](https://github.com/foreverido/uilib/compare/v1.0.5...v1.0.6) (2022-03-27)
 
 
