@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/foreverido/uilib/compare/v1.0.1...v1.0.2) (2022-03-27)
+
+
+### Bug Fixes
+
+* Notifications - width ([4d58ba2](https://github.com/foreverido/uilib/commit/4d58ba2b7636085d5a42dc1756013552017a7591))
+* Router - getWeightestRoute() considering rootPath ([0a2a8fd](https://github.com/foreverido/uilib/commit/0a2a8fd7a48eb92b57c02cfe5156608a0e79cb14))
+* Virtualized - last maximum totalCount, +examples routing ([977737d](https://github.com/foreverido/uilib/commit/977737d07b723610f6dbb11bbd75c38a1cff9ba5))
+
 ### [1.0.1](https://github.com/foreverido/uilib/compare/v1.0.0...v1.0.1) (2022-03-26)
 
 

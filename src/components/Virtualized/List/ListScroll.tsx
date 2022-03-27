@@ -12,15 +12,12 @@ type Props = ListProps & {
 };
 
 export default function ListScroll({ scrollProps, ...rest }: Props) {
-  const innerClassName = cn(
-    S.inner,
-    scrollProps.x && S.x,
-    scrollProps.y && S.y
-  );
+  const innerClassName = cn(scrollProps.x && S.x, scrollProps.y && S.y);
   const props = {
     ...scrollProps,
     innerClassName,
   };
+
   return (
     <List
       {...rest}

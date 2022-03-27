@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { VirtualizedList, uid } from 'uilib';
+import { VirtualizedListScroll, uid } from 'uilib';
 import { createStore, withStore } from 'justorm/react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
@@ -45,7 +45,8 @@ export default withStore('example')(
       const { data } = store.originalObject;
 
       return (
-        <VirtualizedList
+        <VirtualizedListScroll
+          scrollProps={{ y: true }}
           id={updateId}
           totalCount={totalCount}
           itemsCount={totalCount}

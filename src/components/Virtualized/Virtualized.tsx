@@ -43,10 +43,10 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   componentDidMount() {
-    Time.after(100, () => {
-      const indexes = this.getIndexes();
-      this.setState(indexes); // eslint-disable-line
-    });
+    // Time.after(100, () => {
+    const indexes = this.getIndexes();
+    this.setState(indexes); // eslint-disable-line
+    // });
     // document.addEventListener('scroll', this.onScroll, true);
   }
 
@@ -148,7 +148,12 @@ class Virtualized extends Component<T.Props, T.State> {
     return H.getIndexes({
       scrollTop,
       clientHeight,
-      ...pick(this.props, ['itemsCount', 'itemHeight', 'overlapCount']),
+      ...pick(this.props, [
+        'itemsCount',
+        'totalCount',
+        'itemHeight',
+        'overlapCount',
+      ]),
     });
   }
 
@@ -158,6 +163,8 @@ class Virtualized extends Component<T.Props, T.State> {
     const { onScroll } = this.props;
     const indexes = this.getIndexes() as T.State;
     const { scrollTop } = this.scrollElem;
+
+    console.log('indexes', indexes);
 
     if (onScroll) onScroll({ scrollTop, ...indexes });
 

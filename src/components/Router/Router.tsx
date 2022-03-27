@@ -51,6 +51,10 @@ export class Router extends Component<Props> {
 
   getRoute() {
     const currPath = this.getPath();
+    const currPathWithoutRoot = currPath.replace(
+      new RegExp(`^${this.rootPath}\/`),
+      '/'
+    );
     const notExactRoutes = [];
 
     // const sorted = this.routes.sort((a, b) =>
@@ -62,8 +66,7 @@ export class Router extends Component<Props> {
       const sourceTested = parsed && new RegExp(parsed.source).test(currPath);
 
       if (parsed) {
-        const currLocalPath = currPath
-          .replace(new RegExp(`^${this.rootPath}\/`), '/')
+        const currLocalPath = currPathWithoutRoot
           .split('/')
           .slice(0, path.split('/').length)
           .join('/');
@@ -73,11 +76,11 @@ export class Router extends Component<Props> {
         if (exact && currPath === fullPath) return true;
       }
 
-      notExactRoutes.push(route);
+      if (!exact) notExactRoutes.push(route);
 
       return false;
     });
-    const weightestRoute = getWeightestRoute(routes, currPath);
+    const weightestRoute = getWeightestRoute(routes, currPathWithoutRoot);
     const route = weightestRoute || notExactRoutes[0];
 
     return route;

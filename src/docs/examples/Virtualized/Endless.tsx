@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { VirtualizedListScroll, VirtualizedList, array } from 'uilib';
+import { VirtualizedList, array, Spinner } from 'uilib';
 import { createStore, withStore } from 'justorm/react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
@@ -31,9 +31,7 @@ export default withStore('example')(
       const itemsCount = data.length;
 
       return (
-        // <VirtualizedList
-        <VirtualizedListScroll
-          scrollProps={{ y: true }}
+        <VirtualizedList
           totalCount={totalCount}
           itemsCount={itemsCount}
           overlapCount={10}
@@ -43,6 +41,14 @@ export default withStore('example')(
           }
           onScrollEnd={() => this.onScrollEnd()}
           pageSize={PAGE_SIZE}
+          contentAfter={
+            itemsCount !== totalCount && (
+              <>
+                <Spinner size="s" style={{ marginRight: 10 }} />
+                loading items...
+              </>
+            )
+          }
         />
       );
     }
