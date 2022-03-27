@@ -128,6 +128,7 @@ class List extends Component<Props> {
   renderLayout = ({ state, items, ...rest }) => {
     const { contentBefore, contentAfter, customWrapElem } = this.props;
     const { height, offsetAfter } = state;
+    const { contentBeforeHeight } = this.store;
     const props = omit(rest, [
       'contentBefore',
       'contentAfter',
@@ -151,7 +152,11 @@ class List extends Component<Props> {
             {contentBefore}
           </div>
         )}
-        <div className={S.gap} style={{ height }} key="gap" />
+        <div
+          className={S.gap}
+          style={{ height: height - contentBeforeHeight }}
+          key="gap"
+        />
         {items}
         {contentAfter && (
           <div
