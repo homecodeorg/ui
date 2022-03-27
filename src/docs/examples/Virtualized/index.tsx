@@ -7,6 +7,7 @@ import Endless from '!!raw-loader!./Endless';
 import EndlessScroll from '!!raw-loader!./EndlessScroll';
 import Finite from '!!raw-loader!./Finite';
 import FiniteScroll from '!!raw-loader!./FiniteScroll';
+import InitialTotal from '!!raw-loader!./InitialTotal';
 
 const rootPath = '/virtualized';
 
@@ -28,6 +29,11 @@ export default () => {
             <Link href={`${rootPath}/finite-scroll`}>Finite</Link>
           </div>
         </div>
+        <div>
+          <Link href={`${rootPath}/initial-total`}>
+            Initial data already total
+          </Link>
+        </div>
       </div>
 
       <Router rootPath={rootPath}>
@@ -44,6 +50,12 @@ export default () => {
           path="/finite-scroll"
           code={FiniteScroll}
           key="finite-scroll"
+        />
+        <Example
+          exact
+          path="/initial-total"
+          code={InitialTotal}
+          key="initial-total"
         />
       </Router>
     </Container>

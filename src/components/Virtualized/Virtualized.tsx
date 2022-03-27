@@ -68,6 +68,7 @@ class Virtualized extends Component<T.Props, T.State> {
   ): boolean {
     if (nextProps.id !== this.props.id) return true;
     if (nextProps.itemsCount !== this.props.itemsCount) return true;
+    if (nextProps.wrapElem !== this.props.wrapElem) return true;
     if (!compare(nextState, this.state)) return true;
 
     return false;
@@ -75,9 +76,9 @@ class Virtualized extends Component<T.Props, T.State> {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const state = {} as T.State;
+    const scrollElemUpdated = this.scrollElem !== this.props.wrapElem;
 
-    if (this.scrollElem !== this.props.wrapElem)
-      this.scrollElem = this.props.wrapElem;
+    if (scrollElemUpdated) this.scrollElem = this.props.wrapElem;
 
     if (this.scrollElem) {
       const newScrollTop = this.getNewScrollTop(prevProps, snapshot);
@@ -87,7 +88,7 @@ class Virtualized extends Component<T.Props, T.State> {
 
     if (prevProps.id !== this.props.id) state.id = this.props.id;
 
-    if (this.needUpdateIndexes(prevProps))
+    if (scrollElemUpdated || this.needUpdateIndexes(prevProps))
       Object.assign(state, this.getIndexes());
 
     if (this.needUpdateHeight(prevProps))
@@ -163,8 +164,6 @@ class Virtualized extends Component<T.Props, T.State> {
     const { onScroll } = this.props;
     const indexes = this.getIndexes() as T.State;
     const { scrollTop } = this.scrollElem;
-
-    console.log('indexes', indexes);
 
     if (onScroll) onScroll({ scrollTop, ...indexes });
 
