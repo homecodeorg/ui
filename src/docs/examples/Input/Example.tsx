@@ -6,6 +6,7 @@ export default () => {
 
   return (
     <Input
+      type="textarea"
       value={value}
       onChange={(e, val) => setValue(val)}
       hasClear

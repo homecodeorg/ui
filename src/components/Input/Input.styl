@@ -5,7 +5,11 @@ $controlHeight = 34px
 $paddingSide = 12px
 
 .root
+  position relative
   color var(--accent-color)
+
+  &.isTextArea
+    max-height 10em
 
 .main
   position relative
@@ -14,10 +18,18 @@ $paddingSide = 12px
   border-radius inherit
 
   .isTextArea &
-    height auto
-    max-height unset
+    height auto !important
+    max-height inherit !important
+
+    .size-s&
+      padding-right 2px !important;
+    .size-m&
+      padding-right 8px !important;
+    .size-l&
+      padding-right 13px !important;
 
 .border
+  z-index 1
   position absolute
   top 0
   left 0
@@ -100,6 +112,9 @@ $paddingSide = 12px
   .isTextArea &
     max-height 40px
 
+.scroller
+  width 100%
+
 .control
   filter none // remove browser(Frefox) autofill-styles
   appearance none
@@ -116,7 +131,27 @@ $paddingSide = 12px
   transition border-color 0.15s ease-in-out 0s
 
   .isTextArea &
-    margin 8px 0
+    display block
+    height unset
+    max-height 100%
+    width 100%
+
+    &::after
+      display block
+      content ''
+
+    .size-s&
+      padding-top 8px
+      &::after
+        height 8px
+    .size-m&
+      padding-top 10px
+      &::after
+        height 10px
+    .size-l&
+      padding-top 12px
+      &::after
+        height 12px
 
   // remove browser(Chrome) autofill-styles
   &:-internal-autofill-selected
@@ -125,7 +160,12 @@ $paddingSide = 12px
     animation-fill-mode both
 
   .hasClear &
-    padding-right 1em
+    .size-s&
+      padding-right 20px
+    .size-m&
+      padding-right 24px
+    .size-l&
+      padding-right 28px
 
   &::placeholder
     color var(--accent-color-alpha-500)
