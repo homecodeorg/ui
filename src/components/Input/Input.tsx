@@ -293,12 +293,14 @@ export class Input extends Component<T.Props> {
   wrapControll(control) {
     if (this.isTextArea()) {
       const { size } = this.props;
+      const { labelClipPath } = this.store;
 
       return (
         <Scroll
           y
-          className={S.scroller}
           size="m"
+          className={S.scroller}
+          innerProps={{ style: { clipPath: labelClipPath } }}
           offset={{
             y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
           }}
