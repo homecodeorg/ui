@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/foreverido/uilib/compare/v1.0.7...v1.1.0) (2022-03-28)
+
+
+### Features
+
+* Input - textarea ([a155eba](https://github.com/foreverido/uilib/commit/a155eba40a47a1f52597c91a179b8f949a7f9909))
+
 ### [1.0.7](https://github.com/foreverido/uilib/compare/v1.0.6...v1.0.7) (2022-03-27)
 
 
