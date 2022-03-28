@@ -121,10 +121,15 @@ export class Gallery extends Component<Props> {
   onKeyDown = e => {
     if (this.isSingle()) return;
 
-    e.stopPropagation();
+    if (e.key === 'ArrowRight') {
+      e.stopPropagation();
+      return this.move(-1);
+    }
 
-    if (e.key === 'ArrowRight') return this.move(-1);
-    if (e.key === 'ArrowLeft') return this.move(1);
+    if (e.key === 'ArrowLeft') {
+      e.stopPropagation();
+      return this.move(1);
+    }
   };
 
   move = throttle(function (direction: -1 | 1) {
