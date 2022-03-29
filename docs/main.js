@@ -2903,13 +2903,14 @@ var Scroll_Scroll_Scroll = /*#__PURE__*/function (_Component) {
           y = _this$props4.y,
           x = _this$props4.x,
           size = _this$props4.size,
+          extraWide = _this$props4.extraWide,
           autoHide = _this$props4.autoHide,
           className = _this$props4.className;
       var _this$store4 = this.store,
           isScrolling = _this$store4.isScrolling,
           activeAxis = _this$store4.activeAxis;
-      var classes = classnames_default()(Scroll_Scroll.root, y && Scroll_Scroll.y, x && Scroll_Scroll.x, Scroll_Scroll["size-".concat(size)], autoHide && Scroll_Scroll.autoHide, (isScrolling || activeAxis) && Scroll_Scroll.isScrolling, this.isTouch && Scroll_Scroll.isTouch, className);
-      var props = lodash_omit_default()(this.props, ['x', 'y', 'offset', 'className', 'innerClassName', 'innerProps', 'thumbClassName', 'autoHide', 'children']);
+      var classes = classnames_default()(Scroll_Scroll.root, y && Scroll_Scroll.y, x && Scroll_Scroll.x, Scroll_Scroll["size-".concat(size)], autoHide && Scroll_Scroll.autoHide, extraWide && Scroll_Scroll.extraWide, (isScrolling || activeAxis) && Scroll_Scroll.isScrolling, this.isTouch && Scroll_Scroll.isTouch, className);
+      var props = lodash_omit_default()(this.props, ['x', 'y', 'offset', 'className', 'innerClassName', 'innerProps', 'thumbClassName', 'autoHide', 'children', 'extraWide']);
       return /*#__PURE__*/React.createElement("div", Object.assign({
         className: classes
       }, props), this.renderInner(), x && this.renderBar('x', 'width', 'left'), y && this.renderBar('y', 'height', 'top'));
@@ -4018,7 +4019,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Scroll__root___uNzmI{position:relative;overflow:hidden;display:flex}.Scroll__inner___uM4Pm{position:relative;width:100%;overflow:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:none;scrollbar-width:none}.Scroll__inner___uM4Pm::-webkit-scrollbar{display:none}.Scroll__y___einFi .Scroll__inner___uM4Pm{max-height:100%;overflow-y:auto}.Scroll__x___dIeLw .Scroll__inner___uM4Pm{max-width:100%;overflow-x:auto}.Scroll__thumb___PE90F{position:absolute;background-color:var(--accent-color-alpha-100);border-radius:1px;transition:all .1s ease-out;transform-origin:center}.Scroll__y___einFi > .Scroll__thumb___PE90F{top:0;width:100%}.Scroll__x___dIeLw > .Scroll__thumb___PE90F{left:0;height:100%}.Scroll__bar___kQ5uR{z-index:2;position:absolute;transition:.3s opacity .1s ease-out;cursor:pointer;overflow:hidden}.Scroll__autoHide___G6xl2 .Scroll__bar___kQ5uR{opacity:0}.Scroll__isScrolling___YfrZZ .Scroll__bar___kQ5uR,.Scroll__bar___kQ5uR:hover{transition-delay:0;opacity:1}.Scroll__bar___kQ5uR::before{content:'';position:absolute;opacity:0;transition:.2s opacity .3s ease-out;background-color:var(--accent-color-alpha-100);border-radius:2px}.Scroll__bar___kQ5uR:hover,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ{z-index:1}.Scroll__bar___kQ5uR:hover::before,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ::before{opacity:1;transition-delay:0s}.Scroll__bar___kQ5uR:hover .Scroll__thumb___PE90F,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ .Scroll__thumb___PE90F{background-color:var(--active-color)}.Scroll__bar___kQ5uR.Scroll__y___einFi{right:0;top:8px;bottom:8px;width:16px}.Scroll__isTouch___DPyrK .Scroll__bar___kQ5uR.Scroll__y___einFi{width:32px}.Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{right:30%}.Scroll__bar___kQ5uR.Scroll__y___einFi::before{height:100%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw{bottom:0;right:8px;left:8px;height:16px}.Scroll__isTouch___DPyrK .Scroll__bar___kQ5uR.Scroll__x___dIeLw{height:32px}.Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{bottom:30%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw::before{width:100%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw{height:32px}.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:1px}.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:5px;border-radius:calc(5px / 2)}.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:9px;border-radius:calc(9px / 2)}.Scroll__bar___kQ5uR.Scroll__y___einFi{width:32px}.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:1px}.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:5px;border-radius:calc(5px / 2)}.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:9px;border-radius:calc(9px / 2)}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Scroll__root___uNzmI{position:relative;overflow:hidden;display:flex}.Scroll__inner___uM4Pm{position:relative;width:100%;overflow:hidden;-webkit-overflow-scrolling:touch;-ms-overflow-style:none;scrollbar-width:none}.Scroll__inner___uM4Pm::-webkit-scrollbar{display:none}.Scroll__y___einFi .Scroll__inner___uM4Pm{max-height:100%;overflow-y:auto}.Scroll__x___dIeLw .Scroll__inner___uM4Pm{max-width:100%;overflow-x:auto}.Scroll__thumb___PE90F{position:absolute;background-color:var(--accent-color-alpha-100);border-radius:1px;transition:all .1s ease-out;transform-origin:center}.Scroll__y___einFi > .Scroll__thumb___PE90F{top:0;width:100%;min-height:30px}.Scroll__x___dIeLw > .Scroll__thumb___PE90F{left:0;height:100%;min-width:30px}.Scroll__bar___kQ5uR{z-index:2;position:absolute;transition:.3s opacity .1s ease-out;cursor:pointer;overflow:hidden}.Scroll__autoHide___G6xl2 .Scroll__bar___kQ5uR{opacity:0}.Scroll__isScrolling___YfrZZ .Scroll__bar___kQ5uR,.Scroll__bar___kQ5uR:hover{transition-delay:0;opacity:1}.Scroll__bar___kQ5uR::before{content:'';position:absolute;opacity:0;transition:.2s opacity .3s ease-out;background-color:var(--accent-color-alpha-100);border-radius:2px}.Scroll__bar___kQ5uR:hover,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ{z-index:1}.Scroll__bar___kQ5uR:hover::before,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ::before{opacity:1;transition-delay:0s}.Scroll__bar___kQ5uR:hover .Scroll__thumb___PE90F,.Scroll__bar___kQ5uR.Scroll__isActive___NQiBJ .Scroll__thumb___PE90F{background-color:var(--active-color)}.Scroll__bar___kQ5uR.Scroll__y___einFi{right:0;top:8px;bottom:8px;width:16px}.Scroll__isTouch___DPyrK .Scroll__bar___kQ5uR.Scroll__y___einFi{width:32px}.Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{right:30%}.Scroll__bar___kQ5uR.Scroll__y___einFi::before{height:100%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw{bottom:0;right:8px;left:8px;height:16px}.Scroll__isTouch___DPyrK .Scroll__bar___kQ5uR.Scroll__x___dIeLw{height:32px}.Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{bottom:30%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw::before{width:100%}.Scroll__bar___kQ5uR.Scroll__x___dIeLw{height:32px}.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:1px}.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:5px;border-radius:calc(5px / 2)}.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__x___dIeLw::before,.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__x___dIeLw .Scroll__thumb___PE90F{height:9px;border-radius:calc(9px / 2)}.Scroll__bar___kQ5uR.Scroll__y___einFi{width:32px}.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-s___d3oUk .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:1px}.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-m___QwfMe .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:5px;border-radius:calc(5px / 2)}.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__y___einFi::before,.Scroll__size-l___QCHgh .Scroll__bar___kQ5uR.Scroll__y___einFi .Scroll__thumb___PE90F{width:9px;border-radius:calc(9px / 2)}.Scroll__extraWide___crEyv .Scroll__bar___kQ5uR.Scroll__x___dIeLw{height:52px}.Scroll__extraWide___crEyv .Scroll__bar___kQ5uR.Scroll__y___einFi{width:52px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Scroll__root___uNzmI",
@@ -4033,7 +4034,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"isTouch": "Scroll__isTouch___DPyrK",
 	"size-s": "Scroll__size-s___d3oUk",
 	"size-m": "Scroll__size-m___QwfMe",
-	"size-l": "Scroll__size-l___QCHgh"
+	"size-l": "Scroll__size-l___QCHgh",
+	"extraWide": "Scroll__extraWide___crEyv"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8327,7 +8329,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("77a75d61e04832c4ead8")
+/******/ 		__webpack_require__.h = () => ("a02b4d06e55cddaa0b81")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -8646,7 +8648,7 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 }, {
   slug: 'virtualized',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(672)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(802)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
   }
 }, {
   slug: 'notifications',
@@ -8936,7 +8938,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
         className: App_App.configBar
       }, /*#__PURE__*/App_React.createElement("span", {
         className: App_App.version
-      }, "v", "1.0.2"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
+      }, "v", "1.1.1"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
         className: App_App.cfgButton,
         variant: "clear",
         size: "l",

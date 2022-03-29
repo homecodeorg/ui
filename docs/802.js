@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[672],{
+(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[802],{
 
 /***/ "./src/docs/examples/Virtualized/index.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -203,8 +203,15 @@ function renderComplexItem(_ref, data) {
 /* harmony default export */ const Finite = ("import { Component } from 'react';\nimport { VirtualizedList, uid } from 'uilib';\nimport { createStore, withStore } from 'justorm/react';\n\nconst { getSimpleItemData, renderSimpleItems, loadData } = helpers;\n\nconst PAGE_SIZE = 20;\nconst totalCount = 100;\nconst store = createStore('example', { data: {} });\nlet updateId = uid.generateUID(); // update to fire render items, bcz itemsCount === totalCount\n\nconst loadNextData = (first, last) => loadData(first, last, getSimpleItemData);\n\nfunction setData(nextData, startIndex = Object.keys(store.data).length) {\n  const data = { ...store.data.originalObject };\n\n  nextData.every((item, i) => {\n    const index = startIndex + i;\n    if (index > totalCount) return false;\n    data[index] = item;\n    return true;\n  });\n\n  store.data = data;\n}\n\nexport default withStore('example')(\n  class Example extends Component {\n    componentDidMount() {\n      updateId = uid.generateUID();\n      loadNextData(0, PAGE_SIZE).then(setData);\n    }\n\n    onScroll({ first, last }) {\n      updateId = uid.generateUID();\n      const currId = updateId;\n\n      loadNextData(first, last).then(nextData => {\n        if (currId !== updateId) return;\n        setData(nextData, first);\n      });\n    }\n\n    render() {\n      const { data } = store.originalObject;\n\n      return (\n        <VirtualizedList\n          id={updateId}\n          totalCount={totalCount}\n          itemsCount={totalCount}\n          overlapCount={10}\n          itemHeight={40}\n          renderItem={itemProps =>\n            renderSimpleItems(itemProps, data[itemProps.key])\n          }\n          onScroll={state => this.onScroll(state)}\n        />\n      );\n    }\n  }\n);\n");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Virtualized/FiniteScroll.tsx
 /* harmony default export */ const FiniteScroll = ("import { Component } from 'react';\nimport { VirtualizedListScroll, uid } from 'uilib';\nimport { createStore, withStore } from 'justorm/react';\n\nconst { getSimpleItemData, renderSimpleItems, loadData } = helpers;\n\nconst PAGE_SIZE = 20;\nconst totalCount = 100;\nconst store = createStore('example', { data: {} });\nlet updateId = uid.generateUID(); // update to fire render items, bcz itemsCount === totalCount\n\nconst loadNextData = (first, last) => loadData(first, last, getSimpleItemData);\n\nfunction setData(nextData, startIndex = Object.keys(store.data).length) {\n  const data = { ...store.data.originalObject };\n\n  nextData.every((item, i) => {\n    const index = startIndex + i;\n    if (index > totalCount) return false;\n    data[index] = item;\n    return true;\n  });\n\n  store.data = data;\n}\n\nexport default withStore('example')(\n  class Example extends Component {\n    componentDidMount() {\n      updateId = uid.generateUID();\n      loadNextData(0, PAGE_SIZE).then(setData);\n    }\n\n    onScroll({ first, last }) {\n      updateId = uid.generateUID();\n      const currId = updateId;\n\n      loadNextData(first, last).then(nextData => {\n        if (currId !== updateId) return;\n        setData(nextData, first);\n      });\n    }\n\n    render() {\n      const { data } = store.originalObject;\n\n      return (\n        <VirtualizedListScroll\n          scrollProps={{ y: true }}\n          id={updateId}\n          totalCount={totalCount}\n          itemsCount={totalCount}\n          overlapCount={10}\n          itemHeight={40}\n          renderItem={itemProps =>\n            renderSimpleItems(itemProps, data[itemProps.key])\n          }\n          onScroll={state => this.onScroll(state)}\n        />\n      );\n    }\n  }\n);\n");
+;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Virtualized/InitialTotal.tsx
+/* harmony default export */ const InitialTotal = ("import { Component } from 'react';\nimport { VirtualizedListScroll, Spinner } from 'uilib';\nimport { createStore, withStore } from 'justorm/react';\n\nconst { renderSimpleItems } = helpers;\n\nconst PAGE_SIZE = 20;\nconst totalCount = 10;\nconst store = createStore('example', { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] });\n\nexport default withStore('example')(\n  class Example extends Component {\n    render() {\n      const { data } = store.originalObject;\n      const itemsCount = data.length;\n\n      return (\n        <VirtualizedListScroll\n          scrollProps={{ y: true }}\n          totalCount={totalCount}\n          itemsCount={itemsCount}\n          overlapCount={10}\n          itemHeight={40}\n          renderItem={itemProps =>\n            renderSimpleItems(itemProps, data[itemProps.key])\n          }\n          onScrollEnd={() => {}}\n          contentAfter={\n            itemsCount !== totalCount && (\n              <>\n                <Spinner size=\"s\" style={{ marginRight: 10 }} />\n                loading items...\n              </>\n            )\n          }\n          pageSize={PAGE_SIZE}\n        />\n      );\n    }\n  }\n);\n");
+;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Virtualized/ContentBefore.tsx
+/* harmony default export */ const ContentBefore = ("import { Component } from 'react';\nimport { VirtualizedListScroll, Spinner } from 'uilib';\nimport { createStore, withStore } from 'justorm/react';\n\nconst { renderSimpleItems } = helpers;\n\nconst PAGE_SIZE = 20;\nconst totalCount = 10;\nconst store = createStore('example', { data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] });\n\nexport default withStore('example')(\n  class Example extends Component {\n    render() {\n      const { data } = store.originalObject;\n      const itemsCount = data.length;\n\n      return (\n        <VirtualizedListScroll\n          scrollProps={{ y: true }}\n          totalCount={totalCount}\n          itemsCount={itemsCount}\n          overlapCount={10}\n          itemHeight={40}\n          renderItem={itemProps =>\n            renderSimpleItems(itemProps, data[itemProps.key])\n          }\n          onScrollEnd={() => {}}\n          contentBefore={<div className={S.contentGap}>content before</div>}\n          contentAfter={\n            itemsCount !== totalCount && (\n              <>\n                <Spinner size=\"s\" style={{ marginRight: 10 }} />\n                loading items...\n              </>\n            )\n          }\n          pageSize={PAGE_SIZE}\n        />\n      );\n    }\n  }\n);\n");
 ;// CONCATENATED MODULE: ./src/docs/examples/Virtualized/index.tsx
 /* provided dependency */ var React = __webpack_require__("./node_modules/react/index.js");
+
+
+
 
 
 
@@ -217,7 +224,8 @@ var rootPath = '/virtualized';
 var Example = function Example(props) {
   return /*#__PURE__*/React.createElement(Code/* Code */.E, Object.assign({
     scope: {
-      helpers: Virtualized_helpers_namespaceObject
+      helpers: Virtualized_helpers_namespaceObject,
+      S: Virtualized_helpers
     }
   }, props));
 };
@@ -234,7 +242,11 @@ var Example = function Example(props) {
     href: "".concat(rootPath, "/endless-scroll")
   }, "Endless"), /*#__PURE__*/React.createElement(Link/* Link */.r, {
     href: "".concat(rootPath, "/finite-scroll")
-  }, "Finite")))), /*#__PURE__*/React.createElement(Router/* Router */.F0, {
+  }, "Finite"))), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Link/* Link */.r, {
+    href: "".concat(rootPath, "/initial-total")
+  }, "Initial data already total")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Link/* Link */.r, {
+    href: "".concat(rootPath, "/content-before")
+  }, "contentBefore"))), /*#__PURE__*/React.createElement(Router/* Router */.F0, {
     rootPath: rootPath
   }, /*#__PURE__*/React.createElement(Example, {
     exact: true,
@@ -256,6 +268,16 @@ var Example = function Example(props) {
     path: "/finite-scroll",
     code: FiniteScroll,
     key: "finite-scroll"
+  }), /*#__PURE__*/React.createElement(Example, {
+    exact: true,
+    path: "/initial-total",
+    code: InitialTotal,
+    key: "initial-total"
+  }), /*#__PURE__*/React.createElement(Example, {
+    exact: true,
+    path: "/content-before",
+    code: ContentBefore,
+    key: "content-before"
   })));
 });
 
@@ -276,14 +298,15 @@ var Example = function Example(props) {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".helpers__root___jqPlK{display:flex;height:50vh}.helpers__count___dz6ze{text-align:right;margin-bottom:10px}.helpers__form___E59JF{max-width:200px}.helpers__list___bumA2{flex:1;margin-left:16px;border-radius:8px;box-shadow:0 0 0 1px var(--default-color)}.helpers__item___UfZEV{margin:0 !important}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".helpers__root___jqPlK{display:flex;height:50vh}.helpers__count___dz6ze{text-align:right;margin-bottom:10px}.helpers__form___E59JF{max-width:200px}.helpers__list___bumA2{flex:1;margin-left:16px;border-radius:8px;box-shadow:0 0 0 1px var(--default-color)}.helpers__item___UfZEV{margin:0 !important}.helpers__contentGap___qDkNH{height:100px;width:100%;background-color:var(--accent-color-alpha-50)}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "helpers__root___jqPlK",
 	"count": "helpers__count___dz6ze",
 	"form": "helpers__form___E59JF",
 	"list": "helpers__list___bumA2",
-	"item": "helpers__item___UfZEV"
+	"item": "helpers__item___UfZEV",
+	"contentGap": "helpers__contentGap___qDkNH"
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -638,6 +638,12 @@ var Input_excluded = ["value", "label", "isNullable", "controlProps", "placehold
 
 
 
+
+var TEXTAREA_SCROLL_TOP_OFFSET = {
+  s: 30,
+  m: 40,
+  l: 50
+};
 var Input_Input_Input = /*#__PURE__*/function (_Component) {
   (0,inherits/* default */.Z)(Input, _Component);
 
@@ -656,21 +662,33 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
     _this.store = void 0;
     _this.uid = generateUID();
 
+    _this.isTextArea = function () {
+      return _this.props.type === 'textarea';
+    };
+
     _this.onClearPress = function (e) {
       var _this$inputRef$curren;
 
       var _this$props = _this.props,
           onChange = _this$props.onChange,
           onClear = _this$props.onClear;
+
+      var isTextArea = _this.isTextArea();
+
       e.preventDefault();
       e.stopPropagation();
       onClear === null || onClear === void 0 ? void 0 : onClear();
 
+      if (_this.isTextArea()) {
+        _this.inputRef.current.innerText = '';
+      }
+
       if (onChange) {
         _this.onChange('');
       } else {
-        // @ts-ignore
-        _this.inputRef.current.value = '';
+        if (!_this.isTextArea) {
+          _this.inputRef.current.value = '';
+        }
       }
 
       (_this$inputRef$curren = _this.inputRef.current) === null || _this$inputRef$curren === void 0 ? void 0 : _this$inputRef$curren.focus();
@@ -718,6 +736,14 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
       } else if (onChange) onChange(e, value);else {
         _this.store.inputValue = value;
       }
+    };
+
+    _this.onTextAreaInput = function (e) {
+      var onInput = _this.props.onInput;
+
+      _this.handleChange(e);
+
+      onInput === null || onInput === void 0 ? void 0 : onInput(e);
     };
 
     _this.onLabelClipPathChange = function (clipPath) {
@@ -787,6 +813,7 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       document.addEventListener('keyup', this.onDocKeyUp, true);
+      if (this.isTextArea()) this.inputRef.current.innerText = this.store.inputValue;
     }
   }, {
     key: "componentDidUpdate",
@@ -796,7 +823,9 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
       this.updateAutoComplete();
 
       if (value !== prevProps.value && value !== this.store.inputValue) {
-        this.store.inputValue = value;
+        this.store.inputValue = value; // @ts-ignore
+        // if (this.isTextArea()) this.inputRef.current.innerText = value;
+
         this.updateHasValue();
         this.updateLabelPosition();
       }
@@ -864,6 +893,7 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
         return 0;
       }
 
+      if (this.isTextArea()) return this.inputRef.current.innerText.replace('/n', '');
       return val;
     }
   }, {
@@ -888,7 +918,12 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
         onChange: this.handleChange,
         onFocus: this.onFocus,
         onBlur: this.onBlur
-      }); // @ts-ignore
+      });
+
+      if (this.isTextArea()) {
+        props.contentEditable = true;
+        props.onInput = this.onTextAreaInput;
+      } // @ts-ignore
 
 
       if (value === null && !isNullable) {
@@ -906,6 +941,32 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
 
       if (props.value === undefined) props.value = '';
       return props;
+    }
+  }, {
+    key: "wrapControll",
+    value: function wrapControll(control) {
+      if (this.isTextArea()) {
+        var size = this.props.size;
+        var labelClipPath = this.store.labelClipPath;
+        return /*#__PURE__*/Input_React.createElement(Scroll/* Scroll */.X, {
+          y: true,
+          size: "m",
+          className: Input_Input.scroller,
+          innerProps: {
+            style: {
+              clipPath: labelClipPath
+            }
+          },
+          offset: {
+            y: {
+              before: TEXTAREA_SCROLL_TOP_OFFSET[size],
+              after: 20
+            }
+          }
+        }, control);
+      }
+
+      return control;
     }
   }, {
     key: "renderAdornment",
@@ -942,8 +1003,8 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
           hasValue = _this$store4.hasValue,
           labelClipPath = _this$store4.labelClipPath,
           isLabelOnTop = _this$store4.isLabelOnTop;
-      var isTextArea = type === 'textarea';
-      var Control = isTextArea ? 'textarea' : 'input';
+      var isTextArea = this.isTextArea();
+      var Control = isTextArea ? 'span' : 'input';
       var controlProps = this.getControlProps();
       var classes = classnames_default()(Input_Input.root, isTextArea && Input_Input.isTextArea, Input_Input["size-".concat(size)], isFocused && Input_Input.isFocused, error && Input_Input.hasError, clear && Input_Input.isClear, hasClear && Input_Input.hasClear, disabled && Input_Input.isDisabled, className);
       return /*#__PURE__*/Input_React.createElement("div", {
@@ -957,12 +1018,12 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
           clipPath: labelClipPath
         },
         key: "border"
-      }), this.renderAdornment('left'), /*#__PURE__*/Input_React.createElement(Control, Object.assign({}, controlProps, {
+      }), this.renderAdornment('left'), this.wrapControll( /*#__PURE__*/Input_React.createElement(Control, Object.assign({}, controlProps, {
         className: classnames_default()(Input_Input.control, controlProps === null || controlProps === void 0 ? void 0 : controlProps.className) // @ts-ignore
         ,
         ref: this.inputRef,
         key: "control"
-      })), /*#__PURE__*/Input_React.createElement(Label_Label_Label, {
+      }))), /*#__PURE__*/Input_React.createElement(Label_Label_Label, {
         className: Input_Input.label,
         size: size,
         disabled: disabled,
@@ -970,7 +1031,9 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
         isError: Boolean(error),
         isFocused: isFocused,
         onClipPathChange: this.onLabelClipPathChange
-      }, label), this.renderAdornment('right'), hasClear && !disabled && hasValue && /*#__PURE__*/Input_React.createElement(Button/* Button */.z, {
+      }, label), this.renderAdornment('right'), required && /*#__PURE__*/Input_React.createElement(RequiredStar_RequiredStar_RequiredStar, {
+        size: size
+      })), hasClear && !disabled && hasValue && /*#__PURE__*/Input_React.createElement(Button/* Button */.z, {
         className: Input_Input.clearButton,
         variant: "clear",
         size: size,
@@ -980,8 +1043,6 @@ var Input_Input_Input = /*#__PURE__*/function (_Component) {
         className: Input_Input.clearIcon,
         size: size,
         type: "close"
-      })), required && /*#__PURE__*/Input_React.createElement(RequiredStar_RequiredStar_RequiredStar, {
-        size: size
       })), !disabled && typeof error === 'string' && /*#__PURE__*/Input_React.createElement(AssistiveText_AssistiveText_AssistiveText, {
         variant: "danger",
         size: size
@@ -1769,9 +1830,16 @@ var Gallery_Gallery_Gallery = /*#__PURE__*/function (_Component) {
 
     _this.onKeyDown = function (e) {
       if (_this.isSingle()) return;
-      e.stopPropagation();
-      if (e.key === 'ArrowRight') return _this.move(-1);
-      if (e.key === 'ArrowLeft') return _this.move(1);
+
+      if (e.key === 'ArrowRight') {
+        e.stopPropagation();
+        return _this.move(-1);
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.stopPropagation();
+        return _this.move(1);
+      }
     };
 
     _this.move = throttle(function (direction) {
@@ -4251,7 +4319,7 @@ var VH = /*#__PURE__*/function (_Component) {
 var debounce = __webpack_require__("./src/tools/debounce.ts");
 ;// CONCATENATED MODULE: ./src/components/Virtualized/Virtualized.helpers.ts
 function getLastIndex(scrollTop, clientHeight, itemHeight, overlapCount, totalCount) {
-  return Math.min(totalCount, Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount));
+  return Math.min(totalCount - 1, Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount));
 } // Returns indexes of first and last items to be rendered
 
 function Virtualized_helpers_getIndexes(_ref) {
@@ -4349,7 +4417,6 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
       var indexes = _this.getIndexes();
 
       var scrollTop = _this.scrollElem.scrollTop;
-      console.log('indexes', indexes);
       if (onScroll) onScroll((0,objectSpread2/* default */.Z)({
         scrollTop: scrollTop
       }, indexes));
@@ -4369,7 +4436,7 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
           onScrollEnd = _this$props.onScrollEnd;
       if (itemsCount === totalCount) return;
       if (itemsCount < _this.lastScrollEndIndex) return;
-      _this.lastScrollEndIndex = itemsCount + pageSize;
+      _this.lastScrollEndIndex = Math.min(itemsCount + pageSize, totalCount);
       onScrollEnd === null || onScrollEnd === void 0 ? void 0 : onScrollEnd();
     };
 
@@ -4450,6 +4517,7 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
     value: function shouldComponentUpdate(nextProps, nextState) {
       if (nextProps.id !== this.props.id) return true;
       if (nextProps.itemsCount !== this.props.itemsCount) return true;
+      if (nextProps.wrapElem !== this.props.wrapElem) return true;
       if (!compareq_default()(nextState, this.state)) return true;
       return false;
     }
@@ -4457,7 +4525,8 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps, prevState, snapshot) {
       var state = {};
-      if (this.scrollElem !== this.props.wrapElem) this.scrollElem = this.props.wrapElem;
+      var scrollElemUpdated = this.scrollElem !== this.props.wrapElem;
+      if (scrollElemUpdated) this.scrollElem = this.props.wrapElem;
 
       if (this.scrollElem) {
         var newScrollTop = this.getNewScrollTop(prevProps, snapshot);
@@ -4465,7 +4534,7 @@ var Virtualized_Virtualized_Virtualized = /*#__PURE__*/function (_Component) {
       }
 
       if (prevProps.id !== this.props.id) state.id = this.props.id;
-      if (this.needUpdateIndexes(prevProps)) Object.assign(state, this.getIndexes());
+      if (scrollElemUpdated || this.needUpdateIndexes(prevProps)) Object.assign(state, this.getIndexes());
       if (this.needUpdateHeight(prevProps)) state.height = getHeight(this.props);
       if (Object.keys(state).length) this.setState(state);
     }
@@ -4733,6 +4802,7 @@ var List_List_List = /*#__PURE__*/function (_Component) {
           customWrapElem = _this$props.customWrapElem;
       var height = state.height,
           offsetAfter = state.offsetAfter;
+      var contentBeforeHeight = _this.store.contentBeforeHeight;
       var props = lodash_omit_default()(rest, ['contentBefore', 'contentAfter', 'scrollTop', 'itemHeight', 'itemsCount', 'totalCount', 'overlapCount', 'onScrollEnd', 'renderItem', 'wrapElem', 'getItemProps', 'offsetAfter', 'offsetBefore']);
       var content = /*#__PURE__*/List_React.createElement(List_React.Fragment, null, contentBefore && /*#__PURE__*/List_React.createElement("div", {
         ref: _this.contentBeforeElem,
@@ -4740,7 +4810,7 @@ var List_List_List = /*#__PURE__*/function (_Component) {
       }, contentBefore), /*#__PURE__*/List_React.createElement("div", {
         className: List_List.gap,
         style: {
-          height: height
+          height: height - contentBeforeHeight
         },
         key: "gap"
       }), items, contentAfter && /*#__PURE__*/List_React.createElement("div", {
@@ -5461,25 +5531,26 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Input__root___yzjNr{color:var(--accent-color)}.Input__main___MeGt2{position:relative;display:flex;max-width:100%;border-radius:inherit}.Input__isTextArea___LJf2L .Input__main___MeGt2{height:auto;max-height:unset}.Input__border___Nfw8F{position:absolute;top:0;left:0;right:0;bottom:0;box-shadow:inset 0 0 0 2px var(--accent-color);transition:.15s ease-out;transition-property:box-shadow,border-color;border-radius:inherit;pointer-events:none}.Input__root___yzjNr:hover .Input__border___Nfw8F,.Input__isFocused___bPVgw .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--active-color);background-color:var(--active-color-alpha-100)}.Input__isFocused___bPVgw .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--active-color)}.Input__hasError___pqR_8 .Input__border___Nfw8F,.Input__hasError___pqR_8:hover .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--danger-color)}.Input__isClear___uiPMc .Input__border___Nfw8F,.Input__isDisabled___vdMoi .Input__border___Nfw8F{box-shadow:none}.Input__isDisabled___vdMoi .Input__border___Nfw8F{opacity:.6;background-color:var(--accent-color-alpha-500)}.Input__size-s___nB4W0{font-size:12px}.Input__size-s___nB4W0 .Input__main___MeGt2{height:30px;min-height:30px;max-height:30px;min-width:30px;border-radius:4px;font-size:12px;border-radius:4px;padding:0 10px}.Input__size-m___Uv18K{font-size:16px}.Input__size-m___Uv18K .Input__main___MeGt2{height:40px;min-height:40px;max-height:40px;min-width:40px;border-radius:6px;font-size:16px;border-radius:6px;padding:0 12px}.Input__size-l___iTpZi{font-size:20px}.Input__size-l___iTpZi .Input__main___MeGt2{height:50px;min-height:50px;max-height:50px;min-width:50px;border-radius:8px;font-size:20px;border-radius:8px;padding:0 14px}.Input__isDisabled___vdMoi{color:var(--accent-color-alpha-500)}.Input__control____e2zJ,.Input__adornmentLeft___MgBuC,.Input__adornmentRight___C4YsM{font-size:inherit;font-weight:normal}.Input__labelGap___kpLPr{position:absolute;opacity:0;pointer-events:none}.Input__isTextArea___LJf2L .Input__label___vRBnA{max-height:40px}.Input__control____e2zJ{filter:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;display:inline-flex;flex-grow:1;position:relative;width:30px;min-width:50%;height:100%;box-shadow:none;background:none;color:inherit;outline:none;transition:border-color .15s ease-in-out 0s}.Input__isTextArea___LJf2L .Input__control____e2zJ{margin:8px 0}.Input__control____e2zJ:-internal-autofill-selected,.Input__control____e2zJ:-webkit-autofill{-webkit-animation-name:Input__clearBg___Xz_Gn;animation-name:Input__clearBg___Xz_Gn;-webkit-animation-fill-mode:both;animation-fill-mode:both}.Input__hasClear___N3Xdo .Input__control____e2zJ{padding-right:1em}.Input__control____e2zJ::-moz-placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ:-ms-input-placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ::placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ::-moz-selection{background-color:var(--active-color-alpha-300)}.Input__control____e2zJ::selection{background-color:var(--active-color-alpha-300)}@-webkit-keyframes Input__clearBg___Xz_Gn{to{background:transparent}}.Input__adornmentLeft___MgBuC,.Input__adornmentRight___C4YsM{display:inline-flex;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:1;min-width:0}.Input__size-s___nB4W0 .Input__adornmentLeft___MgBuC,.Input__size-s___nB4W0 .Input__adornmentRight___C4YsM{min-width:calc(var(--indent-s) * 1.5)}.Input__size-m___Uv18K .Input__adornmentLeft___MgBuC,.Input__size-m___Uv18K .Input__adornmentRight___C4YsM{min-width:var(--indent-m)}.Input__size-l___iTpZi .Input__adornmentLeft___MgBuC,.Input__size-l___iTpZi .Input__adornmentRight___C4YsM{min-width:var(--indent-l)}.Input__adornmentLeft___MgBuC > span,.Input__adornmentRight___C4YsM > span{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.Input__adornmentLeft___MgBuC{margin-right:12px}.Input__adornmentRight___C4YsM{margin-left:12px}.Input__requiredStar___DO4gn{position:absolute;height:8px;width:8px;border-radius:50%;background-color:var(--warning-color);opacity:.8;pointer-events:none}.Input__isDisabled___vdMoi .Input__requiredStar___DO4gn{display:none}.Input__size-s___nB4W0 .Input__requiredStar___DO4gn{right:4px;top:4px}.Input__size-m___Uv18K .Input__requiredStar___DO4gn{right:6px;top:6px}.Input__size-l___iTpZi .Input__requiredStar___DO4gn{right:8px;top:8px}.Input__isDisabled___vdMoi{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Input__clearButton___AGSAF{z-index:1;position:absolute;top:0;right:0;bottom:1px;height:auto}.Input__clearButton___AGSAF:hover{background-color:var(--accent-color-alpha-0) !important}.Input__clearIcon____ASvP{flex-shrink:0;opacity:.3;transition:opacity .2s ease-out}.Input__clearButton___AGSAF:hover .Input__clearIcon____ASvP{opacity:.8}.Input__size-s___nB4W0 .Input__clearIcon____ASvP{height:10px;width:10px}.Input__size-m___Uv18K .Input__clearIcon____ASvP{height:12px;width:12px}.Input__size-l___iTpZi .Input__clearIcon____ASvP{height:14px;width:14px}.Input__size-xl___GgFLo .Input__clearIcon____ASvP{height:16px;width:16px}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Input__root___yzjNr{position:relative;color:var(--accent-color)}.Input__root___yzjNr.Input__isTextArea___LJf2L{max-height:10em}.Input__main___MeGt2{position:relative;display:flex;max-width:100%;border-radius:inherit}.Input__isTextArea___LJf2L .Input__main___MeGt2{height:auto !important;max-height:inherit !important}.Input__size-s___nB4W0.Input__isTextArea___LJf2L .Input__main___MeGt2{padding-right:2px !important}.Input__size-m___Uv18K.Input__isTextArea___LJf2L .Input__main___MeGt2{padding-right:8px !important}.Input__size-l___iTpZi.Input__isTextArea___LJf2L .Input__main___MeGt2{padding-right:13px !important}.Input__border___Nfw8F{z-index:1;position:absolute;top:0;left:0;right:0;bottom:0;box-shadow:inset 0 0 0 2px var(--accent-color);transition:.15s ease-out;transition-property:box-shadow,border-color;border-radius:inherit;pointer-events:none}.Input__root___yzjNr:hover .Input__border___Nfw8F,.Input__isFocused___bPVgw .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--active-color);background-color:var(--active-color-alpha-100)}.Input__isFocused___bPVgw .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--active-color)}.Input__hasError___pqR_8 .Input__border___Nfw8F,.Input__hasError___pqR_8:hover .Input__border___Nfw8F{box-shadow:inset 0 0 0 2px var(--danger-color)}.Input__isClear___uiPMc .Input__border___Nfw8F,.Input__isDisabled___vdMoi .Input__border___Nfw8F{box-shadow:none}.Input__isDisabled___vdMoi .Input__border___Nfw8F{opacity:.6;background-color:var(--accent-color-alpha-500)}.Input__size-s___nB4W0{font-size:12px}.Input__size-s___nB4W0 .Input__main___MeGt2{height:30px;min-height:30px;max-height:30px;min-width:30px;border-radius:4px;font-size:12px;border-radius:4px;padding:0 10px}.Input__size-m___Uv18K{font-size:16px}.Input__size-m___Uv18K .Input__main___MeGt2{height:40px;min-height:40px;max-height:40px;min-width:40px;border-radius:6px;font-size:16px;border-radius:6px;padding:0 12px}.Input__size-l___iTpZi{font-size:20px}.Input__size-l___iTpZi .Input__main___MeGt2{height:50px;min-height:50px;max-height:50px;min-width:50px;border-radius:8px;font-size:20px;border-radius:8px;padding:0 14px}.Input__isTextArea___LJf2L .Input__main___MeGt2{padding-left:0}.Input__size-s___nB4W0.Input__isTextArea___LJf2L .Input__control____e2zJ{padding:0 10px}.Input__size-m___Uv18K.Input__isTextArea___LJf2L .Input__control____e2zJ{padding:0 12px}.Input__size-l___iTpZi.Input__isTextArea___LJf2L .Input__control____e2zJ{padding:0 14px}.Input__isDisabled___vdMoi{color:var(--accent-color-alpha-500)}.Input__control____e2zJ,.Input__adornmentLeft___MgBuC,.Input__adornmentRight___C4YsM{font-size:inherit;font-weight:normal}.Input__labelGap___kpLPr{position:absolute;opacity:0;pointer-events:none}.Input__isTextArea___LJf2L .Input__label___vRBnA{max-height:40px}.Input__scroller___SX2Wp{width:100%}.Input__control____e2zJ{filter:none;-webkit-appearance:none;-moz-appearance:none;appearance:none;display:inline-flex;flex-grow:1;position:relative;width:30px;min-width:50%;height:100%;box-shadow:none;background:none;color:inherit;outline:none;transition:border-color .15s ease-in-out 0s}.Input__isTextArea___LJf2L .Input__control____e2zJ{display:block;height:unset;max-height:100%;width:100%}.Input__isTextArea___LJf2L .Input__control____e2zJ::after{display:block;content:''}.Input__size-s___nB4W0.Input__isTextArea___LJf2L .Input__control____e2zJ{padding-top:8px}.Input__size-s___nB4W0.Input__isTextArea___LJf2L .Input__control____e2zJ::after{height:8px}.Input__size-m___Uv18K.Input__isTextArea___LJf2L .Input__control____e2zJ{padding-top:10px}.Input__size-m___Uv18K.Input__isTextArea___LJf2L .Input__control____e2zJ::after{height:10px}.Input__size-l___iTpZi.Input__isTextArea___LJf2L .Input__control____e2zJ{padding-top:12px}.Input__size-l___iTpZi.Input__isTextArea___LJf2L .Input__control____e2zJ::after{height:12px}.Input__control____e2zJ:-internal-autofill-selected,.Input__control____e2zJ:-webkit-autofill{-webkit-animation-name:Input__clearBg___Xz_Gn;animation-name:Input__clearBg___Xz_Gn;-webkit-animation-fill-mode:both;animation-fill-mode:both}.Input__size-s___nB4W0.Input__hasClear___N3Xdo .Input__control____e2zJ{padding-right:20px}.Input__size-m___Uv18K.Input__hasClear___N3Xdo .Input__control____e2zJ{padding-right:24px}.Input__size-l___iTpZi.Input__hasClear___N3Xdo .Input__control____e2zJ{padding-right:28px}.Input__control____e2zJ::-moz-placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ:-ms-input-placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ::placeholder{color:var(--accent-color-alpha-500)}.Input__control____e2zJ::-moz-selection{background-color:var(--active-color-alpha-300)}.Input__control____e2zJ::selection{background-color:var(--active-color-alpha-300)}@-webkit-keyframes Input__clearBg___Xz_Gn{to{background:transparent}}.Input__adornmentLeft___MgBuC,.Input__adornmentRight___C4YsM{display:inline-flex;align-items:center;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:1;min-width:0}.Input__size-s___nB4W0 .Input__adornmentLeft___MgBuC,.Input__size-s___nB4W0 .Input__adornmentRight___C4YsM{min-width:calc(var(--indent-s) * 1.5)}.Input__size-m___Uv18K .Input__adornmentLeft___MgBuC,.Input__size-m___Uv18K .Input__adornmentRight___C4YsM{min-width:var(--indent-m)}.Input__size-l___iTpZi .Input__adornmentLeft___MgBuC,.Input__size-l___iTpZi .Input__adornmentRight___C4YsM{min-width:var(--indent-l)}.Input__adornmentLeft___MgBuC > span,.Input__adornmentRight___C4YsM > span{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.Input__adornmentLeft___MgBuC{margin-right:12px}.Input__adornmentRight___C4YsM{margin-left:12px}.Input__requiredStar___DO4gn{position:absolute;height:8px;width:8px;border-radius:50%;background-color:var(--warning-color);opacity:.8;pointer-events:none}.Input__isDisabled___vdMoi .Input__requiredStar___DO4gn{display:none}.Input__size-s___nB4W0 .Input__requiredStar___DO4gn{right:4px;top:4px}.Input__size-m___Uv18K .Input__requiredStar___DO4gn{right:6px;top:6px}.Input__size-l___iTpZi .Input__requiredStar___DO4gn{right:8px;top:8px}.Input__isDisabled___vdMoi{pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.Input__clearButton___AGSAF{z-index:1;position:absolute;top:0;right:0;bottom:1px;height:auto}.Input__clearButton___AGSAF:hover{background-color:var(--accent-color-alpha-0) !important}.Input__clearIcon____ASvP{flex-shrink:0;opacity:.3;transition:opacity .2s ease-out}.Input__clearButton___AGSAF:hover .Input__clearIcon____ASvP{opacity:.8}.Input__size-s___nB4W0 .Input__clearIcon____ASvP{height:10px;width:10px}.Input__size-m___Uv18K .Input__clearIcon____ASvP{height:12px;width:12px}.Input__size-l___iTpZi .Input__clearIcon____ASvP{height:14px;width:14px}.Input__size-xl___GgFLo .Input__clearIcon____ASvP{height:16px;width:16px}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Input__root___yzjNr",
-	"main": "Input__main___MeGt2",
 	"isTextArea": "Input__isTextArea___LJf2L",
+	"main": "Input__main___MeGt2",
+	"size-s": "Input__size-s___nB4W0",
+	"size-m": "Input__size-m___Uv18K",
+	"size-l": "Input__size-l___iTpZi",
 	"border": "Input__border___Nfw8F",
 	"isFocused": "Input__isFocused___bPVgw",
 	"hasError": "Input__hasError___pqR_8",
 	"isClear": "Input__isClear___uiPMc",
 	"isDisabled": "Input__isDisabled___vdMoi",
-	"size-s": "Input__size-s___nB4W0",
-	"size-m": "Input__size-m___Uv18K",
-	"size-l": "Input__size-l___iTpZi",
 	"control": "Input__control____e2zJ",
 	"adornmentLeft": "Input__adornmentLeft___MgBuC",
 	"adornmentRight": "Input__adornmentRight___C4YsM",
 	"labelGap": "Input__labelGap___kpLPr",
 	"label": "Input__label___vRBnA",
+	"scroller": "Input__scroller___SX2Wp",
 	"clearBg": "Input__clearBg___Xz_Gn",
 	"hasClear": "Input__hasClear___N3Xdo",
 	"requiredStar": "Input__requiredStar___DO4gn",
@@ -5944,7 +6015,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Code__root___aJQw4{display:flex;flex-direction:column;width:100%;max-height:calc(100vh - 100px);margin:1px;box-shadow:0 0 0 1px var(--accent-color-alpha-100);border-radius:var(--border-radius-l)}.Code__editorContainer___hKAb0,.Code__editorResult____Y8II{border-radius:inherit;flex:1}.Code__editorContainer___hKAb0{position:relative;max-height:60vh;border-bottom-left-radius:0;border-bottom-right-radius:0}.Code__error___pxycX,.Code__editorContainer___hKAb0 *{font-family:monospace !important}.Code__editorResult____Y8II{display:flex;position:relative}.Code__editorResult____Y8II::before{content:'';position:absolute;bottom:100%;left:0;width:100%;height:24px;background-image:linear-gradient(to top,var(--decent-color),var(--decent-color-alpha-0));pointer-events:none}.Code__editor___JRByv{padding-bottom:16px;background-color:unset !important}@media (max-width:700px){.Code__editor___JRByv,.Code__error___pxycX{font-size:80%}}.Code__editor___JRByv.Code__runtime___ptkHa{display:none}.Code__error___pxycX,.Code__preview___YxPS0{padding:16px}.Code__error___pxycX{white-space:break-spaces;background-color:var(--danger-color-alpha-100)}.Code__preview___YxPS0{flex:1;margin-top:-1px;padding-top:24px;border-top-left-radius:0;border-top-right-radius:0}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Code__root___aJQw4{display:flex;flex-direction:column;width:100%;max-height:calc(100vh - 100px);margin:1px;box-shadow:0 0 0 1px var(--accent-color-alpha-100);border-radius:var(--border-radius-l)}.Code__editorContainer___hKAb0,.Code__editorResult____Y8II{border-radius:inherit;flex:1}.Code__editorContainer___hKAb0{position:relative;max-height:60vh;border-bottom-left-radius:0;border-bottom-right-radius:0}.Code__error___pxycX,.Code__editorContainer___hKAb0 *{font-family:monospace !important}.Code__editorResult____Y8II{display:flex;flex-direction:column;position:relative}.Code__editorResult____Y8II::before{content:'';position:absolute;bottom:100%;left:0;width:100%;height:24px;background-image:linear-gradient(to top,var(--decent-color),var(--decent-color-alpha-0));pointer-events:none}.Code__editor___JRByv{padding-bottom:16px;background-color:unset !important}@media (max-width:700px){.Code__editor___JRByv,.Code__error___pxycX{font-size:80%}}.Code__editor___JRByv.Code__runtime___ptkHa{display:none}.Code__error___pxycX,.Code__preview___YxPS0{padding:16px}.Code__error___pxycX{white-space:break-spaces;background-color:var(--danger-color-alpha-100)}.Code__preview___YxPS0{flex:1;margin-top:-1px;padding-top:24px;border-top-left-radius:0;border-top-right-radius:0}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Code__root___aJQw4",
