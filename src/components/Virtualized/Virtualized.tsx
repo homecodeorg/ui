@@ -181,7 +181,7 @@ class Virtualized extends Component<T.Props, T.State> {
     if (itemsCount === totalCount) return;
     if (itemsCount < this.lastScrollEndIndex) return;
 
-    this.lastScrollEndIndex = itemsCount + pageSize;
+    this.lastScrollEndIndex = Math.min(itemsCount + pageSize, totalCount);
     onScrollEnd?.();
   };
 
