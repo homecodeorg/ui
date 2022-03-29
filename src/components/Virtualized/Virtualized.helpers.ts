@@ -6,7 +6,7 @@ export function getLastIndex(
   totalCount
 ) {
   return Math.min(
-    totalCount,
+    totalCount - 1,
     Math.floor((scrollTop + clientHeight) / itemHeight + overlapCount)
   );
 }

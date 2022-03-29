@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/foreverido/uilib/compare/v1.1.0...v1.1.1) (2022-03-29)
+
+
+### Bug Fixes
+
+* Gallery - do not stop propagation if no matched key ([27290f2](https://github.com/foreverido/uilib/commit/27290f2692bf85ea1f36137d0f7243b95b890ee5))
+* Input - textarea - clip area under label (when scrolling) ([fd20116](https://github.com/foreverido/uilib/commit/fd20116239cf9107c0f6f60de0511424206214f1))
+* Scroll - omit extraWide prop for DOM props ([de0dd38](https://github.com/foreverido/uilib/commit/de0dd3834cc80112b11a5fa871b88e288d59a721))
+* Virtualized - lastScrollEndIndex not highter than totalCount ([10101cb](https://github.com/foreverido/uilib/commit/10101cb3fd147dc1de1df447e6feeb7a0b650905))
+
+## [1.1.0](https://github.com/foreverido/uilib/compare/v1.0.7...v1.1.0) (2022-03-28)
+
+
+### Features
+
+* Input - textarea ([a155eba](https://github.com/foreverido/uilib/commit/a155eba40a47a1f52597c91a179b8f949a7f9909))
+
+### [1.0.7](https://github.com/foreverido/uilib/compare/v1.0.6...v1.0.7) (2022-03-27)
+
+
+### Features
+
+* Scroll - extraWide prop ([7dbd3d7](https://github.com/foreverido/uilib/commit/7dbd3d7a805c832998dc5705e2af40606c0dd160))
+
+### [1.0.6](https://github.com/foreverido/uilib/compare/v1.0.5...v1.0.6) (2022-03-27)
+
+
+### Bug Fixes
+
+* Scroll - thumb min length ([990b0ed](https://github.com/foreverido/uilib/commit/990b0eda5958294cdfb2c567283ea3bf7a550d94))
+* Virtualized - contentBefore height calculation ([d2801a2](https://github.com/foreverido/uilib/commit/d2801a2caffbc0893efbd50ac33ab91fb5dca37c))
+
+### [1.0.5](https://github.com/foreverido/uilib/compare/v1.0.4...v1.0.5) (2022-03-27)
+
+
+### Bug Fixes
+
+* Virtualized - getLastIndex() - 'total-1' ([1ee5e49](https://github.com/foreverido/uilib/commit/1ee5e49da6be01895fdbcaf9c06682abcd4fdad1))
+
+### [1.0.4](https://github.com/foreverido/uilib/compare/v1.0.2...v1.0.4) (2022-03-27)
+
+
+### Bug Fixes
+
+* Virtualized - when initial data already total, +example ([07fc048](https://github.com/foreverido/uilib/commit/07fc048f80871e7236598dab40a3158a9c1d64c6))
+
 ### [1.0.2](https://github.com/foreverido/uilib/compare/v1.0.1...v1.0.2) (2022-03-27)
 
 

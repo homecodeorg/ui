@@ -11,9 +11,16 @@ import { RequiredStar } from '../RequiredStar/RequiredStar';
 import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
+import { Scroll } from '../Scroll/Scroll';
 
 import S from './Input.styl';
 import * as T from './Input.types';
+
+const TEXTAREA_SCROLL_TOP_OFFSET = {
+  s: 30,
+  m: 40,
+  l: 50,
+};
 
 export class Input extends Component<T.Props> {
   inputRef = createRef<HTMLInputElement>();
@@ -47,6 +54,9 @@ export class Input extends Component<T.Props> {
 
   componentDidMount() {
     document.addEventListener('keyup', this.onDocKeyUp, true);
+
+    if (this.isTextArea())
+      this.inputRef.current.innerText = this.store.inputValue;
   }
 
   componentDidUpdate(prevProps: T.Props) {
@@ -57,6 +67,8 @@ export class Input extends Component<T.Props> {
 
     if (value !== prevProps.value && value !== this.store.inputValue) {
       this.store.inputValue = value;
+      // @ts-ignore
+      // if (this.isTextArea()) this.inputRef.current.innerText = value;
       this.updateHasValue();
       this.updateLabelPosition();
     }
@@ -94,6 +106,8 @@ export class Input extends Component<T.Props> {
     return type === 'number' || Boolean(value || defaultValue);
   }
 
+  isTextArea = () => this.props.type === 'textarea';
+
   isLabelOnTop(hasValue = this.store?.hasValue) {
     const { forceLabelOnTop, adornmentLeft } = this.props;
 
@@ -113,22 +127,32 @@ export class Input extends Component<T.Props> {
       if (isNullable && val === '') return null;
       return 0;
     }
+
+    if (this.isTextArea())
+      return this.inputRef.current.innerText.replace('/n', '');
+
     return val;
   }
 
   onClearPress = e => {
     const { onChange, onClear } = this.props;
+    const isTextArea = this.isTextArea();
 
     e.preventDefault();
     e.stopPropagation();
 
     onClear?.();
 
+    if (this.isTextArea()) {
+      this.inputRef.current.innerText = '';
+    }
+
     if (onChange) {
       this.onChange('');
     } else {
-      // @ts-ignore
-      this.inputRef.current.value = '';
+      if (!this.isTextArea) {
+        this.inputRef.current.value = '';
+      }
     }
 
     this.inputRef.current?.focus();
@@ -171,6 +195,13 @@ export class Input extends Component<T.Props> {
     else {
       this.store.inputValue = value;
     }
+  };
+
+  onTextAreaInput = e => {
+    const { onInput } = this.props;
+
+    this.handleChange(e);
+    onInput?.(e);
   };
 
   onLabelClipPathChange = (clipPath: string) =>
@@ -235,6 +266,11 @@ export class Input extends Component<T.Props> {
       onBlur: this.onBlur,
     };
 
+    if (this.isTextArea()) {
+      props.contentEditable = true;
+      props.onInput = this.onTextAreaInput;
+    }
+
     // @ts-ignore
     if (value === null && !isNullable) {
       props.value = rest.type === 'number' ? 0 : '';
@@ -252,6 +288,29 @@ export class Input extends Component<T.Props> {
     if (props.value === undefined) props.value = '';
 
     return props;
+  }
+
+  wrapControll(control) {
+    if (this.isTextArea()) {
+      const { size } = this.props;
+      const { labelClipPath } = this.store;
+
+      return (
+        <Scroll
+          y
+          size="m"
+          className={S.scroller}
+          innerProps={{ style: { clipPath: labelClipPath } }}
+          offset={{
+            y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
+          }}
+        >
+          {control}
+        </Scroll>
+      );
+    }
+
+    return control;
   }
 
   renderAdornment(type: 'right' | 'left') {
@@ -287,9 +346,9 @@ export class Input extends Component<T.Props> {
       disabled,
     } = this.props;
     const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
+    const isTextArea = this.isTextArea();
 
-    const isTextArea = type === 'textarea';
-    const Control = isTextArea ? 'textarea' : 'input';
+    const Control = isTextArea ? 'span' : 'input';
     const controlProps = this.getControlProps();
     const classes = cn(
       S.root,
@@ -313,13 +372,15 @@ export class Input extends Component<T.Props> {
             key="border"
           />
           {this.renderAdornment('left')}
-          <Control
-            {...controlProps}
-            className={cn(S.control, controlProps?.className)}
-            // @ts-ignore
-            ref={this.inputRef}
-            key="control"
-          />
+          {this.wrapControll(
+            <Control
+              {...controlProps}
+              className={cn(S.control, controlProps?.className)}
+              // @ts-ignore
+              ref={this.inputRef}
+              key="control"
+            />
+          )}
           <Label
             className={S.label}
             size={size}
@@ -332,19 +393,19 @@ export class Input extends Component<T.Props> {
             {label}
           </Label>
           {this.renderAdornment('right')}
-          {hasClear && !disabled && hasValue && (
-            <Button
-              className={S.clearButton}
-              variant="clear"
-              size={size}
-              isSquare
-              onClick={this.onClearPress}
-            >
-              <Icon className={S.clearIcon} size={size} type="close" />
-            </Button>
-          )}
           {required && <RequiredStar size={size} />}
         </label>
+        {hasClear && !disabled && hasValue && (
+          <Button
+            className={S.clearButton}
+            variant="clear"
+            size={size}
+            isSquare
+            onClick={this.onClearPress}
+          >
+            <Icon className={S.clearIcon} size={size} type="close" />
+          </Button>
+        )}
         {!disabled && typeof error === 'string' && (
           <AssistiveText variant="danger" size={size}>
             {error}

@@ -18,6 +18,7 @@ export type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   innerClassName?: string;
   thumbClassName?: string;
   innerProps?: HTMLAttributes<HTMLDivElement>;
+  extraWide?: boolean;
   x?: boolean;
   y?: boolean;
   size?: Size;
@@ -298,7 +299,7 @@ export class Scroll extends Component<Props> {
   }
 
   render() {
-    const { y, x, size, autoHide, className } = this.props;
+    const { y, x, size, extraWide, autoHide, className } = this.props;
     const { isScrolling, activeAxis } = this.store;
 
     const classes = cn(
@@ -307,6 +308,7 @@ export class Scroll extends Component<Props> {
       x && S.x,
       S[`size-${size}`],
       autoHide && S.autoHide,
+      extraWide && S.extraWide,
       (isScrolling || activeAxis) && S.isScrolling,
       this.isTouch && S.isTouch,
       className
@@ -321,6 +323,7 @@ export class Scroll extends Component<Props> {
       'thumbClassName',
       'autoHide',
       'children',
+      'extraWide',
     ]);
 
     return (
