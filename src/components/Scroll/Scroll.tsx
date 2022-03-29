@@ -323,6 +323,7 @@ export class Scroll extends Component<Props> {
       'thumbClassName',
       'autoHide',
       'children',
+      'extraWide',
     ]);
 
     return (
