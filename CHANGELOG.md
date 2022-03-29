@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/foreverido/uilib/compare/v1.1.0...v1.1.1) (2022-03-29)
+
+
+### Bug Fixes
+
+* Gallery - do not stop propagation if no matched key ([27290f2](https://github.com/foreverido/uilib/commit/27290f2692bf85ea1f36137d0f7243b95b890ee5))
+* Input - textarea - clip area under label (when scrolling) ([fd20116](https://github.com/foreverido/uilib/commit/fd20116239cf9107c0f6f60de0511424206214f1))
+* Scroll - omit extraWide prop for DOM props ([de0dd38](https://github.com/foreverido/uilib/commit/de0dd3834cc80112b11a5fa871b88e288d59a721))
+* Virtualized - lastScrollEndIndex not highter than totalCount ([10101cb](https://github.com/foreverido/uilib/commit/10101cb3fd147dc1de1df447e6feeb7a0b650905))
+
 ## [1.1.0](https://github.com/foreverido/uilib/compare/v1.0.7...v1.1.0) (2022-03-28)
 
 
