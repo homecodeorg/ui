@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, ReactNode } from 'react';
 
 import omit from 'lodash.omit';
 
@@ -6,7 +6,7 @@ import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
 
 type Loader = () => Promise<any>;
-type Props = { loader: Loader };
+type Props = { loader: Loader; progressElem: ReactNode };
 type State = { loading: boolean };
 
 function compare(cb1: Loader, cb2: Loader) {
@@ -37,15 +37,17 @@ export class Lazy extends Component<Props, State> {
   }
 
   render() {
+    const { C, props } = this;
+
     if (this.state.loading) {
       return (
-        <Container fullHeight>
-          <Spinner size="l" />
-        </Container>
+        props.progressElem ?? (
+          <Container fullHeight fullWidth>
+            <Spinner size="l" />
+          </Container>
+        )
       );
     }
-
-    const { C, props } = this;
 
     return <C {...omit(props, ['loading'])} />;
   }
