@@ -9,20 +9,34 @@ type Props = {
   className?: string;
   img?: string;
   onRemove?: () => void;
-  loaded: number;
   total: number;
+  loaded: number;
+  waitingForUpload?: boolean;
 };
 
 export default class Item extends Component<Props> {
   render() {
-    const { className, img, loaded, total, onRemove, children } = this.props;
+    const {
+      className,
+      img,
+      total,
+      loaded,
+      waitingForUpload,
+      onRemove,
+      children,
+    } = this.props;
     const style = {} as CSSProperties;
     const isComplete = loaded === total;
+    const classes = cn(
+      S.root,
+      waitingForUpload && S.waitingForUpload,
+      className
+    );
 
     if (img) style.backgroundImage = `url(${img})`;
 
     return (
-      <div className={cn(S.root, className)} style={style}>
+      <div className={classes} style={style}>
         {children}
 
         <Button

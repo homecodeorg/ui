@@ -5,15 +5,15 @@ import { Code } from 'docs/components';
 import { upload } from './helpers';
 
 import UploadOnChange from '!!raw-loader!./UploadOnChange';
-import UploadOnSubmit from '!!raw-loader!./UploadOnSubmit';
+import UploadOnDemand from '!!raw-loader!./UploadOnDemand';
 
 const rootPath = '/inputFile';
 
 export default () => (
   <Container vertical fullWidth>
     <div>
-      <Link href={`${rootPath}/onchange`}>UploadOnChange</Link>
-      <Link href={`${rootPath}/onsubmit`}>UploadOnSubmit</Link>
+      <Link href={`${rootPath}/onchange`}>Upload on change</Link>
+      <Link href={`${rootPath}/ondemand`}>Upload on demand</Link>
     </div>
 
     <Router rootPath={rootPath}>
@@ -26,10 +26,10 @@ export default () => (
       />
       <Code
         exact
-        path="/onsubmit"
-        code={UploadOnSubmit}
+        path="/ondemand"
+        code={UploadOnDemand}
         scope={{ upload }}
-        key="onsubmit"
+        key="ondemand"
       />
     </Router>
   </Container>
