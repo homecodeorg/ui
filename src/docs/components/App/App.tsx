@@ -85,7 +85,7 @@ class App extends Component<{ store?: any }> {
             <Router>
               {NAV_CONFIG.map(({ slug, loader }) => (
                 // @ts-ignore
-                <Lazy path={`/${slug}`} loader={loader} key={slug} />
+                <Lazy exact path={`/${slug}`} loader={loader} key={slug} />
               ))}
             </Router>
           </Container>

@@ -46,6 +46,18 @@ export function getWeightestRoute(routes, currPath) {
 
   if (exactMatch) return exactMatch;
 
+  const strictMatch = routes.find(({ path }) =>
+    new RegExp(`^${path}/`).test(currPath)
+  );
+
+  if (strictMatch) return strictMatch;
+
+  const liberalMatch = routes.find(({ source }) =>
+    new RegExp(source).test(currPath)
+  );
+
+  if (liberalMatch) return liberalMatch;
+
   return routes.sort((a, b) =>
     getRouteWeight(a) > getRouteWeight(b)
       ? -1

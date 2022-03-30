@@ -63,14 +63,18 @@ export class Router extends Component<Props> {
     const routes = this.routes.filter(route => {
       const { path = '', exact, parsed } = route;
       const fullPath = `${this.rootPath}${path}`;
-      const sourceTested = parsed && new RegExp(parsed.source).test(currPath);
 
       if (parsed) {
+        // const regexp = exact ? `^${parsed.source}$` : parsed.source;
+        const regexp = parsed.source;
+        const sourceTested = new RegExp(regexp).test(currPath);
         const currLocalPath = currPathWithoutRoot
           .split('/')
           .slice(0, path.split('/').length)
           .join('/');
+
         route.params = parsed.test(currLocalPath);
+
         if (sourceTested) return true;
       } else {
         if (exact && currPath === fullPath) return true;

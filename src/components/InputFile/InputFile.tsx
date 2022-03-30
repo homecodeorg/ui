@@ -17,6 +17,11 @@ type ProgressParams = {
 
 type Value = string[];
 
+type ItemStatus = {
+  total: number;
+  loaded: number;
+};
+
 type Props = {
   className?: string;
   label?: string;
@@ -26,6 +31,7 @@ type Props = {
     onProgress: (params: ProgressParams) => void,
     getXHR?: (xhr: XMLHttpRequest) => void
   ) => Promise<string>;
+  uploadStatus?: ItemStatus[];
   rootUrl: string; // folder in cloud storage
   accept?: HTMLProps<HTMLInputElement>['accept'];
   limit?: number; // megabytes
@@ -33,6 +39,7 @@ type Props = {
   value?: Value; // url
   onSelect?: (e: ChangeEvent<HTMLInputElement>) => void;
   onChange: (e: ChangeEvent<HTMLInputElement>, value: Value) => void; // upload complete
+  onFilesCoose?: (files: File[]) => void;
   remove?: (fileName: string) => Promise<boolean>;
 };
 
@@ -45,10 +52,10 @@ const defaultFileState = {
   base64: '',
 };
 
-function stateFromProps(value, maxCount) {
+function stateFromProps(value, maxCount, loaded = 1) {
   return value.slice(0, maxCount).map((src, index) => ({
     ...defaultFileState,
-    loaded: 1,
+    loaded,
     index,
     src,
   }));
@@ -57,14 +64,15 @@ function stateFromProps(value, maxCount) {
 export class InputFile extends Component<Props> {
   store;
   _mounted = false;
+  files = [];
 
   constructor(props) {
     super(props);
 
-    const { value, maxCount } = props;
-    const items = stateFromProps(value, maxCount);
-
-    this.store = createStore(this, { items, labelClipPath: '' });
+    this.store = createStore(this, {
+      items: this.getStateFromProps(),
+      labelClipPath: '',
+    });
   }
 
   static defaultProps = { rootUrl: '', size: 'm', maxCount: 1 };
@@ -79,19 +87,42 @@ export class InputFile extends Component<Props> {
   }
 
   componentDidUpdate(prevProps) {
-    const { value, maxCount } = this.props;
+    const { value, maxCount, uploadStatus } = this.props;
+    const { items } = this.store;
 
     if (!compare(prevProps.value, value) || prevProps.maxCount !== maxCount) {
-      this.store.items = stateFromProps(value, maxCount);
+      this.store.items = this.getStateFromProps();
     }
+
+    if (!compare(prevProps.uploadStatus, uploadStatus)) {
+      this.store.items = items.map((itemState, i) => ({
+        ...itemState,
+        ...uploadStatus[i],
+      }));
+    }
+  }
+
+  getStateFromProps() {
+    const { value, maxCount, upload } = this.props;
+    const loaded = upload ? 1 : 0;
+
+    return value.slice(0, maxCount).map((src, index) => ({
+      ...defaultFileState,
+      loaded,
+      index,
+      src,
+    }));
   }
 
   onChange = async e => {
     const { files } = e.target;
-    const { value, maxCount, limit, onChange } = this.props;
+    const { value, maxCount, limit, onChange, onFilesCoose, upload } =
+      this.props;
     const { items } = this.store;
     let index = value.length;
+
     const requests = [];
+    const filesByIndex = [];
 
     [...files].every(file => {
       if (index >= maxCount) return false;
@@ -106,22 +137,31 @@ export class InputFile extends Component<Props> {
       }
 
       items.push({ ...defaultFileState, index });
-      requests.push(this.upload(file, items[index]));
+
+      if (upload) {
+        requests.push(this.upload(file, items[index]));
+      } else {
+        filesByIndex[index] = file;
+      }
+
       index++;
 
       return true;
     });
 
-    await Promise.all(requests);
+    if (upload) {
+      await Promise.all(requests);
+      const newValue = [...this.props.value];
 
-    const newValue = [...this.props.value];
+      requests.forEach((r, _i) => {
+        const i = value.length + _i;
+        newValue[i] = items[i].src;
+      });
 
-    requests.forEach((r, _i) => {
-      const i = value.length + _i;
-      newValue[i] = items[i].src;
-    });
-
-    onChange(null, newValue);
+      onChange(null, newValue);
+    } else {
+      onFilesCoose?.(filesByIndex);
+    }
   };
 
   onProgress = state => e => {
@@ -184,12 +224,12 @@ export class InputFile extends Component<Props> {
         </Label>
 
         <Scroll x size="s" innerClassName={S.items}>
-          {items.map(({ base64, src, loaded, total }) => {
+          {items.map(({ base64, src, loaded, total }, i) => {
             const url = base64 || src;
 
             return (
               <Item
-                key={url}
+                key={String(url) + i}
                 className={S.item}
                 img={url}
                 loaded={loaded}

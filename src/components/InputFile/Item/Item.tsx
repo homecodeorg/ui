@@ -37,7 +37,7 @@ export default class Item extends Component<Props> {
 
         <div
           className={cn(S.progress, isComplete && S.complete)}
-          style={{ left: `${(loaded / total) * 100}%` }}
+          style={{ left: `${(loaded / total) * 100 - 100}%` }}
         />
 
         <div className={S.overlay} />
