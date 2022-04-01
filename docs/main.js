@@ -1002,16 +1002,20 @@ var Lazy = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var C = this.C,
+          props = this.props;
+
       if (this.state.loading) {
-        return /*#__PURE__*/React.createElement(_Container_Container__WEBPACK_IMPORTED_MODULE_6__/* .Container */ .W, {
-          fullHeight: true
+        var _props$progressElem;
+
+        return (_props$progressElem = props.progressElem) !== null && _props$progressElem !== void 0 ? _props$progressElem : /*#__PURE__*/React.createElement(_Container_Container__WEBPACK_IMPORTED_MODULE_6__/* .Container */ .W, {
+          fullHeight: true,
+          fullWidth: true
         }, /*#__PURE__*/React.createElement(_Spinner_Spinner__WEBPACK_IMPORTED_MODULE_7__/* .Spinner */ .$, {
           size: "l"
         }));
       }
 
-      var C = this.C,
-          props = this.props;
       return /*#__PURE__*/React.createElement(C, lodash_omit__WEBPACK_IMPORTED_MODULE_1___default()(props, ['loading']));
     }
   }]);
@@ -1311,7 +1315,7 @@ var createSuper = __webpack_require__("./node_modules/@babel/runtime/helpers/esm
 var react = __webpack_require__("./node_modules/react/index.js");
 // EXTERNAL MODULE: ./node_modules/justorm/react.js
 var justorm_react = __webpack_require__("./node_modules/justorm/react.js");
-// EXTERNAL MODULE: ./src/tools/array.ts + 1 modules
+// EXTERNAL MODULE: ./src/tools/array.ts
 var array = __webpack_require__("./src/tools/array.ts");
 // EXTERNAL MODULE: ./src/tools/queryParams.ts
 var queryParams = __webpack_require__("./src/tools/queryParams.ts");
@@ -2301,14 +2305,25 @@ var getRouteWeight = function getRouteWeight(route) {
 };
 
 function getWeightestRoute(routes, currPath) {
-  var exactMatch = routes.find(function (_ref) {
+  var sorted = routes.sort(function (a, b) {
+    return getRouteWeight(a) > getRouteWeight(b) ? -1 : getRouteWeight(b) > getRouteWeight(a) ? 1 : 0;
+  });
+  var exactMatch = sorted.find(function (_ref) {
     var path = _ref.path;
     return path === currPath;
   });
   if (exactMatch) return exactMatch;
-  return routes.sort(function (a, b) {
-    return getRouteWeight(a) > getRouteWeight(b) ? -1 : getRouteWeight(b) > getRouteWeight(a) ? 1 : 0;
-  })[0];
+  var strictMatch = sorted.find(function (route) {
+    var currPathTrimmed = currPath.split('/').slice(0, getRouteWeight(route)).join('/');
+    return route.parsed.test(currPathTrimmed);
+  });
+  if (strictMatch) return strictMatch;
+  var liberalMatch = sorted.filter(function (_ref2) {
+    var source = _ref2.source;
+    return new RegExp(source).test(currPath);
+  });
+  if (liberalMatch.length === 1) return liberalMatch[0];
+  return sorted[0];
 }
 // EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 2 modules
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
@@ -2423,9 +2438,11 @@ var Router = (_dec = (0,justorm_react.withStore)({
             exact = route.exact,
             parsed = route.parsed;
         var fullPath = "".concat(_this2.rootPath).concat(path);
-        var sourceTested = parsed && new RegExp(parsed.source).test(currPath);
 
         if (parsed) {
+          // const regexp = exact ? `^${parsed.source}$` : parsed.source;
+          var regexp = parsed.source;
+          var sourceTested = new RegExp(regexp).test(currPath);
           var currLocalPath = currPathWithoutRoot.split('/').slice(0, path.split('/').length).join('/');
           route.params = parsed.test(currLocalPath);
           if (sourceTested) return true;
@@ -3327,40 +3344,19 @@ var initialActiveColor = getInitialActiveColor();
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "addUniq": () => (/* binding */ addUniq),
-  "circularSlice": () => (/* binding */ circularSlice),
-  "getIndexCircular": () => (/* binding */ getIndexCircular),
-  "indexWhere": () => (/* binding */ indexWhere),
-  "insert": () => (/* binding */ insert),
-  "sliceWhere": () => (/* binding */ sliceWhere),
-  "spliceWhere": () => (/* binding */ spliceWhere),
-  "unshiftUniq": () => (/* binding */ unshiftUniq)
-});
-
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
-var toConsumableArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js
-var arrayWithHoles = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/iterableToArray.js
-var iterableToArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/iterableToArray.js");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js
-var unsupportedIterableToArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
-// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js
-var nonIterableRest = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
-;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/toArray.js
-
-
-
-
-function _toArray(arr) {
-  return (0,arrayWithHoles/* default */.Z)(arr) || (0,iterableToArray/* default */.Z)(arr) || (0,unsupportedIterableToArray/* default */.Z)(arr) || (0,nonIterableRest/* default */.Z)();
-}
-;// CONCATENATED MODULE: ./src/tools/array.ts
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addUniq": () => (/* binding */ addUniq),
+/* harmony export */   "circularSlice": () => (/* binding */ circularSlice),
+/* harmony export */   "getIndexCircular": () => (/* binding */ getIndexCircular),
+/* harmony export */   "indexWhere": () => (/* binding */ indexWhere),
+/* harmony export */   "insert": () => (/* binding */ insert),
+/* harmony export */   "sliceWhere": () => (/* binding */ sliceWhere),
+/* harmony export */   "spliceWhere": () => (/* binding */ spliceWhere),
+/* harmony export */   "unshiftUniq": () => (/* binding */ unshiftUniq)
+/* harmony export */ });
+/* harmony import */ var _home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toConsumableArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
+/* harmony import */ var _home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/toArray.js");
 
 
 function indexWhere(arr, val, fieldName) {
@@ -3383,7 +3379,7 @@ function indexWhere(arr, val, fieldName) {
   return index;
 }
 function sliceWhere(_ref, val, fieldName) {
-  var _ref2 = _toArray(_ref),
+  var _ref2 = (0,_home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toArray_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(_ref),
       arr = _ref2.slice(0);
 
   spliceWhere(arr, val, fieldName);
@@ -3429,7 +3425,7 @@ function unshiftUniq(arr, val, fieldName) {
   });
 }
 function insert(baseArr, targetArr, startIndex) {
-  return [].concat((0,toConsumableArray/* default */.Z)(baseArr.slice(0, startIndex)), (0,toConsumableArray/* default */.Z)(targetArr), (0,toConsumableArray/* default */.Z)(baseArr.slice(startIndex + targetArr.length)));
+  return [].concat((0,_home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toConsumableArray_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(baseArr.slice(0, startIndex)), (0,_home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toConsumableArray_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(targetArr), (0,_home_oleg_prj_uilib_node_modules_babel_runtime_helpers_esm_toConsumableArray_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(baseArr.slice(startIndex + targetArr.length)));
 }
 function getIndexCircular(arr, index) {
   var l = arr.length;
@@ -8183,6 +8179,27 @@ function _slicedToArray(arr, i) {
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/esm/toArray.js":
+/***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (/* binding */ _toArray)
+/* harmony export */ });
+/* harmony import */ var _arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/arrayWithHoles.js");
+/* harmony import */ var _iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/iterableToArray.js");
+/* harmony import */ var _unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/unsupportedIterableToArray.js");
+/* harmony import */ var _nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/nonIterableRest.js");
+
+
+
+
+function _toArray(arr) {
+  return (0,_arrayWithHoles_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .Z)(arr) || (0,_iterableToArray_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .Z)(arr) || (0,_unsupportedIterableToArray_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .Z)(arr) || (0,_nonIterableRest_js__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)();
+}
+
+/***/ }),
+
 /***/ "./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js":
 /***/ ((__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) => {
 
@@ -8329,7 +8346,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("a02b4d06e55cddaa0b81")
+/******/ 		__webpack_require__.h = () => ("46ff54a33faa7eda5dff")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -8583,32 +8600,32 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 /* harmony default export */ const navigation = ([{
   slug: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
   }
 }, {
   slug: 'checkbox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
   }
 }, {
   slug: 'input',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
   }
 }, {
   slug: 'inputFile',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(288)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(197)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
   }
 }, {
   slug: 'spinner',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
   }
 }, {
   slug: 'form',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
   }
 }, // {
 //   slug: 'icon',
@@ -8617,48 +8634,48 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 {
   slug: 'popup',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
   }
 }, {
   slug: 'popupMenu',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
   }
 }, {
   slug: 'gallery',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
   }
 }, {
   slug: 'lightBox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
   }
 }, {
   slug: 'select',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
   } // items: () => import('./examples/Select/navigation'),
 
 }, {
   slug: 'scroll',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
   }
 }, {
   slug: 'virtualized',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(802)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(802)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
   }
 }, {
   slug: 'notifications',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
   }
 }, {
   slug: 'router',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(801), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
@@ -8938,7 +8955,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
         className: App_App.configBar
       }, /*#__PURE__*/App_React.createElement("span", {
         className: App_App.version
-      }, "v", "1.1.1"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
+      }, "v", "1.2.4"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
         className: App_App.cfgButton,
         variant: "clear",
         size: "l",
@@ -8971,6 +8988,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
           /*#__PURE__*/
           // @ts-ignore
           App_React.createElement(Lazy/* Lazy */.o, {
+            exact: true,
             path: "/".concat(slug),
             loader: loader,
             key: slug

@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ Checkbox)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 60 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 61 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Checkbox/Example.tsx
 /* harmony default export */ const Example = ("import { useState } from 'react';\nimport { Checkbox } from 'uilib';\n\nexport default () => {\n  const [checked, setChecked] = useState(false);\n\n  return (\n    <Checkbox\n      size=\"m\"\n      label=\"I'm a checkbutton\"\n      onChange={() => setChecked(!checked)}\n      checked={checked}\n    />\n  );\n};\n");

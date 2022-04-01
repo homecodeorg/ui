@@ -1,4 +1,4 @@
-(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[801],{
+(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[10],{
 
 /***/ "./src/docs/components/Code/Code.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -27,6 +27,10 @@ __webpack_require__.d(object_namespaceObject, {
 // NAMESPACE OBJECT: ./src/components/Form/Form.types.tsx
 var Form_types_namespaceObject = {};
 __webpack_require__.r(Form_types_namespaceObject);
+
+// NAMESPACE OBJECT: ./src/components/InputFile/InputFile.types.ts
+var InputFile_types_namespaceObject = {};
+__webpack_require__.r(InputFile_types_namespaceObject);
 
 // NAMESPACE OBJECT: ./src/tools/scroll.ts
 var scroll_namespaceObject = {};
@@ -75,6 +79,7 @@ __webpack_require__.d(src_namespaceObject, {
   "Icon": () => (Icon/* Icon */.J),
   "Input": () => (Input_Input_Input),
   "InputFile": () => (InputFile_InputFile_InputFile),
+  "InputFileTypes": () => (InputFile_types_namespaceObject),
   "Label": () => (Label_Label_Label),
   "Lazy": () => (Lazy/* Lazy */.o),
   "LightBox": () => (LightBox_LightBox_LightBox),
@@ -1519,6 +1524,8 @@ var Form_Form_Form = /*#__PURE__*/function (_Component) {
   }, {
     key: "getFieldProps",
     value: function getFieldProps(props) {
+      var _this$validationSchem;
+
       var markEdited = this.props.markEdited;
       var name = props.name;
       var _this$store$originalO = this.store.originalObject,
@@ -1526,9 +1533,8 @@ var Form_Form_Form = /*#__PURE__*/function (_Component) {
           changed = _this$store$originalO.changed,
           touched = _this$store$originalO.touched,
           errors = _this$store$originalO.errors;
-      return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({
-        required: this.validationSchema[name].empty === false
-      }, props), {}, {
+
+      var fieldProps = (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, props), {}, {
         value: values[name],
         markEdited: markEdited,
         isChanged: changed[name],
@@ -1537,6 +1543,9 @@ var Form_Form_Form = /*#__PURE__*/function (_Component) {
         handleChange: this.onChange,
         handleBlur: this.onBlur
       });
+
+      if (((_this$validationSchem = this.validationSchema) === null || _this$validationSchem === void 0 ? void 0 : _this$validationSchem[name].empty) === false) fieldProps.required = true;
+      return fieldProps;
     }
   }, {
     key: "getFormAPI",
@@ -1683,6 +1692,8 @@ var Form_Form_Form = /*#__PURE__*/function (_Component) {
 
 
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toArray.js
+var toArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/toArray.js");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js + 2 modules
 var toConsumableArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js");
 // EXTERNAL MODULE: ./src/components/Spinner/Spinner.tsx + 2 modules
@@ -1705,7 +1716,7 @@ function throttle(func, wait) {
     return result;
   };
 }
-// EXTERNAL MODULE: ./src/tools/array.ts + 1 modules
+// EXTERNAL MODULE: ./src/tools/array.ts
 var array = __webpack_require__("./src/tools/array.ts");
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Gallery/Gallery.styl
 var Gallery = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Gallery/Gallery.styl");
@@ -1740,6 +1751,7 @@ var Gallery_update = injectStylesIntoStyleTag_default()(Gallery/* default */.Z, 
 
 ;// CONCATENATED MODULE: ./src/components/Gallery/Gallery.tsx
 /* provided dependency */ var Gallery_React = __webpack_require__("./node_modules/react/index.js");
+
 
 
 
@@ -1822,6 +1834,7 @@ var Gallery_Gallery_Gallery = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.store = void 0;
+    _this.items = void 0;
     _this.timers = timen_default().create();
 
     _this.isSingle = function () {
@@ -1848,7 +1861,7 @@ var Gallery_Gallery_Gallery = /*#__PURE__*/function (_Component) {
       this.store.movingDirection = direction;
       this.timers.after(DURATION, function () {
         _this2.store.index += direction * -1;
-        _this2.store.items = array.circularSlice(_this2.props.items, _this2.store.index, 3);
+        _this2.store.items = array.circularSlice(_this2.items, _this2.store.index, 3);
         _this2.store.movingDirection = 0;
         var _this2$store = _this2.store,
             items = _this2$store.items,
@@ -1860,8 +1873,11 @@ var Gallery_Gallery_Gallery = /*#__PURE__*/function (_Component) {
     }, DURATION);
     var _items = props.items,
         startIndex = props.startIndex;
+
+    _this.recenter();
+
     _this.store = (0,justorm_react.createStore)((0,assertThisInitialized/* default */.Z)(_this), {
-      items: getInitialState(_items, startIndex),
+      items: getInitialState(_this.items, startIndex),
       index: startIndex,
       movingDirection: 0,
       loading: {},
@@ -1890,8 +1906,17 @@ var Gallery_Gallery_Gallery = /*#__PURE__*/function (_Component) {
           startIndex = _this$props.startIndex;
 
       if (!compareq_default()(prevProps.items, items)) {
-        this.store.items = getInitialState(items, startIndex);
+        this.recenter();
+        this.store.items = getInitialState(this.items, startIndex);
       }
+    }
+  }, {
+    key: "recenter",
+    value: function recenter() {
+      var _this$props$items = (0,toArray/* default */.Z)(this.props.items),
+          items = _this$props$items.slice(0);
+
+      this.items = [items.pop()].concat((0,toConsumableArray/* default */.Z)(items));
     }
   }, {
     key: "init",
@@ -2059,15 +2084,17 @@ var Item_Item_Item = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           className = _this$props.className,
           img = _this$props.img,
-          loaded = _this$props.loaded,
           total = _this$props.total,
+          loaded = _this$props.loaded,
+          waitingForUpload = _this$props.waitingForUpload,
           onRemove = _this$props.onRemove,
           children = _this$props.children;
       var style = {};
       var isComplete = loaded === total;
+      var classes = classnames_default()(InputFile_Item_Item.root, waitingForUpload && InputFile_Item_Item.waitingForUpload, className);
       if (img) style.backgroundImage = "url(".concat(img, ")");
       return /*#__PURE__*/Item_React.createElement("div", {
-        className: classnames_default()(InputFile_Item_Item.root, className),
+        className: classes,
         style: style
       }, children, /*#__PURE__*/Item_React.createElement(Button/* Button */.z, {
         className: InputFile_Item_Item.removeButton,
@@ -2080,7 +2107,7 @@ var Item_Item_Item = /*#__PURE__*/function (_Component) {
       })), /*#__PURE__*/Item_React.createElement("div", {
         className: classnames_default()(InputFile_Item_Item.progress, isComplete && InputFile_Item_Item.complete),
         style: {
-          left: "".concat(loaded / total * 100, "%")
+          left: "".concat(loaded / total * 100 - 100, "%")
         }
       }), /*#__PURE__*/Item_React.createElement("div", {
         className: InputFile_Item_Item.overlay
@@ -2092,8 +2119,11 @@ var Item_Item_Item = /*#__PURE__*/function (_Component) {
 }(react.Component);
 
 
+;// CONCATENATED MODULE: ./src/components/InputFile/InputFile.types.ts
+
 ;// CONCATENATED MODULE: ./src/components/InputFile/InputFile.tsx
 /* provided dependency */ var InputFile_React = __webpack_require__("./node_modules/react/index.js");
+
 
 
 
@@ -2118,22 +2148,13 @@ var defaultFileState = {
   error: null,
   base64: ''
 };
-
-function stateFromProps(value, maxCount) {
-  return value.slice(0, maxCount).map(function (src, index) {
-    return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
-      loaded: 1,
-      index: index,
-      src: src
-    });
-  });
-}
-
 var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   (0,inherits/* default */.Z)(InputFile, _Component);
 
   var _super = (0,createSuper/* default */.Z)(InputFile);
 
+  // [File,...]
+  // [index]: Promise
   function InputFile(props) {
     var _this;
 
@@ -2141,54 +2162,44 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
 
     _this = _super.call(this, props);
     _this.store = void 0;
+    _this.filesToUpload = [];
+    _this.previewRequests = {};
     _this._mounted = false;
 
+    _this.getValFromState = function () {
+      return _this.store.items.map(function (_ref) {
+        var src = _ref.src,
+            base64 = _ref.base64;
+        return src || base64;
+      });
+    };
+
     _this.onChange = /*#__PURE__*/function () {
-      var _ref = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee(e) {
-        var files, _this$props, value, maxCount, limit, onChange, items, index, requests, newValue;
+      var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee(e) {
+        var files, _this$props, value, onSelect, uploadOnDemand, upload, items, index, allowedFiles;
 
         return regenerator_default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 files = e.target.files;
-                _this$props = _this.props, value = _this$props.value, maxCount = _this$props.maxCount, limit = _this$props.limit, onChange = _this$props.onChange;
+                _this$props = _this.props, value = _this$props.value, onSelect = _this$props.onSelect, uploadOnDemand = _this$props.uploadOnDemand, upload = _this$props.upload;
                 items = _this.store.items;
                 index = value.length;
-                requests = [];
-
-                (0,toConsumableArray/* default */.Z)(files).every(function (file) {
-                  if (index >= maxCount) return false;
-
-                  if (limit) {
-                    var sizeMb = file.size / 1024 / 1024;
-
-                    if (sizeMb > limit) {
-                      console.error("Max file size - ".concat(limit, "Mb"), file);
-                      return false;
-                    }
-                  }
-
+                allowedFiles = _this.filterAllowedFiles(files);
+                allowedFiles.forEach(function (file) {
                   items.push((0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
                     index: index
                   }));
-                  requests.push(_this.upload(file, items[index]));
+                  _this.filesToUpload[index] = file;
+                  _this.previewRequests[index] = _this.generatePreview(file, index);
                   index++;
-                  return true;
                 });
+                onSelect === null || onSelect === void 0 ? void 0 : onSelect(allowedFiles);
+                if (upload) _this.processUploadOnChange(allowedFiles);
+                if (uploadOnDemand) _this.processUploadOnDemand();
 
-                _context.next = 8;
-                return Promise.all(requests);
-
-              case 8:
-                newValue = (0,toConsumableArray/* default */.Z)(_this.props.value);
-                requests.forEach(function (r, _i) {
-                  var i = value.length + _i;
-                  newValue[i] = items[i].src;
-                });
-                onChange(null, newValue);
-
-              case 11:
+              case 9:
               case "end":
                 return _context.stop();
             }
@@ -2197,7 +2208,7 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
       }));
 
       return function (_x) {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
 
@@ -2207,43 +2218,34 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
       };
     };
 
-    _this.remove = /*#__PURE__*/function () {
-      var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(value) {
-        var _this$props2, remove, onChange, res, items;
-
+    _this.demandedUploader = /*#__PURE__*/function () {
+      var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(upload) {
+        var value, items, requests, newVal;
         return regenerator_default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this$props2 = _this.props, remove = _this$props2.remove, onChange = _this$props2.onChange;
+                value = _this.props.value;
+                items = _this.store.items;
+                requests = [];
+                newVal = (0,toConsumableArray/* default */.Z)(value);
+                value.forEach(function (val, i) {
+                  var file = _this.filesToUpload[i];
 
-                if (!remove) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                _context2.next = 4;
-                return remove(value);
-
-              case 4:
-                res = _context2.sent;
-
-                if (res) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                return _context2.abrupt("return");
+                  if (file) {
+                    requests.push(upload(file, _this.onProgress(items[i])).then(function (url) {
+                      return newVal[i] = url;
+                    }));
+                  }
+                });
+                _context2.next = 7;
+                return Promise.all(requests);
 
               case 7:
-                items = _this.store.items;
-                array.spliceWhere(items, value, 'src');
-                onChange(null, items.map(function (_ref3) {
-                  var src = _ref3.src;
-                  return src;
-                }));
+                _this.filesToUpload = [];
+                return _context2.abrupt("return", newVal);
 
-              case 10:
+              case 9:
               case "end":
                 return _context2.stop();
             }
@@ -2252,17 +2254,61 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
       }));
 
       return function (_x2) {
-        return _ref2.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       };
     }();
 
-    var _value = props.value,
-        _maxCount = props.maxCount;
+    _this.remove = /*#__PURE__*/function () {
+      var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(value) {
+        var _this$props2, remove, onChange, res, items;
 
-    var _items = stateFromProps(_value, _maxCount);
+        return regenerator_default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this$props2 = _this.props, remove = _this$props2.remove, onChange = _this$props2.onChange;
+
+                if (!remove) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                _context3.next = 4;
+                return remove(value);
+
+              case 4:
+                res = _context3.sent;
+
+                if (res) {
+                  _context3.next = 7;
+                  break;
+                }
+
+                return _context3.abrupt("return");
+
+              case 7:
+                items = _this.store.items;
+                array.spliceWhere(items, value, 'src');
+                onChange(null, items.map(function (_ref5) {
+                  var src = _ref5.src;
+                  return src;
+                }));
+
+              case 10:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x3) {
+        return _ref4.apply(this, arguments);
+      };
+    }();
 
     _this.store = (0,justorm_react.createStore)((0,assertThisInitialized/* default */.Z)(_this), {
-      items: _items,
+      items: _this.getStateFromProps(),
       labelClipPath: ''
     });
     return _this;
@@ -2271,75 +2317,225 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   (0,createClass/* default */.Z)(InputFile, [{
     key: "componentDidMount",
     value: function componentDidMount() {
+      var _this$props$uploadOnD, _this$props3;
+
       this._mounted = true;
+      (_this$props$uploadOnD = (_this$props3 = this.props).uploadOnDemand) === null || _this$props$uploadOnD === void 0 ? void 0 : _this$props$uploadOnD.call(_this$props3, this.demandedUploader);
     }
   }, {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this._mounted = false;
-      this.store.items.forEach(function (_ref4) {
-        var xhr = _ref4.xhr;
+      this.store.items.forEach(function (_ref6) {
+        var xhr = _ref6.xhr;
         return xhr === null || xhr === void 0 ? void 0 : xhr.abort();
       });
     }
   }, {
     key: "componentDidUpdate",
     value: function componentDidUpdate(prevProps) {
-      var _this$props3 = this.props,
-          value = _this$props3.value,
-          maxCount = _this$props3.maxCount;
+      var _this$props4 = this.props,
+          value = _this$props4.value,
+          maxCount = _this$props4.maxCount;
 
       if (!compareq_default()(prevProps.value, value) || prevProps.maxCount !== maxCount) {
-        this.store.items = stateFromProps(value, maxCount);
+        this.store.items = this.getStateFromProps();
       }
     }
   }, {
-    key: "upload",
+    key: "getStateFromProps",
+    value: function getStateFromProps() {
+      var _this$props5 = this.props,
+          value = _this$props5.value,
+          maxCount = _this$props5.maxCount,
+          upload = _this$props5.upload;
+      var loaded = upload ? 1 : 0;
+      return value.slice(0, maxCount).map(function (src, index) {
+        return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
+          loaded: loaded,
+          index: index,
+          src: src
+        });
+      });
+    }
+  }, {
+    key: "filterAllowedFiles",
+    value: function filterAllowedFiles(files) {
+      var _this$props6 = this.props,
+          value = _this$props6.value,
+          maxCount = _this$props6.maxCount,
+          limit = _this$props6.limit;
+      var allowedFiles = [];
+      var index = value.length;
+
+      (0,toConsumableArray/* default */.Z)(files).every(function (file) {
+        if (index >= maxCount) return false;
+
+        if (limit) {
+          var sizeMb = file.size / 1024 / 1024;
+
+          if (sizeMb > limit) {
+            console.error("Max file size - ".concat(limit, "Mb"), file);
+            return false;
+          }
+        }
+
+        allowedFiles.push(file);
+        return true;
+      }, []);
+
+      return allowedFiles;
+    }
+  }, {
+    key: "generatePreview",
     value: function () {
-      var _upload = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(file, state) {
-        var upload, src;
-        return regenerator_default().wrap(function _callee3$(_context3) {
+      var _generatePreview = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee4(file, index) {
+        var state;
+        return regenerator_default().wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                upload = this.props.upload;
+                state = this.store.items[index];
                 Object.assign(state, defaultFileState);
-                _context3.next = 4;
+                _context4.next = 4;
                 return tools_file.toBase64(file);
 
               case 4:
-                state.base64 = _context3.sent;
-                _context3.next = 7;
+                state.base64 = _context4.sent;
+                delete this.previewRequests[index];
+
+              case 6:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4, this);
+      }));
+
+      function generatePreview(_x4, _x5) {
+        return _generatePreview.apply(this, arguments);
+      }
+
+      return generatePreview;
+    }()
+  }, {
+    key: "processUploadOnDemand",
+    value: function () {
+      var _processUploadOnDemand = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee5() {
+        var onChange;
+        return regenerator_default().wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                _context5.next = 2;
+                return Promise.all(Object.values(this.previewRequests));
+
+              case 2:
+                if (this._mounted) {
+                  _context5.next = 4;
+                  break;
+                }
+
+                return _context5.abrupt("return");
+
+              case 4:
+                onChange = this.props.onChange;
+                onChange(null, this.getValFromState());
+
+              case 6:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function processUploadOnDemand() {
+        return _processUploadOnDemand.apply(this, arguments);
+      }
+
+      return processUploadOnDemand;
+    }()
+  }, {
+    key: "processUploadOnChange",
+    value: function () {
+      var _processUploadOnChange = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(files) {
+        var _this2 = this;
+
+        var _this$props7, value, onChange, reqs;
+
+        return regenerator_default().wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                _this$props7 = this.props, value = _this$props7.value, onChange = _this$props7.onChange;
+                reqs = files.map(function (file, i) {
+                  return _this2.upload(file, value.length + i);
+                });
+                _context6.next = 4;
+                return Promise.all(reqs);
+
+              case 4:
+                onChange(null, this.getValFromState());
+
+              case 5:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function processUploadOnChange(_x6) {
+        return _processUploadOnChange.apply(this, arguments);
+      }
+
+      return processUploadOnChange;
+    }()
+  }, {
+    key: "upload",
+    value: function () {
+      var _upload = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee7(file, index) {
+        var upload, items, state, src;
+        return regenerator_default().wrap(function _callee7$(_context7) {
+          while (1) {
+            switch (_context7.prev = _context7.next) {
+              case 0:
+                upload = this.props.upload;
+                items = this.store.items;
+                state = items[index];
+                _context7.next = 5;
                 return upload(file, this.onProgress(state), function (xhr) {
                   return state.xhr = xhr;
                 });
 
-              case 7:
-                src = _context3.sent;
+              case 5:
+                src = _context7.sent;
+                delete this.filesToUpload[index];
 
                 if (this._mounted) {
-                  _context3.next = 10;
+                  _context7.next = 9;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context7.abrupt("return");
 
-              case 10:
+              case 9:
                 Object.assign(state, {
                   src: src,
                   loaded: state.total,
                   xhr: null
                 });
 
-              case 11:
+              case 10:
               case "end":
-                return _context3.stop();
+                return _context7.stop();
             }
           }
-        }, _callee3, this);
+        }, _callee7, this);
       }));
 
-      function upload(_x3, _x4) {
+      function upload(_x7, _x8) {
         return _upload.apply(this, arguments);
       }
 
@@ -2348,14 +2544,14 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
-      var _this$props4 = this.props,
-          className = _this$props4.className,
-          size = _this$props4.size,
-          label = _this$props4.label,
-          accept = _this$props4.accept,
-          maxCount = _this$props4.maxCount;
+      var _this$props8 = this.props,
+          className = _this$props8.className,
+          size = _this$props8.size,
+          label = _this$props8.label,
+          accept = _this$props8.accept,
+          maxCount = _this$props8.maxCount;
       var _this$store = this.store,
           items = _this$store.items,
           labelClipPath = _this$store.labelClipPath;
@@ -2372,26 +2568,27 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         size: size,
         className: InputFile_InputFile.label,
         onClipPathChange: function onClipPathChange(clipPath) {
-          return _this2.store.labelClipPath = clipPath;
+          return _this3.store.labelClipPath = clipPath;
         }
       }, label), /*#__PURE__*/InputFile_React.createElement(Scroll/* Scroll */.X, {
         x: true,
         size: "s",
         innerClassName: InputFile_InputFile.items
-      }, items.map(function (_ref5) {
-        var base64 = _ref5.base64,
-            src = _ref5.src,
-            loaded = _ref5.loaded,
-            total = _ref5.total;
+      }, items.map(function (_ref7, i) {
+        var base64 = _ref7.base64,
+            src = _ref7.src,
+            loaded = _ref7.loaded,
+            total = _ref7.total;
         var url = base64 || src;
         return /*#__PURE__*/InputFile_React.createElement(Item_Item_Item, {
-          key: url,
+          key: String(url) + i,
           className: InputFile_InputFile.item,
           img: url,
-          loaded: loaded,
           total: total,
+          loaded: loaded,
+          waitingForUpload: !!_this3.filesToUpload[i],
           onRemove: function onRemove() {
-            return _this2.remove(url);
+            return _this3.remove(url);
           }
         });
       }), items.length < maxCount && /*#__PURE__*/InputFile_React.createElement("label", {
@@ -5344,7 +5541,8 @@ function toBase64(file) {
 
     reader.onload = function () {
       return resolve(reader.result);
-    };
+    }; // @ts-ignore
+
 
     reader.onerror = function (error) {
       return resolve({
@@ -5614,11 +5812,12 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Item__root___cu1xF{position:relative;overflow:hidden;background-size:cover;background-position:center}.Item__root___cu1xF > .Item__overlay___kMLr4,.Item__root___cu1xF > img{border-radius:inherit}.Item__overlay___kMLr4{z-index:1;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .1s ease-out}.Item__root___cu1xF:hover .Item__overlay___kMLr4{background-color:var(--active-color-alpha-500)}.Item__root___cu1xF:hover .Item__removeButton___dPCm0{transform:translateX(0)}.Item__removeButton___dPCm0{z-index:2;position:absolute;right:0;bottom:0;transition:transform .2s ease-out;transform:translateX(100%);border-radius:0;border-top-left-radius:inherit}.Item__removeButton___dPCm0,.Item__removeButton___dPCm0:hover{background-color:var(--decent-color-alpha-900)}.Item__removeButton___dPCm0:hover{color:var(--danger-color)}.Item__progress___c6eSX{z-index:1;position:absolute;top:0;left:0;height:100%;width:100%;background-color:var(--decent-color-alpha-800);transition:all .2s ease-out;pointer-events:none}.Item__progress___c6eSX.Item__complete___wXZaL{opacity:0}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Item__root___cu1xF{position:relative;overflow:hidden;background-size:cover;background-position:center}.Item__root___cu1xF > .Item__overlay___kMLr4,.Item__root___cu1xF > img{border-radius:inherit}.Item__overlay___kMLr4{z-index:1;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .1s ease-out}.Item__waitingForUpload___s3v5S .Item__overlay___kMLr4{background-color:var(--accent-color-alpha-200);border:4px solid var(--decent-color-alpha-500)}.Item__root___cu1xF:hover .Item__overlay___kMLr4{background-color:var(--active-color-alpha-500)}.Item__root___cu1xF:hover .Item__removeButton___dPCm0{transform:translateX(0)}.Item__removeButton___dPCm0{z-index:2;position:absolute;right:0;bottom:0;transition:transform .2s ease-out;transform:translateX(100%);border-radius:0;border-top-left-radius:inherit}.Item__removeButton___dPCm0,.Item__removeButton___dPCm0:hover{background-color:var(--decent-color-alpha-900)}.Item__removeButton___dPCm0:hover{color:var(--danger-color)}.Item__progress___c6eSX{z-index:1;position:absolute;top:0;left:-100%;height:100%;width:100%;background-color:var(--active-color-alpha-800);transition:all .2s ease-out;pointer-events:none}.Item__progress___c6eSX.Item__complete___wXZaL{opacity:0}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Item__root___cu1xF",
 	"overlay": "Item__overlay___kMLr4",
+	"waitingForUpload": "Item__waitingForUpload___s3v5S",
 	"removeButton": "Item__removeButton___dPCm0",
 	"progress": "Item__progress___c6eSX",
 	"complete": "Item__complete___wXZaL"
