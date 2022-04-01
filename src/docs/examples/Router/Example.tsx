@@ -1,8 +1,7 @@
 import { withStore } from 'justorm/react';
 import { Router, Link } from 'uilib';
 
-const HomeLink = () => <Link href="/">Home</Link>;
-const Home = () => (
+const StartPage = () => (
   <>
     <Link href="/">Home</Link>
     > <Link href="/users">Users</Link>
@@ -10,7 +9,7 @@ const Home = () => (
 );
 const UsersPage = () => (
   <>
-    <HomeLink />
+    <Link href="/">Home</Link>
     > <Link href="/users">Users</Link>
     <br />
     <Link href="/users/azaza">azaza</Link>
@@ -21,18 +20,18 @@ const UserPage = ({ id, rootPath }) => {
   const currPage = `/users/${id}`;
 
   return (
-  <>
-    <HomeLink />
-    > <Link href="/users">Users</Link>
-    > <Link href={currPage}>{id}</Link>
-    <br />
-    <Router rootPath={`${rootPath}${currPage}`}>
-      <UserMenu id={id} />
-      <UserFriends path="/friends" />
-      <UserCreatures path="/creatures" />
-    </Router>
-  </>
-);
+    <>
+      <Link href="/">Home</Link>
+      > <Link href="/users">Users</Link>
+      > <Link href={currPage}>{id}</Link>
+      <br />
+      <Router rootPath={`${rootPath}${currPage}`}>
+        <UserMenu id={id} />
+        <UserFriends path="/friends" />
+        <UserCreatures path="/creatures" />
+      </Router>
+    </>
+  );
 }
 const UserMenu = ({ id }) => (<>
   <Link href="/friends">friends</Link>
@@ -49,7 +48,7 @@ export default withStore('router')(({ store: { router } }) => {
       {router.path.replace(new RegExp(`^${rootPath}`), '') || '/'}
       <br />
       <Router rootPath={rootPath}>
-        <Home />
+        <StartPage />
         <UsersPage path="/users" />
         <UserPage exact path="/users/:id" rootPath={rootPath} />
       </Router>

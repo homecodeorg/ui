@@ -68,6 +68,7 @@ type Props = {
 
 export class Gallery extends Component<Props> {
   store;
+  items;
   timers = Time.create();
 
   static defaultProps = {
@@ -81,8 +82,10 @@ export class Gallery extends Component<Props> {
 
     const { items, startIndex } = props;
 
+    this.recenter();
+
     this.store = createStore(this, {
-      items: getInitialState(items, startIndex),
+      items: getInitialState(this.items, startIndex),
       index: startIndex,
       movingDirection: 0,
       loading: {}, // [src]: boolean
@@ -102,8 +105,14 @@ export class Gallery extends Component<Props> {
     const { items, startIndex } = this.props;
 
     if (!compare(prevProps.items, items)) {
-      this.store.items = getInitialState(items, startIndex);
+      this.recenter();
+      this.store.items = getInitialState(this.items, startIndex);
     }
+  }
+
+  recenter() {
+    const [...items] = this.props.items;
+    this.items = [items.pop(), ...items];
   }
 
   init() {
@@ -137,11 +146,7 @@ export class Gallery extends Component<Props> {
 
     this.timers.after(DURATION, () => {
       this.store.index += direction * -1;
-      this.store.items = array.circularSlice(
-        this.props.items,
-        this.store.index,
-        3
-      );
+      this.store.items = array.circularSlice(this.items, this.store.index, 3);
       this.store.movingDirection = 0;
 
       const { items, loading } = this.store;

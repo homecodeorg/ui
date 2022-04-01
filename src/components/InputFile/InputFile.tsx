@@ -4,39 +4,13 @@ import cn from 'classnames';
 import pick from 'lodash.pick';
 import compare from 'compareq';
 
-import { Label, Icon, Scroll, file as _file } from 'uilib';
+import { Label, Icon, Scroll, file as fileTools, array } from 'uilib';
 
 import S from './InputFile.styl';
 import Item from './Item/Item';
-import { array } from 'uilib/tools';
 
-type ProgressParams = {
-  loaded: number;
-  total: number;
-};
-
-type Value = string[];
-
-type Props = {
-  className?: string;
-  label?: string;
-  size?: string;
-  upload: (
-    file: File,
-    onProgress: (params: ProgressParams) => void,
-    getXHR?: (xhr: XMLHttpRequest) => void
-  ) => Promise<string>;
-  rootUrl: string; // folder in cloud storage
-  accept?: HTMLProps<HTMLInputElement>['accept'];
-  limit?: number; // megabytes
-  maxCount?: number; // max files count
-  value?: Value; // url
-  onSelect?: (e: ChangeEvent<HTMLInputElement>) => void;
-  onChange: (e: ChangeEvent<HTMLInputElement>, value: Value) => void; // upload complete
-  remove?: (fileName: string) => Promise<boolean>;
-};
-
-export type InputFileProps = Props;
+import * as T from './InputFile.types';
+export * as InputFileTypes from './InputFile.types';
 
 const defaultFileState = {
   total: 1,
@@ -45,32 +19,26 @@ const defaultFileState = {
   base64: '',
 };
 
-function stateFromProps(value, maxCount) {
-  return value.slice(0, maxCount).map((src, index) => ({
-    ...defaultFileState,
-    loaded: 1,
-    index,
-    src,
-  }));
-}
-
-export class InputFile extends Component<Props> {
+export class InputFile extends Component<T.Props> {
   store;
+  filesToUpload = []; // [File,...]
+  previewRequests = {}; // [index]: Promise
   _mounted = false;
 
   constructor(props) {
     super(props);
 
-    const { value, maxCount } = props;
-    const items = stateFromProps(value, maxCount);
-
-    this.store = createStore(this, { items, labelClipPath: '' });
+    this.store = createStore(this, {
+      items: this.getStateFromProps(),
+      labelClipPath: '',
+    });
   }
 
   static defaultProps = { rootUrl: '', size: 'm', maxCount: 1 };
 
   componentDidMount() {
     this._mounted = true;
+    this.props.uploadOnDemand?.(this.demandedUploader);
   }
 
   componentWillUnmount() {
@@ -82,16 +50,29 @@ export class InputFile extends Component<Props> {
     const { value, maxCount } = this.props;
 
     if (!compare(prevProps.value, value) || prevProps.maxCount !== maxCount) {
-      this.store.items = stateFromProps(value, maxCount);
+      this.store.items = this.getStateFromProps();
     }
   }
 
-  onChange = async e => {
-    const { files } = e.target;
-    const { value, maxCount, limit, onChange } = this.props;
-    const { items } = this.store;
+  getStateFromProps() {
+    const { value, maxCount, upload } = this.props;
+    const loaded = upload ? 1 : 0;
+
+    return value.slice(0, maxCount).map((src, index) => ({
+      ...defaultFileState,
+      loaded,
+      index,
+      src,
+    }));
+  }
+
+  getValFromState = () =>
+    this.store.items.map(({ src, base64 }) => src || base64);
+
+  filterAllowedFiles(files) {
+    const { value, maxCount, limit } = this.props;
+    const allowedFiles = [];
     let index = value.length;
-    const requests = [];
 
     [...files].every(file => {
       if (index >= maxCount) return false;
@@ -105,46 +86,108 @@ export class InputFile extends Component<Props> {
         }
       }
 
-      items.push({ ...defaultFileState, index });
-      requests.push(this.upload(file, items[index]));
-      index++;
-
+      allowedFiles.push(file);
       return true;
+    }, []);
+
+    return allowedFiles;
+  }
+
+  onChange = async e => {
+    const { files } = e.target;
+    const { value, onSelect, uploadOnDemand, upload } = this.props;
+    const { items } = this.store;
+    let index = value.length;
+    const allowedFiles = this.filterAllowedFiles(files);
+
+    allowedFiles.forEach(file => {
+      items.push({ ...defaultFileState, index });
+      this.filesToUpload[index] = file;
+      this.previewRequests[index] = this.generatePreview(file, index);
+      index++;
     });
 
-    await Promise.all(requests);
+    onSelect?.(allowedFiles);
 
-    const newValue = [...this.props.value];
-
-    requests.forEach((r, _i) => {
-      const i = value.length + _i;
-      newValue[i] = items[i].src;
-    });
-
-    onChange(null, newValue);
+    if (upload) this.processUploadOnChange(allowedFiles);
+    if (uploadOnDemand) this.processUploadOnDemand();
   };
 
   onProgress = state => e => {
     Object.assign(state, pick(e, ['total', 'loaded']));
   };
 
-  async upload(file, state) {
-    const { upload } = this.props;
+  async generatePreview(file, index) {
+    const state = this.store.items[index];
 
     Object.assign(state, defaultFileState);
+    state.base64 = await fileTools.toBase64(file);
 
-    state.base64 = await _file.toBase64(file);
+    delete this.previewRequests[index];
+  }
 
+  async processUploadOnDemand() {
+    await Promise.all(Object.values(this.previewRequests));
+
+    if (!this._mounted) return;
+
+    const { onChange } = this.props;
+
+    onChange(null, this.getValFromState());
+  }
+
+  async processUploadOnChange(files) {
+    const { value, onChange } = this.props;
+    const reqs = files.map((file, i) => this.upload(file, value.length + i));
+
+    await Promise.all(reqs);
+
+    onChange(null, this.getValFromState());
+  }
+
+  async upload(file, index) {
+    const { upload } = this.props;
+    const { items } = this.store;
+    const state = items[index];
     const src = await upload(
       file,
       this.onProgress(state),
       xhr => (state.xhr = xhr)
     );
 
+    delete this.filesToUpload[index];
+
     if (!this._mounted) return;
 
-    Object.assign(state, { src, loaded: state.total, xhr: null });
+    Object.assign(state, {
+      src,
+      loaded: state.total,
+      xhr: null,
+    });
   }
+
+  demandedUploader = async upload => {
+    const { value } = this.props;
+    const { items } = this.store;
+    const requests = [];
+    const newVal = [...value];
+
+    value.forEach((val, i) => {
+      const file = this.filesToUpload[i];
+
+      if (file) {
+        requests.push(
+          upload(file, this.onProgress(items[i])).then(url => (newVal[i] = url))
+        );
+      }
+    });
+
+    await Promise.all(requests);
+
+    this.filesToUpload = [];
+
+    return newVal;
+  };
 
   remove = async value => {
     const { remove, onChange } = this.props;
@@ -184,16 +227,17 @@ export class InputFile extends Component<Props> {
         </Label>
 
         <Scroll x size="s" innerClassName={S.items}>
-          {items.map(({ base64, src, loaded, total }) => {
+          {items.map(({ base64, src, loaded, total }, i) => {
             const url = base64 || src;
 
             return (
               <Item
-                key={url}
+                key={String(url) + i}
                 className={S.item}
                 img={url}
-                loaded={loaded}
                 total={total}
+                loaded={loaded}
+                waitingForUpload={!!this.filesToUpload[i]}
                 onRemove={() => this.remove(url)}
               />
             );

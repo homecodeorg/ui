@@ -42,15 +42,34 @@ export function parseRouteParams(routes) {
 const getRouteWeight = route => route.path.split('/').length;
 
 export function getWeightestRoute(routes, currPath) {
-  const exactMatch = routes.find(({ path }) => path === currPath);
-
-  if (exactMatch) return exactMatch;
-
-  return routes.sort((a, b) =>
+  const sorted = routes.sort((a, b) =>
     getRouteWeight(a) > getRouteWeight(b)
       ? -1
       : getRouteWeight(b) > getRouteWeight(a)
       ? 1
       : 0
-  )[0];
+  );
+
+  const exactMatch = sorted.find(({ path }) => path === currPath);
+
+  if (exactMatch) return exactMatch;
+
+  const strictMatch = sorted.find(route => {
+    const currPathTrimmed = currPath
+      .split('/')
+      .slice(0, getRouteWeight(route))
+      .join('/');
+
+    return route.parsed.test(currPathTrimmed);
+  });
+
+  if (strictMatch) return strictMatch;
+
+  const liberalMatch = sorted.filter(({ source }) =>
+    new RegExp(source).test(currPath)
+  );
+
+  if (liberalMatch.length === 1) return liberalMatch[0];
+
+  return sorted[0];
 }

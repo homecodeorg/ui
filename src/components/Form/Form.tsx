@@ -217,9 +217,7 @@ export class Form extends Component<T.Props> {
     const { markEdited } = this.props;
     const { name } = props;
     const { values, changed, touched, errors } = this.store.originalObject;
-
-    return {
-      required: this.validationSchema[name].empty === false,
+    const fieldProps = {
       ...props,
       value: values[name],
       markEdited,
@@ -229,6 +227,11 @@ export class Form extends Component<T.Props> {
       handleChange: this.onChange,
       handleBlur: this.onBlur,
     };
+
+    if (this.validationSchema?.[name].empty === false)
+      fieldProps.required = true;
+
+    return fieldProps;
   }
 
   getFormAPI(): T.FormApi {
