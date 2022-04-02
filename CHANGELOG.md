@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.5](https://github.com/foreverido/uilib/compare/v1.2.4...v1.2.5) (2022-04-02)
+
+
+### Bug Fixes
+
+* LightBox - subscribe keydown capture ([8219f73](https://github.com/foreverido/uilib/commit/8219f7312417b3991650bd115dbf131ef3ee5772))
+
 ### [1.2.4](https://github.com/foreverido/uilib/compare/v1.2.3...v1.2.4) (2022-04-01)
 
 
