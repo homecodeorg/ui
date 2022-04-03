@@ -1,4 +1,4 @@
-import { Component, CSSProperties } from 'react';
+import { Component, CSSProperties, HTMLProps } from 'react';
 import cn from 'classnames';
 
 import { Button, Icon } from 'uilib';
@@ -8,7 +8,8 @@ import S from './Item.styl';
 type Props = {
   className?: string;
   img?: string;
-  onRemove?: () => void;
+  onRemove?: HTMLProps<HTMLButtonElement>['onClick'];
+  onClick?: () => void;
   total: number;
   loaded: number;
   waitingForUpload?: boolean;
@@ -22,21 +23,24 @@ export default class Item extends Component<Props> {
       total,
       loaded,
       waitingForUpload,
-      onRemove,
       children,
+      onRemove,
+      ...rest
     } = this.props;
     const style = {} as CSSProperties;
     const isComplete = loaded === total;
+    const isLoading = !isComplete && loaded > 0;
     const classes = cn(
       S.root,
       waitingForUpload && S.waitingForUpload,
+      isLoading && S.loading,
       className
     );
 
     if (img) style.backgroundImage = `url(${img})`;
 
     return (
-      <div className={classes} style={style}>
+      <div {...rest} className={classes} style={style}>
         {children}
 
         <Button

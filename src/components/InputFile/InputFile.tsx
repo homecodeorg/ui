@@ -1,8 +1,9 @@
-import { ChangeEvent, Component, HTMLProps } from 'react';
+import { Component, createRef } from 'react';
 import { createStore } from 'justorm/react';
 import cn from 'classnames';
 import pick from 'lodash.pick';
 import compare from 'compareq';
+import Time from 'timen';
 
 import { Label, Icon, Scroll, file as fileTools, array } from 'uilib';
 
@@ -30,6 +31,7 @@ export class InputFile extends Component<T.Props> {
   store;
   filesToUpload = []; // [File,...]
   previewRequests = {}; // [index]: Promise
+  inputRef = createRef<HTMLInputElement>();
   _mounted = false;
 
   constructor(props) {
@@ -38,6 +40,7 @@ export class InputFile extends Component<T.Props> {
     this.store = createStore(this, {
       items: this.getStateFromProps(),
       labelClipPath: '',
+      pickingIndex: null,
     });
   }
 
@@ -93,10 +96,9 @@ export class InputFile extends Component<T.Props> {
     return Array.isArray(value) ? value.length : 0;
   };
 
-  filterAllowedFiles(files) {
+  filterAllowedFiles(files, index) {
     const { maxCount, limit } = this.props;
     const allowedFiles = [];
-    let index = this.getLastIndex();
 
     [...files].every(file => {
       if (index >= maxCount) return false;
@@ -111,21 +113,30 @@ export class InputFile extends Component<T.Props> {
       }
 
       allowedFiles.push(file);
+      index++;
       return true;
     }, []);
 
     return allowedFiles;
   }
 
+  onPlusButtonClick = () => this.inputRef.current.click();
+
+  onItemClick(index) {
+    this.store.pickingIndex = index;
+    Time.after(50, () => this.inputRef.current.click());
+  }
+
   onChange = async e => {
     const { files } = e.target;
+    const { items, pickingIndex } = this.store;
     const { onSelect, uploadOnDemand, upload } = this.props;
-    const { items } = this.store;
-    let index = this.getLastIndex();
-    const allowedFiles = this.filterAllowedFiles(files);
+
+    let index = pickingIndex ?? this.getLastIndex();
+    const allowedFiles = this.filterAllowedFiles(files, index);
 
     allowedFiles.forEach(file => {
-      items.push({ ...defaultFileState, index });
+      items[index] = { ...defaultFileState, index };
       this.filesToUpload[index] = file;
       this.previewRequests[index] = this.generatePreview(file, index);
       index++;
@@ -135,6 +146,8 @@ export class InputFile extends Component<T.Props> {
 
     if (upload) this.processUploadOnChange(allowedFiles);
     if (uploadOnDemand) this.processUploadOnDemand();
+
+    if (typeof pickingIndex === 'number') this.store.pickingIndex = null;
   };
 
   onProgress = state => e => {
@@ -162,7 +175,8 @@ export class InputFile extends Component<T.Props> {
 
   async processUploadOnChange(files) {
     const { onChange } = this.props;
-    const lastIndex = this.getLastIndex();
+    const { pickingIndex } = this.store;
+    const lastIndex = pickingIndex ?? this.getLastIndex();
     const reqs = files.map((file, i) => this.upload(file, lastIndex + i));
 
     await Promise.all(reqs);
@@ -222,7 +236,9 @@ export class InputFile extends Component<T.Props> {
     return newVal;
   };
 
-  remove = async value => {
+  remove = async (e, value) => {
+    e.stopPropagation();
+
     const { remove, onChange } = this.props;
 
     if (remove) {
@@ -239,13 +255,22 @@ export class InputFile extends Component<T.Props> {
 
   render() {
     const { className, size, label, accept, maxCount } = this.props;
-    const { items, labelClipPath } = this.store;
+    const { items, labelClipPath, pickingIndex } = this.store;
 
     const classes = cn(S.root, className, S[`size-${size}`]);
 
     return (
       <div className={classes}>
         <div className={S.border} style={{ clipPath: labelClipPath }} />
+
+        <input
+          ref={this.inputRef}
+          className={S.input}
+          type="file"
+          multiple={maxCount > 1 && typeof pickingIndex !== 'number'}
+          accept={accept}
+          onChange={this.onChange}
+        />
 
         <Label
           isOnTop
@@ -268,21 +293,21 @@ export class InputFile extends Component<T.Props> {
                 total={total}
                 loaded={loaded}
                 waitingForUpload={!!this.filesToUpload[i]}
-                onRemove={() => this.remove(url)}
+                onRemove={e => {
+                  this.remove(e, url);
+                }}
+                onClick={() => this.onItemClick(i)}
               />
             );
           })}
 
           {items.length < maxCount && (
-            <label className={cn(S.item, S.addButton)} key="add-button">
+            <label
+              className={cn(S.item, S.addButton)}
+              key="add-button"
+              onClick={this.onPlusButtonClick}
+            >
               <Icon type="plus" />
-              <input
-                className={S.input}
-                type="file"
-                multiple={maxCount > 1}
-                accept={accept}
-                onChange={this.onChange}
-              />
             </label>
           )}
         </Scroll>
