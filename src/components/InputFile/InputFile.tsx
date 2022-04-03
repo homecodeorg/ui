@@ -19,6 +19,13 @@ const defaultFileState = {
   base64: '',
 };
 
+const buildDefaultState = (src, index, loaded) => ({
+  ...defaultFileState,
+  loaded,
+  index,
+  src,
+});
+
 export class InputFile extends Component<T.Props> {
   store;
   filesToUpload = []; // [File,...]
@@ -34,7 +41,10 @@ export class InputFile extends Component<T.Props> {
     });
   }
 
-  static defaultProps = { rootUrl: '', size: 'm', maxCount: 1 };
+  static defaultProps = {
+    size: 'm',
+    maxCount: 1,
+  };
 
   componentDidMount() {
     this._mounted = true;
@@ -54,25 +64,39 @@ export class InputFile extends Component<T.Props> {
     }
   }
 
+  isMultiple = () => this.props.maxCount > 1;
+
   getStateFromProps() {
     const { value, maxCount, upload } = this.props;
     const loaded = upload ? 1 : 0;
 
-    return value.slice(0, maxCount).map((src, index) => ({
-      ...defaultFileState,
-      loaded,
-      index,
-      src,
-    }));
+    if (this.isMultiple()) {
+      return value
+        .slice(0, maxCount)
+        .map((src, index) => buildDefaultState(src, index, loaded));
+    }
+
+    return value ? [buildDefaultState(value, 0, loaded)] : [];
   }
 
-  getValFromState = () =>
-    this.store.items.map(({ src, base64 }) => src || base64);
+  getValFromState = () => {
+    const { items } = this.store;
+
+    if (this.isMultiple()) return items.map(({ src, base64 }) => src || base64);
+
+    if (!items[0]) return null;
+    return items[0].src || items[0].base64;
+  };
+
+  getLastIndex = () => {
+    const { value } = this.props;
+    return Array.isArray(value) ? value.length : 0;
+  };
 
   filterAllowedFiles(files) {
-    const { value, maxCount, limit } = this.props;
+    const { maxCount, limit } = this.props;
     const allowedFiles = [];
-    let index = value.length;
+    let index = this.getLastIndex();
 
     [...files].every(file => {
       if (index >= maxCount) return false;
@@ -95,9 +119,9 @@ export class InputFile extends Component<T.Props> {
 
   onChange = async e => {
     const { files } = e.target;
-    const { value, onSelect, uploadOnDemand, upload } = this.props;
+    const { onSelect, uploadOnDemand, upload } = this.props;
     const { items } = this.store;
-    let index = value.length;
+    let index = this.getLastIndex();
     const allowedFiles = this.filterAllowedFiles(files);
 
     allowedFiles.forEach(file => {
@@ -137,8 +161,9 @@ export class InputFile extends Component<T.Props> {
   }
 
   async processUploadOnChange(files) {
-    const { value, onChange } = this.props;
-    const reqs = files.map((file, i) => this.upload(file, value.length + i));
+    const { onChange } = this.props;
+    const lastIndex = this.getLastIndex();
+    const reqs = files.map((file, i) => this.upload(file, lastIndex + i));
 
     await Promise.all(reqs);
 
@@ -169,20 +194,28 @@ export class InputFile extends Component<T.Props> {
   demandedUploader = async upload => {
     const { value } = this.props;
     const { items } = this.store;
-    const requests = [];
-    const newVal = [...value];
+    let newVal;
 
-    value.forEach((val, i) => {
-      const file = this.filesToUpload[i];
+    if (this.isMultiple()) {
+      const requests = [];
 
-      if (file) {
-        requests.push(
-          upload(file, this.onProgress(items[i])).then(url => (newVal[i] = url))
-        );
-      }
-    });
+      newVal = [...value];
+      value.forEach((val, i) => {
+        const file = this.filesToUpload[i];
 
-    await Promise.all(requests);
+        if (file) {
+          requests.push(
+            upload(file, this.onProgress(items[i])).then(
+              url => (newVal[i] = url)
+            )
+          );
+        }
+      });
+
+      await Promise.all(requests);
+    } else {
+      newVal = await upload(this.filesToUpload[0], this.onProgress(items[0]));
+    }
 
     this.filesToUpload = [];
 
@@ -201,10 +234,7 @@ export class InputFile extends Component<T.Props> {
 
     array.spliceWhere(items, value, 'src');
 
-    onChange(
-      null,
-      items.map(({ src }) => src)
-    );
+    onChange(null, this.getValFromState());
   };
 
   render() {
@@ -249,7 +279,7 @@ export class InputFile extends Component<T.Props> {
               <input
                 className={S.input}
                 type="file"
-                multiple
+                multiple={maxCount > 1}
                 accept={accept}
                 onChange={this.onChange}
               />

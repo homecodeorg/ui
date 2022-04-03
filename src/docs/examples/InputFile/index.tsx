@@ -4,33 +4,31 @@ import { Code } from 'docs/components';
 
 import { upload } from './helpers';
 
-import UploadOnChange from '!!raw-loader!./UploadOnChange';
-import UploadOnDemand from '!!raw-loader!./UploadOnDemand';
+import single from '!!raw-loader!./Single';
+import multiple from '!!raw-loader!./Multiple';
+import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
 
 const rootPath = '/inputFile';
+const examples = { single, multiple, uploadOnDemand };
 
 export default () => (
   <Container vertical fullWidth>
     <div>
-      <Link href={`${rootPath}/onchange`}>Upload on change</Link>
-      <Link href={`${rootPath}/ondemand`}>Upload on demand</Link>
+      {Object.keys(examples).map(key => (
+        <Link href={`${rootPath}/${key}`}>{key}</Link>
+      ))}
     </div>
 
     <Router rootPath={rootPath}>
-      <Code
-        exact
-        path="/onchange"
-        code={UploadOnChange}
-        scope={{ upload }}
-        key="onchange"
-      />
-      <Code
-        exact
-        path="/ondemand"
-        code={UploadOnDemand}
-        scope={{ upload }}
-        key="ondemand"
-      />
+      {Object.entries(examples).map(([key, example]) => (
+        <Code
+          exact
+          path={`/${key}`}
+          code={example}
+          scope={{ upload }}
+          key={key}
+        />
+      ))}
     </Router>
   </Container>
 );
