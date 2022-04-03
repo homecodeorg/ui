@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.6](https://github.com/foreverido/uilib/compare/v1.2.5...v1.2.6) (2022-04-03)
+
+
+### Features
+
+* InputFile - single ([3a3ca4d](https://github.com/foreverido/uilib/commit/3a3ca4db3137f3976b2891d0c962d87d103fd439))
+
+
+### Bug Fixes
+
+* SubmitButtons - props.className ([4ce42a3](https://github.com/foreverido/uilib/commit/4ce42a3943b962ffa42c3555c05657f7267f8ea7))
+
 ### [1.2.5](https://github.com/foreverido/uilib/compare/v1.2.4...v1.2.5) (2022-04-02)
 
 
