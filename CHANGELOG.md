@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.7](https://github.com/foreverido/uilib/compare/v1.2.6...v1.2.7) (2022-04-03)
+
+
+### Features
+
+* InputFile - replace item ([481f9f5](https://github.com/foreverido/uilib/commit/481f9f50dd4fcc0cacee3f8d1ef1a7b8a43f0aa5))
+
 ### [1.2.6](https://github.com/foreverido/uilib/compare/v1.2.5...v1.2.6) (2022-04-03)
 
 
