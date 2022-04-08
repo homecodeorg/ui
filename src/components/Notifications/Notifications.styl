@@ -17,6 +17,7 @@ $paddingBottom = 30px
   transition transform .3s ease-out
   overflow hidden
   max-height calc(100% - 20px)
+  transform translateZ(0) // fix background blinking on hover
 
   &.paused
     transform translateX(-3px)
