@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/foreverido/uilib/compare/v1.2.8...v1.3.0) (2022-04-08)
+
+
+### Features
+
+* popup lighter contrast & blur ([a408da3](https://github.com/foreverido/uilib/commit/a408da3c283b2a183fd43fe85edabcc6407daa03))
+
+
+### Bug Fixes
+
+* Link - external icon color ([9226666](https://github.com/foreverido/uilib/commit/92266662e96edf9556845385a4f1efd81a2f81ca))
+
 ### [1.2.8](https://github.com/foreverido/uilib/compare/v1.2.7...v1.2.8) (2022-04-07)
 
 
