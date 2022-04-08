@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/foreverido/uilib/compare/v1.3.1...v1.3.2) (2022-04-08)
+
+
+### Bug Fixes
+
+* Icon type=externalLink, +examples ([961212f](https://github.com/foreverido/uilib/commit/961212fe56d3663e3c65aff45a6e7af086cafb94))
+* Notification - background blinking on hover ([e45a321](https://github.com/foreverido/uilib/commit/e45a321a04edcd3327c7519f56a4d04fe3bb14d9))
+
 ### [1.3.1](https://github.com/foreverido/uilib/compare/v1.3.0...v1.3.1) (2022-04-08)
 
 
