@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.3](https://github.com/foreverido/uilib/compare/v1.3.2...v1.3.3) (2022-04-10)
+
+
+### Features
+
+* tools/localStorage, LS ([6947d01](https://github.com/foreverido/uilib/commit/6947d016aecd281a613b1e666b409312ee6e4137))
+
+
+### Bug Fixes
+
+* Notifications - backdrop-filter on animation ([df5f8a0](https://github.com/foreverido/uilib/commit/df5f8a0ce88dc84e3e9c9e4b6247cb3cc6714558))
+
 ### [1.3.2](https://github.com/foreverido/uilib/compare/v1.3.1...v1.3.2) (2022-04-08)
 
 
