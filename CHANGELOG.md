@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/foreverido/uilib/compare/v1.3.3...v1.3.4) (2022-04-10)
+
+
+### Features
+
+* Icon - fullscreen, fullscreenExit ([8631baf](https://github.com/foreverido/uilib/commit/8631bafaa649e1bd4fbe6d2eb82cc0b516118c3c))
+
 ### [1.3.3](https://github.com/foreverido/uilib/compare/v1.3.2...v1.3.3) (2022-04-10)
 
 
