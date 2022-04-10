@@ -8,6 +8,8 @@ export { default as chevronRight } from './chevronRight.svg';
 export { default as chevronLeft } from './chevronLeft.svg';
 export { default as delete } from './delete.svg';
 export { default as externalLink } from './externalLink.svg';
+export { default as fullscreen } from './fullscreen.svg';
+export { default as fullscreenExit } from './fullscreenExit.svg';
 export { default as menu } from './menu.svg';
 export { default as moreVertical } from './moreVertical.svg';
 export { default as moreHorizontal } from './moreHorizontal.svg';
