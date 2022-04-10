@@ -34,16 +34,16 @@ const showAll = () => {
 export default () => (
   <Container centered fullHeight>
     <Notifications style={{ maxWidth: '60%' }} />
-    <div>
-      <Button onClick={() => show('info')}>Info</Button>
-      <br />
-      <Button onClick={() => show('warning')}>Warning</Button>
-      <br />
-      <Button onClick={() => show('error')}>Error</Button>
-      <br />
-      <Button onClick={() => show('loading')}>Loading</Button>
-      <br />
-      <Button onClick={showAll}>All</Button>
-    </div>
+    {/* <div> */}
+    <Button onClick={() => show('info')}>Info</Button>
+    <br />
+    <Button onClick={() => show('warning')}>Warning</Button>
+    <br />
+    <Button onClick={() => show('error')}>Error</Button>
+    <br />
+    <Button onClick={() => show('loading')}>Loading</Button>
+    <br />
+    <Button onClick={showAll}>All</Button>
+    {/* </div> */}
   </Container>
 );

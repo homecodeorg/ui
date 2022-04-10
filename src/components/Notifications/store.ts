@@ -2,9 +2,9 @@ import { createStore } from 'justorm/react';
 import Time from 'timen';
 
 import { array, uid } from 'uilib';
+import C from './Notifications.constants.json';
 
 const SHOW_TIME = 5000;
-const ANIMATION_DURATION = 200;
 
 type ID = string;
 
@@ -22,7 +22,7 @@ const STORE = createStore('notifications', {
       createdAt: Date.now(),
     };
 
-    Time.after(ANIMATION_DURATION, () => (this.data[id].visible = true));
+    Time.after(C.ANIMATION_DURATION, () => (this.data[id].visible = true));
 
     if (data.autohide !== false) {
       this.autohide.push(id);
@@ -45,7 +45,7 @@ const STORE = createStore('notifications', {
   },
   close(id) {
     this.data[id].visible = false;
-    Time.after(ANIMATION_DURATION, () => this.remove(id));
+    Time.after(C.ANIMATION_DURATION, () => this.remove(id));
   },
   remove(id) {
     array.spliceWhere(this.autohide, id);
@@ -68,7 +68,7 @@ Time.tick(function tick() {
 
   if (item.visible && readyToHide) {
     item.visible = false;
-    Time.after(ANIMATION_DURATION, () => STORE.remove(id));
+    Time.after(C.ANIMATION_DURATION, () => STORE.remove(id));
   }
 });
 

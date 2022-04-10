@@ -1,9 +1,10 @@
 @import '../../theme'
+json('./Notifications.constants.json')
 
 $width = 300px
 $height = 80px
-$duration = 200ms
 $padding = 10px
+$duration = '%sms' % ANIMATION_DURATION
 $paddingBottom = 30px
 
 .root
@@ -14,13 +15,10 @@ $paddingBottom = 30px
   width 300px
   padding-left var(--indent-s)
   padding-right var(--indent-s)
-  transition transform .3s ease-out
+  transition right .3s ease-out
   overflow hidden
   max-height calc(100% - 20px)
   transform translateZ(0) // fix background blinking on hover
-
-  &.paused
-    transform translateX(-3px)
 
 .empty
   pointer-events none
@@ -30,24 +28,24 @@ $paddingBottom = 30px
   border-radius var(--border-radius-l)
 
 .item
+  position relative
+  left 100%
   padding-right 10px
   max-height 0 // animate `height:auto` – https://stackoverflow.com/a/8331169/2131453
   width $width
   max-width 100%
-  transform translateX(100%)
-  transform translate3d(100%, 0, 0)
   transition all $duration ease-out
   backface-visibility hidden
 
   & + &
     padding-top 10px
 
-  &:active
-    transform scale(.99)
+  // &:active
+  //   transform scale(.99)
 
 .visible
   max-height 500px
-  transform translateX(0)
+  left 0
 
 .itemInner
   position relative
@@ -58,13 +56,17 @@ $paddingBottom = 30px
   background-color var(--accent-color-alpha-100)
   backdrop-filter blur(50px)
   box-shadow inset 0 0 0 1px var(--accent-color-alpha-100)
-  transition transform $duration ease-out
+  transition $duration ease-out
+  transition-property transform, box-shadow
 
   .type-warning &
     background-color var(--warning-color-alpha-100)
 
   .type-danger &
     background-color var(--danger-color-alpha-100)
+
+  .paused &
+    box-shadow inset 0 0 0 1px var(--accent-color-alpha-200)
 
 .icon
   height 24px
