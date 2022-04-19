@@ -273,6 +273,9 @@ __webpack_require__.d(icons_namespaceObject, {
   "chevronUp": () => (chevronUp),
   "close": () => (icons_close),
   "delete": () => (icons_delete),
+  "externalLink": () => (externalLink),
+  "fullscreen": () => (fullscreen),
+  "fullscreenExit": () => (fullscreenExit),
   "menu": () => (menu),
   "moreHorizontal": () => (moreHorizontal),
   "moreVertical": () => (moreVertical),
@@ -686,6 +689,114 @@ function delete_extends() {
     d: "M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"
   }));
 });
+;// CONCATENATED MODULE: ./src/components/Icon/icons/externalLink.svg
+
+var externalLink_excluded = ["styles"];
+
+function externalLink_extends() {
+  externalLink_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return externalLink_extends.apply(this, arguments);
+}
+
+
+/* harmony default export */ const externalLink = (function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === void 0 ? {} : _ref$styles,
+      props = (0,objectWithoutProperties/* default */.Z)(_ref, externalLink_excluded);
+
+  return /*#__PURE__*/react.createElement("svg", externalLink_extends({
+    viewBox: "0 0 24 24",
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "currentColor"
+  }, props), /*#__PURE__*/react.createElement("path", {
+    d: "M18 19H6c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v6c0 .6-.4 1-1 1zM14 3v2h3.6l-6.1 6.1c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L19 6.4V10h2V4c0-.6-.4-1-1-1z"
+  }));
+});
+;// CONCATENATED MODULE: ./src/components/Icon/icons/fullscreen.svg
+
+var fullscreen_excluded = ["styles"];
+
+function fullscreen_extends() {
+  fullscreen_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return fullscreen_extends.apply(this, arguments);
+}
+
+
+/* harmony default export */ const fullscreen = (function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === void 0 ? {} : _ref$styles,
+      props = (0,objectWithoutProperties/* default */.Z)(_ref, fullscreen_excluded);
+
+  return /*#__PURE__*/react.createElement("svg", fullscreen_extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "currentColor"
+  }, props), /*#__PURE__*/react.createElement("path", {
+    d: "M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"
+  }));
+});
+;// CONCATENATED MODULE: ./src/components/Icon/icons/fullscreenExit.svg
+
+var fullscreenExit_excluded = ["styles"];
+
+function fullscreenExit_extends() {
+  fullscreenExit_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return fullscreenExit_extends.apply(this, arguments);
+}
+
+
+/* harmony default export */ const fullscreenExit = (function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === void 0 ? {} : _ref$styles,
+      props = (0,objectWithoutProperties/* default */.Z)(_ref, fullscreenExit_excluded);
+
+  return /*#__PURE__*/react.createElement("svg", fullscreenExit_extends({
+    xmlns: "http://www.w3.org/2000/svg",
+    viewBox: "0 0 24 24",
+    fill: "currentColor"
+  }, props), /*#__PURE__*/react.createElement("path", {
+    d: "M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"
+  }));
+});
 ;// CONCATENATED MODULE: ./src/components/Icon/icons/menu.svg
 
 var menu_excluded = ["styles"];
@@ -884,6 +995,9 @@ function requiredStar_extends() {
 
 
 
+
+
+
 ;// CONCATENATED MODULE: ./src/components/Icon/Icon.tsx
 /* provided dependency */ var React = __webpack_require__("./node_modules/react/index.js");
 
@@ -1054,41 +1168,8 @@ var justorm_react = __webpack_require__("./node_modules/justorm/react.js");
 // EXTERNAL MODULE: ./node_modules/classnames/index.js
 var classnames = __webpack_require__("./node_modules/classnames/index.js");
 var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
-;// CONCATENATED MODULE: ./src/components/Router/Link/icons/external.svg
-
-var _excluded = ["styles"];
-
-function _extends() {
-  _extends = Object.assign || function (target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i];
-
-      for (var key in source) {
-        if (Object.prototype.hasOwnProperty.call(source, key)) {
-          target[key] = source[key];
-        }
-      }
-    }
-
-    return target;
-  };
-
-  return _extends.apply(this, arguments);
-}
-
-
-/* harmony default export */ const external = (function (_ref) {
-  var _ref$styles = _ref.styles,
-      styles = _ref$styles === void 0 ? {} : _ref$styles,
-      props = (0,objectWithoutProperties/* default */.Z)(_ref, _excluded);
-
-  return /*#__PURE__*/react.createElement("svg", _extends({
-    viewBox: "0 0 24 24",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, props), /*#__PURE__*/react.createElement("path", {
-    d: "M18 19H6c-.6 0-1-.4-1-1V6c0-.6.4-1 1-1h6V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v6c0 .6-.4 1-1 1zM14 3v2h3.6l-6.1 6.1c-.4.4-.4 1 0 1.4.4.4 1 .4 1.4 0L19 6.4V10h2V4c0-.6-.4-1-1-1z"
-  }));
-});
+// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 19 modules
+var Icon = __webpack_require__("./src/components/Icon/Icon.tsx");
 // EXTERNAL MODULE: ./src/components/Router/context.ts
 var context = __webpack_require__("./src/components/Router/context.ts");
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
@@ -1148,7 +1229,7 @@ var update = injectStylesIntoStyleTag_default()(Link/* default */.Z, options);
 
 
 
-var Link_excluded = ["className", "exactClassName", "children", "isClear", "isClearPadding", "isDisabled", "store", "isPartialExact"];
+var _excluded = ["className", "exactClassName", "children", "isClear", "isClearPadding", "isDisabled", "store", "isPartialExact"];
 
 var _dec, _class, _class2;
 
@@ -1206,7 +1287,7 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
           isDisabled = _this$props.isDisabled,
           store = _this$props.store,
           isPartialExact = _this$props.isPartialExact,
-          rest = (0,objectWithoutProperties/* default */.Z)(_this$props, Link_excluded);
+          rest = (0,objectWithoutProperties/* default */.Z)(_this$props, _excluded);
 
       var path = store.router.path;
 
@@ -1238,8 +1319,9 @@ var Link_Link_Link = (_dec = (0,justorm_react.withStore)({
       }, props, {
         onClick: _this.onClick,
         ref: _this.domElem
-      }), children, isExternal && /*#__PURE__*/React.createElement(external, {
-        "class": Link_Link.externalIcon
+      }), children, isExternal && /*#__PURE__*/React.createElement(Icon/* Icon */.J, {
+        type: "externalLink",
+        className: Link_Link.externalIcon
       }));
     };
 
@@ -2325,7 +2407,7 @@ function getWeightestRoute(routes, currPath) {
   if (liberalMatch.length === 1) return liberalMatch[0];
   return sorted[0];
 }
-// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 2 modules
+// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 1 modules
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
 ;// CONCATENATED MODULE: ./src/components/Router/Redirect.tsx
 
@@ -3248,7 +3330,7 @@ var colors = {
 
   }],
   warning: ['#ffa31a', {
-    alpha: [200, 500]
+    alpha: [100, 200, 500]
   }],
   danger: ['#da3749', {
     alpha: [100, 300, 500]
@@ -8346,7 +8428,7 @@ function _unsupportedIterableToArray(o, minLen) {
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	(() => {
-/******/ 		__webpack_require__.h = () => ("46ff54a33faa7eda5dff")
+/******/ 		__webpack_require__.h = () => ("0aad9df263185b0277b8")
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/global */
@@ -8569,7 +8651,7 @@ var classnames_default = /*#__PURE__*/__webpack_require__.n(classnames);
 var dom = __webpack_require__("./src/tools/dom.ts");
 // EXTERNAL MODULE: ./src/components/Button/Button.tsx + 2 modules
 var Button = __webpack_require__("./src/components/Button/Button.tsx");
-// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 16 modules
+// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 19 modules
 var Icon = __webpack_require__("./src/components/Icon/Icon.tsx");
 // EXTERNAL MODULE: ./src/components/Router/Router.tsx + 6 modules
 var Router = __webpack_require__("./src/components/Router/Router.tsx");
@@ -8588,7 +8670,7 @@ var asyncToGenerator = __webpack_require__("./node_modules/@babel/runtime/helper
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
 var regenerator = __webpack_require__("./node_modules/@babel/runtime/regenerator/index.js");
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
-// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 2 modules
+// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 1 modules
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
 // EXTERNAL MODULE: ./src/tools/string.ts
 var string = __webpack_require__("./src/tools/string.ts");
@@ -8600,82 +8682,87 @@ var store = __webpack_require__("./src/docs/components/App/store.ts");
 /* harmony default export */ const navigation = ([{
   slug: 'button',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(408)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Button/index.tsx"));
   }
 }, {
   slug: 'checkbox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(679)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Checkbox/index.tsx"));
   }
 }, {
   slug: 'input',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(659)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Input/index.tsx"));
   }
 }, {
   slug: 'inputFile',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(197)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(649)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/InputFile/index.tsx"));
   }
 }, {
   slug: 'spinner',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(676)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Spinner/index.tsx"));
   }
 }, {
   slug: 'form',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(3)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Form/index.tsx"));
   }
-}, // {
-//   slug: 'icon',
-//   loader: () => import('./examples/Icon/Icon'),
-// },
-{
+}, {
+  slug: 'icon',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(509)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Icon/index.tsx"));
+  }
+}, {
+  slug: 'link',
+  loader: function loader() {
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(446)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Link/index.tsx"));
+  }
+}, {
   slug: 'popup',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(294)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Popup/index.tsx"));
   }
 }, {
   slug: 'popupMenu',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(924)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/PopupMenu/index.tsx"));
   }
 }, {
   slug: 'gallery',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(335)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Gallery/index.tsx"));
   }
 }, {
   slug: 'lightBox',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(748)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/LightBox/index.tsx"));
   }
 }, {
   slug: 'select',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
-  } // items: () => import('./examples/Select/navigation'),
-
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(744)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Select/Select.tsx"));
+  }
 }, {
   slug: 'scroll',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(282)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Scroll/index.tsx"));
   }
 }, {
   slug: 'virtualized',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(802)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(802)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Virtualized/index.tsx"));
   }
 }, {
   slug: 'notifications',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(113)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Notifications/index.tsx"));
   }
 }, {
   slug: 'router',
   loader: function loader() {
-    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(10), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
+    return Promise.all(/* import() */[__webpack_require__.e(907), __webpack_require__.e(835), __webpack_require__.e(176)]).then(__webpack_require__.bind(__webpack_require__, "./src/docs/examples/Router/index.tsx"));
   }
 }]);
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
@@ -8955,7 +9042,7 @@ var App_App_App = (_dec = (0,justorm_react.withStore)('app'), _dec(_class = /*#_
         className: App_App.configBar
       }, /*#__PURE__*/App_React.createElement("span", {
         className: App_App.version
-      }, "v", "1.2.4"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
+      }, "v", "1.3.4"), /*#__PURE__*/App_React.createElement(Button/* Button */.z, {
         className: App_App.cfgButton,
         variant: "clear",
         size: "l",

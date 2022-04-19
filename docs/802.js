@@ -22,11 +22,11 @@ __webpack_require__.d(Virtualized_helpers_namespaceObject, {
   "renderSimpleItems": () => (renderSimpleItems)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 61 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 63 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 // EXTERNAL MODULE: ./src/components/Container/Container.tsx + 1 modules
 var Container = __webpack_require__("./src/components/Container/Container.tsx");
-// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 2 modules
+// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 1 modules
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
 // EXTERNAL MODULE: ./src/components/Router/Router.tsx + 6 modules
 var Router = __webpack_require__("./src/components/Router/Router.tsx");
@@ -42,7 +42,7 @@ var timen = __webpack_require__("./node_modules/timen/index.js");
 var timen_default = /*#__PURE__*/__webpack_require__.n(timen);
 // EXTERNAL MODULE: ./src/components/Button/Button.tsx + 2 modules
 var Button = __webpack_require__("./src/components/Button/Button.tsx");
-// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 16 modules
+// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 19 modules
 var Icon = __webpack_require__("./src/components/Icon/Icon.tsx");
 // EXTERNAL MODULE: ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js
 var injectStylesIntoStyleTag = __webpack_require__("./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");

@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[197],{
+(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[649],{
 
 /***/ "./src/docs/examples/InputFile/index.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -12,13 +12,15 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ InputFile)
 });
 
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/slicedToArray.js + 1 modules
+var slicedToArray = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/slicedToArray.js");
 // EXTERNAL MODULE: ./src/components/Container/Container.tsx + 1 modules
 var Container = __webpack_require__("./src/components/Container/Container.tsx");
-// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 2 modules
+// EXTERNAL MODULE: ./src/components/Router/Link/Link.tsx + 1 modules
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
 // EXTERNAL MODULE: ./src/components/Router/Router.tsx + 6 modules
 var Router = __webpack_require__("./src/components/Router/Router.tsx");
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 61 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 63 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 var objectSpread2 = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/objectSpread2.js");
@@ -63,8 +65,10 @@ var upload = function upload(file, onProgress) {
     simulateLoader(onProgress, getOnComplete(file, resolve));
   });
 };
-;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/InputFile/UploadOnChange.tsx
-/* harmony default export */ const UploadOnChange = ("import { useState } from 'react';\nimport { InputFile } from 'uilib';\n\nexport default () => {\n  const [value, setValue] = useState([]);\n\n  return (\n    <InputFile\n      size=\"m\"\n      label=\"Photos\"\n      value={value}\n      onChange={(e, val) => setValue(val)}\n      // @ts-ignore\n      upload={upload}\n      maxCount={5}\n      accept=\"image/png, image/jpeg\"\n    />\n  );\n};\n");
+;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/InputFile/Single.tsx
+/* harmony default export */ const Single = ("import { useState } from 'react';\nimport { InputFile } from 'uilib';\n\nexport default () => {\n  const [value, setValue] = useState(null);\n\n  return (\n    <InputFile\n      size=\"m\"\n      label=\"Photo\"\n      value={value}\n      onChange={(e, val) => setValue(val)}\n      upload={upload}\n      accept=\"image/png, image/jpeg\"\n    />\n  );\n};\n");
+;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/InputFile/Multiple.tsx
+/* harmony default export */ const Multiple = ("import { useState } from 'react';\nimport { InputFile } from 'uilib';\n\nexport default () => {\n  const [value, setValue] = useState([]);\n\n  return (\n    <InputFile\n      size=\"m\"\n      label=\"Photos\"\n      value={value}\n      onChange={(e, val) => setValue(val)}\n      // @ts-ignore\n      upload={upload}\n      maxCount={5}\n      accept=\"image/png, image/jpeg\"\n    />\n  );\n};\n");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/InputFile/UploadOnDemand.tsx
 /* harmony default export */ const UploadOnDemand = ("import { useCallback, useState } from 'react';\nimport { InputFile, Form, SubmitButtons } from 'uilib';\n\nlet demandUploader;\n\nexport default () => {\n  const [initialValues, setInitialValues] = useState({ photos: [] });\n\n  const onSubmit = useCallback(async function () {\n    const photos = await demandUploader(upload);\n\n    setInitialValues({ photos });\n  }, []);\n\n  const renderFields = useCallback(\n    ({ Field, isLoading, isValid, isDirty }) => (\n      <>\n        <Field\n          name=\"photos\"\n          component={InputFile}\n          size=\"m\"\n          label=\"Photos\"\n          uploadOnDemand={fn => (demandUploader = fn)}\n          maxCount={5}\n          accept=\"image/png, image/jpeg\"\n        />\n        <SubmitButtons\n          buttons={[\n            {\n              type: 'submit',\n              children: 'Submit',\n              isLoading,\n              key: 'submit',\n              disabled: !isValid || !isDirty,\n            },\n          ]}\n        />\n      </>\n    ),\n    []\n  );\n\n  return (\n    <Form\n      initialValues={initialValues}\n      validationSchema={{\n        photos: { type: 'array', items: 'string', empty: false },\n      }}\n      onSubmit={onSubmit}\n    >\n      {renderFields}\n    </Form>\n  );\n};\n");
 ;// CONCATENATED MODULE: ./src/docs/examples/InputFile/index.tsx
@@ -74,33 +78,38 @@ var upload = function upload(file, onProgress) {
 
 
 
+
+
 var rootPath = '/inputFile';
+var examples = {
+  single: Single,
+  multiple: Multiple,
+  uploadOnDemand: UploadOnDemand
+};
 /* harmony default export */ const InputFile = (function () {
   return /*#__PURE__*/React.createElement(Container/* Container */.W, {
     vertical: true,
     fullWidth: true
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Link/* Link */.r, {
-    href: "".concat(rootPath, "/onchange")
-  }, "Upload on change"), /*#__PURE__*/React.createElement(Link/* Link */.r, {
-    href: "".concat(rootPath, "/ondemand")
-  }, "Upload on demand")), /*#__PURE__*/React.createElement(Router/* Router */.F0, {
+  }, /*#__PURE__*/React.createElement("div", null, Object.keys(examples).map(function (key) {
+    return /*#__PURE__*/React.createElement(Link/* Link */.r, {
+      href: "".concat(rootPath, "/").concat(key)
+    }, key);
+  })), /*#__PURE__*/React.createElement(Router/* Router */.F0, {
     rootPath: rootPath
-  }, /*#__PURE__*/React.createElement(Code/* Code */.E, {
-    exact: true,
-    path: "/onchange",
-    code: UploadOnChange,
-    scope: {
-      upload: upload
-    },
-    key: "onchange"
-  }), /*#__PURE__*/React.createElement(Code/* Code */.E, {
-    exact: true,
-    path: "/ondemand",
-    code: UploadOnDemand,
-    scope: {
-      upload: upload
-    },
-    key: "ondemand"
+  }, Object.entries(examples).map(function (_ref) {
+    var _ref2 = (0,slicedToArray/* default */.Z)(_ref, 2),
+        key = _ref2[0],
+        example = _ref2[1];
+
+    return /*#__PURE__*/React.createElement(Code/* Code */.E, {
+      exact: true,
+      path: "/".concat(key),
+      code: example,
+      scope: {
+        upload: upload
+      },
+      key: key
+    });
   })));
 });
 

@@ -1,4 +1,4 @@
-(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[10],{
+(self["webpackChunk_foreverido_uilib"] = self["webpackChunk_foreverido_uilib"] || []).push([[835],{
 
 /***/ "./src/docs/components/Code/Code.tsx":
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -68,7 +68,7 @@ __webpack_require__.r(Virtualized_types_namespaceObject);
 var src_namespaceObject = {};
 __webpack_require__.r(src_namespaceObject);
 __webpack_require__.d(src_namespaceObject, {
-  "ANIMATION_DURATION": () => (Popup_ANIMATION_DURATION),
+  "ANIMATION_DURATION": () => (ANIMATION_DURATION),
   "AssistiveText": () => (AssistiveText_AssistiveText_AssistiveText),
   "Button": () => (Button/* Button */.z),
   "Checkbox": () => (Checkbox_Checkbox_Checkbox),
@@ -80,6 +80,7 @@ __webpack_require__.d(src_namespaceObject, {
   "Input": () => (Input_Input_Input),
   "InputFile": () => (InputFile_InputFile_InputFile),
   "InputFileTypes": () => (InputFile_types_namespaceObject),
+  "LS": () => (localStorage),
   "Label": () => (Label_Label_Label),
   "Lazy": () => (Lazy/* Lazy */.o),
   "LightBox": () => (LightBox_LightBox_LightBox),
@@ -232,7 +233,7 @@ function AssistiveText_AssistiveText_AssistiveText(props) {
 }
 // EXTERNAL MODULE: ./src/components/Button/Button.tsx + 2 modules
 var Button = __webpack_require__("./src/components/Button/Button.tsx");
-// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 16 modules
+// EXTERNAL MODULE: ./src/components/Icon/Icon.tsx + 19 modules
 var Icon = __webpack_require__("./src/components/Icon/Icon.tsx");
 // EXTERNAL MODULE: ./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Checkbox/Checkbox.styl
 var Checkbox = __webpack_require__("./node_modules/css-modules-typescript-loader/index.js!./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[2]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[2].use[3]!./node_modules/stylus-loader/dist/cjs.js!./src/components/Checkbox/Checkbox.styl");
@@ -1106,12 +1107,12 @@ var Form_helpers_excluded = ["field"];
 
 function patchWithCustomMessages(checkRes, validationSchema) {
   return checkRes.reduce(function (acc, _ref) {
-    var _validationSchema$fie, _validationSchema$fie2;
+    var _validationSchema$fie, _validationSchema$fie2, _validationSchema$fie3, _validationSchema$fie4;
 
     var field = _ref.field,
         rest = (0,objectWithoutProperties/* default */.Z)(_ref, Form_helpers_excluded);
 
-    var customMessage = (_validationSchema$fie = validationSchema[field]) === null || _validationSchema$fie === void 0 ? void 0 : (_validationSchema$fie2 = _validationSchema$fie.messages) === null || _validationSchema$fie2 === void 0 ? void 0 : _validationSchema$fie2[rest.type];
+    var customMessage = (_validationSchema$fie = (_validationSchema$fie2 = validationSchema[field]) === null || _validationSchema$fie2 === void 0 ? void 0 : _validationSchema$fie2.message) !== null && _validationSchema$fie !== void 0 ? _validationSchema$fie : (_validationSchema$fie3 = validationSchema[field]) === null || _validationSchema$fie3 === void 0 ? void 0 : (_validationSchema$fie4 = _validationSchema$fie3.messages) === null || _validationSchema$fie4 === void 0 ? void 0 : _validationSchema$fie4[rest.type];
     if (customMessage) rest.message = customMessage;
     return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, acc), {}, (0,defineProperty/* default */.Z)({}, field, rest));
   }, {});
@@ -1224,25 +1225,21 @@ var SubmitButtons_update = injectStylesIntoStyleTag_default()(SubmitButtons/* de
 ;// CONCATENATED MODULE: ./src/components/Form/SubmitButtons/SubmitButtons.tsx
 /* provided dependency */ var SubmitButtons_React = __webpack_require__("./node_modules/react/index.js");
 
-var SubmitButtons_excluded = ["buttons"],
-    _excluded2 = ["children"];
-// import Icon from 'components/Icon/Icon';
-// import { IconType } from 'components/Icon/Icon.types';
+var SubmitButtons_excluded = ["buttons", "className"];
+
 
 
 var SubmitButtons_SubmitButtons_SubmitButtons = function SubmitButtons(_ref) {
   var buttons = _ref.buttons,
+      className = _ref.className,
       props = (0,objectWithoutProperties/* default */.Z)(_ref, SubmitButtons_excluded);
 
   return /*#__PURE__*/SubmitButtons_React.createElement("div", Object.assign({
-    className: SubmitButtons_SubmitButtons.root
-  }, props), buttons.map(function (_ref2) {
-    var children = _ref2.children,
-        buttonProps = (0,objectWithoutProperties/* default */.Z)(_ref2, _excluded2);
-
+    className: classnames_default()(SubmitButtons_SubmitButtons.root, className)
+  }, props), buttons.map(function (buttonProps) {
     return /*#__PURE__*/SubmitButtons_React.createElement(Button/* Button */.z, Object.assign({
-      className: SubmitButtons_SubmitButtons.item
-    }, buttonProps), children);
+      className: classnames_default()(SubmitButtons_SubmitButtons.item, buttonProps.className)
+    }, buttonProps));
   }));
 };
 ;// CONCATENATED MODULE: ./src/components/Form/Form.types.tsx
@@ -1260,7 +1257,7 @@ var SubmitButtons_SubmitButtons_SubmitButtons = function SubmitButtons(_ref) {
 
 
 var Form_excluded = ["value", "error", "markEdited", "isChanged", "isTouched", "clearMargins", "component", "className", "onChange", "onBlur", "handleChange", "handleBlur", "children"],
-    Form_excluded2 = ["className", "children"];
+    _excluded2 = ["className", "children"];
 
 
 
@@ -1674,7 +1671,7 @@ var Form_Form_Form = /*#__PURE__*/function (_Component) {
       var _this$props = this.props,
           className = _this$props.className,
           children = _this$props.children,
-          rest = (0,objectWithoutProperties/* default */.Z)(_this$props, Form_excluded2);
+          rest = (0,objectWithoutProperties/* default */.Z)(_this$props, _excluded2);
 
       var isLoading = this.store.isLoading;
       var classes = classnames_default()(Form_Form.root, className, isLoading && Form_Form.isLoading);
@@ -2063,6 +2060,8 @@ var Item_update = injectStylesIntoStyleTag_default()(Item_Item/* default */.Z, I
 
 
 
+var Item_excluded = ["className", "img", "total", "loaded", "waitingForUpload", "children", "onRemove"];
+
 
 
 
@@ -2087,16 +2086,19 @@ var Item_Item_Item = /*#__PURE__*/function (_Component) {
           total = _this$props.total,
           loaded = _this$props.loaded,
           waitingForUpload = _this$props.waitingForUpload,
+          children = _this$props.children,
           onRemove = _this$props.onRemove,
-          children = _this$props.children;
+          rest = (0,objectWithoutProperties/* default */.Z)(_this$props, Item_excluded);
+
       var style = {};
       var isComplete = loaded === total;
-      var classes = classnames_default()(InputFile_Item_Item.root, waitingForUpload && InputFile_Item_Item.waitingForUpload, className);
+      var isLoading = !isComplete && loaded > 0;
+      var classes = classnames_default()(InputFile_Item_Item.root, waitingForUpload && InputFile_Item_Item.waitingForUpload, isLoading && InputFile_Item_Item.loading, className);
       if (img) style.backgroundImage = "url(".concat(img, ")");
-      return /*#__PURE__*/Item_React.createElement("div", {
+      return /*#__PURE__*/Item_React.createElement("div", Object.assign({}, rest, {
         className: classes,
         style: style
-      }, children, /*#__PURE__*/Item_React.createElement(Button/* Button */.z, {
+      }), children, /*#__PURE__*/Item_React.createElement(Button/* Button */.z, {
         className: InputFile_Item_Item.removeButton,
         size: "s",
         variant: "clear",
@@ -2142,12 +2144,22 @@ var Item_Item_Item = /*#__PURE__*/function (_Component) {
 
 
 
+
 var defaultFileState = {
   total: 1,
   loaded: 0,
   error: null,
   base64: ''
 };
+
+var buildDefaultState = function buildDefaultState(src, index, loaded) {
+  return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
+    loaded: loaded,
+    index: index,
+    src: src
+  });
+};
+
 var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   (0,inherits/* default */.Z)(InputFile, _Component);
 
@@ -2164,33 +2176,50 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
     _this.store = void 0;
     _this.filesToUpload = [];
     _this.previewRequests = {};
+    _this.inputRef = /*#__PURE__*/(0,react.createRef)();
     _this._mounted = false;
 
+    _this.isMultiple = function () {
+      return _this.props.maxCount > 1;
+    };
+
     _this.getValFromState = function () {
-      return _this.store.items.map(function (_ref) {
+      var items = _this.store.items;
+      if (_this.isMultiple()) return items.map(function (_ref) {
         var src = _ref.src,
             base64 = _ref.base64;
         return src || base64;
       });
+      if (!items[0]) return null;
+      return items[0].src || items[0].base64;
+    };
+
+    _this.getLastIndex = function () {
+      var value = _this.props.value;
+      return Array.isArray(value) ? value.length : 0;
+    };
+
+    _this.onPlusButtonClick = function () {
+      return _this.inputRef.current.click();
     };
 
     _this.onChange = /*#__PURE__*/function () {
       var _ref2 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee(e) {
-        var files, _this$props, value, onSelect, uploadOnDemand, upload, items, index, allowedFiles;
+        var files, _this$store, items, pickingIndex, _this$props, onSelect, uploadOnDemand, upload, index, allowedFiles;
 
         return regenerator_default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 files = e.target.files;
-                _this$props = _this.props, value = _this$props.value, onSelect = _this$props.onSelect, uploadOnDemand = _this$props.uploadOnDemand, upload = _this$props.upload;
-                items = _this.store.items;
-                index = value.length;
-                allowedFiles = _this.filterAllowedFiles(files);
+                _this$store = _this.store, items = _this$store.items, pickingIndex = _this$store.pickingIndex;
+                _this$props = _this.props, onSelect = _this$props.onSelect, uploadOnDemand = _this$props.uploadOnDemand, upload = _this$props.upload;
+                index = pickingIndex !== null && pickingIndex !== void 0 ? pickingIndex : _this.getLastIndex();
+                allowedFiles = _this.filterAllowedFiles(files, index);
                 allowedFiles.forEach(function (file) {
-                  items.push((0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
+                  items[index] = (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
                     index: index
-                  }));
+                  });
                   _this.filesToUpload[index] = file;
                   _this.previewRequests[index] = _this.generatePreview(file, index);
                   index++;
@@ -2198,8 +2227,9 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
                 onSelect === null || onSelect === void 0 ? void 0 : onSelect(allowedFiles);
                 if (upload) _this.processUploadOnChange(allowedFiles);
                 if (uploadOnDemand) _this.processUploadOnDemand();
+                if (typeof pickingIndex === 'number') _this.store.pickingIndex = null;
 
-              case 9:
+              case 10:
               case "end":
                 return _context.stop();
             }
@@ -2220,13 +2250,19 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
 
     _this.demandedUploader = /*#__PURE__*/function () {
       var _ref3 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee2(upload) {
-        var value, items, requests, newVal;
+        var value, items, newVal, requests;
         return regenerator_default().wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
                 value = _this.props.value;
                 items = _this.store.items;
+
+                if (!_this.isMultiple()) {
+                  _context2.next = 10;
+                  break;
+                }
+
                 requests = [];
                 newVal = (0,toConsumableArray/* default */.Z)(value);
                 value.forEach(function (val, i) {
@@ -2238,14 +2274,25 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
                     }));
                   }
                 });
-                _context2.next = 7;
+                _context2.next = 8;
                 return Promise.all(requests);
 
-              case 7:
+              case 8:
+                _context2.next = 13;
+                break;
+
+              case 10:
+                _context2.next = 12;
+                return upload(_this.filesToUpload[0], _this.onProgress(items[0]));
+
+              case 12:
+                newVal = _context2.sent;
+
+              case 13:
                 _this.filesToUpload = [];
                 return _context2.abrupt("return", newVal);
 
-              case 9:
+              case 15:
               case "end":
                 return _context2.stop();
             }
@@ -2259,42 +2306,40 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
     }();
 
     _this.remove = /*#__PURE__*/function () {
-      var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(value) {
+      var _ref4 = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee3(e, value) {
         var _this$props2, remove, onChange, res, items;
 
         return regenerator_default().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
+                e.stopPropagation();
                 _this$props2 = _this.props, remove = _this$props2.remove, onChange = _this$props2.onChange;
 
                 if (!remove) {
-                  _context3.next = 7;
+                  _context3.next = 8;
                   break;
                 }
 
-                _context3.next = 4;
+                _context3.next = 5;
                 return remove(value);
 
-              case 4:
+              case 5:
                 res = _context3.sent;
 
                 if (res) {
-                  _context3.next = 7;
+                  _context3.next = 8;
                   break;
                 }
 
                 return _context3.abrupt("return");
 
-              case 7:
+              case 8:
                 items = _this.store.items;
                 array.spliceWhere(items, value, 'src');
-                onChange(null, items.map(function (_ref5) {
-                  var src = _ref5.src;
-                  return src;
-                }));
+                onChange(null, _this.getValFromState());
 
-              case 10:
+              case 11:
               case "end":
                 return _context3.stop();
             }
@@ -2302,14 +2347,15 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         }, _callee3);
       }));
 
-      return function (_x3) {
+      return function (_x3, _x4) {
         return _ref4.apply(this, arguments);
       };
     }();
 
     _this.store = (0,justorm_react.createStore)((0,assertThisInitialized/* default */.Z)(_this), {
       items: _this.getStateFromProps(),
-      labelClipPath: ''
+      labelClipPath: '',
+      pickingIndex: null
     });
     return _this;
   }
@@ -2326,8 +2372,8 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
     key: "componentWillUnmount",
     value: function componentWillUnmount() {
       this._mounted = false;
-      this.store.items.forEach(function (_ref6) {
-        var xhr = _ref6.xhr;
+      this.store.items.forEach(function (_ref5) {
+        var xhr = _ref5.xhr;
         return xhr === null || xhr === void 0 ? void 0 : xhr.abort();
       });
     }
@@ -2350,23 +2396,22 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
           maxCount = _this$props5.maxCount,
           upload = _this$props5.upload;
       var loaded = upload ? 1 : 0;
-      return value.slice(0, maxCount).map(function (src, index) {
-        return (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, defaultFileState), {}, {
-          loaded: loaded,
-          index: index,
-          src: src
+
+      if (this.isMultiple()) {
+        return value.slice(0, maxCount).map(function (src, index) {
+          return buildDefaultState(src, index, loaded);
         });
-      });
+      }
+
+      return value ? [buildDefaultState(value, 0, loaded)] : [];
     }
   }, {
     key: "filterAllowedFiles",
-    value: function filterAllowedFiles(files) {
+    value: function filterAllowedFiles(files, index) {
       var _this$props6 = this.props,
-          value = _this$props6.value,
           maxCount = _this$props6.maxCount,
           limit = _this$props6.limit;
       var allowedFiles = [];
-      var index = value.length;
 
       (0,toConsumableArray/* default */.Z)(files).every(function (file) {
         if (index >= maxCount) return false;
@@ -2381,10 +2426,21 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         }
 
         allowedFiles.push(file);
+        index++;
         return true;
       }, []);
 
       return allowedFiles;
+    }
+  }, {
+    key: "onItemClick",
+    value: function onItemClick(index) {
+      var _this2 = this;
+
+      this.store.pickingIndex = index;
+      timen_default().after(50, function () {
+        return _this2.inputRef.current.click();
+      });
     }
   }, {
     key: "generatePreview",
@@ -2412,7 +2468,7 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         }, _callee4, this);
       }));
 
-      function generatePreview(_x4, _x5) {
+      function generatePreview(_x5, _x6) {
         return _generatePreview.apply(this, arguments);
       }
 
@@ -2460,25 +2516,26 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
     key: "processUploadOnChange",
     value: function () {
       var _processUploadOnChange = (0,asyncToGenerator/* default */.Z)( /*#__PURE__*/regenerator_default().mark(function _callee6(files) {
-        var _this2 = this;
+        var _this3 = this;
 
-        var _this$props7, value, onChange, reqs;
-
+        var onChange, pickingIndex, lastIndex, reqs;
         return regenerator_default().wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                _this$props7 = this.props, value = _this$props7.value, onChange = _this$props7.onChange;
+                onChange = this.props.onChange;
+                pickingIndex = this.store.pickingIndex;
+                lastIndex = pickingIndex !== null && pickingIndex !== void 0 ? pickingIndex : this.getLastIndex();
                 reqs = files.map(function (file, i) {
-                  return _this2.upload(file, value.length + i);
+                  return _this3.upload(file, lastIndex + i);
                 });
-                _context6.next = 4;
+                _context6.next = 6;
                 return Promise.all(reqs);
 
-              case 4:
+              case 6:
                 onChange(null, this.getValFromState());
 
-              case 5:
+              case 7:
               case "end":
                 return _context6.stop();
             }
@@ -2486,7 +2543,7 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         }, _callee6, this);
       }));
 
-      function processUploadOnChange(_x6) {
+      function processUploadOnChange(_x7) {
         return _processUploadOnChange.apply(this, arguments);
       }
 
@@ -2535,7 +2592,7 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         }, _callee7, this);
       }));
 
-      function upload(_x7, _x8) {
+      function upload(_x8, _x9) {
         return _upload.apply(this, arguments);
       }
 
@@ -2544,17 +2601,18 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
-      var _this$props8 = this.props,
-          className = _this$props8.className,
-          size = _this$props8.size,
-          label = _this$props8.label,
-          accept = _this$props8.accept,
-          maxCount = _this$props8.maxCount;
-      var _this$store = this.store,
-          items = _this$store.items,
-          labelClipPath = _this$store.labelClipPath;
+      var _this$props7 = this.props,
+          className = _this$props7.className,
+          size = _this$props7.size,
+          label = _this$props7.label,
+          accept = _this$props7.accept,
+          maxCount = _this$props7.maxCount;
+      var _this$store2 = this.store,
+          items = _this$store2.items,
+          labelClipPath = _this$store2.labelClipPath,
+          pickingIndex = _this$store2.pickingIndex;
       var classes = classnames_default()(InputFile_InputFile.root, className, InputFile_InputFile["size-".concat(size)]);
       return /*#__PURE__*/InputFile_React.createElement("div", {
         className: classes
@@ -2563,22 +2621,29 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
         style: {
           clipPath: labelClipPath
         }
+      }), /*#__PURE__*/InputFile_React.createElement("input", {
+        ref: this.inputRef,
+        className: InputFile_InputFile.input,
+        type: "file",
+        multiple: maxCount > 1 && typeof pickingIndex !== 'number',
+        accept: accept,
+        onChange: this.onChange
       }), /*#__PURE__*/InputFile_React.createElement(Label_Label_Label, {
         isOnTop: true,
         size: size,
         className: InputFile_InputFile.label,
         onClipPathChange: function onClipPathChange(clipPath) {
-          return _this3.store.labelClipPath = clipPath;
+          return _this4.store.labelClipPath = clipPath;
         }
       }, label), /*#__PURE__*/InputFile_React.createElement(Scroll/* Scroll */.X, {
         x: true,
         size: "s",
         innerClassName: InputFile_InputFile.items
-      }, items.map(function (_ref7, i) {
-        var base64 = _ref7.base64,
-            src = _ref7.src,
-            loaded = _ref7.loaded,
-            total = _ref7.total;
+      }, items.map(function (_ref6, i) {
+        var base64 = _ref6.base64,
+            src = _ref6.src,
+            loaded = _ref6.loaded,
+            total = _ref6.total;
         var url = base64 || src;
         return /*#__PURE__*/InputFile_React.createElement(Item_Item_Item, {
           key: String(url) + i,
@@ -2586,22 +2651,20 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
           img: url,
           total: total,
           loaded: loaded,
-          waitingForUpload: !!_this3.filesToUpload[i],
-          onRemove: function onRemove() {
-            return _this3.remove(url);
+          waitingForUpload: !!_this4.filesToUpload[i],
+          onRemove: function onRemove(e) {
+            _this4.remove(e, url);
+          },
+          onClick: function onClick() {
+            return _this4.onItemClick(i);
           }
         });
       }), items.length < maxCount && /*#__PURE__*/InputFile_React.createElement("label", {
         className: classnames_default()(InputFile_InputFile.item, InputFile_InputFile.addButton),
-        key: "add-button"
+        key: "add-button",
+        onClick: this.onPlusButtonClick
       }, /*#__PURE__*/InputFile_React.createElement(Icon/* Icon */.J, {
         type: "plus"
-      }), /*#__PURE__*/InputFile_React.createElement("input", {
-        className: InputFile_InputFile.input,
-        type: "file",
-        multiple: true,
-        accept: accept,
-        onChange: this.onChange
       }))));
     }
   }]);
@@ -2609,7 +2672,6 @@ var InputFile_InputFile_InputFile = /*#__PURE__*/function (_Component) {
   return InputFile;
 }(react.Component);
 InputFile_InputFile_InputFile.defaultProps = {
-  rootUrl: '',
   size: 'm',
   maxCount: 1
 };
@@ -2717,7 +2779,7 @@ function LightBox_LightBox_LightBox(_ref) {
     }
   }, [onClose]);
   (0,react.useEffect)(function () {
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', onKeyDown, true);
     return function () {
       return document.removeEventListener('keydown', onKeyDown);
     };
@@ -2733,13 +2795,15 @@ function LightBox_LightBox_LightBox(_ref) {
     size: "l"
   })));
 }
+;// CONCATENATED MODULE: ./src/components/Notifications/Notifications.constants.json
+const Notifications_constants_namespaceObject = {"z":200};
 ;// CONCATENATED MODULE: ./src/components/Notifications/store.ts
 
 
 
 
+
 var SHOW_TIME = 5000;
-var ANIMATION_DURATION = 200;
 var STORE = (0,justorm_react.createStore)('notifications', {
   items: [],
   autohide: [],
@@ -2753,7 +2817,7 @@ var STORE = (0,justorm_react.createStore)('notifications', {
     this.data[id] = (0,objectSpread2/* default */.Z)((0,objectSpread2/* default */.Z)({}, data), {}, {
       createdAt: Date.now()
     });
-    timen_default().after(ANIMATION_DURATION, function () {
+    timen_default().after(Notifications_constants_namespaceObject.z, function () {
       return _this.data[id].visible = true;
     });
 
@@ -2780,7 +2844,7 @@ var STORE = (0,justorm_react.createStore)('notifications', {
     var _this3 = this;
 
     this.data[id].visible = false;
-    timen_default().after(ANIMATION_DURATION, function () {
+    timen_default().after(Notifications_constants_namespaceObject.z, function () {
       return _this3.remove(id);
     });
   },
@@ -2807,7 +2871,7 @@ timen_default().tick(function tick() {
 
   if (item.visible && readyToHide) {
     item.visible = false;
-    timen_default().after(ANIMATION_DURATION, function () {
+    timen_default().after(Notifications_constants_namespaceObject.z, function () {
       return STORE.remove(id);
     });
   }
@@ -3132,7 +3196,7 @@ var Popup_update = injectStylesIntoStyleTag_default()(Popup/* default */.Z, Popu
 
 
 
-var Popup_ANIMATION_DURATION = 100;
+var ANIMATION_DURATION = 100;
 
 function getIframeDoc() {
   var _document$querySelect;
@@ -3257,7 +3321,7 @@ var Popup_Popup_Popup = /*#__PURE__*/function (_Component) {
       if (!_this.store.isOpen) return;
       _this.store.isOpen = false;
 
-      _this.timers.after(Popup_ANIMATION_DURATION, _this.afterClose);
+      _this.timers.after(ANIMATION_DURATION, _this.afterClose);
     };
 
     _this.toggle = function () {
@@ -5185,11 +5249,44 @@ function ListScroll_ListScroll(_ref) {
 
 
 
+;// CONCATENATED MODULE: ./src/tools/localStorage.js
+var ls = window.localStorage;
+/* harmony default export */ const localStorage = ({
+  get: function get(key) {
+    var result = ls.getItem(key);
+
+    try {
+      result = JSON.parse(result);
+    } catch (e) {
+      var _e$message;
+
+      console.warn((_e$message = e === null || e === void 0 ? void 0 : e.message) !== null && _e$message !== void 0 ? _e$message : 'failed to parse', ": \"".concat(result, "\""));
+    }
+
+    return result;
+  },
+  set: function set(key, val) {
+    if (!val) {
+      this.remove(key);
+      return;
+    }
+
+    var item = typeof val === 'object' ? JSON.stringify(val) : val;
+    ls.setItem(key, item);
+  },
+  remove: function remove(key) {
+    ls.removeItem(key);
+  },
+  clear: function clear() {
+    ls.clear();
+  }
+});
 // EXTERNAL MODULE: ./src/tools/resizeObserver.ts
 var resizeObserver = __webpack_require__("./src/tools/resizeObserver.ts");
 // EXTERNAL MODULE: ./src/tools/queryParams.ts
 var queryParams = __webpack_require__("./src/tools/queryParams.ts");
 ;// CONCATENATED MODULE: ./src/tools/index.ts
+
 
 
 
@@ -5812,10 +5909,11 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Item__root___cu1xF{position:relative;overflow:hidden;background-size:cover;background-position:center}.Item__root___cu1xF > .Item__overlay___kMLr4,.Item__root___cu1xF > img{border-radius:inherit}.Item__overlay___kMLr4{z-index:1;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .1s ease-out}.Item__waitingForUpload___s3v5S .Item__overlay___kMLr4{background-color:var(--accent-color-alpha-200);border:4px solid var(--decent-color-alpha-500)}.Item__root___cu1xF:hover .Item__overlay___kMLr4{background-color:var(--active-color-alpha-500)}.Item__root___cu1xF:hover .Item__removeButton___dPCm0{transform:translateX(0)}.Item__removeButton___dPCm0{z-index:2;position:absolute;right:0;bottom:0;transition:transform .2s ease-out;transform:translateX(100%);border-radius:0;border-top-left-radius:inherit}.Item__removeButton___dPCm0,.Item__removeButton___dPCm0:hover{background-color:var(--decent-color-alpha-900)}.Item__removeButton___dPCm0:hover{color:var(--danger-color)}.Item__progress___c6eSX{z-index:1;position:absolute;top:0;left:-100%;height:100%;width:100%;background-color:var(--active-color-alpha-800);transition:all .2s ease-out;pointer-events:none}.Item__progress___c6eSX.Item__complete___wXZaL{opacity:0}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Item__root___cu1xF{position:relative;overflow:hidden;background-size:cover;background-position:center}.Item__root___cu1xF.Item__loading___QXTmy{pointer-events:none}.Item__root___cu1xF > .Item__overlay___kMLr4,.Item__root___cu1xF > img{border-radius:inherit}.Item__overlay___kMLr4{z-index:1;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .1s ease-out}.Item__waitingForUpload___s3v5S .Item__overlay___kMLr4{background-color:var(--accent-color-alpha-200);border:4px solid var(--decent-color-alpha-500)}.Item__root___cu1xF:hover .Item__overlay___kMLr4{background-color:var(--active-color-alpha-500)}.Item__root___cu1xF:hover .Item__removeButton___dPCm0{transform:translateX(0)}.Item__removeButton___dPCm0{z-index:2;position:absolute;right:0;bottom:0;transition:transform .2s ease-out;transform:translateX(100%);border-radius:0;border-top-left-radius:inherit}.Item__removeButton___dPCm0,.Item__removeButton___dPCm0:hover{background-color:var(--decent-color-alpha-900)}.Item__removeButton___dPCm0:hover{color:var(--danger-color)}.Item__progress___c6eSX{z-index:1;position:absolute;top:0;left:-100%;height:100%;width:100%;background-color:var(--active-color-alpha-800);transition:all .2s ease-out;pointer-events:none}.Item__progress___c6eSX.Item__complete___wXZaL{opacity:0}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Item__root___cu1xF",
+	"loading": "Item__loading___QXTmy",
 	"overlay": "Item__overlay___kMLr4",
 	"waitingForUpload": "Item__waitingForUpload___s3v5S",
 	"removeButton": "Item__removeButton___dPCm0",
@@ -5908,17 +6006,17 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Notifications__root___q4Zar{z-index:20;position:absolute;top:10px;right:0;width:300px;padding-left:var(--indent-s);padding-right:var(--indent-s);transition:transform .3s ease-out;overflow:hidden;max-height:calc(100% - 20px)}.Notifications__root___q4Zar.Notifications__paused___oD7LG{transform:translateX(-3px)}.Notifications__empty___ujLOM{pointer-events:none}.Notifications__item___Slrcd,.Notifications__itemInner____PSAo{border-radius:var(--border-radius-l)}.Notifications__item___Slrcd{padding-right:10px;max-height:0;width:300px;max-width:100%;transform:translateX(100%);transform:translate3d(100%,0,0);transition:all 200ms ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Notifications__item___Slrcd + .Notifications__item___Slrcd{padding-top:10px}.Notifications__item___Slrcd:active{transform:scale(.99)}.Notifications__visible___ptGR5{max-height:500px;transform:translateX(0)}.Notifications__itemInner____PSAo{position:relative;display:flex;align-items:center;padding:16px 32px 16px 20px;box-sizing:border-box;background-color:var(--accent-color);color:var(--decent-color);transition:transform 200ms ease-out}.Notifications__itemInner____PSAo::before{content:'';position:absolute;top:0;right:0;bottom:0;left:0;opacity:0;transition:opacity .3s ease-out;border-radius:20%;box-shadow:0 10px 20px var(--decent-color);pointer-events:none}.Notifications__type-warning___qelS5 .Notifications__itemInner____PSAo::before{background-color:var(--warning-color)}.Notifications__type-danger___m8r2V .Notifications__itemInner____PSAo::before{background-color:var(--danger-color)}.Notifications__visible___ptGR5 .Notifications__itemInner____PSAo::before{opacity:.2}.Notifications__icon___TgQ_8{height:24px;width:24px;min-width:24px;background:no-repeat center;margin-right:10px}.Notifications__type-loading___D_sGK .Notifications__icon___TgQ_8{transform:translateY(-20px)}.Notifications__text___YgVir{display:flex;flex-direction:column;flex-grow:1;z-index:1}.Notifications__title___ZaopM{font-size:16px;font-weight:bold}.Notifications__content___pHpva{font-size:12px;margin-top:calc(var(--indent-s) / 2)}.Notifications__content___pHpva:first-child{margin-top:0}.Notifications__close___SK0U5{position:absolute;right:-5px;top:-5px;height:40px !important;width:40px !important;max-height:40px !important;max-width:40px !important;border-radius:50%;transition:opacity .1s ease-out;background-color:transparent;cursor:pointer;opacity:.8}.Notifications__close___SK0U5 [role=img],.Notifications__close___SK0U5:hover [role=img]{color:var(--decent-color)}.Notifications__close___SK0U5:hover{opacity:1;background-color:var(--decent-color-alpha-100)}@media (max-width:700px){.Notifications__root___q4Zar,.Notifications__item___Slrcd{width:100%}.Notifications__title___ZaopM{font-size:20px}.Notifications__content___pHpva{font-size:16px}.Notifications__close___SK0U5{transform:scale(1.2)}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Notifications__root___q4Zar{z-index:20;position:absolute;top:10px;right:0;width:300px;padding-left:var(--indent-s);padding-right:var(--indent-s);transition:right .3s ease-out;overflow:hidden;max-height:calc(100% - 20px);transform:translateZ(0)}.Notifications__empty___ujLOM{pointer-events:none}.Notifications__item___Slrcd,.Notifications__itemInner____PSAo{border-radius:var(--border-radius-l)}.Notifications__item___Slrcd{position:relative;left:100%;padding-right:10px;max-height:0;width:300px;max-width:100%;transition:all 200ms ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Notifications__item___Slrcd + .Notifications__item___Slrcd{padding-top:10px}.Notifications__visible___ptGR5{max-height:500px;left:0}.Notifications__itemInner____PSAo{position:relative;display:flex;align-items:center;padding:16px 32px 16px 20px;box-sizing:border-box;background-color:var(--accent-color-alpha-100);-webkit-backdrop-filter:blur(50px);backdrop-filter:blur(50px);box-shadow:inset 0 0 0 1px var(--accent-color-alpha-100);transition:200ms ease-out;transition-property:transform,box-shadow}.Notifications__type-warning___qelS5 .Notifications__itemInner____PSAo{background-color:var(--warning-color-alpha-100)}.Notifications__type-danger___m8r2V .Notifications__itemInner____PSAo{background-color:var(--danger-color-alpha-100)}.Notifications__paused___oD7LG .Notifications__itemInner____PSAo{box-shadow:inset 0 0 0 1px var(--accent-color-alpha-200)}.Notifications__icon___TgQ_8{height:24px;width:24px;min-width:24px;background:no-repeat center;margin-right:10px}.Notifications__type-loading___D_sGK .Notifications__icon___TgQ_8{transform:translateY(-20px)}.Notifications__text___YgVir{display:flex;flex-direction:column;flex-grow:1;z-index:1}.Notifications__title___ZaopM{font-size:16px;font-weight:bold}.Notifications__content___pHpva{font-size:12px;margin-top:calc(var(--indent-s) / 2)}.Notifications__content___pHpva:first-child{margin-top:0}.Notifications__close___SK0U5{position:absolute;right:-5px;top:-5px;height:40px !important;width:40px !important;max-height:40px !important;max-width:40px !important;border-radius:50%;transition:.1s ease-out;transition-property:opacity,background-color;background-color:transparent;cursor:pointer;opacity:.8}.Notifications__close___SK0U5:hover{opacity:1;background-color:var(--decent-color-alpha-200)}@media (max-width:700px){.Notifications__root___q4Zar,.Notifications__item___Slrcd{width:100%}.Notifications__title___ZaopM{font-size:20px}.Notifications__content___pHpva{font-size:16px}.Notifications__close___SK0U5{transform:scale(1.2)}}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Notifications__root___q4Zar",
-	"paused": "Notifications__paused___oD7LG",
 	"empty": "Notifications__empty___ujLOM",
 	"item": "Notifications__item___Slrcd",
 	"itemInner": "Notifications__itemInner____PSAo",
 	"visible": "Notifications__visible___ptGR5",
 	"type-warning": "Notifications__type-warning___qelS5",
 	"type-danger": "Notifications__type-danger___m8r2V",
+	"paused": "Notifications__paused___oD7LG",
 	"icon": "Notifications__icon___TgQ_8",
 	"type-loading": "Notifications__type-loading___D_sGK",
 	"text": "Notifications__text___YgVir",
@@ -5973,7 +6071,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Popup__root___FoFZI{position:relative;display:inline-block}.Popup__contentWrapper___MrnC3{pointer-events:none;position:absolute}.Popup__contentWrapper___MrnC3.Popup__inline___oIXOm.Popup__isOpen___zigfu{position:relative}.Popup__contentWrapper___MrnC3:not(.Popup__inline___oIXOm),.Popup__contentWrapper___MrnC3:not(.Popup__inline___oIXOm) > .Popup__content___CoZGx{position:absolute}.Popup__paranja___l_pDK{z-index:10;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .2s ease-out}.Popup__paranja___l_pDK.Popup__isOpen___zigfu{background-color:var(--accent-color-alpha-800);pointer-events:all}.Popup__trigger___fqdBs{cursor:pointer}.Popup__trigger___fqdBs.Popup__isOpen___zigfu{position:relative;z-index:11}.Popup__trigger___fqdBs.Popup__disabled___TcnPU{pointer-events:none}.Popup__content___CoZGx{position:relative;z-index:11;min-width:100%;background-color:var(--accent-color);opacity:0;transform-origin:top center;transform:scale3d(.5,.5,.5);transition:.1s ease-out;transition-property:opacity,transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;pointer-events:none;color:var(--decent-color)}.Popup__content___CoZGx.Popup__size-s___QE_Lt{border-radius:4px}.Popup__content___CoZGx.Popup__size-m___mX8Ta{border-radius:6px}.Popup__content___CoZGx.Popup__size-l___T97ma{border-radius:8px}.Popup__content___CoZGx.Popup__outlined___vTSIY::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px var(--bg-color)}.Popup__content___CoZGx.Popup__isOpen___zigfu{pointer-events:all;transform:scale3d(1,1,1);opacity:1}.Popup__axis-top___IGtkf{bottom:100%}.Popup__axis-top___IGtkf.Popup__hasMargin___KaqRU{margin-bottom:4px}.Popup__axis-bottom___MMaLk{top:100%}.Popup__axis-bottom___MMaLk.Popup__hasMargin___KaqRU{margin-top:4px}.Popup__axis-right___Fyl_R{left:100%}.Popup__axis-right___Fyl_R.Popup__hasMargin___KaqRU{margin-left:4px}.Popup__axis-left___HlOR3{right:100%}.Popup__axis-left___HlOR3.Popup__hasMargin___KaqRU{margin-right:4px}.Popup__float-top___opQjK{bottom:0}.Popup__float-right___kFfry{left:0}.Popup__float-bottom___BO0pr{top:0}.Popup__float-left___f2gsi{right:0}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs,.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs{left:50%;transform:scale3d(.5,.5,.5) translateX(-50%)}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs.Popup__isOpen___zigfu,.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs.Popup__isOpen___zigfu{transform:scale3d(1,1,1) translateX(-50%)}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs,.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs{top:50%;transform:scale3d(.5,.5,.5) translateY(-50%)}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs.Popup__isOpen___zigfu,.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs.Popup__isOpen___zigfu{transform:scale3d(1,1,1) translateY(-50%)}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs,.Popup__axis-top___IGtkf.Popup__float-right___kFfry{transform-origin:bottom left}.Popup__axis-top___IGtkf.Popup__float-left___f2gsi{transform-origin:bottom right}.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs,.Popup__axis-bottom___MMaLk.Popup__float-right___kFfry{transform-origin:top left}.Popup__axis-bottom___MMaLk.Popup__float-left___f2gsi{transform-origin:top right}.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs{transform-origin:top left}.Popup__axis-right___Fyl_R.Popup__float-top___opQjK{transform-origin:bottom left}.Popup__axis-right___Fyl_R.Popup__float-bottom___BO0pr{transform-origin:top left}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs{transform-origin:top right}.Popup__axis-left___HlOR3.Popup__float-top___opQjK{transform-origin:bottom right}.Popup__axis-left___HlOR3.Popup__float-bottom___BO0pr{transform-origin:top right}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Popup__root___FoFZI{position:relative;display:inline-block}.Popup__contentWrapper___MrnC3{pointer-events:none;position:absolute}.Popup__contentWrapper___MrnC3.Popup__inline___oIXOm.Popup__isOpen___zigfu{position:relative}.Popup__contentWrapper___MrnC3:not(.Popup__inline___oIXOm),.Popup__contentWrapper___MrnC3:not(.Popup__inline___oIXOm) > .Popup__content___CoZGx{position:absolute}.Popup__paranja___l_pDK{z-index:10;position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;transition:background-color .2s ease-out}.Popup__paranja___l_pDK.Popup__isOpen___zigfu{background-color:var(--accent-color-alpha-800);pointer-events:all}.Popup__trigger___fqdBs{cursor:pointer}.Popup__trigger___fqdBs.Popup__isOpen___zigfu{position:relative;z-index:11}.Popup__trigger___fqdBs.Popup__disabled___TcnPU{pointer-events:none}.Popup__content___CoZGx{position:relative;z-index:11;min-width:100%;background-color:var(--accent-color-alpha-100);box-shadow:inset 0 0 0 1px var(--accent-color-alpha-100);opacity:0;transform-origin:top center;transform:scale3d(.5,.5,.5);transition:.1s ease-out;transition-property:opacity,transform;-webkit-backface-visibility:hidden;backface-visibility:hidden;overflow:hidden;pointer-events:none;-webkit-backdrop-filter:blur(50px);backdrop-filter:blur(50px)}.Popup__content___CoZGx.Popup__size-s___QE_Lt{border-radius:4px}.Popup__content___CoZGx.Popup__size-m___mX8Ta{border-radius:6px}.Popup__content___CoZGx.Popup__size-l___T97ma{border-radius:8px}.Popup__content___CoZGx.Popup__outlined___vTSIY::after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 0 0 1px var(--bg-color)}.Popup__content___CoZGx.Popup__isOpen___zigfu{pointer-events:all;transform:scale3d(1,1,1);opacity:1}.Popup__axis-top___IGtkf{bottom:100%}.Popup__axis-top___IGtkf.Popup__hasMargin___KaqRU{margin-bottom:4px}.Popup__axis-bottom___MMaLk{top:100%}.Popup__axis-bottom___MMaLk.Popup__hasMargin___KaqRU{margin-top:4px}.Popup__axis-right___Fyl_R{left:100%}.Popup__axis-right___Fyl_R.Popup__hasMargin___KaqRU{margin-left:4px}.Popup__axis-left___HlOR3{right:100%}.Popup__axis-left___HlOR3.Popup__hasMargin___KaqRU{margin-right:4px}.Popup__float-top___opQjK{bottom:0}.Popup__float-right___kFfry{left:0}.Popup__float-bottom___BO0pr{top:0}.Popup__float-left___f2gsi{right:0}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs,.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs{left:50%;transform:scale3d(.5,.5,.5) translateX(-50%)}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs.Popup__isOpen___zigfu,.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs.Popup__isOpen___zigfu{transform:scale3d(1,1,1) translateX(-50%)}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs,.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs{top:50%;transform:scale3d(.5,.5,.5) translateY(-50%)}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs.Popup__isOpen___zigfu,.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs.Popup__isOpen___zigfu{transform:scale3d(1,1,1) translateY(-50%)}.Popup__axis-top___IGtkf.Popup__float-middle___p2JBs,.Popup__axis-top___IGtkf.Popup__float-right___kFfry{transform-origin:bottom left}.Popup__axis-top___IGtkf.Popup__float-left___f2gsi{transform-origin:bottom right}.Popup__axis-bottom___MMaLk.Popup__float-middle___p2JBs,.Popup__axis-bottom___MMaLk.Popup__float-right___kFfry{transform-origin:top left}.Popup__axis-bottom___MMaLk.Popup__float-left___f2gsi{transform-origin:top right}.Popup__axis-right___Fyl_R.Popup__float-middle___p2JBs{transform-origin:top left}.Popup__axis-right___Fyl_R.Popup__float-top___opQjK{transform-origin:bottom left}.Popup__axis-right___Fyl_R.Popup__float-bottom___BO0pr{transform-origin:top left}.Popup__axis-left___HlOR3.Popup__float-middle___p2JBs{transform-origin:top right}.Popup__axis-left___HlOR3.Popup__float-top___opQjK{transform-origin:bottom right}.Popup__axis-left___HlOR3.Popup__float-bottom___BO0pr{transform-origin:top right}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Popup__root___FoFZI",
@@ -6073,7 +6171,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".Select__root___U69qS{width:100%;position:relative}.Select__root___U69qS.Select__disabled___QLzFX{pointer-events:none}.Select__additionalLabel___RljBn{flex-grow:1;text-align:left;overflow:hidden;text-overflow:ellipsis}.Select__trigger___euHKv{z-index:1;position:relative}.Select__triggerArrow___SisSh{width:14px !important;margin-right:0 !important;transition:transform .2s ease-out}.Select__triggerArrow___SisSh.Select__isOpen___HDyUd{transform:rotateX(-180deg)}.Select__disabled___QLzFX .Select__triggerArrow___SisSh{color:var(--text3-color)}.Select__triggerButton___AKkXk{justify-content:space-between;width:100%;text-align:left}.Select__triggerButton___AKkXk.Select__hasTriggerArrow___w1a49 > span{max-width:calc(100% - 22px)}.Select__triggerButton___AKkXk.Select__isError___ooWBi{box-shadow:inset 0 0 0 2px var(--danger-color)}.Select__presetPanel___RSwXP{display:flex;padding:5px;box-shadow:inset 0 -1px 0 var(--decent-color-alpha-100)}.Select__presetButton___BOYyA{flex-grow:1;justify-content:center}.Select__presetButton___BOYyA + .Select__presetButton___BOYyA{margin-left:8px}.Select__options___IxOoa{max-height:200px;overflow-y:auto}.Select__option___e6FNr{display:flex;align-items:center;width:100%;padding-top:0 !important;padding-bottom:0 !important;cursor:pointer;color:var(--decent-color);text-align:left;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-animation:Select__fadeIn___uKuOn .3s ease-out;animation:Select__fadeIn___uKuOn .3s ease-out}.Select__isTree___zSpEM .Select__option___e6FNr{min-height:36px}.Select__size-s___PsWVv .Select__option___e6FNr{padding:0 10px;font-size:12px;height:26px}.Select__size-m___cKMY4 .Select__option___e6FNr{padding:0 12px;font-size:16px;height:34px}.Select__size-l___wMvZS .Select__option___e6FNr{padding:0 14px;font-size:20px;height:42px}.Select__size-xl___m5G70 .Select__option___e6FNr{height:50px}.Select__option___e6FNr:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.Select__option___e6FNr:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.Select__isTree___zSpEM .Select__option___e6FNr{padding-left:30px}.Select__option___e6FNr.Select__isGroup___q9wA9{color:var(--accent-color);font-weight:500;background:var(--bg-color-alpha-200);pointer-events:none}.Select__isExpanded___HmsIB > .Select__option___e6FNr{display:flex}.Select__option___e6FNr > span{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.Select__option___e6FNr:hover{background-color:var(--active-color-alpha-100)}.Select__option___e6FNr::before{content:'';display:inline-block}.Select__option___e6FNr.Select__level-0___xMRi5::before{content:none}.Select__option___e6FNr.Select__level-1___lF_JT::before{width:24px;min-width:24px}.Select__option___e6FNr.Select__level-2___HIRtp::before{width:48px;min-width:48px}.Select__option___e6FNr.Select__level-3___gOPen::before{width:72px;min-width:72px}.Select__option___e6FNr.Select__level-4___UvWbS::before{width:96px;min-width:96px}.Select__option___e6FNr.Select__level-5___c2hY1::before{width:120px;min-width:120px}.Select__option___e6FNr.Select__level-6___EegJ9::before{width:144px;min-width:144px}.Select__option___e6FNr.Select__isSelected___c2qJo,.Select__option___e6FNr.Select__isIndeterminate___zaLd_{background-color:var(--active-color-alpha-500)}.Select__expandButton___dP9n3{position:relative;display:flex;justify-content:flex-end;width:30px;height:100%;padding:0;overflow:visible;background-color:transparent !important}.Select__expandButton___dP9n3::before{content:'';position:absolute;top:-10;right:0;display:block;width:100px;height:calc(100% + 20px)}.Select__size-m___cKMY4 .Select__expandButton___dP9n3{margin-left:-40px}.Select__size-l___wMvZS .Select__expandButton___dP9n3{margin-left:-46px}.Select__expandIcon___9RL33{transition:transform .1s ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Select__isExpanded___HmsIB .Select__expandIcon___9RL33{transform:rotateZ(90deg) translateZ(0)}.Select__expandButton___dP9n3:hover .Select__expandIcon___9RL33{color:var(--primary-color)}@-webkit-keyframes Select__fadeIn___uKuOn{0%{opacity:0}10%{opacity:0}100%{opacity:1}}@keyframes Select__fadeIn___uKuOn{0%{opacity:0}10%{opacity:0}100%{opacity:1}}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".Select__root___U69qS{width:100%;position:relative}.Select__root___U69qS.Select__disabled___QLzFX{pointer-events:none}.Select__additionalLabel___RljBn{flex-grow:1;text-align:left;overflow:hidden;text-overflow:ellipsis}.Select__trigger___euHKv{z-index:1;position:relative}.Select__triggerArrow___SisSh{width:14px !important;margin-right:0 !important;transition:transform .2s ease-out}.Select__triggerArrow___SisSh.Select__isOpen___HDyUd{transform:rotateX(-180deg)}.Select__disabled___QLzFX .Select__triggerArrow___SisSh{color:var(--text3-color)}.Select__triggerButton___AKkXk{justify-content:space-between;width:100%;text-align:left}.Select__triggerButton___AKkXk.Select__hasTriggerArrow___w1a49 > span{max-width:calc(100% - 22px)}.Select__triggerButton___AKkXk.Select__isError___ooWBi{box-shadow:inset 0 0 0 2px var(--danger-color)}.Select__presetPanel___RSwXP{display:flex;padding:5px;box-shadow:inset 0 -1px 0 var(--decent-color-alpha-100)}.Select__presetButton___BOYyA{flex-grow:1;justify-content:center}.Select__presetButton___BOYyA + .Select__presetButton___BOYyA{margin-left:8px}.Select__options___IxOoa{max-height:200px;overflow-y:auto}.Select__option___e6FNr{display:flex;align-items:center;width:100%;padding-top:0 !important;padding-bottom:0 !important;cursor:pointer;text-align:left;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-animation:Select__fadeIn___uKuOn .3s ease-out;animation:Select__fadeIn___uKuOn .3s ease-out}.Select__isTree___zSpEM .Select__option___e6FNr{min-height:36px}.Select__size-s___PsWVv .Select__option___e6FNr{padding:0 10px;font-size:12px;height:26px}.Select__size-m___cKMY4 .Select__option___e6FNr{padding:0 12px;font-size:16px;height:34px}.Select__size-l___wMvZS .Select__option___e6FNr{padding:0 14px;font-size:20px;height:42px}.Select__size-xl___m5G70 .Select__option___e6FNr{height:50px}.Select__option___e6FNr:first-child{border-top-left-radius:2px;border-top-right-radius:2px}.Select__option___e6FNr:last-child{border-bottom-left-radius:2px;border-bottom-right-radius:2px}.Select__isTree___zSpEM .Select__option___e6FNr{padding-left:30px}.Select__option___e6FNr.Select__isGroup___q9wA9{color:var(--accent-color);font-weight:500;background:var(--bg-color-alpha-200);pointer-events:none}.Select__isExpanded___HmsIB > .Select__option___e6FNr{display:flex}.Select__option___e6FNr > span{white-space:nowrap;text-overflow:ellipsis;overflow:hidden}.Select__option___e6FNr:hover{background-color:var(--active-color-alpha-100)}.Select__option___e6FNr::before{content:'';display:inline-block}.Select__option___e6FNr.Select__level-0___xMRi5::before{content:none}.Select__option___e6FNr.Select__level-1___lF_JT::before{width:24px;min-width:24px}.Select__option___e6FNr.Select__level-2___HIRtp::before{width:48px;min-width:48px}.Select__option___e6FNr.Select__level-3___gOPen::before{width:72px;min-width:72px}.Select__option___e6FNr.Select__level-4___UvWbS::before{width:96px;min-width:96px}.Select__option___e6FNr.Select__level-5___c2hY1::before{width:120px;min-width:120px}.Select__option___e6FNr.Select__level-6___EegJ9::before{width:144px;min-width:144px}.Select__option___e6FNr.Select__isSelected___c2qJo,.Select__option___e6FNr.Select__isIndeterminate___zaLd_{background-color:var(--active-color-alpha-500)}.Select__expandButton___dP9n3{position:relative;display:flex;justify-content:flex-end;width:30px;height:100%;padding:0;overflow:visible;background-color:transparent !important}.Select__expandButton___dP9n3::before{content:'';position:absolute;top:-10;right:0;display:block;width:100px;height:calc(100% + 20px)}.Select__size-m___cKMY4 .Select__expandButton___dP9n3{margin-left:-40px}.Select__size-l___wMvZS .Select__expandButton___dP9n3{margin-left:-46px}.Select__expandIcon___9RL33{transition:transform .1s ease-out;-webkit-backface-visibility:hidden;backface-visibility:hidden}.Select__isExpanded___HmsIB .Select__expandIcon___9RL33{transform:rotateZ(90deg) translateZ(0)}.Select__expandButton___dP9n3:hover .Select__expandIcon___9RL33{color:var(--primary-color)}@-webkit-keyframes Select__fadeIn___uKuOn{0%{opacity:0}10%{opacity:0}100%{opacity:1}}@keyframes Select__fadeIn___uKuOn{0%{opacity:0}10%{opacity:0}100%{opacity:1}}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"root": "Select__root___U69qS",
