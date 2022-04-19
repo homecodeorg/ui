@@ -19,7 +19,6 @@ export type Props = {
   size?: string;
   upload: Uploader;
   uploadOnDemand?: (upload: (fn: Uploader) => Promise<Value>) => void;
-  rootUrl: string; // folder in cloud storage
   accept?: HTMLProps<HTMLInputElement>['accept'];
   limit?: number; // megabytes
   maxCount?: number; // max files count

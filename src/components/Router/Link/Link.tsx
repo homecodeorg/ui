@@ -2,7 +2,8 @@ import { Component, createRef, HTMLProps } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
-import ExternalIcon from './icons/external.svg';
+import { Icon } from 'uilib';
+
 import Context from '../context';
 import S from './Link.styl';
 
@@ -112,7 +113,7 @@ export class Link extends Component<Props> {
         ref={this.domElem}
       >
         {children}
-        {isExternal && <ExternalIcon class={S.externalIcon} />}
+        {isExternal && <Icon type="externalLink" className={S.externalIcon} />}
       </a>
     );
   };

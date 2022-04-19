@@ -4,7 +4,9 @@ import { clone } from '../../tools/object';
 
 export function patchWithCustomMessages(checkRes, validationSchema) {
   return checkRes.reduce((acc, { field, ...rest }) => {
-    const customMessage = validationSchema[field]?.messages?.[rest.type];
+    const customMessage =
+      validationSchema[field]?.message ??
+      validationSchema[field]?.messages?.[rest.type];
 
     if (customMessage) rest.message = customMessage;
 

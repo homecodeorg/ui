@@ -30,10 +30,14 @@ export default [
     slug: 'form',
     loader: () => import('./examples/Form'),
   },
-  // {
-  //   slug: 'icon',
-  //   loader: () => import('./examples/Icon/Icon'),
-  // },
+  {
+    slug: 'icon',
+    loader: () => import('./examples/Icon'),
+  },
+  {
+    slug: 'link',
+    loader: () => import('./examples/Link'),
+  },
   {
     slug: 'popup',
     loader: () => import('./examples/Popup'),
@@ -53,7 +57,6 @@ export default [
   {
     slug: 'select',
     loader: () => import('./examples/Select/Select'),
-    // items: () => import('./examples/Select/navigation'),
   },
   {
     slug: 'scroll',

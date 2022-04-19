@@ -32,7 +32,7 @@ const showAll = () => {
 };
 
 export default () => (
-  <Container centered fullHeight>
+  <Container fullHeight>
     <Notifications style={{ maxWidth: '60%' }} />
     <div>
       <Button onClick={() => show('info')}>Info</Button>

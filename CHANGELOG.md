@@ -2,6 +2,85 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.4](https://github.com/foreverido/uilib/compare/v1.3.3...v1.3.4) (2022-04-10)
+
+
+### Features
+
+* Icon - fullscreen, fullscreenExit ([8631baf](https://github.com/foreverido/uilib/commit/8631bafaa649e1bd4fbe6d2eb82cc0b516118c3c))
+
+### [1.3.3](https://github.com/foreverido/uilib/compare/v1.3.2...v1.3.3) (2022-04-10)
+
+
+### Features
+
+* tools/localStorage, LS ([6947d01](https://github.com/foreverido/uilib/commit/6947d016aecd281a613b1e666b409312ee6e4137))
+
+
+### Bug Fixes
+
+* Notifications - backdrop-filter on animation ([df5f8a0](https://github.com/foreverido/uilib/commit/df5f8a0ce88dc84e3e9c9e4b6247cb3cc6714558))
+
+### [1.3.2](https://github.com/foreverido/uilib/compare/v1.3.1...v1.3.2) (2022-04-08)
+
+
+### Bug Fixes
+
+* Icon type=externalLink, +examples ([961212f](https://github.com/foreverido/uilib/commit/961212fe56d3663e3c65aff45a6e7af086cafb94))
+* Notification - background blinking on hover ([e45a321](https://github.com/foreverido/uilib/commit/e45a321a04edcd3327c7519f56a4d04fe3bb14d9))
+
+### [1.3.1](https://github.com/foreverido/uilib/compare/v1.3.0...v1.3.1) (2022-04-08)
+
+
+### Bug Fixes
+
+* Popup - outline ([c81ba03](https://github.com/foreverido/uilib/commit/c81ba0341a5fc65e3d7845180adf0883b517dc97))
+
+## [1.3.0](https://github.com/foreverido/uilib/compare/v1.2.8...v1.3.0) (2022-04-08)
+
+
+### Features
+
+* popup lighter contrast & blur ([a408da3](https://github.com/foreverido/uilib/commit/a408da3c283b2a183fd43fe85edabcc6407daa03))
+
+
+### Bug Fixes
+
+* Link - external icon color ([9226666](https://github.com/foreverido/uilib/commit/92266662e96edf9556845385a4f1efd81a2f81ca))
+
+### [1.2.8](https://github.com/foreverido/uilib/compare/v1.2.7...v1.2.8) (2022-04-07)
+
+
+### Features
+
+* Form - validationSchema - custom field.message ([eb04a09](https://github.com/foreverido/uilib/commit/eb04a09c169ecf328c5a41b6126d01ec8026bd0a))
+
+### [1.2.7](https://github.com/foreverido/uilib/compare/v1.2.6...v1.2.7) (2022-04-03)
+
+
+### Features
+
+* InputFile - replace item ([481f9f5](https://github.com/foreverido/uilib/commit/481f9f50dd4fcc0cacee3f8d1ef1a7b8a43f0aa5))
+
+### [1.2.6](https://github.com/foreverido/uilib/compare/v1.2.5...v1.2.6) (2022-04-03)
+
+
+### Features
+
+* InputFile - single ([3a3ca4d](https://github.com/foreverido/uilib/commit/3a3ca4db3137f3976b2891d0c962d87d103fd439))
+
+
+### Bug Fixes
+
+* SubmitButtons - props.className ([4ce42a3](https://github.com/foreverido/uilib/commit/4ce42a3943b962ffa42c3555c05657f7267f8ea7))
+
+### [1.2.5](https://github.com/foreverido/uilib/compare/v1.2.4...v1.2.5) (2022-04-02)
+
+
+### Bug Fixes
+
+* LightBox - subscribe keydown capture ([8219f73](https://github.com/foreverido/uilib/commit/8219f7312417b3991650bd115dbf131ef3ee5772))
+
 ### [1.2.4](https://github.com/foreverido/uilib/compare/v1.2.3...v1.2.4) (2022-04-01)
 
 

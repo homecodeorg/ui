@@ -23,7 +23,7 @@ export function LightBox({ children, isOpen, onClose }: Props) {
   );
 
   useEffect(() => {
-    document.addEventListener('keydown', onKeyDown);
+    document.addEventListener('keydown', onKeyDown, true);
     return () => document.removeEventListener('keydown', onKeyDown);
   });
 

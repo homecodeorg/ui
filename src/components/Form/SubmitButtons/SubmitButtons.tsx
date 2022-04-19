@@ -1,14 +1,12 @@
 import { ReactNode } from 'react';
+import cn from 'classnames';
 
-// import Icon from 'components/Icon/Icon';
-// import { IconType } from 'components/Icon/Icon.types';
 import { Button, ButtonProps } from '../../Button/Button';
 
 import S from './SubmitButtons.styl';
 
 export type ButtonConfig = ButtonProps & {
   key: string;
-  // icon?: IconType;
   children?: ReactNode;
 };
 
@@ -18,14 +16,10 @@ type Props = {
   children?: ReactNode;
 };
 
-export type Variant = ButtonProps['variant'];
-export const SubmitButtons = ({ buttons, ...props }: Props) => (
-  <div className={S.root} {...props}>
-    {buttons.map(({ children, ...buttonProps }) => (
-      <Button className={S.item} {...buttonProps}>
-        {/*icon && <Icon type={icon} size={buttonProps.size} />*/}
-        {children}
-      </Button>
+export const SubmitButtons = ({ buttons, className, ...props }: Props) => (
+  <div className={cn(S.root, className)} {...props}>
+    {buttons.map(buttonProps => (
+      <Button className={cn(S.item, buttonProps.className)} {...buttonProps} />
     ))}
   </div>
 );

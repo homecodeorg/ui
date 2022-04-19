@@ -9,5 +9,6 @@ export * as dom from './dom';
 export * as scroll from './scroll';
 export { default as throttle } from './throttle';
 export { default as debounce } from './debounce';
+export { default as LS } from './localStorage';
 export * as resizeObserver from './resizeObserver';
 export * as queryParams from './queryParams';

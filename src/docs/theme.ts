@@ -11,7 +11,7 @@ export const colors = {
     '#6d447f',
     { alpha: [100, 300, 500, 800] /* mix: [['accent', 300]] */ },
   ],
-  warning: ['#ffa31a', { alpha: [200, 500] }],
+  warning: ['#ffa31a', { alpha: [100, 200, 500] }],
   danger: ['#da3749', { alpha: [100, 300, 500] }],
   disable: '#f1f1f2',
   link: '#3089fe',
