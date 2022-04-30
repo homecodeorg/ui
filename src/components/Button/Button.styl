@@ -20,9 +20,15 @@
   &.isLoading
     pointer-events none
 
-  &.isChecked
-    background-color var(--accent-color)
-    color var(--decent-color)
+  &.checked
+    &
+    &:hover
+      background-color var(--accent-color)
+      color var(--decent-color)
+      box-shadow none
+
+    &:hover
+      background-color var(--accent-color-alpha-900)
 
     path
       fill var(--decent-color)

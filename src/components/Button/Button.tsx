@@ -20,7 +20,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   isLoading?: boolean;
-  isChecked?: boolean;
+  checked?: boolean;
   isSquare?: boolean;
   tabIndex?: number;
   prefixElem?: JSX.Element;
@@ -34,7 +34,7 @@ export function Button(props: Props) {
   const {
     className,
     isLoading,
-    isChecked,
+    checked,
     isSquare,
     onMouseUp,
     children,
@@ -51,7 +51,7 @@ export function Button(props: Props) {
     S[`size-${size}`],
     S[`variant-${variant}`],
     isLoading && S.isLoading,
-    isChecked && S.isChecked,
+    checked && S.checked,
     isSquare && S.isSquare,
     className
   );
