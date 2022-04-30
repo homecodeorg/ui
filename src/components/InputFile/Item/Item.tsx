@@ -47,7 +47,7 @@ export default class Item extends Component<Props> {
           className={S.removeButton}
           size="s"
           variant="clear"
-          isSquare
+          square
           onClick={onRemove}
         >
           <Icon type="delete" />

@@ -400,7 +400,7 @@ export class Input extends Component<T.Props> {
             className={S.clearButton}
             variant="clear"
             size={size}
-            isSquare
+            square
             onClick={this.onClearPress}
           >
             <Icon className={S.clearIcon} size={size} type="close" />

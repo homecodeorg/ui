@@ -21,7 +21,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   disabled?: boolean;
   isLoading?: boolean;
   checked?: boolean;
-  isSquare?: boolean;
+  square?: boolean;
   tabIndex?: number;
   prefixElem?: JSX.Element;
   postfixElem?: JSX.Element;
@@ -35,7 +35,7 @@ export function Button(props: Props) {
     className,
     isLoading,
     checked,
-    isSquare,
+    square,
     onMouseUp,
     children,
     type = 'button',
@@ -52,7 +52,7 @@ export function Button(props: Props) {
     S[`variant-${variant}`],
     isLoading && S.isLoading,
     checked && S.checked,
-    isSquare && S.isSquare,
+    square && S.square,
     className
   );
   const buttonRef = useRef<HTMLButtonElement>(null);
