@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.5](https://github.com/foreverido/uilib/compare/v1.3.4...v1.3.5) (2022-04-30)
+
+
+### Bug Fixes
+
+* Button - isLoading => loading ([31e6da6](https://github.com/foreverido/uilib/commit/31e6da614839fd44c1c13ced77276f6f76949072))
+* isCHecked => checked ([9beba01](https://github.com/foreverido/uilib/commit/9beba0167b1d00b5882d1e50c600d596c2d65213))
+* isSquare => square ([8733599](https://github.com/foreverido/uilib/commit/8733599ae4a36c57be03574b0f681fd0e91400f4))
+* tools/uid - clean id ([7b54f48](https://github.com/foreverido/uilib/commit/7b54f48fa5fcf94b584124d646f3085942316cec))
+
 ### [1.3.4](https://github.com/foreverido/uilib/compare/v1.3.3...v1.3.4) (2022-04-10)
 
 
