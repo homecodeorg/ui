@@ -19,7 +19,7 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 's' | 'm' | 'l';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  isLoading?: boolean;
+  loading?: boolean;
   checked?: boolean;
   square?: boolean;
   tabIndex?: number;
@@ -33,7 +33,7 @@ export type ButtonProps = Props;
 export function Button(props: Props) {
   const {
     className,
-    isLoading,
+    loading,
     checked,
     square,
     onMouseUp,
@@ -50,7 +50,7 @@ export function Button(props: Props) {
     S.root,
     S[`size-${size}`],
     S[`variant-${variant}`],
-    isLoading && S.isLoading,
+    loading && S.loading,
     checked && S.checked,
     square && S.square,
     className
@@ -81,9 +81,7 @@ export function Button(props: Props) {
       {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
       {typeof children === 'string' ? <span>{children}</span> : children}
       {postfixElem && <div className={S.postfix}>{postfixElem}</div>}
-      {isLoading && (
-        <Spinner className={cn(S.spinner, S.postfix)} size={size} />
-      )}
+      {loading && <Spinner className={cn(S.spinner, S.postfix)} size={size} />}
     </button>
   );
 }
