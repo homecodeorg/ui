@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.6](https://github.com/foreverido/uilib/compare/v1.3.5...v1.3.6) (2022-04-30)
+
+
+### Bug Fixes
+
+* Controls - hover/focused ([9738d38](https://github.com/foreverido/uilib/commit/9738d38767fa908f5ff7884a1dd7034afca3fe67))
+* Popup - outer shadow ([1765ac7](https://github.com/foreverido/uilib/commit/1765ac7b6c947b3e8c658b1282a3e34e2b322bf4))
+
 ### [1.3.5](https://github.com/foreverido/uilib/compare/v1.3.4...v1.3.5) (2022-04-30)
 
 
