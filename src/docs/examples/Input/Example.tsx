@@ -7,7 +7,7 @@ export default () => {
   return (
     <Input
       type="textarea"
-      label="Textar eaxample label"
+      label="Textarea example label"
       value={value}
       onChange={(e, val) => setValue(val)}
       hasClear

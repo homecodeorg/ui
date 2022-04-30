@@ -43,11 +43,10 @@ $paddingSide = 12px
   pointer-events none
 
   .root:hover &
-  .isFocused &
-    controlBorder(var(--active-color))
     background-color var(--active-color-alpha-100)
 
   .isFocused &
+    controlBorder(var(--active-color))
     controlFocused()
 
   .hasError &
@@ -98,14 +97,6 @@ $paddingSide = 12px
   .main
     padding-left 0
 
-  .control
-    .size-s&
-      controlPaddingSize('s')
-    .size-m&
-      controlPaddingSize('m')
-    .size-l&
-      controlPaddingSize('l')
-
 .isDisabled
   color var(--accent-color-alpha-500)
 
@@ -144,23 +135,29 @@ $paddingSide = 12px
 
   .isTextArea &
     display block
-    height unset
+    height 100%
     max-height 100%
     width 100%
+
+    &:hover
+      cursor text
 
     &::after
       display block
       content ''
 
     .size-s&
+      controlPaddingSize('s')
       padding-top 8px
       &::after
         height 8px
     .size-m&
+      controlPaddingSize('m')
       padding-top 10px
       &::after
         height 10px
     .size-l&
+      controlPaddingSize('l')
       padding-top 12px
       &::after
         height 12px
