@@ -23,12 +23,16 @@ export default [
     loader: () => import('./examples/InputFile'),
   },
   {
-    slug: 'spinner',
-    loader: () => import('./examples/Spinner'),
+    slug: 'select',
+    loader: () => import('./examples/Select/Select'),
   },
   {
     slug: 'form',
     loader: () => import('./examples/Form'),
+  },
+  {
+    slug: 'spinner',
+    loader: () => import('./examples/Spinner'),
   },
   {
     slug: 'icon',
@@ -47,20 +51,16 @@ export default [
     loader: () => import('./examples/PopupMenu'),
   },
   {
+    slug: 'scroll',
+    loader: () => import('./examples/Scroll'),
+  },
+  {
     slug: 'gallery',
     loader: () => import('./examples/Gallery'),
   },
   {
     slug: 'lightBox',
     loader: () => import('./examples/LightBox'),
-  },
-  {
-    slug: 'select',
-    loader: () => import('./examples/Select/Select'),
-  },
-  {
-    slug: 'scroll',
-    loader: () => import('./examples/Scroll'),
   },
   {
     slug: 'virtualized',
