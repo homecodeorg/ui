@@ -7,10 +7,12 @@
     "ts": "tsc --noUnusedLocals",
     "dev": "NODE_ENV=development webpack-dev-server --mode=development --config ./src/docs/config/webpack.config.js --progress",
     "build": "rollup -c rollup.config.ts",
+    "build:compress": "COMPRESS=true yarn build",
     "release": "standard-version",
     "release:patch": "yarn release -- --release-as patch",
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
+    "release:as": "yarn release -- --release-as",
     "docs:build": "NODE_ENV=production webpack --mode=production --config ./src/docs/config/webpack.config.js --progress",
     "docs:deploy": "./bin/deploy-docs.sh"
   },
@@ -34,7 +36,7 @@
   },
   "main": "dist/cjs",
   "module": "dist/esm",
-  "types": "dist/esm/src/types.d.ts",
+  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.16.0",

@@ -7,7 +7,7 @@ config/
 tsconfig.json
 .babelrc
 src/
-dist/esm/src/docs/
+dist/types/docs/
 assets/
 node_modules/
 .npmrc
