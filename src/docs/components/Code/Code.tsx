@@ -9,7 +9,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
 
-import { Scroll, uid, debounce } from 'uilib';
+import { Scroll, uid } from 'uilib';
 
 import * as uilib from '/src';
 import * as helpers from 'helpers';
@@ -93,14 +93,13 @@ export class Code extends Component<Props> {
           offset={{ y: { before: 20, after: 20 } }}
         >
           <LiveEditor
-            className={cn(S.editor, S.user)}
+            className={S.editor}
             id={this.id}
             code={editedCode}
             language="typescript"
             theme={theme === 'dark' ? vsDark : vsLight}
             onChange={this.onChange}
           />
-          <div className={S.editorContainerFade} />
         </Scroll>
         <div className={S.editorResult}>
           <LiveProvider noInline code={execCode} scope={currScope}>
