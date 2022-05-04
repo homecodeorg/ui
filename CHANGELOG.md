@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0-beta](https://github.com/foreverido/uilib/compare/v1.3.7...v2.0.0-beta) (2022-05-04)
+
+
+### Features
+
+* DateTime ([138e7fe](https://github.com/foreverido/uilib/commit/138e7fe22e10a890d6f7737af56e9bc15552d47c))
+* dist/types ([3497808](https://github.com/foreverido/uilib/commit/3497808340779c169d608c7e4cf6ee6d69a71c92))
+
 ### [1.3.7](https://github.com/foreverido/uilib/compare/v1.3.6...v1.3.7) (2022-05-01)
 
 
