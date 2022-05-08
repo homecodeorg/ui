@@ -67,7 +67,7 @@ export class Checkbox extends Component<Props> {
     const classes = cn(
       S.root,
       S[`size-${size}`],
-      checked && S.isChecked,
+      checked && S.checked,
       error && S.hasError,
       isActive && S.isActive,
       isFocused && S.isFocused,

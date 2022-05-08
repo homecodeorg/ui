@@ -2,6 +2,7 @@ export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
 export * from './Checkbox/Checkbox';
 export * from './Container/Container';
+export * from './DateTime/DateTime';
 export * from './Form/Form';
 export * from './Gallery/Gallery';
 export * from './Icon/Icon';

@@ -505,7 +505,7 @@ export class Select extends Component<T.Props, T.State> {
       <div>
         <Button
           className={classes}
-          variant="default-primary"
+          variant="default"
           {...props}
           onClick={this.toggle}
           style={{ clipPath: labelClipPath }}

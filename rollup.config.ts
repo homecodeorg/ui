@@ -41,6 +41,7 @@ glob.sync('src/**/*.styl').forEach(css => {
 const external = [
   'react',
   'react/jsx-runtime',
+  'moment',
   'timen',
   'justorm',
   'compareq',
@@ -49,6 +50,8 @@ const external = [
   'lodash.omit',
   'lodash.pick',
 ];
+
+const { COMPRESS } = process.env;
 
 export default [
   {
@@ -67,7 +70,7 @@ export default [
         format: 'esm',
         // format: 'iife',
         // exports: 'named',
-        sourcemap: true,
+        sourcemap: Boolean(COMPRESS),
         preserveModules: true,
       },
     ],
@@ -105,16 +108,16 @@ export default [
       //   extensions: ['.js', '.ts', '.jsx', '.tsx'],
       // }),
 
-      // uglify(),
+      COMPRESS && uglify(),
 
       generateLocalLib(),
     ],
   },
   // {
-  //   input: 'dist/esm/types/index.d.ts',
+  //   input: 'dist/types/index.d.ts',
   //   output: [{ file: 'dist/index.d.ts', format: 'esm' }],
-  //   plugins: [dts()],
   //   // external: [/\.css$/],
+  //   plugins: [resolve({ extensions: ['.ts', '.js'] }), dts()],
   // },
 ];
 

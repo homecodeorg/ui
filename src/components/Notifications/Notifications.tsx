@@ -120,7 +120,7 @@ class Item extends Component<T.Props> {
           <Button
             className={S.close}
             variant="clear"
-            isSquare
+            square
             onClick={this.closeMe}
           >
             <Icon type="close" size="s" />

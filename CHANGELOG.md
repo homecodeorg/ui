@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/foreverido/uilib/compare/v2.0.0...v2.0.1) (2022-05-04)
+
+
+### Features
+
+* tools/rangeMap ([f5199a8](https://github.com/foreverido/uilib/commit/f5199a8affbea115cca1353c1593dad3a058eb0b))
+
+## [2.0.0](https://github.com/foreverido/uilib/compare/v2.0.0-beta...v2.0.0) (2022-05-04)
+
+## [2.0.0-beta](https://github.com/foreverido/uilib/compare/v1.3.7...v2.0.0-beta) (2022-05-04)
+
+
+### Features
+
+* DateTime ([138e7fe](https://github.com/foreverido/uilib/commit/138e7fe22e10a890d6f7737af56e9bc15552d47c))
+* dist/types ([3497808](https://github.com/foreverido/uilib/commit/3497808340779c169d608c7e4cf6ee6d69a71c92))
+
+### [1.3.7](https://github.com/foreverido/uilib/compare/v1.3.6...v1.3.7) (2022-05-01)
+
+
+### Features
+
+* Link - external colors ([3f7a1b4](https://github.com/foreverido/uilib/commit/3f7a1b47ff86905fe4394cc1fa4cbd7050837875))
+
+### [1.3.6](https://github.com/foreverido/uilib/compare/v1.3.5...v1.3.6) (2022-04-30)
+
+
+### Bug Fixes
+
+* Controls - hover/focused ([9738d38](https://github.com/foreverido/uilib/commit/9738d38767fa908f5ff7884a1dd7034afca3fe67))
+* Popup - outer shadow ([1765ac7](https://github.com/foreverido/uilib/commit/1765ac7b6c947b3e8c658b1282a3e34e2b322bf4))
+
+### [1.3.5](https://github.com/foreverido/uilib/compare/v1.3.4...v1.3.5) (2022-04-30)
+
+
+### Bug Fixes
+
+* Button - isLoading => loading ([31e6da6](https://github.com/foreverido/uilib/commit/31e6da614839fd44c1c13ced77276f6f76949072))
+* isCHecked => checked ([9beba01](https://github.com/foreverido/uilib/commit/9beba0167b1d00b5882d1e50c600d596c2d65213))
+* isSquare => square ([8733599](https://github.com/foreverido/uilib/commit/8733599ae4a36c57be03574b0f681fd0e91400f4))
+* tools/uid - clean id ([7b54f48](https://github.com/foreverido/uilib/commit/7b54f48fa5fcf94b584124d646f3085942316cec))
+
 ### [1.3.4](https://github.com/foreverido/uilib/compare/v1.3.3...v1.3.4) (2022-04-10)
 
 

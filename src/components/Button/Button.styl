@@ -17,12 +17,18 @@
   &:active
     opacity .7
 
-  &.isLoading
+  &.loading
     pointer-events none
 
-  &.isChecked
-    background-color var(--accent-color)
-    color var(--decent-color)
+  &.checked
+    &
+    &:hover
+      background-color var(--accent-color)
+      color var(--decent-color)
+      box-shadow none
+
+    &:hover
+      background-color var(--accent-color-alpha-900)
 
     path
       fill var(--decent-color)
@@ -41,7 +47,7 @@
   controlFontSize('s')
   controlPaddingSize('s')
 
-  &.isSquare
+  &.square
     width @height
 
 .size-m
@@ -49,7 +55,7 @@
   controlFontSize('m')
   controlPaddingSize('m')
 
-  &.isSquare
+  &.square
     width @height
 
 .size-l
@@ -57,10 +63,10 @@
   controlFontSize('l')
   controlPaddingSize('l')
 
-  &.isSquare
+  &.square
     width @height
 
-.isSquare
+.square
   padding 0
   justify-content center
 

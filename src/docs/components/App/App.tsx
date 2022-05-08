@@ -55,7 +55,7 @@ class App extends Component<{ store?: any }> {
                 className={S.cfgButton}
                 variant="clear"
                 size="l"
-                isSquare
+                square
                 onClick={this.toggleTheme}
               >
                 {this.isDarkTheme() ? '🌙' : '🌕'}
@@ -65,7 +65,7 @@ class App extends Component<{ store?: any }> {
                 className={S.cfgButton}
                 variant="clear"
                 size="l"
-                isSquare
+                square
                 onClick={this.pickActiveColor}
               >
                 <div className={S.activeColor} />

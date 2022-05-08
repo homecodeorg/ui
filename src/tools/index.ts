@@ -6,6 +6,7 @@ export * as object from './object';
 export * as file from './file';
 export * as uid from './uid';
 export * as dom from './dom';
+export { default as rangeMap } from './rangeMap';
 export * as scroll from './scroll';
 export { default as throttle } from './throttle';
 export { default as debounce } from './debounce';

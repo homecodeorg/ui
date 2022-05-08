@@ -1,16 +1,18 @@
 {
   "name": "@foreverido/uilib",
-  "version": "1.3.4",
+  "version": "2.0.1",
   "description": "React UI components library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "ts": "tsc --noUnusedLocals",
     "dev": "NODE_ENV=development webpack-dev-server --mode=development --config ./src/docs/config/webpack.config.js --progress",
     "build": "rollup -c rollup.config.ts",
+    "build:compress": "COMPRESS=true yarn build",
     "release": "standard-version",
     "release:patch": "yarn release -- --release-as patch",
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
+    "release:as": "yarn release -- --release-as",
     "docs:build": "NODE_ENV=production webpack --mode=production --config ./src/docs/config/webpack.config.js --progress",
     "docs:deploy": "./bin/deploy-docs.sh"
   },
@@ -34,7 +36,7 @@
   },
   "main": "dist/cjs",
   "module": "dist/esm",
-  "types": "dist/esm/src/types.d.ts",
+  "types": "dist/types/index.d.ts",
   "sideEffects": false,
   "dependencies": {
     "@babel/core": "^7.16.0",
@@ -64,6 +66,7 @@
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
     "mini-css-extract-plugin": "^2.5.3",
+    "moment": "^2.29.3",
     "path-browserify": "^1.0.1",
     "path-parser": "^6.1.0",
     "postcss-loader": "^6.2.1",

@@ -19,9 +19,9 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 's' | 'm' | 'l';
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  isLoading?: boolean;
-  isChecked?: boolean;
-  isSquare?: boolean;
+  loading?: boolean;
+  checked?: boolean;
+  square?: boolean;
   tabIndex?: number;
   prefixElem?: JSX.Element;
   postfixElem?: JSX.Element;
@@ -33,9 +33,9 @@ export type ButtonProps = Props;
 export function Button(props: Props) {
   const {
     className,
-    isLoading,
-    isChecked,
-    isSquare,
+    loading,
+    checked,
+    square,
     onMouseUp,
     children,
     type = 'button',
@@ -50,9 +50,9 @@ export function Button(props: Props) {
     S.root,
     S[`size-${size}`],
     S[`variant-${variant}`],
-    isLoading && S.isLoading,
-    isChecked && S.isChecked,
-    isSquare && S.isSquare,
+    loading && S.loading,
+    checked && S.checked,
+    square && S.square,
     className
   );
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -81,9 +81,7 @@ export function Button(props: Props) {
       {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
       {typeof children === 'string' ? <span>{children}</span> : children}
       {postfixElem && <div className={S.postfix}>{postfixElem}</div>}
-      {isLoading && (
-        <Spinner className={cn(S.spinner, S.postfix)} size={size} />
-      )}
+      {loading && <Spinner className={cn(S.spinner, S.postfix)} size={size} />}
     </button>
   );
 }

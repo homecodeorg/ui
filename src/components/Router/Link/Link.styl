@@ -21,7 +21,7 @@
     left 5px
     right 5px
     height 2px
-    background-color var(--active-color)
+    background-color var(--accent-color)
     transform scale(0)
     transition transform .1s ease-out
     pointer-events none
@@ -42,15 +42,15 @@
     pointer-events none
 
   &.external::before
-    background-color var(--accent-color)
+    background-color var(--active-color)
 
   &:hover
   &:active
   &:focus
-    color var(--active-color)
+    color var(--accent-color)
 
     &.external
-      color var(--accent-color)
+      color var(--active-color)
 
     &::selection
       color var(--accent-color)

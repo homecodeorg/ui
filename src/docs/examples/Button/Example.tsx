@@ -6,7 +6,7 @@ export default () => {
   return (
     <Button
       size={size}
-      // isSquare
+      // square
       variant="default"
       prefixElem={<Icon type="check" size={size} />}
     >

@@ -7,71 +7,75 @@ export type RouteItem = {
 
 export default [
   {
-    slug: 'button',
+    slug: 'Button',
     loader: () => import('./examples/Button'),
   },
   {
-    slug: 'checkbox',
+    slug: 'Checkbox',
     loader: () => import('./examples/Checkbox'),
   },
   {
-    slug: 'input',
+    slug: 'Input',
     loader: () => import('./examples/Input'),
   },
   {
-    slug: 'inputFile',
+    slug: 'InputFile',
     loader: () => import('./examples/InputFile'),
   },
   {
-    slug: 'spinner',
-    loader: () => import('./examples/Spinner'),
-  },
-  {
-    slug: 'form',
-    loader: () => import('./examples/Form'),
-  },
-  {
-    slug: 'icon',
-    loader: () => import('./examples/Icon'),
-  },
-  {
-    slug: 'link',
-    loader: () => import('./examples/Link'),
-  },
-  {
-    slug: 'popup',
-    loader: () => import('./examples/Popup'),
-  },
-  {
-    slug: 'popupMenu',
-    loader: () => import('./examples/PopupMenu'),
-  },
-  {
-    slug: 'gallery',
-    loader: () => import('./examples/Gallery'),
-  },
-  {
-    slug: 'lightBox',
-    loader: () => import('./examples/LightBox'),
-  },
-  {
-    slug: 'select',
+    slug: 'Select',
     loader: () => import('./examples/Select/Select'),
   },
   {
-    slug: 'scroll',
+    slug: 'Popup',
+    loader: () => import('./examples/Popup'),
+  },
+  {
+    slug: 'PopupMenu',
+    loader: () => import('./examples/PopupMenu'),
+  },
+  {
+    slug: 'Form',
+    loader: () => import('./examples/Form'),
+  },
+  {
+    slug: 'Spinner',
+    loader: () => import('./examples/Spinner'),
+  },
+  {
+    slug: 'Icon',
+    loader: () => import('./examples/Icon'),
+  },
+  {
+    slug: 'Link',
+    loader: () => import('./examples/Link'),
+  },
+  {
+    slug: 'DateTime',
+    loader: () => import('./examples/DateTime'),
+  },
+  {
+    slug: 'Scroll',
     loader: () => import('./examples/Scroll'),
   },
   {
-    slug: 'virtualized',
+    slug: 'Gallery',
+    loader: () => import('./examples/Gallery'),
+  },
+  {
+    slug: 'LightBox',
+    loader: () => import('./examples/LightBox'),
+  },
+  {
+    slug: 'Virtualized',
     loader: () => import('./examples/Virtualized'),
   },
   {
-    slug: 'notifications',
+    slug: 'Notifications',
     loader: () => import('./examples/Notifications'),
   },
   {
-    slug: 'router',
+    slug: 'Router',
     loader: () => import('./examples/Router'),
   },
 ] as RouteItem[];
