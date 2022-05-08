@@ -20,7 +20,7 @@ var Container = __webpack_require__("./src/components/Container/Container.tsx");
 var Link = __webpack_require__("./src/components/Router/Link/Link.tsx");
 // EXTERNAL MODULE: ./src/components/Router/Router.tsx + 6 modules
 var Router = __webpack_require__("./src/components/Router/Router.tsx");
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 63 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 65 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectSpread2.js
 var objectSpread2 = __webpack_require__("./node_modules/@babel/runtime/helpers/esm/objectSpread2.js");

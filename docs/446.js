@@ -12,7 +12,7 @@ __webpack_require__.d(__webpack_exports__, {
   "default": () => (/* binding */ Link)
 });
 
-// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 63 modules
+// EXTERNAL MODULE: ./src/docs/components/Code/Code.tsx + 65 modules
 var Code = __webpack_require__("./src/docs/components/Code/Code.tsx");
 ;// CONCATENATED MODULE: ./node_modules/raw-loader/dist/cjs.js!./src/docs/examples/Link/Example.tsx
 /* harmony default export */ const Example = ("import { Link } from 'uilib';\n\nexport default () => {\n  return (\n    <>\n      <Link href=\"/button\">local link</Link>\n      <Link href=\"https://apostol.space\">external link</Link>\n    </>\n  );\n};\n");
