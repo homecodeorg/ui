@@ -4,8 +4,9 @@
 
 React UI components library
 
+- fully typed
+- tree-shaking
+
 ## Roadmap
 
-- build and publish typings
-- uncomment rest components and fix typings
 - documentation for every component / sandpack
