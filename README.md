@@ -6,6 +6,7 @@ React UI components library
 
 - fully typed
 - tree-shaking
+- [playground](https://foreverido.github.io/uilib)
 
 ## Roadmap
 
