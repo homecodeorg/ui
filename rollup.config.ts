@@ -40,7 +40,7 @@ glob.sync('src/**/*.styl').forEach(css => {
 
 const external = [
   'react',
-  'react/jsx-runtime',
+  'react-dom',
   'moment',
   'timen',
   'justorm',

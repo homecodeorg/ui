@@ -4,10 +4,8 @@
 
 React UI components library
 
+> NOTE: v3 migrated to react@18
+
 - fully typed
 - tree-shaking
 - [playground](https://foreverido.github.io/uilib)
-
-## Roadmap
-
-- documentation for every component / sandpack
