@@ -4,8 +4,8 @@
 
 React UI components library
 
-## Roadmap
+> NOTE: v3 migrated to react@18
 
-- build and publish typings
-- uncomment rest components and fix typings
-- documentation for every component / sandpack
+- fully typed
+- tree-shaking
+- [playground](https://foreverido.github.io/uilib)
