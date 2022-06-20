@@ -11,7 +11,7 @@ import FiniteScroll from '!!raw-loader!./FiniteScroll';
 import InitialTotal from '!!raw-loader!./InitialTotal';
 import ContentBefore from '!!raw-loader!./ContentBefore';
 
-const rootPath = '/virtualized';
+const rootPath = '/Virtualized';
 
 const Example = props => <Code scope={{ helpers, S }} {...props} />;
 
