@@ -1,0 +1,54 @@
+@import 'theme';
+
+.root
+  display flex
+  flex-direction column
+  flex-grow 1
+
+.header
+  position sticky
+  top 0
+  display flex
+  align-items center
+  justify-content space-between
+  padding var(--indent-m) 0 var(--indent-m)
+
+  @media(max-width: $tablet)
+    padding-left 50px
+
+.api
+  margin-top -20px
+
+  table
+    min-width 100%
+    padding-bottom var(--indent-l)
+
+  thead
+    position sticky
+    top 2px
+    background-color var(--decent-color)
+    // background-image linear-gradient(to bottom, var(--decent-color) 80%, var(--decent-color-alpha-0) 100%)
+    box-shadow 0 -3px 0 3px var(--decent-color)
+
+  th
+    border-bttom 1px solid var(--accent-color-alpha-100)
+
+  tr
+    text-align left
+    font-size 20px
+
+  tbody tr
+    transition background-color .3s ease-out
+
+    &:nth-child(2n+1)
+      background-color var(--accent-color-alpha-100)
+
+  &:hover tbody tr
+    transition none
+    background-color unset
+
+  tbody tr:hover
+    background-color var(--accent-color-alpha-100)
+
+  th, td
+    padding var(--indent-s)

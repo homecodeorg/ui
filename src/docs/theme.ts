@@ -8,7 +8,7 @@ const lightColor = ['#e6e6e6', { alpha: colorsAlphaModes }];
 
 export const colors = {
   active: [
-    '#6d447f',
+    '#c0990c',
     { alpha: [100, 300, 500, 800] /* mix: [['accent', 300]] */ },
   ],
   warning: ['#ffa31a', { alpha: [100, 200, 500] }],

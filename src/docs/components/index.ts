@@ -1,4 +1,5 @@
 export { Code } from './Code/Code';
+export { ComponentLayout } from './ComponentLayout/ComponentLayout';
 export { Title } from './Title';
 export { State } from './State';
 

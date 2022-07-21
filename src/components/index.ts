@@ -1,5 +1,6 @@
 export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
+export * from './ButtonGroup/ButtonGroup';
 export * from './Checkbox/Checkbox';
 export * from './Container/Container';
 export * from './DateTime/DateTime';
@@ -20,6 +21,7 @@ export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';
 export * from './Scroll/Scroll';
 export * from './Spinner/Spinner';
+export * from './Tabs/Tabs';
 export * from './Theme/Theme';
 export * from './VH/VH';
 export * from './Virtualized';

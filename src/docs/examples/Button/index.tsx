@@ -1,5 +1,6 @@
-import { Code } from 'docs/components';
+import React from 'react';
+import { ComponentLayout } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 
-export default () => <Code code={example} />;
+export default () => <ComponentLayout name="Button" code={example} />;
