@@ -12,6 +12,7 @@ body
   overflow hidden
 
 .configBar
+  z-index 1
   display flex
   justify-content space-between
   align-items center
@@ -57,12 +58,13 @@ body
     &::before
       z-index -1
       content ''
-      position absolute
+      position fixed
       top 0
       left 0
       height 100vh
       width 100vw
       background-color var(--decent-color-alpha-900)
+      backdrop-filter blur(10px)
 
 .nav
   display flex
@@ -111,7 +113,7 @@ body
 .content
   padding-top 0
   padding-bottom 0
-
+  overflow hidden
 
 @media(min-width: $tablet)
   .content
@@ -122,7 +124,6 @@ body
     position fixed
     z-index 100
     height 100%
-    backdrop-filter blur(10px)
     transform translateX(-100%)
     transition transform .2s ease-out
 

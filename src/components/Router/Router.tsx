@@ -1,4 +1,4 @@
-import { Component, cloneElement, ReactNode } from 'react';
+import { Component, cloneElement } from 'react';
 import { withStore } from 'justorm/react';
 
 import STORE from './store';
@@ -10,7 +10,7 @@ import * as T from './Router.types';
 let isFirstMonted = false;
 
 @withStore({ router: ['path'] })
-export class Router extends Component<Props> {
+export class Router extends Component<T.Props> {
   store;
   routes;
   rootPath = '';

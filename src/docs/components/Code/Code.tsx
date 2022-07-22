@@ -3,7 +3,7 @@ import * as justorm from 'justorm/react';
 import timen from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Scroll, uid } from 'uilib';
+import { Scroll, uid } from '/src';
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 

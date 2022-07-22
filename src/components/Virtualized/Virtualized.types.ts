@@ -38,7 +38,7 @@ type ScrollCallbackState = IndexesType & {
   scrollTop: number;
 };
 
-export type Props = {
+export type Props = Readonly<DefaultProps> & {
   id?: any; // change to fire render
   className?: string;
   wrapElem: Element | null;
@@ -57,6 +57,6 @@ export type Props = {
   renderItem: (props: ItemProps) => ReactElement;
   getItemProps: (params: GetItemPropsParams) => { [key: string]: any };
   style?: any;
-} & Readonly<DefaultProps>;
+};
 
 export type ViewProps = Omit<Props, 'children' | 'wrapElem' | 'getItemProps'>;

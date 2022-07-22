@@ -1,5 +1,6 @@
-export { Code } from './Code/Code';
 export { ComponentLayout } from './ComponentLayout/ComponentLayout';
+export { Code } from './Code/Code';
+export { ApiTable } from './ApiTable/ApiTable';
 export { Title } from './Title';
 export { State } from './State';
 

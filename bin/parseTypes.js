@@ -5,28 +5,68 @@ const fs = require('fs');
 let level = 'root';
 const levelsData = [];
 const getCurrLevelData = () => levelsData[0];
-const endFieldRgx = /^}(.*);$/;
+const endFieldRgx = /^}(|.*);$/;
 const MATCHERS = {
   root(line) {
     const match = line.match(/(type|interface) (\w+) = (.*)/);
 
     if (match) {
       const [, kind, name, value] = match;
-      // console.log([kind, name, value]);
       const data = getCurrLevelData();
 
-      levelsData.unshift((data[name] = { kind }));
+      console.log([kind, name, value]);
+      levelsData.unshift((data[name] = {}));
 
       if (/&/.test(value)) this.extends(value.replace(/ {/, ''));
 
-      if (/{$/.test(value)) level = 'field';
+      // multiline type value
+      if (/</.test(value) && !/>/.test(value)) {
+        getCurrLevelData().value = value;
+        level = 'typeValue';
+        return;
+      }
+
+      // single line type
+      if (/;$/.test(line)) {
+        data[name] = value;
+        levelsData.shift();
+      } else level = 'field'; // dive into field level
+    }
+  },
+  typeValue(line) {
+    const data = getCurrLevelData();
+
+    data.value += line;
+
+    if (/>/.test(line)) {
+      if (/;$/.test(line)) {
+        level = 'root';
+      } else if (/& {$/.test(line)) {
+        level = 'field';
+        data.extends = data.value.split('&').map(s => s.trim());
+        this.clearExtends(data);
+      }
     }
   },
   extends(line) {
-    getCurrLevelData().extends = line
+    const data = getCurrLevelData();
+    const items = line
       .split('&')
       .map(s => s.trim())
       .filter(Boolean);
+
+    if (data.extends) data.extends.push(...items);
+    else data.extends = items;
+
+    if (/&$/.test(line.trim())) level = 'extends';
+    if (/& {$/.test(line.trim())) {
+      level = 'field';
+      this.clearExtends(data);
+    }
+  },
+  clearExtends(node) {
+    if (node.extends[node.extends.length - 1].trim() === '{')
+      node.extends.pop();
   },
   preFieldComment: null,
   field(line) {
@@ -37,7 +77,7 @@ const MATCHERS = {
       return;
     }
 
-    if (endFieldRgx.test(line)) return this.endField(line);
+    if (endFieldRgx.test(trimedLine)) return this.endField(line);
 
     const match = line.match(/(\w+)(\?|): (\n|.+)/);
 
@@ -93,7 +133,7 @@ const MATCHERS = {
     }
   },
   endField(line) {
-    const match = line.match(endFieldRgx);
+    const match = line.trim().match(endFieldRgx);
 
     if (match[1]) this.extends(match[1]);
 
@@ -110,42 +150,23 @@ function parseTypes(code) {
 
   code.split('\n').forEach(line => {
     // console.log(getCurrLevelData());
-    // console.log(level, line);
+    console.log(`::${level}`, line);
     MATCHERS[level](line);
   });
+
+  console.log('>>>', levelsData);
 
   return levelsData.shift();
 }
 
 function parseComponentTypes(name) {
   const file = `src/components/${name}/${name}.types.ts`;
-
   // console.log('file', file);
 
   try {
     const code = fs.readFileSync(file, 'utf8');
-    // const code = `export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-    //   className?: string;
-    //   children: ReactNode;
-    //   prefixElem?: JSX.Element; // Element to be prepended to the children
-    //   size?: 's' | 'm' | 'l';
-    //   // comment before:
-    //   asd: number;
-    //   variant?:
-    //   | 'clear'
-    //   | 'default'
-    //   | 'primary';
-    //   inputProps?: Omit<
-    //     InputProps,
-    //     'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
-    //   >;
-    //   getInputVal?: (params: {
-    //     isFocused: boolean;
-    //     searchVal: string;
-    //     selected: Selected;
-    //   }) => string;
-    // };
-    // `;
+    // const code = fs.readFileSync('bin/test.ts', 'utf8');
+
     return parseTypes(code);
   } catch (e) {
     if (e.message.includes('ENOENT')) {
@@ -157,7 +178,7 @@ function parseComponentTypes(name) {
 }
 
 const types = {};
-// const componentsNames = ['Button'];
+// const componentsNames = ['Input'];
 const componentsNames = fs.readdirSync('src/components', {
   withFileTypes: false,
 });
@@ -170,5 +191,4 @@ componentsNames.forEach(name => {
 });
 
 // console.log(types);
-
 fs.writeFileSync('src/docs/types.json', JSON.stringify(types, null, 0));

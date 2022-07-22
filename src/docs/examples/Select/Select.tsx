@@ -1,6 +1,7 @@
-import { Code } from 'docs/components';
-
+import { ComponentLayout, Code, ApiTable } from 'docs/components';
 import * as helpers from './helpers';
+
+import TYPES from '../../types.json';
 
 import example from '!!raw-loader!./Example';
 
@@ -34,7 +35,14 @@ import example from '!!raw-loader!./Example';
 // }
 
 // export default () => <div>123123</div>;
-export default () => <Code scope={{ helpers }} code={example} />;
+export default () => (
+  <ComponentLayout
+    name="Select"
+    scope={{ helpers }}
+    code={<Code code={example} />}
+    api={<ApiTable types={TYPES.Select.Props} />}
+  />
+);
 
 // export default () => (
 //   <Fragment>

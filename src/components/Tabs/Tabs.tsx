@@ -1,5 +1,4 @@
 import { useCallback, useRef, useState } from 'react';
-// import cn from 'classnames';
 
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
