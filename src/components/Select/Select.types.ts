@@ -42,7 +42,15 @@ type SelectPopupProps = Omit<
 
 type Selected = { [id: string]: true | Id[] };
 
-export type Props = {
+type GetInputValParams = {
+  isFocused: boolean;
+  searchVal: string;
+  selected: Selected;
+};
+
+export type Props = Partial<
+  Pick<InputProps, 'required' | 'error' | 'disabled'>
+> & {
   className?: string;
   isOpen?: boolean;
   optionsClassName?: string;
@@ -63,11 +71,7 @@ export type Props = {
   groupBy?: string;
   value?: Id | Id[] | null;
   onApi?: (optionsTree: any) => void;
-  getInputVal?: (params: {
-    isFocused: boolean;
-    searchVal: string;
-    selected: Selected;
-  }) => string;
+  getInputVal?: (params: GetInputValParams) => string;
   expandSelected?: boolean;
   onChange: (value: Id | Id[]) => void;
   onFocus?: InputProps['onFocus'];
@@ -86,7 +90,7 @@ export type Props = {
   hideErrorMessage?: boolean;
   independentSelection?: boolean;
   groupSelectedLeafs?: boolean;
-} & Partial<Pick<InputProps, 'required' | 'error' | 'disabled'>>;
+};
 
 export type State = {
   isFocused: boolean;

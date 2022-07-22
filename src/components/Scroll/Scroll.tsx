@@ -1,33 +1,18 @@
-import { Component, createRef, HTMLAttributes, HTMLProps } from 'react';
+import { Component, createRef } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 import Time from 'timen';
 
-import type { Size } from '../../types';
 import { capitalize } from '../../tools/string';
 import { isTouch } from '../../tools/dom';
 import debounce from '../../tools/debounce';
 import * as resizeObserver from '../../tools/resizeObserver';
 
 import S from './Scroll.styl';
+import * as T from './Scroll.types';
 
-type OffsetAxis = { before?: number; after?: number };
-export type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
-  className?: string;
-  innerClassName?: string;
-  thumbClassName?: string;
-  innerProps?: HTMLAttributes<HTMLDivElement>;
-  extraWide?: boolean;
-  x?: boolean;
-  y?: boolean;
-  size?: Size;
-  autoHide?: boolean;
-  offset?: { x?: OffsetAxis; y?: OffsetAxis };
-  onScroll?: (e: MouseEvent) => void;
-};
-
-export class Scroll extends Component<Props> {
+export class Scroll extends Component<T.Props> {
   innerElem = createRef<HTMLDivElement>();
   thumbELem = {
     x: createRef<HTMLDivElement>(),

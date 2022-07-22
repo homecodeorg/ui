@@ -5,11 +5,7 @@ import STORE from './store';
 import Context from './context';
 import { parseRouteParams, getWeightestRoute } from './Router.helpers';
 
-type Props = {
-  store?: any;
-  children: ReactNode;
-  rootPath?: string;
-};
+import * as T from './Router.types';
 
 let isFirstMonted = false;
 

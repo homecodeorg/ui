@@ -6,10 +6,6 @@ export type WrapperPropsType = DetailedHTMLProps<
   HTMLDivElement
 > & {
   className?: string;
-  // style?: CSSStyleDeclaration & {
-  //   height?: number;
-  //   width?: number;
-  // };
 };
 
 export type Direction =

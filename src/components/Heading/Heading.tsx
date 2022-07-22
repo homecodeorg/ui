@@ -3,8 +3,9 @@ import { useEffect, useRef } from 'react';
 import { scrollIntoView } from '../../tools/scroll';
 
 import S from './Heading.styl';
+import * as T from './Heading.types';
 
-export function Heading({ id, text }) {
+export function Heading({ id, text }: T.Props) {
   const domElem = useRef(null);
   const hash = `#${id}`;
 

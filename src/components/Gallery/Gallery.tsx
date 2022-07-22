@@ -6,9 +6,9 @@ import cn from 'classnames';
 import omit from 'lodash.omit';
 
 import { Button, Icon, throttle, array, Spinner } from 'uilib';
-import type { Size } from 'uilib/types';
 
 import S from './Gallery.styl';
+import * as T from './Gallery.types';
 
 const DURATION = 200;
 const DIR_NAME = {
@@ -56,17 +56,7 @@ function Item({ src, size, isLoaded, isError, onLoad, onError }) {
   );
 }
 
-type Props = {
-  className?: string;
-  items: string[];
-  size?: Size;
-  animation?: boolean;
-  startIndex?: number;
-  onChange?: (item: string) => void;
-  style?: CSSProperties;
-};
-
-export class Gallery extends Component<Props> {
+export class Gallery extends Component<T.Props> {
   store;
   items;
   timers = Time.create();

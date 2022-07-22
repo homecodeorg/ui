@@ -1,17 +1,12 @@
-import { ReactNode, useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import cn from 'classnames';
 
 import { Paranja, Button, Icon } from 'uilib';
 
 import S from './LightBox.styl';
+import * as T from './LightBox.types';
 
-type Props = {
-  isOpen?: boolean;
-  onClose: () => void;
-  children: ReactNode;
-};
-
-export function LightBox({ children, isOpen, onClose }: Props) {
+export function LightBox({ children, isOpen, onClose }: T.Props) {
   const onKeyDown = useCallback(
     e => {
       if (isOpen && onClose && e.key === 'Escape') {

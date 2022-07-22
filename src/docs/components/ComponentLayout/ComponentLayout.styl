@@ -4,6 +4,7 @@
   display flex
   flex-direction column
   flex-grow 1
+  overflow hidden
 
 .header
   position sticky
@@ -17,7 +18,10 @@
     padding-left 50px
 
 .api
-  margin-top -20px
+  max-width 100%
+  margin -10px 0 10px
+  border-radius var(--indent-s)
+  // box-shadow 0 0 0 1px var(--accent-color-alpha-50)
 
   table
     min-width 100%
@@ -25,13 +29,14 @@
 
   thead
     position sticky
-    top 2px
-    background-color var(--decent-color)
+    top 0
+    backdrop-filter blur(10px)
+    background-color var(--decent-color-alpha-500)
     // background-image linear-gradient(to bottom, var(--decent-color) 80%, var(--decent-color-alpha-0) 100%)
-    box-shadow 0 -3px 0 3px var(--decent-color)
+    box-shadow 0 -3px 0 3px var(--decent-color), 0 1px 0 0 var(--accent-color-alpha-50)
 
-  th
-    border-bttom 1px solid var(--accent-color-alpha-100)
+  // th
+  //   border-bottom 1px solid var(--accent-color-alpha-100)
 
   tr
     text-align left
@@ -52,3 +57,7 @@
 
   th, td
     padding var(--indent-s)
+
+  td
+    min-width 10em
+    word-break break-word

@@ -1,11 +1,9 @@
-import { Component, FormEventHandler } from 'react';
+import { Component } from 'react';
 import { createStore } from 'justorm/react';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
-
-import { clone } from '../../tools/object';
 
 import { Input } from '../Input/Input';
 

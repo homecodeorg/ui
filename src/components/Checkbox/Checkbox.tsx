@@ -1,27 +1,13 @@
-import { ChangeEvent, Component, DOMAttributes, ReactNode } from 'react';
+import { Component } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 
 import { uid, Icon } from 'uilib';
 
-import { Size } from '../../types';
-
 import S from './Checkbox.styl';
+import * as T from './Checkbox.types';
 
-type ControlProps = DOMAttributes<HTMLInputElement>;
-
-type Props = ControlProps & {
-  id?: string;
-  className?: string;
-  label?: ReactNode;
-  checked?: boolean;
-  error?: string | boolean;
-  size: Size;
-  // onFocus?: (e: FocusEvent) => void;
-  // onBlur?: (e: FocusEvent) => void;
-};
-
-export class Checkbox extends Component<Props> {
+export class Checkbox extends Component<T.Props> {
   id;
   store;
 

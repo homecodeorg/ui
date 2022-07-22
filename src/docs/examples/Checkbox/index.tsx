@@ -1,5 +1,5 @@
-import { Code } from 'docs/components';
+import { ComponentLayout } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 
-export default () => <Code code={example} />;
+export default () => <ComponentLayout name="Checkbox" code={example} />;
