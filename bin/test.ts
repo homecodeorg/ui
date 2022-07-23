@@ -5,6 +5,12 @@ import { Size } from '../../types';
 import { InputProps } from '../Input/Input';
 import { PopupProps } from '../Popup/Popup';
 
+type Uploader = (
+  file: File,
+  fn: OnProgress,
+  getXHR?: (xhr: XMLHttpRequest) => void
+) => Promise<string>;
+
 type SelectPopupProps = Omit<
   PopupProps,
   | 'disabled'

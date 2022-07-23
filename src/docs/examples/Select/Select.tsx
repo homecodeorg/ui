@@ -39,7 +39,7 @@ export default () => (
   <ComponentLayout
     name="Select"
     scope={{ helpers }}
-    code={<Code code={example} />}
+    code={<Code code={example} scope={{ helpers }} />}
     api={<ApiTable types={TYPES.Select.Props} />}
   />
 );

@@ -1,10 +1,12 @@
 import { useCallback, useRef, useState } from 'react';
 
+import cn from 'classnames';
+
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 
 import * as T from './Tabs.types';
-// import S from './Tabs.styl';
+import S from './Tabs.styl';
 
 function isId(id) {
   return ['string', 'number'].includes(typeof id);
@@ -37,12 +39,16 @@ export function Tabs(props: T.Props) {
   tabsContent.current = [];
 
   const tabs = items.map((params: T.Item) => {
-    const { id, label, forceRender, content, ...rest } = params;
+    const { id, label, forceRender, content, contentClassName, ...rest } =
+      params;
     const isActive = activeId === id;
+    const tabContent = typeof content === 'function' ? content() : content;
 
     if (renderAll || forceRender || isActive) {
       tabsContent.current.push(
-        typeof content === 'function' ? content() : content
+        <div className={cn(contentClassName, !isActive && S.inactive)} key={id}>
+          {tabContent}
+        </div>
       );
     }
 

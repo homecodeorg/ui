@@ -6,6 +6,7 @@ export type Item = ButtonProps & {
   id: ID;
   label: string;
   content: React.ReactNode | (() => React.ReactNode);
+  contentClassName?: string;
   forceRender?: boolean;
   onClick?: (e: MouseEvent) => boolean | void;
 };

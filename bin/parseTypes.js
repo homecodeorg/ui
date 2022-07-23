@@ -19,8 +19,14 @@ const MATCHERS = {
 
       if (/&/.test(value)) this.extends(value.replace(/ {/, ''));
 
+      const isMultilineAngle = /</.test(value) && !/>/.test(value);
+      const isMultilineParenthesis = /\(/.test(value) && !/\)/.test(value);
+
       // multiline type value
-      if (/</.test(value) && !/>/.test(value)) {
+      if (isMultilineAngle || isMultilineParenthesis) {
+        if (isMultilineAngle) this.multilineCloseBrace = '>';
+        if (isMultilineParenthesis) this.multilineCloseBrace = ')';
+
         getCurrLevelData().value = value;
         level = 'typeValue';
         return;
@@ -38,10 +44,19 @@ const MATCHERS = {
 
     data.value += line;
 
-    if (/>/.test(line)) {
+    console.log('-', this.multilineCloseBrace);
+
+    const rgx = new RegExp(`\\${this.multilineCloseBrace}`);
+
+    if (rgx.test(line)) {
+      console.log('--');
+
       if (/;$/.test(line)) {
+        console.log('---;');
         level = 'root';
+        levelsData.shift();
       } else if (/& {$/.test(line)) {
+        console.log('---& {');
         level = 'field';
         data.extends = data.value.split('&').map(s => s.trim());
         this.clearExtends(data);
@@ -149,12 +164,13 @@ function parseTypes(code) {
   levelsData.push({});
 
   code.split('\n').forEach(line => {
+    console.log(levelsData);
     // console.log(getCurrLevelData());
     console.log(`::${level}`, line);
     MATCHERS[level](line);
   });
 
-  console.log('>>>', levelsData);
+  // console.log('>>>', levelsData);
 
   return levelsData.shift();
 }
