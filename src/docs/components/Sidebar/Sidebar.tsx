@@ -17,18 +17,16 @@ function Item({ slug, parentSlug = '' }: ItemProps) {
   const href = parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`;
 
   return (
-    <>
-      <Link
-        href={href}
-        isPartialExact
-        className={cn(S.link, parentSlug && S.sub)}
-        exactClassName={S.active}
-        onClick={() => (app.isMenuOpen = false)}
-        key={slug}
-      >
-        {string.capitalize(slug)}
-      </Link>
-    </>
+    <Link
+      href={href}
+      isPartialExact
+      className={cn(S.link, parentSlug && S.sub)}
+      exactClassName={S.active}
+      onClick={() => (app.isMenuOpen = false)}
+      key={slug}
+    >
+      {string.capitalize(slug)}
+    </Link>
   );
 }
 

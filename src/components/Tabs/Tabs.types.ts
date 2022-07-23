@@ -18,6 +18,7 @@ export type RenderProps = {
 
 export type Props = {
   className?: string;
+  contentClassName?: string;
   items: Item[];
   activeId?: ID;
   onChange: (id: ID) => void;

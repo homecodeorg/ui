@@ -14,6 +14,7 @@ function isId(id) {
 
 export function Tabs(props: T.Props) {
   const {
+    contentClassName,
     items,
     onChange,
     renderAll,
@@ -39,14 +40,27 @@ export function Tabs(props: T.Props) {
   tabsContent.current = [];
 
   const tabs = items.map((params: T.Item) => {
-    const { id, label, forceRender, content, contentClassName, ...rest } =
-      params;
+    const {
+      id,
+      label,
+      forceRender,
+      content,
+      contentClassName: currContentClassName,
+      ...rest
+    } = params;
     const isActive = activeId === id;
     const tabContent = typeof content === 'function' ? content() : content;
 
     if (renderAll || forceRender || isActive) {
       tabsContent.current.push(
-        <div className={cn(contentClassName, !isActive && S.inactive)} key={id}>
+        <div
+          className={cn(
+            contentClassName,
+            currContentClassName,
+            !isActive && S.inactive
+          )}
+          key={id}
+        >
           {tabContent}
         </div>
       );

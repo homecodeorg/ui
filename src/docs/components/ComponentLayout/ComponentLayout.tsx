@@ -14,12 +14,13 @@ export function ComponentLayout({ name, api, code }: Props) {
   return (
     <div className={S.root}>
       <Tabs
+        contentClassName={S.content}
         items={[
           {
             id: 'api',
             label: 'API',
             content: api,
-            contentClassName: S.content,
+            contentClassName: S.api,
             forceRender: true,
           },
           { id: 'demo', label: 'Demo', content: code, forceRender: true },

@@ -42,10 +42,14 @@
 
   &:hover tbody tr
     transition none
-    background-color unset
 
-  tbody tr:hover
-    background-color var(--accent-color-alpha-100)
+  tbody tr
+    &:last-child
+      border-bottom-left-radius var(--indent-s)
+      border-bottom-right-radius var(--indent-s)
+    &:hover
+      box-shadow inset 0 0 0 1px var(--accent-color-alpha-500)
+
 
   th, td
     padding var(--indent-s)
