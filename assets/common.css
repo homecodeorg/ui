@@ -8,6 +8,8 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 body {

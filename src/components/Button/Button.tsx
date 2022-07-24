@@ -1,36 +1,15 @@
-import {
-  ButtonHTMLAttributes,
-  useEffect,
-  useRef,
-  useCallback,
-  ReactNode,
-} from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import cn from 'classnames';
 
 import { Spinner } from '../Spinner/Spinner';
 
 import S from './Button.styl';
 import * as H from './Button.helpers';
+import * as T from './Button.types';
 
-type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-  className?: string;
-  children: ReactNode;
-  variant?: 'clear' | 'default' | 'primary';
-  size?: 's' | 'm' | 'l';
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  loading?: boolean;
-  checked?: boolean;
-  square?: boolean;
-  tabIndex?: number;
-  prefixElem?: JSX.Element;
-  postfixElem?: JSX.Element;
-  style?: Partial<CSSStyleDeclaration>;
-};
+export type ButtonProps = T.Props;
 
-export type ButtonProps = Props;
-
-export function Button(props: Props) {
+export function Button(props: T.Props) {
   const {
     className,
     loading,

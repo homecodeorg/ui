@@ -47,10 +47,6 @@ export default [
     loader: () => import('./examples/Icon'),
   },
   {
-    slug: 'Link',
-    loader: () => import('./examples/Link'),
-  },
-  {
     slug: 'DateTime',
     loader: () => import('./examples/DateTime'),
   },
@@ -77,5 +73,9 @@ export default [
   {
     slug: 'Router',
     loader: () => import('./examples/Router'),
+  },
+  {
+    slug: 'Link',
+    loader: () => import('./examples/Link'),
   },
 ] as RouteItem[];

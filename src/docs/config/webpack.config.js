@@ -4,6 +4,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
 
 const pkg = require('../../../package.json');
 const paths = require('./paths.js');
@@ -136,6 +137,12 @@ module.exports = (env, argv) => {
             to: paths.build,
           },
         ],
+      }),
+
+      new HtmlWebpackPartialsPlugin({
+        path: `${paths.assets}/analytics.html`,
+        location: 'body',
+        priority: 'low',
       }),
 
       new HtmlWebpackPlugin({

@@ -1,5 +1,11 @@
-import { Code } from 'docs/components';
+import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 
-export default () => <Code code={example} />;
+export default () => (
+  <ComponentLayout
+    name="Icon"
+    code={<Code code={example} />}
+    api={<TypesNavigator scope="Icon" type="Props" />}
+  />
+);

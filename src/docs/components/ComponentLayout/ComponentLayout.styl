@@ -1,0 +1,30 @@
+@import 'theme';
+
+.root
+  display flex
+  flex-direction column
+  flex-grow 1
+  overflow hidden
+
+.header
+  position sticky
+  top 0
+  display flex
+  align-items center
+  justify-content space-between
+  padding var(--indent-m) 0 var(--indent-m)
+
+  @media(max-width: $tablet)
+    padding-left 50px
+
+.api
+  flex-grow unset !important
+
+.content
+  display flex
+  flex-grow 1
+  overflow hidden
+  margin-bottom var(--indent-s)
+
+  @media(min-width: $tablet)
+    margin-bottom var(--indent-l)

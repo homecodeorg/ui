@@ -3,17 +3,17 @@ import * as justorm from 'justorm/react';
 import timen from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
+import { Scroll, uid } from '/src';
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
 
-import { Scroll, uid } from 'uilib';
-
 import * as uilib from '/src';
 import * as helpers from 'helpers';
 
+// import TYPES from '../../types.json';
 import * as H from './Code.helpers';
 import S from './Code.styl';
 

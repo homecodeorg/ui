@@ -1,0 +1,77 @@
+.root
+  position relative
+  box-shadow inset 0 0 0 1px var(--accent-color-alpha-50)
+  border-radius var(--indent-s)
+  overflow hidden
+
+  &.inPopup
+    border-radius inherit
+
+  &
+  & *
+    font-family monospace
+
+  // &
+
+.title
+.extends
+.fieldsInner
+.stringType
+  padding var(--indent-s)
+
+.stringType
+  white-space nowrap
+
+.header
+  z-index 1
+  position sticky
+  top 0
+  background-color var(--decent-color-alpha-500)
+  backdrop-filter blur(50px)
+
+.fields
+  max-height 50vh
+
+.field
+  white-space nowrap
+  line-height 1.7em
+
+.extends
+  background-color var(--accent-color-alpha-50)
+
+.kw
+  color var(--code-keyword-color)
+
+.sep
+  color var(--code-separator-color)
+
+.value
+  color var(--code-value-color)
+
+.comment
+  color var(--code-comment-color)
+
+  &:before
+    content ' // '
+
+.typePopup
+  border-radius var(--indent-s)
+
+.type
+  position relative
+  color var(--code-keyword-color)
+
+  &::before
+    content ''
+    position absolute
+    top -5px
+    left -5px
+    right -5px
+    bottom -5px
+    border-radius var(--indent-s)
+    transition background-color .2s ease-out
+
+  &:hover::before
+    background-color var(--accent-color-alpha-50)
+
+

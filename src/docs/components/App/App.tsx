@@ -8,7 +8,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import NAV_CONFIG from '../../navigation';
 require('./store');
 import S from './App.styl';
-import { Container, Paranja } from 'uilib/components';
+import { Container } from 'uilib/components';
 
 dom.watchControllerFlag();
 

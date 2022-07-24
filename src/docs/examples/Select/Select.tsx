@@ -1,5 +1,4 @@
-import { Code } from 'docs/components';
-
+import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
 import * as helpers from './helpers';
 
 import example from '!!raw-loader!./Example';
@@ -34,7 +33,14 @@ import example from '!!raw-loader!./Example';
 // }
 
 // export default () => <div>123123</div>;
-export default () => <Code scope={{ helpers }} code={example} />;
+export default () => (
+  <ComponentLayout
+    name="Select"
+    scope={{ helpers }}
+    code={<Code code={example} scope={{ helpers }} />}
+    api={<TypesNavigator scope="Select" type="Props" />}
+  />
+);
 
 // export default () => (
 //   <Fragment>

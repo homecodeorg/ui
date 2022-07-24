@@ -8,7 +8,7 @@ const lightColor = ['#e6e6e6', { alpha: colorsAlphaModes }];
 
 export const colors = {
   active: [
-    '#6d447f',
+    '#c0990c',
     { alpha: [100, 300, 500, 800] /* mix: [['accent', 300]] */ },
   ],
   warning: ['#ffa31a', { alpha: [100, 200, 500] }],
@@ -30,10 +30,18 @@ export const config = {
   light: {
     ...defaultConfig,
     ...colorsConfigToVars({ ...colors, accent: darkColor, decent: lightColor }),
+    'code-keyword-color': '#3674bd',
+    'code-separator-color': '#bfbb36',
+    'code-value-color': '#169780',
+    'code-comment-color': '#008000',
   },
   dark: {
     ...defaultConfig,
     ...colorsConfigToVars({ ...colors, accent: lightColor, decent: darkColor }),
+    'code-keyword-color': '#3674bd',
+    'code-separator-color': '#bfbb36',
+    'code-value-color': '#35c5ab',
+    'code-comment-color': '#666',
   },
 };
 

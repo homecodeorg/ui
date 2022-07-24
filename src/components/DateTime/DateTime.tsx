@@ -1,12 +1,6 @@
-import { ReactNode } from 'react';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 
-type Props = {
-  value?: Date | Moment | string;
-  format?: string;
-  locale?: string;
-  children?: ReactNode;
-};
+import * as T from './DateTime.types';
 
 export function formatDate({ value, format, locale = 'en' }) {
   const d = moment(value).locale(locale);
@@ -19,6 +13,6 @@ export function formatDate({ value, format, locale = 'en' }) {
   return d.toString();
 }
 
-export function DateTime({ value = new Date(), format, locale }: Props) {
+export function DateTime({ value = new Date(), format, locale }: T.Props) {
   return <>{formatDate({ value, format, locale })}</>;
 }

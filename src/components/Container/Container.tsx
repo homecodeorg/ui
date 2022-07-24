@@ -1,22 +1,9 @@
 import cn from 'classnames';
 
 import S from './Container.styl';
+import * as T from './Container.types';
 
-type Props = {
-  className?: string;
-  size?: 's' | 'm' | 'l' | 'xl';
-  children: any;
-  alignItemsCenter?: boolean;
-  justifyContentCenter?: boolean;
-  vertical?: boolean;
-  fullHeight?: boolean | string;
-  fullWidth?: boolean | string;
-  scrolledX?: boolean;
-  scrolledY?: boolean;
-  style?: Partial<CSSStyleDeclaration>;
-};
-
-export function Container(props: Props) {
+export function Container(props: T.Props) {
   const {
     className,
     children,

@@ -7,18 +7,10 @@ import { Icon } from 'uilib';
 import Context from '../context';
 import S from './Link.styl';
 
-type Props = HTMLProps<HTMLAnchorElement> & {
-  store?: any;
-  className?: string;
-  exactClassName?: string;
-  isPartialExact?: boolean;
-  isDisabled?: boolean;
-  isClear?: boolean;
-  isClearPadding?: boolean;
-};
+import * as T from './Link.types';
 
 @withStore({ router: ['path'] })
-export class Link extends Component<Props> {
+export class Link extends Component<T.Props> {
   domElem = createRef<HTMLAnchorElement>();
   rootPath = '';
 
@@ -39,8 +31,11 @@ export class Link extends Component<Props> {
   isExternal = () => /\./.test(this.getHref());
 
   onClick = e => {
-    const { router } = this.props.store;
+    const { onClick, store } = this.props;
+    const { router } = store;
     const href = this.getHref();
+
+    onClick?.(e, href);
 
     if (!this.isExternal() && router.path !== href) {
       e.preventDefault();

@@ -1,4 +1,7 @@
+export { ComponentLayout } from './ComponentLayout/ComponentLayout';
 export { Code } from './Code/Code';
+export { TypesNavigator } from './TypesNavigator/TypesNavigator';
+// export { ApiTable } from './ApiTable/ApiTable';
 export { Title } from './Title';
 export { State } from './State';
 

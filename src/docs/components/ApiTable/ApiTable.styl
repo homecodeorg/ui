@@ -1,0 +1,62 @@
+.root
+  position relative
+  max-width 100%
+  min-width 100%
+  margin-bottom 10px
+  border-radius var(--indent-s)
+
+  &::after
+    content ''
+    position absolute
+    height 100%
+    width 100%
+    box-shadow inset 0 0 0 1px var(--accent-color-alpha-50)
+    pointer-events none
+    border-radius inherit
+
+  table
+    min-width 100%
+    padding-bottom var(--indent-l)
+
+  thead
+    position sticky
+    top 1px
+    transform translateY(-1px)
+    backdrop-filter blur(10px)
+    background-color var(--decent-color-alpha-500)
+    // background-image linear-gradient(to bottom, var(--decent-color) 80%, var(--decent-color-alpha-0) 100%)
+    box-shadow 0 -3px 0 3px var(--decent-color), inset 0 -1px 0 0 var(--accent-color-alpha-50)
+
+  // th
+  //   border-bottom 1px solid var(--accent-color-alpha-100)
+
+  tr
+    text-align left
+    font-size 20px
+
+  tbody tr
+    transition background-color .3s ease-out
+
+    &:nth-child(2n+1)
+      background-color var(--accent-color-alpha-100)
+
+  &:hover tbody tr
+    transition none
+
+  tbody tr
+    &:last-child
+      border-bottom-left-radius var(--indent-s)
+      border-bottom-right-radius var(--indent-s)
+    &:hover
+      box-shadow inset 0 0 0 1px var(--accent-color-alpha-500)
+
+
+  th, td
+    padding var(--indent-s)
+
+  td
+    min-width 10em
+    word-break break-word
+
+  td + td
+    box-shadow -1px 0 0 0 var(--accent-color-alpha-50)

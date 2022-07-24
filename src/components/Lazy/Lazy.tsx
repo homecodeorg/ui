@@ -1,19 +1,16 @@
-import { Component, ReactNode } from 'react';
+import { Component } from 'react';
 
 import omit from 'lodash.omit';
 
 import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
+import * as T from './Lazy.types';
 
-type Loader = () => Promise<any>;
-type Props = { loader: Loader; progressElem: ReactNode };
-type State = { loading: boolean };
-
-function compare(cb1: Loader, cb2: Loader) {
+function compare(cb1: T.Loader, cb2: T.Loader) {
   return cb1?.toString() === cb2?.toString();
 }
 
-export class Lazy extends Component<Props, State> {
+export class Lazy extends Component<T.Props, T.State> {
   state = { loading: true };
   C: any;
 
@@ -21,7 +18,7 @@ export class Lazy extends Component<Props, State> {
     this.update();
   }
 
-  componentDidUpdate({ loader }: Props) {
+  componentDidUpdate({ loader }) {
     if (!compare(this.props.loader, loader)) this.update();
   }
 

@@ -1,4 +1,4 @@
-import { Code } from 'docs/components';
+import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 
@@ -26,7 +26,13 @@ import example from '!!raw-loader!./Example';
 //   return <div className={classes}>{children}</div>;
 // };
 
-export default () => <Code code={example} />;
+export default () => (
+  <ComponentLayout
+    name="Popup"
+    code={<Code code={example} />}
+    api={<TypesNavigator scope="Popup" type="Props" />}
+  />
+);
 
 // export default () => (
 //   <Fragment>

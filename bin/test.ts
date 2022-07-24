@@ -5,44 +5,21 @@ import { Size } from '../../types';
 import { InputProps } from '../Input/Input';
 import { PopupProps } from '../Popup/Popup';
 
-export type Id = string | number;
+type Uploader = (
+  file: File,
+  fn: OnProgress,
+  getXHR?: (xhr: XMLHttpRequest) => void
+) => Promise<string>;
 
-export type Option = {
-  id: Id;
-  isGroupHeader?: boolean;
-  parentId?: Id;
-  label: any;
-  sortingKey?: string | number;
-  children?: Option[];
-  render?: (label: string) => string;
+type GetInputValParams = {
+  isFocused: boolean;
+  searchVal: string;
+  selected: Selected;
 };
 
-type Preset = {
-  label: string;
-  ids: Id[];
-};
-
-export type PresetButtonProps = {
-  key: string;
-  children: ReactChild;
-  onClick: () => void;
-};
-
-type SelectPopupProps = Omit<
-  PopupProps,
-  | 'disabled'
-  | 'direction'
-  | 'autoClose'
-  | 'onOpen'
-  | 'onClose'
-  | 'trigger'
-  | 'content'
-> &
-  Partial<{ direction: PopupProps['direction'] }>;
-
-type Selected = { [id: string]: true | Id[] };
-
-export type Props = {
+export type Props = Partial<
+  Pick<InputProps, 'required' | 'error' | 'disabled'>
+> & {
   className?: string;
   isOpen?: boolean;
   optionsClassName?: string;
@@ -63,11 +40,7 @@ export type Props = {
   groupBy?: string;
   value?: Id | Id[] | null;
   onApi?: (optionsTree: any) => void;
-  getInputVal?: (params: {
-    isFocused: boolean;
-    searchVal: string;
-    selected: Selected;
-  }) => string;
+  getInputVal?: (params: GetInputValParams) => string;
   expandSelected?: boolean;
   onChange: (value: Id | Id[]) => void;
   onFocus?: InputProps['onFocus'];
@@ -86,7 +59,7 @@ export type Props = {
   hideErrorMessage?: boolean;
   independentSelection?: boolean;
   groupSelectedLeafs?: boolean;
-} & Partial<Pick<InputProps, 'required' | 'error' | 'disabled'>>;
+};
 
 export type State = {
   isFocused: boolean;

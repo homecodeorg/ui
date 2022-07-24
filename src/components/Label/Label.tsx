@@ -4,19 +4,9 @@ import Time from 'timen';
 
 import S from './Label.styl';
 import * as H from './Label.helpers';
+import * as T from './Label.types';
 
-type Props = {
-  className?: string;
-  size?: string;
-  children: string;
-  isOnTop: boolean;
-  isFocused?: boolean;
-  disabled?: boolean;
-  isError?: boolean;
-  onClipPathChange?: (clipPath: string) => void;
-};
-
-export class Label extends Component<Props> {
+export class Label extends Component<T.Props> {
   gapWrapRef = createRef<HTMLDivElement>();
   gapRef = createRef<HTMLDivElement>();
 

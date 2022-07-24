@@ -2,6 +2,7 @@
   "compilerOptions": {
     "strict": false,
     "allowJs": true,
+    "allowUmdGlobalAccess": true,
     // "noImplicitAny": false,
     // "incremental": true,
     "allowSyntheticDefaultImports": true,
@@ -47,5 +48,6 @@
     "src/App",
     "src/helpers",
     "src/docs"
-  ]
+  ],
+  "plugins": ["typescript-eslint-language-service"]
 }
