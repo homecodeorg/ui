@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/foreverido/uilib/compare/v3.0.0...v3.1.0) (2022-07-24)
+
+
+### Features
+
+* +ButtonGroup, +Tabs ([dbecf02](https://github.com/foreverido/uilib/commit/dbecf02ccbeabab824157ae16d0bc7211113c63e))
+* Popup - checkvisiblePosition, popup over popup ([89db123](https://github.com/foreverido/uilib/commit/89db123fa0ca5c596e80d8e2922bb9c87d2224ee))
+
 ## [3.0.0](https://github.com/foreverido/uilib/compare/v2.0.3...v3.0.0) (2022-06-04)
 
 ### [2.0.3](https://github.com/foreverido/uilib/compare/v2.0.2...v2.0.3) (2022-05-19)
