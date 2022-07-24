@@ -1,15 +1,18 @@
 import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import { Size } from '../../types';
 
+export type TriggerPropsType = DetailedHTMLProps<
+  HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+> & {
+  className?: string;
+};
+
 export type WrapperPropsType = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 > & {
   className?: string;
-  // style?: CSSStyleDeclaration & {
-  //   height?: number;
-  //   width?: number;
-  // };
 };
 
 export type Direction =
@@ -31,7 +34,7 @@ export type Props = {
   className?: string;
   autoClose?: boolean; // close popup when clicked
   controllable?: boolean; // disable handling focus and click events to update open state
-  hoverControl?: boolean; // open/close popup on mouseover/mouseout
+  hoverControl?: boolean; // open/close popup on pointer over/out
   disabled?: boolean;
   outlined?: boolean;
   inline?: boolean;
@@ -42,6 +45,7 @@ export type Props = {
   clearTargetMargin?: boolean;
   direction: Direction;
   trigger?: ReactNode;
+  triggerProps?: TriggerPropsType;
   content: ReactNode;
   contentProps?: any;
   wrapperProps?: WrapperPropsType;
