@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
-import type { ButtonProps, PopupProps } from 'uilib';
+
+import type { Props as ButtonProps } from '../Button/Button.types';
+import type { Props as PopupProps } from '../Popup/Popup.types';
 
 export type Item = Pick<ButtonProps, 'onClick'> & {
   id: string;

@@ -2,7 +2,7 @@ import cn from 'classnames';
 import { Scroll } from 'uilib';
 import List from './List';
 
-import type { Props as ScrollProps } from 'uilib';
+import type { Props as ScrollProps } from '../../Scroll/Scroll.types';
 import type { Props as ListProps } from './List';
 
 import S from './ListScroll.styl';

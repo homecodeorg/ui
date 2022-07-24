@@ -12,6 +12,7 @@ import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Scroll } from '../Scroll/Scroll';
+import { Size } from 'uilib/types';
 
 import S from './Input.styl';
 import * as T from './Input.types';
@@ -337,7 +338,6 @@ export class Input extends Component<T.Props> {
     const {
       className,
       size,
-      type,
       label,
       error,
       clear,
