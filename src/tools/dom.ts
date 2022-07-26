@@ -1,3 +1,5 @@
+import { isBrowser } from './env';
+
 export function getCoords(elem) {
   const box = elem.getBoundingClientRect();
 
@@ -33,4 +35,4 @@ export function watchControllerFlag() {
   classes.add('mouse');
 }
 
-export const isTouch = () => 'ontouchstart' in window;
+export const isTouch = () => isBrowser && 'ontouchstart' in window;

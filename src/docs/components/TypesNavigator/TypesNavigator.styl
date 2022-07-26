@@ -1,8 +1,19 @@
 .root
   position relative
-  box-shadow inset 0 0 0 1px var(--accent-color-alpha-50)
   border-radius var(--indent-s)
   overflow hidden
+
+  &::after
+    content ''
+    z-index 1
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    border-radius inherit
+    box-shadow inset 0 0 0 1px var(--accent-color-alpha-50)
+    pointer-events none
 
   &.inPopup
     border-radius inherit
@@ -26,18 +37,29 @@
   z-index 1
   position sticky
   top 0
+  left 0
   background-color var(--decent-color-alpha-500)
   backdrop-filter blur(50px)
+
+.title
+  background-color var(--accent-color-alpha-50)
+
+.extends
+  background-color var(--warning-color-alpha-100)
 
 .fields
   max-height 50vh
 
+.fieldsInner
+  display inline-block
+
+.root:not(.inPopup) .fieldsInner
+  padding-right var(--indent-l)
+  padding-bottom var(--indent-l)
+
 .field
   white-space nowrap
   line-height 1.7em
-
-.extends
-  background-color var(--accent-color-alpha-50)
 
 .kw
   color var(--code-keyword-color)

@@ -3,10 +3,11 @@ import compare from 'compareq';
 import pick from 'lodash.pick';
 
 import { addUniq, spliceWhere } from './array';
+import { isBrowser } from './env';
 
 const ITEMS = new Map();
 const NATIVE_OBSERVERS = new Map();
-const IS_NATIVE = 'ResizeObserver' in window;
+const IS_NATIVE = isBrowser && 'ResizeObserver' in window;
 const TIMEOUT = 500;
 const SIZE_FIELDS = ['offsetWidth', 'offsetHeight'];
 

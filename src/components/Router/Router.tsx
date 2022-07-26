@@ -14,6 +14,7 @@ export class Router extends Component<T.Props> {
   store;
   routes;
   rootPath = '';
+  state = { isMounted: false };
 
   static defaultProps = { rootPath: '' };
 
@@ -32,6 +33,10 @@ export class Router extends Component<T.Props> {
     } else if (!rootPath) this.rootPath = router.path;
 
     this.rebuildRoutes(props.children);
+  }
+
+  componentDidMount(): void {
+    this.setState({ isMounted: true });
   }
 
   shouldComponentUpdate(nextProps) {
@@ -87,6 +92,8 @@ export class Router extends Component<T.Props> {
   }
 
   render() {
+    if (!this.state.isMounted) return null;
+
     const route = this.getRoute();
 
     if (!route) return null;

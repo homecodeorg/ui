@@ -23,16 +23,16 @@ export default [
     loader: () => import('./examples/InputFile'),
   },
   {
-    slug: 'Select',
-    loader: () => import('./examples/Select/Select'),
-  },
-  {
     slug: 'Popup',
     loader: () => import('./examples/Popup'),
   },
   {
     slug: 'PopupMenu',
     loader: () => import('./examples/PopupMenu'),
+  },
+  {
+    slug: 'Select',
+    loader: () => import('./examples/Select/Select'),
   },
   {
     slug: 'Form',

@@ -1,14 +1,18 @@
 import { Component } from 'react';
+import { isBrowser } from 'uilib/tools';
 
 type State = { vh: number };
+
+const getVH = () => (isBrowser ? window.innerHeight / 100 : 0);
 
 export class VH extends Component<any, State> {
   constructor(props: any) {
     super(props);
-    this.state = { vh: this.getVH() };
+    this.state = { vh: 0 };
   }
 
   componentDidMount() {
+    this.updateVH();
     window.addEventListener('resize', this.updateVH);
   }
 
@@ -16,10 +20,8 @@ export class VH extends Component<any, State> {
     window.removeEventListener('resize', this.updateVH);
   }
 
-  getVH = () => window.innerHeight / 100;
-
   updateVH = () => {
-    this.setState({ vh: this.getVH() });
+    this.setState({ vh: getVH() });
   };
 
   render() {

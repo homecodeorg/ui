@@ -1,33 +1,37 @@
-const ls = window.localStorage;
+import { isBrowser } from './env';
 
-export default {
-  get(key) {
-    let result = ls.getItem(key);
+const ls = isBrowser && window.localStorage;
 
-    try {
-      result = JSON.parse(result);
-    } catch (e) {
-      console.warn(e?.message ?? 'failed to parse', `: "${result}"`);
+export default isBrowser
+  ? {
+      get(key) {
+        let result = ls.getItem(key);
+
+        try {
+          result = JSON.parse(result);
+        } catch (e) {
+          console.warn(e?.message ?? 'failed to parse', `: "${result}"`);
+        }
+
+        return result;
+      },
+
+      set(key, val) {
+        if (!val) {
+          this.remove(key);
+          return;
+        }
+
+        const item = typeof val === 'object' ? JSON.stringify(val) : val;
+        ls.setItem(key, item);
+      },
+
+      remove(key) {
+        ls.removeItem(key);
+      },
+
+      clear() {
+        ls.clear();
+      },
     }
-
-    return result;
-  },
-
-  set(key, val) {
-    if (!val) {
-      this.remove(key);
-      return;
-    }
-
-    const item = typeof val === 'object' ? JSON.stringify(val) : val;
-    ls.setItem(key, item);
-  },
-
-  remove(key) {
-    ls.removeItem(key);
-  },
-
-  clear() {
-    ls.clear();
-  },
-};
+  : { get() {}, set() {}, remove() {}, clear() {} };

@@ -2,14 +2,15 @@ import { createStore } from 'justorm/react';
 
 import { addUniq, spliceWhere } from 'uilib/tools/array';
 import { parseQueryParams } from 'uilib/tools/queryParams';
+import { isBrowser } from 'uilib/tools/env';
 
 const LISTENERS = [];
 
 const STORE = createStore('router', {
-  path: location.pathname,
+  path: isBrowser && location.pathname,
   params: {},
   query: {},
-  queryString: location.search,
+  queryString: isBrowser && location.search,
   on(cb) {
     addUniq(LISTENERS, cb);
   },
@@ -46,7 +47,9 @@ function updateRouteState() {
     onRouteChange();
 }
 
-window.addEventListener('popstate', updateRouteState);
-window.addEventListener('pushstate', updateRouteState);
+if (isBrowser) {
+  window.addEventListener('popstate', updateRouteState);
+  window.addEventListener('pushstate', updateRouteState);
+}
 
 export default STORE;

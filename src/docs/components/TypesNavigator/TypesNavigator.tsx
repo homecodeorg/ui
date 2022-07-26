@@ -92,13 +92,15 @@ const SimpleTypesNavigator = ({ value, scope, inPopup }) => (
   </div>
 );
 
+const scrollBarOffset = 20;
+
 export function TypesNavigator({ scope, type, inPopup }: Props) {
   const { kind, ext, ...props } = TYPES[scope][type];
 
   const headerRef = useRef<HTMLDivElement>(null);
-  const [offsetTop, setOffsetTop] = useState(10);
+  const [offsetTop, setOffsetTop] = useState(scrollBarOffset);
   const onHeaderResize = useCallback(() => {
-    setOffsetTop(headerRef.current?.offsetHeight + 10);
+    setOffsetTop(headerRef.current?.offsetHeight + scrollBarOffset);
   }, []);
 
   useEffect(() => {
@@ -109,9 +111,13 @@ export function TypesNavigator({ scope, type, inPopup }: Props) {
   return (
     <div className={cn(S.root, inPopup && S.inPopup)}>
       <Scroll
+        x
         y
         className={S.fields}
-        offset={{ y: { before: offsetTop, after: 10 } }}
+        offset={{
+          x: { before: scrollBarOffset, after: scrollBarOffset },
+          y: { before: offsetTop, after: scrollBarOffset },
+        }}
       >
         <div className={S.header} ref={headerRef}>
           {!inPopup && (

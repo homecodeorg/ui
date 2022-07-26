@@ -1,3 +1,4 @@
+export * from './env';
 export { config } from './config';
 export * as array from './array';
 export * as string from './string';
