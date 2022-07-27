@@ -27,7 +27,7 @@ const show = type => NotificationsStore.show(params[type]);
 const showAll = () => {
   let delay = 0;
   ['info', 'warning', 'error', 'loading'].forEach(type =>
-    Time.after((delay += Math.random() * 1000), () => show(type))
+    Time.after((delay += 200), () => show(type))
   );
 };
 

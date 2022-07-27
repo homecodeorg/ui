@@ -1,14 +1,10 @@
-import { getRGB } from './Theme.helpers';
-
-type ThemeConfig = {
-  [name: string]: string;
-};
+import * as T from './Theme.types';
 
 function buildVar(name: string, val: string) {
   return `--${name}: ${val};`;
 }
 
-export function Theme({ config = {} }) {
+export function Theme({ config = {} }: T.Props) {
   const vars = Object.entries(config)
     .map(([name, val]) => buildVar(name, val as string))
     .join('\n');
@@ -17,3 +13,4 @@ export function Theme({ config = {} }) {
 }
 
 export * as ThemeHelpers from './Theme.helpers';
+export * as ThemeDefaults from './Theme.defaults';
