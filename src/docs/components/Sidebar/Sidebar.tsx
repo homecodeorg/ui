@@ -1,62 +1,69 @@
-import { useCallback, useEffect, useState, memo } from 'react';
+import { memo, useCallback, useState } from 'react';
+import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
-import { Link, Scroll, string } from 'uilib';
+import { Link, Scroll, Expand } from 'uilib';
 
-import app from '../App/store';
-import NAV_CONFIG, { RouteItem } from '../../navigation';
-
-type ItemProps = {
-  slug: RouteItem['slug'];
-  parentSlug?: RouteItem['slug'];
-};
+import NAV_CONFIG from '../../navigation';
 
 import S from './Sidebar.styl';
 
-function Item({ slug, parentSlug = '' }: ItemProps) {
-  const href = parentSlug ? `/${parentSlug}/${slug}` : `/${slug}`;
+export default memo(
+  withStore(['router', 'app'])(function Sidebar({ store }) {
+    const { path } = store.router;
+    const [openedGroup, setOpenedGroup] = useState(path.split('/')[1]);
 
-  return (
-    <Link
-      href={href}
-      isPartialExact
-      className={cn(S.link, parentSlug && S.sub)}
-      exactClassName={S.active}
-      onClick={() => (app.isMenuOpen = false)}
-      key={slug}
-    >
-      {string.capitalize(slug)}
-    </Link>
-  );
-}
+    const onExpand = useCallback((group, isOpen) => {
+      setOpenedGroup(isOpen ? group : null);
+    }, []);
 
-async function loadExampleRoutes({ slug, items }: Partial<RouteItem>) {
-  if (!items) return {};
-  const routes = await items();
-  return { [slug]: routes.default };
-}
-
-export default memo(function Sidebar() {
-  const [subItems, setSubItems] = useState({});
-
-  const loadSubItems = useCallback(async () => {
-    const routes = await Promise.all(NAV_CONFIG.map(loadExampleRoutes));
-    const subItems = routes.reduce((acc, item) => ({ ...acc, ...item }), {});
-
-    setSubItems(subItems);
-  }, []);
-
-  useEffect(() => {
-    loadSubItems();
-  }, []);
-
-  return (
-    <Scroll y size="s">
+    return (
+      // <Scroll y size="m">
       <div className={S.root}>
-        {NAV_CONFIG.map(({ slug }) => (
-          <Item slug={slug} items={subItems[slug]} />
-        ))}
+        {NAV_CONFIG.map(
+          ({ items, ...group }) =>
+            items && (
+              <Expand
+                className={S.item}
+                isOpen={
+                  openedGroup
+                    ? openedGroup === group.id
+                    : new RegExp(`^/${group.id}`).test(path)
+                }
+                onChange={isExpanded => onExpand(group.id, isExpanded)}
+                key={group.id}
+                header={group.label}
+                headerClassName={S.itemHeader}
+                content={({ className, ...props }) => (
+                  <Scroll
+                    size="s"
+                    {...props}
+                    y
+                    offset={{ y: { before: 10, after: 10 } }}
+                    className={cn(S.itemContent, className)}
+                    innerClassName={S.itemContentInner}
+                  >
+                    {items.map(({ id, label }) => {
+                      const path = `/${group.id}/${id}`;
+
+                      return (
+                        <Link
+                          href={path}
+                          key={path}
+                          className={S.subItem}
+                          onClick={store.app.toggleMenu}
+                        >
+                          {label}
+                        </Link>
+                      );
+                    })}
+                  </Scroll>
+                )}
+              />
+            )
+        )}
       </div>
-    </Scroll>
-  );
-});
+      // </Scroll>
+    );
+  })
+);

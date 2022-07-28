@@ -1,81 +1,126 @@
 type RouteLoader = () => Promise<any>;
 export type RouteItem = {
-  slug: string;
+  id: string;
+  label: string;
   loader: RouteLoader;
-  items?: RouteLoader; // sub navigation
+};
+
+export type GroupItem = {
+  id: string;
+  label: string;
+  items: RouteItem[];
+  isOpen?: boolean;
 };
 
 export default [
   {
-    slug: 'Button',
-    loader: () => import('./examples/Button'),
+    id: 'intro',
+    label: 'Introduction',
+    items: [
+      {
+        id: 'about',
+        label: 'About',
+      },
+      {
+        id: 'getting-started',
+        label: 'Getting Started',
+      },
+    ],
   },
   {
-    slug: 'Checkbox',
-    loader: () => import('./examples/Checkbox'),
+    id: 'components',
+    label: 'Components',
+    items: [
+      {
+        id: 'button',
+        label: 'Button',
+        loader: () => import('./examples/Button'),
+      },
+      {
+        id: 'checkbox',
+        label: 'Checkbox',
+        loader: () => import('./examples/Checkbox'),
+      },
+      {
+        id: 'input',
+        label: 'Input',
+        loader: () => import('./examples/Input'),
+      },
+      {
+        id: 'inputfile',
+        label: 'InputFile',
+        loader: () => import('./examples/InputFile'),
+      },
+      {
+        id: 'popup',
+        label: 'Popup',
+        loader: () => import('./examples/Popup'),
+      },
+      {
+        id: 'popupmenu',
+        label: 'PopupMenu',
+        loader: () => import('./examples/PopupMenu'),
+      },
+      {
+        id: 'select',
+        label: 'Select',
+        loader: () => import('./examples/Select/Select'),
+      },
+      {
+        id: 'form',
+        label: 'Form',
+        loader: () => import('./examples/Form'),
+      },
+      {
+        id: 'spinner',
+        label: 'Spinner',
+        loader: () => import('./examples/Spinner'),
+      },
+      {
+        id: 'icon',
+        label: 'Icon',
+        loader: () => import('./examples/Icon'),
+      },
+      {
+        id: 'datetime',
+        label: 'DateTime',
+        loader: () => import('./examples/DateTime'),
+      },
+      {
+        id: 'scroll',
+        label: 'Scroll',
+        loader: () => import('./examples/Scroll'),
+      },
+      {
+        id: 'gallery',
+        label: 'Gallery',
+        loader: () => import('./examples/Gallery'),
+      },
+      {
+        id: 'lightbox',
+        label: 'LightBox',
+        loader: () => import('./examples/LightBox'),
+      },
+      {
+        id: 'virtualized',
+        label: 'Virtualized',
+        loader: () => import('./examples/Virtualized'),
+      },
+      {
+        id: 'notifications',
+        label: 'Notifications',
+        loader: () => import('./examples/Notifications'),
+      },
+      {
+        id: 'router',
+        label: 'Router',
+        loader: () => import('./examples/Router'),
+      },
+      {
+        id: 'link',
+        label: 'Link',
+        loader: () => import('./examples/Link'),
+      },
+    ],
   },
-  {
-    slug: 'Input',
-    loader: () => import('./examples/Input'),
-  },
-  {
-    slug: 'InputFile',
-    loader: () => import('./examples/InputFile'),
-  },
-  {
-    slug: 'Popup',
-    loader: () => import('./examples/Popup'),
-  },
-  {
-    slug: 'PopupMenu',
-    loader: () => import('./examples/PopupMenu'),
-  },
-  {
-    slug: 'Select',
-    loader: () => import('./examples/Select/Select'),
-  },
-  {
-    slug: 'Form',
-    loader: () => import('./examples/Form'),
-  },
-  {
-    slug: 'Spinner',
-    loader: () => import('./examples/Spinner'),
-  },
-  {
-    slug: 'Icon',
-    loader: () => import('./examples/Icon'),
-  },
-  {
-    slug: 'DateTime',
-    loader: () => import('./examples/DateTime'),
-  },
-  {
-    slug: 'Scroll',
-    loader: () => import('./examples/Scroll'),
-  },
-  {
-    slug: 'Gallery',
-    loader: () => import('./examples/Gallery'),
-  },
-  {
-    slug: 'LightBox',
-    loader: () => import('./examples/LightBox'),
-  },
-  {
-    slug: 'Virtualized',
-    loader: () => import('./examples/Virtualized'),
-  },
-  {
-    slug: 'Notifications',
-    loader: () => import('./examples/Notifications'),
-  },
-  {
-    slug: 'Router',
-    loader: () => import('./examples/Router'),
-  },
-  {
-    slug: 'Link',
-    loader: () => import('./examples/Link'),
-  },
-] as RouteItem[];
+] as GroupItem[];

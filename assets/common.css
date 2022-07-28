@@ -16,6 +16,7 @@ body {
   font-size: 16px;
   background-color: var(--decent-color);
   color: var(--accent-color);
+  overflow: hidden;
 }
 
 *::selection {
