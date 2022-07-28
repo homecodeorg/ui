@@ -1,0 +1,16 @@
+.root
+  display flex
+  flex-direction column
+
+.header
+  justify-content space-between
+
+.headerIcon
+  transition transform .2s ease-out
+
+.isOpen
+  .header
+    background-color var(--active-color-alpha-300)
+
+  .headerIcon
+    transform rotate(90deg)

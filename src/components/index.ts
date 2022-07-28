@@ -4,6 +4,7 @@ export * from './ButtonGroup/ButtonGroup';
 export * from './Checkbox/Checkbox';
 export * from './Container/Container';
 export * from './DateTime/DateTime';
+export * from './Expand/Expand';
 export * from './Form/Form';
 export * from './Gallery/Gallery';
 export * from './Icon/Icon';
