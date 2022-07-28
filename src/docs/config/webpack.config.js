@@ -139,16 +139,18 @@ module.exports = (env, argv) => {
         ],
       }),
 
-      new HtmlWebpackPartialsPlugin({
-        path: `${paths.assets}/analytics.html`,
-        location: 'body',
-        priority: 'low',
-      }),
+      !isDev &&
+        new HtmlWebpackPartialsPlugin({
+          path: `${paths.assets}/analytics.html`,
+          location: 'body',
+          priority: 'low',
+        }),
 
       new HtmlWebpackPlugin({
         // lang: PAGE_LANG,
         // title: PAGE_TITLE,
-        // filename: 'index.html',
+        baseUrl: '/',
+        filename: 'index.html',
         template: `${paths.assets}/index.html`,
         minify: {
           removeComments: true,

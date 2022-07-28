@@ -2,7 +2,7 @@ import { hot } from 'react-hot-loader/root';
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
-import { Router, Lazy, Button, Theme, dom, Icon } from 'uilib';
+import { Router, Lazy, Button, Theme, dom, Icon, Expand } from 'uilib';
 
 import Sidebar from '../Sidebar/Sidebar';
 import NAV_CONFIG from '../../navigation';
@@ -29,23 +29,32 @@ class App extends Component<{ store?: any }> {
     this.store.setTheme(this.isDarkTheme() ? 'light' : 'dark');
   };
 
-  toggleMenu = () => (this.store.isMenuOpen = !this.store.isMenuOpen);
-
   // @ts-ignore
   pickActiveColor = () => this.colorPickerRef.current.click();
+
+  renderItem(groupId, { id, loader }) {
+    const path = `/${groupId}/${id}`;
+
+    return (
+      // @ts-ignore
+      <Lazy exact path={path} loader={loader} key={path} />
+    );
+  }
 
   render() {
     const { currThemeConfig, activeColor, isMenuOpen } = this.store;
 
     return (
       <>
+        <Theme config={currThemeConfig.originalObject} />
+
         <div className={S.root}>
           <div className={cn(S.nav, isMenuOpen && S.open)}>
             <Button
               className={S.menuButton}
               variant="clear"
               size="l"
-              onClick={this.toggleMenu}
+              onClick={this.store.toggleMenu}
             >
               <Icon type="menu" size="l" />
             </Button>
@@ -83,15 +92,12 @@ class App extends Component<{ store?: any }> {
 
           <Container size="xl" fullWidth className={S.content}>
             <Router>
-              {NAV_CONFIG.map(({ slug, loader }) => (
-                // @ts-ignore
-                <Lazy exact path={`/${slug}`} loader={loader} key={slug} />
-              ))}
+              {NAV_CONFIG.map(({ id, items }) =>
+                items.map(item => this.renderItem(id, item))
+              )}
             </Router>
           </Container>
         </div>
-
-        <Theme config={currThemeConfig.originalObject} />
       </>
     );
   }

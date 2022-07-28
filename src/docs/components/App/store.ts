@@ -37,4 +37,8 @@ export default createStore('app', {
   updateTheme(theme = this.theme) {
     this.currThemeConfig = getThemeConfig(theme, this.activeColor);
   },
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  },
 });
