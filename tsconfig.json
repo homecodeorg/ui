@@ -2,14 +2,14 @@
   "compilerOptions": {
     "strict": false,
     "allowJs": true,
-    "allowUmdGlobalAccess": true,
+    "allowUmdGlobalAccess": true, // make typescript work with ProvidePlugin
     // "noImplicitAny": false,
     // "incremental": true,
     "allowSyntheticDefaultImports": true,
     // "downlevelIteration": true,
     "jsx": "react-jsx",
-    "target": "es5",
-    // "target": "esnext",
+    // "target": "es6",
+    "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,

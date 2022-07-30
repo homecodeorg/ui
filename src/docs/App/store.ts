@@ -1,6 +1,6 @@
 import { createStore } from 'justorm/react';
 
-import { colorsConfig, getThemeConfig } from '../../theme';
+import { colorsConfig, getThemeConfig } from '../theme';
 
 const initialThemeType =
   (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark';

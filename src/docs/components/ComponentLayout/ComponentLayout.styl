@@ -12,10 +12,11 @@
   display flex
   align-items center
   justify-content space-between
-  padding var(--indent-m) 0 var(--indent-m)
+  padding 0 var(--indent-l)
 
   @media(max-width: $tablet)
-    padding-left 50px
+    padding-left 60px
+    padding-right var(--indent-m)
 
 .api
   flex-grow unset !important
@@ -24,7 +25,9 @@
   display flex
   flex-grow 1
   overflow hidden
-  margin-bottom var(--indent-s)
+  padding 0 var(--indent-m)
+  margin-bottom var(--indent-m)
 
   @media(min-width: $tablet)
+    padding 0 var(--indent-l)
     margin-bottom var(--indent-l)

@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
@@ -17,6 +17,10 @@ export default memo(
       setOpenedGroup(isOpen ? group : null);
     }, []);
 
+    useEffect(() => {
+      setOpenedGroup(null);
+    }, [path]);
+
     return (
       // <Scroll y size="m">
       <div className={S.root}>
@@ -34,13 +38,13 @@ export default memo(
                 key={group.id}
                 header={group.label}
                 headerClassName={S.itemHeader}
-                content={({ className, ...props }) => (
+                content={props => (
                   <Scroll
                     size="s"
                     {...props}
                     y
                     offset={{ y: { before: 10, after: 10 } }}
-                    className={cn(S.itemContent, className)}
+                    className={S.itemContent}
                     innerClassName={S.itemContentInner}
                   >
                     {items.map(({ id, label }) => {
@@ -50,7 +54,8 @@ export default memo(
                         <Link
                           href={path}
                           key={path}
-                          className={S.subItem}
+                          className={S.link}
+                          isPartialExact
                           onClick={store.app.toggleMenu}
                         >
                           {label}

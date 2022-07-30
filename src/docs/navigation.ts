@@ -20,10 +20,17 @@ export default [
       {
         id: 'about',
         label: 'About',
+        loader: () => import('./pages/About'),
       },
       {
-        id: 'getting-started',
-        label: 'Getting Started',
+        id: 'install',
+        label: 'Installation',
+        loader: () => import('./pages/Installation'),
+      },
+      {
+        id: 'usage',
+        label: 'Usage',
+        loader: () => import('./pages/Usage'),
       },
     ],
   },
@@ -31,6 +38,11 @@ export default [
     id: 'components',
     label: 'Components',
     items: [
+      {
+        id: 'theme',
+        label: 'Theme',
+        loader: () => import('./examples/Theme'),
+      },
       {
         id: 'button',
         label: 'Button',
