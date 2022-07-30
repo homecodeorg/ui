@@ -53,9 +53,11 @@
 .fieldsInner
   display inline-block
 
-.root:not(.inPopup) .fieldsInner
-  padding-right var(--indent-l)
-  padding-bottom var(--indent-l)
+.root:not(.inPopup) .field
+  padding-right var(--indent-m)
+
+  &:last-child:not(:first-child)
+    padding-bottom var(--indent-s)
 
 .field
   white-space nowrap

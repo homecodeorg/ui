@@ -35,10 +35,10 @@ export function ComponentLayout({ name, api, code }: Props) {
         onChange={setActiveTab}
         children={({ tabs, content }) => (
           <>
-            <div className={S.header}>
-              <h1>{name}</h1>
+            <h1 className={S.header}>
+              {name}
               {tabs}
-            </div>
+            </h1>
             {content}
           </>
         )}

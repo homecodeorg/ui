@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
@@ -16,6 +16,10 @@ export default memo(
     const onExpand = useCallback((group, isOpen) => {
       setOpenedGroup(isOpen ? group : null);
     }, []);
+
+    useEffect(() => {
+      setOpenedGroup(null);
+    }, [path]);
 
     return (
       // <Scroll y size="m">
@@ -50,7 +54,8 @@ export default memo(
                         <Link
                           href={path}
                           key={path}
-                          className={S.subItem}
+                          className={S.link}
+                          isPartialExact
                           onClick={store.app.toggleMenu}
                         >
                           {label}

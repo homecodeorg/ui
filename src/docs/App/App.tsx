@@ -2,13 +2,13 @@ import { hot } from 'react-hot-loader/root';
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
-import { Router, Lazy, Button, Theme, dom, Icon, Expand } from 'uilib';
+import { Router, Lazy, Button, Theme, dom, Icon, Container } from 'uilib';
 
-import Sidebar from '../Sidebar/Sidebar';
-import NAV_CONFIG from '../../navigation';
+import Sidebar from '../components/Sidebar/Sidebar';
+import NAV_CONFIG from '../navigation';
+
 require('./store');
 import S from './App.styl';
-import { Container } from 'uilib/components';
 
 dom.watchControllerFlag();
 
@@ -90,7 +90,7 @@ class App extends Component<{ store?: any }> {
             <Sidebar />
           </div>
 
-          <Container size="xl" fullWidth className={S.content}>
+          <Container fullWidth className={S.content}>
             <Router>
               {NAV_CONFIG.map(({ id, items }) =>
                 items.map(item => this.renderItem(id, item))

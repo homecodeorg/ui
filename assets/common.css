@@ -22,3 +22,31 @@ body {
 *::selection {
   background-color: var(--active-color-alpha-500);
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 2.7em;
+}
+
+h1 {
+  font-size: 160%;
+}
+h2 {
+  font-size: 140%;
+}
+h3 {
+  font-size: 120%;
+}
+h4 {
+  font-size: 115%;
+}
+h5 {
+  font-size: 110%;
+}
+h6 {
+  font-size: 105%;
+}
