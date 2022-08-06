@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/foreverido/uilib/compare/v3.2.0...v3.3.0) (2022-08-06)
+
+
+### Features
+
+* +Expand ([e3cb079](https://github.com/foreverido/uilib/commit/e3cb079557f8b8a3904c5c3bbd7d5ad7c597c3f2))
+* +Text ([41e1073](https://github.com/foreverido/uilib/commit/41e107331aa8e8b2dfeeb6f70e44bb5f9338dc23))
+* Scroll - smooth ([dad19ee](https://github.com/foreverido/uilib/commit/dad19ee08770456aa921022ec3aba8e696fad96e))
+* Theme - default config ([8ab9df7](https://github.com/foreverido/uilib/commit/8ab9df70d8a427e702f60cb6f4b49a58f49b9482))
+
+
+### Bug Fixes
+
+* Link - isPartialExact counting location.hash ([fddc94a](https://github.com/foreverido/uilib/commit/fddc94a0b6667eb36b758f24da93c615071e8049))
+* Router/Redirect ([187060e](https://github.com/foreverido/uilib/commit/187060e75916fb90b090242c7596ec2d7f9a0e58))
+
 ## [3.2.0](https://github.com/foreverido/uilib/compare/v3.1.2...v3.2.0) (2022-07-26)
 
 
