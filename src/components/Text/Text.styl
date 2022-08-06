@@ -1,0 +1,26 @@
+.heading
+  position relative
+
+.anchor
+  align-items flex-start
+  height 100%
+  padding 0 .5em
+  opacity 0
+  border-radius 50%
+  transform translateX(-1em)
+  transition .2s ease-out
+  transition-property transform, opacity
+  user-select none
+
+  &::before
+    position absolute
+    width 2em
+    height 100%
+    background none !important
+
+.heading:hover .anchor
+  transform translateX(0)
+  opacity 1
+
+.heading .anchor:hover
+  color var(--active-color)
