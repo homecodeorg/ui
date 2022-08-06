@@ -271,9 +271,14 @@ export class Scroll extends Component<T.Props> {
   }
 
   renderInner() {
-    const { innerClassName, innerProps, children } = this.props;
+    const { innerClassName, innerProps, children, smooth } = this.props;
 
-    const innerClasses = cn(S.inner, innerProps?.className, innerClassName);
+    const innerClasses = cn(
+      S.inner,
+      innerProps?.className,
+      innerClassName,
+      smooth && S.smooth
+    );
     const props = { ...innerProps, onScroll: this.onInnerScroll };
 
     return (
