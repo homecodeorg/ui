@@ -7,6 +7,6 @@ export type Props = HTMLProps<HTMLAnchorElement> & {
   isPartialExact?: boolean;
   isDisabled?: boolean;
   isClear?: boolean;
-  isClearPadding?: boolean;
+  inline?: boolean;
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 };

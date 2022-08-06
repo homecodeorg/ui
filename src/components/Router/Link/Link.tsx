@@ -17,7 +17,7 @@ export class Link extends Component<T.Props> {
   static contextType = Context;
   static defaultProps = {
     isClear: false,
-    isClearPadding: false,
+    inline: false,
     isDisabled: false,
   };
 
@@ -47,11 +47,12 @@ export class Link extends Component<T.Props> {
   isExact(href = this.getHref()) {
     const { store, isPartialExact } = this.props;
     const { path } = store.router;
-    const pathSections = path.split('/');
-    const hrefSections = href.split('/');
-    const minLength = Math.min(pathSections.length, hrefSections.length);
 
     if (isPartialExact) {
+      const pathSections = path.replace(/#.+/, '').split('/');
+      const hrefSections = href.split('/');
+      const minLength = Math.min(pathSections.length, hrefSections.length);
+
       return (
         hrefSections.slice(0, minLength).join('/') ===
         pathSections.slice(0, minLength).join('/')
@@ -67,8 +68,8 @@ export class Link extends Component<T.Props> {
       exactClassName,
       children,
       isClear,
-      isClearPadding,
       isDisabled,
+      inline,
       store,
       isPartialExact,
       ...rest
@@ -87,7 +88,7 @@ export class Link extends Component<T.Props> {
       isExternal && S.external,
       isExact && cn(S.exact, exactClassName),
       isClear && S.clear,
-      isClearPadding && S.clearPadding,
+      inline && S.inline,
       className
     );
 
