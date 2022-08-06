@@ -53,7 +53,9 @@ export function getColors({
 }
 
 export const getConfig = (cfg: T.ThemeConfig = {}) => ({
+  // @ts-ignore
   ...colorsConfigToVars(getColors(cfg.colors)),
   ...baseConfig,
+  // @ts-ignore
   ...cfg.rest,
 });
