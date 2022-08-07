@@ -1,4 +1,4 @@
-import { Link, H2, H3 } from 'uilib';
+import { Link, H2 } from 'uilib';
 
 import Page from '../components/Page/Page';
 

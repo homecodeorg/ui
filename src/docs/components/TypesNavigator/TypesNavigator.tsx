@@ -31,7 +31,6 @@ const Type = ({ name, scope }) => (
   <Popup
     direction="bottom-right"
     hoverControl
-    clearTargetMargin
     trigger={<span className={S.type}>{name}</span>}
     content={renderNavigator({ scope, type: name, inPopup: true })}
   />

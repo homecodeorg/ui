@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { Popup, Button } from 'uilib';
 
 export default () => {
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
   const toggle = useCallback(() => setOpen(!isOpen), [isOpen]);
   const size = 'm';
 

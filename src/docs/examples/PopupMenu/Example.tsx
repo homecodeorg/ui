@@ -6,7 +6,6 @@ export default () => {
     <PopupMenu
       direction="bottom"
       autoClose
-      isOpen
       size={size}
       trigger={
         <Button size={size} variant="default">

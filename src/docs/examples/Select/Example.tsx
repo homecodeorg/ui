@@ -7,7 +7,6 @@ export default () => {
 
   return (
     <Select
-      isSearchable
       label="Label"
       options={OPTIONS}
       value={value}
