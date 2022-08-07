@@ -27,7 +27,13 @@ type Props = {
   code: string;
 };
 
-@withStore({ app: 'theme' })
+const getGradient = ([c0, c1, c2]) => `
+linear-gradient(${c0}deg, rgba(255,0,0,.1), rgba(255,0,0,0) 70.71%),
+linear-gradient(${c1}deg, rgba(0,255,0,.1), rgba(0,255,0,0) 70.71%),
+linear-gradient(${c2}deg, rgba(0,0,255,.1), rgba(0,0,255,0) 70.71%);
+`;
+
+@withStore({ app: ['theme', 'gradient'] })
 export class Code extends Component<Props> {
   store;
 
@@ -48,6 +54,7 @@ export class Code extends Component<Props> {
 
   componentDidMount() {
     this.updateHeight();
+    this.props.store.app.updateGradient();
   }
 
   componentDidUpdate({ scope }: Props) {
@@ -80,16 +87,33 @@ export class Code extends Component<Props> {
 
   render() {
     const { store } = this.props;
-    const { theme } = store.app;
+    const { theme, gradient } = store.app;
     const { height, editedCode, execCode, currScope } =
       this.store.originalObject;
+    const isGradientEven = gradient.changeCount % 2 === 0;
 
     return (
       <div className={S.root}>
-        <style>{`#${this.id} > textarea { height: ${height} !important; }`}</style>
+        <style>{`
+          #${this.id} > textarea { height: ${height} !important; }
+          .${S.root}::before {
+            background: ${getGradient(
+              isGradientEven ? gradient.prev : gradient.curr
+            )};
+            opacity: ${isGradientEven ? 0 : 1};
+          }
+          .${S.root}::after {
+            background: ${getGradient(
+              isGradientEven ? gradient.curr : gradient.prev
+            )};
+            opacity: ${isGradientEven ? 1 : 0};
+          }
+        `}</style>
+
         <Scroll
           y
           className={S.editorContainer}
+          innerClassName={S.editorContainerInner}
           offset={{ y: { before: 20, after: 20 } }}
         >
           <LiveEditor
@@ -101,6 +125,7 @@ export class Code extends Component<Props> {
             onChange={this.onChange}
           />
         </Scroll>
+
         <div className={S.editorResult}>
           <LiveProvider noInline code={execCode} scope={currScope}>
             <LiveEditor className={cn(S.editor, S.runtime)} />

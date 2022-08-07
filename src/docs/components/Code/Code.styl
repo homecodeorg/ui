@@ -1,14 +1,27 @@
 @import 'theme'
 
 .root
+  position relative
   display flex
   flex-direction column
   flex-grow 1
   width calc(100% - 2px)
   max-height calc(100vh - 100px)
   margin 1px
-  box-shadow 0 0 0 1px var(--accent-color-alpha-100);
+  box-shadow inset 0 0 0 1px var(--accent-color-alpha-100);
   border-radius var(--border-radius-l)
+  overflow hidden
+
+  &::before
+  &::after
+    content ''
+    position absolute
+    height 100%
+    width 100%
+    transition opacity 10s linear
+    filter blur(50px)
+    backface-visibility hidden
+    pointer-events none
 
 .editorContainer
 .editorResult
@@ -21,6 +34,8 @@
   border-bottom-left-radius 0
   border-bottom-right-radius 0
 
+.editorContainerInner
+  mask-image linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 50px)
 
 .error
 .editorContainer *
@@ -30,16 +45,6 @@
   display flex
   flex-direction column
   position relative
-
-  &::before
-    content ''
-    position absolute
-    bottom calc(100% - 1px)
-    left 0
-    width 100%
-    height 24px
-    background-image linear-gradient(to top, var(--decent-color), var(--decent-color-alpha-0))
-    pointer-events none
 
 .editor
   padding-bottom 16px

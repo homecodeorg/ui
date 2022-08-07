@@ -1,4 +1,5 @@
 import { createStore } from 'justorm/react';
+import Time from 'timen';
 
 import { colorsConfig, getThemeConfig } from '../theme';
 
@@ -14,11 +15,19 @@ function getInitialActiveColor() {
 
 const initialActiveColor = getInitialActiveColor();
 
-export default createStore('app', {
+const getRandomDegree = () => Math.random() * 360;
+let clearGradientTimeout;
+
+const STORE = createStore('app', {
   isMenuOpen: false,
   theme: initialThemeType,
   currThemeConfig: getThemeConfig(initialThemeType, initialActiveColor),
   activeColor: initialActiveColor,
+  gradient: {
+    prev: [getRandomDegree(), getRandomDegree(), getRandomDegree()],
+    curr: [getRandomDegree(), getRandomDegree(), getRandomDegree()],
+    changeCount: 0,
+  },
 
   setTheme(theme) {
     this.theme = theme;
@@ -38,7 +47,22 @@ export default createStore('app', {
     this.currThemeConfig = getThemeConfig(theme, this.activeColor);
   },
 
+  updateGradient() {
+    clearGradientTimeout?.();
+    clearGradientTimeout = Time.after(10000, STORE.updateGradient);
+
+    const gr = STORE.gradient;
+
+    STORE.gradient = {
+      prev: [...gr.curr],
+      curr: [getRandomDegree(), getRandomDegree(), getRandomDegree()],
+      changeCount: gr.changeCount + 1,
+    };
+  },
+
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   },
 });
+
+export default STORE;

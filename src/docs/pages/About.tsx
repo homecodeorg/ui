@@ -1,4 +1,4 @@
-import { Link, H1, H2, H3 } from 'uilib';
+import { Link, H2, H3 } from 'uilib';
 
 import Page from '../components/Page/Page';
 
@@ -14,10 +14,10 @@ export default function About() {
       </p>
       <p>All external dependencies are shiped as requirements.</p>
 
-      <H3 id="typescript">Typescript</H3>
+      <H3>Typescript support</H3>
       <p>
         There are still some issues with bundling typescript files. But every
-        components/tool/helper are fully typed.
+        components/tool/helper are fully typed already.
       </p>
 
       <H3>SSR compatible</H3>
@@ -27,6 +27,21 @@ export default function About() {
         <Link inline href="https://github.com/foreverido/uilib-nextjs">
           uilib-next
         </Link>
+      </p>
+
+      <H2>Perspective</H2>
+      <p>There's still a lot of work to be done to make it shine.</p>
+      {/* <p>I will continue to describe it separately for each component.</p> */}
+      <p>
+        Also welcome to contact me if you have any ideas -&nbsp;
+        <Link inline href="https://twitter.com/vpostol">
+          Twitter
+        </Link>
+        ,&nbsp;
+        <Link inline href="https://t.me/apostol">
+          Telegram
+        </Link>
+        .
       </p>
     </Page>
   );
