@@ -42,7 +42,6 @@ export type Props = {
   paranja?: boolean;
   size?: Size;
   elevation?: 1 | 2;
-  clearTargetMargin?: boolean;
   direction: Direction;
   trigger?: ReactNode;
   triggerProps?: TriggerPropsType;

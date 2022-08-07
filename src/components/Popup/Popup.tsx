@@ -299,7 +299,6 @@ export class Popup extends Component<T.Props> {
       outlined,
       paranja,
       elevation,
-      clearTargetMargin,
     } = this.props;
     const { isOpen, isContentVisible, direction } = this.store;
 
@@ -319,7 +318,6 @@ export class Popup extends Component<T.Props> {
     const classes = cn(
       S.content,
       !disabled && isOpen && S.isOpen,
-      !clearTargetMargin && S.hasMargin,
       outlined && S.outlined,
       elevation && S[`elevation-${elevation}`],
       S[`size-${size}`],

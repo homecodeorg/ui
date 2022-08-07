@@ -695,7 +695,6 @@ export class Select extends Component<T.Props, T.State> {
         <Popup
           className={classes}
           direction="bottom-right"
-          clearTargetMargin
           {...popupProps}
           autoClose={!this.isMultiple()}
           controllable={isOpen}
