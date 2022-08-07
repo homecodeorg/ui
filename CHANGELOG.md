@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/foreverido/uilib/compare/v3.4.0...v3.4.1) (2022-08-07)
+
+
+### Bug Fixes
+
+* Router - Redirect fire on mount ([9b6e0ad](https://github.com/foreverido/uilib/commit/9b6e0ad64a3ae706b43b1fa36bf74c9ed763464a))
+
 ## [3.4.0](https://github.com/foreverido/uilib/compare/v3.3.1...v3.4.0) (2022-08-07)
 
 
