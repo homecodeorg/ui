@@ -8,7 +8,7 @@ import single from '!!raw-loader!./Single';
 import multiple from '!!raw-loader!./Multiple';
 import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
 
-const rootPath = '/InputFile';
+const rootPath = '/components/inputfile';
 const examples = { single, multiple, uploadOnDemand };
 
 export default () => (
