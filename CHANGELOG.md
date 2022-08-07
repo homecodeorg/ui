@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/foreverido/uilib/compare/v3.3.1...v3.4.0) (2022-08-07)
+
+
+### Bug Fixes
+
+* Popup - deprecate props.clearTargetMargin ([d3ba1ff](https://github.com/foreverido/uilib/commit/d3ba1ff7e6efa0850a955bb103ab62eaa88a5c14))
+* Popup/Select - open/close lifecycle ([b7607ae](https://github.com/foreverido/uilib/commit/b7607ae715ddb5ba6a4d07464397d06a9948f55a))
+
 ### [3.3.1](https://github.com/foreverido/uilib/compare/v3.3.0...v3.3.1) (2022-08-06)
 
 ## [3.3.0](https://github.com/foreverido/uilib/compare/v3.2.0...v3.3.0) (2022-08-06)
