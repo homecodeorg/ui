@@ -4,7 +4,14 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { debounce, dom, scroll, resizeObserver, isBrowser } from 'uilib/tools';
+import {
+  debounce,
+  dom,
+  scroll,
+  resizeObserver,
+  isBrowser,
+  throttle,
+} from 'uilib/tools';
 
 import S from './Popup.styl';
 import * as H from './Popup.helpers';
@@ -141,10 +148,6 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  dropMousePressed = () => {
-    this._pointerPressed = false;
-  };
-
   checkHover = e => {
     const { isOpen } = this.store;
     const overContent = e.target.closest(`.${S.content}`);
@@ -171,23 +174,28 @@ export class Popup extends Component<T.Props> {
   };
 
   onTriggerPointerDown = () => {
+    this._pointerPressed = true;
+  };
+
+  onTriggerPointerUp = () => {
+    this._pointerPressed = false;
     this.toggle();
   };
 
-  onFocus = () => {
-    const { controllable, onFocus } = this.props;
+  onFocus = (e: FocusEvent) => {
+    const { controllable, onTriggerFocus } = this.props;
 
     this._focused = true;
-    if (!controllable) this.open();
-    if (onFocus) onFocus();
+    if (!controllable && !this._pointerPressed) this.open();
+    onTriggerFocus?.(e);
   };
 
-  onBlur = () => {
-    const { controllable, onBlur } = this.props;
+  onBlur = (e: FocusEvent) => {
+    const { controllable, onTriggerBlur } = this.props;
 
     this._focused = false;
 
-    if (onBlur) onBlur();
+    onTriggerBlur?.(e);
     if (!controllable && !this._pointerPressed) {
       // give time to fire clicks inside popup
       this.timers.after(80, this.close);
@@ -212,7 +220,7 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  open = () => {
+  open = throttle(() => {
     const { onOpen } = this.props;
 
     if (this.store.isOpen) return;
@@ -224,7 +232,7 @@ export class Popup extends Component<T.Props> {
     if (onOpen) Time.nextTick(onOpen);
 
     this.timers.after(100, this.checkvisiblePosition);
-  };
+  }, 100);
 
   close = () => {
     if (!this.store.isOpen) return;
@@ -240,9 +248,9 @@ export class Popup extends Component<T.Props> {
     if (onClose) Time.nextTick(onClose);
   }
 
-  toggle = () => {
+  toggle = throttle(() => {
     this.store.isOpen ? this.close() : this.open();
-  };
+  }, 100);
 
   renderTrigger() {
     const { trigger, content, disabled, triggerProps = {} } = this.props;
@@ -263,7 +271,8 @@ export class Popup extends Component<T.Props> {
         role: 'button',
         onFocus: this.onFocus,
         onBlur: this.onBlur,
-        onPointerDownCapture: this.onTriggerPointerDown,
+        onPointerDown: this.onTriggerPointerDown,
+        onPointerUp: this.onTriggerPointerUp,
       });
     }
 

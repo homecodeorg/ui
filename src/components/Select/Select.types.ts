@@ -107,7 +107,7 @@ export type State = {
 export type OptionElemProps = {
   className: string;
   key: Option['id'];
-  onMouseDown: () => void;
-  onMouseUp: () => void;
+  onPointerDown: () => void;
+  onPointerUp: () => void;
   ref?: RefObject<HTMLDivElement>;
 };

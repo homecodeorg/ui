@@ -51,12 +51,10 @@ export type Props = {
   wrapperProps?: WrapperPropsType;
   onOpen?: () => void;
   onClose?: () => void;
-  onFocus?: () => void;
-  onBlur?: () => void;
+  onTriggerFocus?: (e: FocusEvent) => void;
+  onTriggerBlur?: (e: FocusEvent) => void;
   hookBeforeOpen?: () => boolean | void;
   hookBeforeClose?: () => boolean | void;
-  onTriggerFocus?: (e?: any) => boolean;
-  onTriggerBlur?: (e?: any) => boolean;
 };
 
 export type State = {

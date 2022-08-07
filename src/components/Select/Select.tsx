@@ -167,7 +167,10 @@ export class Select extends Component<T.Props, T.State> {
 
     this.store.selected = selected;
     onChange(this.getValue());
-    if (isOpen && isRemoved) this.updateSelectedScroll();
+    if (isOpen) {
+      if (isRemoved) this.scrollToSelected();
+      else if (!this.isMultiple()) this.store.isOpen = false;
+    }
   }
 
   onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
@@ -176,7 +179,9 @@ export class Select extends Component<T.Props, T.State> {
     const { onOpen } = this.props;
 
     this.store.isOpen = true;
-    this.updateSelectedScroll();
+    this.scrollToSelected();
+
+    document.addEventListener('click', this.onDocumentClick, true);
 
     onOpen?.();
   };
@@ -185,50 +190,38 @@ export class Select extends Component<T.Props, T.State> {
     const { onClose } = this.props;
 
     this.store.isOpen = false;
+    document.removeEventListener('click', this.onDocumentClick, true);
 
     onClose?.();
+  };
+
+  onDocumentClick = e => {
+    if (e.target.closest(`.${S.options}`)) return;
+    this.store.isOpen = false;
   };
 
   toggle = () => {
     this.store.isOpen = !this.store.isOpen;
   };
 
-  hookPopupClose = () => this.preventClose;
-
   setSearchVal(searchVal) {
     this.searchValLower = searchVal.toLowerCase();
     this.store.searchVal = searchVal;
   }
 
-  freezePopup = () => {
-    this.preventClose = true;
-  };
-
-  unfreezePopup = () => {
-    this.preventClose = false;
-  };
-
-  updateSelectedScroll() {
+  scrollToSelected() {
     const selectedElem = this.selectedElem.current;
 
     if (selectedElem) Time.after(50, () => scrollIntoView(selectedElem));
   }
 
-  getParentId(id) {
-    return this.ids.items[id]?.parentId;
-  }
+  getParentId = id => this.ids.items[id]?.parentId;
 
-  getChildIds(id) {
-    return this.ids.childIds[id];
-  }
+  getChildIds = id => this.ids.childIds[id];
 
-  isMultiple() {
-    return H.isMultiple(this.props.value);
-  }
+  isMultiple = () => H.isMultiple(this.props.value);
 
-  isErrorVisible() {
-    return !this.store.isOpen && Boolean(this.props.error);
-  }
+  isErrorVisible = () => !this.store.isOpen && Boolean(this.props.error);
 
   isSelected(id): boolean | 'indeterminate' {
     const { selected } = this.store;
@@ -471,8 +464,6 @@ export class Select extends Component<T.Props, T.State> {
       adornmentRight: this.renderTriggerArrow(),
       value,
       onChange: this.onSearchChange,
-      onFocus: this.onFocus,
-      onBlur: this.onBlur,
       ref: this.triggerInputRef,
       label: this.getFieldLabel(label),
     } as T.Props['inputProps'] & { onBlur: T.Props['onBlur'] };
@@ -565,7 +556,7 @@ export class Select extends Component<T.Props, T.State> {
         variant="clear"
         size={size}
         className={S.expandButton}
-        onMouseUpCapture={e => this.onExpandClick(e, id)}
+        onPointerUpCapture={e => this.onExpandClick(e, id)}
       >
         <Icon type="chevronRight" size={size} className={S.expandIcon} />
       </Button>
@@ -593,8 +584,7 @@ export class Select extends Component<T.Props, T.State> {
     const props = {
       className,
       key: id,
-      onMouseDown: this.freezePopup,
-      onMouseUp: () => this.onItemClick(id),
+      onPointerUp: () => this.onItemClick(id),
     } as T.OptionElemProps;
 
     if (isIndeterminate || (isSelected && !this.isFirstSelectedMeet)) {
@@ -708,9 +698,12 @@ export class Select extends Component<T.Props, T.State> {
           clearTargetMargin
           {...popupProps}
           autoClose={!this.isMultiple()}
+          controllable={isOpen}
           isOpen={isOpen}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
+          onTriggerFocus={this.onFocus}
+          onTriggerBlur={this.onBlur}
           trigger={this.renderTrigger()}
           content={this.renderOptionsList()}
         />
