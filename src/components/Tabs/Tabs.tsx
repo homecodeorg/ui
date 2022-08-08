@@ -14,6 +14,7 @@ function isId(id) {
 
 export function Tabs(props: T.Props) {
   const {
+    size = 'm',
     contentClassName,
     items,
     onChange,
@@ -69,6 +70,7 @@ export function Tabs(props: T.Props) {
     return (
       <Button
         {...rest}
+        size={size}
         key={id}
         onClick={e => onTabClick(e, params)}
         checked={isActive}

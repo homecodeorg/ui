@@ -1,3 +1,4 @@
+import { Size } from 'uilib/types';
 import { ButtonProps } from '../Button/Button';
 
 type ID = string | number;
@@ -17,6 +18,7 @@ export type RenderProps = {
 };
 
 export type Props = {
+  size?: Size;
   className?: string;
   contentClassName?: string;
   items: Item[];
