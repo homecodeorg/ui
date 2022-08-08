@@ -11,18 +11,21 @@ import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
 const rootPath = '/components/inputfile';
 const examples = { single, multiple, uploadOnDemand };
 
+const Nav = () => (
+  <div>
+    {Object.keys(examples).map(key => (
+      <Link href={`/${key}`}>{key}</Link>
+    ))}
+  </div>
+);
+
 export default () => (
   <ComponentLayout
     name="InputFile"
     code={
       <Container vertical fullWidth>
-        <div>
-          {Object.keys(examples).map(key => (
-            <Link href={`${rootPath}/${key}`}>{key}</Link>
-          ))}
-        </div>
-
         <Router rootPath={rootPath}>
+          <Nav path="/" exact />
           {Object.entries(examples).map(([key, example]) => (
             <Code
               exact

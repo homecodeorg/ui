@@ -15,36 +15,37 @@ const rootPath = '/components/virtualized';
 
 const Example = props => <Code scope={{ helpers, S }} {...props} />;
 
+const Navigation = () => (
+  <div>
+    <div>
+      native scrollbars:
+      <Link href={`/endless`}>Endless</Link>
+      <Link href={`/finite`}>Finite</Link>
+    </div>
+    <div>
+      <div>
+        custom scrollbars:
+        <Link href={`/endless-scroll`}>Endless</Link>
+        <Link href={`/finite-scroll`}>Finite</Link>
+      </div>
+    </div>
+    <div>
+      <Link href={`/initial-total`}>Initial data already total</Link>
+    </div>
+    <div>
+      <Link href={`/content-before`}>contentBefore</Link>
+    </div>
+  </div>
+);
+
 export default () => {
   return (
     <ComponentLayout
       name="Virtualized"
       code={
         <Container vertical fullWidth>
-          <div>
-            <div>
-              native scrollbars:
-              <Link href={`${rootPath}/endless`}>Endless</Link>
-              <Link href={`${rootPath}/finite`}>Finite</Link>
-            </div>
-            <div>
-              <div>
-                custom scrollbars:
-                <Link href={`${rootPath}/endless-scroll`}>Endless</Link>
-                <Link href={`${rootPath}/finite-scroll`}>Finite</Link>
-              </div>
-            </div>
-            <div>
-              <Link href={`${rootPath}/initial-total`}>
-                Initial data already total
-              </Link>
-            </div>
-            <div>
-              <Link href={`${rootPath}/content-before`}>contentBefore</Link>
-            </div>
-          </div>
-
           <Router rootPath={rootPath}>
+            <Navigation exact path="/" />
             <Example exact path="/endless" code={Endless} key="endless" />
             <Example
               exact
