@@ -20,6 +20,7 @@ export function ComponentLayout({ name, api, code }: Props) {
   return (
     <div className={S.root}>
       <Tabs
+        size="s"
         contentClassName={S.content}
         items={[
           {
