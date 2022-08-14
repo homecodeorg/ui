@@ -1,23 +1,28 @@
 import { array } from 'uilib/tools';
 
-const popupsOverContent = {}; // [popupId]: [popupId, popupId, ...]
-let popupIds = -1;
+type Id = number;
 
+export const childs: Record<Id, Id[]> = {};
+
+let popupIds = 0;
 export const getId = () => ++popupIds;
 
-export const getPopupId = elem => elem?.getAttribute('data-popup-id');
+export const getPopupId = (elem, attr = 'data-popup-id') => {
+  const id = elem.getAttribute(attr);
+  return id ? parseInt(id, 10) : null;
+};
 
-export function isLastOverContent(parentId, id) {
-  const ids = popupsOverContent[parentId];
-  return ids && ids.slice(-1) === id;
+export function isLastOverContent(rootId, id) {
+  const ids = childs[rootId];
+  return ids && ids[ids.length - 1] === id;
 }
 
-export function setOverContent(parentId, id) {
-  if (!popupsOverContent[parentId]) popupsOverContent[parentId] = [];
-  popupsOverContent[parentId].push(id);
+export function setOverContent(rootId, id) {
+  if (!childs[rootId]) childs[rootId] = [];
+  childs[rootId].push(id);
 }
 
-export function unsetOverContent(parentId, id) {
-  array.spliceWhere(popupsOverContent[parentId], id);
-  if (!popupsOverContent[parentId].length) delete popupsOverContent[parentId];
+export function unsetOverContent(rootId, id) {
+  array.spliceWhere(childs[rootId], id);
+  if (!childs[rootId].length) delete childs[rootId];
 }

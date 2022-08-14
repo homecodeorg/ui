@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const fs = require('fs');
+import fs from 'fs';
 
 let level = 'root';
 const levelsData = [];
@@ -34,7 +34,7 @@ const MATCHERS = {
 
       // single line type
       if (/;$/.test(line)) {
-        data[name] = value;
+        data[name] = { value: value.replace(/;$/, ''), isPlain: true };
         levelsData.shift();
       } else level = 'field'; // dive into field level
     }
@@ -83,12 +83,13 @@ const MATCHERS = {
   clearExtends(node) {
     if (node.ext[node.ext.length - 1].trim() === '{') node.ext.pop();
   },
-  preFieldComment: null,
+  preFieldComment: '',
   field(line) {
     const trimedLine = line.trim();
 
     if (/^\/\//.test(trimedLine)) {
-      this.preFieldComment = trimedLine;
+      const comment = trimedLine.replace(/^\/\//, '').trim();
+      this.preFieldComment += (this.preFieldComment ? '\n' : '') + comment;
       return;
     }
 
@@ -102,14 +103,18 @@ const MATCHERS = {
 
       if (this.preFieldComment) {
         fieldData.comment = this.preFieldComment;
-        this.preFieldComment = null;
+        this.preFieldComment = '';
       }
 
       this.value(fieldData);
 
-      // console.log([name, question, value]);
-
       if (question) fieldData.optional = true;
+      // } else {
+      //   console.log('______ !match,   line:', line);
+      //   const levelData = getCurrLevelData();
+      //   levelData.value = line.trim();
+      //   console.log('>>>', levelData);
+      //   this.value(levelData);
     }
   },
   value(fieldData) {
@@ -127,7 +132,6 @@ const MATCHERS = {
 
       if (braces) this.subfieldBraces.push(...braces);
 
-      // console.log('=value', fieldData.value);
       levelsData.unshift(fieldData);
       level = 'subfield';
     } else {
@@ -164,9 +168,8 @@ function parseTypes(code) {
   levelsData.push({});
 
   code.split('\n').forEach(line => {
-    console.log(levelsData);
-    // console.log(getCurrLevelData());
     console.log(`::${level}`, line);
+    console.log(levelsData);
     MATCHERS[level](line);
   });
 

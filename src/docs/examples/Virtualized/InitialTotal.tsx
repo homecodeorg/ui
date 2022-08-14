@@ -16,6 +16,7 @@ export default withStore('example')(
 
       return (
         <VirtualizedListScroll
+          className={S.root}
           scrollProps={{ y: true }}
           totalCount={totalCount}
           itemsCount={itemsCount}

@@ -1,17 +1,19 @@
-export { default as avatar } from './avatar.svg';
-export { default as brokenImage } from './brokenImage.svg';
-export { default as check } from './check.svg';
-export { default as close } from './close.svg';
-export { default as chevronUp } from './chevronUp.svg';
-export { default as chevronDown } from './chevronDown.svg';
-export { default as chevronRight } from './chevronRight.svg';
-export { default as chevronLeft } from './chevronLeft.svg';
-export { default as delete } from './delete.svg';
-export { default as externalLink } from './externalLink.svg';
-export { default as fullscreen } from './fullscreen.svg';
-export { default as fullscreenExit } from './fullscreenExit.svg';
-export { default as menu } from './menu.svg';
-export { default as moreVertical } from './moreVertical.svg';
-export { default as moreHorizontal } from './moreHorizontal.svg';
-export { default as plus } from './plus.svg';
-export { default as requiredStar } from './requiredStar.svg';
+export default {
+  avatar: () => import('./avatar.svg'),
+  brokenImage: () => import('./brokenImage.svg'),
+  check: () => import('./check.svg'),
+  close: () => import('./close.svg'),
+  chevronUp: () => import('./chevronUp.svg'),
+  chevronDown: () => import('./chevronDown.svg'),
+  chevronRight: () => import('./chevronRight.svg'),
+  chevronLeft: () => import('./chevronLeft.svg'),
+  delete: () => import('./delete.svg'),
+  externalLink: () => import('./externalLink.svg'),
+  fullscreen: () => import('./fullscreen.svg'),
+  fullscreenExit: () => import('./fullscreenExit.svg'),
+  menu: () => import('./menu.svg'),
+  moreVertical: () => import('./moreVertical.svg'),
+  moreHorizontal: () => import('./moreHorizontal.svg'),
+  plus: () => import('./plus.svg'),
+  requiredStar: () => import('./requiredStar.svg'),
+};

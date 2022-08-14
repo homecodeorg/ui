@@ -46,6 +46,7 @@ export default withStore('example')(
 
       return (
         <VirtualizedList
+          className={S.root}
           id={updateId}
           totalCount={totalCount}
           itemsCount={totalCount}

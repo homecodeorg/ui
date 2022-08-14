@@ -1,15 +1,19 @@
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin');
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
-const pkg = require('../../../package.json');
-const paths = require('./paths.js');
+import webpack from 'webpack';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import HtmlWebpackPartialsPlugin from 'html-webpack-partials-plugin';
+import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
-module.exports = (env, argv) => {
+// @ts-ignore
+import pkg from '../../../package.json' assert { type: 'json' };
+import paths from './paths.ts';
+
+export default (env, argv) => {
   const isDev = argv.mode === 'development';
   const config = {
     entry: [paths.docs],
@@ -18,8 +22,8 @@ module.exports = (env, argv) => {
     },
 
     resolve: {
-      modules: [paths.docs, 'node_modules'],
-      extensions: ['.js', '.jsx', '.ts', '.tsx', '.styl'],
+      modules: [paths.src, paths.docs, 'node_modules'],
+      extensions: ['.js', '.ts', '.tsx', '.styl'],
       alias: {
         'docs/components': `${paths.docs}/components`,
         uilib: paths.src,
@@ -35,10 +39,15 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          test: /\.(j|t)sx?$/,
+          test: /\.tsx?$/,
           loader: 'babel-loader',
           include: [paths.src, paths.docs],
           // exclude: paths.modules,
+          options: {
+            plugins: [isDev && require.resolve('react-refresh/babel')].filter(
+              Boolean
+            ),
+          },
         },
         {
           test: /\.css$/,
@@ -111,6 +120,8 @@ module.exports = (env, argv) => {
     },
 
     plugins: [
+      isDev && new ReactRefreshPlugin(),
+
       new CleanWebpackPlugin(),
 
       new webpack.ProvidePlugin({
@@ -170,12 +181,6 @@ module.exports = (env, argv) => {
         filename: isDev ? '[name].css' : '[name].[hash].css',
         chunkFilename: isDev ? '[id].css' : '[id].[hash].css',
       }),
-
-      process.env.BUNDLE_ANALYZER &&
-        new BundleAnalyzerPlugin({
-          openAnalyzer: isDev,
-          reportFilename: isDev,
-        }),
     ].filter(Boolean),
   };
 
@@ -183,7 +188,7 @@ module.exports = (env, argv) => {
     Object.assign(config, {
       devtool: 'source-map',
       devServer: {
-        // hot: true,
+        hot: true,
         port: 8181,
         historyApiFallback: true,
         // open: true,

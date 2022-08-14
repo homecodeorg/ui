@@ -1,6 +1,5 @@
-import { Size } from 'uilib/types';
+import { ComponentType, Size } from 'uilib/types';
 
-export type Props = {
-  className?: string;
+export type Props = ComponentType & {
   size?: Size;
 };

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Checkbox } from 'uilib';
 
 export default () => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(true);
 
   return (
     <Checkbox

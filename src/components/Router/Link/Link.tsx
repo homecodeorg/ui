@@ -14,7 +14,9 @@ export class Link extends Component<T.Props> {
   domElem = createRef<HTMLAnchorElement>();
   rootPath = '';
 
+  // declare context: React.ContextType<typeof Context>;
   static contextType = Context;
+
   static defaultProps = {
     isClear: false,
     inline: false,
@@ -22,13 +24,23 @@ export class Link extends Component<T.Props> {
   };
 
   getHref() {
-    const { href } = this.props;
-    const { rootPath = '' } = this.context;
+    let href = this.props.href;
 
-    return `${rootPath}${href === '/' ? '' : href}`;
+    if (this.isStartFromDoubleSlash()) href = href.replace(/^\//, '');
+
+    if (href === '/') href = '';
+
+    return `${this.getRootPath()}${href}`;
   }
 
-  isExternal = () => /\./.test(this.getHref());
+  isExternal = () => /\./.test(this.props.href);
+
+  isStartFromDoubleSlash = () => /^\/\//.test(this.props.href);
+
+  getRootPath = () => {
+    if (this.isExternal() || this.isStartFromDoubleSlash()) return '';
+    return this.context.rootPath ?? '';
+  };
 
   onClick = e => {
     const { onClick, store } = this.props;
@@ -50,7 +62,7 @@ export class Link extends Component<T.Props> {
 
     if (isPartialExact) {
       const pathSections = path.replace(/#.+/, '').split('/');
-      const hrefSections = href.split('/');
+      const hrefSections = href.replace(/#.+/, '').split('/');
       const minLength = Math.min(pathSections.length, hrefSections.length);
 
       return (
@@ -62,7 +74,7 @@ export class Link extends Component<T.Props> {
     return path === href;
   }
 
-  renderLink = () => {
+  render() {
     const {
       className,
       exactClassName,
@@ -112,9 +124,5 @@ export class Link extends Component<T.Props> {
         {isExternal && <Icon type="externalLink" className={S.externalIcon} />}
       </a>
     );
-  };
-
-  render() {
-    return this.renderLink();
   }
 }

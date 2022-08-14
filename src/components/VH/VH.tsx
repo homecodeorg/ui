@@ -1,9 +1,9 @@
 import { Component } from 'react';
-import { isBrowser } from 'uilib/tools';
+import { env } from 'uilib/tools';
 
 type State = { vh: number };
 
-const getVH = () => (isBrowser ? window.innerHeight / 100 : 0);
+const getVH = () => (env.isBrowser ? window.innerHeight / 100 : 0);
 
 export class VH extends Component<any, State> {
   constructor(props: any) {

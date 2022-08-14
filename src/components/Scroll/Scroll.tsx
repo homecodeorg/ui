@@ -4,7 +4,6 @@ import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 import Time from 'timen';
 
-import { capitalize } from '../../tools/string';
 import { isTouch } from '../../tools/dom';
 import debounce from '../../tools/debounce';
 import * as resizeObserver from '../../tools/resizeObserver';
@@ -246,7 +245,7 @@ export class Scroll extends Component<T.Props> {
 
     if (coeff[axis] === 1) return null;
 
-    const offsetSizeField = `offset${capitalize(sizeField)}`;
+    // const offsetSizeField = `offset${capitalize(sizeField)}`;
     // const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
     const thumbStyle = {
       [sizeField]: `${coeff[axis] * 100}%`,

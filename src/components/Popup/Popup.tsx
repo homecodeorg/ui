@@ -4,20 +4,15 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import {
-  debounce,
-  dom,
-  scroll,
-  resizeObserver,
-  isBrowser,
-  throttle,
-} from 'uilib/tools';
+import { dom, resizeObserver, env, debounce, throttle } from 'uilib/tools';
 
 import S from './Popup.styl';
 import * as H from './Popup.helpers';
 import * as T from './Popup.types';
 
 export const ANIMATION_DURATION = 100;
+
+export type PopupProps = T.Props;
 
 export class Popup extends Component<T.Props> {
   rootElem = createRef<HTMLDivElement>();
@@ -34,6 +29,8 @@ export class Popup extends Component<T.Props> {
   _subscribedSizeChange = false;
 
   id;
+  parentPopupContent;
+
   store;
   timers = Time.create();
   scrollParent;
@@ -49,28 +46,33 @@ export class Popup extends Component<T.Props> {
 
     this.id = H.getId();
     this.store = createStore(this, {
-      isMounted: false,
+      rootPopupId: null,
       isOpen,
       isContentVisible: isOpen,
       position: { top: 0, left: 0 },
       direction: props.direction,
     } as T.State);
 
-    this.afterClose = this.afterClose.bind(this);
     this.checkHover = debounce(this.checkHover, 100);
   }
 
   componentDidMount() {
-    const { controllable, hoverControl, inline } = this.props;
+    const { hoverControl, focusControl, inline } = this.props;
+    const parentPopupContent = this.triggerElem.current.closest(
+      `.${S.content}`
+    );
 
-    this.store.isMounted = true;
-
-    if (this.rootElem && !inline) {
-      this.scrollParent = scroll.getScrollParent(this.rootElem.current);
-      this.scrollParent.addEventListener('scroll', this.close);
+    if (parentPopupContent) {
+      this.store.rootPopupId =
+        H.getPopupId(parentPopupContent, 'data-root-popup-id') ||
+        H.getPopupId(parentPopupContent, 'data-popup-id');
     }
 
-    if (!controllable) {
+    if (env.isBrowser && !inline) {
+      document.addEventListener('scroll', this.close);
+    }
+
+    if (focusControl) {
       document.addEventListener('keyup', this.onDocKeyUp, true);
     }
 
@@ -121,6 +123,7 @@ export class Popup extends Component<T.Props> {
     this._subscribedHoverControl = true;
 
     document.addEventListener('pointermove', this.checkHover);
+    document.addEventListener('pointerup', this.checkHover);
   }
 
   unsubscribeHoverControl() {
@@ -128,13 +131,81 @@ export class Popup extends Component<T.Props> {
     this._subscribedHoverControl = false;
 
     document.removeEventListener('pointermove', this.checkHover);
+    document.removeEventListener('pointerup', this.checkHover);
   }
+
+  checkvisiblePosition = () => {
+    // const trigger = this.triggerElem.current.getBoundingClientRect();
+    const content = this.containerElem.getBoundingClientRect();
+    const newDir = [];
+
+    if (content.top < 0) {
+      // if (window.innerHeight - trigger.bottom > content.height) {
+      newDir[0] = 'bottom';
+      // } else {
+      //   this.containerElem.style.top = '0px';
+      // }
+    } else if (content.bottom > window.innerHeight) {
+      // if (trigger.top > content.height) {
+      newDir[0] = 'top';
+      // } else {
+      //   this.containerElem.style.bottom = '0px';
+      // }
+    }
+
+    if (content.left < 0) {
+      // if (window.innerWidth - trigger.right > content.width) {
+      newDir[1] = 'right';
+      // } else {
+      //   this.containerElem.style.left = '0px';
+      // }
+    } else if (content.right > window.innerWidth) {
+      // if (trigger.left > content.width) {
+      newDir[1] = 'left';
+      // } else {
+      //   this.containerElem.style.right = `-${
+      //     window.innerWidth - trigger.right
+      //   }px`;
+      // }
+    }
+
+    if (newDir.length) {
+      this.store.direction = newDir.join('-');
+    }
+  };
+
+  checkHover = e => {
+    const { isOpen, rootPopupId } = this.store;
+    const overTrigger = this.isPointerOver(e.target, S.trigger);
+    const overContent = this.isPointerOver(e.target, S.content);
+
+    if (!isOpen) {
+      if (overTrigger) this.open();
+      return;
+    }
+
+    // isOpen
+    if (overTrigger || overContent) return;
+
+    if (typeof rootPopupId === 'number') {
+      if (H.isLastOverContent(rootPopupId, this.id)) {
+        this.close();
+        H.unsetOverContent(rootPopupId, this.id);
+      }
+    } else {
+      const isOverAnyPopupContent = e.target.closest(`.${S.content}`);
+
+      if (!isOverAnyPopupContent || !H.childs[this.id]?.length) {
+        this.close();
+      }
+    }
+  };
 
   isPointerOver(target, elem) {
     return target.closest(`.${elem}[data-popup-id="${this.id}"]`);
   }
 
-  onDocKeyUp = e => {
+  onDocKeyUp = (e: KeyboardEvent) => {
     if (this.store.isOpen && e.key === 'Escape') {
       e.stopPropagation();
       this.close();
@@ -148,31 +219,6 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  checkHover = e => {
-    const { isOpen } = this.store;
-    const overContent = e.target.closest(`.${S.content}`);
-
-    if (isOpen) {
-      if (!this.isPointerOver(e.target, S.trigger)) {
-        if (!this.isPointerOver(e.target, S.content)) {
-          if (overContent) {
-            const parentPopupId = H.getPopupId(overContent);
-
-            if (!H.isLastOverContent(parentPopupId, this.id)) {
-              this.close();
-              H.unsetOverContent(parentPopupId, this.id);
-            }
-          } else this.close();
-        }
-      }
-    } else if (this.isPointerOver(e.target, S.trigger)) {
-      this.open();
-      if (overContent) {
-        H.setOverContent(H.getPopupId(overContent), this.id);
-      }
-    }
-  };
-
   onTriggerPointerDown = () => {
     this._pointerPressed = true;
   };
@@ -183,45 +229,28 @@ export class Popup extends Component<T.Props> {
   };
 
   onFocus = (e: FocusEvent) => {
-    const { controllable, onTriggerFocus } = this.props;
+    const { onTriggerFocus } = this.props;
 
     this._focused = true;
-    if (!controllable && !this._pointerPressed) this.open();
+    if (!this._pointerPressed) this.open();
     onTriggerFocus?.(e);
   };
 
   onBlur = (e: FocusEvent) => {
-    const { controllable, onTriggerBlur } = this.props;
+    const { onTriggerBlur } = this.props;
 
     this._focused = false;
 
     onTriggerBlur?.(e);
-    if (!controllable && !this._pointerPressed) {
+    if (!this._pointerPressed) {
       // give time to fire clicks inside popup
       this.timers.after(80, this.close);
     }
   };
 
-  checkvisiblePosition = () => {
-    if (!this.props.direction.match(/^(top|bottom)/)) return;
-
-    const { direction } = this.store;
-    const isBottom = direction.match(/^bottom/);
-    // TODO: support horizontal axis
-    const { top, bottom } = this.containerElem?.getBoundingClientRect() || {};
-
-    if (typeof top !== 'number') return;
-
-    if (isBottom) {
-      if (window.innerHeight < bottom)
-        this.store.direction = direction.replace('bottom', 'top');
-    } else {
-      if (top < 0) this.store.direction = direction.replace('top', 'bottom');
-    }
-  };
-
   open = throttle(() => {
     const { onOpen } = this.props;
+    const { rootPopupId } = this.store;
 
     if (this.store.isOpen) return;
 
@@ -229,6 +258,7 @@ export class Popup extends Component<T.Props> {
 
     Object.assign(this.store, { isOpen: true, isContentVisible: true });
 
+    if (rootPopupId) H.setOverContent(rootPopupId, this.id);
     if (onOpen) Time.nextTick(onOpen);
 
     this.timers.after(100, this.checkvisiblePosition);
@@ -241,19 +271,26 @@ export class Popup extends Component<T.Props> {
     this.timers.after(ANIMATION_DURATION, this.afterClose);
   };
 
-  afterClose() {
+  afterClose = () => {
     const { onClose } = this.props;
 
     this.store.isContentVisible = false;
     if (onClose) Time.nextTick(onClose);
-  }
+  };
 
   toggle = throttle(() => {
     this.store.isOpen ? this.close() : this.open();
   }, 100);
 
   renderTrigger() {
-    const { trigger, content, disabled, triggerProps = {} } = this.props;
+    const {
+      trigger,
+      content,
+      disabled,
+      triggerProps = {},
+      focusControl,
+      hoverControl,
+    } = this.props;
     const { isOpen } = this.store;
 
     if (!trigger) return null;
@@ -267,13 +304,21 @@ export class Popup extends Component<T.Props> {
     );
 
     if (!disableTrigger) {
-      Object.assign(triggerProps, {
-        role: 'button',
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
-        onPointerDown: this.onTriggerPointerDown,
-        onPointerUp: this.onTriggerPointerUp,
-      });
+      triggerProps.role = 'button';
+
+      if (hoverControl) {
+        Object.assign(triggerProps, {
+          onPointerDown: this.onTriggerPointerDown,
+          onPointerUp: this.onTriggerPointerUp,
+        });
+      }
+
+      if (focusControl) {
+        Object.assign(triggerProps, {
+          onFocus: this.onFocus,
+          onBlur: this.onBlur,
+        });
+      }
     }
 
     return (
@@ -300,12 +345,12 @@ export class Popup extends Component<T.Props> {
       paranja,
       elevation,
     } = this.props;
-    const { isOpen, isContentVisible, direction } = this.store;
+    const { isOpen, isContentVisible, direction, rootPopupId } = this.store;
 
     const trigger = this.triggerElem.current;
-    const target = isBrowser && document.getElementById('app-modal');
+    const target = env.isBrowser && document.getElementById('app-modal');
 
-    if (!target) return null;
+    if (!target || disabled) return null;
 
     const wrapperClasses = cn(
       S.contentWrapper,
@@ -317,7 +362,7 @@ export class Popup extends Component<T.Props> {
     const [axis, float] = direction.split('-');
     const classes = cn(
       S.content,
-      !disabled && isOpen && S.isOpen,
+      isOpen && S.isOpen,
       outlined && S.outlined,
       elevation && S[`elevation-${elevation}`],
       S[`size-${size}`],
@@ -348,6 +393,7 @@ export class Popup extends Component<T.Props> {
           ref={this.onContainerElemRef}
           className={classes}
           data-popup-id={this.id}
+          data-root-popup-id={rootPopupId}
         >
           {isContentVisible && content}
         </div>
@@ -360,13 +406,12 @@ export class Popup extends Component<T.Props> {
 
   render() {
     const { className } = this.props;
-    const { isMounted } = this.store;
     const classes = cn(S.root, className);
 
     return (
       <div className={classes} ref={this.rootElem}>
         {this.renderTrigger()}
-        {isMounted && this.renderContent()}
+        {this.renderContent()}
       </div>
     );
   }

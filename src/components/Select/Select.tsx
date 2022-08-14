@@ -1,12 +1,10 @@
-import { Component, createRef, Fragment } from 'react';
+import { Component, createRef, Fragment, ReactNode } from 'react';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
-
-import { scrollIntoView } from '../../tools/scroll';
 
 import { Icon } from '../Icon/Icon';
 import { Button } from '../Button/Button';
@@ -88,6 +86,7 @@ export class Select extends Component<T.Props, T.State> {
     const result = {};
     const stack = [...(this.isMultiple() ? value : [value])];
 
+    // go through all selected items and mark their parents as expanded
     while (stack.length) {
       const pointerId = stack.shift();
       const item = items[pointerId];
@@ -212,7 +211,8 @@ export class Select extends Component<T.Props, T.State> {
   scrollToSelected() {
     const selectedElem = this.selectedElem.current;
 
-    if (selectedElem) Time.after(50, () => scrollIntoView(selectedElem));
+    if (selectedElem)
+      Time.after(50, () => selectedElem.scrollIntoView({ behavior: 'smooth' }));
   }
 
   getParentId = id => this.ids.items[id]?.parentId;
@@ -371,10 +371,10 @@ export class Select extends Component<T.Props, T.State> {
     return null;
   }
 
-  getInputVal() {
+  getInputVal(): T.Value {
     const { isFocused, searchVal, selected } = this.store;
 
-    if (isFocused) return searchVal;
+    if (isFocused) return searchVal as T.Id;
 
     const selectedPlain = Object.entries(selected).reduce((acc, entry) => {
       const parentId = this.coerceType(entry[0]);
@@ -466,7 +466,7 @@ export class Select extends Component<T.Props, T.State> {
       onChange: this.onSearchChange,
       ref: this.triggerInputRef,
       label: this.getFieldLabel(label),
-    } as T.Props['inputProps'] & { onBlur: T.Props['onBlur'] };
+    } as T.Props['inputProps'] & { onBlur: T.Props['onBlur']; value: string };
 
     return <Input {...props} />;
   }
@@ -615,17 +615,10 @@ export class Select extends Component<T.Props, T.State> {
   };
 
   renderOptions() {
-    const { groupBy, sortBy, additionalOptions = [] } = this.props;
+    const { additionalOptions = [] } = this.props;
 
-    const itemsFormatted = H.formatOptionsList({
-      options: this.optionsTree,
-      groupBy,
-      sortBy,
-      idsMap: this.ids,
-    });
-
-    const items = additionalOptions.concat(itemsFormatted);
-    const itemsList = [] as JSX.Element[];
+    const items = additionalOptions.concat(this.optionsTree);
+    const itemsList = [] as ReactNode[];
 
     this.isFirstSelectedMeet = false;
     items.forEach(item => {
@@ -696,8 +689,6 @@ export class Select extends Component<T.Props, T.State> {
           className={classes}
           direction="bottom-right"
           {...popupProps}
-          autoClose={!this.isMultiple()}
-          controllable={isOpen}
           isOpen={isOpen}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}

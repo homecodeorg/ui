@@ -3,7 +3,7 @@ import { Select } from 'uilib';
 import { OPTIONS } from 'helpers';
 
 export default () => {
-  const [value, setValue] = useState(OPTIONS[0].id);
+  const [value, setValue] = useState([OPTIONS[2].id]);
 
   return (
     <Select

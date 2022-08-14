@@ -2,7 +2,7 @@
   display flex
   flex-direction column
   align-items flex-end
-  padding-left 8px
+  padding 0 var(--indent-s)
   overflow hidden
 
 .item
@@ -15,6 +15,7 @@
   width 100%
   overflow hidden
   min-height 44px
+  user-select none
 
 .itemHeader
   z-index 1
@@ -40,3 +41,14 @@
     left 0
     top 0
     right -200px
+
+.subItems
+  position relative
+  display flex
+  flex-direction column
+  padding-left var(--indent-m)
+  transform translateY(-2px)
+
+  & .link
+    padding-top 3px
+    padding-bottom 3px

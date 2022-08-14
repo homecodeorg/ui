@@ -3,19 +3,20 @@ import * as justorm from 'justorm/react';
 import timen from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Scroll, uid } from '/src';
+import { Button, Icon, Scroll, uid, config } from 'uilib';
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
 
-import * as uilib from '/src';
+import * as uilib from 'uilib';
 import * as helpers from 'helpers';
 
 // import TYPES from '../../types.json';
 import * as H from './Code.helpers';
 import S from './Code.styl';
+import { createPortal } from 'react-dom';
 
 const { withStore, createStore } = justorm;
 
@@ -46,6 +47,7 @@ export class Code extends Component<Props> {
 
     this.store = createStore(this, {
       height: '100%',
+      isFullscreen: false,
       editedCode: code,
       execCode: this.getExecCode(code),
       currScope: this.getScope(),
@@ -79,21 +81,59 @@ export class Code extends Component<Props> {
   //   1000
   // );
 
+  onKeyDown = e => {
+    if (e.key === 'Escape') {
+      this.store.isFullscreen = false;
+    }
+  };
+
   onChange = code => {
+    if (code === this.store.editedCode) return;
+
     this.store.editedCode = code;
     this.updateHeight();
     this.updateExecCode(code);
   };
 
+  toggleFullscreen = () => {
+    this.store.isFullscreen = !this.store.isFullscreen;
+
+    if (this.store.isFullscreen) {
+      document.addEventListener('keydown', this.onKeyDown);
+    } else {
+      document.removeEventListener('keydown', this.onKeyDown);
+    }
+  };
+
+  renderContent(content) {
+    const { isFullscreen } = this.store.originalObject;
+
+    if (isFullscreen)
+      return createPortal(
+        content,
+        document.getElementById(config.appOverlayId)
+      );
+
+    return content;
+  }
+
   render() {
     const { store } = this.props;
     const { theme, gradient } = store.app;
-    const { height, editedCode, execCode, currScope } =
+    const { height, editedCode, execCode, currScope, isFullscreen } =
       this.store.originalObject;
     const isGradientEven = gradient.changeCount % 2 === 0;
 
-    return (
-      <div className={S.root}>
+    return this.renderContent(
+      <div className={cn(S.root, isFullscreen && S.fullscreen)}>
+        <Button
+          className={S.fullscreenButton}
+          onClick={this.toggleFullscreen}
+          variant="clear"
+          square
+        >
+          <Icon type="fullscreen" size="l" />
+        </Button>
         <style>{`
           #${this.id} > textarea { height: ${height} !important; }
           .${S.root}::before {
@@ -114,7 +154,7 @@ export class Code extends Component<Props> {
           y
           className={S.editorContainer}
           innerClassName={S.editorContainerInner}
-          offset={{ y: { before: 20, after: 20 } }}
+          offset={{ y: { before: 50, after: 20 } }}
         >
           <LiveEditor
             className={S.editor}

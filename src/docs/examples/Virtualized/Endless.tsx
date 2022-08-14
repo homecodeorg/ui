@@ -32,6 +32,7 @@ export default withStore('example')(
 
       return (
         <VirtualizedList
+          className={S.root}
           totalCount={totalCount}
           itemsCount={itemsCount}
           overlapCount={10}

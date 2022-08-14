@@ -1,11 +1,30 @@
-import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
+import { Heading, Link } from 'uilib';
+import { ComponentLayout } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
+
+const name = 'Button';
+const Docs = () => (
+  <>
+    <p>
+      UI button component with customizable properties such as style, size,
+      loading state, etc.{' '}
+      <Link inline href="/demo">
+        Demo
+      </Link>
+    </p>
+
+    <Heading id="Props" text="Props" />
+    <TypesTable scope={name} type="Props" />
+  </>
+);
 
 export default () => (
   <ComponentLayout
-    name="Button"
-    code={<Code code={example} />}
-    api={<TypesNavigator scope="Button" type="Props" />}
+    name={name}
+    docs={Docs}
+    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    scope={{}}
   />
 );

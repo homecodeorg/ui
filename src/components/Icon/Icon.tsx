@@ -1,8 +1,11 @@
 import cn from 'classnames';
+import { Lazy } from 'uilib';
 
 import S from './Icon.styl';
 import * as T from './Icon.types';
-import * as ICONS from './icons';
+import ICONS from './icons';
+
+export const icons = ICONS;
 
 export type { IconType } from './Icon.types';
 
@@ -13,14 +16,15 @@ export function Icon(props: T.Props) {
     role: 'img',
     ...rest,
   };
-  const LocalIcon = ICONS[type];
+  const localIcon = ICONS[type];
 
-  if (!LocalIcon) {
+  if (!localIcon) {
     console.warn(`Icon: type="${type}" is unknown`);
     return null;
   }
 
-  return <LocalIcon {...iconProps} />;
+  // @ts-ignore
+  return <Lazy loader={localIcon} {...iconProps} />;
 }
 
 Icon.defaultProps = {

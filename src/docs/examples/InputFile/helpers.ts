@@ -19,7 +19,7 @@ const simulateLoader = (onProgress, onComplete) => {
 const getOnComplete = (file, resolve) => () =>
   _file.toBase64(file).then(resolve);
 
-export const upload = (file, onProgress) =>
+export const upload = ({ file, onProgress }) =>
   new Promise(resolve => {
     simulateLoader(onProgress, getOnComplete(file, resolve));
   });

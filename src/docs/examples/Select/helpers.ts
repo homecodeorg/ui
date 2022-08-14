@@ -1,5 +1,5 @@
 import { getRandomItem } from 'helpers';
-import { Option } from 'components/Select/Select.types';
+import { Option } from 'uilib/components/Select/Select.types';
 
 const TEXT = [
   'Aenean',

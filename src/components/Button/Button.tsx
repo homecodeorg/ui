@@ -1,7 +1,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import cn from 'classnames';
 
-import { Spinner } from '../Spinner/Spinner';
+import { Spinner } from 'uilib';
 
 import S from './Button.styl';
 import * as H from './Button.helpers';

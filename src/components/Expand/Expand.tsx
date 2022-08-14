@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Icon } from 'uilib';
 import cn from 'classnames';
+import { Button, Icon } from 'uilib';
 
 import S from './Expand.styl';
 import * as T from './Expand.types';

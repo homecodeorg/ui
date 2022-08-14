@@ -1,7 +1,6 @@
 .root
   position relative
   border-radius var(--indent-s)
-  overflow hidden
 
   &::after
     content ''
@@ -21,8 +20,6 @@
   &
   & *
     font-family monospace
-
-  // &
 
 .title
 .extends
@@ -49,9 +46,6 @@
 
 .fields
   max-height 50vh
-
-.fieldsInner
-  display inline-block
 
 .root:not(.inPopup) .field
   padding-right var(--indent-m)
@@ -85,17 +79,17 @@
   position relative
   color var(--code-keyword-color)
 
-  &::before
+  &::after
     content ''
     position absolute
     top -5px
     left -5px
     right -5px
     bottom -5px
-    border-radius var(--indent-s)
+    border-radius 4px
     transition background-color .2s ease-out
 
-  &:hover::before
-    background-color var(--accent-color-alpha-50)
+  &:hover::after
+    background-color var(--decent-color-alpha-200)
 
 

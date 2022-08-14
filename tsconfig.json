@@ -3,29 +3,22 @@
     "strict": false,
     "allowJs": true,
     "allowUmdGlobalAccess": true, // make typescript work with ProvidePlugin
-    // "noImplicitAny": false,
-    // "incremental": true,
     "allowSyntheticDefaultImports": true,
-    // "downlevelIteration": true,
     "jsx": "react-jsx",
-    // "target": "es6",
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    // "isolatedModules": true,
     "esModuleInterop": true,
-    // "lib": ["esnext", "dom"],
     // "lib": ["dom", "dom.iterable", "esnext"],
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist",
     "baseUrl": "./",
-    "rootDir": "./src",
+    "rootDir": "./",
     "declaration": true,
     "declarationDir": "dist/types",
-    // "emitDeclarationOnly": true,
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
@@ -43,11 +36,9 @@
   "include": ["src"],
   "exclude": [
     "node_modules",
-    "config",
     "src/**/*.example.*",
-    "src/App",
-    "src/helpers",
-    "src/docs"
+    // "src/App",
+    // "src/docs"
   ],
   "plugins": ["typescript-eslint-language-service"]
 }

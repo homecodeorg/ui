@@ -1,13 +1,14 @@
 import { HTMLAttributes, ReactNode } from 'react';
-import { Size, ComponentType } from 'uilib/types';
+import { Size } from 'uilib/types';
 
+type ContentProps = HTMLAttributes<HTMLDivElement> & { className?: string };
 export type Props = {
   className?: string;
-  size: Size;
+  size?: Size;
   isOpen: boolean;
   header: ReactNode;
   headerClassName?: string;
-  content: ReactNode;
-  contentProps?: HTMLAttributes<HTMLDivElement> & { className?: string };
+  content: (props: ContentProps) => ReactNode | ReactNode;
+  contentProps?: ContentProps;
   onChange?: (isOpen: boolean) => void;
 };

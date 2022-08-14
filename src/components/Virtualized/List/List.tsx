@@ -8,8 +8,7 @@ import {
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
-
-import { number, Scroll } from 'uilib';
+import { number } from 'uilib/tools';
 
 import Virtualized from '../Virtualized';
 import * as T from '../Virtualized.types';

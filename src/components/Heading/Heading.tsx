@@ -1,24 +1,51 @@
-import { useEffect, useRef } from 'react';
-
-import { scrollIntoView } from '../../tools/scroll';
+import { memo, useEffect } from 'react';
+import { scroll } from 'uilib/tools';
 
 import S from './Heading.styl';
 import * as T from './Heading.types';
 
-export function Heading({ id, text }: T.Props) {
-  const domElem = useRef(null);
+let subscribersCount = 0;
+const idTmpl = (id: string) => `heading-${id}`;
+
+function onClick(e) {
+  const href = e.target?.getAttribute('href');
+  if (!href || !/#/.test(href)) return;
+  const [path, hash] = href.split('#');
+  const heading = document.getElementById(idTmpl(hash));
+
+  if (heading) {
+    scroll.scrollIntoView(heading, { behavior: 'smooth' });
+    e.stopPropagation();
+  }
+}
+
+function subscribe() {
+  if (subscribersCount === 0) {
+    window.addEventListener('click', onClick, true);
+  }
+  subscribersCount++;
+}
+
+function unsubscribe() {
+  if (--subscribersCount === 0) {
+    window.removeEventListener('click', onClick, true);
+  }
+}
+
+export const Heading = memo(function Heading({ id, text }: T.Props) {
   const hash = `#${id}`;
 
   useEffect(() => {
-    if (location.hash === hash) scrollIntoView(domElem.current);
-  }, []);
+    subscribe();
+    return unsubscribe;
+  });
 
   return (
-    <h2 className={S.root} ref={domElem}>
-      <a name={id} href={`${location.pathname}${hash}`} className={S.link}>
+    <h2 className={S.root} id={idTmpl(id)}>
+      <a href={`${location.pathname}${hash}`} className={S.link}>
         #
       </a>
       {text}
     </h2>
   );
-}
+});

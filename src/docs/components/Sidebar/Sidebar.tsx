@@ -1,6 +1,5 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { Fragment, memo, useCallback, useEffect, useState } from 'react';
 import { withStore } from 'justorm/react';
-import cn from 'classnames';
 
 import { Link, Scroll, Expand } from 'uilib';
 
@@ -8,8 +7,19 @@ import NAV_CONFIG from '../../navigation';
 
 import S from './Sidebar.styl';
 
+export const SidebarLink = withStore('app')(({ path, label, store }) => (
+  <Link
+    href={path}
+    key={path}
+    className={S.link}
+    onClick={store.app.toggleMenu}
+  >
+    {label}
+  </Link>
+));
+
 export default memo(
-  withStore(['router', 'app'])(function Sidebar({ store }) {
+  withStore('router')(function Sidebar({ store }) {
     const { path } = store.router;
     const [openedGroup, setOpenedGroup] = useState(path.split('/')[1]);
 
@@ -51,15 +61,13 @@ export default memo(
                       const path = `/${group.id}/${id}`;
 
                       return (
-                        <Link
-                          href={path}
-                          key={path}
-                          className={S.link}
-                          isPartialExact
-                          onClick={store.app.toggleMenu}
-                        >
-                          {label}
-                        </Link>
+                        <Fragment key={id}>
+                          <SidebarLink path={path} label={label || id} />
+                          <div
+                            id={`sidebar-item-${id}`}
+                            className={S.subItems}
+                          />
+                        </Fragment>
                       );
                     })}
                   </Scroll>

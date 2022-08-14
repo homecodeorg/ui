@@ -4,12 +4,12 @@ export default () => {
   const size = 'm';
   return (
     <PopupMenu
-      direction="bottom"
-      autoClose
+      direction="top"
+      hoverControl
       size={size}
       trigger={
         <Button size={size} variant="default">
-          Open Menu
+          Hover to open menu
         </Button>
       }
       items={[

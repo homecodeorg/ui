@@ -1,81 +1,57 @@
-import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
-import { Container, Link, Router } from 'uilib';
+import { ComponentLayout, TypesTable } from 'docs/components';
+import { Heading, Link } from 'uilib';
 
 import * as helpers from './helpers';
 import S from './helpers.styl';
 
-import Endless from '!!raw-loader!./Endless';
-import EndlessScroll from '!!raw-loader!./EndlessScroll';
-import Finite from '!!raw-loader!./Finite';
-import FiniteScroll from '!!raw-loader!./FiniteScroll';
-import InitialTotal from '!!raw-loader!./InitialTotal';
-import ContentBefore from '!!raw-loader!./ContentBefore';
+import endless from '!!raw-loader!./Endless';
+import endlessScroll from '!!raw-loader!./EndlessScroll';
+import finite from '!!raw-loader!./Finite';
+import finiteScroll from '!!raw-loader!./FiniteScroll';
+import initialTotal from '!!raw-loader!./InitialTotal';
+import contentBefore from '!!raw-loader!./ContentBefore';
 
-const rootPath = '/components/virtualized';
-
-const Example = props => <Code scope={{ helpers, S }} {...props} />;
-
-const Navigation = () => (
-  <div>
-    <div>
-      native scrollbars:
-      <Link href={`/endless`}>Endless</Link>
-      <Link href={`/finite`}>Finite</Link>
-    </div>
-    <div>
-      <div>
-        custom scrollbars:
-        <Link href={`/endless-scroll`}>Endless</Link>
-        <Link href={`/finite-scroll`}>Finite</Link>
-      </div>
-    </div>
-    <div>
-      <Link href={`/initial-total`}>Initial data already total</Link>
-    </div>
-    <div>
-      <Link href={`/content-before`}>contentBefore</Link>
-    </div>
-  </div>
+const name = 'Virtualized';
+const Docs = () => (
+  <>
+    <p>
+      UI component is a slideshow gallery component that displays a series of
+      images or other items in a carousel-like fashion.{' '}
+      <span>
+        <Link inline href="/demo">
+          Demo
+        </Link>
+      </span>
+    </p>
+    <Heading id="Props" text="Props" />
+    <TypesTable scope={name} type="Props" />
+  </>
 );
 
-export default () => {
-  return (
-    <ComponentLayout
-      name="Virtualized"
-      code={
-        <Container vertical fullWidth>
-          <Router rootPath={rootPath}>
-            <Navigation exact path="/" />
-            <Example exact path="/endless" code={Endless} key="endless" />
-            <Example
-              exact
-              path="/endless-scroll"
-              code={EndlessScroll}
-              key="endless-scroll"
-            />
-            <Example exact path="/finite" code={Finite} key="finite" />
-            <Example
-              exact
-              path="/finite-scroll"
-              code={FiniteScroll}
-              key="finite-scroll"
-            />
-            <Example
-              exact
-              path="/initial-total"
-              code={InitialTotal}
-              key="initial-total"
-            />
-            <Example
-              exact
-              path="/content-before"
-              code={ContentBefore}
-              key="content-before"
-            />
-          </Router>
-        </Container>
-      }
-      api={<TypesNavigator scope="Virtualized" type="Props" />}
-    />
-  );
-};
+const examples = [
+  { id: 'endless', label: 'Endless', code: endless },
+  { id: 'finite', label: 'Finite', code: finite },
+  {
+    id: 'customScroll',
+    label: 'Custom scrollbars',
+    items: [
+      { id: 'endless', label: 'Endless', code: endlessScroll },
+      { id: 'finite', label: 'Finite', code: finiteScroll },
+      {
+        id: 'initialTotal',
+        label: 'Initial data total',
+        code: initialTotal,
+      },
+      { id: 'contentBefore', label: 'Content before', code: contentBefore },
+    ],
+  },
+];
+
+export default () => (
+  <ComponentLayout
+    name={name}
+    docs={Docs}
+    examples={examples}
+    scope={{ helpers, S }}
+  />
+);

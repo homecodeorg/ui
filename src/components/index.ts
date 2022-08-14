@@ -7,6 +7,7 @@ export * from './DateTime/DateTime';
 export * from './Expand/Expand';
 export * from './Form/Form';
 export * from './Gallery/Gallery';
+export * from './Heading/Heading';
 export * from './Icon/Icon';
 export * from './Input/Input';
 export * from './InputFile/InputFile';

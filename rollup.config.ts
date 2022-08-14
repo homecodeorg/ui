@@ -24,7 +24,7 @@ import dts from 'rollup-plugin-dts';
 // import { babel } from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 
-import pkg from './package.json';
+import pkg from './package.json' assert { type: "json" };
 
 /* initialize CSS files because of a catch-22 situation:
    https://github.com/rollup/rollup/issues/1404 */
@@ -126,6 +126,7 @@ function generateLocalLib() {
     name: 'generate-local-lib',
     writeBundle: (options, bundle) => {
       const libJSON = Object.entries(bundle).reduce(
+        // @ts-ignore
         (acc, [path, { code }]) => ({
           ...acc,
           [`/node_modules/@foreverido/uilib/${path}`]: code,

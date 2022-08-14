@@ -26,15 +26,14 @@ const params = {
 const show = type => NotificationsStore.show(params[type]);
 const showAll = () => {
   let delay = 0;
-  ['info', 'warning', 'error', 'loading'].forEach(type =>
+  Object.keys(params).forEach(type =>
     Time.after((delay += 200), () => show(type))
   );
 };
 
 export default () => (
-  <Container fullHeight>
-    <Notifications style={{ maxWidth: '60%' }} />
-    <div>
+  <Container fullHeight style={{ height: '40vh', maxHeight: '40vh' }}>
+    <div style={{ flex: 1 }}>
       <Button onClick={() => show('info')}>Info</Button>
       <br />
       <Button onClick={() => show('warning')}>Warning</Button>
@@ -45,5 +44,6 @@ export default () => (
       <br />
       <Button onClick={showAll}>All</Button>
     </div>
+    <Notifications style={{ maxWidth: '60%' }} />
   </Container>
 );

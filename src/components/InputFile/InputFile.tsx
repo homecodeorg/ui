@@ -188,11 +188,11 @@ export class InputFile extends Component<T.Props> {
     const { upload } = this.props;
     const { items } = this.store;
     const state = items[index];
-    const src = await upload(
+    const src = await upload({
       file,
-      this.onProgress(state),
-      xhr => (state.xhr = xhr)
-    );
+      onProgress: this.onProgress(state),
+      getXHR: xhr => (state.xhr = xhr),
+    });
 
     delete this.filesToUpload[index];
 
@@ -218,11 +218,8 @@ export class InputFile extends Component<T.Props> {
         const file = this.filesToUpload[i];
 
         if (file) {
-          requests.push(
-            upload(file, this.onProgress(items[i])).then(
-              url => (newVal[i] = url)
-            )
-          );
+          const params = { file, onProgress: this.onProgress(items[i]) };
+          requests.push(upload(params).then(url => (newVal[i] = url)));
         }
       });
 
