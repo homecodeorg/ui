@@ -1,49 +1,67 @@
-import { Tabs } from 'uilib/components';
-import { LS } from 'uilib/tools';
+import { withStore } from 'justorm/react';
+
+import { Router, Link, Container } from 'uilib/components';
+import { Code, TypesNavigator } from 'docs/components';
 
 import S from './ComponentLayout.styl';
 
-type Props = {
-  name: string;
-  api: React.ReactNode;
-  code: React.ReactNode;
+export type ExmapleData = {
+  id: string;
+  label: string;
+  content: React.ReactNode;
 };
 
-let activeTabId = LS.get('component-layout-tab') || 'demo';
+type Props = {
+  name: string;
+  rootPath: string;
+  scope: Record<string, any>;
+  examples: ExmapleData[];
+  documentation: React.ReactNode;
+};
 
-function setActiveTab(id) {
-  activeTabId = id;
-  LS.set('component-layout-tab', id);
-}
+const Header = withStore('router')(({ name, rootPath, examples, store }) => {
+  const tail = store.router.path
+    .replace(new RegExp(`^${rootPath}`), '')
+    .replace(/\?.+/, '')
+    .split('/')
+    .pop();
+  const example = tail && examples.find(({ id }) => id === tail);
+  const title = <h1>{name}</h1>;
+  return (
+    <div className={S.header}>
+      {example ? (
+        <>
+          <Link className={S.title} href={rootPath}>
+            {title}
+          </Link>
+          <h2 className={S.subtitle}>{example.label}</h2>
+        </>
+      ) : (
+        title
+      )}
+    </div>
+  );
+});
 
-export function ComponentLayout({ name, api, code }: Props) {
+export function ComponentLayout({
+  name,
+  rootPath,
+  examples,
+  scope,
+  documentation: Docs,
+}: Props) {
   return (
     <div className={S.root}>
-      <Tabs
-        size="s"
-        contentClassName={S.content}
-        items={[
-          {
-            id: 'api',
-            label: 'API',
-            content: api,
-            contentClassName: S.api,
-            forceRender: true,
-          },
-          { id: 'demo', label: 'Demo', content: code, forceRender: true },
-        ]}
-        activeId={activeTabId}
-        onChange={setActiveTab}
-        children={({ tabs, content }) => (
-          <>
-            <h1 className={S.header}>
-              {name}
-              {tabs}
-            </h1>
-            {content}
-          </>
-        )}
-      />
+      <Header name={name} rootPath={rootPath} examples={examples} />
+      <Container vertical fullWidth size="m" className={S.content}>
+        <Router rootPath={rootPath}>
+          <Docs path="/" exact />
+          {examples.map(({ id, content }) => (
+            <Code exact path={`/${id}`} code={content} scope={scope} key={id} />
+          ))}
+        </Router>
+        {/* <TypesNavigator scope={name} type="Props" /> */}
+      </Container>
     </div>
   );
 }

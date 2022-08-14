@@ -57,16 +57,8 @@ class App extends Component<{ store?: any }> {
       <>
         <Theme config={currThemeConfig.originalObject} />
 
-        <div className={S.root}>
-          <div className={cn(S.nav, isMenuOpen && S.open)}>
-            <Button
-              className={S.menuButton}
-              variant="clear"
-              size="l"
-              onClick={this.store.toggleMenu}
-            >
-              <Icon type="menu" size="l" />
-            </Button>
+        <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>
+          <div className={S.nav}>
             <div className={S.configBar}>
               <span className={S.version}>v{VERSION}</span>
               <Button
@@ -95,6 +87,8 @@ class App extends Component<{ store?: any }> {
                   value={activeColor}
                 />
               </Button>
+
+              <div style={{ width: 50 }} />
             </div>
             <Sidebar />
           </div>
@@ -107,6 +101,15 @@ class App extends Component<{ store?: any }> {
               )}
             </Router>
           </Container>
+
+          <Button
+            className={S.menuButton}
+            variant="clear"
+            size="l"
+            onClick={this.store.toggleMenu}
+          >
+            <Icon type="menu" size="l" />
+          </Button>
         </div>
       </>
     );

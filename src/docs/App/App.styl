@@ -32,15 +32,15 @@ body
   border-radius inherit
 
 .menuButton
-  position fixed
+  z-index 101
+  position absolute
   top 0
-  left 100%
+  right 0
   max-height unset
   height 71px
   width 67px
   border-radius 0
   border-bottom-right-radius var(--indent-s)
-  opacity 0
   background-color transparent !important
   transition all .5s ease-out
 
@@ -49,48 +49,29 @@ body
     height 30px
     width 30px
 
-  &:hover
-    color var(--active-color)
-
-  .open &
-    left calc(100% - 11px)
-
-    &::before
-      z-index -1
-      content ''
-      position fixed
-      top 0
-      left 0
-      height 100vh
-      width 100vw
-      background-color var(--decent-color-alpha-900)
-      backdrop-filter blur(10px)
+  @media (min-width: $tablet)
+    display none
 
 .nav
   display flex
   flex-direction column
-  min-width 200px
-  background-color var(--decent-color-alpha-800)
-  background-image linear-gradient(to left, var(--decent-color-alpha-500), var(--decent-color-alpha-50));
-  // box-shadow 2px 0 0 var(--decent-color)
+  width 250px
 
-  &::before
-  &::after
-    content ''
-    position absolute
-    left 0
-    right 2px
-    height 100px
-    pointer-events none
-    z-index 1
+  @media (min-width: $tablet)
+    transform translateX(var(--indent-s))
 
-  &::before
-    top 0
-    background-image linear-gradient(var(--bg-color), transparent)
+  @media (max-width: $tablet)
+    width 100%
 
-  &::after
-    bottom 0
-    background-image linear-gradient(transparent, var(--bg-color))
+    &::before
+      content ''
+      position absolute
+      top 0
+      left 0
+      right 0
+      bottom 0
+      background-color var(--decent-color-alpha-900)
+      backdrop-filter blur(10px)
 
 .navItem
   text-align right
@@ -124,8 +105,8 @@ body
     transform translateX(-100%)
     transition transform .2s ease-out
 
-    &.open
-      transform translateX(0)
-
     .menuButton
       opacity 1
+
+    .isMenuOpen &
+      transform translateX(0)

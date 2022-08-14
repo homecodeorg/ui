@@ -10,24 +10,47 @@
   position sticky
   top 0
   display flex
-  align-items center
+  flex-direction column
   justify-content space-between
   padding 0 var(--indent-l)
+  backdrop-filter blur(50px)
 
   @media(max-width: $tablet)
-    padding-left 60px
-    padding-right var(--indent-m)
+    padding-right 60px
+
+.title
+  padding 0
+
+  &::before
+    content none !important
+
+.subtitle
+  width 100%
+  padding-left 4px
+  padding-bottom var(--indent-m)
+  margin-top -1em
+  line-height 1.2em
+  font-size 80%
+
+  &::before
+    content ''
+    display inline-block
+    height .5em
+    width .5em
+    border solid var(--accent-color)
+    border-width 0 0 2px 2px
+    margin-right 1em
+    transform translateY(-.3em)
 
 .api
   flex-grow unset !important
 
 .content
-  display flex
-  flex-grow 1
-  overflow hidden
-  padding 0 var(--indent-m)
-  margin-bottom var(--indent-m)
+  // display flex
+  // flex-grow 1
+  // overflow hidden
+  padding-top 0
 
-  @media(min-width: $tablet)
-    padding 0 var(--indent-l)
-    margin-bottom var(--indent-l)
+  // @media(min-width: $tablet)
+  //   padding 0 var(--indent-l)
+  //   margin-bottom var(--indent-l)

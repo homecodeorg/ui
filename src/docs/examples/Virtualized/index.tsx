@@ -19,21 +19,21 @@ const Navigation = () => (
   <div>
     <div>
       native scrollbars:
-      <Link href={`/endless`}>Endless</Link>
-      <Link href={`/finite`}>Finite</Link>
+      <Link href="/endless">Endless</Link>
+      <Link href="/finite">Finite</Link>
     </div>
     <div>
       <div>
         custom scrollbars:
-        <Link href={`/endless-scroll`}>Endless</Link>
-        <Link href={`/finite-scroll`}>Finite</Link>
+        <Link href="/endless-scroll">Endless</Link>
+        <Link href="/finite-scroll">Finite</Link>
       </div>
     </div>
     <div>
-      <Link href={`/initial-total`}>Initial data already total</Link>
+      <Link href="/initial-total">Initial data already total</Link>
     </div>
     <div>
-      <Link href={`/content-before`}>contentBefore</Link>
+      <Link href="/content-before">contentBefore</Link>
     </div>
   </div>
 );
