@@ -8,6 +8,7 @@
   width calc(100% - 2px)
   max-height calc(100vh - 100px)
   margin 1px
+  background-color var(--decent-color)
   box-shadow inset 0 0 0 2px var(--accent-color-alpha-100)
   border-radius var(--border-radius-l)
   overflow hidden
@@ -22,19 +23,30 @@
     backface-visibility hidden
     pointer-events none
 
+  &.fullscreen
+    position fixed
+    top 0
+    left 0
+    z-index 1000
+    width 100vw
+    height 100vh
+    max-height 100vh
+    border-radius 0
+    box-shadow none
+
 .editorContainer
 .editorResult
   border-radius inherit
   flex 1
+
+.editorContainerInner
+  mask-image linear-gradient(to bottom, rgba(0,0,0,0) 2px, #000 20px, #000 calc(100% - 20px), rgba(0,0,0,0))
 
 .editorContainer
   position relative
   max-height 60vh
   border-bottom-left-radius 0
   border-bottom-right-radius 0
-
-.editorContainerInner
-  mask-image linear-gradient(to bottom, rgba(0,0,0,0) 2px, #000 20px, #000 calc(100% - 20px), rgba(0,0,0,0))
 
 .error
 .editorContainer *
@@ -48,6 +60,10 @@
 .editor
   padding-bottom 16px
   background-color unset !important
+
+  & > pre
+    padding-right 50px !important // for fullscreen button
+    background-color unset !important
 
 @media(max-width: $tablet)
   .editor
@@ -72,3 +88,25 @@
   border-top-left-radius 0
   border-top-right-radius 0
 
+.fullscreenButton
+  position absolute
+  top 0
+  right 0
+  z-index 3
+  border-top-left-radius 0
+  border-bottom-right-radius 0
+
+  & > svg
+    transform scale(1.4)
+
+  .fullscreen &
+    border-top-right-radius 0
+
+  &::before
+    content ''
+    display block
+    position relative
+    left -10px
+    top -10px
+    right -10px
+    bottom -10px

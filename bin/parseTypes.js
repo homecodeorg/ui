@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const fs = require('fs');
+import fs from 'fs';
 
 let level = 'root';
 const levelsData = [];
@@ -34,7 +34,7 @@ const MATCHERS = {
 
       // single line type
       if (/;$/.test(line)) {
-        data[name] = value;
+        data[name] = { value: value.replace(/;$/, ''), isPlain: true };
         levelsData.shift();
       } else level = 'field'; // dive into field level
     }
@@ -83,12 +83,13 @@ const MATCHERS = {
   clearExtends(node) {
     if (node.ext[node.ext.length - 1].trim() === '{') node.ext.pop();
   },
-  preFieldComment: null,
+  preFieldComment: '',
   field(line) {
     const trimedLine = line.trim();
 
     if (/^\/\//.test(trimedLine)) {
-      this.preFieldComment = trimedLine;
+      const comment = trimedLine.replace(/^\/\//, '').trim();
+      this.preFieldComment += (this.preFieldComment ? '\n' : '') + comment;
       return;
     }
 
@@ -102,7 +103,7 @@ const MATCHERS = {
 
       if (this.preFieldComment) {
         fieldData.comment = this.preFieldComment;
-        this.preFieldComment = null;
+        this.preFieldComment = '';
       }
 
       this.value(fieldData);

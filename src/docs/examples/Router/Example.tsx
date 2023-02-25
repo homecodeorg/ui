@@ -4,13 +4,13 @@ import { Router, Link } from 'uilib';
 const StartPage = () => (
   <>
     <Link href="/">Home</Link>
-    > <Link href="/users">Users</Link>
+    &gt; <Link href="/users">Users</Link>
   </>
 );
 const UsersPage = () => (
   <>
     <Link href="/">Home</Link>
-    > <Link href="/users">Users</Link>
+    &gt; <Link href="/users">Users</Link>
     <br />
     <Link href="/users/azaza">azaza</Link>
     <Link href="/users/ololosh">ololosh</Link>
@@ -22,8 +22,8 @@ const UserPage = ({ id, rootPath }) => {
   return (
     <>
       <Link href="/">Home</Link>
-      > <Link href="/users">Users</Link>
-      > <Link href={currPage}>{id}</Link>
+      &gt; <Link href="/users">Users</Link>
+      &gt; <Link href={currPage}>{id}</Link>
       <br />
       <Router rootPath={`${rootPath}${currPage}`}>
         <UserMenu id={id} />
@@ -32,13 +32,15 @@ const UserPage = ({ id, rootPath }) => {
       </Router>
     </>
   );
-}
-const UserMenu = ({ id }) => (<>
-  <Link href="/friends">friends</Link>
-  <Link href="/creatures">creatures</Link>
-</>);
-const UserFriends = () => "friends: foo, bar";
-const UserCreatures = () => "creatures: sas";
+};
+const UserMenu = ({ id }) => (
+  <>
+    <Link href="/friends">friends</Link>
+    <Link href="/creatures">creatures</Link>
+  </>
+);
+const UserFriends = () => 'friends: foo, bar';
+const UserCreatures = () => 'creatures: sas';
 
 export default withStore('router')(({ store: { router } }) => {
   const rootPath = '/components/router';

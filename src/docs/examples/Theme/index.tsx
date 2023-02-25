@@ -1,13 +1,157 @@
-import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
+import { Heading, Link } from 'uilib';
+import { ComponentLayout } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import basic from '!!raw-loader!./Basic';
+import advanced from '!!raw-loader!./Advanced';
 
-import S from './Example.styl';
+const examples = [
+  {
+    id: 'demo',
+    label: 'Demo',
+    code: basic,
+  },
+  {
+    id: 'advanced',
+    label: 'Advanced',
+    code: advanced,
+  },
+];
+
+const Docs = () => (
+  <>
+    <p>Allow define the look and feel of UI components easily.</p>
+    <p>
+      Just pass a JSON object to the component with the desired colors, sizes,
+      and other styles. The component then applies those styles to all the
+      library components using CSS variables.
+    </p>
+    <Heading id="props" text="Props" />
+    <table>
+      <thead>
+        <tr>
+          <th>Prop</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>config</td>
+          <td>
+            <Link href="#ThemeConfig" inline>
+              ThemeConfig
+            </Link>
+          </td>
+          <td>Theme configuration</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <Heading id="ThemeConfig" text="ThemeConfig" />
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>base</td>
+          <td>
+            <ul>
+              <li>indent-s</li>
+              <li>indent-m</li>
+              <li>indent-l</li>
+              <li>border-radius-s</li>
+              <li>border-radius-m</li>
+              <li>border-radius-l</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>colors</td>
+          <td>
+            <ul>
+              <li>active</li>
+              <li>accent</li>
+              <li>decent</li>
+              <li>warning</li>
+              <li>danger</li>
+              <li>disabled</li>
+              <li>link</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>rest</td>
+          <td>Any other values that will be rendered as CSS variables</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <Heading id="ThemeDefaults" text="ThemeDefaults" />
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>colors</td>
+          <td>
+            <ul>
+              <li>light</li>
+              <li>dark</li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <Heading id="ThemeHelpers" text="ThemeHelpers" />
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>colorsConfigToVars</td>
+          <td>
+            Function takes a ThemeConfig object, which contains color
+            definitions for various states, and returns a new object that
+            contains CSS variable declarations for each color and its associated
+            variations.
+          </td>
+        </tr>
+        <tr>
+          <td>getColors</td>
+          <td>
+            <p>
+              The function takes an optional object parameter with default
+              values for accent, decent, active, warning, danger, disabled, and
+              link colors.
+            </p>
+            <p>
+              Returns a ColorConfig, which defines the color palette for a user
+              interface.
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td>getConfig</td>
+          <td>Function</td>
+        </tr>
+      </tbody>
+    </table>
+  </>
+);
 
 export default () => (
-  <ComponentLayout
-    name="Theme"
-    code={<Code code={example} scope={{ S }} />}
-    api={<TypesNavigator scope="Theme" type="Props" />}
-  />
+  <ComponentLayout name="Theme" examples={examples} docs={Docs} />
 );

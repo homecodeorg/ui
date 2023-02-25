@@ -12,7 +12,6 @@ import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';
 import { Icon } from '../Icon/Icon';
 import { Scroll } from '../Scroll/Scroll';
-import { Size } from 'uilib/types';
 
 import S from './Input.styl';
 import * as T from './Input.types';
@@ -121,11 +120,10 @@ export class Input extends Component<T.Props> {
   }
 
   getValue(val = this.store.inputValue) {
-    const { type, isNullable } = this.props;
+    const { type } = this.props;
 
     if (type === 'number') {
       if (val) return parseFloat(val);
-      if (isNullable && val === '') return null;
       return 0;
     }
 
@@ -186,14 +184,14 @@ export class Input extends Component<T.Props> {
     const { onChange, changeOnEnd, type } = this.props;
     const isNumber = type === 'number';
 
-    // @ts-ignore
     if (!isNumber) this.cursorPos = this.inputRef.current.selectionStart;
 
     if (changeOnEnd) {
       this.store.inputValue = value;
       this.updateHasValue();
-    } else if (onChange) onChange(e, value);
-    else {
+    } else if (onChange) {
+      onChange(e, value);
+    } else {
       this.store.inputValue = value;
     }
   };
@@ -210,9 +208,7 @@ export class Input extends Component<T.Props> {
 
   onTypingEnd = () => {
     const { onChange } = this.props;
-    const value = this.getValue();
-
-    if (onChange) onChange(null, value);
+    onChange?.(null, this.getValue());
   };
 
   onFocus = e => {
@@ -220,7 +216,7 @@ export class Input extends Component<T.Props> {
 
     this.store.isFocused = true;
     this.updateLabelPosition();
-    if (onFocus) onFocus(e);
+    onFocus?.(e);
   };
 
   onBlur = e => {
@@ -242,8 +238,7 @@ export class Input extends Component<T.Props> {
   };
 
   getControlProps(): T.ControlProps {
-    const { value, label, isNullable, controlProps, placeholder, ...rest } =
-      this.props;
+    const { value, label, controlProps, placeholder, ...rest } = this.props;
     const { autoComplete, isLabelOnTop, inputValue } = this.store;
 
     const props = {
@@ -270,11 +265,6 @@ export class Input extends Component<T.Props> {
     if (this.isTextArea()) {
       props.contentEditable = true;
       props.onInput = this.onTextAreaInput;
-    }
-
-    // @ts-ignore
-    if (value === null && !isNullable) {
-      props.value = rest.type === 'number' ? 0 : '';
     }
 
     if (placeholder && !value && (!label || isLabelOnTop)) {

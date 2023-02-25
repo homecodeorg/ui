@@ -15,5 +15,5 @@ export type Props = Omit<HTMLProps<HTMLDivElement>, 'size'> & {
   smooth?: boolean; // smooth scroll
   autoHide?: boolean;
   offset?: { x?: OffsetAxis; y?: OffsetAxis };
-  onScroll?: (e: MouseEvent) => void;
+  onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
 };

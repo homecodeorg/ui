@@ -76,7 +76,7 @@ export class Checkbox extends Component<T.Props> {
             type="checkbox"
             tabIndex={0}
           />
-          <Icon type="check" className={S.checkmark} />
+          <Icon type="check" className={S.checkmark} size={size} />
         </div>
         {label}
       </label>

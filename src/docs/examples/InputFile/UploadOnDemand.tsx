@@ -8,7 +8,6 @@ export default () => {
 
   const onSubmit = useCallback(async function () {
     const photos = await demandUploader(upload);
-
     setInitialValues({ photos });
   }, []);
 
@@ -29,7 +28,7 @@ export default () => {
             {
               type: 'submit',
               children: 'Submit',
-              isLoading,
+              loading: isLoading,
               key: 'submit',
               disabled: !isValid || !isDirty,
             },

@@ -17,6 +17,10 @@ export const colors = {
   dark: '#1a1a1a',
 };
 
+type ColorConfig = {
+  [key: string]: string | { color: string; mods: { alpha: number[] } };
+};
+
 export function getColors({
   accent = colors.light,
   decent = colors.dark,
@@ -25,7 +29,7 @@ export function getColors({
   danger = '#da3749',
   disabled = '#f1f1f2',
   link = '#3089fe',
-} = {}) {
+} = {}): ColorConfig {
   return {
     active: {
       color: active,

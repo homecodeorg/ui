@@ -1,11 +1,12 @@
 import cn from 'classnames';
 import { useCallback } from 'react';
-import { isBrowser, Link } from 'uilib';
+import { Link } from 'uilib';
+import { env } from 'uilib/tools';
 
 import S from './Text.styl';
 
 const textToAnchorId = text => text.toLowerCase().split(' ').join('_');
-const getPath = () => (isBrowser && location.pathname) ?? '/';
+const getPath = () => (env.isBrowser && location.pathname) ?? '/';
 const scrollIntoHeader = id => document.getElementById(id)?.scrollIntoView();
 
 function useAnchor(text) {
@@ -45,7 +46,7 @@ export const H4 = props => <H {...props} As="h4" />;
 export const H5 = props => <H {...props} As="h5" />;
 export const H6 = props => <H {...props} As="h6" />;
 
-if (isBrowser) {
+if (env.isBrowser) {
   window.addEventListener('load', () => {
     scrollIntoHeader(location.hash.slice(1));
   });

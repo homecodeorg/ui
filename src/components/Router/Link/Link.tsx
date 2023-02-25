@@ -23,6 +23,7 @@ export class Link extends Component<T.Props> {
 
   getHref() {
     const { href } = this.props;
+    // @ts-ignore
     const { rootPath = '' } = this.context;
 
     return `${rootPath}${href === '/' ? '' : href}`;
@@ -62,7 +63,7 @@ export class Link extends Component<T.Props> {
     return path === href;
   }
 
-  renderLink = () => {
+  render() {
     const {
       className,
       exactClassName,
@@ -112,9 +113,5 @@ export class Link extends Component<T.Props> {
         {isExternal && <Icon type="externalLink" className={S.externalIcon} />}
       </a>
     );
-  };
-
-  render() {
-    return this.renderLink();
   }
 }

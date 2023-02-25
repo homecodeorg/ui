@@ -1,7 +1,7 @@
-export type ThemeConfig = {
-  [name: string]: string;
+export type ThemeConfig = Record<string, string> & {
+  colors?: Record<string, string>;
 };
 
 export type Props = {
-  config?: ThemeConfig;
+  config?: Record<string, string>;
 };

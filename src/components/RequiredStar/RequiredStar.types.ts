@@ -1,6 +1,7 @@
-import type { Size } from '../../types';
+import { IconSize } from '../Icon/Icon.types';
 
 export type Props = {
   className?: string;
-  size?: Size;
+  size?: IconSize;
+  inline?: boolean;
 };

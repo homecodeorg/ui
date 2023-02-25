@@ -1,4 +1,4 @@
-import { isBrowser } from './env';
+import { env } from 'uilib/tools';
 
 export function getCoords(elem) {
   const box = elem.getBoundingClientRect();
@@ -35,4 +35,4 @@ export function watchControllerFlag() {
   classes.add('mouse');
 }
 
-export const isTouch = () => isBrowser && 'ontouchstart' in window;
+export const isTouch = () => env.isBrowser && 'ontouchstart' in window;

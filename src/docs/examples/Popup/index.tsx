@@ -1,6 +1,25 @@
-import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
+import { Heading } from 'uilib';
+import { ComponentLayout, TypesTable } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import basic from '!!raw-loader!./Basic';
+// import multiple from '!!raw-loader!./Multiple';
+// import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
+
+const name = 'Popup';
+const examples = [{ id: 'basic', label: 'Basic', code: basic }];
+
+const Docs = () => (
+  <>
+    <p>Component for uploading files.</p>
+
+    <Heading id="props" text="Props" />
+    <TypesTable scope={name} type="Props" />
+  </>
+);
+
+export default () => (
+  <ComponentLayout name={name} docs={Docs} examples={examples} />
+);
 
 // import cn from 'classnames';
 
@@ -25,14 +44,6 @@ import example from '!!raw-loader!./Example';
 
 //   return <div className={classes}>{children}</div>;
 // };
-
-export default () => (
-  <ComponentLayout
-    name="Popup"
-    code={<Code code={example} />}
-    api={<TypesNavigator scope="Popup" type="Props" />}
-  />
-);
 
 // export default () => (
 //   <Fragment>

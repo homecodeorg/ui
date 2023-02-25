@@ -9,7 +9,7 @@ import {
   dom,
   scroll,
   resizeObserver,
-  isBrowser,
+  env,
   throttle,
 } from 'uilib/tools';
 
@@ -303,7 +303,7 @@ export class Popup extends Component<T.Props> {
     const { isOpen, isContentVisible, direction } = this.store;
 
     const trigger = this.triggerElem.current;
-    const target = isBrowser && document.getElementById('app-modal');
+    const target = env.isBrowser && document.getElementById('app-modal');
 
     if (!target) return null;
 

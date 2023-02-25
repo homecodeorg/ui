@@ -1,22 +1,13 @@
-import { hot } from 'react-hot-loader/root';
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
-import {
-  Router,
-  Redirect,
-  Lazy,
-  Button,
-  Theme,
-  dom,
-  Icon,
-  Container,
-} from 'uilib';
+import { Button, Container, Icon, Redirect, Router, Theme, Lazy } from 'uilib';
+import { dom } from 'uilib/tools';
 
 import Sidebar from '../components/Sidebar/Sidebar';
 import NAV_CONFIG from '../navigation';
 
-require('./store');
+import './store';
 import S from './App.styl';
 
 dom.watchControllerFlag();
@@ -60,6 +51,7 @@ class App extends Component<{ store?: any }> {
         <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>
           <div className={S.nav}>
             <div className={S.configBar}>
+              {/* @ts-ignore */}
               <span className={S.version}>v{VERSION}</span>
               <Button
                 className={S.cfgButton}
@@ -95,6 +87,7 @@ class App extends Component<{ store?: any }> {
 
           <Container fullWidth className={S.content}>
             <Router>
+              {/* @ts-ignore */}
               <Redirect exact path="/" to="/intro/about" key="/" />
               {NAV_CONFIG.map(({ id, items }) =>
                 items.map(item => this.renderItem(id, item))
@@ -116,4 +109,4 @@ class App extends Component<{ store?: any }> {
   }
 }
 
-export default hot(App);
+export default App;
