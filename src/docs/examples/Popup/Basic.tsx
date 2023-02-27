@@ -10,8 +10,8 @@ export default () => {
     <Popup
       isOpen={isOpen}
       size={size}
-      controllable
-      direction="bottom"
+      focusControl
+      direction="top"
       trigger={
         <Button size={size} onClick={toggle}>
           Open Popup

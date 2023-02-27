@@ -1,9 +1,10 @@
 import { Heading, Link } from 'uilib';
-import { ComponentLayout, Required, TypesNavigator } from 'docs/components';
+import { ComponentLayout } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
 
+const name = 'Button';
 const Docs = () => (
   <>
     <p>
@@ -15,13 +16,13 @@ const Docs = () => (
     </p>
 
     <Heading id="props" text="Props" />
-    <TypesTable scope="Button" type="Props" />
+    <TypesTable scope={name} type="Props" />
   </>
 );
 
 export default () => (
   <ComponentLayout
-    name="Button"
+    name={name}
     docs={Docs}
     examples={[{ id: 'demo', label: 'Demo', code: example }]}
     scope={{}}

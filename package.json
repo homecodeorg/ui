@@ -67,6 +67,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/plugin-proposal-optional-chaining": "^7.20.7",
+    "@babel/preset-typescript": "^7.21.0",
     "@codesandbox/sandpack-react": "^2.0.6",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-json": "^6.0.0",

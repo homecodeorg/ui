@@ -19,6 +19,8 @@ import * as T from './Popup.types';
 
 export const ANIMATION_DURATION = 100;
 
+export type PopupProps = T.Props;
+
 export class Popup extends Component<T.Props> {
   rootElem = createRef<HTMLDivElement>();
   triggerElem = createRef<HTMLDivElement>();
@@ -61,16 +63,17 @@ export class Popup extends Component<T.Props> {
   }
 
   componentDidMount() {
-    const { controllable, hoverControl, inline } = this.props;
+    const { hoverControl, focusControl, inline } = this.props;
 
     this.store.isMounted = true;
 
     if (this.rootElem && !inline) {
+      // TODO: listen scroll on document and check if its outside of popup
       this.scrollParent = scroll.getScrollParent(this.rootElem.current);
       this.scrollParent.addEventListener('scroll', this.close);
     }
 
-    if (!controllable) {
+    if (focusControl) {
       document.addEventListener('keyup', this.onDocKeyUp, true);
     }
 
@@ -183,20 +186,20 @@ export class Popup extends Component<T.Props> {
   };
 
   onFocus = (e: FocusEvent) => {
-    const { controllable, onTriggerFocus } = this.props;
+    const { onTriggerFocus } = this.props;
 
     this._focused = true;
-    if (!controllable && !this._pointerPressed) this.open();
+    if (!this._pointerPressed) this.open();
     onTriggerFocus?.(e);
   };
 
   onBlur = (e: FocusEvent) => {
-    const { controllable, onTriggerBlur } = this.props;
+    const { onTriggerBlur } = this.props;
 
     this._focused = false;
 
     onTriggerBlur?.(e);
-    if (!controllable && !this._pointerPressed) {
+    if (!this._pointerPressed) {
       // give time to fire clicks inside popup
       this.timers.after(80, this.close);
     }
@@ -253,7 +256,14 @@ export class Popup extends Component<T.Props> {
   }, 100);
 
   renderTrigger() {
-    const { trigger, content, disabled, triggerProps = {} } = this.props;
+    const {
+      trigger,
+      content,
+      disabled,
+      triggerProps = {},
+      focusControl,
+      hoverControl,
+    } = this.props;
     const { isOpen } = this.store;
 
     if (!trigger) return null;
@@ -267,13 +277,21 @@ export class Popup extends Component<T.Props> {
     );
 
     if (!disableTrigger) {
-      Object.assign(triggerProps, {
-        role: 'button',
-        onFocus: this.onFocus,
-        onBlur: this.onBlur,
-        onPointerDown: this.onTriggerPointerDown,
-        onPointerUp: this.onTriggerPointerUp,
-      });
+      triggerProps.role = 'button';
+
+      if (hoverControl) {
+        Object.assign(triggerProps, {
+          onPointerDown: this.onTriggerPointerDown,
+          onPointerUp: this.onTriggerPointerUp,
+        });
+      }
+
+      if (focusControl) {
+        Object.assign(triggerProps, {
+          onFocus: this.onFocus,
+          onBlur: this.onBlur,
+        });
+      }
     }
 
     return (
@@ -305,7 +323,7 @@ export class Popup extends Component<T.Props> {
     const trigger = this.triggerElem.current;
     const target = env.isBrowser && document.getElementById('app-modal');
 
-    if (!target) return null;
+    if (!target || disabled) return null;
 
     const wrapperClasses = cn(
       S.contentWrapper,
@@ -317,7 +335,7 @@ export class Popup extends Component<T.Props> {
     const [axis, float] = direction.split('-');
     const classes = cn(
       S.content,
-      !disabled && isOpen && S.isOpen,
+      isOpen && S.isOpen,
       outlined && S.outlined,
       elevation && S[`elevation-${elevation}`],
       S[`size-${size}`],

@@ -5,7 +5,7 @@ import { ComponentType, FormControl, Size } from '../../types';
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;
 export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
-  // Omit<ControlProps, 'ref'> &
+  Omit<ControlProps, 'ref'> &
   FormControl<Value> & {
     name?: string;
     size?: Size;

@@ -3,15 +3,16 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 
-import { capitalize } from '../../tools/string';
-import { generateUID } from '../../tools/uid';
-
-import { Label } from '../Label/Label';
-import { RequiredStar } from '../RequiredStar/RequiredStar';
-import { AssistiveText } from '../AssistiveText/AssistiveText';
-import { Button } from '../Button/Button';
-import { Icon } from '../Icon/Icon';
-import { Scroll } from '../Scroll/Scroll';
+import {
+  Label,
+  RequiredStar,
+  AssistiveText,
+  Button,
+  Icon,
+  Scroll,
+} from 'uilib';
+import { capitalize } from 'uilib/tools/string';
+import { generateUID } from 'uilib/tools/uid';
 
 import S from './Input.styl';
 import * as T from './Input.types';
@@ -21,6 +22,8 @@ const TEXTAREA_SCROLL_TOP_OFFSET = {
   m: 40,
   l: 50,
 };
+
+export type InputProps = T.Props;
 
 export class Input extends Component<T.Props> {
   inputRef = createRef<HTMLInputElement>();
@@ -405,5 +408,3 @@ export class Input extends Component<T.Props> {
     );
   }
 }
-
-export type InputProps = T.Props;

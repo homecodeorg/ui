@@ -108,9 +108,13 @@ const MATCHERS = {
 
       this.value(fieldData);
 
-      // console.log([name, question, value]);
-
       if (question) fieldData.optional = true;
+      // } else {
+      //   console.log('______ !match,   line:', line);
+      //   const levelData = getCurrLevelData();
+      //   levelData.value = line.trim();
+      //   console.log('>>>', levelData);
+      //   this.value(levelData);
     }
   },
   value(fieldData) {
@@ -128,7 +132,6 @@ const MATCHERS = {
 
       if (braces) this.subfieldBraces.push(...braces);
 
-      // console.log('=value', fieldData.value);
       levelsData.unshift(fieldData);
       level = 'subfield';
     } else {
@@ -165,9 +168,8 @@ function parseTypes(code) {
   levelsData.push({});
 
   code.split('\n').forEach(line => {
-    console.log(levelsData);
-    // console.log(getCurrLevelData());
     console.log(`::${level}`, line);
+    console.log(levelsData);
     MATCHERS[level](line);
   });
 

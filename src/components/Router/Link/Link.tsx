@@ -14,7 +14,9 @@ export class Link extends Component<T.Props> {
   domElem = createRef<HTMLAnchorElement>();
   rootPath = '';
 
+  // declare context: React.ContextType<typeof Context>;
   static contextType = Context;
+
   static defaultProps = {
     isClear: false,
     inline: false,
@@ -23,13 +25,14 @@ export class Link extends Component<T.Props> {
 
   getHref() {
     const { href } = this.props;
-    // @ts-ignore
-    const { rootPath = '' } = this.context;
+    const hrefFormatted = href === '/' ? '' : href;
 
-    return `${rootPath}${href === '/' ? '' : href}`;
+    return `${this.getRootPath()}${hrefFormatted}`;
   }
 
-  isExternal = () => /\./.test(this.getHref());
+  isExternal = () => /\./.test(this.props.href);
+
+  getRootPath = () => (this.isExternal() ? '' : this.context.rootPath ?? '');
 
   onClick = e => {
     const { onClick, store } = this.props;

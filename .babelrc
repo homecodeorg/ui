@@ -1,5 +1,8 @@
 {
-  "presets": ["react-app"],
+  "presets": [
+    "react-app",
+    ["@babel/preset-typescript", { "allowDeclareFields": true }]
+  ],
   "plugins": [
     "react-hot-loader/babel"
     // "@babel/plugin-proposal-optional-chaining"

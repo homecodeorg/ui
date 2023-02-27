@@ -1,6 +1,6 @@
-import { RefObject, ReactChild, ReactNode } from 'react';
+import { RefObject, ReactNode } from 'react';
 
-import { Size } from '../../types';
+import type { FormControl, Size } from 'uilib/types';
 
 import { InputProps } from '../Input/Input';
 import { PopupProps } from '../Popup/Popup';
@@ -24,7 +24,7 @@ type Preset = {
 
 export type PresetButtonProps = {
   key: string;
-  children: ReactChild;
+  children: ReactNode;
   onClick: () => void;
 };
 
@@ -40,57 +40,55 @@ type SelectPopupProps = Omit<
 > &
   Partial<{ direction: PopupProps['direction'] }>;
 
-type Selected = { [id: string]: true | Id[] };
+type Selected = Record<string, true | Id[]>;
 
-type GetInputValParams = {
-  isFocused: boolean;
-  searchVal: string;
-  selected: Selected;
-};
+export type Value = Id | Id[] | null;
 
-export type Props = Partial<
-  Pick<InputProps, 'required' | 'error' | 'disabled'>
-> & {
-  className?: string;
-  isOpen?: boolean;
-  optionsClassName?: string;
-  optionClassName?: string;
-  name?: string;
-  label?: string;
-  additionalLabel?: ReactNode;
-  size?: Size;
-  options: Option[];
-  limit?: number;
-  selectTree?: any; // typeof OptionsTree
-  isOnlyLeafs?: boolean; // select only leafs
-  additionalOptions?: Option[];
-  presets?: Preset[];
-  clearButton?: boolean;
-  selectAllButton?: boolean;
-  sortBy?: string;
-  groupBy?: string;
-  value?: Id | Id[] | null;
-  onApi?: (optionsTree: any) => void;
-  getInputVal?: (params: GetInputValParams) => string;
-  expandSelected?: boolean;
-  onChange: (value: Id | Id[]) => void;
-  onFocus?: InputProps['onFocus'];
-  onBlur?: InputProps['onBlur'];
-  onOpen?: () => void;
-  onClose?: () => void;
-  isSearchable?: boolean;
-  inputProps?: Omit<
-    InputProps,
-    'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
-  >;
-  disableTrigger?: boolean;
-  triggerProps?: any;
-  popupProps?: SelectPopupProps;
-  hideRequiredStar?: boolean;
-  hideErrorMessage?: boolean;
-  independentSelection?: boolean;
-  groupSelectedLeafs?: boolean;
-};
+type InheritedInputProps = Partial<Pick<InputProps, 'onFocus' | 'onBlur'>>;
+
+export type Props = FormControl<Value> &
+  InheritedInputProps & {
+    className?: string;
+    // Use this prop to control the open state
+    isOpen?: boolean;
+    // CSS class for styling the list items wrapper
+    optionsClassName?: string;
+    // CSS class that will be applied to every list options
+    optionClassName?: string;
+    // ReactNode that will be added to to label
+    additionalLabel?: ReactNode;
+    size?: Size;
+    // An array of options
+    options: Option[];
+    // Options that would be added to the top of the list
+    additionalOptions?: Option[];
+    // Presets are a set of options that can be selected with a single click
+    presets?: Preset[];
+    // Show clear button
+    clearButton?: boolean;
+    // Show select all button
+    selectAllButton?: boolean;
+    // Id(s) of selected item(s)
+    //
+    // Pass array for multiple selection
+    value?: Value;
+    // Expand selected items on first open
+    expandSelected?: boolean;
+    onChange: (value: Value) => void;
+    onOpen?: () => void;
+    onClose?: () => void;
+    // Whether to show the search input field
+    isSearchable?: boolean;
+    // Props for the search <Input> component
+    inputProps?: Omit<
+      InputProps,
+      'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
+    >;
+    triggerProps?: any;
+    popupProps?: SelectPopupProps;
+    // Hide the required star symbol
+    hideRequiredStar?: boolean;
+  };
 
 export type State = {
   isFocused: boolean;

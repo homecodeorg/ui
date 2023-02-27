@@ -108,6 +108,7 @@ export class Form extends Component<T.Props> {
       disabled,
       isLoading: false,
       isDirty: false,
+      // TODO: do not validate here (only when Field is mounted)
       ...this.getValidationState({ values, disabled }),
       isEmpty: Object.keys(notEmpty).length === 0,
     });
@@ -232,7 +233,7 @@ export class Form extends Component<T.Props> {
     return fieldProps;
   }
 
-  getFormAPI(): T.FormApi {
+  getFormAPI(): T.FormAPI {
     return {
       ...pick(this.store.originalObject, STORE_FIELDS_EXPOSED),
       Field: this.field,

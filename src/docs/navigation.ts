@@ -76,7 +76,7 @@ export default [
       {
         id: 'select',
         label: 'Select',
-        loader: () => import('./examples/Select/Select'),
+        loader: () => import('./examples/Select'),
       },
       {
         id: 'form',

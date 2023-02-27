@@ -1,7 +1,7 @@
-import { useCallback, useState, useEffect, useRef } from 'react';
+import { useCallback, useState, useEffect, useRef, ReactNode } from 'react';
 import cn from 'classnames';
 
-import { Scroll, Popup } from 'uilib/components';
+import { Scroll, Popup, Link } from 'uilib/components';
 import { resizeObserver } from 'uilib/tools';
 
 import TYPES from '../../types.json';
@@ -29,10 +29,10 @@ const Field = ({ name, value, optional, comment }) => (
   </div>
 );
 
-export const Type = ({ name, scope }) => {
+export const Type = ({ name, scope, customLinks = {} }) => {
   const content = renderNavigator({ scope, type: name, inPopup: true });
 
-  if (!content) return name;
+  if (!content) return injectTypes(name, scope, customLinks);
 
   return (
     <Popup
@@ -44,8 +44,15 @@ export const Type = ({ name, scope }) => {
   );
 };
 
+const cleanTypName = (type: string) => {
+  if (/\w+\[\]$/.test(type)) return type.replace(/\[\]/, '');
+
+  return type;
+};
+
 function renderNavigator(p) {
-  const value = TYPES[p.scope][p.type] || TYPES.global[p.type];
+  const name = cleanTypName(p.type);
+  const value = TYPES[p.scope][name] || TYPES.global[name];
 
   if (!value) return null;
 
@@ -54,20 +61,30 @@ function renderNavigator(p) {
   return <TypesNavigator {...p} />;
 }
 
-function injectTypes(value, scope) {
+function injectTypes(value, scope, customLinks = {}): ReactNode[] {
   const content = [];
   let restStr = value;
+
+  const renderType = (type: string, scope: string) => {
+    const link = customLinks[type];
+
+    if (link) {
+      return (
+        <Link href={link} key={type} className={S.type}>
+          {type}
+        </Link>
+      );
+    }
+
+    return <Type scope={scope} name={type} key={type} />;
+  };
 
   // local component types
   for (const type of Object.keys(TYPES[scope])) {
     const match = restStr.match(new RegExp(`\\b${type}\\b`));
 
     if (match) {
-      content.push(
-        restStr.substr(0, match.index),
-        <Type scope={scope} name={type} key={type} />
-      );
-
+      content.push(restStr.substr(0, match.index), renderType(type, scope));
       restStr = restStr.substr(match.index + type.length);
     }
   }
@@ -77,21 +94,12 @@ function injectTypes(value, scope) {
     const match = restStr.match(new RegExp(`\\b${type}\\b`));
 
     if (match) {
-      content.push(
-        restStr.substr(0, match.index),
-        <Type scope="global" name={type} key={type} />
-      );
-
+      content.push(restStr.substr(0, match.index), renderType(type, 'global'));
       restStr = restStr.substr(match.index + type.length);
     }
   }
 
-  if (content.length) {
-    content.push(restStr);
-    return content;
-  }
-
-  return value;
+  return [...content, restStr];
 }
 
 const SimpleTypesNavigator = ({ value, scope, inPopup }) => (
@@ -103,7 +111,8 @@ const SimpleTypesNavigator = ({ value, scope, inPopup }) => (
 const scrollBarOffset = 20;
 
 export function TypesNavigator({ scope, type, inPopup }: Props) {
-  const { kind, ext, ...props } = TYPES[scope][type];
+  const name = cleanTypName(type);
+  const { kind, ext, ...props } = TYPES[scope][name] || TYPES.global[name];
 
   const headerRef = useRef<HTMLDivElement>(null);
   const [offsetTop, setOffsetTop] = useState(scrollBarOffset);
@@ -159,7 +168,38 @@ export function TypesNavigator({ scope, type, inPopup }: Props) {
   );
 }
 
-export function TypesTable({ scope, type }) {
+function parseLinks(str: string) {
+  const links = str.match(/\[([^\]]+)\]\(([^)]+)\)/g);
+
+  if (!links) return str;
+
+  const content = [];
+  let restStr = str;
+
+  links.forEach(link => {
+    const href = link.match(/\(([^)]+)\)/)[1];
+    const text = link.match(/\[([^\]]+)\]/)[1];
+    const startIndex = restStr.indexOf(link);
+
+    content.push(
+      restStr.substring(0, startIndex),
+      <Link inline href={link.match(/\(([^)]+)\)/)?.[1]}>
+        {link.match(/\[([^\]]+)\]/)?.[1]}
+      </Link>
+    );
+
+    restStr = restStr.substring(startIndex + link.length);
+  });
+
+  return [...content, restStr];
+}
+
+export function TypesTable({
+  scope,
+  type,
+  hideRequiredStart = false,
+  customLinks = {},
+}) {
   const { kind, ext, ...props } = TYPES[scope][type];
 
   const renderComments = useCallback(comments => {
@@ -172,13 +212,13 @@ export function TypesTable({ scope, type }) {
     comments.forEach(line => {
       if (line.startsWith('- ')) {
         isList = true;
-        listItems.push(<li>{line.substr(2)}</li>);
+        listItems.push(<li>{parseLinks(line.substr(2))}</li>);
       } else if (isList) {
         isList = false;
         content.push(<ul>{listItems}</ul>);
         listItems = [];
       } else {
-        content.push(<p>{line}</p>);
+        content.push(<p>{parseLinks(line)}</p>);
       }
     });
 
@@ -188,9 +228,11 @@ export function TypesTable({ scope, type }) {
   const renderField = useCallback(([name, { value, comment, optional }]) => {
     return (
       <tr>
-        <td>{optional ? name : <Required text={name} />}</td>
         <td>
-          <Type scope={scope} name={value} />
+          {hideRequiredStart || optional ? name : <Required text={name} />}
+        </td>
+        <td>
+          <Type scope={scope} name={value} customLinks={customLinks} />
         </td>
         <td>{renderComments(comment?.split('\n\n'))}</td>
       </tr>

@@ -1,7 +1,8 @@
-import { ComponentLayout, Code, TypesNavigator } from 'docs/components';
-import * as helpers from './helpers';
+import { Heading, Link } from 'uilib';
+import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import * as helpers from './helpers';
 
 // const OPTIONS = H.generateOptions();
 // const TREE_OPTIONS = H.generateTreeOptions();
@@ -32,13 +33,28 @@ import example from '!!raw-loader!./Example';
 //   );
 // }
 
-// export default () => <div>123123</div>;
+const name = 'Select';
+const Docs = () => (
+  <>
+    <p>
+      Form control that allows users to select one or multiple options from a
+      dropdown list.{' '}
+      <Link inline href="/demo">
+        Demo
+      </Link>
+    </p>
+
+    <Heading id="props" text="Props" />
+    <TypesTable scope={name} type="Props" />
+  </>
+);
+
 export default () => (
   <ComponentLayout
-    name="Select"
+    name={name}
+    docs={Docs}
+    examples={[{ id: 'demo', label: 'Demo', code: example }]}
     scope={{ helpers }}
-    code={<Code code={example} scope={{ helpers }} />}
-    api={<TypesNavigator scope="Select" type="Props" />}
   />
 );
 
