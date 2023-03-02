@@ -24,15 +24,23 @@ export class Link extends Component<T.Props> {
   };
 
   getHref() {
-    const { href } = this.props;
-    const hrefFormatted = href === '/' ? '' : href;
+    let href = this.props.href;
 
-    return `${this.getRootPath()}${hrefFormatted}`;
+    if (this.isStartFromDoubleSlash()) href = href.replace(/^\//, '');
+
+    if (href === '/') href = '';
+
+    return `${this.getRootPath()}${href}`;
   }
 
   isExternal = () => /\./.test(this.props.href);
 
-  getRootPath = () => (this.isExternal() ? '' : this.context.rootPath ?? '');
+  isStartFromDoubleSlash = () => /^\/\//.test(this.props.href);
+
+  getRootPath = () => {
+    if (this.isExternal() || this.isStartFromDoubleSlash()) return '';
+    return this.context.rootPath ?? '';
+  };
 
   onClick = e => {
     const { onClick, store } = this.props;

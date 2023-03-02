@@ -6,7 +6,7 @@
   flex-direction column
   flex-grow 1
   width calc(100% - 2px)
-  max-height calc(100vh - 100px)
+  max-height calc(100vh - 130px)
   margin 1px
   background-color var(--decent-color)
   box-shadow inset 0 0 0 2px var(--accent-color-alpha-100)
@@ -84,9 +84,18 @@
 .preview
   flex 1
   margin-top -1px
-  padding-top 24px
+  padding-top var(--indent-m)
   border-top-left-radius 0
   border-top-right-radius 0
+
+  &::before
+    content ''
+    position absolute
+    top 0
+    left 2px
+    right 2px
+    height 1px
+    background var(--accent-color-alpha-100)
 
 .fullscreenButton
   position absolute

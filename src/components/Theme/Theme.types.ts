@@ -3,5 +3,6 @@ export type ThemeConfig = Record<string, string> & {
 };
 
 export type Props = {
-  config?: Record<string, string>;
+  // Theme configuration
+  config?: ThemeConfig;
 };

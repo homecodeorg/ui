@@ -1,6 +1,6 @@
-import { Component } from 'react';
-
-import omit from 'lodash.omit';
+import { Component, ComponentType } from 'react';
+import Time from 'timen';
+import { createStore } from 'justorm/react';
 
 import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
@@ -10,35 +10,65 @@ function compare(cb1: T.Loader, cb2: T.Loader) {
   return cb1?.toString() === cb2?.toString();
 }
 
-export class Lazy extends Component<T.Props, T.State> {
-  state = { loading: true };
-  C: any;
+const loaded = new Map<T.Loader, ComponentType>();
+
+export class Lazy extends Component<T.Props> {
+  store: T.State;
+  Node?: ComponentType;
+  hasNode = false;
+  clearSpinnerTimeout: null;
+
+  constructor(props: T.Props) {
+    super(props);
+
+    this.Node = loaded.get(this.props.loader);
+
+    this.hasNode = Boolean(this.Node);
+
+    this.store = createStore(this, {
+      loading: !this.hasNode,
+      spinnerTimeout: this.hasNode,
+    });
+  }
 
   componentDidMount() {
-    this.update();
+    if (!this.hasNode) this.update();
   }
 
   componentDidUpdate({ loader }) {
-    if (!compare(this.props.loader, loader)) this.update();
+    if (!compare(this.props.loader, loader)) {
+      // @ts-ignore
+      this.clearSpinnerTimeout?.();
+      this.update();
+    }
   }
 
   update() {
     const { loader } = this.props;
 
-    this.setState({ loading: true });
-    loader().then((m: any) => {
+    this.clearSpinnerTimeout = Time.after(200, () =>
+      this.setState({ spinnerTimeout: false })
+    );
+
+    this.store.loading = true;
+    loader().then(({ default: Node }: any) => {
       if (!compare(this.props.loader, loader)) return;
-      this.C = m.default;
-      this.setState({ loading: false });
+      this.Node = Node;
+      loaded.set(loader, Node);
+      this.store.loading = false;
     });
   }
 
   render() {
-    const { C, props } = this;
+    const { Node } = this;
+    const { progressElem, loader, ...props } = this.props;
+    const { loading, spinnerTimeout } = this.store;
 
-    if (this.state.loading) {
+    if (Node) return <Node {...props} />;
+
+    if (!spinnerTimeout && loading) {
       return (
-        props.progressElem ?? (
+        progressElem ?? (
           <Container fullHeight fullWidth>
             <Spinner size="l" />
           </Container>
@@ -46,6 +76,6 @@ export class Lazy extends Component<T.Props, T.State> {
       );
     }
 
-    return <C {...omit(props, ['loading'])} />;
+    return null;
   }
 }

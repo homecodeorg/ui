@@ -30,6 +30,10 @@ const Field = ({ name, value, optional, comment }) => (
 );
 
 export const Type = ({ name, scope, customLinks = {} }) => {
+  const customLink = customLinks[name];
+
+  if (customLink) return injectTypes(name, scope, customLinks);
+
   const content = renderNavigator({ scope, type: name, inPopup: true });
 
   if (!content) return injectTypes(name, scope, customLinks);

@@ -124,6 +124,11 @@ export default [
         loader: () => import('./examples/Notifications'),
       },
       {
+        id: 'lazy',
+        label: 'Lazy',
+        loader: () => import('./examples/Lazy'),
+      },
+      {
         id: 'router',
         label: 'Router',
         loader: () => import('./examples/Router'),

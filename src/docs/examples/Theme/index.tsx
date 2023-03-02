@@ -1,9 +1,10 @@
 import { Heading, Link } from 'uilib';
-import { ComponentLayout } from 'docs/components';
+import { ComponentLayout, TypesTable } from 'docs/components';
 
 import basic from '!!raw-loader!./Basic';
 import advanced from '!!raw-loader!./Advanced';
 
+const name = 'Theme';
 const examples = [
   {
     id: 'demo',
@@ -25,27 +26,13 @@ const Docs = () => (
       and other styles. The component then applies those styles to all the
       library components using CSS variables.
     </p>
+
     <Heading id="props" text="Props" />
-    <table>
-      <thead>
-        <tr>
-          <th>Prop</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>config</td>
-          <td>
-            <Link href="#ThemeConfig" inline>
-              ThemeConfig
-            </Link>
-          </td>
-          <td>Theme configuration</td>
-        </tr>
-      </tbody>
-    </table>
+    <TypesTable
+      scope={name}
+      type="Props"
+      customLinks={{ ThemeConfig: '#ThemeConfig' }}
+    />
 
     <Heading id="ThemeConfig" text="ThemeConfig" />
     <table>

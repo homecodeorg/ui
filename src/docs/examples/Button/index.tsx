@@ -8,14 +8,14 @@ const name = 'Button';
 const Docs = () => (
   <>
     <p>
-      A reusable UI button component with customizable properties such as style,
-      size, loading state, etc.{' '}
+      UI button component with customizable properties such as style, size,
+      loading state, etc.{' '}
       <Link inline href="/demo">
         Demo
       </Link>
     </p>
 
-    <Heading id="props" text="Props" />
+    <Heading id="Props" text="Props" />
     <TypesTable scope={name} type="Props" />
   </>
 );
