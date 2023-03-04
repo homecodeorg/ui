@@ -62,7 +62,7 @@ export class Link extends Component<T.Props> {
 
     if (isPartialExact) {
       const pathSections = path.replace(/#.+/, '').split('/');
-      const hrefSections = href.split('/');
+      const hrefSections = href.replace(/#.+/, '').split('/');
       const minLength = Math.min(pathSections.length, hrefSections.length);
 
       return (

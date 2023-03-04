@@ -13,7 +13,7 @@
     "release:minor": "yarn release -- --release-as minor",
     "release:major": "yarn release -- --release-as major",
     "release:as": "yarn release -- --release-as",
-    "docs:build": "NODE_ENV=production webpack --mode=production --config ./src/docs/config/webpack.config.js --progress",
+    "docs:build": "NODE_OPTIONS='--loader ts-node/esm' NODE_ENV=production webpack --mode=production --config ./src/docs/config/webpack.config.js --progress",
     "docs:deploy": "./bin/deploy",
     "docs": "yarn docs:build && yarn docs:deploy"
   },

@@ -16,7 +16,8 @@ export type ExmapleData = {
   id: string;
   label: string;
   scope?: Record<string, any>;
-  code: string;
+  code?: string;
+  items?: ExmapleData[];
 };
 
 type Props = {
@@ -55,41 +56,74 @@ const Header = withStore('router')(({ name, rootPath, examples, store }) => {
   );
 });
 
+const SidebarItem = ({ id, label, rootPath, items = null }) => {
+  const content = items ? (
+    <div className={S.sidebarItemGroup}>{label}</div>
+  ) : (
+    <SidebarLink path={`${rootPath}/${id}`} label={label} key={id} />
+  );
+
+  return (
+    <>
+      {content}
+      {items?.map(props => (
+        <SidebarItem {...props} rootPath={`${rootPath}/${id}`} />
+      ))}
+    </>
+  );
+};
+
+type SidebarRouteProps = Omit<ExmapleData, 'label'> & {
+  items?: SidebarRouteProps[];
+};
+
+const renderSidebarRoute = (
+  { id, code, items, scope }: SidebarRouteProps,
+  rootScope
+) => {
+  const content = [
+    <Code
+      exact
+      path={`/${id}`}
+      code={code}
+      scope={{ ...rootScope, ...scope }}
+      key={id}
+    />,
+  ];
+
+  items?.forEach(props => {
+    content.push(
+      ...renderSidebarRoute({ ...props, id: `${id}/${props.id}` }, rootScope)
+    );
+  });
+
+  return content;
+};
+
 export const ComponentLayout = ({
   name,
   examples,
   scope,
   docs: Docs,
 }: Props) => {
-  const rootPath = `/components/${name.toLowerCase()}`;
+  const rootPath = `/components/${name}`;
 
   return (
     <Scroll y className={S.root} offset={{ y: { before: 80, after: 50 } }}>
       {examples &&
         createPortal(
           <>
-            {examples.map(({ id, label }) => (
-              <SidebarLink path={`${rootPath}/${id}`} label={label} key={id} />
+            {examples.map(props => (
+              <SidebarItem {...props} rootPath={rootPath} />
             ))}
           </>,
-          document.getElementById(`sidebar-item-${name.toLowerCase()}`)
+          document.getElementById(`sidebar-item-${name}`)
         )}
       <Header name={name} rootPath={rootPath} examples={examples} />
       <Container vertical fullWidth size="l" className={S.content}>
         <Router rootPath={rootPath}>
           <Docs path="/" exact />
-          {examples?.map(item => {
-            const { id, code } = item;
-            return (
-              <Code
-                exact
-                path={`/${id}`}
-                code={code}
-                scope={{ ...scope, ...item.scope }}
-                key={id}
-              />
-            );
-          })}
+          {examples?.map(props => renderSidebarRoute(props, scope))}
         </Router>
       </Container>
     </Scroll>

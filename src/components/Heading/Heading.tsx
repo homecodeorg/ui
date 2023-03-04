@@ -21,7 +21,6 @@ function onClick(e) {
 
 function subscribe() {
   if (subscribersCount === 0) {
-    console.log('subscribed');
     window.addEventListener('click', onClick, true);
   }
   subscribersCount++;
@@ -29,7 +28,6 @@ function subscribe() {
 
 function unsubscribe() {
   if (--subscribersCount === 0) {
-    console.log('UNsubscribed');
     window.removeEventListener('click', onClick, true);
   }
 }

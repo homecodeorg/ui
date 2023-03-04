@@ -62,7 +62,7 @@ export default memo(
 
                       return (
                         <Fragment key={id}>
-                          <SidebarLink path={path} label={label} />
+                          <SidebarLink path={path} label={label || id} />
                           <div
                             id={`sidebar-item-${id}`}
                             className={S.subItems}

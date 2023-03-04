@@ -8,27 +8,6 @@ import STORE from './store';
 import S from './Notifications.styl';
 import * as T from './Notifications.types';
 
-function getContent(content, links, LinkComponent) {
-  const items = [] as JSX.Element[];
-
-  if (!links) return content;
-
-  content?.split('%s').forEach((part, i) => {
-    items.push(part);
-
-    if (i > 0) {
-      const link = links[i - 1];
-
-      if (link) {
-        const { text, href } = link;
-        items.push(<LinkComponent to={href}>{text}</LinkComponent>);
-      }
-    }
-  });
-
-  return items;
-}
-
 function getTouchPos(e) {
   const { clientX: x, clientY: y } = e.targetTouches[0];
   return { x, y };
@@ -43,7 +22,7 @@ function getDeltaPos(p1, p2) {
 
 const TOUCH_MOVE_TRESHOLD = 50;
 
-class Item extends Component<T.Props> {
+class Item extends Component<T.ItemProps> {
   startPos = null;
 
   onTouchStart = e => {
@@ -86,11 +65,9 @@ class Item extends Component<T.Props> {
       type = 'default',
       title,
       content,
-      links,
       visible,
       pause,
       unpause,
-      LinkComponent,
     } = this.props;
     const classes = cn(S.item, S[`type-${type}`], visible && S.visible);
 
@@ -110,11 +87,7 @@ class Item extends Component<T.Props> {
           {(title || content) && (
             <div className={S.text}>
               {title && <div className={S.title}>{title}</div>}
-              {content && (
-                <div className={S.content}>
-                  {getContent(content, links, LinkComponent)}
-                </div>
-              )}
+              {content && <div className={S.content}>{content}</div>}
             </div>
           )}
           <Button

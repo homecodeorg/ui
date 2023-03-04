@@ -66,7 +66,7 @@ function renderNavigator(p) {
 }
 
 function injectTypes(value, scope, customLinks = {}): ReactNode[] {
-  const content = [];
+  const content = [value];
   let restStr = value;
 
   const renderType = (type: string, scope: string) => {
@@ -83,27 +83,37 @@ function injectTypes(value, scope, customLinks = {}): ReactNode[] {
     return <Type scope={scope} name={type} key={type} />;
   };
 
+  const injectType = (type: string, scope: string) => {
+    for (let i = 0; i < content.length; i++) {
+      const item = content[i];
+
+      if (typeof item === 'string') {
+        const match = item.match(new RegExp(`\\b${type}\\b`));
+
+        if (match) {
+          const newItems = [
+            item.substring(0, match.index),
+            renderType(type, scope),
+            item.substring(match.index + type.length),
+          ].filter(Boolean);
+
+          content.splice(i, 1, ...newItems);
+        }
+      }
+    }
+  };
+
   // local component types
   for (const type of Object.keys(TYPES[scope])) {
-    const match = restStr.match(new RegExp(`\\b${type}\\b`));
-
-    if (match) {
-      content.push(restStr.substr(0, match.index), renderType(type, scope));
-      restStr = restStr.substr(match.index + type.length);
-    }
+    injectType(type, scope);
   }
 
   // global types
   for (const type of Object.keys(TYPES.global)) {
-    const match = restStr.match(new RegExp(`\\b${type}\\b`));
-
-    if (match) {
-      content.push(restStr.substr(0, match.index), renderType(type, 'global'));
-      restStr = restStr.substr(match.index + type.length);
-    }
+    injectType(type, 'global');
   }
 
-  return [...content, restStr];
+  return [...content];
 }
 
 const SimpleTypesNavigator = ({ value, scope, inPopup }) => (

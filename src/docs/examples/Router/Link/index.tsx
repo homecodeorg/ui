@@ -4,13 +4,12 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 
-const name = 'Router';
+const name = 'Link';
 const Docs = () => (
   <>
     <p>
-      UI component is a client-side routing solution that allows developers to
-      define the routes of their web application. It works by rendering child
-      components conditionally based on the current URL.
+      UI component is a customizable anchor element that can be used to create
+      hyperlinks
     </p>
 
     <span>

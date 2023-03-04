@@ -43,7 +43,7 @@ const UserFriends = () => 'friends: foo, bar';
 const UserCreatures = () => 'creatures: sas';
 
 export default withStore('router')(({ store: { router } }) => {
-  const rootPath = '/components/router';
+  const rootPath = '/components/Router/demo';
 
   return (
     <>

@@ -30,15 +30,21 @@ const Docs = () => (
 
 const examples = [
   { id: 'endless', label: 'Endless', code: endless },
-  { id: 'endlessScroll', label: 'Endless scroll', code: endlessScroll },
   { id: 'finite', label: 'Finite', code: finite },
-  { id: 'finiteScroll', label: 'Finite scroll', code: finiteScroll },
   {
-    id: 'initialTotal',
-    label: 'Initial data total',
-    code: initialTotal,
+    id: 'customScroll',
+    label: 'Custom scrollbars',
+    items: [
+      { id: 'endless', label: 'Endless', code: endlessScroll },
+      { id: 'finite', label: 'Finite', code: finiteScroll },
+      {
+        id: 'initialTotal',
+        label: 'Initial data total',
+        code: initialTotal,
+      },
+      { id: 'contentBefore', label: 'Content before', code: contentBefore },
+    ],
   },
-  { id: 'contentBefore', label: 'Content before', code: contentBefore },
 ];
 
 export default () => (
