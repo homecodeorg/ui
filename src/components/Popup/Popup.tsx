@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
+import { Paranja } from 'uilib';
 import { dom, resizeObserver, env, debounce, throttle } from 'uilib/tools';
 
 import S from './Popup.styl';
@@ -383,11 +384,6 @@ export class Popup extends Component<T.Props> {
 
     const contentNode = (
       <div {...wrapperProps} className={wrapperClasses}>
-        {paranja &&
-          createPortal(
-            <div className={cn(S.paranja, isOpen && S.isOpen)} />,
-            target
-          )}
         <div
           {...contentProps}
           ref={this.onContainerElemRef}
@@ -395,7 +391,8 @@ export class Popup extends Component<T.Props> {
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
         >
-          {isContentVisible && content}
+          {paranja && !rootPopupId && <Paranja isVisible={isContentVisible} />}
+          {isContentVisible && <>{content}</>}
         </div>
       </div>
     );

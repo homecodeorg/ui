@@ -5,4 +5,11 @@
   left 0
   right 0
   bottom 0
-  background-color var(--decent-color)
+  opacity 0
+  background-color var(--decent-color-alpha-800)
+  transition opacity .2s ease-out
+  pointer-events none
+
+.visible
+  pointer-events all
+  opacity 1
