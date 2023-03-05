@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/foreverido/uilib/compare/v3.4.1...v3.5.0) (2023-03-05)
+
+
+### Bug Fixes
+
+* Tabs - support props.size ([6725ec0](https://github.com/foreverido/uilib/commit/6725ec0e0f56b1d23172bb5633bc33c4a830a2a0))
+
 ### [3.4.1](https://github.com/foreverido/uilib/compare/v3.4.0...v3.4.1) (2022-08-07)
 
 
