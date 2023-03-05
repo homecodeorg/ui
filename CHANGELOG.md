@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.1](https://github.com/foreverido/uilib/compare/v3.5.0...v3.5.1) (2023-03-05)
+
+
+### Bug Fixes
+
+* Popup - elevation styles ([5581024](https://github.com/foreverido/uilib/commit/5581024c5913ec891fa45db97709b5c4907c65c2))
+* Popup - using <Paranja> ([02dc647](https://github.com/foreverido/uilib/commit/02dc6471e883761a14d2cc059abd3bcd2c679b19))
+
 ## [3.5.0](https://github.com/foreverido/uilib/compare/v3.4.1...v3.5.0) (2023-03-05)
 
 
