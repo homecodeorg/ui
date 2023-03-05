@@ -42,6 +42,7 @@ export const Type = ({ name, scope, customLinks = {} }) => {
     <Popup
       direction="bottom-right"
       hoverControl
+      elevation={1}
       trigger={<span className={S.type}>{name}</span>}
       content={content}
     />

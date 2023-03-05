@@ -4,11 +4,10 @@ type ProgressParams = {
   loaded: number;
   total: number;
 };
-type OnProgress = (args: ProgressParams) => void;
 type UploaderParams = {
   file: File;
-  fn: OnProgress;
-  getXHR?: (xhr: XMLHttpRequest) => void;
+  fn: (ProgressParams) => void;
+  getXHR?: (XMLHttpRequest) => void;
 };
 type Uploader = (UploaderParams) => Promise<string>;
 
