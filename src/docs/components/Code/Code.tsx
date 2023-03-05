@@ -3,7 +3,7 @@ import * as justorm from 'justorm/react';
 import timen from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Button, Icon, Scroll, uid, config } from 'uilib';
+import { Button, Icon, Scroll, uid, config, debounce } from 'uilib';
 
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
@@ -76,10 +76,10 @@ export class Code extends Component<Props> {
     this.store.height = H.getPreHeight(editorElem);
   }
 
-  // updateExecCode = debounce(
-  updateExecCode = code => (this.store.execCode = this.getExecCode(code));
-  //   1000
-  // );
+  updateExecCode = debounce(
+    code => (this.store.execCode = this.getExecCode(code)),
+    1000
+  );
 
   onKeyDown = e => {
     if (e.key === 'Escape') {

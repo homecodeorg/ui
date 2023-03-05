@@ -43,6 +43,7 @@ export const Type = ({ name, scope, customLinks = {} }) => {
       direction="bottom-right"
       hoverControl
       elevation={1}
+      paranja
       trigger={<span className={S.type}>{name}</span>}
       content={content}
     />
