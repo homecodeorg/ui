@@ -5,11 +5,15 @@ import { config } from 'uilib';
 import S from './Paranja.styl';
 import * as T from './Paranja.types';
 
-export const Paranja = ({ className, children, isVisible = true }: T.Props) => {
-  const classes = cn(S.root, isVisible && S.visible, className);
+export const Paranja = ({
+  className,
+  children,
+  visible = true,
+  inline = false,
+}: T.Props) => {
+  const classes = cn(S.root, visible && S.visible, className);
+  const node = <div className={classes}>{children}</div>;
 
-  return createPortal(
-    <div className={classes}>{children}</div>,
-    document.getElementById(config.appOverlayId)
-  );
+  if (inline) return node;
+  return createPortal(node, document.getElementById(config.appOverlayId));
 };

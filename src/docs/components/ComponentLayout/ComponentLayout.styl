@@ -15,43 +15,9 @@
     &:first-child
       margin-top 0
 
-  table
-    border-radius var(--border-radius-l)
-    box-shadow 0 0 0 2px var(--accent-color-alpha-100)
-    overflow hidden
-
-    thead
-      position relative
-
-    tr:not(:first-child)
-      box-shadow inset 0 1px 0 0 var(--accent-color-alpha-100)
-
-    td, th
-      padding var(--indent-s)
-      min-width 5em
-      text-align left
-
-      &:first-child
-        text-align right
-
-    th
-      padding-bottom 16px
-      background-color var(--accent-color-alpha-100)
-
-      &:first-child::before
-        content ''
-        position absolute
-        left 0
-        bottom -2px
-        display block
-        height 5px
-        width 100%
-        background var(--decent-color)
-        border-radius 5px 5px 0 0
-
-    td
-      vertical-align top
-
+  td, th
+    &:first-child
+      text-align right
 
   ul
     display block
@@ -61,7 +27,7 @@
     margin var(--indent-s) 0
 
 .header
-  z-index 1
+  z-index 2
   position sticky
   top 0
   padding 0 var(--indent-l)

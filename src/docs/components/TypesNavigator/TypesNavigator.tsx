@@ -1,7 +1,7 @@
 import { useCallback, useState, useEffect, useRef, ReactNode } from 'react';
 import cn from 'classnames';
 
-import { Scroll, Popup, Link } from 'uilib/components';
+import { Table, Popup, Link } from 'uilib/components';
 import { resizeObserver } from 'uilib/tools';
 
 import TYPES from '../../types.json';
@@ -240,30 +240,31 @@ export function TypesTable({
     return content;
   }, []);
 
-  const renderField = useCallback(([name, { value, comment, optional }]) => {
-    return (
-      <tr key={name}>
-        <td>
-          {hideRequiredStart || optional ? name : <Required text={name} />}
-        </td>
-        <td>
-          <Type scope={scope} name={value} customLinks={customLinks} />
-        </td>
-        <td>{renderComments(comment?.split('\n\n'))}</td>
-      </tr>
-    );
-  }, []);
+  const columns = [
+    {
+      id: 'name',
+      label: 'Name',
+      sticky: true,
+      render({ name, optional }) {
+        return hideRequiredStart || optional ? name : <Required text={name} />;
+      },
+    },
+    {
+      id: 'type',
+      label: 'Type',
+      render({ value }) {
+        return <Type scope={scope} name={value} customLinks={customLinks} />;
+      },
+    },
+    {
+      id: 'description',
+      label: 'Description',
+      render({ comment }) {
+        return renderComments(comment?.split('\n\n'));
+      },
+    },
+  ];
+  const data = Object.entries(props).map(([name, p]) => ({ name, ...p }));
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>{Object.entries(props).map(renderField)}</tbody>
-    </table>
-  );
+  return <Table columns={columns} data={data} className={S.typesNavigator} />;
 }

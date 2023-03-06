@@ -23,6 +23,7 @@ export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';
 export * from './Scroll/Scroll';
 export * from './Spinner/Spinner';
+export * from './Table/Table';
 export * from './Tabs/Tabs';
 export * from './Text/Text';
 export * from './Theme/Theme';

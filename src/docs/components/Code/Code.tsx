@@ -1,26 +1,16 @@
-import React, { Component } from 'react';
-import * as justorm from 'justorm/react';
-import timen from 'timen';
+import { Component, createRef, ReactNode } from 'react';
+import { createPortal } from 'react-dom';
+import { withStore } from 'justorm/react';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Button, Icon, Scroll, uid, config, debounce } from 'uilib';
+import { Scroll, uid, config } from 'uilib';
 
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+import FullscreenButton from './FullscreenButton/FullscreenButton';
+import Editor from './Editor/Editor';
+import Result from './Result/Result';
 
-import vsDark from 'prism-react-renderer/themes/vsDark';
-import vsLight from 'prism-react-renderer/themes/vsLight';
-
-import * as uilib from 'uilib';
-import * as helpers from 'helpers';
-
-// import TYPES from '../../types.json';
-import * as H from './Code.helpers';
 import S from './Code.styl';
-import { createPortal } from 'react-dom';
-
-const { withStore, createStore } = justorm;
-
-const SCOPE = { uilib, React, justorm, timen, helpers };
+import Styles from './Styles/Styles';
 
 type Props = {
   store?: any;
@@ -28,151 +18,67 @@ type Props = {
   code: string;
 };
 
-const getGradient = ([c0, c1, c2]) => `
-linear-gradient(${c0}deg, rgba(255,0,0,.1), rgba(255,0,0,0) 70.71%),
-linear-gradient(${c1}deg, rgba(0,255,0,.1), rgba(0,255,0,0) 70.71%),
-linear-gradient(${c2}deg, rgba(0,0,255,.1), rgba(0,0,255,0) 70.71%);
-`;
-
-@withStore({ app: ['theme', 'gradient'] })
+@withStore({ app: [], editor: ['isFullscreen'] })
 export class Code extends Component<Props> {
   store;
+  state = { inited: false };
 
   id = `editor-${uid.generateUID()}`;
 
-  constructor(props) {
-    super(props);
-
-    const { code } = props;
-
-    this.store = createStore(this, {
-      height: '100%',
-      isFullscreen: false,
-      editedCode: code,
-      execCode: this.getExecCode(code),
-      currScope: this.getScope(),
-    });
-  }
-
   componentDidMount() {
-    this.updateHeight();
-    this.props.store.app.updateGradient();
+    const { code, scope, store } = this.props;
+    const { app, editor } = store;
+
+    editor.scope = scope;
+    editor.onChange(code, this.id);
+    app.updateGradient();
+
+    this.setState({ inited: true });
   }
 
-  componentDidUpdate({ scope }: Props) {
-    if (!compare(scope, this.props.scope)) {
-      this.store.currScope = this.getScope(scope);
+  componentDidUpdate(prev: Props) {
+    const {
+      scope,
+      store: { editor },
+    } = this.props;
+
+    if (!compare(prev.scope, scope)) {
+      editor.scope = scope;
     }
   }
 
-  getScope = (scope = this.props.scope) => ({ ...SCOPE, ...scope });
-
-  getExecCode = (code = this.store.editedCode) => {
-    return H.wrapExample(code, this.props.scope);
-  };
-
-  updateHeight() {
-    const editorElem = document.getElementById(this.id);
-    this.store.height = H.getPreHeight(editorElem);
-  }
-
-  updateExecCode = debounce(
-    code => (this.store.execCode = this.getExecCode(code)),
-    1000
-  );
-
-  onKeyDown = e => {
-    if (e.key === 'Escape') {
-      this.store.isFullscreen = false;
-    }
-  };
-
-  onChange = code => {
-    if (code === this.store.editedCode) return;
-
-    this.store.editedCode = code;
-    this.updateHeight();
-    this.updateExecCode(code);
-  };
-
-  toggleFullscreen = () => {
-    this.store.isFullscreen = !this.store.isFullscreen;
-
-    if (this.store.isFullscreen) {
-      document.addEventListener('keydown', this.onKeyDown);
-    } else {
-      document.removeEventListener('keydown', this.onKeyDown);
-    }
-  };
+  isFullscreen = () => this.props.store.editor.isFullscreen;
 
   renderContent(content) {
-    const { isFullscreen } = this.store.originalObject;
-
-    if (isFullscreen)
+    if (this.isFullscreen()) {
       return createPortal(
         content,
-        document.getElementById(config.appOverlayId)
+        document.getElementById(
+          this.isFullscreen() ? config.appOverlayId : 'code-inline'
+        )
       );
+    }
 
     return content;
   }
 
   render() {
-    const { store } = this.props;
-    const { theme, gradient } = store.app;
-    const { height, editedCode, execCode, currScope, isFullscreen } =
-      this.store.originalObject;
-    const isGradientEven = gradient.changeCount % 2 === 0;
-
-    return this.renderContent(
-      <div className={cn(S.root, isFullscreen && S.fullscreen)}>
-        <Button
-          className={S.fullscreenButton}
-          onClick={this.toggleFullscreen}
-          variant="clear"
-          square
-        >
-          <Icon type="fullscreen" size="l" />
-        </Button>
-        <style>{`
-          #${this.id} > textarea { height: ${height} !important; }
-          .${S.root}::before {
-            background: ${getGradient(
-              isGradientEven ? gradient.prev : gradient.curr
-            )};
-            opacity: ${isGradientEven ? 0 : 1};
-          }
-          .${S.root}::after {
-            background: ${getGradient(
-              isGradientEven ? gradient.curr : gradient.prev
-            )};
-            opacity: ${isGradientEven ? 1 : 0};
-          }
-        `}</style>
-
+    return (
+      <div
+        className={cn(S.root, this.isFullscreen() && S.fullscreen)}
+        key="code"
+      >
+        <Styles id={this.id} />
         <Scroll
           y
           className={S.editorContainer}
           innerClassName={S.editorContainerInner}
           offset={{ y: { before: 50, after: 20 } }}
         >
-          <LiveEditor
-            className={S.editor}
-            id={this.id}
-            code={editedCode}
-            language="typescript"
-            theme={theme === 'dark' ? vsDark : vsLight}
-            onChange={this.onChange}
-          />
+          <Editor code={this.props.code} id={this.id} />
         </Scroll>
-
-        <div className={S.editorResult}>
-          <LiveProvider noInline code={execCode} scope={currScope}>
-            <LiveEditor className={cn(S.editor, S.runtime)} />
-            <LiveError className={S.error} />
-            <LivePreview className={S.preview} />
-          </LiveProvider>
-        </div>
+        <Result />
+        <FullscreenButton />
       </div>
     );
   }

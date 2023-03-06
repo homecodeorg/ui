@@ -99,6 +99,10 @@ export default [
         loader: () => import('./examples/LightBox'),
       },
       {
+        id: 'Table',
+        loader: () => import('./examples/Table'),
+      },
+      {
         id: 'Virtualized',
         loader: () => import('./examples/Virtualized'),
       },

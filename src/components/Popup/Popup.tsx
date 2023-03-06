@@ -391,7 +391,7 @@ export class Popup extends Component<T.Props> {
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
         >
-          {paranja && !rootPopupId && <Paranja isVisible={isContentVisible} />}
+          {paranja && !rootPopupId && <Paranja visible={isContentVisible} />}
           {isContentVisible && <>{content}</>}
         </div>
       </div>

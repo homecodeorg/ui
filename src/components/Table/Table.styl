@@ -1,0 +1,39 @@
+.root
+  position relative
+  overflow hidden
+  border-radius var(--border-radius-l)
+  box-shadow 0 0 0 2px var(--accent-color-alpha-100)
+
+  tbody
+    overflow auto
+    overflow-scrolling touch
+
+  thead
+    position sticky
+    top 0
+    z-index 1
+
+  td
+    box-shadow inset 0 1px 0 0 var(--accent-color-alpha-100)
+
+  td, th
+    padding var(--indent-s)
+    min-width 5em
+    text-align left
+
+  th
+    padding-bottom 16px
+    background-color var(--accent-color-alpha-100)
+
+  td
+    vertical-align top
+    width 100%
+
+.sticky
+  position sticky
+  left 0
+  z-index 1
+  backdrop-filter blur(20px)
+
+td.sticky
+  background-color var(--decent-color-alpha-500) !important

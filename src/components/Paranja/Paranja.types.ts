@@ -3,5 +3,6 @@ import { ReactNode } from 'react';
 export type Props = {
   children?: ReactNode;
   className?: string;
-  isVisible?: boolean;
+  visible?: boolean;
+  inline?: boolean;
 };
