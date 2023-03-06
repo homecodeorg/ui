@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/foreverido/uilib/compare/v3.5.1...v3.6.0) (2023-03-06)
+
+
+### Features
+
+* Table ([2d633e4](https://github.com/foreverido/uilib/commit/2d633e4302e7192a8c410ed58e2ff87315cf2618))
+
 ### [3.5.1](https://github.com/foreverido/uilib/compare/v3.5.0...v3.5.1) (2023-03-05)
 
 
