@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.1](https://github.com/foreverido/uilib/compare/v3.6.0...v3.6.1) (2023-03-07)
+
+
+### Bug Fixes
+
+* Popup positioning ([ea50acd](https://github.com/foreverido/uilib/commit/ea50acdbb5ae00173d5db71406780ba2efe683a5))
+
 ## [3.6.0](https://github.com/foreverido/uilib/compare/v3.5.1...v3.6.0) (2023-03-06)
 
 
