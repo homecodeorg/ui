@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { ComponentType } from 'uilib/types';
 
-type Column = {
+export type Column = {
   // Unique id of the column
   id: string;
   // Label of the column

@@ -12,6 +12,7 @@ import * as H from './Popup.helpers';
 import * as T from './Popup.types';
 
 export const ANIMATION_DURATION = 100;
+const OFFSET_GAP = 10;
 
 export type PopupProps = T.Props;
 
@@ -19,9 +20,9 @@ export class Popup extends Component<T.Props> {
   rootElem = createRef<HTMLDivElement>();
   triggerElem = createRef<HTMLDivElement>();
   containerElem: HTMLDivElement = null;
+
   onContainerElemRef = elem => {
     this.containerElem = elem;
-    this.subscribeSizeChange();
   };
 
   _focused = false;
@@ -38,6 +39,8 @@ export class Popup extends Component<T.Props> {
 
   static defaultProps = {
     size: 'm',
+    direction: '',
+    animated: true,
   };
 
   constructor(props) {
@@ -50,15 +53,16 @@ export class Popup extends Component<T.Props> {
       rootPopupId: null,
       isOpen,
       isContentVisible: isOpen,
-      position: { top: 0, left: 0 },
       direction: props.direction,
+      wrapperBounds: null,
+      offset: { x: 0, y: 0 },
     } as T.State);
 
     this.checkHover = debounce(this.checkHover, 100);
   }
 
   componentDidMount() {
-    const { hoverControl, focusControl, inline } = this.props;
+    const { isOpen, hoverControl, focusControl, inline } = this.props;
     const parentPopupContent = this.triggerElem.current.closest(
       `.${S.content}`
     );
@@ -69,15 +73,13 @@ export class Popup extends Component<T.Props> {
         H.getPopupId(parentPopupContent, 'data-popup-id');
     }
 
-    if (env.isBrowser && !inline) {
-      document.addEventListener('scroll', this.close);
-    }
-
     if (focusControl) {
       document.addEventListener('keyup', this.onDocKeyUp, true);
     }
 
     if (hoverControl) this.subscribeHoverControl();
+
+    if (isOpen) this.updateWrapperBounds();
   }
 
   componentDidUpdate(prevProps: T.Props) {
@@ -106,13 +108,25 @@ export class Popup extends Component<T.Props> {
 
     this.unsubscribeHoverControl();
     this.unsubscribeSizeChange();
+    this.unsubscribeScroll();
   }
 
   subscribeSizeChange() {
     if (this._subscribedSizeChange) return;
     this._subscribedSizeChange = true;
 
-    resizeObserver.observe(this.containerElem, this.checkvisiblePosition);
+    resizeObserver.observe(this.triggerElem.current, this.onTriggerResize);
+    // resizeObserver.observe(this.containerElem, this.onContainerResize);
+  }
+
+  subscribeScroll() {
+    if (env.isBrowser && !this.props.inline) {
+      document.addEventListener('scroll', this.close, true);
+    }
+  }
+
+  unsubscribeScroll() {
+    document.removeEventListener('scroll', this.close, true);
   }
 
   unsubscribeSizeChange() {
@@ -135,43 +149,40 @@ export class Popup extends Component<T.Props> {
     document.removeEventListener('pointerup', this.checkHover);
   }
 
-  checkvisiblePosition = () => {
-    // const trigger = this.triggerElem.current.getBoundingClientRect();
+  updateWrapperBounds = () => {
+    const trigger = this.triggerElem.current;
+
+    if (!trigger) return;
+
+    this.store.wrapperBounds = {
+      minHeight: trigger.offsetHeight,
+      minWidth: trigger.offsetWidth,
+      ...dom.getCoords(trigger),
+    };
+  };
+
+  checkVisiblePosition = () => {
+    if (this.store.animating) return;
+
     const content = this.containerElem.getBoundingClientRect();
-    const newDir = [];
+    const { offset } = this.store;
+    const { x, y } = offset;
+    const bottom = content.bottom - y;
+    const right = content.right - x;
+
+    // TODO: time to time numbers a bit different
+    // console.log('checkVisiblePosition', content.right);
 
     if (content.top < 0) {
-      // if (window.innerHeight - trigger.bottom > content.height) {
-      newDir[0] = 'bottom';
-      // } else {
-      //   this.containerElem.style.top = '0px';
-      // }
-    } else if (content.bottom > window.innerHeight) {
-      // if (trigger.top > content.height) {
-      newDir[0] = 'top';
-      // } else {
-      //   this.containerElem.style.bottom = '0px';
-      // }
+      offset.y = -content.top;
+    } else if (bottom > window.innerHeight) {
+      offset.y = window.innerHeight - bottom - OFFSET_GAP;
     }
 
     if (content.left < 0) {
-      // if (window.innerWidth - trigger.right > content.width) {
-      newDir[1] = 'right';
-      // } else {
-      //   this.containerElem.style.left = '0px';
-      // }
-    } else if (content.right > window.innerWidth) {
-      // if (trigger.left > content.width) {
-      newDir[1] = 'left';
-      // } else {
-      //   this.containerElem.style.right = `-${
-      //     window.innerWidth - trigger.right
-      //   }px`;
-      // }
-    }
-
-    if (newDir.length) {
-      this.store.direction = newDir.join('-');
+      offset.x = -content.left;
+    } else if (right > window.innerWidth) {
+      offset.x = window.innerWidth - right - OFFSET_GAP;
     }
   };
 
@@ -229,6 +240,14 @@ export class Popup extends Component<T.Props> {
     this.toggle();
   };
 
+  onTriggerResize = debounce(() => {
+    this.updateWrapperBounds();
+  }, 200);
+
+  onContainerResize = debounce(() => {
+    this.checkVisiblePosition();
+  }, 200);
+
   onFocus = (e: FocusEvent) => {
     const { onTriggerFocus } = this.props;
 
@@ -249,34 +268,53 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  open = throttle(() => {
-    const { onOpen } = this.props;
+  open = () => {
     const { rootPopupId } = this.store;
 
     if (this.store.isOpen) return;
 
-    this.timers.clear(this.afterClose);
-
-    Object.assign(this.store, { isOpen: true, isContentVisible: true });
+    this.updateWrapperBounds();
+    this.subscribeScroll();
+    this.store.isContentVisible = true;
+    this.changeState(true, this.afterOpen);
 
     if (rootPopupId) H.setOverContent(rootPopupId, this.id);
-    if (onOpen) Time.nextTick(onOpen);
-
-    this.timers.after(100, this.checkvisiblePosition);
-  }, 100);
+  };
 
   close = () => {
     if (!this.store.isOpen) return;
 
-    this.store.isOpen = false;
-    this.timers.after(ANIMATION_DURATION, this.afterClose);
+    this.unsubscribeSizeChange();
+    this.unsubscribeScroll();
+    this.changeState(false, this.afterClose);
+  };
+
+  changeState(isOpen: boolean, callback) {
+    const { animated } = this.props;
+
+    this.timers.clear();
+    this.store.isOpen = isOpen;
+
+    if (animated) {
+      this.store.animating = true;
+      this.timers.after(ANIMATION_DURATION, () => {
+        this.store.animating = false;
+        callback();
+      });
+    } else {
+      callback();
+    }
+  }
+
+  afterOpen = () => {
+    this.checkVisiblePosition();
+    this.subscribeSizeChange();
+    this.props.onOpen?.();
   };
 
   afterClose = () => {
-    const { onClose } = this.props;
-
     this.store.isContentVisible = false;
-    if (onClose) Time.nextTick(onClose);
+    this.props.onClose?.();
   };
 
   toggle = throttle(() => {
@@ -343,12 +381,20 @@ export class Popup extends Component<T.Props> {
       disabled,
       inline,
       outlined,
+      animated,
       paranja,
       elevation,
     } = this.props;
-    const { isOpen, isContentVisible, direction, rootPopupId } = this.store;
+    const {
+      isOpen,
+      isContentVisible,
+      animating,
+      direction,
+      wrapperBounds,
+      offset,
+      rootPopupId,
+    } = this.store;
 
-    const trigger = this.triggerElem.current;
     const target = env.isBrowser && document.getElementById('app-modal');
 
     if (!target || disabled) return null;
@@ -356,15 +402,16 @@ export class Popup extends Component<T.Props> {
     const wrapperClasses = cn(
       S.contentWrapper,
       inline && S.inline,
-      isOpen && S.isOpen,
+      isOpen && wrapperBounds && S.isOpen,
       wrapperProps.className
     );
 
+    const trigger = this.triggerElem.current;
     const [axis, float] = direction.split('-');
     const classes = cn(
       S.content,
-      isOpen && S.isOpen,
       outlined && S.outlined,
+      animated && animating && S.animating,
       elevation && S[`elevation-${elevation}`],
       S[`size-${size}`],
       S[`axis-${axis}`],
@@ -372,14 +419,15 @@ export class Popup extends Component<T.Props> {
       contentProps.className
     );
 
-    if (trigger && !inline) {
-      const { offsetHeight, offsetWidth } = trigger;
+    if (trigger && !inline && wrapperBounds) {
+      const { minHeight, minWidth, top, left } = wrapperBounds;
 
       wrapperProps.style = {
-        minHeight: offsetHeight,
-        minWidth: offsetWidth,
-        ...dom.getCoords(trigger),
-      } as any;
+        minHeight,
+        minWidth,
+        top: top + offset.y,
+        left: left + offset.x,
+      };
     }
 
     const contentNode = (

@@ -32,6 +32,8 @@ export type Direction =
 export type Props = ComponentType & {
   // Sets the initial open state (default is false)
   isOpen?: boolean;
+  // Wether to animate open/close state
+  animated?: boolean;
   // Toggle open/close state on pointerover/pointerout
   hoverControl?: boolean;
   // Toggle open/close state on focus/blur
@@ -50,8 +52,12 @@ export type Props = ComponentType & {
   size?: Size;
   // Adds a shadow
   elevation?: 1 | 2;
-  // Direction to open
-  direction: Direction;
+  // Direction to open.
+  //
+  // If not specified, it will be automatically calculated.
+  //
+  // Also when size of content changes, it will be recalculated.
+  direction?: Direction;
   // Target element to attach to
   trigger?: ReactNode;
   triggerProps?: TriggerPropsType;

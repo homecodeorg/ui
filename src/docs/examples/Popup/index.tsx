@@ -4,6 +4,7 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 import basic from '!!raw-loader!./Basic';
 // import multiple from '!!raw-loader!./Multiple';
 // import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
+import S from './Popup.styl';
 
 const name = 'Popup';
 const examples = [{ id: 'basic', label: 'Basic', code: basic }];
@@ -18,7 +19,7 @@ const Docs = () => (
 );
 
 export default () => (
-  <ComponentLayout name={name} docs={Docs} examples={examples} />
+  <ComponentLayout name={name} docs={Docs} examples={examples} scope={{ S }} />
 );
 
 // import cn from 'classnames';

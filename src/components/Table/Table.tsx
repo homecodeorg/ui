@@ -1,4 +1,4 @@
-import { ReactNode, Component } from 'react';
+import { Component } from 'react';
 import cn from 'classnames';
 
 import { Paranja, Scroll, Spinner } from 'uilib';
