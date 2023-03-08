@@ -687,7 +687,9 @@ export class Select extends Component<T.Props, T.State> {
       <Fragment>
         <Popup
           className={classes}
-          direction="bottom-right"
+          direction="bottom"
+          size={size}
+          focusControl
           {...popupProps}
           isOpen={isOpen}
           onOpen={this.onPopupOpen}

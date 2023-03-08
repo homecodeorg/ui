@@ -116,17 +116,17 @@ export class Popup extends Component<T.Props> {
     this._subscribedSizeChange = true;
 
     resizeObserver.observe(this.triggerElem.current, this.onTriggerResize);
-    // resizeObserver.observe(this.containerElem, this.onContainerResize);
+    resizeObserver.observe(this.containerElem, this.onContainerResize);
   }
 
   subscribeScroll() {
     if (env.isBrowser && !this.props.inline) {
-      document.addEventListener('scroll', this.close, true);
+      document.addEventListener('scroll', this.onScroll, true);
     }
   }
 
   unsubscribeScroll() {
-    document.removeEventListener('scroll', this.close, true);
+    document.removeEventListener('scroll', this.onScroll, true);
   }
 
   unsubscribeSizeChange() {
@@ -216,6 +216,10 @@ export class Popup extends Component<T.Props> {
   isPointerOver(target, elem) {
     return target.closest(`.${elem}[data-popup-id="${this.id}"]`);
   }
+
+  onScroll = e => {
+    if (!e.target.closest(`.${S.content}`)) this.close();
+  };
 
   onDocKeyUp = (e: KeyboardEvent) => {
     if (this.store.isOpen && e.key === 'Escape') {
