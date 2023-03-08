@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/foreverido/uilib/compare/v3.6.2...v3.7.0) (2023-03-08)
+
+
+### Features
+
+* Add style variants for form controls ([ae28d9d](https://github.com/foreverido/uilib/commit/ae28d9dd7833ba51468afab2531ece9d3c4a988a))
+
+
+### Bug Fixes
+
+* Popup <-> Select - focus/blur integrations ([3002ea0](https://github.com/foreverido/uilib/commit/3002ea0ef612927023cb201c8d8d9a2cad12d76f))
+
 ### [3.6.2](https://github.com/foreverido/uilib/compare/v3.6.1...v3.6.2) (2023-03-08)
 
 
