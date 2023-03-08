@@ -58,7 +58,7 @@ function Field(props: T.FormFieldProps) {
     handleChange(name, v);
   }
 
-  function handleFieldBlur(e) {
+  function handleFieldBlur(e: FocusEvent) {
     if (onBlur && onBlur(e) === false) return;
     handleBlur(name);
   }

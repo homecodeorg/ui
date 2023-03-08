@@ -8,10 +8,10 @@ export default () => {
   return (
     <Select
       // variant="outlined"
+      // isSearchable
       label="Label"
       options={OPTIONS}
       value={value}
-      //isSearchable
       onChange={val => setValue(val)}
     />
   );

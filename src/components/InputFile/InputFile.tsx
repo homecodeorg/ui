@@ -251,7 +251,8 @@ export class InputFile extends Component<T.Props> {
   };
 
   render() {
-    const { className, size, variant, label, accept, maxCount } = this.props;
+    // @ts-ignore
+    const { className, size, variant, label, maxCount, accept } = this.props;
     const { items, labelClipPath, pickingIndex } = this.store;
 
     const classes = cn(

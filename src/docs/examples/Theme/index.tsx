@@ -1,4 +1,4 @@
-import { Heading, Link } from 'uilib';
+import { Heading, Table } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import basic from '!!raw-loader!./Basic';
@@ -35,17 +35,21 @@ const Docs = () => (
     />
 
     <Heading id="ThemeConfig" text="ThemeConfig" />
-    <table>
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>base</td>
-          <td>
+    <Table
+      columns={[
+        {
+          id: 'field',
+          label: 'Field',
+        },
+        {
+          id: 'description',
+          label: 'Description',
+        },
+      ]}
+      data={[
+        {
+          field: 'base',
+          description: (
             <ul>
               <li>indent-s</li>
               <li>indent-m</li>
@@ -54,11 +58,11 @@ const Docs = () => (
               <li>border-radius-m</li>
               <li>border-radius-l</li>
             </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>colors</td>
-          <td>
+          ),
+        },
+        {
+          field: 'colors',
+          description: (
             <ul>
               <li>active</li>
               <li>accent</li>
@@ -68,74 +72,83 @@ const Docs = () => (
               <li>disabled</li>
               <li>link</li>
             </ul>
-          </td>
-        </tr>
-        <tr>
-          <td>rest</td>
-          <td>Any other values that will be rendered as CSS variables</td>
-        </tr>
-      </tbody>
-    </table>
+          ),
+        },
+        {
+          field: 'rest',
+          description:
+            'Any other values that will be rendered as CSS variables',
+        },
+      ]}
+    />
 
     <Heading id="ThemeDefaults" text="ThemeDefaults" />
-    <table>
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>colors</td>
-          <td>
+    <Table
+      columns={[
+        {
+          id: 'field',
+          label: 'Field',
+        },
+        {
+          id: 'description',
+          label: 'Description',
+        },
+      ]}
+      data={[
+        {
+          field: 'colors',
+          description: (
             <ul>
               <li>light</li>
               <li>dark</li>
             </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          ),
+        },
+      ]}
+    />
 
     <Heading id="ThemeHelpers" text="ThemeHelpers" />
-    <table>
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>colorsConfigToVars</td>
-          <td>
-            Function takes a ThemeConfig object, which contains color
-            definitions for various states, and returns a new object that
-            contains CSS variable declarations for each color and its associated
-            variations.
-          </td>
-        </tr>
-        <tr>
-          <td>getColors</td>
-          <td>
-            <p>
-              The function takes an optional object parameter with default
-              values for accent, decent, active, warning, danger, disabled, and
-              link colors.
-            </p>
-            <p>
-              Returns a ColorConfig, which defines the color palette for a user
-              interface.
-            </p>
-          </td>
-        </tr>
-        <tr>
-          <td>getConfig</td>
-          <td>Function</td>
-        </tr>
-      </tbody>
-    </table>
+    <Table
+      columns={[
+        {
+          id: 'field',
+          label: 'Field',
+        },
+        {
+          id: 'description',
+          label: 'Description',
+        },
+      ]}
+      data={[
+        {
+          field: 'colorsConfigToVars',
+          description: `Function takes a ThemeConfig object, which contains color
+          definitions for various states, and returns a new object that
+          contains CSS variable declarations for each color and its associated
+          variations.`,
+        },
+        {
+          field: 'getColors',
+          description: (
+            <>
+              <p>
+                The function takes an optional object parameter with default
+                values for accent, decent, active, warning, danger, disabled,
+                and link colors.
+              </p>
+              <p>
+                Returns a ColorConfig, which defines the color palette for a
+                user interface.
+              </p>
+            </>
+          ),
+        },
+        {
+          field: 'getConfig',
+          description: 'Function',
+        },
+      ]}
+    />
   </>
 );
 

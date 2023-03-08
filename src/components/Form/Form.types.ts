@@ -1,6 +1,7 @@
-import { ChangeEvent, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { ValidationSchema, ValidationError } from 'fastest-validator';
-import { ComponentType } from 'uilib/types';
+
+import type { ComponentType, FormFieldChangeHandler } from 'uilib/types';
 
 export type FormValidationSchema = ValidationSchema;
 
@@ -47,8 +48,7 @@ export type FormAPI = ValidationState & {
   // Reset the form to its initial state.
   reset: () => void;
   // React component used to render individual form fields.
-  Field: ComponentType;
-  // TODO: use ComponentType
+  Field: (props: FormFieldProps) => ReactNode;
 };
 
 export type FormValidationRule = {
@@ -86,14 +86,24 @@ export type Props = ComponentType & {
 };
 
 export type FieldProps = {
+  // Name of the form field.
+  //
+  // Used to manage states the form field, such as value, error, touched, changed, etc.
   name: string;
   className?: string;
-  onChange: (e: ChangeEvent, value: any) => void | boolean;
-  onBlur;
+  onChange: FormFieldChangeHandler;
+  // Called when the form field is lost focus.
+  //
+  // If the function returns false, the field will not be marked as touched.
+  onBlur?(e: FocusEvent): boolean | void;
+  // Whether to display the dot indicating that the field has been edited.
   markEdited?: Props['markEdited'];
   value: any;
+  // Do not render component if true.
   isHidden: boolean;
+  // Component used to render the form field.
   component?: (props: FormFieldProps) => ReactNode;
+  // Additional content to render below the form field.
   children?: ReactNode;
 };
 

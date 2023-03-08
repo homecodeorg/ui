@@ -29,7 +29,15 @@ const Docs = () => (
     />
 
     <Heading id="FormAPI" text="FormAPI" />
-    <TypesTable scope={name} type="FormAPI" hideRequiredStart />
+    <TypesTable
+      scope={name}
+      type="FormAPI"
+      hideRequiredStart
+      customLinks={{ FormFieldProps: '#FormFieldProps' }}
+    />
+
+    <Heading id="FormFieldProps" text="FormFieldProps" />
+    <TypesTable scope={name} type="FormFieldProps" hideRequiredStart />
   </>
 );
 
