@@ -12,17 +12,17 @@ export const getPopupId = (elem, attr = 'data-popup-id') => {
   return id ? parseInt(id, 10) : null;
 };
 
-export function isLastOverContent(rootId, id) {
+export function isLastChild(rootId, id) {
   const ids = childs[rootId];
   return ids && ids[ids.length - 1] === id;
 }
 
-export function setOverContent(rootId, id) {
+export function setChild(rootId, id) {
   if (!childs[rootId]) childs[rootId] = [];
   childs[rootId].push(id);
 }
 
-export function unsetOverContent(rootId, id) {
+export function unsetChild(rootId, id) {
   array.spliceWhere(childs[rootId], id);
   if (!childs[rootId].length) delete childs[rootId];
 }

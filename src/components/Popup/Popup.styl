@@ -1,7 +1,8 @@
 @import '../../theme'
 
 $openTransform = scale3d(1, 1, 1)
-$hideTransform = scale3d(.5, .5, .5)
+$hideTransformVertical = scale3d(1,.5, 1)
+$hideTransformHorizontal = scale3d(.5, 1, 1)
 
 .root
   position relative
@@ -41,7 +42,6 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-100)
   background-color var(--decent-color-alpha-500)
   box-shadow $contentShadow
   opacity 0
-  transform $hideTransform
   transform-origin top center
   backface-visibility hidden
   pointer-events none
@@ -101,18 +101,22 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-100)
 
 .axis-top
 .axis-bottom
+  transform  $hideTransformVertical
+
   &.float-middle
     left 50%
-    transform translateX(-50%) $hideTransform
+    transform translateX(-50%) $hideTransformVertical
 
     .isOpen &
       transform translateX(-50%) $openTransform
 
 .axis-left
 .axis-right
+  transform  $hideTransformHorizontal
+
   &.float-middle
     top 50%
-    transform translateY(-50%) $hideTransform
+    transform translateY(-50%) $hideTransformHorizontal
 
     .isOpen &
       transform translateY(-50%) $openTransform

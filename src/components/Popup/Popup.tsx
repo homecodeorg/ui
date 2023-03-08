@@ -29,6 +29,7 @@ export class Popup extends Component<T.Props> {
   _pointerPressed = false;
   _subscribedHoverControl = false;
   _subscribedSizeChange = false;
+  _pointerDownTarget = null;
 
   id;
   parentPopupContent;
@@ -57,15 +58,15 @@ export class Popup extends Component<T.Props> {
       wrapperBounds: null,
       offset: { x: 0, y: 0 },
     } as T.State);
-
-    this.checkHover = debounce(this.checkHover, 100);
   }
 
   componentDidMount() {
-    const { isOpen, hoverControl, focusControl, inline } = this.props;
+    const { isOpen, hoverControl, focusControl } = this.props;
     const parentPopupContent = this.triggerElem.current.closest(
       `.${S.content}`
     );
+
+    document.addEventListener('pointerdown', this.onDocPointerDown, true);
 
     if (parentPopupContent) {
       this.store.rootPopupId =
@@ -186,7 +187,7 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  checkHover = e => {
+  checkHover = debounce(e => {
     const { isOpen, rootPopupId } = this.store;
     const overTrigger = this.isPointerOver(e.target, S.trigger);
     const overContent = this.isPointerOver(e.target, S.content);
@@ -200,9 +201,9 @@ export class Popup extends Component<T.Props> {
     if (overTrigger || overContent) return;
 
     if (typeof rootPopupId === 'number') {
-      if (H.isLastOverContent(rootPopupId, this.id)) {
+      if (H.isLastChild(rootPopupId, this.id)) {
         this.close();
-        H.unsetOverContent(rootPopupId, this.id);
+        H.unsetChild(rootPopupId, this.id);
       }
     } else {
       const isOverAnyPopupContent = e.target.closest(`.${S.content}`);
@@ -211,6 +212,16 @@ export class Popup extends Component<T.Props> {
         this.close();
       }
     }
+  }, 100);
+
+  isLastClickInside = () =>
+    this._pointerDownTarget &&
+    (this._pointerDownTarget.closest(`.${S.trigger}`) ||
+      this._pointerDownTarget.closest(`.${S.content}`));
+
+  onDocPointerDown = (e: PointerEvent) => {
+    this._pointerDownTarget = e.target;
+    this.timers.after(100, () => (this._pointerDownTarget = null));
   };
 
   isPointerOver(target, elem) {
@@ -228,8 +239,7 @@ export class Popup extends Component<T.Props> {
       return;
     }
 
-    if (!this._focused) return;
-    if (/Enter| /.test(e.key)) {
+    if (this._focused && /Enter| /.test(e.key)) {
       e.stopPropagation();
       this.toggle();
     }
@@ -244,6 +254,23 @@ export class Popup extends Component<T.Props> {
     this.toggle();
   };
 
+  onFocus = e => {
+    this._focused = true;
+    this.props.triggerProps?.onFocus?.(e);
+
+    if (!this._pointerPressed) this.open();
+  };
+
+  onBlur = e => {
+    this._focused = false;
+    this.props.triggerProps?.onBlur?.(e);
+
+    // give time to fire clicks inside popup
+    this.timers.after(80, () => {
+      if (!this.isLastClickInside()) this.close();
+    });
+  };
+
   onTriggerResize = debounce(() => {
     this.updateWrapperBounds();
   }, 200);
@@ -252,27 +279,7 @@ export class Popup extends Component<T.Props> {
     this.checkVisiblePosition();
   }, 200);
 
-  onFocus = (e: FocusEvent) => {
-    const { onTriggerFocus } = this.props;
-
-    this._focused = true;
-    if (!this._pointerPressed) this.open();
-    onTriggerFocus?.(e);
-  };
-
-  onBlur = (e: FocusEvent) => {
-    const { onTriggerBlur } = this.props;
-
-    this._focused = false;
-
-    onTriggerBlur?.(e);
-    if (!this._pointerPressed) {
-      // give time to fire clicks inside popup
-      this.timers.after(80, this.close);
-    }
-  };
-
-  open = () => {
+  open = throttle(() => {
     const { rootPopupId } = this.store;
 
     if (this.store.isOpen) return;
@@ -282,8 +289,8 @@ export class Popup extends Component<T.Props> {
     this.store.isContentVisible = true;
     this.changeState(true, this.afterOpen);
 
-    if (rootPopupId) H.setOverContent(rootPopupId, this.id);
-  };
+    if (rootPopupId) H.setChild(rootPopupId, this.id);
+  }, 100);
 
   close = () => {
     if (!this.store.isOpen) return;
@@ -326,14 +333,9 @@ export class Popup extends Component<T.Props> {
   }, 100);
 
   renderTrigger() {
-    const {
-      trigger,
-      content,
-      disabled,
-      triggerProps = {},
-      focusControl,
-      hoverControl,
-    } = this.props;
+    const { trigger, content, disabled, focusControl, hoverControl, ...rest } =
+      this.props;
+    const triggerProps = { ...rest.triggerProps };
     const { isOpen } = this.store;
 
     if (!trigger) return null;

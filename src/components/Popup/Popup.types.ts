@@ -61,19 +61,15 @@ export type Props = ComponentType & {
   // Target element to attach to
   trigger?: ReactNode;
   triggerProps?: TriggerPropsType;
+  // Props for element that wraps content
+  wrapperProps?: WrapperPropsType;
   // Content to render inside popup
   content: ReactNode;
   contentProps?: any;
-  // Props for element that wraps content
-  wrapperProps?: WrapperPropsType;
   // Function called when the popup is opened
   onOpen?: () => void;
   // Function called when the popup is closed
   onClose?: () => void;
-  // Function called when the trigger element gains focus
-  onTriggerFocus?: (e: FocusEvent) => void;
-  // Function called when the trigger element loses focus
-  onTriggerBlur?: (e: FocusEvent) => void;
 };
 
 export type State = {

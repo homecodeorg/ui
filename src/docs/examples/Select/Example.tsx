@@ -10,6 +10,7 @@ export default () => {
       label="Label"
       options={OPTIONS}
       value={value}
+      //isSearchable
       onChange={val => setValue(val)}
     />
   );

@@ -127,6 +127,15 @@ export class Select extends Component<T.Props, T.State> {
     return { [value]: true };
   }
 
+  isClickedInside = elem =>
+    elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`);
+
+  onDocumentClick = e => {
+    if (!this.isClickedInside(e.target)) {
+      this.store.isOpen = false;
+    }
+  };
+
   onFocus = e => {
     const { onFocus } = this.props;
 
@@ -142,6 +151,15 @@ export class Select extends Component<T.Props, T.State> {
     onBlur?.(e);
   };
 
+  onOptionsPointerDownCapture = e => {
+    if (this.isMultiple()) {
+      e.preventDefault();
+      e.stopPropagation();
+    } else {
+      this.timers.after(150, () => (this.store.isOpen = false));
+    }
+  };
+
   onSearchChange = (e, value) => {
     this.setSearchVal(value);
   };
@@ -154,7 +172,7 @@ export class Select extends Component<T.Props, T.State> {
     this.store.expanded[id] = !expanded[id];
   }
 
-  onItemClick(id) {
+  onItemPointerUp(e, id) {
     this.onChange(this.getNewSelected(id));
   }
 
@@ -166,37 +184,23 @@ export class Select extends Component<T.Props, T.State> {
 
     this.store.selected = selected;
     onChange(this.getValue());
-    if (isOpen) {
-      if (isRemoved) this.scrollToSelected();
-      else if (!this.isMultiple()) this.store.isOpen = false;
-    }
+    if (isOpen && isRemoved) this.scrollToSelected();
   }
 
   onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
 
   onPopupOpen = () => {
-    const { onOpen } = this.props;
-
-    this.store.isOpen = true;
     this.scrollToSelected();
+    this.store.isOpen = true;
 
-    document.addEventListener('click', this.onDocumentClick, true);
-
-    onOpen?.();
+    if (this.isMultiple()) {
+      document.addEventListener('click', this.onDocumentClick);
+    }
   };
 
   onPopupClose = () => {
-    const { onClose } = this.props;
-
     this.store.isOpen = false;
-    document.removeEventListener('click', this.onDocumentClick, true);
-
-    onClose?.();
-  };
-
-  onDocumentClick = e => {
-    if (e.target.closest(`.${S.options}`)) return;
-    this.store.isOpen = false;
+    document.removeEventListener('click', this.onDocumentClick);
   };
 
   toggle = () => {
@@ -472,7 +476,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerButton() {
-    const { size, disabled, value } = this.props;
+    const { size, disabled } = this.props;
     const { labelClipPath, isFocused } = this.store;
     const { label, className, ...rest } = this.getTriggerProps();
     const props = omit(rest, ['name', 'inputProps']);
@@ -498,7 +502,6 @@ export class Select extends Component<T.Props, T.State> {
           className={classes}
           variant="default"
           {...props}
-          onClick={this.toggle}
           style={{ clipPath: labelClipPath }}
           title={title?.join?.(', ')}
         >
@@ -584,7 +587,7 @@ export class Select extends Component<T.Props, T.State> {
     const props = {
       className,
       key: id,
-      onPointerUp: () => this.onItemClick(id),
+      onPointerUp: e => this.onItemPointerUp(e, id),
     } as T.OptionElemProps;
 
     if (isIndeterminate || (isSelected && !this.isFirstSelectedMeet)) {
@@ -672,7 +675,11 @@ export class Select extends Component<T.Props, T.State> {
 
     return [
       this.renderPresets(),
-      <div className={classes} key="items-scroll">
+      <div
+        className={classes}
+        key="items-scroll"
+        onPointerUp={this.onOptionsPointerDownCapture}
+      >
         {optionsList}
       </div>,
     ];
@@ -684,7 +691,7 @@ export class Select extends Component<T.Props, T.State> {
     const classes = cn(S.root, className);
 
     return (
-      <Fragment>
+      <>
         <Popup
           className={classes}
           direction="bottom"
@@ -694,9 +701,11 @@ export class Select extends Component<T.Props, T.State> {
           isOpen={isOpen}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
-          onTriggerFocus={this.onFocus}
-          onTriggerBlur={this.onBlur}
           trigger={this.renderTrigger()}
+          triggerProps={{
+            onFocus: this.onFocus,
+            onBlur: this.onBlur,
+          }}
           content={this.renderOptionsList()}
         />
         {this.isErrorVisible() && (
@@ -704,7 +713,7 @@ export class Select extends Component<T.Props, T.State> {
             {error as string}
           </AssistiveText>
         )}
-      </Fragment>
+      </>
     );
   }
 }
