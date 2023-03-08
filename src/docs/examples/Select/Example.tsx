@@ -7,6 +7,7 @@ export default () => {
 
   return (
     <Select
+      // variant="outlined"
       label="Label"
       options={OPTIONS}
       value={value}

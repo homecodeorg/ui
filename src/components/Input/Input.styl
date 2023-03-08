@@ -29,37 +29,44 @@ $paddingSide = 12px
       padding-right 13px !important;
 
 .border
-  z-index 1
+  z-index 0
   position absolute
   top 0
   left 0
   right 0
   bottom 0
-  controlBorder(var(--accent-color))
 
   transition 0.15s ease-out
-  transition-property box-shadow, border-color //, clip-path
+  transition-property box-shadow, border-color, background-color //, clip-path
+  background-color var(--accent-color-alpha-100)
   border-radius inherit
   pointer-events none
 
   .root:hover &
     background-color var(--active-color-alpha-100)
 
-  .isFocused &
-    controlBorder(var(--active-color))
-    controlFocused()
+  .variant-default &
+    controlButtonVariant('default')
 
-  .hasError &
-  .hasError:hover &
-    controlBorder(var(--danger-color))
+    .isFocused&
+      controlButtonVariantFocus('default')
 
-  .isFocused.hasError &
-    controlFocus(var(--danger-color))
+  .variant-outlined &
+    controlButtonVariant('outlined')
 
-  .isClear &
-  .isDisabled &
-    controlBorder(false, !important)
-    controlFocus(false, !important)
+    .isFocused&
+      controlButtonVariantFocus('outlined')
+
+    .hasError &
+    .hasError:hover &
+      outline(var(--danger-color))
+
+    .isFocused.hasError&
+      controlFocus(var(--danger-color))
+
+    .isDisabled&
+      outline(false, !important)
+      controlFocus(false, !important)
 
   .isDisabled &
     opacity .6

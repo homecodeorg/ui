@@ -10,12 +10,12 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     name?: string;
     size?: Size;
     label?: string;
+    variant?: 'default' | 'outlined';
     // For label to be on top of the input,
     // even if there is no value/placeholder and not focused
     forceLabelOnTop?: boolean;
     // Defines an error message or error status for the input field
     error?: string | boolean;
-    clear?: boolean; // render without borders and outline
     // Whether the input field should include a clear button that clears the input value when clicked
     hasClear?: boolean;
     // Whether the onChange event should be triggered only when the user finishes typing (focus lost) or immediately after each keystroke (default)

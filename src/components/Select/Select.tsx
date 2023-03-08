@@ -440,6 +440,7 @@ export class Select extends Component<T.Props, T.State> {
         'name',
         'label',
         'size',
+        'variant',
         'disabled',
         // 'inputProps',
         // 'required',

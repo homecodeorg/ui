@@ -9,9 +9,20 @@
   top 0
   height 100%
   width 100%
-  controlBorder()
   pointer-events none
   border-radius inherit
+
+  .variant-default &
+    controlButtonVariant('default')
+
+    &:hover
+      controlButtonVariantHover('default')
+
+  .variant-outlined &
+    controlButtonVariant('outlined')
+
+    &:hover
+      controlButtonVariantHover('outlined')
 
 .label
   display flex

@@ -14,6 +14,10 @@
   cursor pointer
   user-select none
 
+  &:hover
+  &:active
+    background-color var(--active-color-alpha-300)
+
   &:active
     opacity .7
 
@@ -70,24 +74,33 @@
   padding 0
   justify-content center
 
+
 .variant-clear
-  controlBorder(false, null, !important)
-
-  &:hover
-    background-color var(--active-color-alpha-300)
-
 .variant-default
   &:hover
-    background-color var(--active-color-alpha-100)
   &:focus
-    controlBorder(var(--active-color))
-  &:active
-    background-color var(--active-color-alpha-100)
+    controlButtonVariantFocus('default')
+
+.variant-clear
+  controlButtonVariant('clear')
+
+.variant-default
+  controlButtonVariant('default')
+
+.variant-outlined
+  controlButtonVariant('outlined')
+  &:hover
+    controlButtonVariantHover('outlined')
+  &:focus
+    controlButtonVariantFocus('outlined')
 
 .variant-primary
-  background-color var(--active-color)
-  color var(--accent-color-alpha-900)
-  controlBorder(false)
+  controlButtonVariant('primary')
+  &:hover
+    controlButtonVariantHover('primary')
+  &:focus
+    controlButtonVariantFocus('primary')
+
 
 .spinner
   margin-left var(--indent-s)

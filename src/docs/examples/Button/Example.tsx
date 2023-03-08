@@ -7,10 +7,10 @@ export default () => {
     <Button
       size={size}
       // square
-      variant="default"
+      // variant="outlined"
       prefixElem={<Icon type="check" size={size} />}
     >
-      I'm a button
+      Just do it
     </Button>
   );
 };

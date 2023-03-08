@@ -17,6 +17,7 @@ export type Props = {
   className?: string;
   label?: string;
   size?: string;
+  variant?: 'default' | 'outlined';
   // Function that uploads the selected file and returns a Promise that
   // resolves with the URL of the uploaded file.
   //

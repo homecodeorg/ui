@@ -13,6 +13,7 @@ export class Checkbox extends Component<T.Props> {
 
   static defaultProps = {
     size: 'm',
+    variant: 'default',
     label: '',
     checked: false,
   };
@@ -46,13 +47,14 @@ export class Checkbox extends Component<T.Props> {
   };
 
   render() {
-    const { className, label, size, error, ...props } = this.props;
+    const { className, label, size, variant, error, ...props } = this.props;
     const { checked } = props;
     const { isActive, isFocused } = this.store;
 
     const classes = cn(
       S.root,
       S[`size-${size}`],
+      S[`variant-${variant}`],
       checked && S.checked,
       error && S.hasError,
       isActive && S.isActive,

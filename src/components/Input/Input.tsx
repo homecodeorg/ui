@@ -37,6 +37,7 @@ export class Input extends Component<T.Props> {
   static defaultProps = {
     type: 'text',
     size: 'm',
+    variant: 'default',
   };
 
   constructor(props: T.Props) {
@@ -332,8 +333,8 @@ export class Input extends Component<T.Props> {
       className,
       size,
       label,
+      variant,
       error,
-      clear,
       hasClear,
       required,
       disabled,
@@ -347,9 +348,9 @@ export class Input extends Component<T.Props> {
       S.root,
       isTextArea && S.isTextArea,
       S[`size-${size}`],
+      S[`variant-${variant}`],
       isFocused && S.isFocused,
       error && S.hasError,
-      clear && S.isClear,
       hasClear && S.hasClear,
       disabled && S.isDisabled,
       className
@@ -357,7 +358,6 @@ export class Input extends Component<T.Props> {
 
     return (
       <div className={classes}>
-        {/* eslint-disable-next-line */}
         <label className={S.main} key="main">
           <div
             className={S.border}
@@ -369,7 +369,6 @@ export class Input extends Component<T.Props> {
             <Control
               {...controlProps}
               className={cn(S.control, controlProps?.className)}
-              // @ts-ignore
               ref={this.inputRef}
               key="control"
             />

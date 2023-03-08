@@ -18,6 +18,7 @@ export default () => {
           name="photos"
           component={InputFile}
           size="m"
+          variant="outlined"
           label="Photos"
           uploadOnDemand={fn => (demandUploader = fn)}
           maxCount={5}

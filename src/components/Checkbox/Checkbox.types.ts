@@ -17,4 +17,5 @@ export type Props = HTMLAttributes<HTMLInputElement> &
     error?: string | boolean;
     // Size of the checkbox
     size?: Size;
+    variant?: 'default' | 'outlined';
   };

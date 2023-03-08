@@ -10,7 +10,6 @@
   user-select none
 
 .controlWrapper
-  controlBorder()
   position relative
   display block
   border-radius var(--border-radius-m)
@@ -18,15 +17,20 @@
   transition-property opacity, box-shadow
   margin-right 1em
 
+  .variant-default &
+    controlButtonVariant('default')
+  .variant-outlined &
+    controlButtonVariant('outlined')
+
   .root:hover &
     background-color var(--active-color-alpha-100)
 
   .isActive &
   .isFocused &
-    controlBorder(var(--active-color), ,!important)
+    outline(var(--active-color), ,!important)
 
   .hasError &
-    controlBorder(var(--danger-color), ,!important)
+    outline(var(--danger-color), ,!important)
 
   .isActive &
     opacity .7

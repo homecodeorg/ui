@@ -251,10 +251,15 @@ export class InputFile extends Component<T.Props> {
   };
 
   render() {
-    const { className, size, label, accept, maxCount } = this.props;
+    const { className, size, variant, label, accept, maxCount } = this.props;
     const { items, labelClipPath, pickingIndex } = this.store;
 
-    const classes = cn(S.root, className, S[`size-${size}`]);
+    const classes = cn(
+      S.root,
+      className,
+      S[`size-${size}`],
+      S[`variant-${variant}`]
+    );
 
     return (
       <div className={classes}>

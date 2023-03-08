@@ -7,7 +7,7 @@ borderRadius(mod = 1)
 shadow()
   box-shadow 0 10px 20px var(--accent-color)
 
-controlBorder(color = var(--accent-color), size = 2px, rest...)
+outline(color = var(--accent-color), size = 2px, rest...)
   if color
     box-shadow inset 0 0 0 size color rest
   else
@@ -16,14 +16,12 @@ controlBorder(color = var(--accent-color), size = 2px, rest...)
 control()
   appearance none
   outline none
-  // border-radius var(--border-radius-m)
   box-sizing border-box
-  controlBorder(var(--accent-color))
-  background-color var(--bg-color)
   transition .2s ease-out
   transition-property background-color, box-shadow, opacity
 
   &:hover
+  &:focus
     background-color var(--active-color-alpha-100)
 
   &[disabled]
@@ -31,11 +29,52 @@ control()
     background-color var(--accent-color-alpha-100)
     pointer-events none
 
+controlButtonVariant(variant)
+  if variant == 'clear'
+    background-color transparent
+
+  if variant == 'default'
+    background-color var(--accent-color-alpha-100)
+
+  if variant == 'outlined'
+    background-color transparent
+    outline(var(--accent-color))
+
+  if variant == 'primary'
+    background-color var(--active-color)
+    color var(--accent-color-alpha-900)
+
+controlButtonVariantHover(variant)
+  if variant == 'clear'
+    background-color var(--active-color-alpha-300)
+
+  if variant == 'default'
+    background-color var(--active-color-alpha-300)
+
+  if variant == 'primary'
+    background-color var(--active-color-alpha-800)
+
+controlButtonVariantFocus(variant)
+  if variant == 'clear'
+    background-color var(--active-color-alpha-300)
+
+  if variant == 'default'
+    background-color var(--active-color-alpha-300)
+
+  if variant == 'outlined'
+    background-color var(--active-color-alpha-300)
+    outline(var(--active-color))
+
+  if variant == 'primary'
+    background-color var(--active-color)
+    outline(var(--accent-color))
+
+
 controlFocused(args...)
-  controlBorder(var(--active-color), 2px, args)
+  outline(var(--active-color), 2px, args)
 
 controlDisabled()
-  controlBorder(var(--accent-color))
+  outline(var(--accent-color))
   color var(--accent-color)
   cursor not-allowed
   opacity .5
@@ -76,11 +115,11 @@ $controlPaddingL = 14px
 
 controlPaddingSize(size)
   if size == 's'
-    padding 0 10px
+    padding '0 %s' % $controlPaddingS
   if size == 'm'
-    padding 0 12px
+    padding '0 %s' % $controlPaddingM
   if size == 'l'
-    padding 0 14px
+    padding '0 %s' % $controlPaddingL
 
 borderRadiusSize(size)
   if size == 's'
@@ -91,9 +130,3 @@ borderRadiusSize(size)
     border-radius 8px
   if size == 'xl'
     border-radius 10px
-
-mapButton()
-  color var(--accent-color) !important
-  background-color var(--bg-color-alpha-800) !important
-  border-radius 50%
-  controlBorder(var(--accent-color), 2px, !important)

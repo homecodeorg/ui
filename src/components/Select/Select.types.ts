@@ -58,6 +58,7 @@ export type Props = FormControl<Value> &
     // ReactNode that will be added to to label
     additionalLabel?: ReactNode;
     size?: Size;
+    variant?: 'default' | 'outlined';
     // An array of options
     options: Option[];
     // Options that would be added to the top of the list

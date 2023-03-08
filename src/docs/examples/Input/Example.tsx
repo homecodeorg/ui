@@ -6,12 +6,13 @@ export default () => {
 
   return (
     <Input
+      size="m"
+      // variant="outlined"
       type="textarea"
       label="Textarea example label"
       value={value}
       onChange={(e, val) => setValue(val)}
       hasClear
-      size="m"
     />
   );
 };

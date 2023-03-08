@@ -2,8 +2,6 @@ import { ChangeEvent } from 'react';
 
 export type Size = 's' | 'm' | 'l';
 
-export type Variant = 'clear' | 'default' | 'primary';
-
 export type ComponentType = {
   className?: string;
 };
