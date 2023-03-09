@@ -30,6 +30,7 @@ export class Popup extends Component<T.Props> {
   _subscribedHoverControl = false;
   _subscribedSizeChange = false;
   _pointerDownTarget = null;
+  _isPointerPressedInside = false;
 
   id;
   parentPopupContent;
@@ -67,6 +68,7 @@ export class Popup extends Component<T.Props> {
     );
 
     document.addEventListener('pointerdown', this.onDocPointerDown, true);
+    document.addEventListener('pointerup', this.onDocPointerUp, true);
 
     if (parentPopupContent) {
       this.store.rootPopupId =
@@ -188,6 +190,8 @@ export class Popup extends Component<T.Props> {
   };
 
   checkHover = debounce(e => {
+    if (this._isPointerPressedInside) return;
+
     const { isOpen, rootPopupId } = this.store;
     const overTrigger = this.isPointerOver(e.target, S.trigger);
     const overContent = this.isPointerOver(e.target, S.content);
@@ -221,7 +225,13 @@ export class Popup extends Component<T.Props> {
 
   onDocPointerDown = (e: PointerEvent) => {
     this._pointerDownTarget = e.target;
+    this._isPointerPressedInside = this.isLastClickInside();
     this.timers.after(100, () => (this._pointerDownTarget = null));
+  };
+
+  onDocPointerUp = (e: PointerEvent) => {
+    if (!this._isPointerPressedInside) this.close();
+    this._isPointerPressedInside = false;
   };
 
   isPointerOver(target, elem) {
@@ -245,13 +255,14 @@ export class Popup extends Component<T.Props> {
     }
   };
 
-  onTriggerPointerDown = () => {
+  onTriggerPointerDown = e => {
+    this._pointerDownTarget = e.target;
     this._pointerPressed = true;
   };
 
-  onTriggerPointerUp = () => {
+  onTriggerPointerUp = e => {
     this._pointerPressed = false;
-    this.toggle();
+    if (e.traget === this._pointerDownTarget) this.toggle();
   };
 
   onFocus = e => {

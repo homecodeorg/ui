@@ -17,6 +17,7 @@ import { AssistiveText } from '../AssistiveText/AssistiveText';
 import * as T from './Select.types';
 import * as H from './Select.helpers';
 import S from './Select.styl';
+import { Scroll } from 'uilib';
 
 export const SelectHelpers = H;
 
@@ -671,24 +672,26 @@ export class Select extends Component<T.Props, T.State> {
     const { size } = this.props;
 
     this.isTree = false;
-    const optionsList = this.renderOptions();
     const classes = cn(S.options, S[`size-${size}`], this.isTree && S.isTree);
 
-    return [
-      this.renderPresets(),
-      <div
-        className={classes}
-        key="items-scroll"
-        onPointerUp={this.onOptionsPointerDownCapture}
-      >
-        {optionsList}
-      </div>,
-    ];
+    return (
+      <div onPointerUp={this.onOptionsPointerDownCapture}>
+        {this.renderPresets()}
+        <Scroll
+          y
+          offset={{ y: { before: 10, after: 10 } }}
+          className={classes}
+          key="items-scroll"
+        >
+          {this.renderOptions()}
+        </Scroll>
+      </div>
+    );
   }
 
   render() {
     const { className, popupProps, size, error } = this.props;
-    const { isOpen } = this.store;
+    const { isOpen, isFocused } = this.store;
     const classes = cn(S.root, className);
 
     return (
@@ -698,6 +701,7 @@ export class Select extends Component<T.Props, T.State> {
           direction="bottom"
           size={size}
           focusControl
+          hoverControl={isFocused}
           {...popupProps}
           isOpen={isOpen}
           onOpen={this.onPopupOpen}
