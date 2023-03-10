@@ -4,12 +4,32 @@ import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 import Time from 'timen';
 
-import { isTouch } from '../../tools/dom';
-import debounce from '../../tools/debounce';
-import * as resizeObserver from '../../tools/resizeObserver';
+import { isTouch } from 'uilib/tools/dom';
+import * as resizeObserver from 'uilib/tools/resizeObserver';
 
 import S from './Scroll.styl';
 import * as T from './Scroll.types';
+import debounce from 'uilib/tools/debounce';
+
+const AXES = ['x', 'y'];
+const BY_AXIS = {
+  x: {
+    scrollPos: 'scrollLeft',
+    scrollSize: 'scrollWidth',
+    size: 'width',
+    offsetSize: 'offsetWidth',
+    innerSize: 'clientWidth',
+    posField: 'left',
+  },
+  y: {
+    scrollPos: 'scrollTop',
+    scrollSize: 'scrollHeight',
+    size: 'height',
+    offsetSize: 'offsetHeight',
+    innerSize: 'clientHeight',
+    posField: 'top',
+  },
+};
 
 export class Scroll extends Component<T.Props> {
   innerElem = createRef<HTMLDivElement>();
@@ -20,9 +40,11 @@ export class Scroll extends Component<T.Props> {
 
   store;
   isTouch;
-  events;
   timers = Time.create();
 
+  currAxis;
+  coeff = { x: 0, y: 0 };
+  pos = { x: 0, y: 0 };
   prevCoords = { x: 0, y: 0 };
   prevScrolls = { x: 0, y: 0 };
   prevBoundings = { x: 0, y: 0 };
@@ -35,188 +57,65 @@ export class Scroll extends Component<T.Props> {
     super(props);
     this.isTouch = isTouch();
     this.store = createStore(this, {
-      coeff: { x: 0, y: 0 },
-      pos: { x: 0, y: 0 },
       isScrolling: false,
       activeAxis: null,
     });
-    this.events = this.isTouch
-      ? { start: 'onTouchStart', move: 'touchmove', end: 'touchend' }
-      : { start: 'onMouseDown', move: 'mousemove', end: 'mouseup' };
-
-    this.updatePos = debounce(this.updatePos, 50);
   }
 
   componentDidMount() {
-    this.updateCoeff();
+    this.eachAxis(this.update);
 
     this.unsubscribeScrollHeightObserver = Time.every(
       100,
       this.observeScrollHeight
     );
-    resizeObserver.observe(this.innerElem.current, this.update);
+    resizeObserver.observe(this.innerElem.current, this.updateAll);
 
-    document.addEventListener(this.events.move, this.onPointerMove, {
-      passive: false,
-    });
-    document.addEventListener(this.events.end, this.onPointerEnd);
-    document.addEventListener('scroll', this.onScroll);
+    document.addEventListener('scroll', this.onDocScroll);
   }
 
   componentWillUnmount() {
-    // console.log('Scroll UN-mount');
     this.unsubscribeScrollHeightObserver?.();
-    document.removeEventListener(this.events.move, this.onPointerMove);
-    document.removeEventListener(this.events.end, this.onPointerEnd);
-    document.removeEventListener('scroll', this.onScroll);
+    this.unsubscribePointerMoveUp();
+    document.removeEventListener('scroll', this.onDocScroll);
   }
+
+  eachAxis = fn => AXES.map(axis => this.props[axis] && fn(axis));
 
   observeScrollHeight = () => {
-    if (this.isScrollChanged() || this.isBoudingsChanged()) {
-      this.update();
-    }
+    this.eachAxis(axis => {
+      if (
+        (this.props[axis] && this.isScrollChanged(axis)) ||
+        this.isBoudingsChanged(axis)
+      ) {
+        this.update(axis);
+      }
+    });
   };
 
-  isScrollChanged() {
-    const { x, y } = this.props;
-    const currScrolls = this.getScrollSizes();
-    let isChanged = false;
+  isScrollChanged(axis) {
+    const currScrolls = this.getScrollSize(axis);
+    const isChanged = this.prevScrolls[axis] !== currScrolls[axis];
 
-    if (x && this.prevScrolls.x !== currScrolls.x) isChanged = true;
-    if (y && this.prevScrolls.y !== currScrolls.y) isChanged = true;
-    if (isChanged) this.prevScrolls = currScrolls;
+    if (isChanged) this.prevScrolls[axis] = currScrolls;
 
     return isChanged;
   }
 
-  isBoudingsChanged() {
-    const { x, y } = this.props;
-    const { offsetWidth, offsetHeight } = this.innerElem.current;
-    const boundings = { x: offsetWidth, y: offsetHeight };
-    let isChanged = false;
+  isBoudingsChanged(axis) {
+    const curroffsetSize = this.getoffsetSize(axis);
+    const isChanged = this.prevBoundings[axis] !== curroffsetSize[axis];
 
-    if (y && offsetHeight !== this.prevBoundings.y) isChanged = true;
-    if (x && offsetWidth !== this.prevBoundings.x) isChanged = true;
-    if (isChanged) this.prevBoundings = boundings;
+    if (isChanged) this.prevBoundings[axis] = curroffsetSize[axis];
 
     return isChanged;
   }
 
-  update = () => {
-    this.updateCoeff();
-    this.updatePos();
-  };
-
-  // TODO: call on resize
-  updateCoeff() {
-    if (!this.innerElem.current) return;
-
-    const { clientHeight, clientWidth, scrollHeight, scrollWidth } =
-      this.innerElem.current;
-
-    this.store.coeff = {
-      x: clientWidth / scrollWidth,
-      y: clientHeight / scrollHeight,
-    };
-
-    // console.log('updateCoeff', this.store.coeff.originalObject);
-  }
-
-  updatePos = () => {
-    if (!this.innerElem.current) return;
-
-    const { offset } = this.props;
-    const xOffsetBefore = offset?.x?.before || 0;
-    const xOffsetAfter = offset?.x?.after || 0;
-    const yOffsetBefore = offset?.y?.before || 0;
-    const yOffsetAfter = offset?.y?.after || 0;
-
-    const {
-      clientHeight,
-      clientWidth,
-      scrollHeight,
-      scrollWidth,
-      scrollTop,
-      scrollLeft,
-    } = this.innerElem.current;
-    const xThumbSize = this.thumbELem.x.current?.offsetWidth;
-    const yThumbSize = this.thumbELem.y.current?.offsetHeight;
-
-    const x = xThumbSize
-      ? (clientWidth - xThumbSize - xOffsetBefore - xOffsetAfter) *
-        (scrollLeft / (scrollWidth - clientWidth))
-      : 0;
-    const y = yThumbSize
-      ? (clientHeight - yThumbSize - yOffsetBefore - yOffsetAfter) *
-        (scrollTop / (scrollHeight - clientHeight))
-      : 0;
-
-    this.store.pos = { x, y };
-
-    // console.log('updatePos', x, y);
-  };
-
-  dropScrollingState = () => (this.store.isScrolling = false);
-
-  onScroll = e => {
-    const { activeAxis } = this.store;
-
-    if (activeAxis && this.innerElem.current !== e.target) {
-      // console.log('scroll prevented', e.target);
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  };
-
-  onInnerScroll = e => {
-    const { onScroll } = this.props;
-    const { activeAxis, isScrolling } = this.store;
-
-    onScroll?.(e);
-
-    if (!activeAxis) this.updatePos();
-
-    if (!isScrolling) this.store.isScrolling = true;
-    this.timers.clear(this.dropScrollingState);
-    this.timers.after(500, this.dropScrollingState);
-  };
-
-  onPointerStart = (axis, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    // TOOD: if target is bar(not thumb) - move thumb to target coords
-
-    this.prevCoords = this.getEventCoords(e);
-    this.store.activeAxis = axis;
-  };
-
-  onPointerMove = e => {
-    const { activeAxis: axis, coeff } = this.store;
-
-    if (!axis) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    const coords = this.getEventCoords(e);
-    const scrollDir = axis === 'y' ? 'scrollTop' : 'scrollLeft';
-    const pos = coords[axis] - this.prevCoords[axis];
-
-    this.prevCoords = coords;
-    this.innerElem.current[scrollDir] += pos / coeff[axis];
-    this.updatePos();
-  };
-
-  onPointerEnd = e => {
-    e.stopPropagation();
-    this.store.activeAxis = null;
-  };
-
-  getScrollSizes() {
-    const { scrollHeight: y, scrollWidth: x } = this.innerElem.current;
-    return { x, y };
-  }
+  getoffsetSize = axis => this.innerElem.current[BY_AXIS[axis].offsetSize];
+  getInnerSize = axis => this.innerElem.current[BY_AXIS[axis].innerSize];
+  getScrollSize = axis => this.innerElem.current[BY_AXIS[axis].scrollSize];
+  getScrollPos = axis => this.innerElem.current[BY_AXIS[axis].scrollPos];
+  getThumbSize = axis => this.thumbELem[axis].current[BY_AXIS[axis].offsetSize];
 
   getEventCoords(e) {
     const target = this.isTouch ? e.targetTouches[0] : e;
@@ -239,23 +138,149 @@ export class Scroll extends Component<T.Props> {
     };
   }
 
-  renderBar(axis, sizeField, posField) {
+  getCoeffStyle = axis => `${this.coeff[axis] * 100}%`;
+  getPosStyle = axis => `${this.pos[axis]}px`;
+
+  updateAll = () => {
+    this.eachAxis(this.update);
+  };
+
+  update = axis => {
+    this.updateCoeff(axis);
+    this.updatePos(axis);
+  };
+
+  updateCoeff(axis) {
+    const thumb = this.thumbELem[axis].current;
+
+    if (!this.innerElem.current || !thumb) return;
+
+    const sizeField = BY_AXIS[axis].size;
+
+    this.coeff[axis] = this.getInnerSize(axis) / this.getScrollSize(axis);
+    thumb.style[sizeField] = this.getCoeffStyle(axis);
+  }
+
+  updatePos = axis => {
+    const thumb = this.thumbELem[axis].current;
+
+    if (!this.innerElem.current || !thumb) return;
+
+    const { offset } = this.props;
+    const offsetBefore = offset?.[axis]?.before || 0;
+    const offsetAfter = offset?.[axis]?.after || 0;
+    const innerSize = this.getInnerSize(axis);
+    const thumbSize = this.getThumbSize(axis);
+    const scrollSize = this.getScrollSize(axis);
+    const scrollPos = this.getScrollPos(axis);
+    const posField = BY_AXIS[axis].posField;
+    // const AXIS = axis.toUpperCase();
+    const pos = thumbSize
+      ? (innerSize - thumbSize - offsetBefore - offsetAfter) *
+        (scrollPos / (scrollSize - innerSize))
+      : 0;
+
+    this.pos[axis] = pos;
+    // thumb.style.transform = `translate${AXIS}(${pos}px)`;
+    thumb.style[posField] = this.getPosStyle(axis);
+  };
+
+  updateScroll = (axis, e) => {
+    const coords = this.getEventCoords(e);
+    const scrollPos = BY_AXIS[axis].scrollPos;
+    const pos = coords[axis] - this.prevCoords[axis];
+
+    this.prevCoords = coords;
+    this.innerElem.current[scrollPos] += pos / this.coeff[axis];
+  };
+
+  dropScrollingState = debounce(() => (this.store.isScrolling = false), 500);
+
+  subscribePointerMoveUp = () => {
+    document.addEventListener('pointermove', this.onPointerMove, {
+      passive: false, // do not generate passive event warning
+    });
+    document.addEventListener('pointerup', this.onPointerUp);
+  };
+
+  unsubscribePointerMoveUp = () => {
+    document.removeEventListener('pointermove', this.onPointerMove);
+    document.removeEventListener('pointerup', this.onPointerUp);
+  };
+
+  onDocScroll = e => {
+    const { activeAxis } = this.store;
+
+    // if dragging thumb - prevent any other scrolls
+    if (activeAxis && this.innerElem.current !== e.target) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  onInnerScroll = e => {
+    const { onScroll } = this.props;
+    const { activeAxis, isScrolling } = this.store;
+
+    onScroll?.(e);
+
+    if (!activeAxis) {
+      this.eachAxis(axis => {
+        if (this.isScrollChanged(axis)) this.update(axis);
+      });
+    }
+
+    if (!isScrolling) this.store.isScrolling = true;
+  };
+
+  onPointerDown = (axis, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // TOOD: if target is bar(not thumb) - move thumb to target coords
+
+    this.prevCoords = this.getEventCoords(e);
+    this.store.activeAxis = axis;
+
+    this.subscribePointerMoveUp();
+  };
+
+  onPointerMove = e => {
+    const { activeAxis: axis } = this.store;
+
+    if (!axis) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.updateScroll(axis, e);
+    this.updatePos(axis);
+  };
+
+  onPointerUp = e => {
+    e.stopPropagation();
+    this.store.activeAxis = null;
+    this.dropScrollingState();
+    this.unsubscribePointerMoveUp();
+  };
+
+  renderBar = axis => {
     const { thumbClassName } = this.props;
-    const { coeff, pos, activeAxis } = this.store;
+    const { activeAxis } = this.store;
 
-    if (coeff[axis] === 1) return null;
+    if (this.coeff[axis] === 1) return null;
 
-    // const offsetSizeField = `offset${capitalize(sizeField)}`;
-    // const thumbSize = this.thumbELem[axis].current?.[offsetSizeField] || 0;
+    const sizeField = BY_AXIS[axis].size;
+    const posField = BY_AXIS[axis].posField;
     const thumbStyle = {
-      [sizeField]: `${coeff[axis] * 100}%`,
-      [posField]: `${pos[axis]}px`,
+      [sizeField]: this.getCoeffStyle(axis),
+      [posField]: this.getPosStyle(axis),
     };
 
     const barProps = {
       className: cn(S.bar, S[axis], activeAxis === axis && S.isActive),
       style: this.getOffset(axis),
-      [this.events.start]: this.onPointerStart.bind(this, axis),
+      onPointerDown: this.onPointerDown.bind(this, axis),
     };
 
     return (
@@ -267,10 +292,11 @@ export class Scroll extends Component<T.Props> {
         />
       </div>
     );
-  }
+  };
 
   renderInner() {
     const { innerClassName, innerProps, children, smooth } = this.props;
+    const { activeAxis } = this.store;
 
     const innerClasses = cn(
       S.inner,
@@ -278,7 +304,9 @@ export class Scroll extends Component<T.Props> {
       innerClassName,
       smooth && S.smooth
     );
-    const props = { ...innerProps, onScroll: this.onInnerScroll };
+    const props = { ...innerProps };
+
+    if (!activeAxis) props.onScrollCapture = this.onInnerScroll;
 
     return (
       <div {...props} className={innerClasses} ref={this.innerElem}>
@@ -318,8 +346,7 @@ export class Scroll extends Component<T.Props> {
     return (
       <div className={classes} {...props}>
         {this.renderInner()}
-        {x && this.renderBar('x', 'width', 'left')}
-        {y && this.renderBar('y', 'height', 'top')}
+        {this.eachAxis(this.renderBar)}
       </div>
     );
   }

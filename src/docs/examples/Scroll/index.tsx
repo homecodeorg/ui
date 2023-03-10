@@ -3,7 +3,11 @@ import { Heading, Link } from 'uilib';
 
 import { ComponentLayout, TypesTable } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import basic from '!!raw-loader!./Basic';
+import nested from '!!raw-loader!./Nested';
+import S from './Scroll.styl';
+
+const scope = { helpers, S };
 
 const name = 'Scroll';
 const Docs = () => (
@@ -31,7 +35,8 @@ export default () => (
     name={name}
     docs={Docs}
     examples={[
-      { id: 'demo', label: 'Demo', code: example, scope: { helpers } },
+      { id: 'basic', label: 'Basic', code: basic, scope },
+      { id: 'nested', label: 'Nested', code: nested, scope },
     ]}
     scope={{}}
   />

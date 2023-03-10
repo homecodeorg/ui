@@ -8,7 +8,7 @@ import * as helpers from 'helpers';
 
 import S from '../Code.styl';
 
-const SCOPE = { uilib, React, justorm, timen, helpers };
+const SCOPE = { uilib, React, justorm, timen, cn, helpers };
 
 const Result = justorm.withStore({
   editor: ['execCode', 'scope'],
