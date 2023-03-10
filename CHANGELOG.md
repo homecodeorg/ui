@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://github.com/foreverido/uilib/compare/v3.7.0...v3.8.0) (2023-03-10)
+
+
+### Features
+
+* Scroll - improved performance ([7f51e02](https://github.com/foreverido/uilib/commit/7f51e0227e509fca78005c5f3f369b968ceb78e6))
+* Select - custom scrollbar, hoverControl when focused ([858bb90](https://github.com/foreverido/uilib/commit/858bb90fc554cebdb27e31c8e64ed87a21c9f9a9))
+
 ## [3.7.0](https://github.com/foreverido/uilib/compare/v3.6.2...v3.7.0) (2023-03-08)
 
 
