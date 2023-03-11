@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://github.com/foreverido/uilib/compare/v3.8.0...v3.9.0) (2023-03-11)
+
+
+### Features
+
+* Select - keyboard control ([f2b6ebc](https://github.com/foreverido/uilib/commit/f2b6ebcb50788eb92969d1382977479d8ef735ae))
+
 ## [3.8.0](https://github.com/foreverido/uilib/compare/v3.7.0...v3.8.0) (2023-03-10)
 
 
