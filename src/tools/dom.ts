@@ -19,20 +19,32 @@ export function hasParent(elem, parentElem) {
   return hasParent(elem.parentNode, parentElem);
 }
 
+export enum INTERACTION_MODE {
+  POINTER = 'pointer',
+  KEYBOARD = 'keyboard',
+}
+
+let interactionMode = INTERACTION_MODE.POINTER;
+
+export const getInteractionMode = () => interactionMode;
+
 export function watchControllerFlag() {
   const classes = document.body.classList;
+  const onPointerMove = () => {
+    classes.remove(INTERACTION_MODE.KEYBOARD);
+    classes.add(INTERACTION_MODE.POINTER);
+  };
 
-  document.addEventListener('mousedown', () => {
-    classes.remove('keyboard');
-    classes.add('mouse');
+  ['pointerdown', 'pointermove'].forEach(event => {
+    document.addEventListener(event, onPointerMove, true);
   });
 
   document.addEventListener('keydown', () => {
-    classes.remove('mouse');
-    classes.add('keyboard');
+    classes.remove(INTERACTION_MODE.POINTER);
+    classes.add(INTERACTION_MODE.KEYBOARD);
   });
 
-  classes.add('mouse');
+  classes.add(interactionMode);
 }
 
 export const isTouch = () => env.isBrowser && 'ontouchstart' in window;

@@ -77,7 +77,8 @@ export class Popup extends Component<T.Props> {
     }
 
     if (focusControl) {
-      document.addEventListener('keyup', this.onDocKeyUp, true);
+      document.addEventListener('keydown', this.onDocKeyDown, true);
+      document.addEventListener('keyup', this.onDocKeyUp);
     }
 
     if (hoverControl) this.subscribeHoverControl();
@@ -240,6 +241,10 @@ export class Popup extends Component<T.Props> {
 
   onScroll = e => {
     if (!e.target.closest(`.${S.content}`)) this.close();
+  };
+
+  onDocKeyDown = (e: KeyboardEvent) => {
+    this._pointerDownTarget = null;
   };
 
   onDocKeyUp = (e: KeyboardEvent) => {

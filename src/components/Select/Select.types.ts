@@ -1,4 +1,4 @@
-import { RefObject, ReactNode } from 'react';
+import { RefObject, ReactNode, HTMLAttributes } from 'react';
 
 import type { FormControl, Size } from 'uilib/types';
 
@@ -103,10 +103,8 @@ export type State = {
   optionsTreeUpd: number; // store in state to receive updates
 };
 
-export type OptionElemProps = {
+export type OptionElemProps = HTMLAttributes<HTMLDivElement> & {
   className: string;
   key: Option['id'];
-  onPointerDown: () => void;
-  onPointerUp: () => void;
   ref?: RefObject<HTMLDivElement>;
 };

@@ -14,6 +14,8 @@ export type Props = ComponentType &
     thumbClassName?: string;
     // Additional HTML attributes to apply to the inner container element
     innerProps?: HTMLAttributes<HTMLDivElement>;
+    // Callback to get a reference to the inner container element
+    onInnerRef?: (ref: HTMLDivElement | null) => void;
     // Whether to display an extra-wide scrollbar thumb.
     extraWide?: boolean;
     // Whether to enable horizontal scrolling.

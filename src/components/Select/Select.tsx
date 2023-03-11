@@ -1,35 +1,44 @@
-import { Component, createRef, Fragment, ReactNode } from 'react';
+import { Component, createRef, ReactNode } from 'react';
 import cn from 'classnames';
 import compare from 'compareq';
 import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
-
-import { Icon } from '../Icon/Icon';
-import { Button } from '../Button/Button';
-import { Input } from '../Input/Input';
-import { Label } from '../Label/Label';
-import { Popup } from '../Popup/Popup';
-import { RequiredStar } from '../RequiredStar/RequiredStar';
-import { AssistiveText } from '../AssistiveText/AssistiveText';
+import {
+  Icon,
+  Button,
+  Input,
+  Label,
+  Popup,
+  Scroll,
+  RequiredStar,
+  AssistiveText,
+  throttle,
+} from 'uilib';
+import { getInteractionMode, INTERACTION_MODE } from 'uilib/tools/dom';
 
 import * as T from './Select.types';
 import * as H from './Select.helpers';
 import S from './Select.styl';
-import { Scroll } from 'uilib';
 
 export const SelectHelpers = H;
 
 export class Select extends Component<T.Props, T.State> {
   store;
   inputRef = createRef<Input>();
-  selectedElem = createRef<HTMLDivElement>();
   triggerInputRef = createRef<HTMLDivElement>();
+  contentRef = createRef<HTMLDivElement>();
+  scrollInnerElem: HTMLDivElement;
+  onScrollInnerRef = elem => (this.scrollInnerElem = elem);
+  focusedElem = HTMLDivElement;
 
   timers = Time.create();
+  items = [];
+  maxIndex = -1;
   isFirstSelectedMeet = false;
   isTree = false;
+  focusedItemId = '';
   preventClose = false;
   searchValLower = '';
   optionsTree = [] as T.Option[];
@@ -40,20 +49,19 @@ export class Select extends Component<T.Props, T.State> {
 
   static defaultProps = {
     size: 'm',
+    additionalOptions: [],
   };
 
   constructor(props) {
     super(props);
 
-    const { options } = props;
-
-    this.ids = H.mapById(options);
-    this.optionsTree = H.buildOptionsTree(options, this.ids);
+    this.onOptionsChange();
 
     this.store = createStore(this, {
       searchVal: '',
       isOpen: false,
       isFocused: false,
+      focusedItemIndex: 0,
       selected: this.getDefaultSelected(),
       expanded: this.getDefaultExpanded(props.value),
       labelClipPath: '',
@@ -61,13 +69,35 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   componentDidUpdate(prevProps) {
-    if (!compare(this.props.value, prevProps.value)) {
+    const { options, value } = this.props;
+
+    if (!compare(value, prevProps.value)) {
       this.store.selected = this.getDefaultSelected();
+    }
+
+    if (!compare(options, prevProps.options)) {
+      this.onOptionsChange();
     }
   }
 
   componentWillUnmount() {
     this.timers.clear();
+    this.unDocumetnKeyDown();
+    this.unDocumentClick();
+  }
+
+  onOptionsChange() {
+    const { options } = this.props;
+
+    this.ids = H.mapById(options);
+    this.optionsTree = H.buildOptionsTree(options, this.ids);
+    this.items = this.getItems();
+    this.maxIndex = this.items.length - 1;
+
+    if (this.store?.focusedItemIndex > this.maxIndex) {
+      this.store.focusedItemIndex = this.maxIndex;
+      this.focusedItemId = this.items[this.maxIndex].id;
+    }
   }
 
   coerceType(id) {
@@ -131,11 +161,67 @@ export class Select extends Component<T.Props, T.State> {
   isClickedInside = elem =>
     elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`);
 
+  onFocusedElemRef = elem => {
+    this.focusedElem = elem;
+
+    if (elem) {
+      const content = this.contentRef.current;
+
+      if (!content) return;
+
+      const { top, bottom } = elem.getBoundingClientRect();
+      const rect = this.contentRef.current.getBoundingClientRect();
+      const list = this.scrollInnerElem;
+
+      if (top < rect.top) {
+        list.scrollTop -= rect.top - top;
+      } else if (bottom > rect.bottom) {
+        list.scrollTop += bottom - rect.bottom;
+      }
+    }
+  };
+
   onDocumentClick = e => {
     if (!this.isClickedInside(e.target)) {
       this.store.isOpen = false;
     }
   };
+
+  onDocumentKeyDown = e => {
+    const currIndex = this.store.focusedItemIndex;
+
+    switch (e.key) {
+      case 'ArrowDown':
+        if (currIndex < this.maxIndex) this.setItemFocus(currIndex + 1);
+        break;
+
+      case 'ArrowUp':
+        if (currIndex > 0) this.setItemFocus(currIndex - 1);
+        break;
+    }
+  };
+
+  onDocumentKeyUp = e => {
+    const currIndex = this.store.focusedItemIndex;
+
+    if (currIndex === -1) return;
+
+    switch (e.key) {
+      case 'Enter':
+      case 'Space':
+        if (this.store.isOpen) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.onItemToggle(this.items[currIndex].id);
+        }
+    }
+  };
+
+  unDocumetnKeyDown = () =>
+    document.removeEventListener('keyup', this.onDocumentKeyUp, true);
+
+  unDocumentClick = () =>
+    document.removeEventListener('click', this.onDocumentClick);
 
   onFocus = e => {
     const { onFocus } = this.props;
@@ -152,15 +238,6 @@ export class Select extends Component<T.Props, T.State> {
     onBlur?.(e);
   };
 
-  onOptionsPointerDownCapture = e => {
-    if (this.isMultiple()) {
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      this.timers.after(150, () => (this.store.isOpen = false));
-    }
-  };
-
   onSearchChange = (e, value) => {
     this.setSearchVal(value);
   };
@@ -173,35 +250,53 @@ export class Select extends Component<T.Props, T.State> {
     this.store.expanded[id] = !expanded[id];
   }
 
-  onItemPointerUp(e, id) {
+  onItemToggle(id) {
     this.onChange(this.getNewSelected(id));
+    if (!this.isMultiple()) this.store.isOpen = false;
   }
 
   onChange(selected) {
     const { onChange } = this.props;
-    const { isOpen } = this.store;
-    const isRemoved =
-      Object.keys(selected).length < Object.keys(this.store.selected).length;
 
     this.store.selected = selected;
     onChange(this.getValue());
-    if (isOpen && isRemoved) this.scrollToSelected();
   }
 
   onLabelClipPathChange = clipPath => (this.store.labelClipPath = clipPath);
 
   onPopupOpen = () => {
-    this.scrollToSelected();
     this.store.isOpen = true;
 
     if (this.isMultiple()) {
       document.addEventListener('click', this.onDocumentClick);
     }
+
+    document.addEventListener('keydown', this.onDocumentKeyDown);
+    document.addEventListener('keyup', this.onDocumentKeyUp, true);
   };
 
   onPopupClose = () => {
+    this.setItemFocus(-1);
     this.store.isOpen = false;
-    document.removeEventListener('click', this.onDocumentClick);
+    this.unDocumentClick();
+    this.unDocumetnKeyDown();
+  };
+
+  onOptionHover = throttle(
+    id => {
+      const mode = getInteractionMode();
+      if (mode !== INTERACTION_MODE.POINTER) return;
+
+      const index = this.items.findIndex(item => item.id === id);
+      this.setItemFocus(index);
+    },
+    100,
+    { trailing: true }
+  );
+
+  setItemFocus = index => {
+    this.focusedItemId = this.items[index]?.id;
+    this.store.focusedItemIndex = index;
   };
 
   toggle = () => {
@@ -213,12 +308,7 @@ export class Select extends Component<T.Props, T.State> {
     this.store.searchVal = searchVal;
   }
 
-  scrollToSelected() {
-    const selectedElem = this.selectedElem.current;
-
-    if (selectedElem)
-      Time.after(50, () => selectedElem.scrollIntoView({ behavior: 'smooth' }));
-  }
+  getItems = () => [...this.props.additionalOptions, ...this.optionsTree];
 
   getParentId = id => this.ids.items[id]?.parentId;
 
@@ -573,6 +663,7 @@ export class Select extends Component<T.Props, T.State> {
     const { id, children, isGroup } = item;
     const selectedState = this.isSelected(id);
 
+    const isFocused = id === this.focusedItemId;
     const isExpanded = expanded[id];
     const isSelected = selectedState === true;
     const isIndeterminate = selectedState === 'indeterminate';
@@ -581,6 +672,7 @@ export class Select extends Component<T.Props, T.State> {
     const className = cn(
       S.option,
       isGroup && S.isGroup,
+      isFocused && S.isFocused,
       isSelected && S.isSelected,
       isIndeterminate && S.isIndeterminate,
       isExpanded && S.isExpanded,
@@ -589,11 +681,14 @@ export class Select extends Component<T.Props, T.State> {
     const props = {
       className,
       key: id,
-      onPointerUp: e => this.onItemPointerUp(e, id),
+      onPointerUp: () => this.onItemToggle(id),
+      onPointerEnter: () => this.onOptionHover(id),
     } as T.OptionElemProps;
 
+    // @ts-ignore
+    if (isFocused) props.ref = this.onFocusedElemRef;
+
     if (isIndeterminate || (isSelected && !this.isFirstSelectedMeet)) {
-      props.ref = this.selectedElem;
       this.isFirstSelectedMeet = true;
     }
 
@@ -675,12 +770,13 @@ export class Select extends Component<T.Props, T.State> {
     const classes = cn(S.options, S[`size-${size}`], this.isTree && S.isTree);
 
     return (
-      <div onPointerUp={this.onOptionsPointerDownCapture}>
+      <div ref={this.contentRef}>
         {this.renderPresets()}
         <Scroll
           y
           offset={{ y: { before: 10, after: 10 } }}
           className={classes}
+          onInnerRef={this.onScrollInnerRef}
           key="items-scroll"
         >
           {this.renderOptions()}

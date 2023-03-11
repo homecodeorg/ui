@@ -32,7 +32,11 @@ const BY_AXIS = {
 };
 
 export class Scroll extends Component<T.Props> {
-  innerElem = createRef<HTMLDivElement>();
+  innerElem = HTMLDivElement;
+  onInnerRef = elem => {
+    this.innerElem = elem;
+    this.props.onInnerRef?.(elem);
+  };
   thumbELem = {
     x: createRef<HTMLDivElement>(),
     y: createRef<HTMLDivElement>(),
@@ -69,7 +73,7 @@ export class Scroll extends Component<T.Props> {
       100,
       this.observeScrollHeight
     );
-    resizeObserver.observe(this.innerElem.current, this.updateAll);
+    resizeObserver.observe(this.innerElem, this.updateAll);
 
     document.addEventListener('scroll', this.onDocScroll);
   }
@@ -111,10 +115,10 @@ export class Scroll extends Component<T.Props> {
     return isChanged;
   }
 
-  getoffsetSize = axis => this.innerElem.current[BY_AXIS[axis].offsetSize];
-  getInnerSize = axis => this.innerElem.current[BY_AXIS[axis].innerSize];
-  getScrollSize = axis => this.innerElem.current[BY_AXIS[axis].scrollSize];
-  getScrollPos = axis => this.innerElem.current[BY_AXIS[axis].scrollPos];
+  getoffsetSize = axis => this.innerElem[BY_AXIS[axis].offsetSize];
+  getInnerSize = axis => this.innerElem[BY_AXIS[axis].innerSize];
+  getScrollSize = axis => this.innerElem[BY_AXIS[axis].scrollSize];
+  getScrollPos = axis => this.innerElem[BY_AXIS[axis].scrollPos];
   getThumbSize = axis => this.thumbELem[axis].current[BY_AXIS[axis].offsetSize];
 
   getEventCoords(e) {
@@ -153,7 +157,7 @@ export class Scroll extends Component<T.Props> {
   updateCoeff(axis) {
     const thumb = this.thumbELem[axis].current;
 
-    if (!this.innerElem.current || !thumb) return;
+    if (!this.innerElem || !thumb) return;
 
     const sizeField = BY_AXIS[axis].size;
 
@@ -164,7 +168,7 @@ export class Scroll extends Component<T.Props> {
   updatePos = axis => {
     const thumb = this.thumbELem[axis].current;
 
-    if (!this.innerElem.current || !thumb) return;
+    if (!this.innerElem || !thumb) return;
 
     const { offset } = this.props;
     const offsetBefore = offset?.[axis]?.before || 0;
@@ -191,7 +195,7 @@ export class Scroll extends Component<T.Props> {
     const pos = coords[axis] - this.prevCoords[axis];
 
     this.prevCoords = coords;
-    this.innerElem.current[scrollPos] += pos / this.coeff[axis];
+    this.innerElem[scrollPos] += pos / this.coeff[axis];
   };
 
   dropScrollingState = debounce(() => (this.store.isScrolling = false), 500);
@@ -212,7 +216,7 @@ export class Scroll extends Component<T.Props> {
     const { activeAxis } = this.store;
 
     // if dragging thumb - prevent any other scrolls
-    if (activeAxis && this.innerElem.current !== e.target) {
+    if (activeAxis && this.innerElem !== e.target) {
       e.preventDefault();
       e.stopPropagation();
     }
@@ -309,7 +313,7 @@ export class Scroll extends Component<T.Props> {
     if (!activeAxis) props.onScrollCapture = this.onInnerScroll;
 
     return (
-      <div {...props} className={innerClasses} ref={this.innerElem}>
+      <div {...props} className={innerClasses} ref={this.onInnerRef}>
         {children}
       </div>
     );

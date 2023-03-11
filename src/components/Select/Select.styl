@@ -59,7 +59,11 @@ $levelGap = 24px
   max-height 200px
   overflow-y auto
 
+  :global(.keyboard) &
+    pointer-events none
+
 .option
+  position relative
   display flex
   align-items center
 
@@ -116,9 +120,6 @@ $levelGap = 24px
     text-overflow ellipsis
     overflow hidden
 
-  &:hover
-    background-color var(--active-color-alpha-100)
-
   &::before
     content ''
     display inline-block
@@ -146,6 +147,12 @@ $levelGap = 24px
   &.isSelected
   &.isIndeterminate
     background-color var(--active-color-alpha-500)
+
+  :global(.pointer) &:hover
+  :global(.keyboard) &.isFocused
+    box-shadow inset 3px 0 0 0px var(--accent-color)
+    &:not(.isSelected)
+      background-color var(--accent-color-alpha-100)
 
 @keyframes fadeIn
   0%
