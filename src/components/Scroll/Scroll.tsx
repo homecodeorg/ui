@@ -47,7 +47,6 @@ export class Scroll extends Component<T.Props> {
   timers = Time.create();
 
   currAxis;
-  coeff = { x: 0, y: 0 };
   pos = { x: 0, y: 0 };
   prevCoords = { x: 0, y: 0 };
   prevScrolls = { x: 0, y: 0 };
@@ -63,6 +62,7 @@ export class Scroll extends Component<T.Props> {
     this.store = createStore(this, {
       isScrolling: false,
       activeAxis: null,
+      coeff: { x: 0, y: 0 },
     });
   }
 
@@ -142,7 +142,7 @@ export class Scroll extends Component<T.Props> {
     };
   }
 
-  getCoeffStyle = axis => `${this.coeff[axis] * 100}%`;
+  getCoeffStyle = axis => `${this.store.coeff[axis] * 100}%`;
   getPosStyle = axis => `${this.pos[axis]}px`;
 
   updateAll = () => {
@@ -161,7 +161,7 @@ export class Scroll extends Component<T.Props> {
 
     const sizeField = BY_AXIS[axis].size;
 
-    this.coeff[axis] = this.getInnerSize(axis) / this.getScrollSize(axis);
+    this.store.coeff[axis] = this.getInnerSize(axis) / this.getScrollSize(axis);
     thumb.style[sizeField] = this.getCoeffStyle(axis);
   }
 
@@ -195,7 +195,7 @@ export class Scroll extends Component<T.Props> {
     const pos = coords[axis] - this.prevCoords[axis];
 
     this.prevCoords = coords;
-    this.innerElem[scrollPos] += pos / this.coeff[axis];
+    this.innerElem[scrollPos] += pos / this.store.coeff[axis];
   };
 
   dropScrollingState = debounce(() => (this.store.isScrolling = false), 500);
@@ -270,9 +270,9 @@ export class Scroll extends Component<T.Props> {
 
   renderBar = axis => {
     const { thumbClassName } = this.props;
-    const { activeAxis } = this.store;
+    const { activeAxis, coeff } = this.store;
 
-    if (this.coeff[axis] === 1) return null;
+    if (coeff[axis] === 1) return null;
 
     const sizeField = BY_AXIS[axis].size;
     const posField = BY_AXIS[axis].posField;
