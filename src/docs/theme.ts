@@ -39,6 +39,7 @@ export function getThemeConfig(theme: 'dark' | 'light', activeColor: string) {
     ...ThemeHelpers.colorsConfigToVars({
       active: {
         color: activeColor, // update activeColor
+        // @ts-ignore
         mods: defaultColors.active.mods, // save activeColor mods
       },
     }),

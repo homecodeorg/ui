@@ -14,7 +14,7 @@ function onClick(e) {
   const heading = document.getElementById(idTmpl(hash));
 
   if (heading) {
-    scroll.scrollIntoView(heading, { behavior: 'smooth' });
+    scroll.scrollIntoView(heading);
     e.stopPropagation();
   }
 }

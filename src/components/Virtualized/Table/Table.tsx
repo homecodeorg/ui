@@ -1,10 +1,9 @@
 import { Component, createRef, ReactNode } from 'react';
-import { bind } from 'decko';
-import cn from 'classnames';
 
 import Virtualized from '../Virtualized';
 import { ViewProps } from '../Virtualized.types';
 import S from './Table.styl';
+import SR from '../Virtualized.styl';
 
 type Props = ViewProps & {
   thead?: ReactNode;
@@ -43,8 +42,7 @@ class Table extends Component<Props> {
     this.setState({ colsWidth });
   }
 
-  @bind
-  renderLayout({ state, items, onScroll, ...props }) {
+  renderLayout = ({ state, items, onScroll, ...props }) => {
     const { className, thead, tfoot, maxHeight, totalCount, itemHeight } =
       this.props;
     const { colsWidth } = this.state;
@@ -65,7 +63,7 @@ class Table extends Component<Props> {
             {tfoot && <tfoot>{tfoot}</tfoot>}
           </table>
           <style>{`
-            .${S.item} { height: ${itemHeight}px; }
+            .${SR.item} { height: ${itemHeight}px; }
             ${colsWidth
               .map(
                 (w, i) =>
@@ -78,14 +76,14 @@ class Table extends Component<Props> {
         </div>
       </div>
     );
-  }
+  };
 
   render() {
     return (
       <Virtualized
         {...this.props}
         wrapElem={this.wrapElem?.current}
-        getItemProps={() => ({ className: S.item })}
+        getItemProps={() => ({ className: SR.item })}
       >
         {this.renderLayout}
       </Virtualized>

@@ -75,7 +75,7 @@ export function renderComplexItem({ className, ...props }, data) {
       {...props}
       onClick={() => alert('booo!')}
     >
-      <Icon type="arrow-down" /> {data}
+      <Icon type="chevronDown" /> {data}
     </Button>
   );
 }

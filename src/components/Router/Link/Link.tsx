@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { Icon } from 'uilib';
 
 import Context from '../context';
+import type { ContextType } from '../context';
 import S from './Link.styl';
 
 import * as T from './Link.types';
@@ -39,7 +40,8 @@ export class Link extends Component<T.Props> {
 
   getRootPath = () => {
     if (this.isExternal() || this.isStartFromDoubleSlash()) return '';
-    return this.context.rootPath ?? '';
+    const { rootPath } = this.context as ContextType;
+    return rootPath ?? '';
   };
 
   onClick = e => {

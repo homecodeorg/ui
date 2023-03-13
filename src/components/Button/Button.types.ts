@@ -1,7 +1,7 @@
-import { HTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Size } from 'uilib/types';
 
-export type Props = HTMLAttributes<HTMLButtonElement> & {
+export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   // CSS class name(s) to be applied to the component
   className?: string;
   // Text or child elements to be displayed inside the button

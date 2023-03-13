@@ -1,3 +1,5 @@
 import { createContext } from 'react';
 
-export default createContext<{ rootPath: string }>({ rootPath: '' });
+export type ContextType = { rootPath: string };
+
+export default createContext<ContextType>({ rootPath: '' });

@@ -28,7 +28,8 @@ export function Tabs(props: T.Props) {
   );
   const tabsContent = useRef([]);
 
-  const onTabClick = useCallback((e, { id, onClick } = {}) => {
+  const onTabClick = useCallback((e, { id, onClick } = {} as T.Item) => {
+    // @ts-ignore
     if (onClick && !onClick(e)) {
       e.peventDefault();
       return;
