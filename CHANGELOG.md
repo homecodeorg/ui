@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.1](https://github.com/foreverido/uilib/compare/v3.9.0...v3.9.1) (2023-03-14)
+
+
+### Bug Fixes
+
+* Scroll - bind coeff to render updates ([2037edc](https://github.com/foreverido/uilib/commit/2037edc2177ad0bc2330e906f0bdc9af874a51ab))
+* typings ([b902b44](https://github.com/foreverido/uilib/commit/b902b4472e1268296a33f29e36976ac8d50d61e9))
+
 ## [3.9.0](https://github.com/foreverido/uilib/compare/v3.8.0...v3.9.0) (2023-03-11)
 
 
