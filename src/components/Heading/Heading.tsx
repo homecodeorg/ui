@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { scroll } from 'uilib/tools';
+import { scrollIntoView } from 'uilib/tools/scroll';
 
 import S from './Heading.styl';
 import * as T from './Heading.types';
@@ -14,7 +14,7 @@ function onClick(e) {
   const heading = document.getElementById(idTmpl(hash));
 
   if (heading) {
-    scroll.scrollIntoView(heading);
+    scrollIntoView(heading);
     e.stopPropagation();
   }
 }

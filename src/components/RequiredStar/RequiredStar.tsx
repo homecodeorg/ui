@@ -1,5 +1,6 @@
 import cn from 'classnames';
-import { Icon } from 'uilib';
+
+import { Icon } from 'uilib/components/Icon/Icon';
 
 import S from './RequiredStar.styl';
 import * as T from './RequiredStar.types';

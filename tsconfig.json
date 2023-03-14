@@ -36,7 +36,8 @@
   "include": ["src"],
   "exclude": [
     "node_modules",
-    "src/docs/**/*",
+    // "src/docs/**/*",
+    "src/docs/examples/**/*",
     // "src/App",
     // "src/docs"
   ],

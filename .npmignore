@@ -1,7 +1,8 @@
 /index.*
 bin/
 build/
-src/docs/
+src/
+dist/types/src/docs/
 assets/
 CHANGELOG.md
 node_modules/

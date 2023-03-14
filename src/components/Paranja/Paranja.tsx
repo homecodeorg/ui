@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom';
 import cn from 'classnames';
-import { config } from 'uilib';
+
+import { config } from 'uilib/tools/config';
 
 import S from './Paranja.styl';
 import * as T from './Paranja.types';

@@ -1,5 +1,6 @@
 import cn from 'classnames';
-import { Lazy } from 'uilib';
+
+import { Lazy } from 'uilib/components/Lazy/Lazy';
 
 import S from './Icon.styl';
 import * as T from './Icon.types';

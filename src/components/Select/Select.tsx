@@ -5,18 +5,17 @@ import pick from 'lodash.pick';
 import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
-import {
-  Icon,
-  Button,
-  Input,
-  Label,
-  Popup,
-  Scroll,
-  RequiredStar,
-  AssistiveText,
-  throttle,
-} from 'uilib';
+
+import { Icon } from 'uilib/components/Icon/Icon';
+import { Button } from 'uilib/components/Button/Button';
+import { Input } from 'uilib/components/Input/Input';
+import { Label } from 'uilib/components/Label/Label';
+import { Popup } from 'uilib/components/Popup/Popup';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
+import { RequiredStar } from 'uilib/components/RequiredStar/RequiredStar';
+import { AssistiveText } from 'uilib/components/AssistiveText/AssistiveText';
 import { getInteractionMode, INTERACTION_MODE } from 'uilib/tools/dom';
+import throttle from 'uilib/tools/throttle';
 
 import * as T from './Select.types';
 import * as H from './Select.helpers';

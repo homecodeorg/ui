@@ -1,6 +1,5 @@
 import fs from 'fs';
 import glob from 'glob';
-import pick from 'lodash.pick';
 // import path from 'path';
 
 // import cleaner from 'rollup-plugin-cleaner';
@@ -19,12 +18,12 @@ import svgr from '@svgr/rollup';
 import json from '@rollup/plugin-json';
 
 // import dts from '@guanghechen/postcss-modules-dts';
-import dts from 'rollup-plugin-dts';
+// import dts from 'rollup-plugin-dts';
 
 // import { babel } from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 
-import pkg from './package.json' assert { type: "json" };
+import pkg from './package.json' assert { type: 'json' };
 
 /* initialize CSS files because of a catch-22 situation:
    https://github.com/rollup/rollup/issues/1404 */

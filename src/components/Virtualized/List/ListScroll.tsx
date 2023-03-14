@@ -1,5 +1,6 @@
 import cn from 'classnames';
-import { Scroll } from 'uilib';
+
+import { Scroll } from 'uilib/components/Scroll/Scroll';
 import List from './List';
 
 import type { Props as ScrollProps } from '../../Scroll/Scroll.types';

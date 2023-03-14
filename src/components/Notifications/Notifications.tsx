@@ -2,7 +2,9 @@ import { Component } from 'react';
 import cn from 'classnames';
 import { withStore } from 'justorm/react';
 
-import { Icon, Button, Scroll } from 'uilib';
+import { Icon } from 'uilib/components/Icon/Icon';
+import { Button } from 'uilib/components/Button/Button';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
 
 import STORE from './store';
 import S from './Notifications.styl';

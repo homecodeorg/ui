@@ -1,4 +1,4 @@
-import { Component, createRef, ReactNode } from 'react';
+import { Component } from 'react';
 import { createPortal } from 'react-dom';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';

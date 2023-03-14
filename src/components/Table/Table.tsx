@@ -1,7 +1,9 @@
 import { Component } from 'react';
 import cn from 'classnames';
 
-import { Paranja, Scroll, Spinner } from 'uilib';
+import { Paranja } from 'uilib/components/Paranja/Paranja';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
+import { Spinner } from 'uilib/components/Spinner/Spinner';
 
 import S from './Table.styl';
 import * as T from './Table.types';

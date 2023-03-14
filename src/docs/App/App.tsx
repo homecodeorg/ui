@@ -1,11 +1,20 @@
 import { Component, createRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
-import { Button, Container, Icon, Redirect, Router, Theme, Lazy } from 'uilib';
-import { dom } from 'uilib/tools';
 
-import Sidebar from '../components/Sidebar/Sidebar';
-import NAV_CONFIG from '../navigation';
+import {
+  Button,
+  Container,
+  Icon,
+  Redirect,
+  Router,
+  Theme,
+  Lazy,
+  dom,
+} from 'uilib';
+
+import Sidebar from 'docs/components/Sidebar/Sidebar';
+import NAV_CONFIG from 'docs/navigation';
 
 import './store';
 import S from './App.styl';

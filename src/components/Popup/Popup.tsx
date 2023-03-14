@@ -4,8 +4,12 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { Paranja } from 'uilib';
-import { dom, resizeObserver, env, debounce, throttle } from 'uilib/tools';
+import { Paranja } from 'uilib/components/Paranja/Paranja';
+import { getCoords } from 'uilib/tools/dom';
+import * as resizeObserver from 'uilib/tools/resizeObserver';
+import { isBrowser } from 'uilib/tools/env';
+import debounce from 'uilib/tools/debounce';
+import throttle from 'uilib/tools/throttle';
 
 import S from './Popup.styl';
 import * as H from './Popup.helpers';
@@ -124,7 +128,7 @@ export class Popup extends Component<T.Props> {
   }
 
   subscribeScroll() {
-    if (env.isBrowser && !this.props.inline) {
+    if (isBrowser && !this.props.inline) {
       document.addEventListener('scroll', this.onScroll, true);
     }
   }
@@ -161,7 +165,7 @@ export class Popup extends Component<T.Props> {
     this.store.wrapperBounds = {
       minHeight: trigger.offsetHeight,
       minWidth: trigger.offsetWidth,
-      ...dom.getCoords(trigger),
+      ...getCoords(trigger),
     };
   };
 
@@ -417,7 +421,7 @@ export class Popup extends Component<T.Props> {
       rootPopupId,
     } = this.store;
 
-    const target = env.isBrowser && document.getElementById('app-modal');
+    const target = isBrowser && document.getElementById('app-modal');
 
     if (!target || disabled) return null;
 

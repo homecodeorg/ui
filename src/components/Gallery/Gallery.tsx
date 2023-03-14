@@ -5,7 +5,11 @@ import compare from 'compareq';
 import cn from 'classnames';
 import omit from 'lodash.omit';
 
-import { Button, Icon, throttle, array, Spinner } from 'uilib';
+import { Button } from 'uilib/components/Button/Button';
+import { Icon } from 'uilib/components/Icon/Icon';
+import { Spinner } from 'uilib/components/Spinner/Spinner';
+import throttle from 'uilib/tools/throttle';
+import { circularSlice } from 'uilib/tools/array';
 
 import S from './Gallery.styl';
 import * as T from './Gallery.types';
@@ -136,7 +140,7 @@ export class Gallery extends Component<T.Props> {
 
     this.timers.after(DURATION, () => {
       this.store.index += direction * -1;
-      this.store.items = array.circularSlice(this.items, this.store.index, 3);
+      this.store.items = circularSlice(this.items, this.store.index, 3);
       this.store.movingDirection = 0;
 
       const { items, loading } = this.store;

@@ -1,7 +1,8 @@
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 
-import { array, uid } from 'uilib';
+import { spliceWhere } from 'uilib/tools/array';
+import { generateUID } from 'uilib/tools/uid';
 import C from './Notifications.constants.json';
 
 const SHOW_TIME = 5000;
@@ -14,7 +15,7 @@ const STORE = createStore('notifications', {
   data: {},
   paused: false,
   show(data) {
-    const id = uid.generateUID();
+    const id = generateUID();
 
     this.items.push(id);
     this.data[id] = {
@@ -48,8 +49,8 @@ const STORE = createStore('notifications', {
     Time.after(C.ANIMATION_DURATION, () => this.remove(id));
   },
   remove(id) {
-    array.spliceWhere(this.autohide, id);
-    array.spliceWhere(this.items, id);
+    spliceWhere(this.autohide, id);
+    spliceWhere(this.items, id);
     delete this.data[id];
   },
 });

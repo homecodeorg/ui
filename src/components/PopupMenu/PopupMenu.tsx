@@ -1,5 +1,7 @@
-import { Button, Popup } from 'uilib';
 import cn from 'classnames';
+
+import { Button } from 'uilib/components/Button/Button';
+import { Popup } from 'uilib/components/Popup/Popup';
 
 import S from './PopupMenu.styl';
 import * as T from './PopupMenu.types';

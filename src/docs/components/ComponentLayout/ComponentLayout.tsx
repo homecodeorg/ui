@@ -85,6 +85,7 @@ const renderSidebarRoute = (
 ) => {
   const content = [
     <Code
+      // @ts-ignore
       exact
       path={`/${id}`}
       code={code}
@@ -124,6 +125,7 @@ export const ComponentLayout = ({
       <Header name={name} rootPath={rootPath} examples={examples} />
       <Container vertical fullWidth size="l" className={S.content}>
         <Router rootPath={rootPath}>
+          {/* @ts-ignore */}
           <Docs path="/" exact />
           {examples?.map(props => renderSidebarRoute(props, scope))}
         </Router>

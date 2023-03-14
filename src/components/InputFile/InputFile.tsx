@@ -5,7 +5,11 @@ import pick from 'lodash.pick';
 import compare from 'compareq';
 import Time from 'timen';
 
-import { Label, Icon, Scroll, file as fileTools, array } from 'uilib';
+import { Label } from 'uilib/components/Label/Label';
+import { Icon } from 'uilib/components/Icon/Icon';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
+import { toBase64 } from 'uilib/tools/file';
+import { spliceWhere } from 'uilib/tools/array';
 
 import S from './InputFile.styl';
 import Item from './Item/Item';
@@ -158,7 +162,7 @@ export class InputFile extends Component<T.Props> {
     const state = this.store.items[index];
 
     Object.assign(state, defaultFileState);
-    state.base64 = await fileTools.toBase64(file);
+    state.base64 = await toBase64(file);
 
     delete this.previewRequests[index];
   }
@@ -245,7 +249,7 @@ export class InputFile extends Component<T.Props> {
 
     const { items } = this.store;
 
-    array.spliceWhere(items, value, 'src');
+    spliceWhere(items, value, 'src');
 
     onChange(null, this.getValFromState());
   };

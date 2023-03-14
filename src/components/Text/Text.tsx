@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { useCallback } from 'react';
-import { Link } from 'uilib';
+
+import { Link } from 'uilib/components/Router/Link/Link';
 import { env } from 'uilib/tools';
 
 import S from './Text.styl';

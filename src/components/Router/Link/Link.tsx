@@ -2,7 +2,7 @@ import { Component, createRef, HTMLProps } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
-import { Icon } from 'uilib';
+import { Icon } from 'uilib/components/Icon/Icon';
 
 import Context from '../context';
 import type { ContextType } from '../context';

@@ -2,9 +2,9 @@ import { Component, ReactNode } from 'react';
 import cn from 'classnames';
 import pick from 'lodash.pick';
 import compare from 'compareq';
-
-import { debounce } from 'uilib';
 import Time from 'timen';
+
+import debounce from 'uilib/tools/debounce';
 
 import * as T from './Virtualized.types';
 import * as H from './Virtualized.helpers';

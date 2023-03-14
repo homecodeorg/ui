@@ -18,9 +18,9 @@ console.log(TYPES);
 
 const Kw = p => <span className={S.kw}>{p.children}</span>;
 const Sep = p => <span className={S.sep}>{p.children}</span>;
-const Field = ({ name, value, optional, comment }) => (
+const Field = ({ name, value, optional = false, comment = '' }) => (
   <div className={S.field}>
-    <span className={S.name}>{name}</span>
+    {name}
     <Sep>:{optional ? '?' : ''}</Sep>
     &nbsp;
     <span className={S.value}>{value}</span>
@@ -29,7 +29,7 @@ const Field = ({ name, value, optional, comment }) => (
   </div>
 );
 
-export const Type = ({ name, scope, customLinks = {} }) => {
+export const Type = ({ name, scope, customLinks = {} }): ReactNode => {
   const customLink = customLinks[name];
 
   if (customLink) return injectTypes(name, scope, customLinks);
@@ -72,10 +72,10 @@ function injectTypes(
   scope,
   customLinks = {},
   excludeTypes = []
-): ReactNode[] {
-  const content = [value];
+): ReactNode {
+  const content: ReactNode[] = [value];
 
-  const renderType = (type: string, scope: string) => {
+  const renderType = (type: string, scope: string): ReactNode => {
     const link = customLinks[type];
 
     if (link) {
@@ -86,6 +86,7 @@ function injectTypes(
       );
     }
 
+    // @ts-ignore
     return <Type scope={scope} name={type} key={type} />;
   };
 
@@ -174,7 +175,9 @@ export function TypesNavigator({ scope, type, inPopup }: Props) {
           <Field
             name={name}
             key={name}
+            // @ts-ignore
             {...p}
+            // @ts-ignore
             value={injectTypes(p.value ?? p, scope, {}, excludeTypes)}
           />
         ))}
@@ -253,6 +256,7 @@ export function TypesTable({
       id: 'type',
       label: 'Type',
       render({ value }) {
+        // @ts-ignore
         return <Type scope={scope} name={value} customLinks={customLinks} />;
       },
     },
@@ -264,6 +268,7 @@ export function TypesTable({
       },
     },
   ];
+  // @ts-ignore
   const data = Object.entries(props).map(([name, p]) => ({ name, ...p }));
 
   return <Table columns={columns} data={data} className={S.typesNavigator} />;

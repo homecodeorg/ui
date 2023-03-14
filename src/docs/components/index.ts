@@ -2,9 +2,7 @@ export { ComponentLayout, Required } from './ComponentLayout/ComponentLayout';
 export { Code } from './Code/Code';
 export { TypesNavigator, TypesTable } from './TypesNavigator/TypesNavigator';
 export { default as Sidebar, SidebarLink } from './Sidebar/Sidebar';
-// export { ApiTable } from './ApiTable/ApiTable';
 export { Title } from './Title';
-export { State } from './State';
 
 export const LOREM_IPSUM_SHORT =
   'Lorem Ipsum is simply dummy text of the printing and typesetting industry.';

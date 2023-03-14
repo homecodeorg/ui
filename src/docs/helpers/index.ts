@@ -18,5 +18,3 @@ export function getRandomItem(arr) {
 export function getLongText(x = 1) {
   return new Array(x).fill(LOREM_IPSUM_LONG).join('\n');
 }
-
-export { default as State } from './State';

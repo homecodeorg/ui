@@ -1,7 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import cn from 'classnames';
 
-import { Paranja, Button, Icon } from 'uilib';
+import { Paranja } from 'uilib/components/Paranja/Paranja';
+import { Button } from 'uilib/components/Button/Button';
+import { Icon } from 'uilib/components/Icon/Icon';
 
 import S from './LightBox.styl';
 import * as T from './LightBox.types';

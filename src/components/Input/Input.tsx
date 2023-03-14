@@ -3,14 +3,13 @@ import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 
-import {
-  Label,
-  RequiredStar,
-  AssistiveText,
-  Button,
-  Icon,
-  Scroll,
-} from 'uilib';
+import { Label } from 'uilib/components/Label/Label';
+import { RequiredStar } from 'uilib/components/RequiredStar/RequiredStar';
+import { AssistiveText } from 'uilib/components/AssistiveText/AssistiveText';
+import { Button } from 'uilib/components/Button/Button';
+import { Icon } from 'uilib/components/Icon/Icon';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
+
 import { capitalize } from 'uilib/tools/string';
 import { generateUID } from 'uilib/tools/uid';
 

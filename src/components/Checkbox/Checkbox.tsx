@@ -2,7 +2,8 @@ import { Component } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 
-import { uid, Icon } from 'uilib';
+import { Icon } from 'uilib/components/Icon/Icon';
+import { generateUID } from 'uilib/tools/uid';
 
 import S from './Checkbox.styl';
 import * as T from './Checkbox.types';
@@ -20,7 +21,7 @@ export class Checkbox extends Component<T.Props> {
 
   constructor(props) {
     super(props);
-    this.id = props.id || uid.generateUID();
+    this.id = props.id || generateUID();
     this.store = createStore(this, { isActive: false, isFocused: false });
   }
 

@@ -1,7 +1,8 @@
-import { Component, CSSProperties, HTMLProps, ReactNode } from 'react';
+import { CSSProperties, HTMLProps, ReactNode } from 'react';
 import cn from 'classnames';
 
-import { Button, Icon } from 'uilib';
+import { Button } from 'uilib/components/Button/Button';
+import { Icon } from 'uilib/components/Icon/Icon';
 
 import S from './Item.styl';
 

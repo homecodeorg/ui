@@ -1,4 +1,4 @@
-import { ThemeHelpers, ThemeDefaults } from 'uilib';
+import { ThemeHelpers, ThemeDefaults } from 'uilib/components/Theme/Theme';
 
 const { colors, getColors, getConfig } = ThemeDefaults;
 
