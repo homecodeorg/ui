@@ -2,7 +2,7 @@
 bin/
 build/
 src/
-dist/types/src/docs/
+dist/esm/types/src/docs/
 assets/
 CHANGELOG.md
 node_modules/
