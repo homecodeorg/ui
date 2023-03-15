@@ -18,7 +18,7 @@
     "baseUrl": "./",
     "rootDir": "./",
     "declaration": true,
-    "declarationDir": "dist/types",
+    "declarationDir": "dist/esm/types",
     "plugins": [
       {
         "name": "typescript-plugin-css-modules",
