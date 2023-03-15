@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.2](https://github.com/foreverido/uilib/compare/v3.9.1...v3.9.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* Scroll - drag thumb on touch device ([a4a5d73](https://github.com/foreverido/uilib/commit/a4a5d734f05c5cef527e6fd5d12d9ed82b3dbbac))
+* tsconfig - declarationDir ([2cb2fbf](https://github.com/foreverido/uilib/commit/2cb2fbf25e82bdbaa5e8d44fed12a855fe5f2e78))
+
 ### [3.9.1](https://github.com/foreverido/uilib/compare/v3.9.0...v3.9.1) (2023-03-14)
 
 
