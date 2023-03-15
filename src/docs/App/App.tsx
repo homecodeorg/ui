@@ -11,6 +11,7 @@ import {
   Theme,
   Lazy,
   dom,
+  VH,
 } from 'uilib';
 
 import Sidebar from 'docs/components/Sidebar/Sidebar';
@@ -55,6 +56,7 @@ class App extends Component<{ store?: any }> {
 
     return (
       <>
+        <VH />
         <Theme config={currThemeConfig.originalObject} />
 
         <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>

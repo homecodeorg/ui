@@ -6,7 +6,7 @@
   flex-direction column
   flex-grow 1
   width calc(100% - 2px)
-  max-height calc(100vh - 130px)
+  max-height calc(100 * var(--vh) - 130px)
   margin 1px
   background-color var(--decent-color)
   box-shadow inset 0 0 0 2px var(--accent-color-alpha-100)
@@ -29,8 +29,8 @@
     left 0
     z-index 200
     width 100vw
-    height 100vh
-    max-height 100vh
+    height calc(100 * var(--vh))
+    max-height @height
     border-radius 0
     box-shadow none
 
