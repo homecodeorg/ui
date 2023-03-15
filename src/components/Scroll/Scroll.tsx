@@ -11,6 +11,11 @@ import S from './Scroll.styl';
 import * as T from './Scroll.types';
 import debounce from 'uilib/tools/debounce';
 
+const getEventCoords = e => ({
+  x: e.clientX,
+  y: e.clientY,
+});
+
 const AXES = ['x', 'y'];
 const BY_AXIS = {
   x: {
@@ -121,14 +126,6 @@ export class Scroll extends Component<T.Props> {
   getScrollPos = axis => this.innerElem[BY_AXIS[axis].scrollPos];
   getThumbSize = axis => this.thumbELem[axis].current[BY_AXIS[axis].offsetSize];
 
-  getEventCoords(e) {
-    const target = this.isTouch ? e.targetTouches[0] : e;
-    return {
-      x: target.clientX,
-      y: target.clientY,
-    };
-  }
-
   getOffset(axis) {
     const offset = this.props.offset?.[axis];
 
@@ -190,7 +187,7 @@ export class Scroll extends Component<T.Props> {
   };
 
   updateScroll = (axis, e) => {
-    const coords = this.getEventCoords(e);
+    const coords = getEventCoords(e);
     const scrollPos = BY_AXIS[axis].scrollPos;
     const pos = coords[axis] - this.prevCoords[axis];
 
@@ -243,7 +240,7 @@ export class Scroll extends Component<T.Props> {
 
     // TOOD: if target is bar(not thumb) - move thumb to target coords
 
-    this.prevCoords = this.getEventCoords(e);
+    this.prevCoords = getEventCoords(e);
     this.store.activeAxis = axis;
 
     this.subscribePointerMoveUp();
@@ -263,7 +260,9 @@ export class Scroll extends Component<T.Props> {
 
   onPointerUp = e => {
     e.stopPropagation();
+
     this.store.activeAxis = null;
+
     this.dropScrollingState();
     this.unsubscribePointerMoveUp();
   };
