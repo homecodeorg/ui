@@ -52,7 +52,8 @@
   controlPaddingSize('s')
 
   &.square
-    width @height
+    width @min-height
+    max-height @min-height
 
 .size-m
   controlSize('m')
@@ -60,7 +61,8 @@
   controlPaddingSize('m')
 
   &.square
-    width @height
+    width @min-height
+    max-height @min-height
 
 .size-l
   controlSize('l')
@@ -68,7 +70,8 @@
   controlPaddingSize('l')
 
   &.square
-    width @height
+    width @max-height
+    max-height @min-height
 
 .square
   padding 0

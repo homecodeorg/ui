@@ -3,12 +3,13 @@ import { Form, SubmitButtons, Select } from 'uilib';
 const initialValues = {
   name: 'Alise',
   age: 18,
-  groupId: null,
+  groupId: [],
 };
+
 const validationSchema = {
   name: { type: 'string', empty: false },
   age: { type: 'number', min: 18 },
-  groupId: { type: 'number', empty: false },
+  groupId: { type: 'array', items: 'number', empty: false },
 };
 
 const groupsOptions = [

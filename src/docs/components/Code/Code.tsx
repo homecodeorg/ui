@@ -71,8 +71,8 @@ export class Code extends Component<Props> {
         <Styles id={this.id} />
         <Scroll
           y
+          fadeSize="m"
           className={S.editorContainer}
-          innerClassName={S.editorContainerInner}
           offset={{ y: { before: 50, after: 20 } }}
         >
           <Editor code={this.props.code} id={this.id} />

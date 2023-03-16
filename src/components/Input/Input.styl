@@ -11,6 +11,15 @@ $paddingSide = 12px
   &.isTextArea
     max-height 10em
 
+.root
+.main
+.control
+  width fit-content
+
+.root
+.controlWrapper
+  max-width 100%
+
 .main
   position relative
   display flex
@@ -124,6 +133,13 @@ $paddingSide = 12px
 
 .scroller
   width 100%
+  max-height 100%
+
+.controlValuePlaceholder
+  height 0
+  opacity 0
+  pointer-events none
+  white-space nowrap
 
 .control
   filter none // remove browser(Frefox) autofill-styles
@@ -131,9 +147,9 @@ $paddingSide = 12px
   display inline-flex
   flex-grow 1
   position relative
-  width 30px
-  min-width 50%
-  height 100%
+  width 100%
+  min-width 200px
+  text-overflow ellipsis
   box-shadow none
   background none
   color inherit
@@ -142,8 +158,6 @@ $paddingSide = 12px
 
   .isTextArea &
     display block
-    height 100%
-    max-height 100%
     width 100%
 
     &:hover
@@ -252,6 +266,8 @@ $paddingSide = 12px
   right 0
   bottom 1px
   height auto
+  border-top-left-radius 0
+  border-bottom-left-radius 0
 
   &:hover
     background-color var(--accent-color-alpha-0) !important

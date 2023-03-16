@@ -14,6 +14,7 @@ export default () => {
     <Scroll
       x
       y
+      fadeSize="m"
       className={S.example}
       offset={{
         x: { after: 20 },

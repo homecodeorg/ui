@@ -51,9 +51,10 @@ export default memo(
                 content={props => (
                   <Scroll
                     size="s"
+                    fadeSize="s"
                     {...props}
                     y
-                    offset={{ y: { before: 10, after: 10 } }}
+                    offset={{ y: { before: 20, after: 20 } }}
                     className={S.itemContent}
                     innerClassName={S.itemContentInner}
                   >

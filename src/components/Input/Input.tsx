@@ -292,7 +292,8 @@ export class Input extends Component<T.Props> {
       return (
         <Scroll
           y
-          size="m"
+          size={size}
+          fadeSize="s"
           className={S.scroller}
           innerProps={{ style: { clipPath: labelClipPath } }}
           offset={{
@@ -332,6 +333,7 @@ export class Input extends Component<T.Props> {
       className,
       size,
       label,
+      value,
       variant,
       error,
       hasClear,
@@ -356,7 +358,8 @@ export class Input extends Component<T.Props> {
     );
 
     return (
-      <div className={classes}>
+      // @ts-ignore
+      <div className={classes} title={value}>
         <label className={S.main} key="main">
           <div
             className={S.border}
@@ -393,6 +396,7 @@ export class Input extends Component<T.Props> {
             size={size}
             square
             onClick={this.onClearPress}
+            title=""
           >
             <Icon className={S.clearIcon} size={size} type="close" />
           </Button>

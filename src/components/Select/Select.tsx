@@ -576,7 +576,7 @@ export class Select extends Component<T.Props, T.State> {
       this.renderAdditionalLabel(),
     ].filter(Boolean);
     const hasSelected = selectedLabel.length > 0;
-    const displayLabel = hasSelected ? selectedLabel : <div></div>;
+    const displayLabel = hasSelected ? selectedLabel : label;
     const title = hasSelected ? selectedLabel : null;
     const triggerArrow = this.renderTriggerArrow();
     const isError = this.isErrorVisible();
@@ -596,7 +596,12 @@ export class Select extends Component<T.Props, T.State> {
           style={{ clipPath: labelClipPath }}
           title={title?.join?.(', ')}
         >
-          {[displayLabel, triggerArrow]}
+          <div
+            className={cn(S.triggerButtonLabel, hasSelected && S.hasSelected)}
+          >
+            {displayLabel}
+          </div>
+          {triggerArrow}
         </Button>
         <Label
           size={size}
@@ -787,7 +792,7 @@ export class Select extends Component<T.Props, T.State> {
   render() {
     const { className, popupProps, size, error } = this.props;
     const { isOpen, isFocused } = this.store;
-    const classes = cn(S.root, className);
+    const classes = cn(S.root, className, S[`size-${size}`]);
 
     return (
       <>
