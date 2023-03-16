@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](https://github.com/foreverido/uilib/compare/v3.9.3...v3.10.0) (2023-03-16)
+
+
+### Features
+
+* Scroll - fadeSize, +fix on inner resize ([17d46f0](https://github.com/foreverido/uilib/commit/17d46f05922d7f0442a27cc53cd02203111f8d73))
+
 ### [3.9.3](https://github.com/foreverido/uilib/compare/v3.9.2...v3.9.3) (2023-03-15)
 
 
