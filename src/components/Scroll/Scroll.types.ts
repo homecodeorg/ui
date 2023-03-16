@@ -24,6 +24,8 @@ export type Props = ComponentType &
     y?: boolean;
     // Scrollbars size.
     size?: Size;
+    // Content fade size.
+    fadeSize?: Size;
     // Enables scroll-behavior smooth (default false).
     smooth?: boolean;
     // Whether to automatically hide the scrollbar when not in use (default false).

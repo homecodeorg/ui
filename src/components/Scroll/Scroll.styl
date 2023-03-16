@@ -5,6 +5,9 @@ $sizeS = 1px
 $sizeM = 5px
 $sizeL = 9px
 
+fadeMask(direction, size)
+  linear-gradient(to direction, rgba(0,0,0,0) 2px, #000 size, #000 'calc(100% - %s)' % size, rgba(0,0,0,0))
+
 .root
   position relative
   overflow hidden
@@ -32,9 +35,21 @@ $sizeL = 9px
     max-width 100%
     overflow-x auto
 
+  .fadeSize-s &
+    .y&
+      mask-image fadeMask(bottom, 20px)
+    .x&
+      mask-image fadeMask(right, 20px)
+
+  .fadeSize-m &
+    .y&
+      mask-image fadeMask(bottom, 30px)
+    .x&
+      mask-image fadeMask(right, 30px)
+
 .thumb
   position absolute
-  background-color var(--accent-color-alpha-100)
+  background-color var(--accent-color-alpha-200)
   border-radius 1px
   transition background-color .1s ease-out
   transform-origin center

@@ -154,12 +154,12 @@ export class Scroll extends Component<T.Props> {
   updateCoeff(axis) {
     const thumb = this.thumbELem[axis].current;
 
-    if (!this.innerElem || !thumb) return;
+    if (!this.innerElem) return;
 
     const sizeField = BY_AXIS[axis].size;
 
     this.store.coeff[axis] = this.getInnerSize(axis) / this.getScrollSize(axis);
-    thumb.style[sizeField] = this.getCoeffStyle(axis);
+    if (thumb) thumb.style[sizeField] = this.getCoeffStyle(axis);
   }
 
   updatePos = axis => {
@@ -319,7 +319,7 @@ export class Scroll extends Component<T.Props> {
   }
 
   render() {
-    const { y, x, size, extraWide, autoHide, className } = this.props;
+    const { y, x, size, fadeSize, extraWide, autoHide, className } = this.props;
     const { isScrolling, activeAxis } = this.store;
 
     const classes = cn(
@@ -327,6 +327,7 @@ export class Scroll extends Component<T.Props> {
       y && S.y,
       x && S.x,
       S[`size-${size}`],
+      fadeSize && S[`fadeSize-${fadeSize}`],
       autoHide && S.autoHide,
       extraWide && S.extraWide,
       (isScrolling || activeAxis) && S.isScrolling,
