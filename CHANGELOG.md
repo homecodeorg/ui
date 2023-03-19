@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.3](https://github.com/foreverido/uilib/compare/v3.10.2...v3.10.3) (2023-03-19)
+
+
+### Features
+
+* 'blur' are optional now ([169d3c0](https://github.com/foreverido/uilib/commit/169d3c06ae6d8e3322d30b0a85d7f41ac9e75350))
+
+
+### Bug Fixes
+
+* Heading - anchor ([1f60269](https://github.com/foreverido/uilib/commit/1f6026944f4a3387f566f9c231a572130bb0591e))
+
 ### [3.10.2](https://github.com/foreverido/uilib/compare/v3.10.1...v3.10.2) (2023-03-19)
 
 
