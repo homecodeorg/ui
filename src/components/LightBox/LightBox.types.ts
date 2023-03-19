@@ -6,7 +6,7 @@ export type Props = {
   // Called when the lightbox is closed.
   //
   // By default it closed by pressing Esc key.
-  onClose: () => void;
+  onClose?: () => void;
   // The content to display in the lightbox.
   children: ReactNode;
 };

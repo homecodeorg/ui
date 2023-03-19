@@ -15,9 +15,9 @@ export default () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Open {`<LightBox />`}</Button>
+      <Button onClick={() => setOpen(true)}>Open LightBox</Button>
       <LightBox isOpen={isOpen} onClose={() => setOpen(false)}>
-        <Gallery items={items} style={{ height: 400 }} />
+        <Gallery items={items} />
       </LightBox>
     </>
   );

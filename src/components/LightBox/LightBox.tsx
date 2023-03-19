@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import cn from 'classnames';
 
 import { Paranja } from 'uilib/components/Paranja/Paranja';
@@ -8,21 +8,28 @@ import { Icon } from 'uilib/components/Icon/Icon';
 import S from './LightBox.styl';
 import * as T from './LightBox.types';
 
-export function LightBox({ children, isOpen, onClose }: T.Props) {
+export function LightBox({ children, onClose, ...props }: T.Props) {
+  const [isOpen, setOpen] = useState(false);
+
   const onKeyDown = useCallback(
     e => {
-      if (isOpen && onClose && e.key === 'Escape') {
+      if (isOpen && e.key === 'Escape') {
         e.stopPropagation();
-        onClose();
+        setOpen(false);
+        onClose?.();
       }
     },
-    [onClose]
+    [isOpen, onClose]
   );
 
   useEffect(() => {
+    setOpen(props.isOpen);
+  }, [props.isOpen]);
+
+  useEffect(() => {
     document.addEventListener('keydown', onKeyDown, true);
-    return () => document.removeEventListener('keydown', onKeyDown);
-  });
+    return () => document.removeEventListener('keydown', onKeyDown, true);
+  }, [isOpen]);
 
   return (
     <Paranja className={cn(S.root, isOpen && S.open)}>
