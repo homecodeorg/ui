@@ -5,13 +5,12 @@ import S from './Heading.styl';
 import * as T from './Heading.types';
 
 let subscribersCount = 0;
-const idTmpl = (id: string) => `heading-${id}`;
 
 function onClick(e) {
   const href = e.target?.getAttribute('href');
   if (!href || !/#/.test(href)) return;
   const [path, hash] = href.split('#');
-  const heading = document.getElementById(idTmpl(hash));
+  const heading = document.getElementById(hash);
 
   if (heading) {
     scrollIntoView(heading);
@@ -41,7 +40,7 @@ export const Heading = memo(function Heading({ id, text }: T.Props) {
   });
 
   return (
-    <h2 className={S.root} id={idTmpl(id)}>
+    <h2 className={S.root} id={id}>
       <a href={`${location.pathname}${hash}`} className={S.link}>
         #
       </a>
