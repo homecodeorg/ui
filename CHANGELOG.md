@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0](https://github.com/foreverido/uilib/compare/v3.10.3...v3.11.0) (2023-03-19)
+
+
+### Bug Fixes
+
+* Gallery - dynamic startIndex ([9dbf244](https://github.com/foreverido/uilib/commit/9dbf244e2256c75ab5b6b64cfd75052818c3657b))
+
 ### [3.10.3](https://github.com/foreverido/uilib/compare/v3.10.2...v3.10.3) (2023-03-19)
 
 
