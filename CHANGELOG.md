@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.2](https://github.com/foreverido/uilib/compare/v3.10.1...v3.10.2) (2023-03-19)
+
+
+### Features
+
+* Gallery - arrows styles ([22e6456](https://github.com/foreverido/uilib/commit/22e645613894fdeafd70dd9a0ae8e790239d450e))
+
+
+### Bug Fixes
+
+* LightBox - props.isOpen - updates ([e73d822](https://github.com/foreverido/uilib/commit/e73d822d365ef91669f84257630c83ef18da39e3))
+
 ### [3.10.1](https://github.com/foreverido/uilib/compare/v3.10.0...v3.10.1) (2023-03-19)
 
 
