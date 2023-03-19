@@ -20,13 +20,8 @@ const DIR_NAME = {
   '-1': 'right',
 };
 
-type Direction = keyof typeof DIR_NAME;
-
-function getInitialState(items, startIndex) {
-  const state = [...items.slice(startIndex, 3)];
-
-  if (state.length === 2) state.push(items[0]);
-  return state;
+function getInitialState(items: T.Props['items'], startIndex) {
+  return circularSlice(items, startIndex, 3);
 }
 
 function Arr({ className, size, icon, ...rest }) {
@@ -65,6 +60,7 @@ function Item({ src, size, isLoaded, isError, onLoad, onError }) {
 export class Gallery extends Component<T.Props> {
   store;
   items;
+  index = 0;
   timers = Time.create();
 
   static defaultProps = {
@@ -76,13 +72,12 @@ export class Gallery extends Component<T.Props> {
   constructor(props) {
     super(props);
 
-    const { items, startIndex } = props;
+    const { startIndex, items } = props;
 
     this.recenter();
-
+    this.index = startIndex;
     this.store = createStore(this, {
-      items: getInitialState(this.items, startIndex),
-      index: startIndex,
+      items: getInitialState(this.items, this.index),
       movingDirection: 0,
       loading: {}, // [src]: boolean
       errors: {}, // [src]: boolean
@@ -100,9 +95,13 @@ export class Gallery extends Component<T.Props> {
   componentDidUpdate(prevProps) {
     const { items, startIndex } = this.props;
 
-    if (!compare(prevProps.items, items)) {
+    if (
+      prevProps.startIndex !== startIndex ||
+      !compare(prevProps.items, items)
+    ) {
+      this.index = startIndex;
       this.recenter();
-      this.store.items = getInitialState(this.items, startIndex);
+      this.store.items = getInitialState(this.items, this.index);
     }
   }
 
@@ -141,11 +140,14 @@ export class Gallery extends Component<T.Props> {
     this.store.movingDirection = direction;
 
     this.timers.after(DURATION, () => {
-      this.store.index += direction * -1;
-      this.store.items = circularSlice(this.items, this.store.index, 3);
+      this.index += direction * -1;
+      this.store.items = circularSlice(this.items, this.index, 3);
       this.store.movingDirection = 0;
 
+      const { onChange } = this.props;
       const { items, loading } = this.store;
+
+      onChange?.(this.index);
 
       items.forEach(src => {
         if (typeof loading[src] !== 'boolean') loading[src] = false;
@@ -163,10 +165,14 @@ export class Gallery extends Component<T.Props> {
     const innerClasses = cn(S.inner, animation && S.animation, S[dirName]);
 
     return (
-      <div className={classes} {...omit(rest, ['items', 'onChange'])}>
+      <div
+        className={classes}
+        {...omit(rest, ['items', 'onChange', 'startIndex'])}
+      >
         <div className={innerClasses}>
           {items.map(src => (
             <Item
+              key={src}
               src={src}
               size={size}
               isLoaded={loading[src]}

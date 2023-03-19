@@ -2,9 +2,18 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import { Heading, Link } from 'uilib';
 
-import example from '!!raw-loader!./Example';
+import basic from '!!raw-loader!./Basic';
+import grid from '!!raw-loader!./Grid';
+
+import S from './Gallery.styl';
 
 const name = 'Gallery';
+const scope = { S };
+const examples = [
+  { id: 'basic', label: 'Basic', code: basic, scope },
+  { id: 'grid', label: 'Grid', code: grid, scope },
+];
+
 const Docs = () => (
   <>
     <p>
@@ -22,10 +31,5 @@ const Docs = () => (
 );
 
 export default () => (
-  <ComponentLayout
-    name={name}
-    docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
-    scope={{}}
-  />
+  <ComponentLayout name={name} docs={Docs} examples={examples} scope={{}} />
 );

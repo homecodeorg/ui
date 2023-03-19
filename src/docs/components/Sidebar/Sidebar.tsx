@@ -39,6 +39,7 @@ export default memo(
             items && (
               <Expand
                 className={S.item}
+                size="l"
                 isOpen={
                   openedGroup
                     ? openedGroup === group.id

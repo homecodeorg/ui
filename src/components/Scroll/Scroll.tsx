@@ -338,6 +338,8 @@ export class Scroll extends Component<T.Props> {
       'x',
       'y',
       'offset',
+      'size',
+      'fadeSize',
       'className',
       'innerClassName',
       'innerProps',
