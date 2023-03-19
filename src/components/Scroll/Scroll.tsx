@@ -309,7 +309,7 @@ export class Scroll extends Component<T.Props> {
     );
     const props = { ...innerProps };
 
-    if (!activeAxis) props.onScrollCapture = this.onInnerScroll;
+    props.onScrollCapture = this.onInnerScroll;
 
     return (
       <div {...props} className={innerClasses} ref={this.onInnerRef}>
