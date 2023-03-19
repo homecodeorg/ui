@@ -38,13 +38,16 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-100)
   min-width 100%
   max-width 70vw
   overflow hidden
-  background-color var(--decent-color-alpha-500)
+  background-color var(--decent-color)
   box-shadow $contentShadow
   opacity 0
   transform-origin top center
   backface-visibility hidden
   pointer-events none
-  backdrop-filter blur(50px)
+
+  .blur &
+    backdrop-filter blur(50px)
+    background-color var(--decent-color-alpha-500)
 
   &.size-s
     borderRadiusSize('s')

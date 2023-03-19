@@ -59,6 +59,8 @@ export type Props = FormControl<Value> &
     additionalLabel?: ReactNode;
     size?: Size;
     variant?: 'default' | 'outlined';
+    // Applies a blur effect to the options list
+    blur?: boolean;
     // An array of options
     options: Option[];
     // Options that would be added to the top of the list

@@ -3,6 +3,7 @@ import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import S from './Example.styl';
 
 const name = 'Notifications';
 const Docs = () => (
@@ -31,7 +32,7 @@ export default () => (
   <ComponentLayout
     name={name}
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    examples={[{ id: 'demo', label: 'Demo', code: example, scope: { S } }]}
     scope={{}}
   />
 );

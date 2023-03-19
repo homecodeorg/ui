@@ -790,7 +790,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   render() {
-    const { className, popupProps, size, error } = this.props;
+    const { className, popupProps, size, error, blur } = this.props;
     const { isOpen, isFocused } = this.store;
     const classes = cn(S.root, className, S[`size-${size}`]);
 
@@ -802,6 +802,7 @@ export class Select extends Component<T.Props, T.State> {
           size={size}
           focusControl
           hoverControl={isFocused}
+          blur={blur}
           {...popupProps}
           isOpen={isOpen}
           onOpen={this.onPopupOpen}

@@ -9,4 +9,6 @@ export type Props = {
   onClose?: () => void;
   // The content to display in the lightbox.
   children: ReactNode;
+  // Applies a blur effect to the background.
+  blur?: boolean;
 };

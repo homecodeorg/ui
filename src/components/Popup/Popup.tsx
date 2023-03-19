@@ -409,6 +409,7 @@ export class Popup extends Component<T.Props> {
       outlined,
       animated,
       paranja,
+      blur,
       elevation,
     } = this.props;
     const {
@@ -427,6 +428,7 @@ export class Popup extends Component<T.Props> {
 
     const wrapperClasses = cn(
       S.contentWrapper,
+      blur && S.blur,
       inline && S.inline,
       isOpen && wrapperBounds && S.isOpen,
       wrapperProps.className
@@ -465,7 +467,9 @@ export class Popup extends Component<T.Props> {
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
         >
-          {paranja && !rootPopupId && <Paranja visible={isContentVisible} />}
+          {paranja && !rootPopupId && (
+            <Paranja visible={isContentVisible} blur={blur} />
+          )}
           {isContentVisible && <>{content}</>}
         </div>
       </div>

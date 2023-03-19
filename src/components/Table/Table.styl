@@ -38,7 +38,16 @@
   position sticky
   left 0
   z-index 1
-  backdrop-filter blur(20px)
+  background-color var(--decent-color)
 
-td.sticky
-  background-color var(--decent-color-alpha-500) !important
+  th&
+    background-color var(--accent-color)
+    color var(--decent-color)
+
+.blur .sticky
+  backdrop-filter blur(20px)
+  background-color var(--decent-color-alpha-500)
+
+.blur th.sticky
+    background-color var(--accent-color-alpha-500)
+    color var(--decent-color-alpha-800)

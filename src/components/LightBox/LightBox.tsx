@@ -8,7 +8,7 @@ import { Icon } from 'uilib/components/Icon/Icon';
 import S from './LightBox.styl';
 import * as T from './LightBox.types';
 
-export function LightBox({ children, onClose, ...props }: T.Props) {
+export function LightBox({ children, onClose, blur, ...props }: T.Props) {
   const [isOpen, setOpen] = useState(false);
 
   const onKeyDown = useCallback(
@@ -32,7 +32,7 @@ export function LightBox({ children, onClose, ...props }: T.Props) {
   }, [isOpen]);
 
   return (
-    <Paranja className={cn(S.root, isOpen && S.open)}>
+    <Paranja className={cn(S.root, isOpen && S.open)} blur={blur}>
       {children}
       <Button className={S.close} onClick={onClose} variant="clear">
         <Icon type="close" size="l" />

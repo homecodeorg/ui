@@ -8,7 +8,9 @@ export default () => {
   return (
     <Select
       // variant="outlined"
+      // popupProps={{ direction: 'top' }}
       // isSearchable
+      blur
       label="Label"
       options={OPTIONS}
       value={value}

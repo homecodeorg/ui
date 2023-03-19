@@ -31,7 +31,7 @@ const columns = [
 
 export default () => (
   <>
-    <Table columns={columns} data={testData} />
+    <Table columns={columns} data={testData} loadingText="Loading..." blur />
     <style>{`th {min-width: 200px !important}`}</style>
   </>
 );

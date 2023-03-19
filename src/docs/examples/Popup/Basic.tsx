@@ -13,6 +13,7 @@ export default () => {
         size={size}
         // hoverControl
         // focusControl
+        blur
         direction="top"
         trigger={
           <Button size={size} onClick={toggle}>

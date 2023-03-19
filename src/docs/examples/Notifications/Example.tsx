@@ -33,15 +33,11 @@ const showAll = () => {
 
 export default () => (
   <Container fullHeight style={{ height: '40vh', maxHeight: '40vh' }}>
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1 }} className={S.buttons}>
       <Button onClick={() => show('info')}>Info</Button>
-      <br />
       <Button onClick={() => show('warning')}>Warning</Button>
-      <br />
       <Button onClick={() => show('error')}>Error</Button>
-      <br />
       <Button onClick={() => show('loading')}>Loading</Button>
-      <br />
       <Button onClick={showAll}>All</Button>
     </div>
     <Notifications style={{ maxWidth: '60%' }} />

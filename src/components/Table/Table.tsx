@@ -34,10 +34,17 @@ export class Table extends Component<T.Props> {
   }
 
   render() {
-    const { className, columns, isLoading = false, data } = this.props;
+    const {
+      className,
+      columns,
+      isLoading = false,
+      loadingText,
+      blur,
+      data,
+    } = this.props;
 
     return (
-      <div className={cn(S.root, className)}>
+      <div className={cn(S.root, blur && S.blur, className)}>
         <Scroll x y offset={{ x: { before: 10, after: 10 } }}>
           <table>
             <thead>
@@ -47,8 +54,8 @@ export class Table extends Component<T.Props> {
           </table>
         </Scroll>
 
-        <Paranja inline visible={isLoading}>
-          {isLoading && <Spinner />}
+        <Paranja inline visible={isLoading} blur={blur}>
+          {isLoading && (loadingText ?? <Spinner />)}
         </Paranja>
       </div>
     );

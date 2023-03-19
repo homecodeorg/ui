@@ -21,7 +21,7 @@ const Docs = () => (
       which contains the content to be scrolled.
     </p>{' '}
     <span>
-      <Link inline href="/demo">
+      <Link inline href="/basic">
         Demo
       </Link>
     </span>

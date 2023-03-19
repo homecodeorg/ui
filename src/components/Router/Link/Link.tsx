@@ -83,6 +83,7 @@ export class Link extends Component<T.Props> {
       children,
       isClear,
       isDisabled,
+      disableExternalIcon,
       inline,
       store,
       isPartialExact,
@@ -123,7 +124,9 @@ export class Link extends Component<T.Props> {
         ref={this.domElem}
       >
         {children}
-        {isExternal && <Icon type="externalLink" className={S.externalIcon} />}
+        {isExternal && !disableExternalIcon && (
+          <Icon type="externalLink" className={S.externalIcon} />
+        )}
       </a>
     );
   }

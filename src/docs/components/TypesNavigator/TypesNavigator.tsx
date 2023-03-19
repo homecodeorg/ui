@@ -271,5 +271,7 @@ export function TypesTable({
   // @ts-ignore
   const data = Object.entries(props).map(([name, p]) => ({ name, ...p }));
 
-  return <Table columns={columns} data={data} className={S.typesNavigator} />;
+  return (
+    <Table columns={columns} data={data} blur className={S.typesNavigator} />
+  );
 }

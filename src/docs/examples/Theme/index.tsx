@@ -36,6 +36,7 @@ const Docs = () => (
 
     <Heading id="ThemeConfig" text="ThemeConfig" />
     <Table
+      blur
       columns={[
         {
           id: 'field',
@@ -84,6 +85,7 @@ const Docs = () => (
 
     <Heading id="ThemeDefaults" text="ThemeDefaults" />
     <Table
+      blur
       columns={[
         {
           id: 'field',
@@ -109,6 +111,7 @@ const Docs = () => (
 
     <Heading id="ThemeHelpers" text="ThemeHelpers" />
     <Table
+      blur
       columns={[
         {
           id: 'field',

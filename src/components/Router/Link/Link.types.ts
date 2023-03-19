@@ -11,6 +11,8 @@ export type Props = HTMLProps<HTMLAnchorElement> &
     isPartialExact?: boolean;
     // Whether the link should be disabled and unclickable.
     isDisabled?: boolean;
+    // Whether the link should be rendered without external icon.
+    disableExternalIcon?: boolean;
     // Whether the link should be rendered without underline.
     isClear?: boolean;
     // Whether the link should be rendered without paddings.

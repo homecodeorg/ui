@@ -48,6 +48,8 @@ export type Props = ComponentType & {
   inline?: boolean;
   // Adds a backdrop behind
   paranja?: boolean;
+  // Applies a blur effect to the background.
+  blur?: boolean;
   // Set corresponding paddings and border-radius
   size?: Size;
   // Adds a shadow

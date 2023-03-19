@@ -1,4 +1,4 @@
-import { Heading } from 'uilib';
+import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import basic from '!!raw-loader!./Basic';
@@ -11,7 +11,16 @@ const examples = [{ id: 'basic', label: 'Basic', code: basic }];
 
 const Docs = () => (
   <>
-    <p>Component for uploading files.</p>
+    <p>UI component that displays content relative to a specific element.</p>
+    <p>
+      It consists of a trigger element and a content element. When the trigger
+      element is clicked/focused, the content element is shown relative to the
+      trigger.
+    </p>
+    <p>
+      This is also a building block for{' '}
+      <Link href="//components/Select">Select</Link> component.
+    </p>
 
     <Heading id="props" text="Props" />
     <TypesTable scope={name} type="Props" />

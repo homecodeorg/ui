@@ -11,8 +11,9 @@ export const Paranja = ({
   children,
   visible = true,
   inline = false,
+  blur = false,
 }: T.Props) => {
-  const classes = cn(S.root, visible && S.visible, className);
+  const classes = cn(S.root, visible && S.visible, blur && S.blur, className);
   const node = <div className={classes}>{children}</div>;
 
   if (inline) return node;

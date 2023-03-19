@@ -23,8 +23,12 @@ export type Data = { id: string } & any;
 export type Props = ComponentType & {
   // Config that describes the structure of the table
   columns: Column[];
-  // Actual content of the table.
+  // Actual content of the table
   data: Data[];
   // Whether the table data is in loading state
   isLoading?: boolean;
+  // Text to display when the table data is in loading state
+  loadingText?: ReactNode;
+  // Applies a blur effect to the background
+  blur?: boolean;
 };
