@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.1](https://github.com/foreverido/uilib/compare/v3.10.0...v3.10.1) (2023-03-19)
+
+
+### Bug Fixes
+
+* Scroll - fire props.onScroll() ([d0693ee](https://github.com/foreverido/uilib/commit/d0693ee34d91fb25f7594bd8f127ab27300357af))
+
 ## [3.10.0](https://github.com/foreverido/uilib/compare/v3.9.3...v3.10.0) (2023-03-16)
 
 
