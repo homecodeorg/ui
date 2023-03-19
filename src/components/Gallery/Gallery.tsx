@@ -20,6 +20,8 @@ const DIR_NAME = {
   '-1': 'right',
 };
 
+type Direction = keyof typeof DIR_NAME;
+
 function getInitialState(items, startIndex) {
   const state = [...items.slice(startIndex, 3)];
 
@@ -149,7 +151,7 @@ export class Gallery extends Component<T.Props> {
         if (typeof loading[src] !== 'boolean') loading[src] = false;
       });
     });
-  }, DURATION) as (duration: -1 | 1) => void;
+  }, DURATION) as (direction: -1 | 1) => void;
 
   render() {
     const { className, size, animation, ...rest } = this.props;
