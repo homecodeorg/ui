@@ -41,7 +41,7 @@ const getThemeConfig = (theme, activeColor) => ({
 const getThemeName = isDark => (isDark ? 'dark' : 'light');
 
 export default () => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(currTheme === 'dark');
   const [config, setConfig] = useState(
     getThemeConfig(getThemeName(isDark), activeColor)
   );

@@ -1,20 +1,16 @@
 import { Heading, Table } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
+import { withStore } from 'justorm/react';
 
-import basic from '!!raw-loader!./Basic';
-import advanced from '!!raw-loader!./Advanced';
+import demo from '!!raw-loader!./Demo';
+import { useCallback, useEffect } from 'react';
 
 const name = 'Theme';
 const examples = [
   {
     id: 'demo',
     label: 'Demo',
-    code: basic,
-  },
-  {
-    id: 'advanced',
-    label: 'Advanced',
-    code: advanced,
+    code: demo,
   },
 ];
 
@@ -155,6 +151,26 @@ const Docs = () => (
   </>
 );
 
-export default () => (
-  <ComponentLayout name="Theme" examples={examples} docs={Docs} />
-);
+export default withStore({ app: 'theme' })(({ store: { app } }) => {
+  const onDocClick = useCallback(e => {
+    if (e.target.type === 'checkbox') {
+      app.toggleTheme();
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('click', onDocClick, true);
+    return () => {
+      document.removeEventListener('click', onDocClick, true);
+    };
+  });
+
+  return (
+    <ComponentLayout
+      name="Theme"
+      examples={examples}
+      docs={Docs}
+      scope={{ currTheme: app.theme }}
+    />
+  );
+});
