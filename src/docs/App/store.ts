@@ -1,10 +1,10 @@
 import { createStore } from 'justorm/react';
 import Time from 'timen';
+import LS from 'uilib/tools/localStorage';
 
 import { colorsConfig, getThemeConfig } from '../theme';
 
-const initialThemeType =
-  (localStorage.getItem('theme') as 'light' | 'dark') ?? 'dark';
+const initialThemeType = (LS.get('theme') as 'light' | 'dark') ?? 'dark';
 
 function getInitialActiveColor() {
   return (
@@ -29,11 +29,19 @@ const STORE = createStore('app', {
     changeCount: 0,
   },
 
+  isDarkTheme() {
+    return this.theme === 'dark';
+  },
+
+  toggleTheme() {
+    this.setTheme(this.isDarkTheme() ? 'light' : 'dark');
+  },
+
   setTheme(theme) {
     this.theme = theme;
     this.updateTheme(theme);
 
-    localStorage.setItem('theme', theme);
+    LS.set('theme', theme);
   },
 
   setActiveColor(color) {

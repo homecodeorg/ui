@@ -26,19 +26,6 @@ dom.watchControllerFlag();
 class App extends Component<{ store?: any }> {
   colorPickerRef = createRef<HTMLInputElement>();
 
-  store;
-
-  constructor(props) {
-    super(props);
-    this.store = props.store.app;
-  }
-
-  isDarkTheme = () => this.store.theme === 'dark';
-
-  toggleTheme = () => {
-    this.store.setTheme(this.isDarkTheme() ? 'light' : 'dark');
-  };
-
   // @ts-ignore
   pickActiveColor = () => this.colorPickerRef.current.click();
 
@@ -52,7 +39,8 @@ class App extends Component<{ store?: any }> {
   }
 
   render() {
-    const { currThemeConfig, activeColor, isMenuOpen } = this.store;
+    const { app } = this.props.store;
+    const { currThemeConfig, activeColor, isMenuOpen } = app;
 
     return (
       <>
@@ -69,9 +57,9 @@ class App extends Component<{ store?: any }> {
                 variant="clear"
                 size="l"
                 square
-                onClick={this.toggleTheme}
+                onClick={app.toggleTheme}
               >
-                {this.isDarkTheme() ? '🌙' : '🌕'}
+                {app.isDarkTheme() ? '🌙' : '🌕'}
               </Button>
 
               <Button
@@ -86,7 +74,7 @@ class App extends Component<{ store?: any }> {
                   type="color"
                   ref={this.colorPickerRef}
                   className={S.colorPicker}
-                  onChange={e => this.store.setActiveColor(e.target.value)}
+                  onChange={e => app.setActiveColor(e.target.value)}
                   value={activeColor}
                 />
               </Button>
@@ -110,7 +98,7 @@ class App extends Component<{ store?: any }> {
             className={S.menuButton}
             variant="clear"
             size="l"
-            onClick={this.store.toggleMenu}
+            onClick={app.toggleMenu}
           >
             <Icon type="menu" size="l" />
           </Button>
