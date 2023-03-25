@@ -26,34 +26,10 @@
   li
     margin var(--indent-s) 0
 
-.header
-  z-index 2
-  position sticky
-  top 0
-  padding 0 var(--indent-l)
-  padding-top 20px
-  padding-bottom 20px
-  flex-shrink 0
-  border-radius 0 0 10px 10px
-  line-height 1.2em
-  overflow hidden
-  border 2px solid var(--decent-color)
-  box-shadow inset 0 0 0 2px var(--decent-color)
-
-  &::before
-    content ''
-    position absolute
-    top 0
-    left 0
-    width 100%
-    height 100%
-    backdrop-filter blur(20px)
-    background-color var(--decent-color-alpha-300)
-    transform scale(1.5)
-    z-index -1
-
-  @media(max-width: $tablet)
-    padding-right 60px
+.inner
+  display flex
+  flex-direction column
+  height 100%
 
 .headerItem
   position relative
@@ -85,10 +61,10 @@
 
 .content
   // display flex
-  // flex-grow 1
+  flex-grow 1
   // overflow hidden
   padding-top 0
-  padding-bottom 50px
+  // padding-bottom 50px
 
   // @media(min-width: $tablet)
   //   padding 0 var(--indent-l)

@@ -26,7 +26,7 @@ export default function Usage() {
       <p>UILIB provide default theme and helpers for customization.</p>
       <p>
         See{' '}
-        <Link inline href="/components/theme">
+        <Link inline href="/components/Theme">
           Theme
         </Link>{' '}
         component for details.

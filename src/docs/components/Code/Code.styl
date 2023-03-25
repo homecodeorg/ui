@@ -6,10 +6,10 @@
   flex-direction column
   flex-grow 1
   width calc(100% - 2px)
-  max-height calc(100 * var(--vh) - 130px)
+  max-height calc(100 * var(--vh) - 110px)
   margin 1px
   background-color var(--decent-color)
-  box-shadow inset 0 0 0 2px var(--accent-color-alpha-100)
+  box-shadow inset 0 0 0 1px var(--accent-color-alpha-100)
   border-radius var(--border-radius-l)
   overflow hidden
 
@@ -27,7 +27,7 @@
     position fixed
     top 0
     left 0
-    z-index 200
+    z-index 11
     width 100vw
     height calc(100 * var(--vh))
     max-height @height
@@ -76,7 +76,7 @@
 
 .error
   white-space break-spaces
-  background-color var(--danger-color-alpha-100)
+  background-color var(--danger-color-alpha-50)
 
 .preview
   flex 1
@@ -92,4 +92,4 @@
     left 2px
     right 2px
     height 1px
-    background var(--accent-color-alpha-100)
+    background var(--accent-color-alpha-50)

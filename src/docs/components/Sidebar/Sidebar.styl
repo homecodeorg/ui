@@ -2,7 +2,7 @@
   display flex
   flex-direction column
   align-items flex-end
-  padding 0 var(--indent-s)
+  padding 0 var(--indent-s) var(--indent-l)
   overflow hidden
 
 .item
@@ -15,17 +15,20 @@
 
 .item
   flex-grow 1
+  flex-shrink 0
   width 100%
   overflow hidden
-  min-height 44px
   user-select none
+
+  &.opened
+    flex-shrink unset
 
 .itemHeader
   z-index 1
   justify-content space-between
 
 .itemContent
-  padding 0 var(--indent-s) var(--indent-s)
+  padding 0 var(--indent-s)
   margin-right 10px
 
 .itemInnerContent

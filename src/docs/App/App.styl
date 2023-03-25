@@ -16,7 +16,7 @@ body
   display flex
   justify-content space-between
   align-items center
-  padding 0 16px
+  padding 0 var(--indent-s)
   min-height 70px
 
 .version
@@ -30,6 +30,10 @@ body
   height 20px
   width 20px
   border-radius inherit
+
+@media screen and (max-width: $tablet)
+  .cfgBarMenuButtonPlaceholder
+    width 50px
 
 .menuButton
   z-index 10
@@ -55,10 +59,10 @@ body
 .nav
   display flex
   flex-direction column
-  width 250px
 
   @media (min-width: $tablet)
     transform translateX(var(--indent-s))
+    min-width 250px
 
   @media (max-width: $tablet)
     width 100%

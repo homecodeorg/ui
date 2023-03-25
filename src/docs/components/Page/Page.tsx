@@ -1,6 +1,10 @@
-import { Scroll, Container, H1 } from 'uilib';
+import { Scroll, Container, Heading } from 'uilib';
 
 import S from './Page.styl';
+
+export const Header = ({ children }) => (
+  <h1 className={S.header}>{children}</h1>
+);
 
 export default function Page({ title, children }) {
   return (
@@ -10,7 +14,7 @@ export default function Page({ title, children }) {
       y
       offset={{ y: { before: 80, after: 30 } }}
     >
-      <H1 className={S.title}>{title}</H1>
+      <Header>{title}</Header>
       <Container vertical className={S.inner}>
         {children}
       </Container>

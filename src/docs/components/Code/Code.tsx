@@ -63,11 +63,9 @@ export class Code extends Component<Props> {
   }
 
   render() {
+    const isFullscreen = this.isFullscreen();
     return (
-      <div
-        className={cn(S.root, this.isFullscreen() && S.fullscreen)}
-        key="code"
-      >
+      <div className={cn(S.root, isFullscreen && S.fullscreen)} key="code">
         <Styles id={this.id} />
         <Scroll
           y
@@ -78,7 +76,7 @@ export class Code extends Component<Props> {
           <Editor code={this.props.code} id={this.id} />
         </Scroll>
         <Result />
-        <FullscreenButton />
+        <FullscreenButton isFullscreen={isFullscreen} />
       </div>
     );
   }

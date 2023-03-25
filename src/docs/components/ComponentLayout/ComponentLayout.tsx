@@ -9,6 +9,7 @@ import {
 } from 'uilib/components';
 import { Code, SidebarLink } from 'docs/components';
 
+import { Header } from '../Page/Page';
 import S from './ComponentLayout.styl';
 import { createPortal } from 'react-dom';
 
@@ -34,27 +35,29 @@ export const Required = ({ text }) => (
   </span>
 );
 
-const Header = withStore('router')(({ name, rootPath, examples, store }) => {
-  const { path } = store.router;
-  const isRoot = path === rootPath;
-  const matchedExample =
-    !isRoot && examples.find(({ id }) => id === path.split('/').pop());
+const ComponentHeader = withStore('router')(
+  ({ name, rootPath, examples, store }) => {
+    const { path } = store.router;
+    const isRoot = path === rootPath;
+    const matchedExample =
+      !isRoot && examples.find(({ id }) => id === path.split('/').pop());
 
-  return (
-    <h1 className={S.header}>
-      {isRoot ? (
-        name
-      ) : (
-        <Link href={rootPath} className={S.headerLink}>
-          {name}
-        </Link>
-      )}
-      {matchedExample && (
-        <div className={S.headerSubItem}>&gt;&nbsp;{matchedExample.label}</div>
-      )}
-    </h1>
-  );
-});
+    return (
+      <Header>
+        {isRoot ? (
+          name
+        ) : (
+          <Link href={rootPath} className={S.headerLink}>
+            {name}
+          </Link>
+        )}
+        {matchedExample && (
+          <div className={S.headerSubItem}>/&nbsp;{matchedExample.label}</div>
+        )}
+      </Header>
+    );
+  }
+);
 
 const SidebarItem = ({ id, label, rootPath, items = null }) => {
   const content = items ? (
@@ -110,19 +113,26 @@ export const ComponentLayout = ({
   docs: Docs,
 }: Props) => {
   const rootPath = `/components/${name}`;
+  const elem = document.getElementById(`sidebar-item-${name}`);
 
   return (
-    <Scroll y className={S.root} offset={{ y: { before: 80, after: 50 } }}>
+    <Scroll
+      y
+      className={S.root}
+      innerClassName={S.inner}
+      offset={{ y: { before: 80, after: 50 } }}
+    >
       {examples &&
+        elem &&
         createPortal(
           <>
             {examples.map(props => (
               <SidebarItem {...props} rootPath={rootPath} key={props.id} />
             ))}
           </>,
-          document.getElementById(`sidebar-item-${name}`)
+          elem
         )}
-      <Header name={name} rootPath={rootPath} examples={examples} />
+      <ComponentHeader name={name} rootPath={rootPath} examples={examples} />
       <Container vertical fullWidth size="l" className={S.content}>
         <Router rootPath={rootPath}>
           {/* @ts-ignore */}

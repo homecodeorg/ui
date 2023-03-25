@@ -91,7 +91,7 @@ class App extends Component<{ store?: any }> {
                 />
               </Button>
 
-              <div style={{ width: 50 }} />
+              <div className={S.cfgBarMenuButtonPlaceholder} />
             </div>
             <Sidebar />
           </div>

@@ -1,7 +1,9 @@
 import { Fragment, memo, useCallback, useEffect, useState } from 'react';
 import { withStore } from 'justorm/react';
+import cn from 'classnames';
 
 import { Link, Scroll, Expand } from 'uilib';
+import { I18N } from 'docs/config/i18n';
 
 import NAV_CONFIG from '../../navigation';
 
@@ -14,7 +16,7 @@ export const SidebarLink = withStore('app')(({ path, label, store }) => (
     className={S.link}
     onClick={store.app.toggleMenu}
   >
-    {label}
+    <I18N id={label} />
   </Link>
 ));
 
@@ -22,23 +24,25 @@ export default memo(
   withStore('router')(function Sidebar({ store }) {
     const { path } = store.router;
     const [openedGroup, setOpenedGroup] = useState(path.split('/')[1]);
-
+    const [prevPath, setPrevPath] = useState(path);
     const onExpand = useCallback((group, isOpen) => {
       setOpenedGroup(isOpen ? group : null);
     }, []);
 
     useEffect(() => {
-      setOpenedGroup(null);
+      if (path !== prevPath) {
+        setOpenedGroup(null);
+        setPrevPath(path);
+      }
     }, [path]);
 
     return (
-      // <Scroll y size="m">
       <div className={S.root}>
         {NAV_CONFIG.map(
           ({ items, ...group }) =>
             items && (
               <Expand
-                className={S.item}
+                className={cn(S.item, openedGroup === group.id && S.opened)}
                 size="l"
                 isOpen={
                   openedGroup
@@ -47,7 +51,7 @@ export default memo(
                 }
                 onChange={isExpanded => onExpand(group.id, isExpanded)}
                 key={group.id}
-                header={group.label}
+                header={<I18N id={group.label} />}
                 headerClassName={S.itemHeader}
                 content={props => (
                   <Scroll
@@ -78,7 +82,6 @@ export default memo(
             )
         )}
       </div>
-      // </Scroll>
     );
   })
 );

@@ -1,12 +1,13 @@
 import { useCallback } from 'react';
 import { withStore } from 'justorm/react';
 import { Button, Icon } from 'uilib';
+import cn from 'classnames';
 
 import S from './FullscreenButton.styl';
 
 const FullscreenButton = withStore({
   editor: [],
-})(function FullscreenButton({ store: { editor } }) {
+})(function FullscreenButton({ store: { editor }, isFullscreen }) {
   const onKeyDown = useCallback(e => {
     if (e.key === 'Escape') {
       editor.isFullscreen = false;
@@ -25,7 +26,7 @@ const FullscreenButton = withStore({
 
   return (
     <Button
-      className={S.root}
+      className={cn(S.root, isFullscreen && S.fullscreen)}
       onClick={toggleFullscreen}
       variant="clear"
       square
