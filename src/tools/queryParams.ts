@@ -1,36 +1,20 @@
-export function parseQueryParams() {
-  if (!location.search) return {};
-  return location.search
-    .replace(/^\?/, '')
-    .split('&')
-    .reduce((acc, part) => {
-      const [key, val] = part.split('=');
-      let value = decodeURI(val) as any;
+import { isBrowser } from './env';
 
-      if (!val) value = true;
-      else if (/^\{.+\}$/.test(value)) value = JSON.parse(value);
-      else if (value.indexOf(',') > -1) value = val.split(',');
+const SSRQueryParams = {};
 
-      return { ...acc, [key]: value };
-    }, {});
+export function parseQueryParams(): any {
+  if (!location?.search) return {};
+  return [...new URLSearchParams(location.search).entries()].reduce(
+    (acc, [key, value]) => {
+      acc[key] = value;
+      return acc;
+    },
+    {}
+  );
 }
 
-export function stringifyQueryParams(params) {
-  const entries = Object.entries(params);
+export const setSSRQueryParams = (params): void => {
+  Object.assign(SSRQueryParams, params);
+};
 
-  if (!entries.length) return '';
-
-  const plain = entries.reduce((acc, [key, value]) => {
-    if ([undefined, null].indexOf(value) > -1) return acc;
-
-    const val = Array.isArray(value)
-      ? value.join(',')
-      : typeof value === 'object'
-      ? JSON.stringify(value)
-      : value;
-
-    return [...acc, `${key}=${val}`];
-  }, []);
-
-  return `?${plain.join('&')}`;
-}
+export const queryParams = isBrowser ? parseQueryParams() : SSRQueryParams;

@@ -1,3 +1,7 @@
+import { ReactNode } from 'react';
+
+import { I18N } from 'docs/config/i18n';
+
 type RouteLoader = () => Promise<any>;
 export type RouteItem = {
   id: string;
@@ -7,7 +11,7 @@ export type RouteItem = {
 
 export type GroupItem = {
   id: string;
-  label: string;
+  label: ReactNode;
   items: RouteItem[];
   isOpen?: boolean;
 };
