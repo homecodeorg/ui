@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/foreverido/uilib/compare/v3.11.0...v4.0.0) (2023-03-25)
+
+
+### Features
+
+* service/i18n (+ used in docs) ([9ab4980](https://github.com/foreverido/uilib/commit/9ab49808ebdea4f016ba4b89f1952891cc6beef1))
+
+
+### Bug Fixes
+
+* Scroll - resubscribe ResizeObserver to innerElem ([0530df2](https://github.com/foreverido/uilib/commit/0530df2e47dda2932552f0f9a6017bcfdea296d1))
+
 ## [3.11.0](https://github.com/foreverido/uilib/compare/v3.10.3...v3.11.0) (2023-03-19)
 
 
