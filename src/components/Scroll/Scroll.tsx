@@ -39,9 +39,19 @@ const BY_AXIS = {
 export class Scroll extends Component<T.Props> {
   innerElem = HTMLDivElement;
   onInnerRef = elem => {
+    if (this.innerElem) {
+      resizeObserver.unobserve(this.innerElem, this.updateAll);
+    }
+
     this.innerElem = elem;
     this.props.onInnerRef?.(elem);
+
+    if (elem) {
+      this.updateAll();
+      resizeObserver.observe(elem, this.updateAll);
+    }
   };
+
   thumbELem = {
     x: createRef<HTMLDivElement>(),
     y: createRef<HTMLDivElement>(),
@@ -72,13 +82,12 @@ export class Scroll extends Component<T.Props> {
   }
 
   componentDidMount() {
-    this.eachAxis(this.update);
+    this.updateAll();
 
     this.unsubscribeScrollHeightObserver = Time.every(
       100,
       this.observeScrollHeight
     );
-    resizeObserver.observe(this.innerElem, this.updateAll);
 
     document.addEventListener('scroll', this.onDocScroll);
   }
