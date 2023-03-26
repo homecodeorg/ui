@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.4](https://github.com/foreverido/uilib/compare/v4.0.3...v4.0.4) (2023-03-26)
+
+
+### Bug Fixes
+
+* Scroll smooth - dragging ([1ba4787](https://github.com/foreverido/uilib/commit/1ba47873f84a47817582cf8f4bffebd104cc7281))
+
 ### [4.0.3](https://github.com/foreverido/uilib/compare/v4.0.2...v4.0.3) (2023-03-26)
 
 
