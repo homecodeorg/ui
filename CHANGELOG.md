@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.3](https://github.com/foreverido/uilib/compare/v4.0.2...v4.0.3) (2023-03-26)
+
+
+### Bug Fixes
+
+* Lazy - spinner timeout - 500ms, pass props.size to Node ([b846547](https://github.com/foreverido/uilib/commit/b846547ab98aee3ab8021b3cd0332730a2e5df58))
+
 ### [4.0.2](https://github.com/foreverido/uilib/compare/v4.0.1...v4.0.2) (2023-03-26)
 
 
