@@ -57,11 +57,13 @@ export function init(config: RegisterConfig) {
   const storeName = `i18n-${nanoid()}`;
   const componentStore = createStore(storeName, { _updated: '' });
 
-  const callLoader = (loader, lang) =>
-    loader().then(data => {
-      texts[lang].translator.add({ values: data.default });
-      componentStore._updated = nanoid();
-    });
+  const callLoader = async (loader, lang) => {
+    const values =
+      typeof loader === 'function' ? (await loader()).default : loader;
+
+    texts[lang].translator.add({ values });
+    componentStore._updated = nanoid();
+  };
 
   Object.entries(config).forEach(([lang, loader]) => {
     if (lang === store.lang) return callLoader(loader, lang);
