@@ -32,6 +32,14 @@ h6 {
   line-height: 2.7em;
 }
 
+h2:not(:first-child) {
+  margin-top: 2em;
+}
+
+h3:not(:first-child) {
+  margin-top: 1em;
+}
+
 h1 {
   font-size: 160%;
 }

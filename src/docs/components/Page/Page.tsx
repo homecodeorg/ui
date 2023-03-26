@@ -1,4 +1,4 @@
-import { Scroll, Container, Heading } from 'uilib';
+import { Scroll, Container } from 'uilib';
 
 import S from './Page.styl';
 

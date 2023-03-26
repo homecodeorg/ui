@@ -36,52 +36,51 @@ export default memo(
       }
     }, [path]);
 
-    return (
-      <div className={S.root}>
-        {NAV_CONFIG.map(
-          ({ items, ...group }) =>
-            items && (
-              <Expand
-                className={cn(S.item, openedGroup === group.id && S.opened)}
-                size="l"
-                isOpen={
-                  openedGroup
-                    ? openedGroup === group.id
-                    : new RegExp(`^/${group.id}`).test(path)
-                }
-                onChange={isExpanded => onExpand(group.id, isExpanded)}
-                key={group.id}
-                header={<I18N id={group.label} />}
-                headerClassName={S.itemHeader}
-                content={props => (
-                  <Scroll
-                    size="s"
-                    fadeSize="s"
-                    {...props}
-                    y
-                    offset={{ y: { before: 20, after: 20 } }}
-                    className={S.itemContent}
-                    innerClassName={S.itemContentInner}
-                  >
-                    {items.map(({ id, label }) => {
-                      const path = `/${group.id}/${id}`;
+    const renderGroup = useCallback(
+      ({ items, ...group }) => {
+        if (!items) return null;
 
-                      return (
-                        <Fragment key={id}>
-                          <SidebarLink path={path} label={label || id} />
-                          <div
-                            id={`sidebar-item-${id}`}
-                            className={S.subItems}
-                          />
-                        </Fragment>
-                      );
-                    })}
-                  </Scroll>
-                )}
-              />
-            )
-        )}
-      </div>
+        const isOpen = openedGroup
+          ? openedGroup === group.id
+          : new RegExp(`^/${group.id}`).test(path);
+
+        return (
+          <Expand
+            className={cn(S.item, isOpen && S.opened)}
+            size="l"
+            isOpen={isOpen}
+            onChange={isExpanded => onExpand(group.id, isExpanded)}
+            key={group.id}
+            header={<I18N id={group.label} />}
+            headerClassName={S.itemHeader}
+            content={props => (
+              <Scroll
+                size="s"
+                fadeSize="s"
+                {...props}
+                y
+                offset={{ y: { before: 20, after: 20 } }}
+                className={S.itemContent}
+                innerClassName={S.itemContentInner}
+              >
+                {items.map(({ id, label }) => {
+                  const path = `/${group.id}/${id}`;
+
+                  return (
+                    <Fragment key={id}>
+                      <SidebarLink path={path} label={label || id} />
+                      <div id={`sidebar-item-${id}`} className={S.subItems} />
+                    </Fragment>
+                  );
+                })}
+              </Scroll>
+            )}
+          />
+        );
+      },
+      [openedGroup]
     );
+
+    return <div className={S.root}>{NAV_CONFIG.map(renderGroup)}</div>;
   })
 );
