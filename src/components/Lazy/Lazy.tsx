@@ -14,9 +14,13 @@ const loaded = new Map<T.Loader, ComponentType>();
 
 export class Lazy extends Component<T.Props> {
   store: T.State;
-  Node?: ComponentType;
+  Node?: ComponentType<any>;
   hasNode = false;
   clearSpinnerTimeout: null;
+
+  static defaultProps = {
+    size: 'm',
+  };
 
   constructor(props: T.Props) {
     super(props);
@@ -46,7 +50,7 @@ export class Lazy extends Component<T.Props> {
   update() {
     const { loader } = this.props;
 
-    this.clearSpinnerTimeout = Time.after(200, () =>
+    this.clearSpinnerTimeout = Time.after(500, () =>
       this.setState({ spinnerTimeout: false })
     );
 
@@ -70,7 +74,7 @@ export class Lazy extends Component<T.Props> {
       return (
         progressElem ?? (
           <Container fullHeight fullWidth>
-            <Spinner size="l" />
+            <Spinner size={props.size} />
           </Container>
         )
       );
