@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.2](https://github.com/foreverido/uilib/compare/v4.0.1...v4.0.2) (2023-03-26)
+
+
+### Bug Fixes
+
+* services/1i8n - changeLang() to previous ([1f64fbf](https://github.com/foreverido/uilib/commit/1f64fbfd6bb363eebceea866232bf34a12e29929))
+
 ### [4.0.1](https://github.com/foreverido/uilib/compare/v4.0.0...v4.0.1) (2023-03-26)
 
 
