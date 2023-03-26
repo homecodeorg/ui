@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/foreverido/uilib/compare/v4.0.0...v4.0.1) (2023-03-26)
+
+
+### Features
+
+* services/i18n - accept already loaded object in language config ([e6468f0](https://github.com/foreverido/uilib/commit/e6468f0883821fa0f408846ea9aafb10910b3b19))
+
 ## [4.0.0](https://github.com/foreverido/uilib/compare/v3.11.0...v4.0.0) (2023-03-25)
 
 
