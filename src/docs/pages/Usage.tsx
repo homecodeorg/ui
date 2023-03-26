@@ -1,10 +1,11 @@
 import { Link, H2 } from 'uilib';
 
 import Page from '../components/Page/Page';
+import { I18N } from '../config/i18n';
 
 export default function Usage() {
   return (
-    <Page title="Usage">
+    <Page header={<I18N id="Usage" />}>
       <p>
         There are several requirements to make UILIB usage completely clear.
       </p>

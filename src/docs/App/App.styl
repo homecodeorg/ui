@@ -5,7 +5,7 @@ body
 
 .root
   display flex
-  height 100vh
+  height calc(100 * var(--vh))
   width 1000px
   max-width 100%
   margin 0 auto
@@ -20,6 +20,7 @@ body
   min-height 70px
 
 .version
+  padding-left var(--indent-s)
   font-weight bold
 
 .colorPicker

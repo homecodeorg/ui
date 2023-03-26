@@ -1,10 +1,11 @@
 import { Link, H2, H3 } from 'uilib';
 
-import Page from '../components/Page/Page';
+import Page, { Header } from '../components/Page/Page';
+import { I18N } from '../config/i18n';
 
 export default function About() {
   return (
-    <Page title="About">
+    <Page header={<I18N id="About" />}>
       <p>UILIB is a React components library for building user interfaces.</p>
       <H2>Best practices</H2>
       <p>
