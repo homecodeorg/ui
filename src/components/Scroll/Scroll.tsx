@@ -314,7 +314,7 @@ export class Scroll extends Component<T.Props> {
       S.inner,
       innerProps?.className,
       innerClassName,
-      smooth && S.smooth
+      !activeAxis && smooth && S.smooth
     );
     const props = { ...innerProps };
 
