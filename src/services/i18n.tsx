@@ -66,10 +66,12 @@ export function init(config: RegisterConfig) {
   };
 
   Object.entries(config).forEach(([lang, loader]) => {
-    if (lang === store.lang) return callLoader(loader, lang);
     if (!modules[lang]) modules[lang] = [];
+    if (lang === store.lang) return callLoader(loader, lang);
     modules[lang].push(() => callLoader(loader, lang));
   });
+
+  // TODO: revert ability to register modules
 
   return {
     i18n: (key, props?) => getTrans(key, props),
