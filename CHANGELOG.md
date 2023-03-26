@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.5](https://github.com/foreverido/uilib/compare/v4.0.4...v4.0.5) (2023-03-26)
+
+
+### Bug Fixes
+
+* Virtualized/List/ListScroll - innerElem ref ([255b737](https://github.com/foreverido/uilib/commit/255b737f2a8c5b1df384c06e38784c0f6ee480cf))
+
 ### [4.0.4](https://github.com/foreverido/uilib/compare/v4.0.3...v4.0.4) (2023-03-26)
 
 
