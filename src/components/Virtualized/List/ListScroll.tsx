@@ -26,7 +26,7 @@ export default function ListScroll({ scrollProps, ...rest }: Props) {
         component: Scroll,
         props,
         // @ts-ignore
-        getRef: ref => ref.innerElem.current,
+        getRef: ref => ref.innerElem,
       }}
     />
   );
