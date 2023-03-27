@@ -55,6 +55,7 @@ export default memo(
             headerClassName={S.itemHeader}
             content={props => (
               <Scroll
+                autoHide
                 size="s"
                 fadeSize="s"
                 {...props}

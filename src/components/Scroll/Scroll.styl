@@ -47,6 +47,14 @@ fadeMask(direction, size)
     .x&
       mask-image fadeMask(right, 30px)
 
+.autoHide
+  & > .bar
+    opacity 0
+
+    .isScrolling&
+      transition-delay 0
+      opacity 1
+
 .thumb
   position absolute
   background-color var(--accent-color-alpha-200)
@@ -71,14 +79,6 @@ fadeMask(direction, size)
   cursor pointer
   overflow hidden
   touch-action none
-
-  .autoHide &
-    opacity 0
-
-  .isScrolling &
-  &:hover
-    transition-delay 0
-    opacity 1
 
   &::before
     content ''

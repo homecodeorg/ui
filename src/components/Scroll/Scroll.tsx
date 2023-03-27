@@ -204,7 +204,7 @@ export class Scroll extends Component<T.Props> {
     this.innerElem[scrollPos] += pos / this.store.coeff[axis];
   };
 
-  dropScrollingState = debounce(() => (this.store.isScrolling = false), 500);
+  dropScrollingState = debounce(() => (this.store.isScrolling = false), 2000);
 
   subscribePointerMoveUp = () => {
     document.addEventListener('pointermove', this.onPointerMove, {
@@ -229,6 +229,8 @@ export class Scroll extends Component<T.Props> {
   };
 
   onInnerScroll = e => {
+    if (this.innerElem !== e.target) return;
+
     const { onScroll } = this.props;
     const { activeAxis, isScrolling } = this.store;
 
@@ -241,6 +243,8 @@ export class Scroll extends Component<T.Props> {
     }
 
     if (!isScrolling) this.store.isScrolling = true;
+
+    this.dropScrollingState();
   };
 
   onPointerDown = (axis, e) => {
@@ -349,6 +353,7 @@ export class Scroll extends Component<T.Props> {
       'offset',
       'size',
       'fadeSize',
+      'smooth',
       'className',
       'innerClassName',
       'innerProps',

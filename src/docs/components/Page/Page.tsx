@@ -18,6 +18,7 @@ export default function Page({
       className={S.root}
       innerClassName={cn(S.inner, innerClassName)}
       smooth
+      autoHide
       y
       offset={{ y: { before: 100, after: 100 } }}
     >
