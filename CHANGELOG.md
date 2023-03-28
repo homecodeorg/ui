@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.7](https://github.com/foreverido/uilib/compare/v4.0.6...v4.0.7) (2023-03-28)
+
+
+### Bug Fixes
+
+* Scroll - autoHide ([2dbc693](https://github.com/foreverido/uilib/commit/2dbc6936f1e0156295935d952c002089b1cf577a))
+
 ### [4.0.6](https://github.com/foreverido/uilib/compare/v4.0.5...v4.0.6) (2023-03-26)
 
 ### [4.0.5](https://github.com/foreverido/uilib/compare/v4.0.4...v4.0.5) (2023-03-26)
