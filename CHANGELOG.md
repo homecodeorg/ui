@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.11](https://github.com/foreverido/uilib/compare/v4.0.10...v4.0.11) (2023-03-29)
+
+
+### Bug Fixes
+
+* Input - clipPath - suppressHydrationWarning ([1896922](https://github.com/foreverido/uilib/commit/1896922441148929aadafd01918938de29a89be5))
+
 ### [4.0.10](https://github.com/foreverido/uilib/compare/v4.0.9...v4.0.10) (2023-03-29)
 
 
