@@ -30,7 +30,7 @@ export class Select extends Component<T.Props, T.State> {
   contentRef = createRef<HTMLDivElement>();
   scrollInnerElem: HTMLDivElement;
   onScrollInnerRef = elem => (this.scrollInnerElem = elem);
-  focusedElem = HTMLDivElement;
+  focusedElem: HTMLDivElement;
 
   timers = Time.create();
   items = [];
