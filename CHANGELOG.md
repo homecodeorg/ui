@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/foreverido/uilib/compare/v4.0.11...v4.1.0) (2023-03-29)
+
+
+### Bug Fixes
+
+* Input - keys, rename adormnmend => addon ([e3e63f8](https://github.com/foreverido/uilib/commit/e3e63f889430d58801e3fd1cb54d8872bb1b7875))
+
 ### [4.0.11](https://github.com/foreverido/uilib/compare/v4.0.10...v4.0.11) (2023-03-29)
 
 
