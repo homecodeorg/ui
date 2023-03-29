@@ -364,6 +364,7 @@ export class Input extends Component<T.Props> {
         <label className={S.main} key="main">
           <div
             className={S.border}
+            suppressHydrationWarning
             style={{ clipPath: labelClipPath }}
             key="border"
           />
