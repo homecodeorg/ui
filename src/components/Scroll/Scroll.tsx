@@ -37,7 +37,7 @@ const BY_AXIS = {
 };
 
 export class Scroll extends Component<T.Props> {
-  innerElem = HTMLDivElement;
+  innerElem: HTMLDivElement;
   onInnerRef = elem => {
     if (this.innerElem) {
       resizeObserver.unobserve(this.innerElem, this.updateAll);
