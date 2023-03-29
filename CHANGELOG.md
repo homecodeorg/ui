@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.8](https://github.com/foreverido/uilib/compare/v4.0.7...v4.0.8) (2023-03-29)
+
+
+### Bug Fixes
+
+* Scroll - innerElem typings ([a9bdeff](https://github.com/foreverido/uilib/commit/a9bdeffaf22753079a66e7ead7bf21b883215509))
+
 ### [4.0.7](https://github.com/foreverido/uilib/compare/v4.0.6...v4.0.7) (2023-03-28)
 
 
