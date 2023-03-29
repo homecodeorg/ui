@@ -20,12 +20,12 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     hasClear?: boolean;
     // Whether the onChange event should be triggered only when the user finishes typing (focus lost) or immediately after each keystroke (default)
     changeOnEnd?: boolean;
-    // Adornment to be displayed to the left of the input field
-    adornmentLeft?: string | ReactNode;
-    adornmentLeftClassName?: string;
-    // Adornment to be displayed to the right of the input field
-    adornmentRight?: string | ReactNode;
-    adornmentRightClassName?: string;
+    // Addon to be displayed to the left of the input field
+    addonLeft?: string | ReactNode;
+    addonLeftClassName?: string;
+    // Addon to be displayed to the right of the input field
+    addonRight?: string | ReactNode;
+    addonRightClassName?: string;
     // A callback function that is called when the input field's value is cleared using the clear button (if hasClear is true)
     onClear?: () => void;
     // Additional props for the underlying HTML input element

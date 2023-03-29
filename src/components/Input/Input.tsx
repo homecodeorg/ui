@@ -112,13 +112,10 @@ export class Input extends Component<T.Props> {
   isTextArea = () => this.props.type === 'textarea';
 
   isLabelOnTop(hasValue = this.store?.hasValue) {
-    const { forceLabelOnTop, adornmentLeft } = this.props;
+    const { forceLabelOnTop, addonLeft } = this.props;
 
     return (
-      forceLabelOnTop ||
-      Boolean(adornmentLeft) ||
-      hasValue ||
-      this.store?.isFocused
+      forceLabelOnTop || Boolean(addonLeft) || hasValue || this.store?.isFocused
     );
   }
 
@@ -253,8 +250,8 @@ export class Input extends Component<T.Props> {
         'size',
         'error',
         'checkAutofill',
-        'adornmentLeft',
-        'adornmentRight',
+        'addonLeft',
+        'addonRight',
         'forceLabelOnTop',
         'changeOnEnd',
       ]),
@@ -309,8 +306,8 @@ export class Input extends Component<T.Props> {
     return control;
   }
 
-  renderAdornment(type: 'right' | 'left') {
-    const name = `adornment${capitalize(type)}`;
+  renderAddon(type: 'right' | 'left') {
+    const name = `addon${capitalize(type)}`;
     const content = this.props[name];
 
     if (!content) return null;
@@ -368,7 +365,7 @@ export class Input extends Component<T.Props> {
             style={{ clipPath: labelClipPath }}
             key="border"
           />
-          {this.renderAdornment('left')}
+          {this.renderAddon('left')}
           {this.wrapControll(
             <Control
               {...controlProps}
@@ -385,11 +382,12 @@ export class Input extends Component<T.Props> {
             isError={Boolean(error)}
             isFocused={isFocused}
             onClipPathChange={this.onLabelClipPathChange}
+            key="label"
           >
             {label}
           </Label>
-          {this.renderAdornment('right')}
-          {required && <RequiredStar size={size} />}
+          {this.renderAddon('right')}
+          {required && <RequiredStar size={size} key="required-star" />}
         </label>
         {hasClear && !disabled && hasValue && (
           <Button
@@ -399,12 +397,13 @@ export class Input extends Component<T.Props> {
             square
             onClick={this.onClearPress}
             title=""
+            key="clear"
           >
             <Icon className={S.clearIcon} size={size} type="close" />
           </Button>
         )}
         {!disabled && typeof error === 'string' && (
-          <AssistiveText variant="danger" size={size}>
+          <AssistiveText variant="danger" size={size} key="assistive-text">
             {error}
           </AssistiveText>
         )}
