@@ -295,6 +295,7 @@ export class Input extends Component<T.Props> {
           size={size}
           fadeSize="s"
           className={S.scroller}
+          suppressHydrationWarning
           innerProps={{ style: { clipPath: labelClipPath } }}
           offset={{
             y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
