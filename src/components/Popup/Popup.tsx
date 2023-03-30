@@ -390,6 +390,7 @@ export class Popup extends Component<T.Props> {
       <div
         className={classesTrigger}
         {...triggerProps}
+        suppressHydrationWarning
         data-popup-id={this.id}
         ref={this.triggerElem}
       >

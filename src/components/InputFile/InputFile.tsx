@@ -268,7 +268,11 @@ export class InputFile extends Component<T.Props> {
 
     return (
       <div className={classes}>
-        <div className={S.border} style={{ clipPath: labelClipPath }} />
+        <div
+          className={S.border}
+          suppressHydrationWarning
+          style={{ clipPath: labelClipPath }}
+        />
 
         <input
           ref={this.inputRef}

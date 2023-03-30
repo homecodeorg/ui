@@ -300,7 +300,7 @@ export class Scroll extends Component<T.Props> {
     };
 
     return (
-      <div {...barProps}>
+      <div {...barProps} key={`bar-${axis}`}>
         <div
           className={cn(S.thumb, thumbClassName)}
           style={thumbStyle}
@@ -325,7 +325,12 @@ export class Scroll extends Component<T.Props> {
     props.onScrollCapture = this.onInnerScroll;
 
     return (
-      <div {...props} className={innerClasses} ref={this.onInnerRef}>
+      <div
+        {...props}
+        className={innerClasses}
+        ref={this.onInnerRef}
+        key="inner"
+      >
         {children}
       </div>
     );
