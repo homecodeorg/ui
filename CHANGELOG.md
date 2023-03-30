@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/foreverido/uilib/compare/v4.1.0...v4.1.1) (2023-03-30)
+
+
+### Bug Fixes
+
+* Component keys and suppressHydrationWarning ([0b30827](https://github.com/foreverido/uilib/commit/0b3082700efecfc91061defafb3064e9579a0aa1))
+
 ## [4.1.0](https://github.com/foreverido/uilib/compare/v4.0.11...v4.1.0) (2023-03-29)
 
 
