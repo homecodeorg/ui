@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/foreverido/uilib/compare/v4.1.1...v4.2.0) (2023-04-02)
+
+
+### Features
+
+* Portal - component that cover SSR diff HTML problem ([d57f066](https://github.com/foreverido/uilib/commit/d57f0667c13a001117d86a783242a026b32c4e72))
+
+
+### Bug Fixes
+
+* Popup - improved set visible position logic ([b7a2e13](https://github.com/foreverido/uilib/commit/b7a2e13320ed6fc06bab443c04544986850aecc4))
+
 ### [4.1.1](https://github.com/foreverido/uilib/compare/v4.1.0...v4.1.1) (2023-03-30)
 
 
