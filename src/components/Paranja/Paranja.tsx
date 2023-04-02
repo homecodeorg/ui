@@ -1,7 +1,6 @@
-import { createPortal } from 'react-dom';
 import cn from 'classnames';
 
-import { config } from 'uilib/tools/config';
+import { Portal } from '../Portal/Portal';
 
 import S from './Paranja.styl';
 import * as T from './Paranja.types';
@@ -17,5 +16,5 @@ export const Paranja = ({
   const node = <div className={classes}>{children}</div>;
 
   if (inline) return node;
-  return createPortal(node, document.getElementById(config.appOverlayId));
+  return <Portal>node</Portal>;
 };

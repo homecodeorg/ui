@@ -17,6 +17,7 @@ export * from './LightBox/LightBox';
 export * from './Notifications/Notifications';
 export * from './Paranja/Paranja';
 export * from './Popup/Popup';
+export * from './Portal/Portal';
 export * from './PopupMenu/PopupMenu';
 export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';

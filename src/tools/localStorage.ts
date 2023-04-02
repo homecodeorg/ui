@@ -9,9 +9,7 @@ export default isBrowser
 
         try {
           result = JSON.parse(result);
-        } catch (e) {
-          console.warn(e?.message ?? 'failed to parse', `: "${result}"`);
-        }
+        } catch (e) {}
 
         return result;
       },

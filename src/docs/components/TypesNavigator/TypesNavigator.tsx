@@ -44,6 +44,7 @@ export const Type = ({ name, scope, customLinks = {} }): ReactNode => {
       hoverControl
       elevation={1}
       paranja
+      // animated={false}
       trigger={<span className={S.type}>{name}</span>}
       content={content}
     />

@@ -1,11 +1,10 @@
 import { withStore } from 'justorm/react';
 
-import { Router, Link, RequiredStar } from 'uilib/components';
+import { Router, Link, RequiredStar, Portal } from 'uilib/components';
 import { Code, SidebarLink } from 'docs/components';
 
 import Page from '../Page/Page';
 import S from './ComponentLayout.styl';
-import { createPortal } from 'react-dom';
 
 export type ExmapleData = {
   id: string;
@@ -105,7 +104,6 @@ export const ComponentLayout = withStore('router')(
   ({ name, examples, scope, docs: Docs, store: { router } }: Props) => {
     const rootPath = `/components/${name}`;
     const isRoot = router.path === rootPath;
-    const elem = document.getElementById(`sidebar-item-${name}`);
 
     return (
       <Page
@@ -118,20 +116,13 @@ export const ComponentLayout = withStore('router')(
               rootPath={rootPath}
               examples={examples}
             />
-            {examples &&
-              elem &&
-              createPortal(
-                <>
-                  {examples.map(props => (
-                    <SidebarItem
-                      {...props}
-                      rootPath={rootPath}
-                      key={props.id}
-                    />
-                  ))}
-                </>,
-                elem
-              )}
+            {examples && (
+              <Portal selector={`#sidebar-item-${name}`}>
+                {examples.map(props => (
+                  <SidebarItem {...props} rootPath={rootPath} key={props.id} />
+                ))}
+              </Portal>
+            )}
           </>
         }
       >

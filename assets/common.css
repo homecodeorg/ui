@@ -17,6 +17,7 @@ body {
   background-color: var(--decent-color);
   color: var(--accent-color);
   overflow: hidden;
+  max-height: calc(100 * var(--vh));
 }
 
 *::selection {

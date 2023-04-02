@@ -1,9 +1,8 @@
 import { Component } from 'react';
-import { createPortal } from 'react-dom';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Scroll, uid, config } from 'uilib';
+import { Scroll, uid, Portal } from 'uilib';
 
 import FullscreenButton from './FullscreenButton/FullscreenButton';
 import Editor from './Editor/Editor';
@@ -51,12 +50,7 @@ export class Code extends Component<Props> {
 
   renderContent(content) {
     if (this.isFullscreen()) {
-      return createPortal(
-        content,
-        document.getElementById(
-          this.isFullscreen() ? config.appOverlayId : 'code-inline'
-        )
-      );
+      return <Portal>{content}</Portal>;
     }
 
     return content;
