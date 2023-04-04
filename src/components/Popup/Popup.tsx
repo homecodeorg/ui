@@ -68,6 +68,7 @@ export class Popup extends Component<T.Props> {
       rootPopupId: null,
       isOpen,
       isContentVisible: isOpen,
+      animating: false,
       direction: props.direction,
       triggerBounds: null,
     } as T.State);
@@ -486,7 +487,6 @@ export class Popup extends Component<T.Props> {
       direction,
       triggerBounds,
       rootPopupId,
-      offset,
     } = this.store;
 
     if (disabled) return null;
@@ -525,7 +525,10 @@ export class Popup extends Component<T.Props> {
           suppressHydrationWarning
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
-          style={{ ...offset }}
+          style={{
+            marginTop: this.offset.top,
+            marginLeft: this.offset.left,
+          }}
         >
           {paranja && !rootPopupId && (
             <Paranja visible={isContentVisible} blur={blur} />
