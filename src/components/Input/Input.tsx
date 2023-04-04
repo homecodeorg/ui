@@ -272,6 +272,7 @@ export class Input extends Component<T.Props> {
     }
 
     if (!autoComplete) {
+      props.suppressHydrationWarning = true;
       props.autoComplete = this.uid;
       delete props.name;
     }
