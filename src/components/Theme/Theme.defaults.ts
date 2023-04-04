@@ -24,7 +24,7 @@ type ColorConfig = {
 export function getColors({
   accent = colors.light,
   decent = colors.dark,
-  active = '#c0990c',
+  active = '#54b62b',
   warning = '#ffa31a',
   danger = '#da3749',
   disabled = '#f1f1f2',
