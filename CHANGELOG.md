@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.1](https://github.com/foreverido/uilib/compare/v4.2.0...v4.2.1) (2023-04-05)
+
+
+### Bug Fixes
+
+* Input - textarea height, autoComplete id - suppressHydrationWarning ([5502c8a](https://github.com/foreverido/uilib/commit/5502c8a9136a4750a1e891bf7f4a8e0838fdc519))
+* Popup - offset styles - sync from state ([7bdd416](https://github.com/foreverido/uilib/commit/7bdd416ee572e264cd328f4f4dba1069c36898a1))
+
 ## [4.2.0](https://github.com/foreverido/uilib/compare/v4.1.1...v4.2.0) (2023-04-02)
 
 
