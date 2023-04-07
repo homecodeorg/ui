@@ -137,12 +137,12 @@ fadeMask(direction, size)
 
   &::before
   & .thumb
-    .size-s &
+    .size-s > &
       height $sizeS
-    .size-m &
+    .size-m > &
       height $sizeM
       border-radius 'calc(%s / 2)' % $sizeM
-    .size-l &
+    .size-l > &
       height $sizeL
       border-radius 'calc(%s / 2)' % $sizeL
 
@@ -151,12 +151,12 @@ fadeMask(direction, size)
 
   &::before
   & .thumb
-    .size-s &
+    .size-s > &
       width $sizeS
-    .size-m &
+    .size-m > &
       width $sizeM
       border-radius 'calc(%s / 2)' % $sizeM
-    .size-l &
+    .size-l > &
       width $sizeL
       border-radius 'calc(%s / 2)' % $sizeL
 
