@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/foreverido/uilib/compare/v4.2.1...v4.3.0) (2023-04-07)
+
+
+### Features
+
+* Notification - refactor and style update ([7281d67](https://github.com/foreverido/uilib/commit/7281d6789086832eab11c58596982bcd98b83be7))
+
+
+### Bug Fixes
+
+* Scroll - nested sizes ([bb51123](https://github.com/foreverido/uilib/commit/bb511238b4ee9dbebe391541f4143ee49850a3a3))
+
 ### [4.2.1](https://github.com/foreverido/uilib/compare/v4.2.0...v4.2.1) (2023-04-05)
 
 
