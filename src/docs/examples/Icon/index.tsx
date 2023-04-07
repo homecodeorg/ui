@@ -8,7 +8,7 @@ const Docs = () => (
   <>
     <p>
       Component utilize{' '}
-      <Link inline href="//components/lazy">
+      <Link inline href="//components/Lazy">
         Lazy
       </Link>
       -loaded SVG icons, used in other library components.

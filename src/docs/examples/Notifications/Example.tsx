@@ -40,6 +40,6 @@ export default () => (
       <Button onClick={() => show('loading')}>Loading</Button>
       <Button onClick={showAll}>All</Button>
     </div>
-    <Notifications style={{ maxWidth: '60%' }} />
+    <Notifications />
   </Container>
 );

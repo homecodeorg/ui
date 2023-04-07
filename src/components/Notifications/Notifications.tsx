@@ -111,15 +111,22 @@ type Props = { store?: any };
 export const NotificationsStore = STORE;
 
 export const Notifications = withStore({
-  notifications: ['items', 'data', 'paused'],
+  notifications: ['items', 'data'],
 })(function Notifications({ store, ...rest }: Props) {
   const { notifications } = store;
-  const { items, data, paused, pause, unpause, close } = notifications;
+  const { items, data, pause, unpause, close } = notifications;
   const api = { pause, unpause, close };
-  const classes = cn(S.root, items.length === 0 && S.empty, paused && S.paused);
+  const classes = cn(S.root, items.length === 0 && S.empty);
 
   return (
-    <Scroll {...rest} y size="s" className={classes}>
+    <Scroll
+      {...rest}
+      y
+      size="s"
+      className={classes}
+      innerClassName={S.inner}
+      offset={{ y: { before: 22, after: 22 } }}
+    >
       {items.map(id => (
         <Item {...data[id]} {...api} id={id} key={id} />
       ))}

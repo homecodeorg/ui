@@ -56,7 +56,7 @@ const STORE = createStore('notifications', {
 });
 
 // worker
-Time.tick(function tick() {
+Time.every(50, function tick() {
   const { paused, autohide, data } = STORE;
 
   if (paused || autohide.length === 0) {

@@ -10,7 +10,7 @@ export const baseConfig = {
   'border-radius-l': '6px',
 };
 
-const colorsAlphaModes = [0, 50, 100, 200, 500, 800, 900];
+const colorsAlphaModes = [0, 50, 100, 200, 300, 500, 800, 900];
 
 export const colors = {
   light: '#e6e6e6',
@@ -37,7 +37,7 @@ export function getColors({
     },
     warning: {
       color: warning,
-      mods: { alpha: [100, 200, 500] },
+      mods: { alpha: [100, 300, 500] },
     },
     danger: {
       color: danger,
