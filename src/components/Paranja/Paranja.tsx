@@ -16,5 +16,5 @@ export const Paranja = ({
   const node = <div className={classes}>{children}</div>;
 
   if (inline) return node;
-  return <Portal>node</Portal>;
+  return <Portal>{node}</Portal>;
 };

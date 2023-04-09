@@ -1,101 +1,72 @@
-import { Component, createRef, HTMLProps } from 'react';
+import { useCallback, useContext, useMemo, useRef } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 
 import { Icon } from 'uilib/components/Icon/Icon';
 
 import Context from '../context';
-import type { ContextType } from '../context';
 import S from './Link.styl';
 
 import * as T from './Link.types';
 
-@withStore({ router: ['path'] })
-export class Link extends Component<T.Props> {
-  domElem = createRef<HTMLAnchorElement>();
-  rootPath = '';
+const isStartFromDoubleSlash = href => /^\/\//.test(href);
 
-  // declare context: React.ContextType<typeof Context>;
-  static contextType = Context;
+export const Link = withStore({ router: ['path'] })(
+  ({
+    className,
+    exactClassName,
+    children,
+    href: hrefProp,
+    isClear = false,
+    isDisabled = false,
+    disableExternalIcon = false,
+    inline = false,
+    store: { router },
+    isPartialExact = false,
+    onClick,
+    ...rest
+  }: T.Props) => {
+    const { path } = router;
+    const isFromRoot = isStartFromDoubleSlash(hrefProp);
 
-  static defaultProps = {
-    isClear: false,
-    inline: false,
-    isDisabled: false,
-  };
+    const domElem = useRef(null);
+    const { basePath } = useContext(Context);
 
-  getHref() {
-    let href = this.props.href;
+    const isExternal = useMemo(() => /\./.test(hrefProp), [hrefProp]);
+    const rootPath = useMemo(() => {
+      if (isExternal || isFromRoot) return '';
+      return basePath ?? '';
+    }, [isExternal, isFromRoot, basePath]);
 
-    if (this.isStartFromDoubleSlash()) href = href.replace(/^\//, '');
+    const href = useMemo(() => {
+      let str = hrefProp;
 
-    if (href === '/') href = '';
+      if (isFromRoot) str = str.replace(/^\//, '');
 
-    return `${this.getRootPath()}${href}`;
-  }
+      if (str === '/') str = '';
 
-  isExternal = () => /\./.test(this.props.href);
+      return `${rootPath}${str}`;
+    }, [hrefProp, rootPath]);
 
-  isStartFromDoubleSlash = () => /^\/\//.test(this.props.href);
+    const handleClick = useCallback(
+      e => {
+        onClick?.(e, href);
+        if (!isExternal && router.path !== href) {
+          e.preventDefault();
+          router.go(href);
+          domElem.current?.blur();
+        }
+      },
+      [href, isExternal, onClick]
+    );
 
-  getRootPath = () => {
-    if (this.isExternal() || this.isStartFromDoubleSlash()) return '';
-    const { rootPath } = this.context as ContextType;
-    return rootPath ?? '';
-  };
+    const isExact = useMemo(() => {
+      if (isPartialExact) return path.startsWith(href);
+      return path === href;
+    }, [path, href, isPartialExact]);
 
-  onClick = e => {
-    const { onClick, store } = this.props;
-    const { router } = store;
-    const href = this.getHref();
-
-    onClick?.(e, href);
-
-    if (!this.isExternal() && router.path !== href) {
-      e.preventDefault();
-      router.go(href);
-      this.domElem.current?.blur();
-    }
-  };
-
-  isExact(href = this.getHref()) {
-    const { store, isPartialExact } = this.props;
-    const { path } = store.router;
-
-    if (isPartialExact) {
-      const pathSections = path.replace(/#.+/, '').split('/');
-      const hrefSections = href.replace(/#.+/, '').split('/');
-      const minLength = Math.min(pathSections.length, hrefSections.length);
-
-      return (
-        hrefSections.slice(0, minLength).join('/') ===
-        pathSections.slice(0, minLength).join('/')
-      );
-    }
-
-    return path === href;
-  }
-
-  render() {
-    const {
-      className,
-      exactClassName,
-      children,
-      isClear,
-      isDisabled,
-      disableExternalIcon,
-      inline,
-      store,
-      isPartialExact,
-      ...rest
-    } = this.props;
-    const { path } = store.router;
-    const href = this.getHref();
-    const props = { ...rest, href } as HTMLProps<HTMLAnchorElement>;
-
-    const isExternal = /\./.test(href);
+    const props = { ...rest, href };
     const isNested = !/^\//.test(href) && !isExternal;
-    const isExact = this.isExact();
 
     const classes = cn(
       S.root,
@@ -117,12 +88,7 @@ export class Link extends Component<T.Props> {
     }
 
     return (
-      <a /* eslint-disable-line */
-        className={classes}
-        {...props}
-        onClick={this.onClick}
-        ref={this.domElem}
-      >
+      <a className={classes} {...props} onClick={handleClick} ref={domElem}>
         {children}
         {isExternal && !disableExternalIcon && (
           <Icon type="externalLink" className={S.externalIcon} />
@@ -130,4 +96,4 @@ export class Link extends Component<T.Props> {
       </a>
     );
   }
-}
+);

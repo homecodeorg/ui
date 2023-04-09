@@ -1,114 +1,81 @@
-import { Component, cloneElement } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { withStore } from 'justorm/react';
 
 import STORE from './store';
 import Context from './context';
-import { parseRouteParams, getWeightestRoute } from './Router.helpers';
+import { parsePath, replaceParamsInPath } from './Router.helpers';
 
 import * as T from './Router.types';
 
-let isFirstMonted = false;
+export const Router = withStore({
+  router: ['path'],
+})((props: T.Props) => {
+  const {
+    children,
+    single,
+    basePath = '',
+    store: { router },
+  } = props;
+  const ctx = useContext(Context);
+  const fullPath = ctx.basePath + basePath;
 
-@withStore({ router: ['path'] })
-export class Router extends Component<T.Props> {
-  store;
-  routes;
-  rootPath = '';
-  state = { isMounted: false };
+  useEffect(() => {
+    const onPopState = () => {
+      STORE.go(window.location.pathname, { replace: true });
+    };
 
-  static defaultProps = { rootPath: '' };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
 
-  constructor(props) {
-    super(props);
+  const matchedRoutes = useMemo(() => {
+    const childs: React.ReactNode[] = [];
+    let isRouteMatched = false;
 
-    const {
-      rootPath,
-      store: { router },
-    } = props;
-
-    this.rootPath = rootPath;
-
-    if (!isFirstMonted) {
-      isFirstMonted = true;
-    } else if (!rootPath) this.rootPath = router.path;
-
-    this.rebuildRoutes(props.children);
-  }
-
-  componentDidMount(): void {
-    this.setState({ isMounted: true });
-  }
-
-  shouldComponentUpdate(nextProps) {
-    this.rebuildRoutes(nextProps.children);
-    return true;
-  }
-
-  getPath = () => this.props.store.router.path;
-
-  rebuildRoutes(items) {
-    this.routes = parseRouteParams(items);
-  }
-
-  getRoute() {
-    const currPath = this.getPath();
-    const currPathWithoutRoot = currPath.replace(
-      new RegExp(`^${this.rootPath}\/`),
-      '/'
-    );
-    const notExactRoutes = [];
-
-    // const sorted = this.routes.sort((a, b) =>
-    //   a.exact && !b.exact ? -1 : b.exact && !a.exact ? 1 : 0
-    // );
-    const routes = this.routes.filter(route => {
-      const { path = '', exact, parsed } = route;
-      const fullPath = `${this.rootPath}${path}`;
-
-      if (parsed) {
-        // const regexp = exact ? `^${parsed.source}$` : parsed.source;
-        const regexp = parsed.source;
-        const sourceTested = new RegExp(regexp).test(currPath);
-        const currLocalPath = currPathWithoutRoot
-          .split('/')
-          .slice(0, path.split('/').length)
-          .join('/');
-
-        route.params = parsed.test(currLocalPath);
-
-        if (sourceTested) return true;
-      } else {
-        if (exact && currPath === fullPath) return true;
+    for (const child of React.Children.toArray(children)) {
+      if (!React.isValidElement(child)) {
+        childs.push(child);
+        continue;
       }
 
-      if (!exact) notExactRoutes.push(route);
+      const { path, exact, component: Component, ...rest } = child.props;
 
-      return false;
-    });
-    const weightestRoute = getWeightestRoute(routes, currPathWithoutRoot);
-    const route = weightestRoute || notExactRoutes[0];
+      if (!path) {
+        childs.push(child);
+        continue;
+      }
 
-    return route;
-  }
+      if (single && isRouteMatched) {
+        continue;
+      }
 
-  render() {
-    if (!this.state.isMounted) return null;
+      const tailPath = path === '/' ? '' : path;
+      const routePath = fullPath + tailPath;
+      const params = parsePath(router.path, routePath, exact);
 
-    const route = this.getRoute();
+      if (params) {
+        const routeBasePath = fullPath + replaceParamsInPath(path, params);
+        const matchedRoute = (
+          <Context.Provider value={{ basePath: routeBasePath }} key={path}>
+            <Component {...rest} pathParams={params} />
+          </Context.Provider>
+        );
 
-    if (!route) return null;
+        isRouteMatched = true;
+        childs.push(matchedRoute);
+      }
+    }
 
-    const { Elem, params } = route;
-    const { rootPath } = this;
+    return childs;
+  }, [children, router.path, fullPath, single]);
 
-    return (
-      <Context.Provider value={{ rootPath }}>
-        {cloneElement(Elem, { ...params, router: STORE })}
-      </Context.Provider>
-    );
-  }
-}
+  return <>{matchedRoutes}</>;
+});
 
-export * from './Link/Link';
+Router.displayName = 'Router';
+
+export * from './Route';
 export * from './Redirect';
+export * from './Link/Link';
 export const RouterStore = STORE;
+export const RouterContext = Context;

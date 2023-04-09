@@ -18,6 +18,8 @@ const STORE = createStore('router', {
     spliceWhere(LISTENERS, cb);
   },
   go(href, { replace }: { replace?: boolean } = {}) {
+    if (href === this.path) return;
+
     history[replace ? 'replaceState' : 'pushState']({}, '', href);
     onRouteChange(href);
   },

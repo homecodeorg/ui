@@ -1,5 +1,5 @@
 import { createContext } from 'react';
 
-export type ContextType = { rootPath: string };
+export type ContextType = { basePath: string };
 
-export default createContext<ContextType>({ rootPath: '' });
+export default createContext<ContextType>({ basePath: '' });

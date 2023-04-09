@@ -1,58 +1,61 @@
 import { withStore } from 'justorm/react';
-import { Router, Link } from 'uilib';
+import { Router, Route, Link, Button, LightBox } from 'uilib';
 
-const StartPage = () => (
+const menu = items => (
   <>
-    <Link href="/">Home</Link>
-    &gt; <Link href="/users">Users</Link>
+    <br />[
+    {items.map(id => (
+      <Link href={`/${id}`}>{id}</Link>
+    ))}
+    ]
   </>
 );
+
 const UsersPage = () => (
-  <>
-    <Link href="/">Home</Link>
-    &gt; <Link href="/users">Users</Link>
-    <br />
-    <Link href="/users/azaza">azaza</Link>
-    <Link href="/users/ololosh">ololosh</Link>
-  </>
+  <Router>
+    {menu(['azaza', 'ololosh'])}
+    <Route path="/:id" component={UserPage} />
+  </Router>
 );
-const UserPage = ({ id, rootPath }) => {
-  const currPage = `/users/${id}`;
 
-  return (
-    <>
-      <Link href="/">Home</Link>
-      &gt; <Link href="/users">Users</Link>
-      &gt; <Link href={currPage}>{id}</Link>
-      <br />
-      <Router rootPath={`${rootPath}${currPage}`}>
-        <UserMenu id={id} />
-        <UserFriends path="/friends" />
-        <UserCreatures path="/creatures" />
-      </Router>
-    </>
-  );
-};
-const UserMenu = ({ id }) => (
-  <>
-    <Link href="/friends">friends</Link>
-    <Link href="/creatures">creatures</Link>
-  </>
+const UserPage = () => (
+  <Router>
+    {menu(['friends', 'creatures'])}
+
+    <br />
+    <Route path="/friends" component={UserFriends} />
+    <Route path="/creatures" component={UserCreatures} />
+  </Router>
 );
-const UserFriends = () => 'friends: foo, bar';
-const UserCreatures = () => 'creatures: sas';
+
+const UserFriends = () => '👮👷‍♀️💂‍♂️🕵🏻👩‍🌾';
+const UserCreatures = withStore({ router: ['path', 'query'] })(
+  ({ store: { router } }) => (
+    <>
+      🦫🐬🦕🐙🐢🦄
+      <Button onClick={() => router.go(`${router.path}?modal`)}>
+        Open modal
+      </Button>
+      <LightBox isOpen={'modal' in router.query} onClose={() => router.back()}>
+        👻👻👻
+      </LightBox>
+    </>
+  )
+);
+
+const basePath = '/components/Router/demo';
 
 export default withStore('router')(({ store: { router } }) => {
-  const rootPath = '/components/Router/demo';
+  const currPath = router.path.replace(basePath, '');
 
   return (
     <>
-      {router.path.replace(new RegExp(`^${rootPath}`), '') || '/'}
+      {currPath || '/'}
       <br />
-      <Router rootPath={rootPath}>
-        <StartPage />
-        <UsersPage path="/users" />
-        <UserPage exact path="/users/:id" rootPath={rootPath} />
+      <Link href="/">Home</Link>
+      &gt; <Link href="/users">Users</Link>
+      <Router>
+        <Route component={UsersPage} path="/users" />
       </Router>
     </>
   );

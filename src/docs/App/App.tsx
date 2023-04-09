@@ -8,6 +8,7 @@ import {
   Icon,
   Redirect,
   Router,
+  Route,
   Theme,
   Lazy,
   dom,
@@ -34,7 +35,7 @@ class App extends Component<{ store?: any }> {
 
     return (
       // @ts-ignore
-      <Lazy exact path={path} loader={loader} key={path} />
+      <Route path={path} component={Lazy} loader={loader} key={path} />
     );
   }
 
@@ -85,9 +86,15 @@ class App extends Component<{ store?: any }> {
           </div>
 
           <Container fullWidth className={S.content}>
-            <Router>
+            <Router single>
               {/* @ts-ignore */}
-              <Redirect exact path="/" to="/intro/about" key="/" />
+              <Route
+                component={Redirect}
+                exact
+                path="/"
+                to="/intro/about"
+                key="/"
+              />
               {NAV_CONFIG.map(({ id, items }) =>
                 items.map(item => this.renderItem(id, item))
               )}

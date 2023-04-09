@@ -1,15 +1,15 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 
 import STORE from './store';
 
-type Props = { to: string };
+import * as T from './Router.types';
 
-export class Redirect extends Component<Props> {
-  componentDidMount(): void {
-    STORE.replaceState(this.props.to, { replace: true });
-  }
+export const Redirect = (props: T.RedirectProps) => {
+  useEffect(() => {
+    STORE.replaceState(props.to, { replace: true });
+  }, []);
 
-  render() {
-    return null;
-  }
-}
+  return null;
+};
+
+Redirect.displayName = 'Redirect';

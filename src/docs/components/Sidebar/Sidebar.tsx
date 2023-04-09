@@ -9,16 +9,19 @@ import NAV_CONFIG from '../../navigation';
 
 import S from './Sidebar.styl';
 
-export const SidebarLink = withStore('app')(({ path, label, store }) => (
-  <Link
-    href={path}
-    key={path}
-    className={S.link}
-    onClick={store.app.toggleMenu}
-  >
-    <I18N id={label} />
-  </Link>
-));
+export const SidebarLink = withStore('app')(
+  ({ path, label, store, ...rest }) => (
+    <Link
+      {...rest}
+      href={path}
+      key={path}
+      className={S.link}
+      onClick={store.app.toggleMenu}
+    >
+      <I18N id={label} />
+    </Link>
+  )
+);
 
 export default memo(
   withStore('router')(function Sidebar({ store }) {

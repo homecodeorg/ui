@@ -32,8 +32,6 @@ function unsubscribe() {
 }
 
 export const Heading = memo(function Heading({ id, text }: T.Props) {
-  const hash = `#${id}`;
-
   useEffect(() => {
     subscribe();
     return unsubscribe;
@@ -41,7 +39,7 @@ export const Heading = memo(function Heading({ id, text }: T.Props) {
 
   return (
     <h2 className={S.root} id={id}>
-      <a href={`${location.pathname}${hash}`} className={S.link}>
+      <a href={`${location.pathname}#${id}`} className={S.link}>
         #
       </a>
       {text}
