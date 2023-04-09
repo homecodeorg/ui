@@ -9,7 +9,7 @@ import Editor from './Editor/Editor';
 import Result from './Result/Result';
 
 import S from './Code.styl';
-import Styles from './Styles/Styles';
+import Background from './Background';
 
 type Props = {
   store?: any;
@@ -60,7 +60,7 @@ export class Code extends Component<Props> {
     const isFullscreen = this.isFullscreen();
     return (
       <div className={cn(S.root, isFullscreen && S.fullscreen)} key="code">
-        <Styles id={this.id} />
+        <Background />
         <Scroll
           y
           fadeSize="m"

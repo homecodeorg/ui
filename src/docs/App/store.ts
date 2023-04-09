@@ -57,7 +57,7 @@ const STORE = createStore('app', {
 
   updateGradient() {
     clearGradientTimeout?.();
-    clearGradientTimeout = Time.after(10000, STORE.updateGradient);
+    clearGradientTimeout = Time.after(5000, STORE.updateGradient);
 
     const gr = STORE.gradient;
 
