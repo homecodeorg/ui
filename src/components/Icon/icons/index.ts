@@ -12,6 +12,7 @@ export default {
   fullscreen: () => import('./fullscreen.svg'),
   fullscreenExit: () => import('./fullscreenExit.svg'),
   menu: () => import('./menu.svg'),
+  mic: () => import('./mic.svg'),
   moreVertical: () => import('./moreVertical.svg'),
   moreHorizontal: () => import('./moreHorizontal.svg'),
   plus: () => import('./plus.svg'),
