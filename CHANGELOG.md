@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/foreverido/uilib/compare/v4.4.2...v4.5.0) (2023-04-15)
+
+
+### Features
+
+* Icon - mic ([10fd3dd](https://github.com/foreverido/uilib/commit/10fd3dd02278767d3f03c0fc18a81e228c6494a2))
+* Icon - send ([4a9e634](https://github.com/foreverido/uilib/commit/4a9e634db8008ad5612443ce590b22e72c4e5c55))
+
 ### [4.4.2](https://github.com/foreverido/uilib/compare/v4.4.1...v4.4.2) (2023-04-15)
 
 ### [4.4.1](https://github.com/foreverido/uilib/compare/v4.4.0...v4.4.1) (2023-04-15)
