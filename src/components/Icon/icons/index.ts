@@ -17,4 +17,5 @@ export default {
   moreHorizontal: () => import('./moreHorizontal.svg'),
   plus: () => import('./plus.svg'),
   requiredStar: () => import('./requiredStar.svg'),
+  send: () => import('./send.svg'),
 };
