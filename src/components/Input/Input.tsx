@@ -1,4 +1,4 @@
-import { Component, createRef, ChangeEvent } from 'react';
+import { Component, createRef, ChangeEvent, useEffect } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
@@ -265,6 +265,8 @@ export class Input extends Component<T.Props> {
     if (this.isTextArea()) {
       props.contentEditable = true;
       props.onInput = this.onTextAreaInput;
+
+      if (inputValue) props.dangerouslySetInnerHTML = { __html: inputValue };
     }
 
     if (placeholder && !value && (!label || isLabelOnTop)) {
@@ -370,12 +372,19 @@ export class Input extends Component<T.Props> {
           />
           {this.renderAddon('left')}
           {this.wrapControll(
-            <Control
-              {...controlProps}
-              className={cn(S.control, controlProps?.className)}
-              ref={this.inputRef}
-              key="control"
-            />
+            <>
+              <Control
+                {...controlProps}
+                className={cn(S.control, controlProps?.className)}
+                ref={this.inputRef}
+                key="control"
+              />
+              {isTextArea && controlProps.placeholder && (
+                <span className={S.placeholder} spellCheck={false}>
+                  {controlProps.placeholder}
+                </span>
+              )}
+            </>
           )}
           <Label
             className={S.label}
