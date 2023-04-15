@@ -54,6 +54,7 @@
     "react-live": "^3.1.2",
     "react-refresh": "^0.14.0",
     "roddeh-i18n": "^1.2.1",
+    "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-uglify": "^6.0.4",
     "timen": "^0.1.0"
   },

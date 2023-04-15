@@ -10,7 +10,11 @@ import externals from 'rollup-plugin-node-externals';
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 
-import styles from 'rollup-plugin-styles';
+// import styles from 'rollup-plugin-styles';
+import postcss from 'rollup-plugin-postcss';
+import postcssPresetEnv from 'postcss-preset-env';
+import cssnano from 'cssnano';
+
 // import postcss from 'rollup-plugin-postcss';
 // import stylusCssModules from 'rollup-plugin-stylus-css-modules';
 // import svg from 'rollup-plugin-svg';
@@ -84,23 +88,42 @@ export default [
       json(),
 
       svgr(),
-      styles({ modules: true }),
+      // styles({ modules: true }),
       // stylusCssModules({ output: 'index.css' }),
 
       typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: 'tsconfig.json',
       }),
-      // postcss({
-      //   // minimize: true,
-      //   modules: true,
-      //   // use: {
-      //   //   sass: null,
-      //   //   stylus: null,
-      //   //   less: null,
-      //   // },
-      //   // extract: true,
-      // }),
+      postcss({
+        minimize: true,
+        modules: true,
+        // use: {
+        //   sass: null,
+        //   stylus: null,
+        //   less: null,
+        // },
+        // extract: true,
+        // config: {
+        //   path: './src/docs/config/postcss.config.cjs',
+        //   ctx: {
+        //     env: 'production',
+        //   },
+        // },
+        plugins: [
+          postcssPresetEnv({ stage: 3 }),
+          cssnano({
+            preset: [
+              'default',
+              {
+                discardComments: {
+                  removeAll: true,
+                },
+              },
+            ],
+          }),
+        ],
+      }),
       // babel({
       //   babelHelpers: 'bundled',
       //   include: path.resolve('src/components'),
