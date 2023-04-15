@@ -1,4 +1,4 @@
-import { Component, createRef, ChangeEvent, useEffect } from 'react';
+import { Component, createRef, ChangeEvent, useEffect, Fragment } from 'react';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
@@ -71,7 +71,7 @@ export class Input extends Component<T.Props> {
     if (value !== prevProps.value && value !== this.store.inputValue) {
       this.store.inputValue = value;
       // @ts-ignore
-      // if (this.isTextArea()) this.inputRef.current.innerText = value;
+      if (this.isTextArea()) this.inputRef.current.innerText = value;
       this.updateHasValue();
       this.updateLabelPosition();
     }
@@ -199,6 +199,8 @@ export class Input extends Component<T.Props> {
   onTextAreaInput = e => {
     const { onInput } = this.props;
 
+    this.store.inputValue = e.target.innerText;
+    this.updateHasValue();
     this.handleChange(e);
     onInput?.(e);
   };
@@ -265,8 +267,6 @@ export class Input extends Component<T.Props> {
     if (this.isTextArea()) {
       props.contentEditable = true;
       props.onInput = this.onTextAreaInput;
-
-      if (inputValue) props.dangerouslySetInnerHTML = { __html: inputValue };
     }
 
     if (placeholder && !value && (!label || isLabelOnTop)) {
@@ -302,6 +302,7 @@ export class Input extends Component<T.Props> {
           offset={{
             y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
           }}
+          key="scroller"
         >
           {control}
         </Scroll>
@@ -372,19 +373,17 @@ export class Input extends Component<T.Props> {
           />
           {this.renderAddon('left')}
           {this.wrapControll(
-            <>
-              <Control
-                {...controlProps}
-                className={cn(S.control, controlProps?.className)}
-                ref={this.inputRef}
-                key="control"
-              />
-              {isTextArea && controlProps.placeholder && (
-                <span className={S.placeholder} spellCheck={false}>
-                  {controlProps.placeholder}
-                </span>
-              )}
-            </>
+            <Control
+              {...controlProps}
+              className={cn(S.control, controlProps?.className)}
+              ref={this.inputRef}
+              key="control"
+            />
+          )}
+          {isTextArea && controlProps.placeholder && (
+            <span className={S.placeholder} spellCheck={false}>
+              {controlProps.placeholder}
+            </span>
           )}
           <Label
             className={S.label}
