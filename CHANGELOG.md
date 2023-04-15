@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/foreverido/uilib/compare/v4.5.0...v4.6.0) (2023-04-15)
+
+
+### Bug Fixes
+
+* build dist - postcss ([f4c3647](https://github.com/foreverido/uilib/commit/f4c3647112b665ab086320421f4f3e6d81b89d47))
+
 ## [4.5.0](https://github.com/foreverido/uilib/compare/v4.4.2...v4.5.0) (2023-04-15)
 
 
