@@ -91,7 +91,7 @@ export class Select extends Component<T.Props, T.State> {
     this.ids = H.mapById(options);
     this.optionsTree = H.buildOptionsTree(options, this.ids);
     this.items = this.getItems();
-    this.maxIndex = this.items.length - 1;
+    this.maxIndex = Math.max(0, this.items.length - 1);
 
     if (this.store?.focusedItemIndex > this.maxIndex) {
       this.store.focusedItemIndex = this.maxIndex;
@@ -524,8 +524,7 @@ export class Select extends Component<T.Props, T.State> {
 
   getTriggerProps() {
     const { triggerProps } = this.props;
-
-    return {
+    const props = {
       ...pick(this.props, [
         'name',
         'label',
@@ -539,6 +538,12 @@ export class Select extends Component<T.Props, T.State> {
       ]),
       ...triggerProps,
     };
+
+    if (this.isMultiple() && this.items.length === 0) {
+      props.disabled = true;
+    }
+
+    return props;
   }
 
   renderAdditionalLabel() {
