@@ -362,6 +362,7 @@ export class Scroll extends Component<T.Props> {
       'className',
       'innerClassName',
       'innerProps',
+      'onInnnerRef',
       'thumbClassName',
       'autoHide',
       'children',

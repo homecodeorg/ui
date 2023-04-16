@@ -539,7 +539,7 @@ export class Select extends Component<T.Props, T.State> {
       ...triggerProps,
     };
 
-    if (this.isMultiple() && this.items.length === 0) {
+    if (this.items.length === 0) {
       props.disabled = true;
     }
 
