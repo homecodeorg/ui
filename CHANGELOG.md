@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.3](https://github.com/foreverido/uilib/compare/v4.6.2...v4.6.3) (2023-04-16)
+
+
+### Features
+
+* Icon - gear, loader, undo, redo, settings ([20a6ca2](https://github.com/foreverido/uilib/commit/20a6ca27e39bfd679a968c75285175ef5bdc8a12))
+
 ### [4.6.2](https://github.com/foreverido/uilib/compare/v4.6.1...v4.6.2) (2023-04-15)
 
 
