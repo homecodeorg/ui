@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.4](https://github.com/foreverido/uilib/compare/v4.6.3...v4.6.4) (2023-04-16)
+
+
+### Bug Fixes
+
+* Select - maxIndex, automatically disabled when no options ([82e5bef](https://github.com/foreverido/uilib/commit/82e5bef1d1874c9acfb10dc5390a170f368468e0))
+
 ### [4.6.3](https://github.com/foreverido/uilib/compare/v4.6.2...v4.6.3) (2023-04-16)
 
 
