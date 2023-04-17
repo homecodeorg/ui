@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.9](https://github.com/foreverido/uilib/compare/v4.6.8...v4.6.9) (2023-04-17)
+
+
+### Bug Fixes
+
+* services/i18n - fallback to key ([28c57a5](https://github.com/foreverido/uilib/commit/28c57a5e60bc41bb9c876fc5bdd0a41f29e7c787))
+
 ### [4.6.8](https://github.com/foreverido/uilib/compare/v4.6.7...v4.6.8) (2023-04-17)
 
 
