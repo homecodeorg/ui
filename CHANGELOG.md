@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.8](https://github.com/foreverido/uilib/compare/v4.6.7...v4.6.8) (2023-04-17)
+
+
+### Features
+
+* services/i18n - withI18N() hook ([2084556](https://github.com/foreverido/uilib/commit/208455686a429bd42d9413ca79f626eaf28afa1e))
+
 ### [4.6.7](https://github.com/foreverido/uilib/compare/v4.6.6...v4.6.7) (2023-04-17)
 
 
