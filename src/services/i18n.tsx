@@ -32,26 +32,21 @@ const store = createStore('i18n', {
 
 export function init(config: RegisterConfig) {
   const langs = Object.keys(config);
-
   const texts = langs.reduce(
     (acc, lang) => ({ ...acc, [lang]: _i18n.create({ values: {} }) }),
     {}
   );
 
+  const _getText = (lang, key, props) => {
+    if (texts[lang]?.translator.data.values[key]) {
+      return texts[lang](key, ...props);
+    }
+
+    return null;
+  };
+
   function getTrans(key, props: any[] = []) {
-    const langsOrder = Array.from(new Set([store.lang, ...langs])); // prioritize current lang
-    let res;
-
-    langsOrder.some(l => {
-      if (texts[l]?.translator.data.values[key]) {
-        res = texts[l](key, ...props);
-        return true;
-      }
-
-      return false;
-    });
-
-    return res ?? key;
+    return _getText(store.lang, key, props) || key;
   }
 
   const storeName = `i18n-${nanoid()}`;

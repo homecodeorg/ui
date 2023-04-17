@@ -1,14 +1,15 @@
 import { Link, H2, H3 } from 'uilib';
 
 import Page, { Header } from '../components/Page/Page';
-import { I18N } from '../config/i18n';
+import { I18N, i18n } from '../config/i18n';
 
 export default function About() {
   return (
     <Page header={<I18N id="About" />}>
       <p>
-        Design system that makes building web applications with ReactJS faster
-        and easier.
+        {i18n(
+          'Design system that makes building web applications with ReactJS faster and easier.'
+        )}
       </p>
       <p>
         It's a collection of pre-built components, guidelines, and best

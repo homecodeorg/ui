@@ -8,3 +8,4 @@ const api = init({
 
 export const i18n = api.i18n;
 export const I18N = api.I18N;
+export const withI18N = api.withI18N;
