@@ -74,6 +74,11 @@ export function init(config: RegisterConfig) {
   // TODO: revert ability to register modules
 
   return {
+    storeName,
+
+    // hook (update when componentStore._updated changed)
+    withI18N: Component => withStore(storeName)(Component),
+
     i18n: (key, props?) => getTrans(key, props),
 
     I18N: memo(
