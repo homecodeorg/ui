@@ -157,6 +157,10 @@ export class Select extends Component<T.Props, T.State> {
     return { [value]: true };
   }
 
+  isDisabled() {
+    return this.props.disabled || this.items.length === 0;
+  }
+
   isClickedInside = elem =>
     elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`);
 
@@ -537,11 +541,8 @@ export class Select extends Component<T.Props, T.State> {
         // 'hideRequiredStar',
       ]),
       ...triggerProps,
+      disabled: this.isDisabled(),
     };
-
-    if (this.items.length === 0) {
-      props.disabled = true;
-    }
 
     return props;
   }
@@ -797,7 +798,12 @@ export class Select extends Component<T.Props, T.State> {
   render() {
     const { className, popupProps, size, error, blur } = this.props;
     const { isOpen, isFocused } = this.store;
-    const classes = cn(S.root, className, S[`size-${size}`]);
+    const classes = cn(
+      S.root,
+      className,
+      S[`size-${size}`],
+      this.isDisabled() && S.disabled
+    );
 
     return (
       <>
