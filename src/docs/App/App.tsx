@@ -87,7 +87,7 @@ class App extends Component<{ store?: any }> {
 
           <Container fullWidth className={S.content}>
             <Router single>
-              {/* @ts-ignore */}
+              {/* <Route exact path="/" component={() => <>HOME</>} /> */}
               <Route
                 component={Redirect}
                 exact

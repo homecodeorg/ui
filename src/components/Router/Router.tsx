@@ -49,7 +49,7 @@ export const Router = withStore({
         continue;
       }
 
-      const tailPath = path === '/' ? '' : path;
+      const tailPath = fullPath && path === '/' ? '' : path;
       const routePath = fullPath + tailPath;
       const params = parsePath(router.path, routePath, exact);
 
