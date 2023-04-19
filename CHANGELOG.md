@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.10](https://github.com/foreverido/uilib/compare/v4.6.9...v4.6.10) (2023-04-19)
+
+
+### Bug Fixes
+
+* Router - exact path='/' ([8e282d0](https://github.com/foreverido/uilib/commit/8e282d021b0e3eac4cc61bc09073d6c36a346072))
+
 ### [4.6.9](https://github.com/foreverido/uilib/compare/v4.6.8...v4.6.9) (2023-04-17)
 
 
