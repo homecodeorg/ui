@@ -388,10 +388,8 @@ export class Input extends Component<T.Props> {
           <Label
             className={S.label}
             size={size}
-            disabled={disabled}
             isOnTop={isLabelOnTop}
             isError={Boolean(error)}
-            isFocused={isFocused}
             onClipPathChange={this.onLabelClipPathChange}
             key="label"
           >

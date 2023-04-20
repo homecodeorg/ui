@@ -60,14 +60,11 @@ export class Label extends Component<T.Props> {
   };
 
   render() {
-    const { className, size, disabled, isOnTop, isFocused, isError, children } =
-      this.props;
+    const { className, size, isOnTop, isError, children } = this.props;
     const classes = cn(
       S.root,
       S[`size-${size}`],
-      disabled && S.disabled,
       isOnTop && S.onTop,
-      isFocused && S.isFocused,
       isError && S.isError,
       className
     );

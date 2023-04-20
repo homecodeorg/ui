@@ -49,7 +49,7 @@ export class Checkbox extends Component<T.Props> {
 
   render() {
     const { className, label, size, variant, error, ...props } = this.props;
-    const { checked } = props;
+    const { checked, disabled } = props;
     const { isActive, isFocused } = this.store;
 
     const classes = cn(
@@ -57,6 +57,7 @@ export class Checkbox extends Component<T.Props> {
       S[`size-${size}`],
       S[`variant-${variant}`],
       checked && S.checked,
+      disabled && S.disabled,
       error && S.hasError,
       isActive && S.isActive,
       isFocused && S.isFocused,

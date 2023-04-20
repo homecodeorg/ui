@@ -534,14 +534,12 @@ export class Select extends Component<T.Props, T.State> {
         'label',
         'size',
         'variant',
-        'disabled',
         // 'inputProps',
         // 'required',
         'autocomplete',
         // 'hideRequiredStar',
       ]),
       ...triggerProps,
-      disabled: this.isDisabled(),
     };
 
     return props;
@@ -573,8 +571,8 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerButton() {
-    const { size, disabled } = this.props;
-    const { labelClipPath, isFocused } = this.store;
+    const { size } = this.props;
+    const { labelClipPath } = this.store;
     const { label, className, ...rest } = this.getTriggerProps();
     const props = omit(rest, ['name', 'inputProps']);
     const selectedLabel = [
@@ -611,9 +609,7 @@ export class Select extends Component<T.Props, T.State> {
         </Button>
         <Label
           size={size}
-          disabled={disabled}
           isOnTop={hasSelected}
-          isFocused={isFocused}
           isError={isError}
           onClipPathChange={this.onLabelClipPathChange}
         >
@@ -798,12 +794,7 @@ export class Select extends Component<T.Props, T.State> {
   render() {
     const { className, popupProps, size, error, blur } = this.props;
     const { isOpen, isFocused } = this.store;
-    const classes = cn(
-      S.root,
-      className,
-      S[`size-${size}`],
-      this.isDisabled() && S.disabled
-    );
+    const classes = cn(S.root, className, S[`size-${size}`]);
 
     return (
       <>
@@ -818,6 +809,7 @@ export class Select extends Component<T.Props, T.State> {
           isOpen={isOpen}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
+          disabled={this.isDisabled()}
           trigger={this.renderTrigger()}
           triggerProps={{
             onFocus: this.onFocus,

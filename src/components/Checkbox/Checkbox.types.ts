@@ -13,6 +13,8 @@ export type Props = HTMLAttributes<HTMLInputElement> &
     label?: ReactNode;
     // Whether the checkbox is currently selected
     checked?: boolean;
+    // Whether the checkbox is disabled
+    disabled?: boolean;
     // Defines an error message or error status for the input field
     error?: string | boolean;
     // Size of the checkbox

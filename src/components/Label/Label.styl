@@ -57,15 +57,8 @@ json('../Label/Label.constants.json')
     color var(--accent-color)
     transform scale(LABEL_MULTIPLIER) translate3d(0, -53%, 0)
 
-  .isFocused &
-    color var(--active-color)
-
-  .isError:not(.disabled) &
+  .isError &
     color var(--danger-color)
-
-  .disabled &
-    color var(--disabled-color)
-
 
 .gapWrap
   position absolute

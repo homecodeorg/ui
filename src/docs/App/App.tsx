@@ -88,6 +88,8 @@ class App extends Component<{ store?: any }> {
           <Container fullWidth className={S.content}>
             <Router single>
               {/* <Route exact path="/" component={() => <>HOME</>} /> */}
+              {/* <Route exact path="/post/:id" component={({pathParams}) => <>POST ${pathParams.id}</>} /> */}
+              {/* <Route exact path="/post/:id/edit" component={({pathParams}) => <>POST ${pathParams.id}</>} /> */}
               <Route
                 component={Redirect}
                 exact
