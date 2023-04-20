@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.11](https://github.com/foreverido/uilib/compare/v4.6.10...v4.6.11) (2023-04-20)
+
+
+### Features
+
+* Icon - colors, draft ([9d4da5d](https://github.com/foreverido/uilib/commit/9d4da5d76fd5da5a7d521f8dbcd67b8da793936a))
+
+
+### Bug Fixes
+
+* Disabled state for form controls ([e6c3326](https://github.com/foreverido/uilib/commit/e6c3326510dea1ea312b5524b342767de20a769e))
+
 ### [4.6.10](https://github.com/foreverido/uilib/compare/v4.6.9...v4.6.10) (2023-04-19)
 
 
