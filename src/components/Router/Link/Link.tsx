@@ -53,7 +53,13 @@ export const Link = withStore({ router: ['path'] })(
         onClick?.(e, href);
         if (!isExternal && router.path !== href) {
           e.preventDefault();
-          router.go(href);
+
+          if (e.ctrlKey || e.metaKey) {
+            window.open(href, '_blank');
+          } else {
+            router.go(href);
+          }
+
           domElem.current?.blur();
         }
       },
