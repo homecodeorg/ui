@@ -635,15 +635,17 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTrigger() {
-    const { isSearchable, required, hideRequiredStar, size } = this.props;
+    const { trigger, isSearchable, required, hideRequiredStar, size } = this.props;
 
-    const trigger = isSearchable
+    if (trigger) return trigger;
+
+    const triggerElem = isSearchable
       ? this.renderTriggerInput()
       : this.renderTriggerButton();
 
     return (
       <div className={S.trigger}>
-        {trigger}
+        {triggerElem}
         {required && !hideRequiredStar && <RequiredStar size={size} />}
       </div>
     );

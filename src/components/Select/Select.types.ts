@@ -87,6 +87,8 @@ export type Props = FormControl<Value> &
       InputProps,
       'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
     >;
+    // Custom trigger element
+    trigger?: ReactNode;
     triggerProps?: any;
     popupProps?: SelectPopupProps;
     // Hide the required star symbol

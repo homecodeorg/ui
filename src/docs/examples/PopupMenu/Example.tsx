@@ -4,8 +4,9 @@ export default () => {
   const size = 'm';
   return (
     <PopupMenu
-      direction="top"
-      hoverControl
+      direction="bottom"
+      focusControl
+      // hoverControl
       size={size}
       trigger={
         <Button size={size} variant="default">
