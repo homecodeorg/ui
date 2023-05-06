@@ -56,7 +56,10 @@ class List extends Component<Props> {
     // update, to pass actual wrapElem to Virtualized props
     // this.store.mounted = true;
 
-    if (this.props.contentBefore) this.subscribeContentBeforeResize();
+    if (this.props.contentBefore) {
+      this.subscribeContentBeforeResize();
+      this.checkContentBeforeHeight();
+    }
   }
 
   componentDidUpdate(prevProps) {
