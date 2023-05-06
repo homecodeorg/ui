@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.7.0](https://github.com/foreverido/uilib/compare/v4.6.12...v4.7.0) (2023-05-06)
+
+
+### Features
+
+* Select - props.trigger - custom trigger elem ([27cd557](https://github.com/foreverido/uilib/commit/27cd557b28172f88f3a21d87086de9311933b083))
+
 ### [4.6.12](https://github.com/foreverido/uilib/compare/v4.6.11...v4.6.12) (2023-05-04)
 
 
