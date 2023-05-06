@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.1](https://github.com/foreverido/uilib/compare/v4.7.0...v4.7.1) (2023-05-06)
+
+
+### Bug Fixes
+
+* Virtualized - contentBefore - immediately update height on mount ([4c13ed9](https://github.com/foreverido/uilib/commit/4c13ed9551eb7a4f5d843653be11579b44446b31))
+
 ## [4.7.0](https://github.com/foreverido/uilib/compare/v4.6.12...v4.7.0) (2023-05-06)
 
 
