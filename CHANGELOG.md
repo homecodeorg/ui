@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.5](https://github.com/foreverido/uilib/compare/v4.7.4...v4.7.5) (2023-05-07)
+
+
+### Bug Fixes
+
+* Router - initial 'query' state ([9bde5e0](https://github.com/foreverido/uilib/commit/9bde5e06aa4e7947aaedc16c10a3a1a03395dbf5))
+
 ### [4.7.4](https://github.com/foreverido/uilib/compare/v4.7.3...v4.7.4) (2023-05-07)
 
 ### [4.7.3](https://github.com/foreverido/uilib/compare/v4.7.2...v4.7.3) (2023-05-07)
