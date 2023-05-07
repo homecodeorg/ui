@@ -9,7 +9,7 @@ const LISTENERS = [];
 const STORE = createStore('router', {
   path: env.isBrowser && location.pathname,
   params: {},
-  query: {},
+  query: parseQueryParams(),
   queryString: env.isBrowser && location.search,
   on(cb) {
     addUniq(LISTENERS, cb);
