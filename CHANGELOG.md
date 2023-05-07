@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.2](https://github.com/foreverido/uilib/compare/v4.7.1...v4.7.2) (2023-05-07)
+
+
+### Features
+
+* Router - no match Route (without props.path) ([b6a61d2](https://github.com/foreverido/uilib/commit/b6a61d2b434bb1be6e74c3a82edee198766e0fe7))
+
+
+### Bug Fixes
+
+* Gallery - items.length < 3 ([b723df4](https://github.com/foreverido/uilib/commit/b723df4e9b70f2b9349cc9111cbf9eebf5274f60))
+
 ### [4.7.1](https://github.com/foreverido/uilib/compare/v4.7.0...v4.7.1) (2023-05-06)
 
 
