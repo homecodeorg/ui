@@ -15,6 +15,7 @@ export default {
   fullscreen: () => import('./fullscreen.svg'),
   fullscreenExit: () => import('./fullscreenExit.svg'),
   gear: () => import('./gear.svg'),
+  home: () => import('./home.svg'),
   loader: () => import('./loader.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
