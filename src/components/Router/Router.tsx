@@ -30,6 +30,7 @@ export const Router = withStore({
 
   const matchedRoutes = useMemo(() => {
     const childs: React.ReactNode[] = [];
+    let noMatchRoute;
     let isRouteMatched = false;
 
     for (const child of React.Children.toArray(children)) {
@@ -38,9 +39,16 @@ export const Router = withStore({
         continue;
       }
 
+      // @ts-ignore
+      const isRouteComponent = child.type.displayName === 'Route';
       const { path, exact, component: Component, ...rest } = child.props;
 
       if (!path) {
+        if (isRouteComponent && Component) {
+          noMatchRoute = <Component {...rest} />;
+          continue;
+        }
+
         childs.push(child);
         continue;
       }
@@ -64,6 +72,10 @@ export const Router = withStore({
         isRouteMatched = true;
         childs.push(matchedRoute);
       }
+    }
+
+    if (childs.length === 0 && noMatchRoute) {
+      return noMatchRoute;
     }
 
     return childs;
