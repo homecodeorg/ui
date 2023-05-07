@@ -9,7 +9,7 @@
   display flex
   align-items center
   justify-content center
-  background-color var(--decent-color-alpha-800)
+  background-color var(--decent-color-alpha-900)
   transition opacity .2s ease-out
   pointer-events none
 
@@ -17,6 +17,6 @@
   pointer-events all
   opacity 1
 
-.blur
-  backdrop-filter blur(50px)
-  background-color var(--decent-color-alpha-500)
+  &.blur
+    backdrop-filter blur(50px)
+    background-color var(--decent-color-alpha-500)
