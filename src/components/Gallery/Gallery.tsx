@@ -77,7 +77,7 @@ export class Gallery extends Component<T.Props> {
     this.recenter();
     this.index = startIndex;
     this.store = createStore(this, {
-      items: getInitialState(this.items, this.index),
+      items: this.getStateItems(),
       movingDirection: 0,
       loading: {}, // [src]: boolean
       errors: {}, // [src]: boolean
@@ -101,8 +101,14 @@ export class Gallery extends Component<T.Props> {
     ) {
       this.index = startIndex;
       this.recenter();
-      this.store.items = getInitialState(this.items, this.index);
+      this.store.items = this.getStateItems();
     }
+  }
+
+  getStateItems() {
+    return this.isSingle()
+      ? [this.props.items[0]]
+      : getInitialState(this.items, this.index);
   }
 
   recenter() {
@@ -170,9 +176,9 @@ export class Gallery extends Component<T.Props> {
         {...omit(rest, ['items', 'onChange', 'startIndex'])}
       >
         <div className={innerClasses}>
-          {items.map(src => (
+          {items.map((src, i) => (
             <Item
-              key={src}
+              key={`${i}_${src}`}
               src={src}
               size={size}
               isLoaded={loading[src]}
