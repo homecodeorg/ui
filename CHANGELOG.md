@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.3](https://github.com/foreverido/uilib/compare/v4.7.2...v4.7.3) (2023-05-07)
+
+
+### Features
+
+* Icon - 'home', update 'colors' ([e44dab5](https://github.com/foreverido/uilib/commit/e44dab573e16ffae95d6cea1a17e152778e2f4fe))
+
 ### [4.7.2](https://github.com/foreverido/uilib/compare/v4.7.1...v4.7.2) (2023-05-07)
 
 
