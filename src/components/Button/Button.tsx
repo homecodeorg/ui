@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import cn from 'classnames';
 
 import { Spinner } from 'uilib/components/Spinner/Spinner';
@@ -22,6 +22,7 @@ export function Button(props: T.Props) {
     size = 'm',
     prefixElem,
     postfixElem,
+    onRef,
     ...rest
   } = props;
   const { disabled } = props;
@@ -34,15 +35,21 @@ export function Button(props: T.Props) {
     square && S.square,
     className
   );
-  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const [buttonElem, setButtonElem] = useState<HTMLButtonElement>(null);
+
+  const onRefHandler = useCallback(elem => {
+    if (onRef) onRef(elem);
+    setButtonElem(elem);
+  }, []);
 
   // @ts-ignore
   rest.onMouseUp = useCallback(
     e => {
       if (onMouseUp) onMouseUp(e);
-      H.focusOnClick(buttonRef.current);
+      H.focusOnClick(buttonElem);
     },
-    [onMouseUp, buttonRef]
+    [onMouseUp, buttonElem]
   );
 
   if (disabled) rest.tabIndex = -1;
@@ -51,12 +58,12 @@ export function Button(props: T.Props) {
     const activeElement = document.activeElement as HTMLButtonElement;
 
     if (!disabled || !activeElement) return;
-    if (buttonRef?.current === activeElement) activeElement?.blur(); // eslint-disable-line
+    if (buttonElem && buttonElem === activeElement) activeElement?.blur(); // eslint-disable-line
   }, [disabled]);
 
   return (
     // @ts-ignore
-    <button className={classes} {...rest} type={type} ref={buttonRef}>
+    <button className={classes} {...rest} type={type} ref={onRefHandler}>
       {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
       {typeof children === 'string' ? <span>{children}</span> : children}
       {postfixElem && <div className={S.postfix}>{postfixElem}</div>}

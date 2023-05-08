@@ -20,4 +20,6 @@ export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   prefixElem?: ReactNode;
   // Element to be appended to the children
   postfixElem?: ReactNode;
+  // Callback to get the button's ref
+  onRef?: (ref: HTMLButtonElement) => void;
 };
