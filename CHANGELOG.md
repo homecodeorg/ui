@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.6](https://github.com/foreverido/uilib/compare/v4.7.5...v4.7.6) (2023-05-08)
+
+
+### Features
+
+* Button - props.onRef ([e1e7800](https://github.com/foreverido/uilib/commit/e1e7800bc021ca49aa391d76c19ef2f567dd4230))
+
 ### [4.7.5](https://github.com/foreverido/uilib/compare/v4.7.4...v4.7.5) (2023-05-07)
 
 
