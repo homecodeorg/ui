@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.7.7](https://github.com/foreverido/uilib/compare/v4.7.6...v4.7.7) (2023-05-13)
+
+
+### Bug Fixes
+
+* tools/debounce ([da835bd](https://github.com/foreverido/uilib/commit/da835bda90b75a6a9bd630b57780ea2cc0181b34))
+
 ### [4.7.6](https://github.com/foreverido/uilib/compare/v4.7.5...v4.7.6) (2023-05-08)
 
 
