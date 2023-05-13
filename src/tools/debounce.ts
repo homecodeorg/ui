@@ -1,21 +1,13 @@
-export default function debounce(cb, ms) {
-  let isCooldown = false;
-  let isCalledAtCooldown = false;
+import Time from 'timen';
 
-  return function (...args) {
-    if (isCooldown) {
-      isCalledAtCooldown = true;
-      return;
-    }
+export default function debounce(
+  fn: (...args: unknown[]) => any,
+  ms: number
+): any {
+  let unsubscribeFn: () => void;
 
-    cb(...args);
-    isCooldown = true;
-    setTimeout(() => {
-      isCooldown = false;
-      if (isCalledAtCooldown) {
-        cb(...args);
-        isCalledAtCooldown = false;
-      }
-    }, ms);
+  return function debounced(...args) {
+    unsubscribeFn?.();
+    unsubscribeFn = Time.after(ms, () => fn.apply(this, args));
   };
 }

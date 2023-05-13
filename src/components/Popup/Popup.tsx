@@ -240,7 +240,7 @@ export class Popup extends Component<T.Props> {
     this.containerElem.style.marginLeft = `${left}px`;
   }
 
-  checkHover = debounce(e => {
+  checkHover = debounce((e: any) => {
     if (this.isPointerPressedInside) return;
 
     const { isOpen, rootPopupId } = this.store;
