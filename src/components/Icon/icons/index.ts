@@ -27,4 +27,5 @@ export default {
   requiredStar: () => import('./requiredStar.svg'),
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
+  shoppingBag: () => import('./shoppingBag.svg'),
 };
