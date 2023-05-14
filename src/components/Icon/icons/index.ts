@@ -19,6 +19,7 @@ export default {
   loader: () => import('./loader.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
+  minus: () => import('./minus.svg'),
   moreVertical: () => import('./moreVertical.svg'),
   moreHorizontal: () => import('./moreHorizontal.svg'),
   plus: () => import('./plus.svg'),
