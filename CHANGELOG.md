@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.8.0](https://github.com/foreverido/uilib/compare/v4.7.7...v4.8.0) (2023-05-14)
+
+
+### Features
+
+* Gallery - gestures support ([6db2988](https://github.com/foreverido/uilib/commit/6db298864e677c1d0310f02d3eb74dd3d26268e1))
+
 ### [4.7.7](https://github.com/foreverido/uilib/compare/v4.7.6...v4.7.7) (2023-05-13)
 
 
