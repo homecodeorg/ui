@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.3](https://github.com/foreverido/uilib/compare/v4.8.2...v4.8.3) (2023-05-14)
+
+
+### Features
+
+* Icon - minus ([a6bc2dc](https://github.com/foreverido/uilib/commit/a6bc2dcdc5c43ff7c6912d31b3162e7fe2671767))
+
 ### [4.8.2](https://github.com/foreverido/uilib/compare/v4.8.1...v4.8.2) (2023-05-14)
 
 
