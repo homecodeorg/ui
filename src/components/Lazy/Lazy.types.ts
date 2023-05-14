@@ -9,5 +9,7 @@ export type Props = {
   size?: Size;
   // Element that will be rendered while the content is loading.
   progressElem?: ReactNode;
+  // Whether to hide the Spinner while the content is loading.
+  hideSpinner?: boolean;
 };
 export type State = { loading: boolean; spinnerTimeout: boolean };

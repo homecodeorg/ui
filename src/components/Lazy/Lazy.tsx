@@ -65,12 +65,12 @@ export class Lazy extends Component<T.Props> {
 
   render() {
     const { Node } = this;
-    const { progressElem, loader, ...props } = this.props;
+    const { progressElem, loader, hideSpinner, ...props } = this.props;
     const { loading, spinnerTimeout } = this.store;
 
     if (Node) return <Node {...props} />;
 
-    if (!spinnerTimeout && loading) {
+    if (!spinnerTimeout && loading && !hideSpinner) {
       return (
         progressElem ?? (
           <Container fullHeight fullWidth>
