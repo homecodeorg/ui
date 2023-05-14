@@ -10,5 +10,13 @@ const items = [
 ];
 
 export default () => {
-  return <Gallery items={items} style={{ height: 400 }} />;
+  return (
+    <Gallery
+      showArrows
+      showDots
+      // cover
+      items={items}
+      style={{ height: 400 }}
+    />
+  );
 };

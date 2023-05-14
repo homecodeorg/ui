@@ -1,0 +1,29 @@
+.root
+  display flex
+  justify-content center
+  position absolute
+  bottom 1%
+  width 100%
+  padding 0 10%
+  pointer-events none
+  overflow hidden
+  mask-image linear-gradient(to right, transparent, black 3%, black 97%, transparent)
+
+.inner
+  display flex
+  align-items center
+
+.item
+  flex-shrink 0
+  height 8px
+  width 8px
+  margin 3px
+  border-radius 50%
+  background-color var(--accent-color-alpha-200)
+  box-shadow 0 0 0 1px var(--decent-color-alpha-500)
+  transition .1s ease-out
+  transition-property background-color, transform
+
+  &.active
+    background-color var(--accent-color-alpha-500)
+    transform scale(1.2)

@@ -13,6 +13,7 @@ import { circularSlice } from 'uilib/tools/array';
 
 import S from './Gallery.styl';
 import * as T from './Gallery.types';
+import { Lazy } from '../Lazy/Lazy';
 
 const THRESHOLD = 50;
 const DURATION = 200;
@@ -220,8 +221,15 @@ export class Gallery extends Component<T.Props> {
   }
 
   render() {
-    const { className, size, showArrows, initialBounce, cover, ...rest } =
-      this.props;
+    const {
+      className,
+      size,
+      showArrows,
+      showDots,
+      initialBounce,
+      cover,
+      ...rest
+    } = this.props;
     const { items, movingDirection, loading, errors, isDragging } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
@@ -280,6 +288,16 @@ export class Gallery extends Component<T.Props> {
               onClick={() => this.move(-1)}
             />
           </>
+        )}
+
+        {showDots && (
+          <Lazy
+            hideSpinner
+            // @ts-ignore
+            loader={() => import('./Dots/Dots')}
+            index={this.index % items.length}
+            count={items.length}
+          />
         )}
       </div>
     );

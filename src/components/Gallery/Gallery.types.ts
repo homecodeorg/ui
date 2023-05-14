@@ -12,6 +12,8 @@ export type Props = ComponentType & {
   startIndex?: number;
   // Whether to display arrows to navigate between items in the gallery.
   showArrows?: boolean;
+  // Whether to display dots indicating the number of items in the gallery and which item is currently active.
+  showDots?: boolean;
   // Whether to play a bounce animation on initialize.
   initialBounce?: boolean;
   // Item will be displayed as cover, which means it will be stretched to cover the whole height and width of the gallery.
