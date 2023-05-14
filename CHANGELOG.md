@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.4](https://github.com/foreverido/uilib/compare/v4.8.3...v4.8.4) (2023-05-14)
+
+
+### Bug Fixes
+
+* Icon - shoppingBag ([dbefe32](https://github.com/foreverido/uilib/commit/dbefe32befbb7273d4893c66f2e432af2dac12ea))
+
 ### [4.8.3](https://github.com/foreverido/uilib/compare/v4.8.2...v4.8.3) (2023-05-14)
 
 
