@@ -11,8 +11,10 @@
   position absolute
   display flex
   height 100%
-  width 300%
+  width calc(300% + 1px)
   transform translate3d(calc(-100% / 3), 0, 0)
+  backface-visibility hidden
+  touch-action none
 
 .single
 
@@ -23,19 +25,30 @@
   .item
     width 100%
 
-.animation
-  transition transform 0s ease-out
-  backface-visibility hidden
-
+.inner
   &.left
   &.right
+    transition transform 0s ease-out
     transition-duration .2s
 
   &.left
-    transform translate3d(0, 0, 0)
+    transform translate3d(0, 0, 0) !important
 
   &.right
-    transform translate3d(calc(-100% / 3 * 2), 0, 0)
+    transform translate3d(calc(-100% / 3 * 2), 0, 0) !important
+
+  &.initialBounce
+    animation bounce 1s ease-out
+
+@keyframes bounce
+  0%
+    left 0
+  50%
+    left -20%
+  80%
+    left 10%
+  100%
+    left 0
 
 .item
   display flex

@@ -10,6 +10,10 @@ export type Props = ComponentType & {
   //
   // If no index is provided, the first item in the items array will be displayed.
   startIndex?: number;
+  // Whether to display arrows to navigate between items in the gallery.
+  showArrows?: boolean;
+  // Whether to play a bounce animation on initialize.
+  initialBounce?: boolean;
   // Called when the active item in the gallery changes.
-  onChange?: (item: string) => void;
+  onChange?: (index: number, item: string) => void;
 };

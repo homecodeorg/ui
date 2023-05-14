@@ -1,4 +1,4 @@
-import { Component, CSSProperties } from 'react';
+import { Component, createRef, CSSProperties } from 'react';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 import compare from 'compareq';
@@ -14,11 +14,14 @@ import { circularSlice } from 'uilib/tools/array';
 import S from './Gallery.styl';
 import * as T from './Gallery.types';
 
+const THRESHOLD = 50;
 const DURATION = 200;
 const DIR_NAME = {
   '1': 'left',
   '-1': 'right',
 };
+
+type Direction = -1 | 1;
 
 function getInitialState(items: T.Props['items'], startIndex) {
   return circularSlice(items, startIndex, 3);
@@ -62,6 +65,9 @@ export class Gallery extends Component<T.Props> {
   items;
   index = 0;
   timers = Time.create();
+  startX = null;
+
+  innerRef = createRef<HTMLDivElement>();
 
   static defaultProps = {
     size: 'm',
@@ -81,6 +87,7 @@ export class Gallery extends Component<T.Props> {
       movingDirection: 0,
       loading: {}, // [src]: boolean
       errors: {}, // [src]: boolean
+      isDragging: false,
     });
   }
 
@@ -142,40 +149,103 @@ export class Gallery extends Component<T.Props> {
     }
   };
 
-  move = throttle(function (direction: -1 | 1) {
+  onPointerDown = e => {
+    this.startX = e.pageX;
+  };
+
+  onPointerMove = e => {
+    if (this.startX === null) return;
+
+    const delta = this.getDelta(e);
+
+    if (Math.abs(delta) < THRESHOLD) return;
+
+    this.store.isDragging = true;
+    this.setTransformDelta(delta);
+  };
+
+  onPointerUp = e => {
+    if (!this.startX) return;
+
+    const delta = this.getDelta(e);
+
+    this.startX = null;
+
+    if (!this.store.isDragging || !delta) return;
+
+    this.store.isDragging = false;
+
+    const dir = delta / Math.abs(delta);
+
+    this.move(dir as Direction);
+  };
+
+  getDelta = e => e.pageX - this.startX;
+
+  setTransformDelta = (delta: number) => {
+    this.innerRef.current.style.transform = `translateX(calc(-100% / 3 + ${delta}px))`;
+  };
+
+  removeTransformDelta = () => {
+    this.innerRef.current.style.transform = '';
+  };
+
+  move = throttle(function (direction: Direction) {
+    const { animation } = this.props;
+
+    this.store.isDragging = false;
+    this.startX = null;
+
+    if (!animation) return this.switch(direction);
+
     this.store.movingDirection = direction;
+    this.timers.clear();
+    this.timers.after(DURATION, () => this.switch(direction));
+  }, DURATION) as (direction: Direction) => void;
 
-    this.timers.after(DURATION, () => {
-      this.index += direction * -1;
-      this.store.items = circularSlice(this.items, this.index, 3);
-      this.store.movingDirection = 0;
+  switch(direction: Direction) {
+    this.index += direction * -1;
+    this.store.items = circularSlice(this.items, this.index, 3);
+    this.store.movingDirection = 0;
+    this.removeTransformDelta();
 
-      const { onChange } = this.props;
-      const { items, loading } = this.store;
+    const { onChange } = this.props;
+    const { items, loading } = this.store;
 
-      onChange?.(this.index);
+    onChange?.(this.index, this.items[this.index]);
 
-      items.forEach(src => {
-        if (typeof loading[src] !== 'boolean') loading[src] = false;
-      });
+    items.forEach(src => {
+      if (typeof loading[src] !== 'boolean') loading[src] = false;
     });
-  }, DURATION) as (direction: -1 | 1) => void;
+  }
 
   render() {
-    const { className, size, animation, ...rest } = this.props;
-    const { items, movingDirection, loading, errors } = this.store;
+    const { className, size, showArrows, initialBounce, ...rest } = this.props;
+    const { items, movingDirection, loading, errors, isDragging } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
 
+    const props = omit(rest, ['items', 'onChange', 'animation', 'startIndex']);
     const classes = cn(S.root, isSingle && S.single, className);
-    const innerClasses = cn(S.inner, animation && S.animation, S[dirName]);
+    const innerClasses = cn(
+      S.inner,
+      initialBounce && S.initialBounce,
+      S[dirName]
+    );
+
+    if (!isSingle) {
+      props.onPointerDown = this.onPointerDown;
+      props.onPointerMove = this.onPointerMove;
+
+      if (isDragging) {
+        props.onPointerUp = this.onPointerUp;
+        props.onPointerLeave = this.onPointerUp;
+      }
+    }
 
     return (
-      <div
-        className={classes}
-        {...omit(rest, ['items', 'onChange', 'startIndex'])}
-      >
-        <div className={innerClasses}>
+      <div className={classes} {...props}>
+        <div className={innerClasses} ref={this.innerRef}>
           {items.map((src, i) => (
             <Item
               key={`${i}_${src}`}
@@ -189,7 +259,7 @@ export class Gallery extends Component<T.Props> {
           ))}
         </div>
 
-        {!isSingle && (
+        {!isSingle && showArrows && !isDragging && (
           <>
             <Arr
               className={S.left}
