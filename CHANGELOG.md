@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.1](https://github.com/foreverido/uilib/compare/v4.8.0...v4.8.1) (2023-05-14)
+
+
+### Features
+
+* Gallery - dots ([400e625](https://github.com/foreverido/uilib/commit/400e6258259a2f1df6cbb27edef0dec865a61a32))
+* Gallery - props.cover - show items as covers ([504cb3d](https://github.com/foreverido/uilib/commit/504cb3d3e454a756c4e17b48e8c4d2443bf07b86))
+* Lazy - hideSpinner ([ec3e204](https://github.com/foreverido/uilib/commit/ec3e204df2cf03bf2b1b19bb6787dda0f4785f5d))
+
 ## [4.8.0](https://github.com/foreverido/uilib/compare/v4.7.7...v4.8.0) (2023-05-14)
 
 
