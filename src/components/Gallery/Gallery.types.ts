@@ -14,6 +14,8 @@ export type Props = ComponentType & {
   showArrows?: boolean;
   // Whether to play a bounce animation on initialize.
   initialBounce?: boolean;
+  // Item will be displayed as cover, which means it will be stretched to cover the whole height and width of the gallery.
+  cover: true;
   // Called when the active item in the gallery changes.
   onChange?: (index: number, item: string) => void;
 };

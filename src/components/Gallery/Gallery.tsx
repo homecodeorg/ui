@@ -220,13 +220,19 @@ export class Gallery extends Component<T.Props> {
   }
 
   render() {
-    const { className, size, showArrows, initialBounce, ...rest } = this.props;
+    const { className, size, showArrows, initialBounce, cover, ...rest } =
+      this.props;
     const { items, movingDirection, loading, errors, isDragging } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
 
     const props = omit(rest, ['items', 'onChange', 'animation', 'startIndex']);
-    const classes = cn(S.root, isSingle && S.single, className);
+    const classes = cn(
+      S.root,
+      isSingle && S.single,
+      cover && S.cover,
+      className
+    );
     const innerClasses = cn(
       S.inner,
       initialBounce && S.initialBounce,
