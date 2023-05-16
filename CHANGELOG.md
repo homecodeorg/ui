@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.8.5](https://github.com/foreverido/uilib/compare/v4.8.4...v4.8.5) (2023-05-16)
+
+
+### Bug Fixes
+
+* Popup - elevation shadow ([7096ba6](https://github.com/foreverido/uilib/commit/7096ba65b6518478e879dfde4813dcb39b93b634))
+
 ### [4.8.4](https://github.com/foreverido/uilib/compare/v4.8.3...v4.8.4) (2023-05-14)
 
 
