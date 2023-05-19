@@ -10,6 +10,7 @@ export default {
   chevronLeft: () => import('./chevronLeft.svg'),
   delete: () => import('./delete.svg'),
   draft: () => import('./draft.svg'),
+  edit: () => import('./edit.svg'),
   // draft: () => import('./draft.svg'),
   externalLink: () => import('./externalLink.svg'),
   fullscreen: () => import('./fullscreen.svg'),
