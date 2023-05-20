@@ -7,7 +7,7 @@ export default () => {
   return (
     <InputFile
       size="m"
-      variant="outlined"
+      //variant="outlined"
       label="Photo"
       value={value}
       onChange={(e, val) => setValue(val)}

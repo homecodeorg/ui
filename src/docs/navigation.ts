@@ -111,6 +111,10 @@ export default [
         loader: () => import('./examples/Virtualized'),
       },
       {
+        id: 'Draggable',
+        loader: () => import('./examples/Draggable'),
+      },
+      {
         id: 'Notifications',
         loader: () => import('./examples/Notifications'),
       },
