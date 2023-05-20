@@ -50,6 +50,7 @@ export class InputFile extends Component<T.Props> {
 
   static defaultProps = {
     size: 'm',
+    variant: 'default',
     maxCount: 1,
   };
 

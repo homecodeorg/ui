@@ -12,17 +12,19 @@
   pointer-events none
   border-radius inherit
 
-  .variant-default &
-    controlButtonVariant('default')
-
-    &:hover
-      controlButtonVariantHover('default')
-
   .variant-outlined &
     controlButtonVariant('outlined')
 
     &:hover
       controlButtonVariantHover('outlined')
+
+
+.variant-default .border
+  controlButtonVariant('default')
+  background-color var(--accent-color-alpha-100)
+
+  &:hover
+    controlButtonVariantHover('default')
 
 .label
   display flex
