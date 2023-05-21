@@ -51,10 +51,8 @@ export class Draggable extends Component<T.Props> {
     this.draggingElem = currentTarget;
     this.draggingElemBounds = currentTarget.getBoundingClientRect();
 
-    this.store.draggingId = currentTarget.dataset.id;
-
-    document.addEventListener('pointermove', this.onPointerMove, true);
-    document.addEventListener('pointerup', this.onPointerUp, true);
+    document.addEventListener('pointermove', this.onPointerMove);
+    document.addEventListener('pointerup', this.onPointerUp);
   };
 
   onPointerMove = e => {
@@ -62,7 +60,9 @@ export class Draggable extends Component<T.Props> {
 
     const { clientX: x, clientY: y } = e;
 
-    e.stopPropagation();
+    if (!this.store.draggingId) {
+      this.store.draggingId = this.draggingElem.dataset.id;
+    }
 
     if (!this.dragStartFired) {
       this.dragStartFired = true;
@@ -73,19 +73,30 @@ export class Draggable extends Component<T.Props> {
     const dy = y - this.startPos.y;
 
     this.transformInner(this.draggingElem, `translate(${dx}px, ${dy}px)`);
+
+    this.checkUnderElem(x, y);
   };
 
-  onPointerOver = debounce(({ target }) => {
-    const itemElem = target.closest(`.${S.item}`);
-    const { id } = itemElem.dataset;
-    const { underId } = this.store;
+  checkUnderElem = debounce((x: number, y: number) => {
+    const underItem = document.elementFromPoint(x, y)?.closest(`.${S.item}`);
 
-    if (!this.startPos || underId === id) return;
+    if (!underItem) {
+      this.store.underOffset = '';
+      this.store.underId = null;
+      return;
+    }
 
-    const { x, y } = this.draggingElemBounds;
-    const { x: x2, y: y2 } = this.selectInner(itemElem).getBoundingClientRect();
-    const dx = x - x2;
-    const dy = y - y2;
+    // @ts-ignore
+    const { id } = underItem.dataset;
+    const { draggingId, underId } = this.store;
+
+    if (!this.startPos || id === draggingId || id === underId) return;
+
+    const { x: x1, y: y1 } = this.draggingElemBounds;
+    const { x: x2, y: y2 } =
+      this.selectInner(underItem).getBoundingClientRect();
+    const dx = x1 - x2;
+    const dy = y1 - y2;
 
     this.store.underOffset = `translate(${dx}px, ${dy}px)`;
     this.store.underId = id;
@@ -100,13 +111,18 @@ export class Draggable extends Component<T.Props> {
     this.dropUnder();
   };
 
-  onPointerUp = () => {
+  onPointerUp = e => {
     const { underId, draggingId } = this.store;
     const { onChange, onDragEnd } = this.props;
     const { id } = this.draggingElem.dataset;
 
-    document.removeEventListener('pointermove', this.onPointerMove, true);
-    document.removeEventListener('pointerup', this.onPointerUp, true);
+    if (draggingId) {
+      e.stopPropagation();
+      e.preventDefault();
+    }
+
+    document.removeEventListener('pointermove', this.onPointerMove);
+    document.removeEventListener('pointerup', this.onPointerUp);
 
     this.dragStartFired = false;
     this.startPos = null;
@@ -158,8 +174,6 @@ export class Draggable extends Component<T.Props> {
             key={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
             onPointerDown={this.onPointerDown}
-            onPointerOver={this.onPointerOver}
-            onPointerOut={this.onPointerOut}
             data-id={id}
           >
             <div
