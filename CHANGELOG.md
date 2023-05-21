@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.1](https://github.com/foreverido/uilib/compare/v4.9.0...v4.9.1) (2023-05-21)
+
+
+### Bug Fixes
+
+* InputFile - add button & maxCount ([c132660](https://github.com/foreverido/uilib/commit/c132660d9df6a311695632567afe50468920309e))
+* InputFile - maxCount=1, plus button styles ([a76f9e2](https://github.com/foreverido/uilib/commit/a76f9e2183757cac00fbe305536a6f879e0550f3))
+
 ## [4.9.0](https://github.com/foreverido/uilib/compare/v4.8.6...v4.9.0) (2023-05-21)
 
 
