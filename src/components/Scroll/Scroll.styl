@@ -37,11 +37,23 @@ fadeMask(direction, size)
 
   .fadeSize-s &
     .y&
+      mask-image fadeMask(bottom, 10px)
+    .x&
+      mask-image fadeMask(right, 10px)
+
+  .fadeSize-m &
+    .y&
+      mask-image fadeMask(bottom, 16px)
+    .x&
+      mask-image fadeMask(right, 16px)
+
+  .fadeSize-l &
+    .y&
       mask-image fadeMask(bottom, 20px)
     .x&
       mask-image fadeMask(right, 20px)
 
-  .fadeSize-m &
+  .fadeSize-xl &
     .y&
       mask-image fadeMask(bottom, 30px)
     .x&
