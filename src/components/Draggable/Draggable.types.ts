@@ -15,4 +15,6 @@ export type Props = {
   onDragEnd?: (id: string) => void;
   // Called when the order of items changes
   onChange: (items: string[]) => void;
+  // Additional children to render
+  children?: ReactNode;
 };

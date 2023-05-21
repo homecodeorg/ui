@@ -164,7 +164,8 @@ export class Draggable extends Component<T.Props> {
   }
 
   render() {
-    const { items, className, itemClassName, renderItem } = this.props;
+    const { items, className, itemClassName, renderItem, children } =
+      this.props;
     const { draggingId, underId, underOffset } = this.store;
 
     return (
@@ -184,6 +185,7 @@ export class Draggable extends Component<T.Props> {
             </div>
           </div>
         ))}
+        {children}
       </div>
     );
   }
