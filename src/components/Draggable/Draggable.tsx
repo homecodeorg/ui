@@ -16,6 +16,8 @@ export class Draggable extends Component<T.Props> {
   draggingElem = null;
   draggingElemBounds = null;
 
+  dragStartFired = false;
+
   timers = Time.create();
 
   constructor(props) {
@@ -38,7 +40,10 @@ export class Draggable extends Component<T.Props> {
     this.timers.clear();
   }
 
-  onPointerDown = ({ clientX: x, clientY: y, currentTarget }) => {
+  onPointerDown = e => {
+    const { clientX: x, clientY: y, currentTarget } = e;
+
+    e.stopPropagation();
     this.timers.clear();
 
     this.startPos = { x, y };
@@ -48,14 +53,21 @@ export class Draggable extends Component<T.Props> {
 
     this.store.draggingId = currentTarget.dataset.id;
 
-    document.addEventListener('pointermove', this.onPointerMove);
-    document.addEventListener('pointerover', this.onPointerOver);
-    document.addEventListener('pointerup', this.onPointerUp);
-    document.addEventListener('pointercancel', this.onPointerUp);
+    document.addEventListener('pointermove', this.onPointerMove, true);
+    document.addEventListener('pointerup', this.onPointerUp, true);
   };
 
-  onPointerMove = ({ clientX: x, clientY: y, currentTarget }) => {
+  onPointerMove = e => {
     if (!this.draggingElem) return;
+
+    const { clientX: x, clientY: y } = e;
+
+    e.stopPropagation();
+
+    if (!this.dragStartFired) {
+      this.dragStartFired = true;
+      this.props.onDragStart?.(this.store.draggingId);
+    }
 
     const dx = x - this.startPos.x;
     const dy = y - this.startPos.y;
@@ -89,14 +101,14 @@ export class Draggable extends Component<T.Props> {
   };
 
   onPointerUp = () => {
-    const { underId } = this.store;
-    const { onChange } = this.props;
+    const { underId, draggingId } = this.store;
+    const { onChange, onDragEnd } = this.props;
     const { id } = this.draggingElem.dataset;
 
-    document.removeEventListener('pointermove', this.onPointerMove);
-    document.removeEventListener('pointerup', this.onPointerUp);
-    document.removeEventListener('pointercancel', this.onPointerUp);
+    document.removeEventListener('pointermove', this.onPointerMove, true);
+    document.removeEventListener('pointerup', this.onPointerUp, true);
 
+    this.dragStartFired = false;
     this.startPos = null;
     this.store.draggingId = null;
 
@@ -118,6 +130,8 @@ export class Draggable extends Component<T.Props> {
         this.selectInner(this.draggingElem).style.transform = null;
         this.draggingElem = null;
       }
+
+      onDragEnd?.(draggingId);
     });
   };
 
@@ -134,17 +148,17 @@ export class Draggable extends Component<T.Props> {
   }
 
   render() {
-    const { items, itemClassName, renderItem } = this.props;
+    const { items, className, itemClassName, renderItem } = this.props;
     const { draggingId, underId, underOffset } = this.store;
 
     return (
-      <div className={cn(S.root, draggingId && S.dragging)}>
+      <div className={cn(S.root, draggingId && S.dragging, className)}>
         {items.map(id => (
           <div
             key={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
             onPointerDown={this.onPointerDown}
-            // onPointerOver={this.onPointerOver}
+            onPointerOver={this.onPointerOver}
             onPointerOut={this.onPointerOut}
             data-id={id}
           >
