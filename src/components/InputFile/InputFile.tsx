@@ -324,8 +324,6 @@ export class InputFile extends Component<T.Props> {
     if (draggable) {
       const ids = Array.from({ length: items.length }, (_, i) => String(i));
 
-      if (needAddButton) ids.push('add-button');
-
       return (
         <Draggable
           className={S.draggable}
@@ -334,12 +332,10 @@ export class InputFile extends Component<T.Props> {
           onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}
           onChange={this.onReorder}
-          renderItem={id =>
-            id === 'add-button'
-              ? this.renderPlusButton()
-              : this.renderItem(parseInt(id, 10), { isDragging })
-          }
-        />
+          renderItem={id => this.renderItem(parseInt(id, 10), { isDragging })}
+        >
+          {needAddButton && this.renderPlusButton()}
+        </Draggable>
       );
     }
 
