@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.3](https://github.com/foreverido/uilib/compare/v4.9.2...v4.9.3) (2023-05-21)
+
+
+### Features
+
+* Icon - social_: email/instagram/telegram ([246df54](https://github.com/foreverido/uilib/commit/246df54c4e0463f6a7aa6cf682fceb542b5aba36))
+
 ### [4.9.2](https://github.com/foreverido/uilib/compare/v4.9.1...v4.9.2) (2023-05-21)
 
 
