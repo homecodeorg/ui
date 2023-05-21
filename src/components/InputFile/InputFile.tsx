@@ -87,12 +87,19 @@ export class InputFile extends Component<T.Props> {
     const loaded = upload ? 1 : 0;
 
     if (this.isMultiple()) {
+      if (maxCount === 1) return [buildDefaultState(value, 0, loaded)];
+
       return value
         .slice(0, maxCount)
         .map((src, index) => buildDefaultState(src, index, loaded));
     }
 
-    return value ? [buildDefaultState(value, 0, loaded)] : [];
+    if (value) {
+      const val = Array.isArray(value) ? value[0] : value;
+      return [buildDefaultState(val, 0, loaded)];
+    }
+
+    return [];
   }
 
   getValFromState = () => {
@@ -296,10 +303,10 @@ export class InputFile extends Component<T.Props> {
   };
 
   renderItems() {
-    const { draggable, maxCount } = this.props;
+    const { draggable } = this.props;
     const { items, isDragging } = this.store;
 
-    if (items.length < maxCount) {
+    if (items.length === 0) {
       return (
         <label
           className={cn(S.item, S.addButton)}
@@ -316,6 +323,7 @@ export class InputFile extends Component<T.Props> {
 
       return (
         <Draggable
+          className={S.draggable}
           itemClassName={S.item}
           items={ids}
           onDragStart={this.onDragStart}

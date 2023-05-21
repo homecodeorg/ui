@@ -51,8 +51,34 @@
   &:first-child:last-child
     width 100%
 
+  .size-s &
+    height 50px
+    width 50px
+
+    &
+    & > div > div
+      borderRadiusSize('s')
+
+  .size-m &
+    height 70px
+    width 70px
+
+    &
+    & > div > div
+      borderRadiusSize('m')
+
+  .size-l &
+    height 100px
+    width 100px
+
+    &
+    & > div > div
+      borderRadiusSize('l')
+
 .draggable
+  width 100%
   position relative
+
   .item
     cursor move
 
