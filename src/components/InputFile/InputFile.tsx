@@ -94,12 +94,9 @@ export class InputFile extends Component<T.Props> {
         .map((src, index) => buildDefaultState(src, index, loaded));
     }
 
-    if (value) {
-      const val = Array.isArray(value) ? value[0] : value;
-      return [buildDefaultState(val, 0, loaded)];
-    }
+    const val = Array.isArray(value) ? value[0] : value;
 
-    return [];
+    return val ? [buildDefaultState(val, 0, loaded)] : [];
   }
 
   getValFromState = () => {
@@ -282,6 +279,20 @@ export class InputFile extends Component<T.Props> {
     onChange(null, this.getValFromState());
   };
 
+  renderPlusButton() {
+    const { size } = this.props;
+
+    return (
+      <label
+        className={cn(S.item, S.addButton)}
+        key="add-button"
+        onClick={this.onPlusButtonClick}
+      >
+        <Icon type="plus" size={size} />
+      </label>
+    );
+  }
+
   renderItem = (i, props = {}) => {
     const { size } = this.props;
     const { base64, src, loaded, total } = this.store.items[i];
@@ -303,23 +314,17 @@ export class InputFile extends Component<T.Props> {
   };
 
   renderItems() {
-    const { draggable } = this.props;
+    const { draggable, maxCount } = this.props;
     const { items, isDragging } = this.store;
 
-    if (items.length === 0) {
-      return (
-        <label
-          className={cn(S.item, S.addButton)}
-          key="add-button"
-          onClick={this.onPlusButtonClick}
-        >
-          <Icon type="plus" />
-        </label>
-      );
-    }
+    if (items.length === 0) return this.renderPlusButton();
+
+    const needAddButton = this.isMultiple() && items.length < maxCount;
 
     if (draggable) {
       const ids = Array.from({ length: items.length }, (_, i) => String(i));
+
+      if (needAddButton) ids.push('add-button');
 
       return (
         <Draggable
@@ -329,12 +334,22 @@ export class InputFile extends Component<T.Props> {
           onDragStart={this.onDragStart}
           onDragEnd={this.onDragEnd}
           onChange={this.onReorder}
-          renderItem={id => this.renderItem(parseInt(id, 10), { isDragging })}
+          renderItem={id =>
+            id === 'add-button'
+              ? this.renderPlusButton()
+              : this.renderItem(parseInt(id, 10), { isDragging })
+          }
         />
       );
     }
 
-    return items.map((_, i) => this.renderItem(i, { className: S.item }));
+    const elems = items.map((_, i) =>
+      this.renderItem(i, { className: S.item })
+    );
+
+    if (needAddButton) elems.push(this.renderPlusButton());
+
+    return elems;
   }
 
   render() {
