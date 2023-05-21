@@ -1,5 +1,5 @@
 import { Heading, Link } from 'uilib';
-import { ComponentLayout, Required, TypesTable } from 'docs/components';
+import { ComponentLayout, TypesTable } from 'docs/components';
 
 import { upload } from './helpers';
 

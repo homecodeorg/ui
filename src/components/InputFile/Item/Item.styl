@@ -1,8 +1,11 @@
+@import '../../../theme'
+
 .root
   position relative
   overflow hidden
   background-size cover
   background-position center
+  height 100%
 
   &.loading
     pointer-events none
@@ -64,3 +67,26 @@
 
   &.complete
     opacity 0
+
+.size-s
+  borderRadiusSize('s')
+  height 50px
+  width 50px
+
+.size-m
+  borderRadiusSize('m')
+  height 70px
+  width 70px
+
+.size-l
+  borderRadiusSize('l')
+  height 100px
+  width 100px
+
+.dragging
+  overflow visible
+
+  .overlay
+  .progress
+  .removeButton
+    display none

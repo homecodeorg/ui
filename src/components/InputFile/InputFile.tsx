@@ -15,7 +15,14 @@ import S from './InputFile.styl';
 import Item from './Item/Item';
 
 import * as T from './InputFile.types';
+import { Draggable } from 'uilib';
 export * as InputFileTypes from './InputFile.types';
+
+const SCROLL_OFFSET = {
+  s: 10,
+  m: 12,
+  l: 16,
+};
 
 const defaultFileState = {
   total: 1,
@@ -45,6 +52,7 @@ export class InputFile extends Component<T.Props> {
       items: this.getStateFromProps(),
       labelClipPath: '',
       pickingIndex: null,
+      isDragging: false,
     });
   }
 
@@ -132,6 +140,9 @@ export class InputFile extends Component<T.Props> {
     Time.after(50, () => this.inputRef.current.click());
   }
 
+  onDragStart = () => (this.store.isDragging = true);
+  onDragEnd = () => (this.store.isDragging = false);
+
   onChange = async e => {
     const { files } = e.target;
     const { items, pickingIndex } = this.store;
@@ -153,6 +164,15 @@ export class InputFile extends Component<T.Props> {
     if (uploadOnDemand) this.processUploadOnDemand();
 
     if (typeof pickingIndex === 'number') this.store.pickingIndex = null;
+  };
+
+  onReorder = ids => {
+    const { items } = this.store;
+    const { onChange } = this.props;
+
+    this.store.items = ids.map(id => items[id]);
+
+    onChange(null, this.getValFromState());
   };
 
   onProgress = state => e => {
@@ -255,17 +275,75 @@ export class InputFile extends Component<T.Props> {
     onChange(null, this.getValFromState());
   };
 
+  renderItem = (i, props = {}) => {
+    const { size } = this.props;
+    const { base64, src, loaded, total } = this.store.items[i];
+    const url = base64 || src;
+
+    return (
+      <Item
+        {...props}
+        size={size}
+        key={String(url) + i}
+        img={url}
+        total={total}
+        loaded={loaded}
+        waitingForUpload={!!this.filesToUpload[i]}
+        onRemove={e => this.remove(e, url)}
+        onClick={() => this.onItemClick(i)}
+      />
+    );
+  };
+
+  renderItems() {
+    const { draggable, maxCount } = this.props;
+    const { items, isDragging } = this.store;
+
+    if (items.length < maxCount) {
+      return (
+        <label
+          className={cn(S.item, S.addButton)}
+          key="add-button"
+          onClick={this.onPlusButtonClick}
+        >
+          <Icon type="plus" />
+        </label>
+      );
+    }
+
+    if (draggable) {
+      const ids = Array.from({ length: items.length }, (_, i) => String(i));
+
+      return (
+        <Draggable
+          itemClassName={S.item}
+          items={ids}
+          onDragStart={this.onDragStart}
+          onDragEnd={this.onDragEnd}
+          onChange={this.onReorder}
+          renderItem={id => this.renderItem(parseInt(id, 10), { isDragging })}
+        />
+      );
+    }
+
+    return items.map((_, i) => this.renderItem(i, { className: S.item }));
+  }
+
   render() {
     // @ts-ignore
-    const { className, size, variant, label, maxCount, accept } = this.props;
-    const { items, labelClipPath, pickingIndex } = this.store;
+    const { className, size, variant, draggable, label, maxCount, accept } =
+      this.props;
+    const { labelClipPath, pickingIndex } = this.store;
 
     const classes = cn(
       S.root,
       className,
       S[`size-${size}`],
-      S[`variant-${variant}`]
+      S[`variant-${variant}`],
+      draggable && S.draggable
     );
+
+    const scrollOffset = SCROLL_OFFSET[size];
 
     return (
       <div className={classes}>
@@ -293,35 +371,16 @@ export class InputFile extends Component<T.Props> {
           {label}
         </Label>
 
-        <Scroll x size="s" innerClassName={S.items}>
-          {items.map(({ base64, src, loaded, total }, i) => {
-            const url = base64 || src;
-
-            return (
-              <Item
-                key={String(url) + i}
-                className={S.item}
-                img={url}
-                total={total}
-                loaded={loaded}
-                waitingForUpload={!!this.filesToUpload[i]}
-                onRemove={e => {
-                  this.remove(e, url);
-                }}
-                onClick={() => this.onItemClick(i)}
-              />
-            );
-          })}
-
-          {items.length < maxCount && (
-            <label
-              className={cn(S.item, S.addButton)}
-              key="add-button"
-              onClick={this.onPlusButtonClick}
-            >
-              <Icon type="plus" />
-            </label>
-          )}
+        <Scroll
+          y
+          size="s"
+          className={S.inner}
+          innerClassName={S.items}
+          fadeSize={size}
+          offset={{ y: { before: scrollOffset, after: scrollOffset } }}
+          style={{ clipPath: labelClipPath }}
+        >
+          {this.renderItems()}
         </Scroll>
       </div>
     );

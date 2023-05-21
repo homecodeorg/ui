@@ -5,9 +5,11 @@ import { Button } from 'uilib/components/Button/Button';
 import { Icon } from 'uilib/components/Icon/Icon';
 
 import S from './Item.styl';
+import type { Size } from 'uilib/types';
 
 type Props = {
   className?: string;
+  size?: Size;
   img?: string;
   onRemove?: HTMLProps<HTMLButtonElement>['onClick'];
   onClick?: () => void;
@@ -15,17 +17,20 @@ type Props = {
   total: number;
   loaded: number;
   waitingForUpload?: boolean;
+  isDragging?: boolean;
 };
 
 export default function Item(props: Props) {
   const {
     className,
+    size,
     img,
     total,
     loaded,
     waitingForUpload,
     children,
     onRemove,
+    isDragging,
     ...rest
   } = props;
   const style = {} as CSSProperties;
@@ -33,8 +38,10 @@ export default function Item(props: Props) {
   const isLoading = !isComplete && loaded > 0;
   const classes = cn(
     S.root,
+    S[`size-${size}`],
     waitingForUpload && S.waitingForUpload,
     isLoading && S.loading,
+    isDragging && S.dragging,
     className
   );
 

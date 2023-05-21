@@ -32,22 +32,29 @@
   position absolute
   height 100%
 
+.inner
+  max-height inherit
+
 .items
   display flex
   align-items center
+  flex-wrap wrap
+  width calc(100% + 8px)
+  margin -4px
   font-size 0
 
 .item
   position relative
   display inline-flex
-  overflow hidden
-
-  & + &
-    margin-left 8px
+  margin 4px
 
   &:first-child:last-child
     width 100%
 
+.draggable
+  position relative
+  .item
+    cursor move
 
 .addButton
   align-items center
@@ -72,48 +79,33 @@
 
 .size-s
   controlFontSize('s')
-  controlPaddingSize('s')
-  padding-top $controlPaddingS
 
   .border
-  .item
     borderRadiusSize('s')
 
-  .item
-    height 50px
-    width 50px
-
   .items
+    controlPaddingSize('s')
+    padding-top $controlPaddingS
     padding-bottom $controlPaddingS
 
 .size-m
   controlFontSize('m')
-  controlPaddingSize('m')
-  padding-top $controlPaddingM
 
   .border
-  .item
     borderRadiusSize('m')
 
-  .item
-    height 70px
-    width 70px
-
   .items
+    controlPaddingSize('m')
+    padding-top $controlPaddingM
     padding-bottom $controlPaddingM
 
 .size-l
   controlFontSize('l')
-  controlPaddingSize('l')
-  padding-top $controlPaddingL
 
   .border
-  .item
     borderRadiusSize('l')
 
-  .item
-    height 100px
-    width 100px
-
   .items
+    controlPaddingSize('l')
+    padding-top $controlPaddingL
     padding-bottom $controlPaddingL

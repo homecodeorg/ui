@@ -1,6 +1,6 @@
 import { HTMLProps } from 'react';
 
-import type { FormFieldChangeHandler } from '../../types';
+import type { Size, FormFieldChangeHandler } from 'uilib/types';
 
 type ProgressParams = {
   loaded: number;
@@ -22,8 +22,10 @@ type Value = string[];
 export type Props = {
   className?: string;
   label?: string;
-  size?: string;
+  size?: Size;
   variant?: 'default' | 'outlined';
+  // Whether the user can drag files to change the order of the list.
+  draggable?: boolean;
   // Function that uploads the selected file and returns a Promise that
   // resolves with the URL of the uploaded file.
   //
