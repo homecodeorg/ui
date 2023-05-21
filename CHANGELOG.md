@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.2](https://github.com/foreverido/uilib/compare/v4.9.1...v4.9.2) (2023-05-21)
+
+
+### Features
+
+* Draggable - support additional children ([48187f6](https://github.com/foreverido/uilib/commit/48187f6308c8405f178b55f964479f5692fa82bd))
+
+
+### Bug Fixes
+
+* InputFile - add button is not a draggable item ([63172b2](https://github.com/foreverido/uilib/commit/63172b2f895d97cdc55ebb28ac63dc1e6d41118e))
+
 ### [4.9.1](https://github.com/foreverido/uilib/compare/v4.9.0...v4.9.1) (2023-05-21)
 
 
