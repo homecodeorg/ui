@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.9.0](https://github.com/foreverido/uilib/compare/v4.8.6...v4.9.0) (2023-05-21)
+
+
+### Features
+
+* Draggable ([14ab844](https://github.com/foreverido/uilib/commit/14ab844dd013abe296f44be070f6648566f92f09))
+* Draggable - onDragStart/onDragEnd ([0d81fe7](https://github.com/foreverido/uilib/commit/0d81fe7a81ab07abaf578abcf7597c18418718a3))
+* Icon - history ([715b3bf](https://github.com/foreverido/uilib/commit/715b3bf97d95f56dc20f9ae0d69a2df07cde8738))
+* InputFile - draggable - allow change files order by dragging it ([4840624](https://github.com/foreverido/uilib/commit/4840624ecc237ae2ddacfcdd6b93bdaab54515cd))
+
+
+### Bug Fixes
+
+* improved touches - use elementFromPoint() instead of pointerover event ([76c7742](https://github.com/foreverido/uilib/commit/76c7742fb13a799e50e38b95f7d4aa0ba5c066bd))
+* InputFile - variant=default styles ([b3e2880](https://github.com/foreverido/uilib/commit/b3e2880da13e2c40cb53e303546dcd9e5249e2a9))
+* Label - vertical position ([f47d2b1](https://github.com/foreverido/uilib/commit/f47d2b1d21a23645ee8f4c9d6009c718f9dcf99e))
+* Scroll - fadeSize - update sizes ([87e2d53](https://github.com/foreverido/uilib/commit/87e2d5333093fde5d250104e830dd7f718f18dbe))
+
 ### [4.8.6](https://github.com/foreverido/uilib/compare/v4.8.5...v4.8.6) (2023-05-19)
 
 
