@@ -31,4 +31,7 @@ export default {
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
+  social_instagram: () => import('./social_instagram.svg'),
+  social_telegram: () => import('./social_telegram.svg'),
+  social_email: () => import('./social_email.svg'),
 };
