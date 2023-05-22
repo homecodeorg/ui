@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.4](https://github.com/foreverido/uilib/compare/v4.9.3...v4.9.4) (2023-05-22)
+
+
+### Bug Fixes
+
+* Icon - lazy load without spinner (by default) ([2836bfc](https://github.com/foreverido/uilib/commit/2836bfc9b9b32153bc6cad69f6a11db0a0106d35))
+
 ### [4.9.3](https://github.com/foreverido/uilib/compare/v4.9.2...v4.9.3) (2023-05-21)
 
 
