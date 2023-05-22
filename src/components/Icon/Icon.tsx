@@ -25,7 +25,7 @@ export function Icon(props: T.Props) {
   }
 
   // @ts-ignore
-  return <Lazy loader={localIcon} {...iconProps} />;
+  return <Lazy loader={localIcon} hideSpinner {...iconProps} />;
 }
 
 Icon.defaultProps = {
