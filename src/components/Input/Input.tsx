@@ -42,7 +42,7 @@ export class Input extends Component<T.Props> {
   constructor(props: T.Props) {
     super(props);
 
-    const inputValue = props.value || props.defaultValue || '';
+    const inputValue = props.value ?? props.defaultValue ?? '';
     const hasValue = this.hasValue(inputValue);
 
     this.store = createStore(this, {
