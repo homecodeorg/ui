@@ -15,6 +15,7 @@ import { generateUID } from 'uilib/tools/uid';
 
 import S from './Input.styl';
 import * as T from './Input.types';
+import { debounce } from 'uilib';
 
 const TEXTAREA_SCROLL_TOP_OFFSET = {
   s: 30,
@@ -58,8 +59,10 @@ export class Input extends Component<T.Props> {
   componentDidMount() {
     document.addEventListener('keyup', this.onDocKeyUp, true);
 
-    if (this.isTextArea())
+    if (this.isTextArea()) {
       this.inputRef.current.innerText = this.store.inputValue;
+      document.addEventListener('paste', this.onTextareaPaste, true);
+    }
   }
 
   componentDidUpdate(prevProps: T.Props) {
@@ -132,6 +135,28 @@ export class Input extends Component<T.Props> {
 
     return val;
   }
+
+  onTextareaPaste = e => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.pasteToTextarea(e.clipboardData.getData('text/plain'));
+  };
+
+  pasteToTextarea = debounce((text: string) => {
+    console.log('onTextareaPaste');
+
+    const sel = window.getSelection();
+    const textarea = this.inputRef.current;
+    const prevText = textarea.innerText;
+    const startPos = sel.extentOffset;
+    const nextText =
+      prevText.substring(0, startPos) + text + prevText.substring(startPos);
+
+    textarea.innerText = nextText;
+
+    sel.setPosition(textarea.firstChild, startPos + text.length);
+  }, 100);
 
   onClearPress = e => {
     const { onChange, onClear } = this.props;
