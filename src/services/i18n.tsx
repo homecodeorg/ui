@@ -70,6 +70,7 @@ export function init(config: RegisterConfig) {
 
   return {
     storeName,
+    store: componentStore,
 
     // hook (update when componentStore._updated changed)
     withI18N: Component => withStore(storeName)(Component),
