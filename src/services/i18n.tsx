@@ -17,7 +17,7 @@ const queryLang = queryParams.lang;
 
 if (queryLang) LS.set('lang', queryLang);
 
-const store = createStore('i18n', {
+export const store = createStore('i18n', {
   lang: LS.get('lang') ?? DEFAULT_LANG,
   async changeLang(lang) {
     // TODO: use WebWorker for requests?
@@ -70,7 +70,7 @@ export function init(config: RegisterConfig) {
 
   return {
     storeName,
-    store: componentStore,
+    componentStore,
 
     // hook (update when componentStore._updated changed)
     withI18N: Component => withStore(storeName)(Component),
