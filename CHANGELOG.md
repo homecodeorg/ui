@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.10.0](https://github.com/foreverido/uilib/compare/v4.9.7...v4.10.0) (2023-05-27)
+
+
+### Bug Fixes
+
+* Input type=textarea - paste plain text, keep cursor position ([83a87cc](https://github.com/foreverido/uilib/commit/83a87ccb2e35ca41d2af06e60c0a72f827de7b09))
+
 ### [4.9.7](https://github.com/foreverido/uilib/compare/v4.9.6...v4.9.7) (2023-05-27)
 
 
