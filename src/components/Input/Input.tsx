@@ -149,6 +149,7 @@ export class Input extends Component<T.Props> {
     const sel = window.getSelection();
     const textarea = this.inputRef.current;
     const prevText = textarea.innerText;
+    // @ts-ignore
     const startPos = sel.extentOffset;
     const nextText =
       prevText.substring(0, startPos) + text + prevText.substring(startPos);
