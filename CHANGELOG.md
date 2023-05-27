@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.9.6](https://github.com/foreverido/uilib/compare/v4.9.5...v4.9.6) (2023-05-27)
+
+
+### Features
+
+* service/i18n - expose store ([b00707b](https://github.com/foreverido/uilib/commit/b00707badaa03a7934e583ba04a7d4815a4a5fd7))
+
 ### [4.9.5](https://github.com/foreverido/uilib/compare/v4.9.4...v4.9.5) (2023-05-26)
 
 
