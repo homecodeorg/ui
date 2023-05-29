@@ -137,6 +137,8 @@ export class Input extends Component<T.Props> {
   }
 
   onTextareaPaste = e => {
+    if (!this.store.isFocused) return;
+
     e.preventDefault();
     e.stopPropagation();
 
