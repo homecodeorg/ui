@@ -4,6 +4,7 @@ export default {
   check: () => import('./check.svg'),
   close: () => import('./close.svg'),
   colors: () => import('./colors.svg'),
+  copy: () => import('./copy.svg'),
   chevronUp: () => import('./chevronUp.svg'),
   chevronDown: () => import('./chevronDown.svg'),
   chevronRight: () => import('./chevronRight.svg'),
