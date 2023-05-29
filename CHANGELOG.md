@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.10.3](https://github.com/foreverido/uilib/compare/v4.10.2...v4.10.3) (2023-05-29)
+
+
+### Features
+
+* Icon - save ([51af3e8](https://github.com/foreverido/uilib/commit/51af3e87c609d928de98360ad9037adbd93ee57b))
+
+
+### Bug Fixes
+
+* Icon - copy ([5fa2fb7](https://github.com/foreverido/uilib/commit/5fa2fb7079483eaa83a9c6b6f26ad28c627db6ac))
+
 ### [4.10.2](https://github.com/foreverido/uilib/compare/v4.10.1...v4.10.2) (2023-05-29)
 
 
