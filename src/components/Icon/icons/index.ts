@@ -29,6 +29,7 @@ export default {
   redo: () => import('./redo.svg'),
   undo: () => import('./undo.svg'),
   requiredStar: () => import('./requiredStar.svg'),
+  save: () => import('./save.svg'),
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
