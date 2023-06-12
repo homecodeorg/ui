@@ -14,6 +14,15 @@
   & > img
     border-radius inherit
 
+.size-s
+  borderRadiusSize('s')
+
+.size-m
+  borderRadiusSize('m')
+
+.size-l
+  borderRadiusSize('l')
+
 .overlay
   z-index 1
   position absolute
@@ -26,7 +35,7 @@
 
   .waitingForUpload &
     background-color var(--accent-color-alpha-200)
-    border 4px solid var(--decent-color-alpha-500)
+    border 2px dashed var(--accent-color-alpha-500)
 
 .root:hover
 

@@ -11,6 +11,7 @@
   width 100%
   pointer-events none
   border-radius inherit
+  transition background-color .2s ease-out
 
   .variant-outlined &
     controlButtonVariant('outlined')
@@ -18,13 +19,16 @@
     &:hover
       controlButtonVariantHover('outlined')
 
+  .variant-default &
+    controlButtonVariant('default')
+    background-color var(--accent-color-alpha-100)
 
-.variant-default .border
-  controlButtonVariant('default')
-  background-color var(--accent-color-alpha-100)
+    &:hover
+      controlButtonVariantHover('default')
 
-  &:hover
-    controlButtonVariantHover('default')
+  .empty:hover &
+    background-color var(--active-color-alpha-500)
+
 
 .label
   display flex
@@ -51,40 +55,15 @@
   &:first-child:last-child
     width 100%
 
-  .size-s &
-    height 50px
-    width 50px
-
-    &
-    & > div > div
-      borderRadiusSize('s')
-
-  .size-m &
-    height 70px
-    width 70px
-
-    &
-    & > div > div
-      borderRadiusSize('m')
-
-  .size-l &
-    height 100px
-    width 100px
-
-    &
-    & > div > div
-      borderRadiusSize('l')
-
 .addButton
   align-items center
   justify-content center
   position relative
   transition background-color .2s ease-out
   cursor pointer
-  background-color var(--active-color-alpha-100)
 
-  &:hover
-    background-color var(--active-color-alpha-500)
+  .root:not(.empty) &:hover
+      background-color var(--active-color-alpha-500)
 
 .input
   position absolute
@@ -95,11 +74,11 @@
   opacity 0
   pointer-events none
 
-
 .size-s
   controlFontSize('s')
 
   .border
+  .item
     borderRadiusSize('s')
 
   .items
@@ -107,10 +86,15 @@
     padding-top $controlPaddingS
     padding-bottom $controlPaddingS
 
+  .item
+    height 50px
+    width 50px
+
 .size-m
   controlFontSize('m')
 
   .border
+  .item
     borderRadiusSize('m')
 
   .items
@@ -118,10 +102,15 @@
     padding-top $controlPaddingM
     padding-bottom $controlPaddingM
 
+  .item
+    height 70px
+    width 70px
+
 .size-l
   controlFontSize('l')
 
   .border
+  .item
     borderRadiusSize('l')
 
   .items
@@ -129,6 +118,9 @@
     padding-top $controlPaddingL
     padding-bottom $controlPaddingL
 
+  .item
+    height 100px
+    width 100px
 
 .draggable
   width 100%

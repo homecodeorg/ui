@@ -350,13 +350,23 @@ export class InputFile extends Component<T.Props> {
 
   render() {
     // @ts-ignore
-    const { className, size, variant, draggable, label, maxCount, accept } =
-      this.props;
+    const {
+      className,
+      size,
+      variant,
+      draggable,
+      label,
+      maxCount,
+      accept,
+      value,
+    } = this.props;
     const { labelClipPath, pickingIndex } = this.store;
+    const isEmpty = !value?.length;
 
     const classes = cn(
       S.root,
       className,
+      isEmpty && S.empty,
       S[`size-${size}`],
       S[`variant-${variant}`],
       draggable && S.draggable
