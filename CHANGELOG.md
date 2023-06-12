@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.11.0](https://github.com/foreverido/uilib/compare/v4.10.4...v4.11.0) (2023-06-12)
+
+
+### Features
+
+* InputFile - desugn update ([0775f23](https://github.com/foreverido/uilib/commit/0775f237426264c439a201f66b81767854efc0e4))
+
 ### [4.10.4](https://github.com/foreverido/uilib/compare/v4.10.3...v4.10.4) (2023-05-29)
 
 ### [4.10.3](https://github.com/foreverido/uilib/compare/v4.10.2...v4.10.3) (2023-05-29)
