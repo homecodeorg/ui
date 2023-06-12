@@ -8,6 +8,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPartialsPlugin from 'html-webpack-partials-plugin';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+const FaviconWebpackPlugin = require('favicons-webpack-plugin');
 
 // @ts-ignore
 import pkg from '../../../package.json' assert { type: 'json' };
@@ -174,6 +175,24 @@ export default (env, argv) => {
           minifyJS: true,
           minifyCSS: true,
           minifyURLs: true,
+        },
+      }),
+      new FaviconWebpackPlugin({
+        logo: `${paths.assets}/logo.svg`,
+        mode: 'webapp', // optional can be 'webapp' or 'light' - 'webapp' by default
+        devMode: 'webapp', // optional can be 'webapp' or 'light' - 'light' by default
+        favicons: {
+          appName: 'UILIB',
+          // appDescription: '',
+          developerName: 'Oleh Apostol',
+          developerURL: null, // prevent retrieving from the nearest package.json
+          background: '#fff',
+          theme_color: '#1a1a1a',
+          display: 'standalone',
+          icons: {
+            coast: false,
+            yandex: false,
+          },
         },
       }),
 
