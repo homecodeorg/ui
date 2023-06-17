@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.11.1](https://github.com/foreverido/uilib/compare/v4.11.0...v4.11.1) (2023-06-17)
+
+
+### Bug Fixes
+
+* package.json - dist/esm/types ([c99f177](https://github.com/foreverido/uilib/commit/c99f1775eb74f541216756f176152cb63fa1f668))
+
 ## [4.11.0](https://github.com/foreverido/uilib/compare/v4.10.4...v4.11.0) (2023-06-12)
 
 
