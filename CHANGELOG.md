@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.12.0](https://github.com/foreverido/uilib/compare/v4.11.1...v4.12.0) (2023-07-16)
+
+
+### Features
+
+* Input - back to full width by default ([bbc757c](https://github.com/foreverido/uilib/commit/bbc757c53dde851fd566927ef8ff3dcabc129b0b))
+
 ### [4.11.1](https://github.com/foreverido/uilib/compare/v4.11.0...v4.11.1) (2023-06-17)
 
 
