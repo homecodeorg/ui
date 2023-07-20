@@ -8,6 +8,8 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
   Omit<ControlProps, 'ref'> &
   FormControl<Value> & {
     name?: string;
+    // Step value for number inputs
+    step?: number;
     size?: Size;
     label?: string;
     variant?: 'default' | 'outlined';

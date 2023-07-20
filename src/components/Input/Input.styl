@@ -158,6 +158,52 @@ $paddingSide = 12px
       display block
       content ''
 
+  &[type=number]
+    -moz-appearance textfield
+    margin-right 14px
+
+    // Chrome, Safari, Edge, Opera
+    &::-webkit-outer-spin-button
+    &::-webkit-inner-spin-button
+      -webkit-appearance none
+
+.numberArrows
+  position absolute
+  right 0
+  display flex
+  flex-direction column
+  height 100%
+
+  & > button
+    min-height unset
+    max-height unset
+    height 50%
+    width 50%
+    padding-right 0
+    padding-left 0
+    background-color transparent !important
+    opacity .5
+    transition opacity .1s ease-out
+
+    &:hover
+      opacity 1
+
+    .size-s &
+      min-width 'calc(%s * .8)' % $controlSizeS
+    .size-m &
+      min-width 'calc(%s * .8)' % $controlSizeM
+    .size-l &
+      min-width 'calc(%s * .8)' % $controlSizeL
+
+    & > svg
+      transform scale(.8)
+
+    &:first-child > svg
+      margin-bottom -5%
+    &:last-child > svg
+      margin-top -5%
+
+
 .isTextArea .control
 .isTextArea .placeholder
 

@@ -113,6 +113,7 @@ export class Input extends Component<T.Props> {
   }
 
   isTextArea = () => this.props.type === 'textarea';
+  isNumber = () => this.props.type === 'number';
 
   isLabelOnTop(hasValue = this.store?.hasValue) {
     const { forceLabelOnTop, addonLeft } = this.props;
@@ -222,6 +223,14 @@ export class Input extends Component<T.Props> {
     } else {
       this.store.inputValue = value;
     }
+  };
+
+  onNumberWheel = delta => {
+    const { onChange, step = 1 } = this.props;
+    const value = this.getValue() + step * delta;
+
+    this.onChange(value);
+    onChange?.(null, value);
   };
 
   onTextAreaInput = e => {
@@ -373,6 +382,7 @@ export class Input extends Component<T.Props> {
       disabled,
     } = this.props;
     const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
+    const isNumber = this.isNumber();
     const isTextArea = this.isTextArea();
 
     const Control = isTextArea ? 'span' : 'input';
@@ -407,6 +417,16 @@ export class Input extends Component<T.Props> {
               ref={this.inputRef}
               key="control"
             />
+          )}
+          {isNumber && (
+            <div className={S.numberArrows}>
+              <Button variant="clear" onClick={() => this.onNumberWheel(1)}>
+                <Icon type="chevronUp" size={size} />
+              </Button>
+              <Button variant="clear" onClick={() => this.onNumberWheel(-1)}>
+                <Icon type="chevronDown" size={size} />
+              </Button>
+            </div>
           )}
           {isTextArea && controlProps.placeholder && (
             <span className={S.placeholder} spellCheck={false}>
