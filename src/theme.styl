@@ -79,20 +79,24 @@ controlDisabled()
   cursor not-allowed
   opacity .5
 
+$controlSizeS = 30px
+$controlSizeM = 40px
+$controlSizeL = 50px
+
 controlSize(size)
   if size == 's'
-    min-height 30px
-    min-width 30px
+    min-height $controlSizeS
+    min-width $controlSizeS
     borderRadiusSize('s')
 
   if size == 'm'
-    min-height 40px
-    min-width 40px
+    min-height $controlSizeM
+    min-width $controlSizeM
     borderRadiusSize('m')
 
   if size == 'l'
-    min-height 50px
-    min-width 50px
+    min-height $controlSizeL
+    min-width $controlSizeL
     borderRadiusSize('l')
 
 controlFontSize(size)
@@ -103,7 +107,7 @@ controlFontSize(size)
   if size == 'l'
     font-size 20px
 
-$controlPaddingS = 10px
+$controlPaddingS = 8px
 $controlPaddingM = 12px
 $controlPaddingL = 14px
 
@@ -115,12 +119,17 @@ controlPaddingSize(size)
   if size == 'l'
     padding '0 %s' % $controlPaddingL
 
+$borderRadiusS = 4px
+$borderRadiusM = 6px
+$borderRadiusL = 8px
+$borderRadiusXL = 10px
+
 borderRadiusSize(size)
   if size == 's'
-    border-radius 4px
+    border-radius $borderRadiusS
   if size == 'm'
-    border-radius 6px
+    border-radius $borderRadiusM
   if size == 'l'
-    border-radius 8px
+    border-radius $borderRadiusL
   if size == 'xl'
-    border-radius 10px
+    border-radius $borderRadiusXL

@@ -1,0 +1,90 @@
+@import '../../theme'
+
+.size-s
+  font-size 0.5em
+
+.size-m
+  font-size .75em
+
+.size-l
+  font-size 1em
+
+.root
+  display flex
+  flex-direction column
+  // width calc(2em * 7)
+
+.header
+  display flex
+  align-items center
+  justify-content space-between
+
+.month
+  width 100% !important
+
+.year
+  min-width 5em
+  input
+    min-width unset
+
+.month
+  margin-left var(--indent-s)
+
+.weekDays
+  display flex
+  align-items center
+  width 100%
+  margin-top var(--indent-s)
+  font-size 0.75em
+  color var(--accent-color-alpha-500)
+
+  & .day
+    padding 1.5em 0
+
+    .size-s &
+      &:first-child
+        border-top-left-radius $borderRadiusS
+      &:last-child
+        border-top-right-radius $borderRadiusS
+    .size-m &
+      &:first-child
+        border-top-left-radius $borderRadiusM
+      &:last-child
+        border-top-right-radius $borderRadiusM
+    .size-l &
+      &:first-child
+        border-top-left-radius $borderRadiusL
+      &:last-child
+        border-top-right-radius $borderRadiusL
+
+.days
+  display flex
+  flex-wrap wrap
+  justify-content space-between
+  user-select none
+
+  .day
+    &:not(.currMonth)
+      color var(--accent-color-alpha-500)
+
+    &:last-child
+      .size-s &
+        border-bottom-right-radius $borderRadiusS
+      .size-m &
+        border-bottom-right-radius $borderRadiusM
+      .size-l &
+        border-bottom-right-radius $borderRadiusL
+
+.day
+  display flex
+  justify-content center
+  align-items center
+  width calc(100% / 7)
+  height 2em
+
+  // &.weekend
+  //   background-color var(--accent-color-alpha-50)
+
+  &.currMonth
+    font-weight bold
+

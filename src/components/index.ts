@@ -1,6 +1,7 @@
 export * from './AssistiveText/AssistiveText';
 export * from './Button/Button';
 export * from './ButtonGroup/ButtonGroup';
+export * from './Calendar/Calendar';
 export * from './Checkbox/Checkbox';
 export * from './Container/Container';
 export * from './DateTime/DateTime';
