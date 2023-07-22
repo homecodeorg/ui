@@ -65,14 +65,16 @@ export const getDaysArray = (year, month, startOfWeek): T.Day[] => {
   let nextMonthDay = 1;
   const nextMonthStartDay = result.length % 7;
 
-  for (let i = nextMonthStartDay; i < 7; i++) {
-    result.push({
-      day: nextMonthDay,
-      month: monthIndex + 2 > 12 ? 1 : monthIndex + 2,
-      year: monthIndex === 11 ? year + 1 : year,
-      currentMonth: false,
-    });
-    nextMonthDay++;
+  if (nextMonthStartDay > 0) {
+    for (let i = nextMonthStartDay; i < 7; i++) {
+      result.push({
+        day: nextMonthDay,
+        month: monthIndex + 2 > 12 ? 1 : monthIndex + 2,
+        year: monthIndex === 11 ? year + 1 : year,
+        currentMonth: false,
+      });
+      nextMonthDay++;
+    }
   }
 
   CACHE[key] = result;
