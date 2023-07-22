@@ -31,7 +31,7 @@ const FullscreenButton = withStore({
       variant="clear"
       square
     >
-      <Icon type="fullscreen" size="l" />
+      <Icon type="fullscreen" />
     </Button>
   );
 });

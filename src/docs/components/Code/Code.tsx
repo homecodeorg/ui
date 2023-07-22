@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { withStore } from 'justorm/react';
 import cn from 'classnames';
 import compare from 'compareq';
-import { Scroll, uid, Portal } from 'uilib';
+import { Scroll, uid, Portal, Button, Icon, LS } from 'uilib';
 
 import FullscreenButton from './FullscreenButton/FullscreenButton';
 import Editor from './Editor/Editor';
@@ -20,7 +20,10 @@ type Props = {
 @withStore({ app: [], editor: ['isFullscreen'] })
 export class Code extends Component<Props> {
   store;
-  state = { inited: false };
+  state = {
+    inited: false,
+    isBgEnabled: !LS.get('codeBgDisabled'),
+  };
 
   id = `editor-${uid.generateUID()}`;
 
@@ -46,6 +49,12 @@ export class Code extends Component<Props> {
     }
   }
 
+  onColorButtonClick = () => {
+    const isBgEnabled = !this.state.isBgEnabled;
+    this.setState({ isBgEnabled });
+    LS.set('codeBgDisabled', !isBgEnabled);
+  };
+
   isFullscreen = () => this.props.store.editor.isFullscreen;
 
   renderContent(content) {
@@ -57,20 +66,34 @@ export class Code extends Component<Props> {
   }
 
   render() {
+    const { isBgEnabled } = this.state;
     const isFullscreen = this.isFullscreen();
+
     return (
-      <div className={cn(S.root, isFullscreen && S.fullscreen)} key="code">
-        <Background />
+      <div
+        className={cn(
+          S.root,
+          isFullscreen && S.fullscreen,
+          isBgEnabled && S.colorBg
+        )}
+        key="code"
+      >
+        {isBgEnabled && <Background />}
         <Scroll
           y
           fadeSize="m"
           className={S.editorContainer}
-          offset={{ y: { before: 50, after: 20 } }}
+          offset={{ y: { before: 14, after: 14 } }}
         >
           <Editor code={this.props.code} id={this.id} />
         </Scroll>
         <Result />
-        <FullscreenButton isFullscreen={isFullscreen} />
+        <div className={S.toolbar}>
+          <FullscreenButton isFullscreen={isFullscreen} />
+          <Button onClick={this.onColorButtonClick} className={S.colorButton}>
+            <Icon type="colors" />
+          </Button>
+        </div>
       </div>
     );
   }

@@ -7,9 +7,10 @@
   width calc(100% - 2px)
   max-height calc(100 * var(--vh) - 110px)
   margin 1px
-  box-shadow inset 0 0 0 1px var(--accent-color-alpha-50)
+  margin-top 2px
+  box-shadow inset 0 0 20px var(--accent-color-alpha-50), 0 0 0 1px var(--accent-color-alpha-50)
   border-radius var(--border-radius-l)
-  overflow hidden
+  background-color var(--decent-color)
 
   &::before
   &::after
@@ -28,6 +29,7 @@
     width 100%
     height 100%
     z-index -1
+    border-radius inherit
 
   &.fullscreen
     position fixed
@@ -39,6 +41,13 @@
     max-height @height
     border-radius 0
     box-shadow none
+
+.colorBg
+  background-color transparent
+  box-shadow 0 0 0 1px var(--accent-color-alpha-50)
+
+  .colorButton
+    filter saturate(0)
 
 .editorContainer
 .editorResult
@@ -99,6 +108,32 @@
     left 0
     width 1px
     background var(--accent-color-alpha-50)
+
+.toolbar
+  position absolute
+  top 0
+  right 24px
+
+  display flex
+  flex-direction row
+  align-items center
+  justify-content center
+
+  background-color var(--accent-color-alpha-50)
+  backdrop-filter blur(10px)
+  border-bottom-left-radius $borderRadiusL
+  border-bottom-right-radius $borderRadiusL
+  // box-shadow 0 0 0 1px var(--accent-color-alpha-50)
+
+  & > button
+    background-color transparent !important
+    transition transform 0.2s ease-in-out
+
+    &:hover
+      transform scale(1.2)
+
+  .fullscreen &
+    flex-direction row
 
 @media (orientation: portrait)
   .root
