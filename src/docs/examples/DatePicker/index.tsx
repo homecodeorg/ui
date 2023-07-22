@@ -1,17 +1,26 @@
 import { Heading, Link } from 'uilib';
 import { ComponentLayout } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import single from '!!raw-loader!./Single';
+import range from '!!raw-loader!./Range';
 import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
+
+import S from './styles.styl';
 
 const name = 'DatePicker';
 const Docs = () => (
   <>
+    <p>UI date picker component. </p>
     <p>
-      UI date picker component.{' '}
-      <Link inline href="/demo">
-        Demo
+      Can be used for picking{' '}
+      <Link inline href="/single">
+        single date
+      </Link>{' '}
+      and{' '}
+      <Link inline href="/range">
+        range of dates
       </Link>
+      .
     </p>
 
     <Heading id="Props" text="Props" />
@@ -23,7 +32,10 @@ export default () => (
   <ComponentLayout
     name={name}
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
-    scope={{}}
+    examples={[
+      { id: 'single', label: 'Single', code: single },
+      { id: 'range', label: 'Range', code: range },
+    ]}
+    scope={{ S }}
   />
 );

@@ -4,6 +4,7 @@ import type { Props as CalendarProps } from 'uilib/components/Calendar/Calendar.
 export type Value = Date | [Date, Date];
 
 export type Props = {
+  className?: string;
   // Date or range of dates. If range is provided, then calendar will be in range selection mode.
   value: Value;
   onChange: (value: Value) => void;

@@ -2,5 +2,22 @@
   display flex
   flex-direction column
 
-.day:hover
-  background-color var(--accent-color-alpha-100)
+.day
+  &.start
+  &.end
+    background-color var(--active-color-alpha-500) !important
+
+  &.start
+    border-top-right-radius 0
+    border-bottom-right-radius 0
+
+  &.end
+    border-top-left-radius 0
+    border-bottom-left-radius 0
+
+  &.between
+    background-color var(--active-color-alpha-100)
+    border-radius 0
+
+  &:hover
+    background-color var(--accent-color-alpha-100)
