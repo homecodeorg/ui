@@ -36,8 +36,10 @@ const renderDayDefault = (val: T.Day, props: T.DayProps) => {
 };
 
 export function Calendar({
+  className,
   value,
-  onDayClick,
+  onDayPointerDown,
+  onDayPointerUp,
   renderDay,
   renderWeekDayLabel,
   renderMonthLabel,
@@ -80,7 +82,7 @@ export function Calendar({
   };
 
   return (
-    <div className={cn(S.root, S[`size-${size}`])}>
+    <div className={cn(S.root, S[`size-${size}`], className)}>
       <div className={S.header}>
         <Input
           className={S.year}
@@ -117,17 +119,22 @@ export function Calendar({
 
       <div className={S.days}>
         {daysArray.map((day, weekdayIndex) => {
-          const classes = cn(
+          const className = cn(
             S.day,
             day.currentMonth && S.currMonth,
             H.isWeekend(weekdayIndex) && weekendClassName,
             H.isSameDay(day, value) && S.selected
           );
 
-          const dayProps = {
-            className: classes,
-            onClick: () => onDayClick?.(day),
-          };
+          const dayProps = { className } as T.DayProps;
+
+          if (onDayPointerDown) {
+            dayProps.onPointerDown = () => onDayPointerDown(day);
+          }
+
+          if (onDayPointerUp) {
+            dayProps.onPointerUp = () => onDayPointerUp(day);
+          }
 
           return renderDay?.(day, dayProps) ?? renderDayDefault(day, dayProps);
         })}

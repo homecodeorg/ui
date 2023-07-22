@@ -7,12 +7,15 @@ export type Day = Date & {
 
 export type DayProps = {
   className: string;
-  onClick: () => void;
+  onPointerDown: () => void;
+  onPointerUp: () => void;
 };
 
 export type Props = {
+  className?: string;
   value: Date;
-  onDayClick: (value: Date) => void;
+  onDayPointerDown: (value: Date) => void;
+  onDayPointerUp: (value: Date) => void;
   // Day of week to start calendar from  1(Monday)..0(Sunday). Default: 1
   startOfWeek?: number;
   size?: Size;
