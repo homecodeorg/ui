@@ -20,3 +20,11 @@ export type FormControl<T> = {
   name?: string;
   label?: string;
 };
+
+export type Date = {
+  year: number;
+  month: number;
+  day?: number;
+  // ISO 8601 string representation of date (YYYY-MM-DD)
+  ISO?: string;
+};
