@@ -25,14 +25,25 @@ const MONTHS = [
 
 const MIN_YEAR = 1970;
 
+const renderDayDefault = (val: T.Day, props: T.DayProps) => {
+  const { day, year, month } = val;
+
+  return (
+    <div key={`${year}-${month}-${day}`} {...props}>
+      {day}
+    </div>
+  );
+};
+
 export function Calendar({
   value,
   onDayClick,
+  renderDay,
   renderWeekDayLabel,
   renderMonthLabel,
   renderMonthesLabel,
   renderYearLabel,
-  startOfWeek,
+  startOfWeek = 1,
   weekendClassName,
   size,
 }: T.Props) {
@@ -45,7 +56,10 @@ export function Calendar({
     () => H.getWeekDaysArray(startOfWeek),
     [startOfWeek]
   );
-  const daysArray = H.getDaysArray(year, month);
+  const daysArray = useMemo(
+    () => H.getDaysArray(year, month, startOfWeek),
+    [startOfWeek, month, year]
+  );
 
   const monthOptions = useMemo(
     () =>
@@ -65,26 +79,6 @@ export function Calendar({
     if (year < MIN_YEAR) setYear(MIN_YEAR);
   };
 
-  const renderDay = useCallback((val: T.Value, weekdayIndex: number) => {
-    const { day, year, month, currentMonth } = val;
-    const isWeekend = H.isWeekend(weekdayIndex);
-    const classes = cn(
-      S.day,
-      currentMonth && S.currMonth,
-      isWeekend && weekendClassName
-    );
-
-    return (
-      <div
-        key={`${year}-${month}-${day}`}
-        className={classes}
-        onClick={() => onDayClick?.(val)}
-      >
-        {day}
-      </div>
-    );
-  }, []);
-
   return (
     <div className={cn(S.root, S[`size-${size}`])}>
       <div className={S.header}>
@@ -94,7 +88,6 @@ export function Calendar({
           min={MIN_YEAR}
           // @ts-ignore
           size={size}
-          // @ts-ignore
           label={renderYearLabel?.(year) ?? 'Year'}
           value={year}
           // @ts-ignore
@@ -104,7 +97,6 @@ export function Calendar({
         <Select
           className={S.month}
           size={size}
-          // @ts-ignore
           label={renderMonthesLabel?.(month) ?? 'Month'}
           options={monthOptions}
           value={month}
@@ -115,15 +107,30 @@ export function Calendar({
       <div className={S.weekDays}>
         {weekDaysArray.map((day, weekdayIndex) => (
           <div
-            key={day}
+            key={`weekday-${day}`}
             className={cn(S.day, H.isWeekend(weekdayIndex) && weekendClassName)}
           >
             {renderWeekDayLabel?.(day) ?? H.weekDays[day]}
           </div>
         ))}
       </div>
+
       <div className={S.days}>
-        {daysArray.map((d, weekdayIndex) => renderDay(d, weekdayIndex))}
+        {daysArray.map((day, weekdayIndex) => {
+          const classes = cn(
+            S.day,
+            day.currentMonth && S.currMonth,
+            H.isWeekend(weekdayIndex) && weekendClassName,
+            H.isSameDay(day, value) && S.selected
+          );
+
+          const dayProps = {
+            className: classes,
+            onClick: () => onDayClick?.(day),
+          };
+
+          return renderDay?.(day, dayProps) ?? renderDayDefault(day, dayProps);
+        })}
       </div>
     </div>
   );
