@@ -11,7 +11,7 @@ export type Option = {
   id: Id;
   isGroupHeader?: boolean;
   parentId?: Id;
-  label: any;
+  label: string;
   sortingKey?: string | number;
   children?: Option[];
   render?: (label: string) => string;

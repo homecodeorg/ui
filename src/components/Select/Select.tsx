@@ -491,7 +491,7 @@ export class Select extends Component<T.Props, T.State> {
     return selectedPlain.map(id => this.ids.items[id].label).join(', ');
   }
 
-  getLabel(id) {
+  getLabel(id): string {
     const { label, render } = Object(this.ids.items[id]);
 
     if (render) return render(label);
@@ -635,7 +635,8 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTrigger() {
-    const { trigger, isSearchable, required, hideRequiredStar, size } = this.props;
+    const { trigger, isSearchable, required, hideRequiredStar, size } =
+      this.props;
 
     if (trigger) return trigger;
 
@@ -775,6 +776,8 @@ export class Select extends Component<T.Props, T.State> {
     const { size } = this.props;
 
     this.isTree = false;
+
+    const optionsList = this.renderOptions();
     const classes = cn(S.options, S[`size-${size}`], this.isTree && S.isTree);
 
     return (
@@ -787,7 +790,7 @@ export class Select extends Component<T.Props, T.State> {
           onInnerRef={this.onScrollInnerRef}
           key="items-scroll"
         >
-          {this.renderOptions()}
+          {optionsList}
         </Scroll>
       </div>
     );
