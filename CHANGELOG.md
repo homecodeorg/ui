@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.15.0](https://github.com/foreverido/uilib/compare/v4.14.0...v4.15.0) (2023-07-22)
+
+
+### Features
+
+* Calendar update ([b43106c](https://github.com/foreverido/uilib/commit/b43106c263ca50d99edcb25059ccb55f9f6b386c))
+* DatePicker - highlight range ([389f243](https://github.com/foreverido/uilib/commit/389f2438e30b43110251366719977503ba7ce9b8))
+
+
+### Bug Fixes
+
+* Calendar - do not render last full week of next month ([71ed9b6](https://github.com/foreverido/uilib/commit/71ed9b62e990b5da4f2693d41d865dfce546ef68))
+
 ## [4.14.0](https://github.com/foreverido/uilib/compare/v4.13.0...v4.14.0) (2023-07-22)
 
 
