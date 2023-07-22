@@ -32,4 +32,6 @@ export type Props = {
   renderMonthLabel?: (month: number) => string;
   // Class name for weekend days
   weekendClassName?: string;
+  // Do not render last days of previous month and first days of next month.
+  hideOtherMonthDays?: boolean;
 };

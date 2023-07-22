@@ -70,6 +70,7 @@ export function DatePicker(props: T.Props) {
     >
       <Calendar
         size={size}
+        hideOtherMonthDays
         {...calendarProps}
         renderDay={renderDay}
         value={isRange ? value[0] : value}
@@ -78,6 +79,7 @@ export function DatePicker(props: T.Props) {
       {isRange && (
         <Calendar
           size={size}
+          hideOtherMonthDays
           {...calendarProps}
           renderDay={renderDay}
           value={value[1]}

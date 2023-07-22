@@ -67,6 +67,10 @@
     &:not(.currMonth)
       color var(--accent-color-alpha-500)
 
+      .hideOtherMonthDays &
+        opacity 0
+        pointer-events none
+
     &:last-child
       .size-s &
         border-bottom-right-radius $borderRadiusS

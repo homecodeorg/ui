@@ -47,6 +47,7 @@ export function Calendar({
   renderYearLabel,
   startOfWeek = 1,
   weekendClassName,
+  hideOtherMonthDays,
   size,
 }: T.Props) {
   const date = useMemo(() => H.valueToDate(value), [value]);
@@ -81,8 +82,15 @@ export function Calendar({
     if (year < MIN_YEAR) setYear(MIN_YEAR);
   };
 
+  const classes = cn(
+    S.root,
+    S[`size-${size}`],
+    className,
+    hideOtherMonthDays && S.hideOtherMonthDays
+  );
+
   return (
-    <div className={cn(S.root, S[`size-${size}`], className)}>
+    <div className={classes}>
       <div className={S.header}>
         <Input
           className={S.year}
