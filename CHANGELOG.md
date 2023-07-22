@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.16.0](https://github.com/foreverido/uilib/compare/v4.15.0...v4.16.0) (2023-07-22)
+
+
+### Features
+
+* Calendar - hideOtherMonthDays ([a65f433](https://github.com/foreverido/uilib/commit/a65f433641af4fe24a3c0045978e9f4386867c11))
+
 ## [4.15.0](https://github.com/foreverido/uilib/compare/v4.14.0...v4.15.0) (2023-07-22)
 
 
