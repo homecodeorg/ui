@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.17.0](https://github.com/foreverido/uilib/compare/v4.16.0...v4.17.0) (2023-07-22)
+
+
+### Features
+
+* DatePickerInput ([bfa218c](https://github.com/foreverido/uilib/commit/bfa218cf0ea1929274a01090697690450ca250b3))
+
+
+### Bug Fixes
+
+* Input - do not focus numberArrows ([3ec616f](https://github.com/foreverido/uilib/commit/3ec616fe4a07217d2a1205fad77df3493ebbcb75))
+
 ## [4.16.0](https://github.com/foreverido/uilib/compare/v4.15.0...v4.16.0) (2023-07-22)
 
 
