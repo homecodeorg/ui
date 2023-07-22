@@ -420,10 +420,18 @@ export class Input extends Component<T.Props> {
           )}
           {isNumber && (
             <div className={S.numberArrows}>
-              <Button variant="clear" onClick={() => this.onNumberWheel(1)}>
+              <Button
+                variant="clear"
+                onClick={() => this.onNumberWheel(1)}
+                tabIndex={-1}
+              >
                 <Icon type="chevronUp" size={size} />
               </Button>
-              <Button variant="clear" onClick={() => this.onNumberWheel(-1)}>
+              <Button
+                variant="clear"
+                onClick={() => this.onNumberWheel(-1)}
+                tabIndex={-1}
+              >
                 <Icon type="chevronDown" size={size} />
               </Button>
             </div>
