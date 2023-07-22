@@ -1,0 +1,50 @@
+@import '../../theme';
+
+$gap = 1em;
+$borderRadiusFactor = 2;
+
+.popupContent
+  min-width fit-content
+
+.content
+  padding .5em
+
+  .range &
+    display flex
+    flex-direction row
+    flex-wrap nowrap
+    gap $gap
+
+.range .calendar
+  width 50%
+
+
+.size-s
+  border-radius 'calc(%s * 1.5)' % $borderRadiusS !important
+
+  .content
+    padding $controlPaddingS
+    min-width 12em
+
+    .range&
+      min-width 'calc(24em + %s)' % $gap
+
+.size-m
+  border-radius 'calc(%s * 1.5)' % $borderRadiusM !important
+
+  .content
+    padding $controlPaddingM
+    min-width 16em
+
+    .range&
+      min-width 'calc(32em + %s)' % $gap
+
+.size-l
+  border-radius 'calc(%s * 1.5)' % $borderRadiusL !important
+
+  .content
+    padding $controlPaddingL
+    min-width 20em
+
+    .range&
+      min-width 'calc(40em + %s)' % $gap

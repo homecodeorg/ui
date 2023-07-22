@@ -9,5 +9,5 @@ export type Props = {
   value: Value;
   onChange: (value: Value) => void;
   size?: Size;
-  calendarProps?: CalendarProps;
+  calendarProps?: Partial<CalendarProps>;
 };

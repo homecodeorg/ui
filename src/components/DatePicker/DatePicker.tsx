@@ -70,16 +70,17 @@ export function DatePicker(props: T.Props) {
     >
       <Calendar
         size={size}
-        hideOtherMonthDays
+        hideOtherMonthDays={isRange}
         {...calendarProps}
         renderDay={renderDay}
         value={isRange ? value[0] : value}
         onDayPointerDown={onFirstDateChange}
+        onDayPointerUp={undefined!} // NOTE: TS error only when build rollup
       />
       {isRange && (
         <Calendar
           size={size}
-          hideOtherMonthDays
+          hideOtherMonthDays={isRange}
           {...calendarProps}
           renderDay={renderDay}
           value={value[1]}

@@ -5,6 +5,7 @@ export * from './Calendar/Calendar';
 export * from './Checkbox/Checkbox';
 export * from './Container/Container';
 export * from './DatePicker/DatePicker';
+export * from './DatePickerInput/DatePickerInput';
 export * from './DateTime/DateTime';
 export * from './Draggable/Draggable';
 export * from './Expand/Expand';

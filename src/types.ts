@@ -28,3 +28,5 @@ export type Date = {
   // ISO 8601 string representation of date (YYYY-MM-DD)
   ISO?: string;
 };
+
+export type Variant = 'default' | 'outlined';

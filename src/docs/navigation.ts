@@ -63,6 +63,10 @@ export default [
         loader: () => import('./examples/DatePicker'),
       },
       {
+        id: 'DatePickerInput',
+        loader: () => import('./examples/DatePickerInput'),
+      },
+      {
         id: 'Input',
         loader: () => import('./examples/Input'),
       },
