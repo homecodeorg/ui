@@ -40,7 +40,7 @@
   "types": "dist/esm/types/index.d.ts",
   "type": "module",
   "dependencies": {
-    "@homecode/ui": "^4.11.1",
+    "@homecode/ui": "^4.17.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@rollup/plugin-typescript": "^11.0.0",
     "classnames": "^2.3.2",

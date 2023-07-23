@@ -34,4 +34,6 @@ export type Props = {
   weekendClassName?: string;
   // Do not render last days of previous month and first days of next month.
   hideOtherMonthDays?: boolean;
+  // Function to check if day is disabled
+  isDayDisabled?: (day: Day) => boolean;
 };

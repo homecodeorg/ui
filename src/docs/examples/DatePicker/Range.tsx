@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { DatePicker } from 'uilib';
 
+const date = { year: 2023, month: 6, day: 6 };
+const isDayDisabled = d =>
+  d.year <= date.year &&
+  (d.month < date.month || (d.month === date.month && d.day < date.day));
+
 export default () => {
   const [value, setValue] = useState(['2023-06-9', '2023-07-31']);
 
@@ -14,6 +19,7 @@ export default () => {
         className={S.calendars}
         calendarProps={{
           className: S.calendar,
+          isDayDisabled,
           //  startOfWeek: 0
         }}
       />

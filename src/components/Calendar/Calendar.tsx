@@ -48,6 +48,7 @@ export function Calendar({
   startOfWeek = 1,
   weekendClassName,
   hideOtherMonthDays,
+  isDayDisabled,
   size,
 }: T.Props) {
   const date = useMemo(() => H.valueToDate(value), [value]);
@@ -133,7 +134,8 @@ export function Calendar({
             S.day,
             day.currentMonth && S.currMonth,
             H.isWeekend(weekdayIndex) && weekendClassName,
-            H.isSameDay(day, value) && S.selected
+            H.isSameDay(day, value) && S.selected,
+            isDayDisabled?.(day) && S.disabled
           );
 
           const dayProps = { className } as T.DayProps;
