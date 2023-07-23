@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.17.1](https://github.com/foreverido/uilib/compare/v4.17.0...v4.17.1) (2023-07-23)
+
+
+### Features
+
+* tools/date.ts - strToDate() ([d3d8cc9](https://github.com/foreverido/uilib/commit/d3d8cc9ef1dac61ddd437c0666ae1dc8bf72cb98))
+
 ## [4.17.0](https://github.com/foreverido/uilib/compare/v4.16.0...v4.17.0) (2023-07-22)
 
 
