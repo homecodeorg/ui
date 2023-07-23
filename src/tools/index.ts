@@ -1,6 +1,7 @@
 export * as env from './env';
 export { config } from './config';
 export * as array from './array';
+export * as date from './date';
 export * as string from './string';
 export * as number from './number';
 export * as object from './object';

@@ -1,5 +1,6 @@
 import cn from 'classnames';
 
+import { strToDate } from 'uilib/tools/date';
 import { DateTime } from 'uilib/components/DateTime/DateTime';
 import { DatePicker } from 'uilib/components/DatePicker/DatePicker';
 import { Button } from 'uilib/components/Button/Button';
@@ -7,11 +8,6 @@ import { Popup } from 'uilib/components/Popup/Popup';
 
 import * as T from './DatePickerInput.types';
 import S from './DatePickerInput.styl';
-
-const strToDate = (str: string) => {
-  const [year, month, day] = str.split('-').map(Number);
-  return new Date(year, month - 1, day);
-};
 
 export function DatePickerInput(props: T.Props) {
   const {
