@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.17.2](https://github.com/foreverido/uilib/compare/v4.17.1...v4.17.2) (2023-07-23)
+
+
+### Features
+
+* Calendar - isDayDisabled ([53f943c](https://github.com/foreverido/uilib/commit/53f943c56b8278f1f1391f4ddf6e3dbab4160b39))
+
 ### [4.17.1](https://github.com/foreverido/uilib/compare/v4.17.0...v4.17.1) (2023-07-23)
 
 
