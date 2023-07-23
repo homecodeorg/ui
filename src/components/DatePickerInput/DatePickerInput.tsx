@@ -8,6 +8,11 @@ import { Popup } from 'uilib/components/Popup/Popup';
 import * as T from './DatePickerInput.types';
 import S from './DatePickerInput.styl';
 
+const strToDate = (str: string) => {
+  const [year, month, day] = str.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
+
 export function DatePickerInput(props: T.Props) {
   const {
     value,
@@ -29,25 +34,12 @@ export function DatePickerInput(props: T.Props) {
         <Button variant={variant} size={size}>
           {isRange ? (
             <>
-              <DateTime
-                value={
-                  new Date(value[0].year, value[0].month - 1, value[0].day)
-                }
-                format={displayFormat}
-              />
+              <DateTime value={strToDate(value[0])} format={displayFormat} />
               {' - '}
-              <DateTime
-                value={
-                  new Date(value[1].year, value[1].month - 1, value[1].day)
-                }
-                format={displayFormat}
-              />
+              <DateTime value={strToDate(value[1])} format={displayFormat} />
             </>
           ) : (
-            <DateTime
-              value={new Date(value.year, value.month - 1, value.day)}
-              format={displayFormat}
-            />
+            <DateTime value={strToDate(value)} format={displayFormat} />
           )}
         </Button>
       }

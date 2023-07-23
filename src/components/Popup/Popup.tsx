@@ -302,7 +302,10 @@ export class Popup extends Component<T.Props> {
     }
 
     // if scrolling outside this popup - close it
-    if (!this.isPointerOver(e.target, S.content)) {
+    if (
+      !this.isPointerOver(e.target, S.content) &&
+      !H.childs[this.id]?.length
+    ) {
       this.needDropOffset = true;
       this.close();
     }
@@ -347,7 +350,7 @@ export class Popup extends Component<T.Props> {
     this.props.triggerProps?.onBlur?.(e);
 
     // give time to fire clicks inside popup
-    this.timers.after(80, () => {
+    this.timers.after(60, () => {
       if (!this.isLastClickInside()) this.close();
     });
   };

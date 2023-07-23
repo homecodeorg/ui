@@ -1,25 +1,12 @@
 import { useState } from 'react';
-import { DatePicker, DateTime } from 'uilib';
+import { DatePicker } from 'uilib';
 
 export default () => {
-  const [value, setValue] = useState([
-    { year: 2023, month: 6, day: 9 },
-    { year: 2023, month: 7, day: 31 },
-  ]);
+  const [value, setValue] = useState(['2023-06-9', '2023-07-31']);
 
   return (
     <>
-      <div className={S.display}>
-        <DateTime
-          value={new Date(value[0].year, value[0].month - 1, value[0].day)}
-          format="MMM Do YYYY"
-        />
-        {' - '}
-        <DateTime
-          value={new Date(value[1].year, value[1].month - 1, value[1].day)}
-          format="MMM Do YYYY"
-        />
-      </div>
+      <div className={S.display}>{value.join(' - ')}</div>
       <DatePicker
         size="s"
         value={value}

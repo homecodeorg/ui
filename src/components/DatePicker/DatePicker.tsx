@@ -17,7 +17,8 @@ export function DatePicker(props: T.Props) {
 
   const onFirstDateChange = useCallback(
     (val: Date) => {
-      onChange(isRange ? [val, value[1]] : val);
+      const valStr = H.dateToString(val);
+      onChange(isRange ? [valStr, value[1]] : valStr);
     },
     [value, onChange, isRange]
   );
@@ -28,23 +29,27 @@ export function DatePicker(props: T.Props) {
   const renderDay = useCallback(
     (val: Date, { className, ...props }) => {
       const { day, year, month } = val;
+      const valStr = H.dateToString(val);
 
       if (isRange && isPicking) {
         props.onPointerOver = () => {
-          const newVal: [Date, Date] = H.isDateAfter(value[0], val)
-            ? [val, value[0]]
-            : [value[0], val];
+          const newVal = H.isDateAfter(H.strigToDate(value[0]), val)
+            ? [valStr, value[0]]
+            : [value[0], valStr];
 
-          onChange(newVal);
+          onChange(newVal as T.Value);
         };
       }
 
       const classes = [className, S.day];
 
       if (isRange) {
-        if (H.isDateBetween(val, ...value)) classes.push(S.between);
-        if (H.isDateEqual(val, value[0])) classes.push(S.start);
-        if (H.isDateEqual(val, value[1])) classes.push(S.end);
+        const from = H.strigToDate(value[0]);
+        const to = H.strigToDate(value[1]);
+
+        if (H.isDateBetween(val, from, to)) classes.push(S.between);
+        if (H.isDateEqual(val, from)) classes.push(S.start);
+        if (H.isDateEqual(val, to)) classes.push(S.end);
       }
 
       return (
@@ -73,7 +78,7 @@ export function DatePicker(props: T.Props) {
         hideOtherMonthDays={isRange}
         {...calendarProps}
         renderDay={renderDay}
-        value={isRange ? value[0] : value}
+        value={H.strigToDate(isRange ? value[0] : value)}
         onDayPointerDown={onFirstDateChange}
         onDayPointerUp={undefined!} // NOTE: TS error only when build rollup
       />
@@ -83,9 +88,9 @@ export function DatePicker(props: T.Props) {
           hideOtherMonthDays={isRange}
           {...calendarProps}
           renderDay={renderDay}
-          value={value[1]}
-          onDayPointerDown={val => onChange([value[0], val])}
-          onDayPointerUp={val => onChange([value[0], val])}
+          value={H.strigToDate(value[1])}
+          onDayPointerDown={val => onChange([value[0], H.dateToString(val)])}
+          onDayPointerUp={val => onChange([value[0], H.dateToString(val)])}
         />
       )}
     </div>

@@ -111,6 +111,8 @@ export function Calendar({
           options={monthOptions}
           value={month}
           onChange={val => setMonth(val)}
+          required
+          hideRequiredStar
         />
       </div>
 

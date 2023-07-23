@@ -1,7 +1,7 @@
 import type { Date, Size, Variant } from 'uilib/types';
 import type { Props as PopupProps } from 'uilib/components/Popup/Popup.types';
 
-export type Value = Date | [Date, Date];
+export type Value = string | [string, string];
 
 export type Props = {
   className?: string;
