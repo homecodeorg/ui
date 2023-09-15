@@ -810,8 +810,8 @@ export class Select extends Component<T.Props, T.State> {
           focusControl
           hoverControl={isFocused}
           blur={blur}
-          {...popupProps}
           isOpen={isOpen}
+          {...popupProps}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
           disabled={this.isDisabled()}
