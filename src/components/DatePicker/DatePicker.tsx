@@ -10,7 +10,7 @@ import * as T from './DatePicker.types';
 import S from './DatePicker.styl';
 
 export function DatePicker(props: T.Props) {
-  const { value, onChange, size, calendarProps } = props;
+  const { value, onChange, size, doubleCalendar, calendarProps = {} } = props;
   const isRange = Array.isArray(value);
 
   const [isPicking, setIsPicking] = useState(false);
@@ -67,9 +67,15 @@ export function DatePicker(props: T.Props) {
     [size, isPicking, isRange, value, onChange]
   );
 
+  calendarProps.className = cn(calendarProps.className, S.calendar);
+
   return (
     <div
-      className={cn(S.root, props.className)}
+      className={cn(
+        S.root,
+        doubleCalendar && S.doubleCalendar,
+        props.className
+      )}
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
     >
@@ -82,7 +88,7 @@ export function DatePicker(props: T.Props) {
         onDayPointerDown={onFirstDateChange}
         onDayPointerUp={undefined!} // NOTE: TS error only when build rollup
       />
-      {isRange && (
+      {isRange && doubleCalendar && (
         <Calendar
           size={size}
           hideOtherMonthDays={isRange}

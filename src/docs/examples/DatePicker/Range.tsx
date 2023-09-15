@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DatePicker } from 'uilib';
+import { DatePicker, Checkbox } from 'uilib';
 
 const date = { year: 2023, month: 6, day: 6 };
 const isDayDisabled = d =>
@@ -8,6 +8,7 @@ const isDayDisabled = d =>
 
 export default () => {
   const [value, setValue] = useState(['2023-06-9', '2023-07-31']);
+  const [doubleCalendar, setDoubleCalendar] = useState(true);
 
   return (
     <>
@@ -16,12 +17,18 @@ export default () => {
         size="s"
         value={value}
         onChange={setValue}
-        className={S.calendars}
+        // className={cn(S.calendars, doubleCalendar && S.doubleCalendar)}
+        doubleCalendar={doubleCalendar}
         calendarProps={{
-          className: S.calendar,
+          // className: S.calendar,
           isDayDisabled,
           //  startOfWeek: 0
         }}
+      />
+      <Checkbox
+        checked={doubleCalendar}
+        onChange={() => setDoubleCalendar(!doubleCalendar)}
+        label="doubleCalendar"
       />
     </>
   );

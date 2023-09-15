@@ -9,5 +9,8 @@ export type Props = {
   value: Value;
   onChange: (value: Value) => void;
   size?: Size;
+  // Whether to display two calendars (only for range type).
+  doubleCalendar?: boolean;
+  // Props to pass to [Calendar](//components/Calendar) component.
   calendarProps?: Partial<CalendarProps>;
 };

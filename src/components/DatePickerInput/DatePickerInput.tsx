@@ -40,7 +40,11 @@ export function DatePickerInput(props: T.Props) {
         </Button>
       }
       contentProps={{
-        className: cn(S.popupContent, isRange && S.range, S[`size-${size}`]),
+        className: cn(
+          S.popupContent,
+          props.doubleCalendar && S.doubleCalendar,
+          S[`size-${size}`]
+        ),
       }}
       content={
         <DatePicker

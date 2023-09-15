@@ -15,9 +15,8 @@ $borderRadiusFactor = 2;
     flex-wrap nowrap
     gap $gap
 
-.range .calendar
+.doubleCalendar .calendar
   width 50%
-
 
 .size-s
   border-radius 'calc(%s * 1.5)' % $borderRadiusS !important
@@ -26,7 +25,7 @@ $borderRadiusFactor = 2;
     padding $controlPaddingS
     min-width 12em
 
-    .range&
+    .doubleCalendar&
       min-width 'calc(24em + %s)' % $gap
 
 .size-m
@@ -36,7 +35,7 @@ $borderRadiusFactor = 2;
     padding $controlPaddingM
     min-width 16em
 
-    .range&
+    .doubleCalendar&
       min-width 'calc(32em + %s)' % $gap
 
 .size-l
@@ -46,5 +45,5 @@ $borderRadiusFactor = 2;
     padding $controlPaddingL
     min-width 20em
 
-    .range&
+    .doubleCalendar&
       min-width 'calc(40em + %s)' % $gap

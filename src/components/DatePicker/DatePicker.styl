@@ -1,6 +1,13 @@
 .root
   display flex
-  flex-direction column
+  flex-direction row
+  gap var(--indent-m)
+
+.calendar
+  width 100%
+
+  .doubleCalendar &
+    width 50%
 
 .day
   &.start
