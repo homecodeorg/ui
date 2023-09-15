@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.18.0](https://github.com/foreverido/uilib/compare/v4.17.2...v4.18.0) (2023-09-15)
+
+
+### Features
+
+* Calendar - props.doubleCalendar ([d8b0817](https://github.com/foreverido/uilib/commit/d8b08171819ecf0670db6c8ac4f8fe12c6eafbfa))
+* Select - control props.isOpen ([6a454a3](https://github.com/foreverido/uilib/commit/6a454a3958d99519aaff2f9a8d69105e055a5e6c))
+
 ### [4.17.2](https://github.com/foreverido/uilib/compare/v4.17.1...v4.17.2) (2023-07-23)
 
 
