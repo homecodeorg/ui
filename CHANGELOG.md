@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.1](https://github.com/foreverido/uilib/compare/v4.18.0...v4.18.1) (2023-11-05)
+
+
+### Bug Fixes
+
+* Input - control width ([5c8935f](https://github.com/foreverido/uilib/commit/5c8935f3033b46edb842149c2f1a579df86caf0e))
+
 ## [4.18.0](https://github.com/foreverido/uilib/compare/v4.17.2...v4.18.0) (2023-09-15)
 
 
