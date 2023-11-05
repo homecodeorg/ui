@@ -27,6 +27,7 @@ export function DatePickerInput(props: T.Props) {
       direction="bottom-right"
       {...popupProps}
       trigger={
+        // @ts-ignore
         <Button variant={variant} size={size}>
           {isRange ? (
             <>

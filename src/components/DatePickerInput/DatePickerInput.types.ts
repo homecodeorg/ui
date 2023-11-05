@@ -5,7 +5,7 @@ import type { Props as DatePickerProps } from 'uilib/components/DatePicker/DateP
 export type Value = string | [string, string];
 
 export type Props = DatePickerProps & {
-  className?: string;
-  size?: Size;
+  variant?: string;
+  displayFormat: string;
   popupProps?: PopupProps;
 };
