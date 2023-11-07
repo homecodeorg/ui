@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.2](https://github.com/foreverido/uilib/compare/v4.18.1...v4.18.2) (2023-11-07)
+
+
+### Bug Fixes
+
+* Input - refined addons layout ([082da1e](https://github.com/foreverido/uilib/commit/082da1ebaae79577d3a9656d2678edb3a37bc065))
+* Select - refined triggerArrow margins ([8f71024](https://github.com/foreverido/uilib/commit/8f71024c2c520bb2098088100e5b42119ca53ff1))
+
 ### [4.18.1](https://github.com/foreverido/uilib/compare/v4.18.0...v4.18.1) (2023-11-05)
 
 
