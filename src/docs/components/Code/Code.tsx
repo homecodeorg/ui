@@ -13,26 +13,32 @@ import Background from './Background';
 
 type Props = {
   store?: any;
-  scope?: object;
+  id: string;
   code: string;
+  scope?: object;
 };
 
 @withStore({ app: [], editor: ['isFullscreen'] })
 export class Code extends Component<Props> {
   store;
-  state = {
-    inited: false,
-    isBgEnabled: !LS.get('codeBgDisabled'),
-  };
 
   id = `editor-${uid.generateUID()}`;
 
+  state = {
+    inited: false,
+    isBgEnabled: !LS.get('codeBgDisabled'),
+    code: '',
+  };
+
   componentDidMount() {
-    const { code, scope, store } = this.props;
+    const { id, scope, store } = this.props;
     const { app, editor } = store;
 
+    this.setCode(id);
+
     editor.scope = scope;
-    editor.onChange(code, this.id);
+    editor.onChange(this.id, this.state.code);
+
     app.updateGradient();
 
     this.setState({ inited: true });
@@ -40,6 +46,7 @@ export class Code extends Component<Props> {
 
   componentDidUpdate(prev: Props) {
     const {
+      id,
       scope,
       store: { editor },
     } = this.props;
@@ -47,10 +54,22 @@ export class Code extends Component<Props> {
     if (!compare(prev.scope, scope)) {
       editor.scope = scope;
     }
+
+    if (prev.id !== id) {
+      this.setCode(id);
+    }
+  }
+
+  setCode(id) {
+    const { editor } = this.props.store;
+    const code = editor.getEditedCode(id) || this.props.code;
+
+    this.setState({ code });
   }
 
   onColorButtonClick = () => {
     const isBgEnabled = !this.state.isBgEnabled;
+
     this.setState({ isBgEnabled });
     LS.set('codeBgDisabled', !isBgEnabled);
   };
@@ -66,7 +85,8 @@ export class Code extends Component<Props> {
   }
 
   render() {
-    const { isBgEnabled } = this.state;
+    const { id } = this.props;
+    const { isBgEnabled, code } = this.state;
     const isFullscreen = this.isFullscreen();
 
     return (
@@ -85,12 +105,16 @@ export class Code extends Component<Props> {
           className={S.editorContainer}
           offset={{ y: { before: 14, after: 14 } }}
         >
-          <Editor code={this.props.code} id={this.id} />
+          <Editor id={id} code={code} />
         </Scroll>
         <Result />
         <div className={S.toolbar}>
           <FullscreenButton isFullscreen={isFullscreen} />
-          <Button onClick={this.onColorButtonClick} className={S.colorButton}>
+          <Button
+            onClick={this.onColorButtonClick}
+            className={S.colorButton}
+            title="Toggle background color"
+          >
             <Icon type="colors" />
           </Button>
         </div>

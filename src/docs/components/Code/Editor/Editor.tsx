@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { LiveEditor } from 'react-live';
 import { withStore } from 'justorm/react';
 
@@ -13,7 +13,7 @@ const Editor = withStore({
 })(function Editor({ id, code, store: { app } }) {
   const onChange = useCallback(newCode => {
     if (newCode !== STORE.editedCode) {
-      STORE.onChange(newCode, id);
+      STORE.onChange(id, newCode);
     }
   }, []);
 

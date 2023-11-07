@@ -29,6 +29,7 @@ const FullscreenButton = withStore({
       className={cn(S.root, isFullscreen && S.fullscreen)}
       onClick={toggleFullscreen}
       variant="clear"
+      title="Fullscreen"
       square
     >
       <Icon type="fullscreen" />

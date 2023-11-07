@@ -79,6 +79,7 @@ type SidebarRouteProps = Omit<ExmapleData, 'label'> & {
 };
 
 const renderSidebarRoute = (
+  name,
   { id, code, items, scope }: SidebarRouteProps,
   rootScope
 ) => {
@@ -90,6 +91,7 @@ const renderSidebarRoute = (
         component={Code}
         path={`/${id}`}
         // @ts-ignore
+        id={`${name}::${id}`}
         code={code}
         scope={{ ...rootScope, ...scope }}
         key={id}
@@ -99,7 +101,11 @@ const renderSidebarRoute = (
 
   items?.forEach(props => {
     content.push(
-      ...renderSidebarRoute({ ...props, id: `${id}/${props.id}` }, rootScope)
+      ...renderSidebarRoute(
+        name,
+        { ...props, id: `${id}/${props.id}` },
+        rootScope
+      )
     );
   });
 
@@ -135,7 +141,7 @@ export const ComponentLayout = withStore('router')(
         <Router>
           {/* @ts-ignore */}
           <Route component={Docs} path="/" exact />
-          {examples?.map(props => renderSidebarRoute(props, scope))}
+          {examples?.map(props => renderSidebarRoute(name, props, scope))}
         </Router>
       </Page>
     );
