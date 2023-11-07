@@ -620,7 +620,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
-    const { size, inputProps } = this.props;
+    const { size, inputProps, isSearchable } = this.props;
     const { isOpen, searchVal } = this.store;
 
     if (inputProps?.hasClear && searchVal) return null;
@@ -628,7 +628,7 @@ export class Select extends Component<T.Props, T.State> {
     return (
       <Icon
         type="chevronDown"
-        className={cn(S.triggerArrow, isOpen && S.isOpen)}
+        className={cn(S.triggerArrow, isOpen && S.isOpen, !isSearchable && S.clearRightMargin)}
         size={size}
       />
     );
