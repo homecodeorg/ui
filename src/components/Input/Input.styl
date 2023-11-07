@@ -264,16 +264,17 @@ $paddingSide = 12px
 .addonRight
   display inline-flex
   align-items center
-  user-select none
+  flex-shrink 0
   z-index 1
   min-width 0 // to enable ellipsis work in flex
+  user-select none
 
   .size-s &
-    min-width 'calc(%s * 1.5)' % var(--indent-s)
+    min-width calc(var(--indent-s) * 2)
   .size-m &
-    min-width var(--indent-m)
+    min-width calc(var(--indent-m) * 2)
   .size-l &
-    min-width var(--indent-l)
+    min-width calc(var(--indent-l) * 2)
 
   & > span
     white-space nowrap
