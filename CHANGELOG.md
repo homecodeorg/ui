@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.3](https://github.com/foreverido/uilib/compare/v4.18.2...v4.18.3) (2023-11-12)
+
+
+### Bug Fixes
+
+* Input, Select - refined paddings ([22ac9a3](https://github.com/foreverido/uilib/commit/22ac9a3c5554c6d2a4b156a677e8473010fa1b49))
+
 ### [4.18.2](https://github.com/foreverido/uilib/compare/v4.18.1...v4.18.2) (2023-11-07)
 
 
