@@ -323,7 +323,7 @@ export class Input extends Component<T.Props> {
 
   wrapControll(control) {
     if (this.isTextArea()) {
-      const { size } = this.props;
+      const { size, scrollProps } = this.props;
       const { labelClipPath } = this.store;
 
       return (
@@ -332,6 +332,7 @@ export class Input extends Component<T.Props> {
           size={size}
           fadeSize="s"
           className={S.scroller}
+          {...scrollProps}
           innerProps={{
             suppressHydrationWarning: true,
             style: { clipPath: labelClipPath },

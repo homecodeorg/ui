@@ -29,12 +29,13 @@ $paddingSide = 12px
     height auto !important
     max-height inherit !important
 
+    // padding for scrollbar
     .size-s&
-      padding-right 2px !important;
-    .size-m&
       padding-right 8px !important;
+    .size-m&
+      padding-right 10px !important;
     .size-l&
-      padding-right 13px !important;
+      padding-right 14px !important;
 
 .border
   z-index 0
@@ -283,9 +284,20 @@ $paddingSide = 12px
 
 
 .addonLeft
-  margin-right $paddingSide
+  .size-s &
+    margin-right calc(var(--indent-s) / 2)
+  .size-m &
+    margin-right calc(var(--indent-m) / 2)
+  .size-l &
+    margin-right calc(var(--indent-l) / 2)
+
 .addonRight
-  margin-left $paddingSide
+  .size-s &
+    margin-left calc(var(--indent-s) / 2)
+  .size-m &
+    margin-left calc(var(--indent-m) / 2)
+  .size-l &
+    margin-left calc(var(--indent-l) / 2)
 
 .requiredStar
   position absolute

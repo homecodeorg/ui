@@ -472,7 +472,7 @@ export class Select extends Component<T.Props, T.State> {
   getInputVal(): T.Value {
     const { isFocused, searchVal, selected } = this.store;
 
-    if (isFocused) return searchVal as T.Id;
+    if (isFocused && searchVal) return searchVal as T.Id;
 
     const selectedPlain = Object.entries(selected).reduce((acc, entry) => {
       const parentId = this.coerceType(entry[0]);
@@ -620,7 +620,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
-    const { size, inputProps, isSearchable } = this.props;
+    const { size, inputProps } = this.props;
     const { isOpen, searchVal } = this.store;
 
     if (inputProps?.hasClear && searchVal) return null;
@@ -628,7 +628,7 @@ export class Select extends Component<T.Props, T.State> {
     return (
       <Icon
         type="chevronDown"
-        className={cn(S.triggerArrow, isOpen && S.isOpen, !isSearchable && S.clearRightMargin)}
+        className={cn(S.triggerArrow, isOpen && S.isOpen)}
         size={size}
       />
     );

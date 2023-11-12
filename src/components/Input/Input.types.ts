@@ -1,6 +1,7 @@
 import { ReactNode, HTMLProps, InputHTMLAttributes } from 'react';
 
-import { ComponentType, FormControl, Size } from '../../types';
+import type { ComponentType, FormControl, Size } from '../../types';
+import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;
@@ -34,4 +35,6 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     controlProps?: ControlProps & ComponentType;
     // Whether to check for autofill values and update the input field's value accordingly
     checkAutofill?: boolean;
+    // In case of type=textarea, you can pass props for [Scroll|//components/Scroll] component
+    scrollProps: Partial<ScrollProps>;
   };
