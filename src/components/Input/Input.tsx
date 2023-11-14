@@ -331,7 +331,7 @@ export class Input extends Component<T.Props> {
           y
           size={size}
           fadeSize="s"
-          className={S.scroller}
+          className={cn(S.scroller, S.controlWrapper)}
           {...scrollProps}
           innerProps={{
             suppressHydrationWarning: true,
@@ -347,7 +347,7 @@ export class Input extends Component<T.Props> {
       );
     }
 
-    return control;
+    return <div className={S.controlWrapper}>{control}</div>;
   }
 
   renderAddon(type: 'right' | 'left') {
@@ -412,12 +412,21 @@ export class Input extends Component<T.Props> {
           />
           {this.renderAddon('left')}
           {this.wrapControll(
-            <Control
-              {...controlProps}
-              className={cn(S.control, controlProps?.className)}
-              ref={this.inputRef}
-              key="control"
-            />
+            <>
+              <Control
+                {...controlProps}
+                className={cn(S.control, controlProps?.className)}
+                ref={this.inputRef}
+                key="control"
+              />
+              {isTextArea &&
+                controlProps.placeholder &&
+                !controlProps.value && (
+                  <span className={S.placeholder} spellCheck={false}>
+                    {controlProps.placeholder}
+                  </span>
+                )}
+            </>
           )}
           {isNumber && (
             <div className={S.numberArrows}>
@@ -437,11 +446,7 @@ export class Input extends Component<T.Props> {
               </Button>
             </div>
           )}
-          {isTextArea && controlProps.placeholder && (
-            <span className={S.placeholder} spellCheck={false}>
-              {controlProps.placeholder}
-            </span>
-          )}
+
           <Label
             className={S.label}
             size={size}
