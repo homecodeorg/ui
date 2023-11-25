@@ -14,6 +14,8 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     size?: Size;
     label?: string;
     variant?: 'default' | 'outlined';
+    // Hide the required star symbol
+    hideRequiredStar?: boolean;
     // For label to be on top of the input,
     // even if there is no value/placeholder and not focused
     forceLabelOnTop?: boolean;

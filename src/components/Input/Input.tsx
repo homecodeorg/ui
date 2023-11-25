@@ -381,6 +381,7 @@ export class Input extends Component<T.Props> {
       error,
       hasClear,
       required,
+      hideRequiredStar,
       disabled,
     } = this.props;
     const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
@@ -457,7 +458,9 @@ export class Input extends Component<T.Props> {
             {label}
           </Label>
           {this.renderAddon('right')}
-          {required && <RequiredStar size={size} key="required-star" />}
+          {required && !hideRequiredStar && (
+            <RequiredStar size={size} key="required-star" />
+          )}
         </label>
         {hasClear && !disabled && hasValue && (
           <Button
