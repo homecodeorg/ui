@@ -293,6 +293,7 @@ export class Input extends Component<T.Props> {
         'addonRight',
         'forceLabelOnTop',
         'changeOnEnd',
+        'scrollProps',
       ]),
       value: inputValue,
       ...controlProps,
@@ -316,7 +317,7 @@ export class Input extends Component<T.Props> {
       delete props.name;
     }
 
-    if (props.value === undefined) props.value = '';
+    if (props.value === undefined) props.value = ' ';
 
     return props;
   }
@@ -419,13 +420,11 @@ export class Input extends Component<T.Props> {
                 ref={this.inputRef}
                 key="control"
               />
-              {isTextArea &&
-                controlProps.placeholder &&
-                !controlProps.value && (
-                  <span className={S.placeholder} spellCheck={false}>
-                    {controlProps.placeholder}
-                  </span>
-                )}
+              {isTextArea && controlProps.placeholder && (
+                <span className={S.placeholder} spellCheck={false}>
+                  {controlProps.placeholder}
+                </span>
+              )}
             </>
           )}
           {isNumber && (
