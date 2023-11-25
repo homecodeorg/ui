@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.5](https://github.com/foreverido/uilib/compare/v4.18.4...v4.18.5) (2023-11-25)
+
+
+### Bug Fixes
+
+* Input - height and ommiting wrong props ([dfa1dde](https://github.com/foreverido/uilib/commit/dfa1ddee8c48ec241cdd4c7edae701c579ee80e3))
+
 ### [4.18.4](https://github.com/foreverido/uilib/compare/v4.18.3...v4.18.4) (2023-11-14)
 
 
