@@ -30,6 +30,11 @@ function run() {
 }
 
 export function observe(elem, cb) {
+  if (!elem) {
+    console.warn('ResizeObserver: elem is not defined');
+    return;
+  }
+
   if (IS_NATIVE) {
     const observer = new ResizeObserver(cb);
     observer.observe(elem);
