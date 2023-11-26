@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.8](https://github.com/foreverido/uilib/compare/v4.18.7...v4.18.8) (2023-11-26)
+
+
+### Features
+
+* LightBox - className ([c6102b2](https://github.com/foreverido/uilib/commit/c6102b25bbfcbb243d238d2568040bf268d1c1ab))
+
 ### [4.18.7](https://github.com/foreverido/uilib/compare/v4.18.6...v4.18.7) (2023-11-25)
 
 
