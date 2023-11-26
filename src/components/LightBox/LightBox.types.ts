@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 export type Props = {
+  className?: string;
   // Whether the lightbox is open.
   isOpen?: boolean;
   // Called when the lightbox is closed.
