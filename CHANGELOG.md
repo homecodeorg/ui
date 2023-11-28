@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.9](https://github.com/foreverido/uilib/compare/v4.18.8...v4.18.9) (2023-11-28)
+
+
+### Features
+
+* Input - variant=clean ([fb6ce48](https://github.com/foreverido/uilib/commit/fb6ce482f02e95ee0cd70d5f28352941ec917a4f))
+
 ### [4.18.8](https://github.com/foreverido/uilib/compare/v4.18.7...v4.18.8) (2023-11-26)
 
 
