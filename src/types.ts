@@ -2,6 +2,8 @@ import { ChangeEvent } from 'react';
 
 export type Size = 's' | 'm' | 'l';
 
+export type Variant = 'clean' | 'default' | 'outlined';
+
 export type ComponentType = {
   className?: string;
 };
@@ -28,5 +30,3 @@ export type Date = {
   // ISO 8601 string representation of date (YYYY-MM-DD)
   ISO?: string;
 };
-
-export type Variant = 'default' | 'outlined';

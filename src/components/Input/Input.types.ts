@@ -1,6 +1,6 @@
 import { ReactNode, HTMLProps, InputHTMLAttributes } from 'react';
 
-import type { ComponentType, FormControl, Size } from '../../types';
+import type { ComponentType, FormControl, Size, Variant } from '../../types';
 import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
 export type ControlProps = HTMLProps<HTMLInputElement>;
@@ -13,7 +13,7 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     step?: number;
     size?: Size;
     label?: string;
-    variant?: 'default' | 'outlined';
+    variant?: Variant;
     // Hide the required star symbol
     hideRequiredStar?: boolean;
     // For label to be on top of the input,
