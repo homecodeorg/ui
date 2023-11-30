@@ -29,6 +29,7 @@ export default {
   minus: () => import('./minus.svg'),
   moreVertical: () => import('./moreVertical.svg'),
   moreHorizontal: () => import('./moreHorizontal.svg'),
+  output: () => import('./output.svg'),
   plus: () => import('./plus.svg'),
   redo: () => import('./redo.svg'),
   undo: () => import('./undo.svg'),
