@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.15](https://github.com/foreverido/uilib/compare/v4.18.14...v4.18.15) (2023-11-30)
+
+
+### Bug Fixes
+
+* Select - missing props.optionClassName ([1ef9b2f](https://github.com/foreverido/uilib/commit/1ef9b2f7e692ebe7517832a49e6f3b2a49aa4080))
+
 ### [4.18.14](https://github.com/foreverido/uilib/compare/v4.18.13...v4.18.14) (2023-11-30)
 
 
