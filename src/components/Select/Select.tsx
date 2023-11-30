@@ -668,6 +668,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderOption = (item, level = 0) => {
+    const { optionClassName } = this.props;
     const { expanded } = this.store;
     const { id, children, isGroup } = item;
     const selectedState = this.isSelected(id);
@@ -685,7 +686,8 @@ export class Select extends Component<T.Props, T.State> {
       isSelected && S.isSelected,
       isIndeterminate && S.isIndeterminate,
       isExpanded && S.isExpanded,
-      S[`level-${level}`]
+      S[`level-${level}`],
+      optionClassName
     );
     const props = {
       className,
