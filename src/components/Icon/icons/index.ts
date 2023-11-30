@@ -19,6 +19,7 @@ export default {
   fullscreenExit: () => import('./fullscreenExit.svg'),
   function: () => import('./function.svg'),
   gear: () => import('./gear.svg'),
+  group: () => import('./group.svg'),
   history: () => import('./history.svg'),
   instagram: () => import('./instagram.svg'),
   home: () => import('./home.svg'),
