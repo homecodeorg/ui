@@ -383,6 +383,7 @@ export class Input extends Component<T.Props> {
       required,
       hideRequiredStar,
       disabled,
+      addonRight,
     } = this.props;
     const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
     const isNumber = this.isNumber();
@@ -448,7 +449,7 @@ export class Input extends Component<T.Props> {
           )}
 
           <Label
-            className={S.label}
+            className={cn(S.label, addonRight && S.hasAddonRight)}
             size={size}
             isOnTop={isLabelOnTop}
             isError={Boolean(error)}
