@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.14](https://github.com/foreverido/uilib/compare/v4.18.13...v4.18.14) (2023-11-30)
+
+
+### Features
+
+* Icon - link ([bd78d81](https://github.com/foreverido/uilib/commit/bd78d81a352cf7368bb5a87f6e49f274cecc2a3f))
+
+
+### Bug Fixes
+
+* Input - font-size ([135d3c3](https://github.com/foreverido/uilib/commit/135d3c30879c36dc65ae63887da440998664e973))
+* Input - text overflow when there is addonRight ([1b1651d](https://github.com/foreverido/uilib/commit/1b1651d0b3d5f3d049374b8f9f9fd1eb9d33615f))
+
 ### [4.18.13](https://github.com/foreverido/uilib/compare/v4.18.12...v4.18.13) (2023-11-30)
 
 
