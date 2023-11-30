@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.10](https://github.com/foreverido/uilib/compare/v4.18.9...v4.18.10) (2023-11-30)
+
+
+### Features
+
+* Icon - eye, function, group, table ([72523cb](https://github.com/foreverido/uilib/commit/72523cb1dd160607a266012404b6b06c3012a8cd))
+
 ### [4.18.9](https://github.com/foreverido/uilib/compare/v4.18.8...v4.18.9) (2023-11-28)
 
 
