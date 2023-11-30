@@ -23,6 +23,7 @@ export default {
   history: () => import('./history.svg'),
   instagram: () => import('./instagram.svg'),
   home: () => import('./home.svg'),
+  link: () => import('./link.svg'),
   loader: () => import('./loader.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
