@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.16](https://github.com/foreverido/uilib/compare/v4.18.15...v4.18.16) (2024-02-04)
+
+
+### Bug Fixes
+
+* Icon - gear - fill=none ([ce51791](https://github.com/foreverido/uilib/commit/ce51791260bf804f00b57c2579fb4284a743a7cf))
+
 ### [4.18.15](https://github.com/foreverido/uilib/compare/v4.18.14...v4.18.15) (2023-11-30)
 
 
