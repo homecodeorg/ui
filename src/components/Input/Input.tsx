@@ -286,6 +286,8 @@ export class Input extends Component<T.Props> {
         'clear',
         'onClear',
         'hasClear',
+        // 'required',
+        'hideRequiredStar',
         'size',
         'error',
         'checkAutofill',
