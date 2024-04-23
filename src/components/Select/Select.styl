@@ -99,7 +99,7 @@ $levelGap = 24px
   display flex
   align-items center
 
-  width 100%
+  width calc(100% - 2px)
   padding-top 0 !important
   padding-bottom 0 !important
 
@@ -107,6 +107,9 @@ $levelGap = 24px
   text-align left
   user-select none
   animation fadeIn .3s ease-out
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
 
   .isTree & // TODO: remove?
     min-height 36px

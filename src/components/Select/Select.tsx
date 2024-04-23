@@ -64,6 +64,7 @@ export class Select extends Component<T.Props, T.State> {
       selected: this.getDefaultSelected(),
       expanded: this.getDefaultExpanded(props.value),
       labelClipPath: '',
+      optionsUpdated: 0,
     });
   }
 
@@ -93,7 +94,11 @@ export class Select extends Component<T.Props, T.State> {
     this.items = this.getItems();
     this.maxIndex = Math.max(0, this.items.length - 1);
 
-    if (this.store?.focusedItemIndex > this.maxIndex) {
+    if (!this.store) return;
+
+    this.store.optionsUpdated += 1;
+
+    if (this.store.focusedItemIndex > this.maxIndex) {
       this.store.focusedItemIndex = this.maxIndex;
       this.focusedItemId = this.items[this.maxIndex].id;
     }
