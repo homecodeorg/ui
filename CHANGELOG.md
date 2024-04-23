@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.19](https://github.com/foreverido/uilib/compare/v4.18.18...v4.18.19) (2024-04-23)
+
+
+### Bug Fixes
+
+* Select - update/re-render options label ([50db460](https://github.com/foreverido/uilib/commit/50db460bf864e7d2012c5353c3420ef3523f3943))
+
 ### [4.18.18](https://github.com/foreverido/uilib/compare/v4.18.17...v4.18.18) (2024-02-24)
 
 
