@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import cn from 'classnames';
 
@@ -28,6 +28,13 @@ export function Tabs(props: T.Props) {
   const [activeId, setActiveId] = useState(
     isId(initialId) ? initialId : items[0].id
   );
+
+  useEffect(() => {
+    if (isId(initialId)) {
+      setActiveId(initialId);
+    }
+  }, [initialId]);
+
   const onTabClick = useCallback((e, { id, onClick } = {} as T.Item) => {
     // @ts-ignore
     if (onClick && !onClick(e)) {
