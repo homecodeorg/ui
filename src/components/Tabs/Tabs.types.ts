@@ -22,6 +22,7 @@ export type Props = {
   className?: string;
   contentClassName?: string;
   items: Item[];
+  hideTabsIfSingle?: boolean;
   activeId?: ID;
   onChange: (id: ID) => void;
   renderAll?: boolean;
