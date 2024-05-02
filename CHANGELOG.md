@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.23](https://github.com/foreverido/uilib/compare/v4.18.22...v4.18.23) (2024-05-02)
+
+
+### Features
+
+* Tabs - update when props.activeId changed ([fee9d6c](https://github.com/foreverido/uilib/commit/fee9d6cdf7df665c161905e5a00c535517052641))
+
 ### [4.18.22](https://github.com/foreverido/uilib/compare/v4.18.21...v4.18.22) (2024-05-02)
 
 
