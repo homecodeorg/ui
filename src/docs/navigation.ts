@@ -55,6 +55,10 @@ export default [
         loader: () => import('./examples/Checkbox'),
       },
       {
+        id: 'Tabs',
+        loader: () => import('./examples/Tabs'),
+      },
+      {
         id: 'Calendar',
         loader: () => import('./examples/Calendar'),
       },

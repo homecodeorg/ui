@@ -15,6 +15,7 @@ function isId(id) {
 export function Tabs(props: T.Props) {
   const {
     size = 'm',
+    className,
     contentClassName,
     items,
     onChange,
@@ -26,8 +27,6 @@ export function Tabs(props: T.Props) {
   const [activeId, setActiveId] = useState(
     isId(initialId) ? initialId : items[0].id
   );
-  const tabsContent = useRef([]);
-
   const onTabClick = useCallback((e, { id, onClick } = {} as T.Item) => {
     // @ts-ignore
     if (onClick && !onClick(e)) {
@@ -39,9 +38,8 @@ export function Tabs(props: T.Props) {
     onChange?.(id);
   }, []);
 
-  tabsContent.current = [];
-
-  const tabs = items.map((params: T.Item) => {
+  const tabsContent = [];
+  const tabsButtons = items.map((params: T.Item) => {
     const {
       id,
       label,
@@ -54,7 +52,7 @@ export function Tabs(props: T.Props) {
     const tabContent = typeof content === 'function' ? content() : content;
 
     if (renderAll || forceRender || isActive) {
-      tabsContent.current.push(
+      tabsContent.push(
         <div
           className={cn(
             contentClassName,
@@ -81,12 +79,24 @@ export function Tabs(props: T.Props) {
     );
   });
 
+  const tabs = (
+    <ButtonGroup className={className} {...rest}>
+      {tabsButtons}
+    </ButtonGroup>
+  );
+
   if (typeof children === 'function') {
     return children({
-      tabs: <ButtonGroup {...rest}>{tabs}</ButtonGroup>,
-      content: tabsContent.current,
+      tabs,
+      content: tabsContent,
     });
   }
 
-  return <>{tabsContent.current}</>;
+  return (
+    <>
+      {tabs}
+      {children}
+      {tabsContent}
+    </>
+  );
 }

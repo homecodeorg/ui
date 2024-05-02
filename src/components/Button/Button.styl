@@ -14,28 +14,6 @@
   cursor pointer
   user-select none
 
-  &:hover
-  &:active
-    background-color var(--active-color-alpha-300)
-
-  &:active
-    opacity .7
-
-  &.loading
-    pointer-events none
-
-  &.checked
-    &
-    &:hover
-      background-color var(--accent-color)
-      color var(--decent-color)
-      box-shadow none
-
-    &:hover
-      background-color var(--accent-color-alpha-900)
-
-    path
-      fill var(--decent-color)
 
 .prefix
 .postfix
@@ -107,3 +85,25 @@
 .spinner
   margin-left var(--indent-s)
 
+
+.root
+  &:hover
+  &:active
+    background-color var(--active-color-alpha-300)
+
+  &:active
+    opacity .7
+
+  &.loading
+    pointer-events none
+
+  &.checked
+    &
+    &:hover
+      color var(--decent-color)
+      background-color var(--accent-color)
+      box-shadow none
+
+
+    path
+      fill var(--decent-color)

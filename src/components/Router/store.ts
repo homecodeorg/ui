@@ -17,11 +17,11 @@ const STORE = createStore('router', {
   un(cb) {
     spliceWhere(LISTENERS, cb);
   },
-  go(href, { replace }: { replace?: boolean } = {}) {
-    if (href === this.path) return;
+  go(path, { replace }: { replace?: boolean } = {}) {
+    if (path === this.path) return;
 
-    history[replace ? 'replaceState' : 'pushState']({}, '', href);
-    onRouteChange(href);
+    history[replace ? 'replaceState' : 'pushState']({}, '', path);
+    onRouteChange(path);
   },
   back() {
     history.back();
@@ -33,10 +33,10 @@ const STORE = createStore('router', {
   },
 });
 
-function onRouteChange(href = window.location.pathname) {
+function onRouteChange(path = window.location.pathname) {
   STORE.queryString = location.search;
   STORE.query = parseQueryParams();
-  STORE.path = href.replace(/\?.+/, '') || '/';
+  STORE.path = path.replace(/\?.+/, '') || '/';
 
   LISTENERS.forEach(cb => cb(STORE.path));
 }
