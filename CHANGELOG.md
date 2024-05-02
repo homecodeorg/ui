@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.20](https://github.com/foreverido/uilib/compare/v4.18.19...v4.18.20) (2024-05-02)
+
+
+### Features
+
+* Tabs ([ebc4f42](https://github.com/foreverido/uilib/commit/ebc4f4208de254e6bc46466e73545a158eeb0210))
+
 ### [4.18.19](https://github.com/foreverido/uilib/compare/v4.18.18...v4.18.19) (2024-04-23)
 
 
