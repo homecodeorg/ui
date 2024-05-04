@@ -8,9 +8,7 @@ import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 import * as T from './Tabs.types';
 import S from './Tabs.styl';
 
-function isId(id) {
-  return ['string', 'number'].includes(typeof id);
-}
+const isId = id => ['string', 'number'].includes(typeof id);
 
 export function Tabs(props: T.Props) {
   const {
@@ -18,7 +16,7 @@ export function Tabs(props: T.Props) {
     className,
     contentClassName,
     items,
-    hideTabsIfSingle = true,
+    hideTabsIfSingle = false,
     onChange,
     renderAll,
     activeId: initialId,
@@ -47,55 +45,52 @@ export function Tabs(props: T.Props) {
   }, []);
 
   const tabsContent = [];
-  const tabsButtons =
-    items.length === 1 && hideTabsIfSingle
-      ? []
-      : items.map((params: T.Item) => {
-          const {
-            id,
-            label,
-            forceRender,
-            content,
-            contentClassName: currContentClassName,
-            ...rest
-          } = params;
-          const isActive = activeId === id;
-          const tabContent =
-            typeof content === 'function' ? content() : content;
+  const tabsButtons = items.map((params: T.Item) => {
+    const {
+      id,
+      label,
+      forceRender,
+      content,
+      contentClassName: currContentClassName,
+      ...rest
+    } = params;
+    const isActive = activeId === id;
+    const tabContent = typeof content === 'function' ? content() : content;
 
-          if (renderAll || forceRender || isActive) {
-            tabsContent.push(
-              <div
-                className={cn(
-                  contentClassName,
-                  currContentClassName,
-                  !isActive && S.inactive
-                )}
-                key={id}
-              >
-                {tabContent}
-              </div>
-            );
-          }
+    if (renderAll || forceRender || isActive) {
+      tabsContent.push(
+        <div
+          className={cn(
+            contentClassName,
+            currContentClassName,
+            !isActive && S.inactive
+          )}
+          key={id}
+        >
+          {tabContent}
+        </div>
+      );
+    }
 
-          return (
-            <Button
-              {...rest}
-              size={size}
-              key={id}
-              onClick={e => onTabClick(e, params)}
-              checked={isActive}
-            >
-              {label}
-            </Button>
-          );
-        });
+    return (
+      <Button
+        {...rest}
+        size={size}
+        key={id}
+        onClick={e => onTabClick(e, params)}
+        checked={isActive}
+      >
+        {label}
+      </Button>
+    );
+  });
 
-  const tabs = (
-    <ButtonGroup className={className} {...rest}>
-      {tabsButtons}
-    </ButtonGroup>
-  );
+  const tabs =
+    tabsButtons.length === 1 && hideTabsIfSingle ? null : (
+      <ButtonGroup className={className} {...rest}>
+        {tabsButtons}
+      </ButtonGroup>
+    );
 
   if (typeof children === 'function') {
     return children({
