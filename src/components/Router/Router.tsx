@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo } from 'react';
-import { withStore } from 'justorm/react';
+import { withStore, useStore } from 'justorm/dist/esm/src/plugins/react';
 
 import STORE from './store';
 import Context from './context';
@@ -7,15 +7,11 @@ import { parsePath, replaceParamsInPath } from './Router.helpers';
 
 import * as T from './Router.types';
 
-export const Router = withStore({
-  router: ['path'],
-})((props: T.Props) => {
-  const {
-    children,
-    single,
-    basePath = '',
-    store: { router },
-  } = props;
+type Store = { router: RouterStore };
+
+export const Router = (props: T.Props) => {
+  const { router } = useStore<Store>({ router: ['path'] });
+  const { children, single, basePath = '' } = props;
   const ctx = useContext(Context);
   const fullPath = ctx.basePath + basePath;
 
@@ -82,7 +78,7 @@ export const Router = withStore({
   }, [children, router.path, fullPath, single]);
 
   return <>{matchedRoutes}</>;
-});
+};
 
 Router.displayName = 'Router';
 
@@ -91,3 +87,4 @@ export * from './Redirect';
 export * from './Link/Link';
 export const RouterStore = STORE;
 export const RouterContext = Context;
+export type RouterStore = typeof STORE;
