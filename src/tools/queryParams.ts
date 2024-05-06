@@ -23,9 +23,11 @@ export function stringifyQueryParams(params: Record<string, string>): string {
 }
 
 export function applyQueryParams(path, queryParams, currParams) {
+  const clearPath = path.replace(/\?.*/, '/');
+
   if (!queryParams) {
     if (Object.keys(currParams).length === 0) return path;
-    return `${path}?${stringifyQueryParams(currParams)}`;
+    return `${clearPath}?${stringifyQueryParams(currParams)}`;
   }
 
   if (typeof queryParams === 'string') {
@@ -39,9 +41,9 @@ export function applyQueryParams(path, queryParams, currParams) {
     else query[key] = value;
   });
 
-  if (Object.keys(query).length === 0) return path;
+  if (Object.keys(query).length === 0) return clearPath;
 
-  return `${path}?${stringifyQueryParams(query)}`;
+  return `${clearPath}?${stringifyQueryParams(query)}`;
 }
 
 export const setSSRQueryParams = (params): void => {
