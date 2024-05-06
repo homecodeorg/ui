@@ -21,7 +21,7 @@ export const Router = withStore({
 
   useEffect(() => {
     const onPopState = () => {
-      STORE.go(window.location.pathname, { replace: true });
+      STORE.go(window.location.pathname, {}, { replace: true });
     };
 
     window.addEventListener('popstate', onPopState);

@@ -1,7 +1,7 @@
 import { createStore } from 'justorm/react';
 
 import { addUniq, spliceWhere } from 'uilib/tools/array';
-import { parseQueryParams } from 'uilib/tools/queryParams';
+import { applyQueryParams, parseQueryParams } from 'uilib/tools/queryParams';
 import { env } from 'uilib/tools';
 
 const LISTENERS = [];
@@ -17,11 +17,16 @@ const STORE = createStore('router', {
   un(cb) {
     spliceWhere(LISTENERS, cb);
   },
-  go(path, { replace }: { replace?: boolean } = {}) {
+  go(path, query, { replace }: { replace?: boolean } = {}) {
     if (path === this.path) return;
 
-    history[replace ? 'replaceState' : 'pushState']({}, '', path);
-    onRouteChange(path);
+    const pathStr = applyQueryParams(path ?? this.path, query, this.query);
+    const action = replace ? 'replaceState' : 'pushState';
+
+    console.log('Router.go', query, pathStr);
+
+    history[action]({}, '', pathStr);
+    onRouteChange(pathStr);
   },
   back() {
     history.back();

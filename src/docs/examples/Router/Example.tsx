@@ -1,4 +1,4 @@
-import { withStore } from 'justorm/react';
+import {  useStore } from 'justorm/react';
 import { Router, Route, Link, Button, LightBox } from 'uilib';
 
 const menu = items => (
@@ -29,23 +29,26 @@ const UserPage = () => (
 );
 
 const UserFriends = () => '👮👷‍♀️💂‍♂️🕵🏻👩‍🌾';
-const UserCreatures = withStore({ router: ['path', 'query'] })(
-  ({ store: { router } }) => (
+const UserCreatures = () => {
+  const { router } = useStore({ router: ['path', 'query'] });
+
+  return (
     <>
       🦫🐬🦕🐙🐢🦄
-      <Button onClick={() => router.go(`${router.path}?modal`)}>
+      <Button onClick={() => router.go(null, { modal: true })}>
         Open modal
       </Button>
       <LightBox isOpen={'modal' in router.query} onClose={() => router.back()}>
         👻👻👻
       </LightBox>
     </>
-  )
-);
+  );
+};
 
 const basePath = '/components/Router/demo';
 
-export default withStore('router')(({ store: { router } }) => {
+export default () => {
+  const {router} = useStore({ router: [] });
   const currPath = router.path.replace(basePath, '');
 
   return (

@@ -16,6 +16,34 @@ export function parseQueryParams(qs?: string): Record<string, string> {
   );
 }
 
+export function stringifyQueryParams(params: Record<string, string>): string {
+  return Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join('&');
+}
+
+export function applyQueryParams(path, queryParams, currParams) {
+  if (!queryParams) {
+    if (Object.keys(currParams).length === 0) return path;
+    return `${path}?${stringifyQueryParams(currParams)}`;
+  }
+
+  if (typeof queryParams === 'string') {
+    return queryParams;
+  }
+
+  const query = { ...currParams };
+
+  Object.entries(queryParams).forEach(([key, value]) => {
+    if (value === false) delete query[key];
+    else query[key] = value;
+  });
+
+  if (Object.keys(query).length === 0) return path;
+
+  return `${path}?${stringifyQueryParams(query)}`;
+}
+
 export const setSSRQueryParams = (params): void => {
   Object.assign(SSRQueryParams, params);
 };
