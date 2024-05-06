@@ -6,6 +6,14 @@ import { env } from 'uilib/tools';
 
 const LISTENERS = [];
 
+type GoParams = {
+  replace?: boolean;
+};
+
+type ReplaceStateParams = {
+  quiet?: boolean;
+};
+
 const STORE = createStore('router', {
   path: env.isBrowser && location.pathname,
   params: {},
@@ -17,9 +25,10 @@ const STORE = createStore('router', {
   un(cb) {
     spliceWhere(LISTENERS, cb);
   },
-  go(path, query, { replace }: { replace?: boolean } = {}) {
+  go(path?: string, query?, params: GoParams = {}) {
     if (path === this.path) return;
 
+    const { replace } = params;
     const pathStr = applyQueryParams(path ?? this.path, query, this.query);
     const action = replace ? 'replaceState' : 'pushState';
 
@@ -32,9 +41,9 @@ const STORE = createStore('router', {
     history.back();
     onRouteChange();
   },
-  replaceState(href, { quiet }: { quiet?: boolean } = {}) {
+  replaceState(href: string, params: ReplaceStateParams = {}) {
     history.replaceState({}, '', href);
-    if (!quiet) onRouteChange(href);
+    if (!params.quiet) onRouteChange(href);
   },
 });
 
