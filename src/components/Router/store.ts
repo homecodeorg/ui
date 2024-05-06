@@ -26,7 +26,7 @@ const STORE = createStore('router', {
     spliceWhere(LISTENERS, cb);
   },
   go(path?: string, query?, params: GoParams = {}) {
-    if (path === this.path) return;
+    if (path === this.path && !query) return;
 
     const { replace } = params;
     const pathStr = applyQueryParams(path ?? this.path, query, this.query);
@@ -69,3 +69,4 @@ if (env.isBrowser) {
 }
 
 export default STORE;
+// window.routerStore = STORE;
