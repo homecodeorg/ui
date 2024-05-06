@@ -8,6 +8,7 @@ export type RedirectProps = {
 };
 
 export type RouteProps = {
+  className?: string;
   path: string;
   component: ComponentType;
   exact?: boolean;

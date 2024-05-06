@@ -25,11 +25,15 @@ const STORE = createStore('router', {
   un(cb) {
     spliceWhere(LISTENERS, cb);
   },
-  go(path?: string, query?, params: GoParams = {}) {
+  go(
+    path = this.path,
+    query: Record<string, any> | string = {},
+    params: GoParams = {}
+  ) {
     if (path === this.path && !query) return;
 
     const { replace } = params;
-    const pathStr = applyQueryParams(path ?? this.path, query, this.query);
+    const pathStr = applyQueryParams(path ?? this.path, query);
     const action = replace ? 'replaceState' : 'pushState';
 
     console.log('Router.go', query, pathStr);
@@ -69,4 +73,4 @@ if (env.isBrowser) {
 }
 
 export default STORE;
-// window.routerStore = STORE;
+window.routerStore = STORE;

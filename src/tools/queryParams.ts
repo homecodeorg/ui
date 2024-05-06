@@ -22,19 +22,15 @@ export function stringifyQueryParams(params: Record<string, string>): string {
     .join('&');
 }
 
-export function applyQueryParams(path, queryParams, currParams) {
+export function applyQueryParams(
+  path,
+  queryParams: Record<string, any> | string
+): string {
   const clearPath = path.replace(/\?.*/, '/');
 
-  if (!queryParams) {
-    if (Object.keys(currParams).length === 0) return path;
-    return `${clearPath}?${stringifyQueryParams(currParams)}`;
-  }
+  if (typeof queryParams === 'string') return queryParams;
 
-  if (typeof queryParams === 'string') {
-    return queryParams;
-  }
-
-  const query = { ...currParams };
+  const query = { ...queryParams };
 
   Object.entries(queryParams).forEach(([key, value]) => {
     if (value === false) delete query[key];
