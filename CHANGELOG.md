@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.31](https://github.com/foreverido/uilib/compare/v4.18.30...v4.18.31) (2024-05-06)
+
+
+### Features
+
+* Router - match by query param ([15dd8ca](https://github.com/foreverido/uilib/commit/15dd8ca458456e373805aac788e2e27c160af333))
+
 ### [4.18.30](https://github.com/foreverido/uilib/compare/v4.18.29...v4.18.30) (2024-05-06)
 
 
