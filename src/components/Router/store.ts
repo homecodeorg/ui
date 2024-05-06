@@ -73,4 +73,4 @@ if (env.isBrowser) {
 }
 
 export default STORE;
-window.routerStore = STORE;
+// window.routerStore = STORE;

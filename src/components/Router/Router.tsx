@@ -37,10 +37,20 @@ export const Router = (props: T.Props) => {
 
       // @ts-ignore
       const isRouteComponent = child.type.displayName === 'Route';
-      const { path, exact, component: Component, ...rest } = child.props;
+      const {
+        path,
+        queryParam,
+        exact,
+        component: Component,
+        ...rest
+      } = child.props;
 
       if (!path) {
-        if (isRouteComponent && Component) {
+        const isMatched = queryParam
+          ? router.query[queryParam]
+          : isRouteComponent && Component;
+
+        if (isMatched) {
           noMatchRoute = <Component {...rest} />;
           continue;
         }

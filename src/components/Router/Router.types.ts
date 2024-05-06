@@ -10,6 +10,8 @@ export type RedirectProps = {
 export type RouteProps = {
   className?: string;
   path: string;
+  // Name of query param to match route
+  queryParam?: string;
   component: ComponentType;
   exact?: boolean;
 } & Partial<RedirectProps>;
