@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.29](https://github.com/foreverido/uilib/compare/v4.18.28...v4.18.29) (2024-05-06)
+
+
+### Bug Fixes
+
+* Router.go() ([58f9303](https://github.com/foreverido/uilib/commit/58f9303541ae18f9ac6f5d154949169906ba46ef))
+
 ### [4.18.28](https://github.com/foreverido/uilib/compare/v4.18.27...v4.18.28) (2024-05-06)
 
 

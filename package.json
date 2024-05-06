@@ -1,6 +1,6 @@
 {
   "name": "@homecode/ui",
-  "version": "4.18.28",
+  "version": "4.18.29",
   "description": "React UI components library",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
