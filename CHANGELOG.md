@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.32](https://github.com/foreverido/uilib/compare/v4.18.31...v4.18.32) (2024-05-07)
+
+
+### Bug Fixes
+
+* justorm - update version ([478fef1](https://github.com/foreverido/uilib/commit/478fef1a6f228c39448bf1082b8ede9ca448023a))
+
 ### [4.18.31](https://github.com/foreverido/uilib/compare/v4.18.30...v4.18.31) (2024-05-06)
 
 
