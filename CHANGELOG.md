@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.35](https://github.com/foreverido/uilib/compare/v4.18.34...v4.18.35) (2024-05-07)
+
+
+### Features
+
+* Select - showSelectedCount, disableLable ([f710239](https://github.com/foreverido/uilib/commit/f71023962883fe7516bcff2c8fe69073643e5043))
+
 ### [4.18.34](https://github.com/foreverido/uilib/compare/v4.18.33...v4.18.34) (2024-05-07)
 
 
