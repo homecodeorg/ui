@@ -504,10 +504,16 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getFieldLabel(label) {
-    // @ts-ignore
-    const length = this.props.value?.length;
+    const { showSelectedCount, disableLable, value } = this.props;
 
-    if (this.isMultiple() && length) return `${label} (${length})`;
+    if (disableLable) return null;
+
+    // @ts-ignore
+    const length = value?.length;
+
+    if (this.isMultiple() && length && showSelectedCount)
+      return `${label} (${length})`;
+
     return label;
   }
 

@@ -59,6 +59,10 @@ export type Props = FormControl<Value> &
     additionalLabel?: ReactNode;
     size?: Size;
     variant?: 'default' | 'outlined';
+    // Show the number of selected items in the label
+    showSelectedCount?: boolean;
+    // Disabled label rendering
+    disableLable?: boolean;
     // Applies a blur effect to the options list
     blur?: boolean;
     // An array of options
