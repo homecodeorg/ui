@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.34](https://github.com/foreverido/uilib/compare/v4.18.33...v4.18.34) (2024-05-07)
+
+
+### Bug Fixes
+
+* Input - textarea - padding-right for scroller ([68293ad](https://github.com/foreverido/uilib/commit/68293adf405cfc13f0a198d67cdb57348fa08466))
+
 ### [4.18.33](https://github.com/foreverido/uilib/compare/v4.18.32...v4.18.33) (2024-05-07)
 
 
