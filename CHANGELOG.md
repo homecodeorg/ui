@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.37](https://github.com/foreverido/uilib/compare/v4.18.36...v4.18.37) (2024-05-09)
+
+
+### Bug Fixes
+
+* Select - conditional chaining ([2c8d5a1](https://github.com/foreverido/uilib/commit/2c8d5a1abda3c0210147677f5a983336a70c86fe))
+
 ### [4.18.36](https://github.com/foreverido/uilib/compare/v4.18.35...v4.18.36) (2024-05-09)
 
 
