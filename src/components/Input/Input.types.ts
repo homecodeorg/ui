@@ -38,5 +38,5 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     // Whether to check for autofill values and update the input field's value accordingly
     checkAutofill?: boolean;
     // In case of type=textarea, you can pass props for [Scroll|//components/Scroll] component
-    scrollProps: Partial<ScrollProps>;
+    scrollProps?: Partial<ScrollProps>;
   };
