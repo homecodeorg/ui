@@ -1,4 +1,4 @@
-import {  useStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 import { Router, Route, Link, Button, LightBox } from 'uilib';
 
 const menu = items => (
@@ -38,7 +38,7 @@ const UserCreatures = () => {
       <Button onClick={() => router.go(null, { modal: true })}>
         Open modal
       </Button>
-      <LightBox isOpen={'modal' in router.query} onClose={() => router.back()}>
+      <LightBox isOpen={!!router.query.modal} onClose={() => router.back()}>
         👻👻👻
       </LightBox>
     </>
@@ -48,7 +48,7 @@ const UserCreatures = () => {
 const basePath = '/components/Router/demo';
 
 export default () => {
-  const {router} = useStore({ router: [] });
+  const { router } = useStore({ router: [] });
   const currPath = router.path.replace(basePath, '');
 
   return (
@@ -62,4 +62,4 @@ export default () => {
       </Router>
     </>
   );
-});
+};
