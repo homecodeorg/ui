@@ -88,7 +88,7 @@ fadeMask(direction, size)
 .bar
   z-index 2
   position absolute
-  transition var(--hide-delay) opacity .1s ease-out
+  transition .1s opacity var(--hide-delay) ease-out
   cursor pointer
   overflow hidden
   touch-action none
@@ -98,7 +98,7 @@ fadeMask(direction, size)
     content ''
     position absolute
     opacity 0
-    transition calc(var(--hide-delay) * .6) opacity .3s ease-out
+    transition .3s opacity calc(var(--hide-delay) * .6) ease-out
     background-color var(--accent-color-alpha-100)
     border-radius 2px
 

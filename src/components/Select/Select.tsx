@@ -105,7 +105,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   coerceType(id) {
-    const isNumber = typeof this.ids.items[id].id === 'number';
+    const isNumber = typeof this.getItem(id)?.id === 'number';
 
     if (isNumber) return parseFloat(id);
     return id;
@@ -318,7 +318,9 @@ export class Select extends Component<T.Props, T.State> {
 
   getItems = () => [...this.props.additionalOptions, ...this.optionsTree];
 
-  getParentId = id => this.ids.items[id]?.parentId;
+  getItem = id => this.ids.items[id];
+
+  getParentId = id => this.getItem(id)?.parentId;
 
   getChildIds = id => this.ids.childIds[id];
 
@@ -493,11 +495,11 @@ export class Select extends Component<T.Props, T.State> {
       return acc;
     }, [] as T.Id[]);
 
-    return selectedPlain.map(id => this.ids.items[id].label).join(', ');
+    return selectedPlain.map(id => this.getItem(id)?.label).join(', ');
   }
 
   getLabel(id): string {
-    const { label, render } = Object(this.ids.items[id]);
+    const { label, render } = Object(this.getItem(id));
 
     if (render) return render(label);
     return label;
