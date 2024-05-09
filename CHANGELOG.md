@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.36](https://github.com/foreverido/uilib/compare/v4.18.35...v4.18.36) (2024-05-09)
+
+
+### Features
+
+* Router - setParams({}) ([0205d46](https://github.com/foreverido/uilib/commit/0205d4629fdd156b8bbc85c10a0ab1858fcfb18b))
+* Scroll - allow control autoHide delay via CSS prop --hide-delay ([c9ec1ca](https://github.com/foreverido/uilib/commit/c9ec1ca60c3947425cedb34afa30d98435e9c37f))
+
 ### [4.18.35](https://github.com/foreverido/uilib/compare/v4.18.34...v4.18.35) (2024-05-07)
 
 
