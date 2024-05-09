@@ -12,6 +12,7 @@ fadeMask(direction, size)
   position relative
   overflow hidden
   display flex
+  --hide-delay: .3s
 
 .inner
   position relative
@@ -59,7 +60,7 @@ fadeMask(direction, size)
     .x&
       mask-image fadeMask(right, 30px)
 
-.autoHide
+.autoHide:not(:hover)
   & > .bar
     opacity 0
 
@@ -87,16 +88,17 @@ fadeMask(direction, size)
 .bar
   z-index 2
   position absolute
-  transition .3s opacity .1s ease-out
+  transition var(--hide-delay) opacity .1s ease-out
   cursor pointer
   overflow hidden
   touch-action none
+  overscroll-behavior contain
 
   &::before
     content ''
     position absolute
     opacity 0
-    transition .2s opacity .3s ease-out
+    transition calc(var(--hide-delay) * .6) opacity .3s ease-out
     background-color var(--accent-color-alpha-100)
     border-radius 2px
 
