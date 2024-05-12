@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.38](https://github.com/foreverido/uilib/compare/v4.18.37...v4.18.38) (2024-05-12)
+
+
+### Bug Fixes
+
+* Input - textarea height ([15b6b50](https://github.com/foreverido/uilib/commit/15b6b503dc19b07b66f86ab4d8c15feac7ec7f56))
+
 ### [4.18.37](https://github.com/foreverido/uilib/compare/v4.18.36...v4.18.37) (2024-05-09)
 
 
