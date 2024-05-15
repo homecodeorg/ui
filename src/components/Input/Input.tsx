@@ -334,7 +334,7 @@ export class Input extends Component<T.Props> {
           y
           size={size}
           fadeSize="s"
-          className={cn(S.scroller, S.controlWrapper)}
+          className={cn(S.scroller, S.controlWrapper, scrollProps?.className)}
           {...scrollProps}
           innerProps={{
             suppressHydrationWarning: true,
