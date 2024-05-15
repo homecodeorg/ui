@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.39](https://github.com/foreverido/uilib/compare/v4.18.38...v4.18.39) (2024-05-15)
+
+
+### Bug Fixes
+
+* Input - pass className to controllerWrapper ([5e8aacb](https://github.com/foreverido/uilib/commit/5e8aacb68023f9fc2dc60cb2d28aa827954277d3))
+
 ### [4.18.38](https://github.com/foreverido/uilib/compare/v4.18.37...v4.18.38) (2024-05-12)
 
 
