@@ -334,8 +334,8 @@ export class Input extends Component<T.Props> {
           y
           size={size}
           fadeSize="s"
-          className={cn(S.scroller, S.controlWrapper, scrollProps?.className)}
           {...scrollProps}
+          className={cn(S.scroller, S.controlWrapper, scrollProps?.className)}
           innerProps={{
             suppressHydrationWarning: true,
             style: { clipPath: labelClipPath },
