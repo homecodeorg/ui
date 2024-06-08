@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.42](https://github.com/foreverido/uilib/compare/v4.18.41...v4.18.42) (2024-06-08)
+
+
+### Features
+
+* Icon - play, pause, forward, rewind ([985de46](https://github.com/foreverido/uilib/commit/985de46c95c46cda7b1f9f185de18ac1be37b4f7))
+
 ### [4.18.41](https://github.com/foreverido/uilib/compare/v4.18.40...v4.18.41) (2024-06-07)
 
 
