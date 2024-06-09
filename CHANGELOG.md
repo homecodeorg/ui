@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.44](https://github.com/foreverido/uilib/compare/v4.18.43...v4.18.44) (2024-06-09)
+
+
+### Features
+
+* Icon - folder, folderOpen ([620b62a](https://github.com/foreverido/uilib/commit/620b62ac38a7df219074a5ce50101a1f39f8bdec))
+
 ### [4.18.43](https://github.com/foreverido/uilib/compare/v4.18.42...v4.18.43) (2024-06-08)
 
 
