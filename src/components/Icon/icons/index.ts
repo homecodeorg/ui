@@ -1,3 +1,5 @@
+import { file } from 'uilib/tools';
+
 export default {
   avatar: () => import('./avatar.svg'),
   brokenImage: () => import('./brokenImage.svg'),
@@ -16,6 +18,8 @@ export default {
   externalLink: () => import('./externalLink.svg'),
   eye: () => import('./eye.svg'),
   forward: () => import('./forward.svg'),
+  folder: () => import('./folder.svg'),
+  folderOpen: () => import('./folderOpen.svg'),
   fullscreen: () => import('./fullscreen.svg'),
   fullscreenExit: () => import('./fullscreenExit.svg'),
   function: () => import('./function.svg'),
