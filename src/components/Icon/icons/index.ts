@@ -47,6 +47,7 @@ export default {
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
+  sparks: () => import('./sparks.svg'),
   table: () => import('./table.svg'),
   telegram: () => import('./telegram.svg'),
 };
