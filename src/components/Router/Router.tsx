@@ -1,13 +1,14 @@
 import { useContext, useEffect, useMemo } from 'react';
-import { withStore, useStore } from 'justorm/dist/esm/src/plugins/react';
+import { useStore } from 'justorm/dist/esm/src/plugins/react';
 
 import STORE from './store';
+import type { RouterStore as RouterStoreType } from './store';
 import Context from './context';
 import { parsePath, replaceParamsInPath } from './Router.helpers';
 
 import * as T from './Router.types';
 
-type Store = { router: RouterStore };
+type Store = { router: RouterStoreType };
 
 export const Router = (props: T.Props) => {
   const { router } = useStore<Store>({ router: ['path'] });
@@ -17,7 +18,7 @@ export const Router = (props: T.Props) => {
 
   useEffect(() => {
     const onPopState = () => {
-      STORE.go(window.location.pathname, {}, { replace: true });
+      STORE.go(window.location.pathname, STORE.query, { replace: true });
     };
 
     window.addEventListener('popstate', onPopState);
@@ -97,4 +98,4 @@ export * from './Redirect';
 export * from './Link/Link';
 export const RouterStore = STORE;
 export const RouterContext = Context;
-export type RouterStore = typeof STORE;
+export type RouterStore = RouterStoreType;

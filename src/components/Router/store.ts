@@ -77,5 +77,7 @@ if (env.isBrowser) {
   window.addEventListener('pushstate', updateRouteState);
 }
 
-export default STORE;
+export type RouterStore = typeof STORE;
+
+export default STORE as RouterStore;
 // window.routerStore = STORE;
