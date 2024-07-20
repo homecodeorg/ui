@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.47](https://github.com/foreverido/uilib/compare/v4.18.46...v4.18.47) (2024-07-20)
+
+
+### Features
+
+* Icon - geolocation ([a280170](https://github.com/foreverido/uilib/commit/a2801701611e3be9ab3b157bb3a6821209d46408))
+
 ### [4.18.46](https://github.com/foreverido/uilib/compare/v4.18.45...v4.18.46) (2024-07-01)
 
 
