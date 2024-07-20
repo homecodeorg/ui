@@ -24,6 +24,7 @@ export default {
   fullscreenExit: () => import('./fullscreenExit.svg'),
   function: () => import('./function.svg'),
   gear: () => import('./gear.svg'),
+  geolocation: () => import('./geolocation.svg'),
   group: () => import('./group.svg'),
   history: () => import('./history.svg'),
   instagram: () => import('./instagram.svg'),
