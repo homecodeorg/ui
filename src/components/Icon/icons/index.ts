@@ -45,6 +45,7 @@ export default {
   requiredStar: () => import('./requiredStar.svg'),
   rewind: () => import('./rewind.svg'),
   save: () => import('./save.svg'),
+  search: () => import('./search.svg'),
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
