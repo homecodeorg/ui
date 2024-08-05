@@ -33,6 +33,7 @@ export default {
   home: () => import('./home.svg'),
   link: () => import('./link.svg'),
   loader: () => import('./loader.svg'),
+  map: () => import('./map.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
   minus: () => import('./minus.svg'),
