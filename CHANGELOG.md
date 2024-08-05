@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.49](https://github.com/foreverido/uilib/compare/v4.18.48...v4.18.49) (2024-08-05)
+
+
+### Features
+
+* Icon - camera, image ([eca43b0](https://github.com/foreverido/uilib/commit/eca43b017c1ba0ddd50c892b96da37a91744e195))
+
 ### [4.18.48](https://github.com/foreverido/uilib/compare/v4.18.47...v4.18.48) (2024-07-22)
 
 
