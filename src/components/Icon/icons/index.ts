@@ -3,6 +3,7 @@ import { file } from 'uilib/tools';
 export default {
   avatar: () => import('./avatar.svg'),
   brokenImage: () => import('./brokenImage.svg'),
+  camera: () => import('./camera.svg'),
   check: () => import('./check.svg'),
   close: () => import('./close.svg'),
   colors: () => import('./colors.svg'),
@@ -27,6 +28,7 @@ export default {
   geolocation: () => import('./geolocation.svg'),
   group: () => import('./group.svg'),
   history: () => import('./history.svg'),
+  image: () => import('./image.svg'),
   instagram: () => import('./instagram.svg'),
   home: () => import('./home.svg'),
   link: () => import('./link.svg'),
