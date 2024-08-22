@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/dm/@foreverido/uilib?style=flat-square)](https://www.npmjs.com/package/@foreverido/uilib)
+[![npm](https://img.shields.io/npm/dm/@homecode/ui?style=flat-square)](https://www.npmjs.com/package/@homecode/ui)
 
 # UILIB
 
