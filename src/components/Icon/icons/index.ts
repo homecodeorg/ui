@@ -1,5 +1,3 @@
-import { file } from 'uilib/tools';
-
 export default {
   avatar: () => import('./avatar.svg'),
   brokenImage: () => import('./brokenImage.svg'),
@@ -53,6 +51,7 @@ export default {
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
   sparks: () => import('./sparks.svg'),
+  syncArrows: () => import('./syncArrows.svg'),
   table: () => import('./table.svg'),
   telegram: () => import('./telegram.svg'),
 };
