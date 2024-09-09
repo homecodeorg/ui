@@ -33,7 +33,7 @@
       "docs/*": ["./src/docs/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "tests/mocks"],
   "exclude": [
     "node_modules",
     // "src/docs/**/*",

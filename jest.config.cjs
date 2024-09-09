@@ -4,6 +4,8 @@ module.exports = {
   moduleNameMapper: {
     '\\.(css|less|sass|scss|styl)$': 'identity-obj-proxy',
     '^justorm/react$': 'justorm/dist/esm/src/plugins/react',
+    '^uilib(.*)$': '<rootDir>/src$1',
+    '\\.svg$': '<rootDir>/tests/mocks/svgMock.js', // Updated path
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
