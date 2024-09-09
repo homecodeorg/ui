@@ -2,10 +2,10 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '\\.(css|less|sass|scss|styl)$': 'identity-obj-proxy',
+    '\\.(css|less|sass|scss|styl)$': '<rootDir>/tests/mocks/styleMock.js',
     '^justorm/react$': 'justorm/dist/esm/src/plugins/react',
     '^uilib(.*)$': '<rootDir>/src$1',
-    '\\.svg$': '<rootDir>/tests/mocks/svgMock.js', // Updated path
+    '\\.svg$': '<rootDir>/tests/mocks/svgMock.js',
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
@@ -21,4 +21,5 @@ module.exports = {
       tsconfig: 'tsconfig.json',
     },
   },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 };

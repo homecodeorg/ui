@@ -1,8 +1,6 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { screen } from '@testing-library/dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
 import '@testing-library/jest-dom';
 import { Button } from './Button';
 
