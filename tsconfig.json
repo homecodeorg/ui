@@ -33,7 +33,7 @@
       "docs/*": ["./src/docs/*"]
     },
     "typeRoots": ["./node_modules/@types", "./tests/mocks"],
-    "types": ["jest", "node"]
+    "types": ["jest", "node", "testing-library__jest-dom"]
   },
   "include": ["src", "tests", "types/global.d.ts"],
   "exclude": [

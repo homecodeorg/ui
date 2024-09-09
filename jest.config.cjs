@@ -9,8 +9,13 @@ module.exports = {
   },
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.js$': 'babel-jest',
+    '^.+\\.mjs$': 'babel-jest',
   },
-  setupFilesAfterEnv: ['@testing-library/jest-dom'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(.*/node_modules/)?justorm|@babel/runtime|nanoid|classnames|timen)'
+  ],
+  setupFilesAfterEnv: ['@testing-library/jest-dom', '<rootDir>/jest.setup.ts'],
   moduleDirectories: ['node_modules', 'src'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/', '/bin/test.ts'],
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
@@ -21,5 +26,5 @@ module.exports = {
       tsconfig: 'tsconfig.json',
     },
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node', 'mjs'],
 };
