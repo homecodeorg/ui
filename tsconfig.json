@@ -31,9 +31,11 @@
       "uilib": ["./src"],
       "uilib/*": ["./src/*"],
       "docs/*": ["./src/docs/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./tests/mocks"],
+    "types": ["jest", "node"]
   },
-  "include": ["src"],
+  "include": ["src", "tests", "types/global.d.ts"],
   "exclude": [
     "node_modules",
     // "src/docs/**/*",
