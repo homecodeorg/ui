@@ -26,7 +26,7 @@ describe('Popup Component', () => {
     cleanup();
   });
 
-  // Test initial open state and toggle functionality
+  // Test initial closed state and toggle functionality
   it('should render closed by default and toggle open/close', async () => {
     const { findByTestId, queryByTestId, findByText } = customRender(
       <Popup
@@ -36,7 +36,10 @@ describe('Popup Component', () => {
     );
 
     const trigger = await findByTestId('popup-trigger');
+
+    // Check initial closed state
     expect(queryByTestId('popup-content')).not.toBeInTheDocument();
+    expect(trigger).not.toHaveClass('isOpen');
 
     // Open the popup
     fireEvent.click(trigger);
@@ -47,6 +50,7 @@ describe('Popup Component', () => {
 
     const popupWrapper = popupContent.closest('.contentWrapper');
     expect(popupWrapper).toHaveClass('isOpen');
+    expect(trigger).toHaveClass('isOpen');
 
     // Verify additional popup state
     expect(popupContent.closest('.isOpen')).toBeInTheDocument();
@@ -62,6 +66,7 @@ describe('Popup Component', () => {
     expect(queryByTestId('popup-content')).not.toBeInTheDocument();
     expect(document.querySelector('.isOpen')).not.toBeInTheDocument();
     expect(popupWrapper).not.toHaveClass('isOpen');
+    expect(trigger).not.toHaveClass('isOpen');
   });
 
   // Test animation and hover control
@@ -275,5 +280,23 @@ describe('Popup Component', () => {
     }, { timeout: 3000 });
 
     cleanup();
+  });
+
+  // Test initial open state
+  it('should render open when isOpen prop is true', async () => {
+    const { findByTestId } = customRender(
+      <Popup
+        isOpen={true}
+        trigger={<button data-testid="popup-trigger">Open Popup</button>}
+        content={<div data-testid="popup-content">Popup Content</div>}
+      />
+    );
+
+    const popupContent = await findByTestId('popup-content', {}, { timeout: 5000 });
+    expect(popupContent).toBeInTheDocument();
+    expect(popupContent).toBeVisible();
+
+    const popupWrapper = popupContent.closest('.contentWrapper');
+    expect(popupWrapper).toHaveClass('isOpen');
   });
 });

@@ -1,6 +1,5 @@
-import { Component, createRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import cn from 'classnames';
-import { createStore } from 'justorm/react';
 import Time from 'timen';
 
 import { Paranja } from 'uilib/components/Paranja/Paranja';
@@ -21,437 +20,383 @@ const INITIAL_OFFSET = { top: 0, left: 0 };
 
 export type PopupProps = T.Props;
 
-export class Popup extends Component<T.Props> {
-  rootElem = createRef<HTMLDivElement>();
-  triggerElem = createRef<HTMLDivElement>();
-  containerElem: HTMLDivElement = null;
+export const Popup: React.FC<PopupProps> = (props) => {
+  const {
+    isOpen: initialIsOpen = false,
+    size = 'm',
+    direction: initialDirection = '',
+    animated = true,
+    hoverControl,
+    focusControl,
+    disabled,
+    inline,
+    paranja,
+    blur,
+    elevation,
+    outlined,
+    content,
+    trigger,
+    triggerProps = {},
+    wrapperProps = {},
+    contentProps = {},
+    onOpen,
+    onClose,
+  } = props;
 
-  onContainerElemRef = elem => {
-    this.containerElem = elem;
+  const [state, setState] = useState<T.State>({
+    rootPopupId: null,
+    isOpen: initialIsOpen,
+    isContentVisible: initialIsOpen,
+    animating: false,
+    direction: initialDirection,
+    triggerBounds: null,
+  });
 
-    // TODO: useElemResize(elem, callback)
-    if (elem) {
-      this.unsubscribeSizeChange();
-      this.subscribeSizeChange();
-    }
-  };
+  const rootElem = useRef<HTMLDivElement>(null);
+  const triggerElem = useRef<HTMLDivElement>(null);
+  const containerElem = useRef<HTMLDivElement>(null);
 
-  focused = false;
-  pointerPressed = false;
-  subscribedHoverControl = false;
-  subscribedSizeChange = false;
-  pointerDownTarget = null;
-  isPointerPressedInside = false;
-  needDropOffset = false;
+  const id = useRef(H.getId());
+  const timers = useRef(Time.create());
+  const offset = useRef({ ...INITIAL_OFFSET });
 
-  id;
-  parentPopupContent;
+  const [focused, setFocused] = useState(false);
+  const [pointerPressed, setPointerPressed] = useState(false);
+  const [subscribedHoverControl, setSubscribedHoverControl] = useState(false);
+  const [subscribedSizeChange, setSubscribedSizeChange] = useState(false);
+  const [pointerDownTarget, setPointerDownTarget] = useState<EventTarget | null>(null);
+  const [isPointerPressedInside, setIsPointerPressedInside] = useState(false);
+  const [needDropOffset, setNeedDropOffset] = useState(false);
 
-  store;
-  timers = Time.create();
-  scrollParent;
-  offset = { ...INITIAL_OFFSET };
+  const updateBounds = useCallback(() => {
+    if (state.animating || !containerElem.current) return;
+    if (!triggerElem.current) return;
 
-  static defaultProps = {
-    size: 'm',
-    direction: '',
-    animated: true,
-  };
+    const trigger = triggerElem.current;
+    const bounds = {
+      minHeight: trigger.offsetHeight,
+      minWidth: trigger.offsetWidth,
+      ...getCoords(trigger),
+    };
 
-  constructor(props) {
-    super(props);
+    Object.entries(bounds).forEach(([key, value]) => {
+      triggerElem.current!.style[key as any] = value as any;
+    });
 
-    const isOpen = Boolean(props.isOpen);
+    updateOffset();
 
-    this.id = H.getId();
-    this.store = createStore(this, {
-      rootPopupId: null,
-      isOpen,
-      isContentVisible: isOpen,
-      animating: false,
-      direction: props.direction,
-      triggerBounds: null,
-    } as T.State);
-  }
+    setState(prev => ({ ...prev, triggerBounds: bounds }));
+  }, [state.animating]);
 
-  componentDidMount() {
-    const { hoverControl, focusControl } = this.props;
-    const parentPopupContent = this.triggerElem.current.closest(
-      `.${S.content}`
-    );
+  const updateOffset = useCallback(() => {
+    if (!containerElem.current) return;
 
-    document.addEventListener('pointerdown', this.onDocPointerDown, true);
-    document.addEventListener('pointerup', this.onDocPointerUp, true);
-
-    if (parentPopupContent) {
-      this.store.rootPopupId =
-        H.getPopupId(parentPopupContent, 'data-root-popup-id') ||
-        H.getPopupId(parentPopupContent, 'data-popup-id');
-    }
-
-    if (focusControl) {
-      document.addEventListener('keydown', this.onDocKeyDown, true);
-      document.addEventListener('keyup', this.onDocKeyUp);
-    }
-
-    if (hoverControl) this.subscribeHoverControl();
-    this.subscribeScroll();
-  }
-
-  componentDidUpdate(prevProps: T.Props) {
-    const { isOpen, disabled, hoverControl } = this.props;
-
-    if (disabled) {
-      this.store.isOpen = false; // close when receive disabled=true
-      return;
-    }
-
-    if (!prevProps.hoverControl && hoverControl) this.subscribeHoverControl();
-    if (prevProps.hoverControl && !hoverControl) this.unsubscribeHoverControl();
-
-    if (typeof isOpen === 'boolean' && isOpen !== prevProps.isOpen) {
-      isOpen ? this.open() : this.close();
-    }
-  }
-
-  componentWillUnmount() {
-    this.timers.clear();
-    document.removeEventListener('keyup', this.onDocKeyUp, true);
-
-    if (this.scrollParent) {
-      this.scrollParent.removeEventListener('scroll', this.close);
-    }
-
-    this.unsubscribeHoverControl();
-    this.unsubscribeSizeChange();
-    this.unsubscribeScroll();
-  }
-
-  subscribeSizeChange() {
-    if (this.subscribedSizeChange) return;
-    this.subscribedSizeChange = true;
-
-    resizeObserver.observe(this.triggerElem.current, this.onTriggerResize);
-    resizeObserver.observe(this.containerElem, this.onContainerResize);
-  }
-
-  subscribeScroll() {
-    if (isBrowser && !this.props.inline) {
-      document.addEventListener('scroll', this.onScroll, true);
-    }
-  }
-
-  unsubscribeScroll() {
-    document.removeEventListener('scroll', this.onScroll, true);
-  }
-
-  unsubscribeSizeChange() {
-    this.subscribedSizeChange = false;
-    resizeObserver.unobserve(this.triggerElem.current);
-    resizeObserver.unobserve(this.containerElem);
-  }
-
-  subscribeHoverControl() {
-    if (this.subscribedHoverControl) return;
-    this.subscribedHoverControl = true;
-
-    document.addEventListener('pointermove', this.checkHover);
-    document.addEventListener('pointerup', this.checkHover);
-  }
-
-  unsubscribeHoverControl() {
-    if (!this.subscribedHoverControl) return;
-    this.subscribedHoverControl = false;
-
-    document.removeEventListener('pointermove', this.checkHover);
-    document.removeEventListener('pointerup', this.checkHover);
-  }
-
-  updateBounds() {
-    if (this.store.animating || !this.containerElem) return;
-
-    if (!this.triggerElem.current) return;
-
-    this.updateBoundsThrottled();
-  }
-
-  updateBoundsThrottled = throttle(
-    () => {
-      const trigger = this.triggerElem.current;
-      const bounds = {
-        minHeight: trigger.offsetHeight,
-        minWidth: trigger.offsetWidth,
-        ...getCoords(trigger),
-      };
-
-      Object.entries(bounds).forEach(([key, value]) => {
-        this.triggerElem.current.style[key] = value;
-      });
-
-      this.updateOffset();
-
-      this.store.triggerBounds = bounds;
-    },
-    200,
-    { trailing: true }
-  );
-
-  prevContentBounds = { width: 0, height: 0 };
-
-  updateOffset = () => {
-    const content = this.containerElem.getBoundingClientRect();
-
-    if (
-      !content.height ||
-      !content.width ||
-      this.prevContentBounds.width !== content.width ||
-      this.prevContentBounds.height !== content.height
-    ) {
-      this.prevContentBounds = content;
-      Time.after(100, this.updateOffset);
-
-      return;
-    }
-
-    const { offset } = this;
+    const content = containerElem.current.getBoundingClientRect();
     const { innerHeight, innerWidth } = window;
-    const bottom = content.top + content.height + OFFSET_GAP - offset.top;
-    const right = content.left + content.width + OFFSET_GAP - offset.left;
+    const bottom = content.top + content.height + OFFSET_GAP - offset.current.top;
+    const right = content.left + content.width + OFFSET_GAP - offset.current.left;
 
     if (content.top < 0) {
-      offset.top = -content.top + OFFSET_GAP;
+      offset.current.top = -content.top + OFFSET_GAP;
     } else if (bottom > innerHeight) {
-      offset.top = innerHeight - bottom;
+      offset.current.top = innerHeight - bottom;
     }
 
     if (content.left < 0) {
-      offset.left = -content.left + OFFSET_GAP;
+      offset.current.left = -content.left + OFFSET_GAP;
     } else if (right > innerWidth) {
-      offset.left = innerWidth - right;
+      offset.current.left = innerWidth - right;
     }
 
-    this.applyOffset();
-  };
+    applyOffset();
+  }, []);
 
-  applyOffset() {
-    const { left, top } = this.offset;
+  const applyOffset = useCallback(() => {
+    if (!containerElem.current) return;
+    const { left, top } = offset.current;
+    containerElem.current.style.marginTop = `${top}px`;
+    containerElem.current.style.marginLeft = `${left}px`;
+  }, []);
 
-    this.containerElem.style.marginTop = `${top}px`;
-    this.containerElem.style.marginLeft = `${left}px`;
-  }
+  const subscribeHoverControl = useCallback(() => {
+    if (subscribedHoverControl) return;
+    setSubscribedHoverControl(true);
+    document.addEventListener('pointermove', checkHover);
+    document.addEventListener('pointerup', checkHover);
+  }, [subscribedHoverControl]);
 
-  checkHover = debounce((e: any) => {
-    if (this.isPointerPressedInside) return;
+  const unsubscribeHoverControl = useCallback(() => {
+    if (!subscribedHoverControl) return;
+    setSubscribedHoverControl(false);
+    document.removeEventListener('pointermove', checkHover);
+    document.removeEventListener('pointerup', checkHover);
+  }, [subscribedHoverControl]);
 
-    const { isOpen, rootPopupId } = this.store;
-    const overTrigger = this.isPointerOver(e.target, S.trigger);
-    const overContent = this.isPointerOver(e.target, S.content);
+  const subscribeSizeChange = useCallback(() => {
+    if (subscribedSizeChange) return;
+    setSubscribedSizeChange(true);
+    resizeObserver.observe(triggerElem.current!, updateBounds);
+    resizeObserver.observe(containerElem.current!, updateBounds);
+  }, [subscribedSizeChange, updateBounds]);
 
-    if (!isOpen) {
-      if (overTrigger) this.open();
+  const unsubscribeSizeChange = useCallback(() => {
+    setSubscribedSizeChange(false);
+    resizeObserver.unobserve(triggerElem.current!);
+    resizeObserver.unobserve(containerElem.current!);
+  }, []);
+
+  const subscribeScroll = useCallback(() => {
+    if (isBrowser && !inline) {
+      document.addEventListener('scroll', onScroll, true);
+    }
+  }, [inline]);
+
+  const unsubscribeScroll = useCallback(() => {
+    document.removeEventListener('scroll', onScroll, true);
+  }, []);
+
+  const onScroll = useCallback(throttle((e: Event) => {
+    if (!state.isOpen) {
+      const { top, left } = offset.current;
+      if (left || top) {
+        offset.current = { ...INITIAL_OFFSET };
+        applyOffset();
+      }
       return;
     }
 
-    // isOpen
+    if (
+      !isPointerOver(e.target as HTMLElement, S.content) &&
+      !H.childs[id.current]?.length
+    ) {
+      setNeedDropOffset(true);
+      close();
+    }
+  }, 200), [state.isOpen, applyOffset, close]);
+
+  const isPointerOver = useCallback((target: HTMLElement, elem: string) => {
+    return target.closest(`.${elem}[data-popup-id="${id.current}"]`);
+  }, []);
+
+  const checkHover = useCallback(debounce((e: PointerEvent) => {
+    if (isPointerPressedInside) return;
+
+    const overTrigger = isPointerOver(e.target as HTMLElement, S.trigger);
+    const overContent = isPointerOver(e.target as HTMLElement, S.content);
+
+    if (!state.isOpen) {
+      if (overTrigger) open();
+      return;
+    }
+
     if (overTrigger || overContent) return;
 
-    if (typeof rootPopupId === 'number') {
-      if (H.isLastChild(rootPopupId, this.id)) {
-        this.close();
-        H.unsetChild(rootPopupId, this.id);
+    if (typeof state.rootPopupId === 'number') {
+      if (H.isLastChild(state.rootPopupId, id.current)) {
+        close();
+        H.unsetChild(state.rootPopupId, id.current);
       }
     } else {
-      const isOverAnyPopupContent = e.target.closest(`.${S.content}`);
+      const isOverAnyPopupContent = (e.target as HTMLElement).closest(`.${S.content}`);
 
-      if (!isOverAnyPopupContent || !H.childs[this.id]?.length) {
-        this.close();
+      if (!isOverAnyPopupContent || !H.childs[id.current]?.length) {
+        close();
       }
     }
-  }, 100);
+  }, 100), [state.isOpen, state.rootPopupId, isPointerPressedInside, open, close]);
 
-  isLastClickInside = () =>
-    this.pointerDownTarget &&
-    (this.pointerDownTarget.closest(`.${S.trigger}`) ||
-      this.pointerDownTarget.closest(`.${S.content}`));
+  const onDocPointerDown = useCallback((e: PointerEvent) => {
+    setPointerDownTarget(e.target);
+    setIsPointerPressedInside(isLastClickInside());
+    timers.current.after(100, () => setPointerDownTarget(null));
+  }, []);
 
-  onDocPointerDown = (e: PointerEvent) => {
-    this.pointerDownTarget = e.target;
-    this.isPointerPressedInside = this.isLastClickInside();
-    this.timers.after(100, () => (this.pointerDownTarget = null));
-  };
+  const onDocPointerUp = useCallback((e: PointerEvent) => {
+    if (!isPointerPressedInside) close();
+    setIsPointerPressedInside(false);
+  }, [isPointerPressedInside, close]);
 
-  onDocPointerUp = (e: PointerEvent) => {
-    if (!this.isPointerPressedInside) this.close();
-    this.isPointerPressedInside = false;
-  };
+  const onDocKeyDown = useCallback((e: KeyboardEvent) => {
+    setPointerDownTarget(null);
+  }, []);
 
-  isPointerOver(target, elem) {
-    return target.closest(`.${elem}[data-popup-id="${this.id}"]`);
-  }
-
-  onScroll = throttle(e => {
-    if (!this.store.isOpen) {
-      const { top, left } = this.offset;
-
-      if (left || top) {
-        this.offset = { ...INITIAL_OFFSET };
-        this.applyOffset();
-      }
-
+  const onDocKeyUp = useCallback((e: KeyboardEvent) => {
+    if (state.isOpen && e.key === 'Escape') {
+      e.stopPropagation();
+      close();
       return;
     }
 
-    // if scrolling outside this popup - close it
-    if (
-      !this.isPointerOver(e.target, S.content) &&
-      !H.childs[this.id]?.length
-    ) {
-      this.needDropOffset = true;
-      this.close();
-    }
-  }, 200);
-
-  onDocKeyDown = (e: KeyboardEvent) => {
-    this.pointerDownTarget = null;
-  };
-
-  onDocKeyUp = (e: KeyboardEvent) => {
-    if (this.store.isOpen && e.key === 'Escape') {
+    if (focused && /Enter| /.test(e.key)) {
       e.stopPropagation();
-      this.close();
-      return;
+      toggle();
     }
+  }, [state.isOpen, focused, close, toggle]);
 
-    if (this.focused && /Enter| /.test(e.key)) {
-      e.stopPropagation();
-      this.toggle();
-    }
-  };
+  const onTriggerPointerDown = useCallback((e: React.PointerEvent) => {
+    setPointerDownTarget(e.target);
+    setPointerPressed(true);
+  }, []);
 
-  onTriggerPointerDown = e => {
-    this.pointerDownTarget = e.target;
-    this.pointerPressed = true;
-  };
+  const onTriggerPointerUp = useCallback((e: React.PointerEvent) => {
+    setPointerPressed(false);
+    if (e.target === pointerDownTarget) toggle();
+  }, [pointerDownTarget, toggle]);
 
-  onTriggerPointerUp = e => {
-    this.pointerPressed = false;
-    if (e.traget === this.pointerDownTarget) this.toggle();
-  };
+  const onFocus = useCallback((e: React.FocusEvent) => {
+    setFocused(true);
+    triggerProps.onFocus?.(e);
 
-  onFocus = e => {
-    this.focused = true;
-    this.props.triggerProps?.onFocus?.(e);
+    if (!pointerPressed) open();
+  }, [pointerPressed, open]);
 
-    if (!this.pointerPressed) this.open();
-  };
+  const onBlur = useCallback((e: React.FocusEvent) => {
+    setFocused(false);
+    triggerProps.onBlur?.(e);
 
-  onBlur = e => {
-    this.focused = false;
-    this.props.triggerProps?.onBlur?.(e);
-
-    // give time to fire clicks inside popup
-    this.timers.after(60, () => {
-      if (!this.isLastClickInside()) this.close();
+    timers.current.after(60, () => {
+      if (!isLastClickInside()) close();
     });
-  };
+  }, [close]);
 
-  onTriggerResize = () => {
-    this.updateBounds();
-  };
+  const isLastClickInside = useCallback(() => {
+    return pointerDownTarget &&
+      (pointerDownTarget as HTMLElement).closest(`.${S.trigger}`) ||
+      (pointerDownTarget as HTMLElement).closest(`.${S.content}`);
+  }, [pointerDownTarget]);
 
-  onContainerResize = () => {
-    this.updateBounds();
-  };
+  const open = useCallback(throttle(() => {
+    if (state.isOpen) return;
 
-  open = throttle(() => {
-    const { rootPopupId } = this.store;
+    updateBounds();
+    subscribeSizeChange();
+    subscribeScroll();
+    setState(prev => ({ ...prev, isContentVisible: true }));
+    changeState(true, afterOpen);
 
-    if (this.store.isOpen) return;
+    if (state.rootPopupId) H.setChild(state.rootPopupId, id.current);
+  }, 100), [state.isOpen, state.rootPopupId, updateBounds, subscribeSizeChange, subscribeScroll]);
 
-    this.updateBounds();
-    this.subscribeSizeChange();
-    this.subscribeScroll();
-    this.store.isContentVisible = true;
-    this.changeState(true, this.afterOpen);
+  const close = useCallback(() => {
+    if (!state.isOpen) return;
 
-    if (rootPopupId) H.setChild(rootPopupId, this.id);
-  }, 100);
+    unsubscribeSizeChange();
+    changeState(false, afterClose);
+  }, [state.isOpen, unsubscribeSizeChange]);
 
-  close = () => {
-    if (!this.store.isOpen) return;
-
-    this.unsubscribeSizeChange();
-    this.changeState(false, this.afterClose);
-  };
-
-  changeState(isOpen: boolean, callback) {
-    const { animated } = this.props;
-
-    this.timers.clear();
-    this.store.isOpen = isOpen;
+  const changeState = useCallback((isOpen: boolean, callback: () => void) => {
+    timers.current.clear();
+    setState(prev => ({ ...prev, isOpen }));
 
     if (animated) {
-      this.store.animating = true;
-      this.timers.after(ANIMATION_DURATION + 500, () => {
-        this.store.animating = false;
+      setState(prev => ({ ...prev, animating: true }));
+      timers.current.after(ANIMATION_DURATION + 500, () => {
+        setState(prev => ({ ...prev, animating: false }));
         callback();
       });
     } else {
       callback();
     }
-  }
+  }, [animated]);
 
-  afterOpen = () => {
-    this.props.onOpen?.();
-  };
+  const afterOpen = useCallback(() => {
+    onOpen?.();
+  }, [onOpen]);
 
-  afterClose = () => {
-    this.store.isContentVisible = false;
-    this.dropOffset();
-    this.props.onClose?.();
-  };
+  const afterClose = useCallback(() => {
+    setState(prev => ({ ...prev, isContentVisible: false }));
+    dropOffset();
+    onClose?.();
+  }, [onClose]);
 
-  dropOffset() {
-    if (!this.needDropOffset) return;
+  const dropOffset = useCallback(() => {
+    if (!needDropOffset) return;
+    offset.current = { ...INITIAL_OFFSET };
+    applyOffset();
+  }, [needDropOffset, applyOffset]);
 
-    this.offset = { ...INITIAL_OFFSET };
-    this.applyOffset();
-  }
+  const toggle = useCallback(throttle(() => {
+    state.isOpen ? close() : open();
+  }, 100), [state.isOpen, close, open]);
 
-  toggle = throttle(() => {
-    this.store.isOpen ? this.close() : this.open();
-  }, 100);
+  useEffect(() => {
+    const parentPopupContent = triggerElem.current?.closest(`.${S.content}`);
 
-  renderTrigger() {
-    const { trigger, content, disabled, focusControl, hoverControl, ...rest } =
-      this.props;
-    const triggerProps = { ...rest.triggerProps };
-    const { isOpen } = this.store;
+    if (parentPopupContent) {
+      setState(prev => ({
+        ...prev,
+        rootPopupId: H.getPopupId(parentPopupContent, 'data-root-popup-id') ||
+          H.getPopupId(parentPopupContent, 'data-popup-id')
+      }));
+    }
 
+    document.addEventListener('pointerdown', onDocPointerDown, true);
+    document.addEventListener('pointerup', onDocPointerUp, true);
+
+    if (focusControl) {
+      document.addEventListener('keydown', onDocKeyDown, true);
+      document.addEventListener('keyup', onDocKeyUp);
+    }
+
+    if (hoverControl) subscribeHoverControl();
+    subscribeScroll();
+
+    updateBounds();
+    subscribeSizeChange();
+
+    return () => {
+      timers.current.clear();
+      document.removeEventListener('pointerdown', onDocPointerDown, true);
+      document.removeEventListener('pointerup', onDocPointerUp, true);
+      document.removeEventListener('keydown', onDocKeyDown, true);
+      document.removeEventListener('keyup', onDocKeyUp, true);
+      unsubscribeHoverControl();
+      unsubscribeSizeChange();
+      unsubscribeScroll();
+    };
+  }, [
+    focusControl,
+    hoverControl,
+    subscribeHoverControl,
+    subscribeScroll,
+    unsubscribeHoverControl,
+    unsubscribeSizeChange,
+    unsubscribeScroll,
+    onDocPointerDown,
+    onDocPointerUp,
+    onDocKeyDown,
+    onDocKeyUp,
+    updateBounds,
+    subscribeSizeChange
+  ]);
+
+  const renderTrigger = () => {
     if (!trigger) return null;
 
     const disableTrigger = disabled || !content;
     const classesTrigger = cn(
       S.trigger,
-      isOpen && S.isOpen,
+      state.isOpen && S.isOpen,
       disableTrigger && S.disabled,
       triggerProps.className
     );
 
+    const newTriggerProps = { ...triggerProps };
+
     if (!disableTrigger) {
-      triggerProps.role = 'button';
+      newTriggerProps.role = 'button';
 
       if (hoverControl) {
-        Object.assign(triggerProps, {
-          onPointerDown: this.onTriggerPointerDown,
-          onPointerUp: this.onTriggerPointerUp,
+        Object.assign(newTriggerProps, {
+          onPointerDown: onTriggerPointerDown,
+          onPointerUp: onTriggerPointerUp,
         });
       }
 
       if (focusControl) {
-        Object.assign(triggerProps, {
-          onFocus: this.onFocus,
-          onBlur: this.onBlur,
+        Object.assign(newTriggerProps, {
+          onFocus,
+          onBlur,
         });
       }
     }
@@ -459,55 +404,32 @@ export class Popup extends Component<T.Props> {
     return (
       <div
         className={classesTrigger}
-        {...triggerProps}
+        {...newTriggerProps}
         suppressHydrationWarning
-        data-popup-id={this.id}
-        ref={this.triggerElem}
+        data-popup-id={id.current}
+        ref={triggerElem}
       >
         {trigger}
       </div>
     );
-  }
+  };
 
-  renderContent() {
-    const {
-      content,
-      contentProps = {},
-      wrapperProps = {},
-      size,
-      disabled,
-      inline,
-      outlined,
-      animated,
-      paranja,
-      blur,
-      elevation,
-    } = this.props;
-    const {
-      isOpen,
-      isContentVisible,
-      animating,
-      direction,
-      triggerBounds,
-      rootPopupId,
-    } = this.store;
-
+  const renderContent = () => {
     if (disabled) return null;
 
     const wrapperClasses = cn(
       S.contentWrapper,
       blur && S.blur,
       inline && S.inline,
-      isOpen && S.isOpen,
+      state.isOpen && S.isOpen,
       wrapperProps.className
     );
 
-    const trigger = this.triggerElem.current;
-    const [axis, float] = direction.split('-');
+    const [axis, float] = state.direction.split('-');
     const classes = cn(
       S.content,
       outlined && S.outlined,
-      animated && animating && S.animating,
+      animated && state.animating && S.animating,
       elevation && S[`elevation-${elevation}`],
       S[`size-${size}`],
       S[`axis-${axis}`],
@@ -515,45 +437,40 @@ export class Popup extends Component<T.Props> {
       contentProps.className
     );
 
-    if (trigger && !inline && triggerBounds) {
-      wrapperProps.style = { ...triggerBounds };
+    const newWrapperProps = { ...wrapperProps };
+    if (triggerElem.current && !inline && state.triggerBounds) {
+      newWrapperProps.style = { ...state.triggerBounds };
     }
 
     const contentNode = (
-      <div {...wrapperProps} className={wrapperClasses}>
+      <div {...newWrapperProps} className={wrapperClasses}>
         <div
           {...contentProps}
-          ref={this.onContainerElemRef}
+          ref={containerElem}
           className={classes}
           suppressHydrationWarning
-          data-popup-id={this.id}
-          data-root-popup-id={rootPopupId}
+          data-popup-id={id.current}
+          data-root-popup-id={state.rootPopupId}
           style={{
-            marginTop: this.offset.top,
-            marginLeft: this.offset.left,
+            marginTop: offset.current.top,
+            marginLeft: offset.current.left,
           }}
         >
-          {paranja && !rootPopupId && (
-            <Paranja visible={isContentVisible} blur={blur} />
+          {paranja && !state.rootPopupId && (
+            <Paranja visible={state.isContentVisible} blur={blur} />
           )}
-          {isContentVisible && <>{content}</>}
+          {state.isContentVisible && <>{content}</>}
         </div>
       </div>
     );
 
-    if (inline) return contentNode;
-    return <Portal>{contentNode}</Portal>;
-  }
+    return inline ? contentNode : <Portal>{contentNode}</Portal>;
+  };
 
-  render() {
-    const { className } = this.props;
-    const classes = cn(S.root, className);
-
-    return (
-      <div className={classes} ref={this.rootElem}>
-        {this.renderTrigger()}
-        {this.renderContent()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className={cn(S.root, props.className)} ref={rootElem}>
+      {renderTrigger()}
+      {renderContent()}
+    </div>
+  );
+};

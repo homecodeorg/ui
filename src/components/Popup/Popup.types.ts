@@ -75,6 +75,10 @@ export type Props = ComponentType & {
 };
 
 export type State = {
+  rootPopupId: number | null;
   isOpen: boolean;
   isContentVisible: boolean;
+  animating: boolean;
+  direction: Direction;
+  triggerBounds: DOMRect | null;
 };
