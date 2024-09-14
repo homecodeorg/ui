@@ -25,7 +25,7 @@ export function Tabs(props: T.Props) {
     ...rest
   } = props;
   const [activeId, setActiveId] = useState(
-    isId(initialId) ? initialId : items[0].id
+    isId(initialId) ? initialId : allowEmpty ? null : items[0].id
   );
 
   useEffect(() => {
