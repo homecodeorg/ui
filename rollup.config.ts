@@ -87,7 +87,7 @@ export default [
 
       json(),
 
-      svgr(),
+      svgr({ exportType: 'default' }),
       // styles({ modules: true }),
       // stylusCssModules({ output: 'index.css' }),
 

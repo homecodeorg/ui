@@ -1,7 +1,7 @@
 /index.*
 bin/
 build/
-src/
+/src/
 dist/esm/types/src/docs/
 assets/
 CHANGELOG.md

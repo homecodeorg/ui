@@ -86,24 +86,12 @@ export default (env, argv) => {
         },
         {
           test: /\.svg$/,
-          exclude: paths.modules,
-          oneOf: [
+          use: [
             {
-              issuer: /\.(t|j)sx?$/,
-              use: [
-                {
-                  loader: 'babel-loader',
-                },
-                {
-                  loader: 'react-svg-loader',
-                },
-              ],
-            },
-            {
-              loader: 'file-loader',
+              loader: '@svgr/webpack',
               options: {
-                name: 'static/[name].[ext]',
-                outputPath: 'images/',
+                icon: true,
+                exportType: 'default', // Set to 'default' to use default import
               },
             },
           ],

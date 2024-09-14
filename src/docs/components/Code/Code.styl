@@ -54,6 +54,9 @@
   border-radius inherit
   flex 1
 
+  @media(orientation: portrait)
+    height 50%
+
 .editorContainer
   position relative
   border-bottom-left-radius 0
@@ -142,11 +145,14 @@
   .editorContainer
     max-height 60vh
 
-  .preview::before
-    left 1px
-    right 1px
-    height 1px
-    width unset
+  .preview
+    max-height 100%
+
+    &::before
+      left 1px
+      right 1px
+      height 1px
+      width unset
 
 @media (orientation: landscape)
   .preview
