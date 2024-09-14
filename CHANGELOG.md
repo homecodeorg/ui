@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.52](https://github.com/foreverido/uilib/compare/v4.18.51...v4.18.52) (2024-09-14)
+
+
+### Bug Fixes
+
+* **build:** .npmignore - include dist/node_modules/ ([ec24a69](https://github.com/foreverido/uilib/commit/ec24a69ab7009c41d26659f5a81cde8035fbce52))
+
 ### [4.18.51](https://github.com/foreverido/uilib/compare/v4.18.50...v4.18.51) (2024-09-14)
 
 
