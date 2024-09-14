@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.53](https://github.com/foreverido/uilib/compare/v4.18.52...v4.18.53) (2024-09-14)
+
+
+### Bug Fixes
+
+* Tabs - allowEmpty - initial state ([9c4d6b6](https://github.com/foreverido/uilib/commit/9c4d6b678e24752475098e1f71420ba5efd3023a))
+
 ### [4.18.52](https://github.com/foreverido/uilib/compare/v4.18.51...v4.18.52) (2024-09-14)
 
 
