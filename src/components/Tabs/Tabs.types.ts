@@ -23,6 +23,8 @@ export type Props = {
   contentClassName?: string;
   items: Item[];
   hideTabsIfSingle?: boolean;
+  // Allow to unselect tab, so no content will be rendered
+  allowEmpty?: boolean;
   activeId?: ID;
   onChange: (id: ID) => void;
   renderAll?: boolean;

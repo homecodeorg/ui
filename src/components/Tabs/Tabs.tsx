@@ -17,6 +17,7 @@ export function Tabs(props: T.Props) {
     contentClassName,
     items,
     hideTabsIfSingle = false,
+    allowEmpty = false,
     onChange,
     renderAll,
     activeId: initialId,
@@ -33,16 +34,21 @@ export function Tabs(props: T.Props) {
     }
   }, [initialId]);
 
-  const onTabClick = useCallback((e, { id, onClick } = {} as T.Item) => {
-    // @ts-ignore
-    if (onClick && !onClick(e)) {
-      e.peventDefault();
-      return;
-    }
+  const onTabClick = useCallback(
+    (e, { id, onClick } = {} as T.Item) => {
+      // @ts-ignore
+      if (onClick && !onClick(e)) {
+        e.peventDefault();
+        return;
+      }
 
-    setActiveId(id);
-    onChange?.(id);
-  }, []);
+      const newId = allowEmpty && id === activeId ? null : id;
+
+      setActiveId(newId);
+      onChange?.(newId);
+    },
+    [activeId]
+  );
 
   const tabsContent = [];
   const tabsButtons = items.map((params: T.Item) => {
