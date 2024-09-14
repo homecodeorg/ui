@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.51](https://github.com/foreverido/uilib/compare/v4.18.50...v4.18.51) (2024-09-14)
+
+
+### Features
+
+* Icons - syncArrows ([2c00231](https://github.com/foreverido/uilib/commit/2c002316f6af38c92a74b53c0e4f7858474b68a7))
+* Tabs - allowEmpty ([26d067c](https://github.com/foreverido/uilib/commit/26d067cd8a8f8b73a20e8d437a77405412ed5baa))
+* **testing:** Set up Jest configuration and add Button component tests ([1ce006f](https://github.com/foreverido/uilib/commit/1ce006f7e5fbb1d67aba0142cb743c7c0c7dbcb0))
+
+
+### Bug Fixes
+
+* Build(webpack/rollup) - svgr - exportType:default ([eb811f7](https://github.com/foreverido/uilib/commit/eb811f7f97ad633bd589f3aa92d0c5e948f7e4aa))
+
 ### [4.18.50](https://github.com/foreverido/uilib/compare/v4.18.49...v4.18.50) (2024-08-05)
 
 
