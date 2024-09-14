@@ -5,7 +5,7 @@ build/
 dist/esm/types/src/docs/
 assets/
 CHANGELOG.md
-node_modules/
+./node_modules/
 config/
 *.config.*
 .editorconfig
