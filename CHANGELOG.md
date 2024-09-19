@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.55](https://github.com/foreverido/uilib/compare/v4.18.54...v4.18.55) (2024-09-19)
+
+
+### Features
+
+* IconButton - contentBefore/contentAfter ([03b54a2](https://github.com/foreverido/uilib/commit/03b54a2cc5de00f6a78c664b28a758822e11f285))
+
 ### [4.18.54](https://github.com/foreverido/uilib/compare/v4.18.53...v4.18.54) (2024-09-19)
 
 
