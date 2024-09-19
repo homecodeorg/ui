@@ -219,7 +219,11 @@ export function TypesTable({
   hideRequiredStart = false,
   customLinks = {},
 }) {
-  const { kind, ext, ...props } = TYPES[scope][type];
+  const typeData = TYPES[scope]?.[type];
+
+  if (!typeData) return null;
+
+  const { kind, ext, ...props } = typeData;
 
   const renderComments = useCallback(comments => {
     if (!comments) return null;

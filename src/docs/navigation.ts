@@ -51,6 +51,10 @@ export default [
         loader: () => import('./examples/Button'),
       },
       {
+        id: 'IconButton',
+        loader: () => import('./examples/IconButton'),
+      },
+      {
         id: 'Checkbox',
         loader: () => import('./examples/Checkbox'),
       },
