@@ -1,5 +1,6 @@
 import cn from 'classnames';
 
+import type { ReactNode } from 'react';
 import type { IconType } from 'uilib/components/Icon/Icon.types';
 import type { ButtonProps } from 'uilib/components/Button/Button';
 import type { Size } from 'uilib/types';
@@ -16,12 +17,16 @@ export type IconButtonProps = Omit<
   type: IconType;
   className?: string;
   size?: Size;
+  contentBefore?: ReactNode;
+  contentAfter?: ReactNode;
 };
 
 export function IconButton({
   type,
   size,
   className,
+  contentBefore,
+  contentAfter,
   // @ts-ignore
   ...rest
 }: IconButtonProps) {
@@ -32,7 +37,9 @@ export function IconButton({
       variant="clear"
       size={size}
     >
+      {contentBefore}
       <Icon type={type} size={size} />
+      {contentAfter}
     </Button>
   );
 }
