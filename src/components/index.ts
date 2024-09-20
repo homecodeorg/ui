@@ -13,7 +13,6 @@ export * from './Form/Form';
 export * from './Gallery/Gallery';
 export * from './Heading/Heading';
 export * from './Icon/Icon';
-export * from './IconButton/IconButton';
 export * from './Input/Input';
 export * from './InputFile/InputFile';
 export * from './Label/Label';

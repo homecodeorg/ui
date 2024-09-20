@@ -14,6 +14,22 @@
   cursor pointer
   user-select none
 
+  &:active
+    opacity .7
+
+  &.loading
+    pointer-events none
+
+  &.checked
+    &
+    &:hover
+      color var(--decent-color)
+      background-color var(--accent-color)
+      box-shadow none
+
+    path
+      fill var(--decent-color)
+
 
 .prefix
 .postfix
@@ -58,9 +74,26 @@
 
 .variant-clear
 .variant-default
+.variant-outlined
+.variant-primary
+  &:hover
+  &:active
+    background-color var(--active-color-alpha-300)
+
+.variant-clear
+.variant-default
   &:hover
   &:focus
     controlButtonVariantFocus('default')
+
+.variant-text
+  controlButtonVariant('text')
+
+  &:hover
+    controlButtonVariantHover('text')
+    background-color transparent !important
+  &:focus
+    controlButtonVariantFocus('text')
 
 .variant-clear
   controlButtonVariant('clear')
@@ -84,26 +117,3 @@
 
 .spinner
   margin-left var(--indent-s)
-
-
-.root
-  &:hover
-  &:active
-    background-color var(--active-color-alpha-300)
-
-  &:active
-    opacity .7
-
-  &.loading
-    pointer-events none
-
-  &.checked
-    &
-    &:hover
-      color var(--decent-color)
-      background-color var(--accent-color)
-      box-shadow none
-
-
-    path
-      fill var(--decent-color)

@@ -30,7 +30,7 @@ control()
     pointer-events none
 
 controlButtonVariant(variant)
-  if variant == 'clear'
+  if variant == 'clear' or variant == 'text'
     background-color transparent
 
   if variant == 'default'
@@ -45,6 +45,9 @@ controlButtonVariant(variant)
     color var(--accent-color-alpha-900)
 
 controlButtonVariantHover(variant)
+  if variant == 'text'
+    color var(--active-color)
+
   if variant == 'clear'
     background-color var(--active-color-alpha-300)
 
@@ -55,6 +58,10 @@ controlButtonVariantHover(variant)
     background-color var(--active-color-alpha-800)
 
 controlButtonVariantFocus(variant)
+  if variant == 'text'
+    color var(--active-color)
+    background-color transparent
+
   if variant == 'clear'
     background-color var(--active-color-alpha-300)
 

@@ -7,7 +7,7 @@ export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   // Text or child elements to be displayed inside the button
   children: ReactNode;
   // Style variant of the button
-  variant?: 'clear' | 'default' | 'outlined' | 'primary';
+  variant?: 'text' | 'clear' | 'default' | 'outlined' | 'primary';
   // Size of the button
   size?: Size;
   // Whether the button should be in a loading state

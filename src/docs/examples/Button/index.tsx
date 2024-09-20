@@ -1,8 +1,11 @@
 import { Heading, Link } from 'uilib';
 import { ComponentLayout } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import simple from '!!raw-loader!./Simple';
+import complex from '!!raw-loader!./Complex';
 import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
+
+import S from './styles.styl';
 
 const name = 'Button';
 const Docs = () => (
@@ -24,7 +27,10 @@ export default () => (
   <ComponentLayout
     name={name}
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
-    scope={{}}
+    examples={[
+      { id: 'simple', label: 'Demo', code: simple },
+      { id: 'complex', label: 'Complex', code: complex },
+    ]}
+    scope={{ S }}
   />
 );
