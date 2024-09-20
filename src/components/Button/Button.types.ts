@@ -16,6 +16,8 @@ export type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   checked?: boolean;
   // Whether the button should have a square shape
   square?: boolean;
+  // Whether the button should have a round corners
+  round?: boolean;
   // Element to be prepended to the children
   prefixElem?: ReactNode;
   // Element to be appended to the children

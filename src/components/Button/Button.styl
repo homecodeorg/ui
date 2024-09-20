@@ -71,6 +71,14 @@
   padding 0
   justify-content center
 
+.round
+  &.size-s
+    border-radius 'calc(%s / 2)' % $controlSizeS
+    
+  &.size-m
+    border-radius 'calc(%s / 2)' % $controlSizeM
+  &.size-l
+    border-radius 'calc(%s / 2)' % $controlSizeL
 
 .variant-clear
 .variant-default

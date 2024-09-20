@@ -15,6 +15,7 @@ export function Button(props: T.Props) {
     loading,
     checked,
     square,
+    round,
     onMouseUp,
     children,
     type = 'button',
@@ -33,6 +34,7 @@ export function Button(props: T.Props) {
     loading && S.loading,
     checked && S.checked,
     square && S.square,
+    round && S.round,
     className
   );
 
