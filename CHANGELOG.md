@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.56](https://github.com/foreverido/uilib/compare/v4.18.55...v4.18.56) (2024-09-20)
+
+
+### Features
+
+* Button - round ([7f071d7](https://github.com/foreverido/uilib/commit/7f071d76d6fa7528424f46aebb67825a77b1d7c3))
+* Icon - update sizes ([3f06eb5](https://github.com/foreverido/uilib/commit/3f06eb5eafdea65b7825851d23715121dd75bebe))
+
+
+### Bug Fixes
+
+* Button - variant=text ([0a63c2a](https://github.com/foreverido/uilib/commit/0a63c2aaf25f7db4fa9282b76c43fa83592d4e6a))
+
 ### [4.18.55](https://github.com/foreverido/uilib/compare/v4.18.54...v4.18.55) (2024-09-19)
 
 
