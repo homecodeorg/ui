@@ -16,6 +16,7 @@ const getEventCoords = e => ({
   y: e.clientY,
 });
 
+const OFFSET_THRESHOL = 5;
 const AXES = ['x', 'y'];
 const BY_AXIS = {
   x: {
@@ -78,6 +79,12 @@ export class Scroll extends Component<T.Props> {
       isScrolling: false,
       activeAxis: null,
       coeff: { x: 0, y: 0 },
+      hasOffset: {
+        top: false,
+        left: false,
+        right: false,
+        bottom: false,
+      },
     });
   }
 
@@ -102,16 +109,15 @@ export class Scroll extends Component<T.Props> {
 
   observeScrollHeight = () => {
     this.eachAxis(axis => {
-      if (
-        (this.props[axis] && this.isScrollChanged(axis)) ||
-        this.isBoudingsChanged(axis)
-      ) {
-        this.update(axis);
-      }
+      const needUpdate =
+        (this.props[axis] && this.isScrollSizeChanged(axis)) ||
+        this.isBoudingsChanged(axis);
+
+      if (needUpdate) this.update(axis);
     });
   };
 
-  isScrollChanged(axis) {
+  isScrollSizeChanged(axis) {
     const currScrolls = this.getScrollSize(axis);
     const isChanged = this.prevScrolls[axis] !== currScrolls[axis];
 
@@ -153,6 +159,7 @@ export class Scroll extends Component<T.Props> {
 
   updateAll = () => {
     this.eachAxis(this.update);
+    this.updateHasOffsets();
   };
 
   update = axis => {
@@ -171,7 +178,7 @@ export class Scroll extends Component<T.Props> {
     if (thumb) thumb.style[sizeField] = this.getCoeffStyle(axis);
   }
 
-  updatePos = axis => {
+  updatePos(axis) {
     const thumb = this.thumbELem[axis].current;
 
     if (!this.innerElem || !thumb) return;
@@ -193,16 +200,41 @@ export class Scroll extends Component<T.Props> {
     this.pos[axis] = pos;
     // thumb.style.transform = `translate${AXIS}(${pos}px)`;
     thumb.style[posField] = this.getPosStyle(axis);
-  };
+  }
 
-  updateScroll = (axis, e) => {
+  updateScroll(axis, e) {
     const coords = getEventCoords(e);
     const scrollPos = BY_AXIS[axis].scrollPos;
     const pos = coords[axis] - this.prevCoords[axis];
 
     this.prevCoords = coords;
     this.innerElem[scrollPos] += pos / this.store.coeff[axis];
-  };
+  }
+
+  updateHasOffsets() {
+    const { x, y } = this.props;
+    const { hasOffset } = this.store;
+    const {
+      scrollTop,
+      scrollLeft,
+      scrollHeight,
+      scrollWidth,
+      offsetHeight,
+      offsetWidth,
+    } = this.innerElem;
+
+    if (y) {
+      hasOffset.top = scrollTop > 0;
+      hasOffset.bottom =
+        scrollHeight - (scrollTop + offsetHeight) > OFFSET_THRESHOL;
+    }
+
+    if (x && !(hasOffset.top || hasOffset.bottom)) {
+      hasOffset.left = scrollLeft > 0;
+      hasOffset.right =
+        scrollWidth - (scrollLeft + offsetWidth) > OFFSET_THRESHOL;
+    }
+  }
 
   dropScrollingState = debounce(() => (this.store.isScrolling = false), 2000);
 
@@ -234,11 +266,13 @@ export class Scroll extends Component<T.Props> {
     const { onScroll } = this.props;
     const { activeAxis, isScrolling } = this.store;
 
+    this.updateHasOffsets();
+
     onScroll?.(e);
 
     if (!activeAxis) {
       this.eachAxis(axis => {
-        if (this.isScrollChanged(axis)) this.update(axis);
+        if (this.isScrollSizeChanged(axis)) this.update(axis);
       });
     }
 
@@ -312,13 +346,17 @@ export class Scroll extends Component<T.Props> {
 
   renderInner() {
     const { innerClassName, innerProps, children, smooth } = this.props;
-    const { activeAxis } = this.store;
+    const { activeAxis, hasOffset } = this.store;
 
     const innerClasses = cn(
       S.inner,
       innerProps?.className,
       innerClassName,
-      !activeAxis && smooth && S.smooth
+      !activeAxis && smooth && S.smooth,
+      hasOffset.top && S.hasOffsetTop,
+      hasOffset.bottom && S.hasOffsetBottom,
+      hasOffset.right && S.hasOffsetRight,
+      hasOffset.left && S.hasOffsetLeft
     );
     const props = { ...innerProps };
 
