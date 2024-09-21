@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.57](https://github.com/foreverido/uilib/compare/v4.18.56...v4.18.57) (2024-09-21)
+
+
+### Features
+
+* Scroll - draw fade only when has offset ([3986db8](https://github.com/foreverido/uilib/commit/3986db8623021bd1c807d42120bca1a8cfafcb4f))
+
 ### [4.18.56](https://github.com/foreverido/uilib/compare/v4.18.55...v4.18.56) (2024-09-20)
 
 
