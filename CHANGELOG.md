@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.59](https://github.com/foreverido/uilib/compare/v4.18.58...v4.18.59) (2024-09-27)
+
+
+### Bug Fixes
+
+* Scroll - style helpers, attrs filtering ([18962d4](https://github.com/foreverido/uilib/commit/18962d47e7eca5b5989e66194737b8235128fd2c))
+* Table - adjust scrollbars position ([ca574e3](https://github.com/foreverido/uilib/commit/ca574e39ecbb14018def71b4a77340777602d6c6))
+
 ### [4.18.58](https://github.com/foreverido/uilib/compare/v4.18.57...v4.18.58) (2024-09-27)
 
 ### [4.18.57](https://github.com/foreverido/uilib/compare/v4.18.56...v4.18.57) (2024-09-21)
