@@ -404,6 +404,8 @@ export class Scroll extends Component<T.Props> {
       'smooth',
       'className',
       'innerClassName',
+      'xScrollbarClassName',
+      'yScrollbarClassName',
       'innerProps',
       'onInnerRef',
       'thumbClassName',

@@ -1,0 +1,14 @@
+fadeMask(direction, size)
+  linear-gradient(to direction, rgba(0,0,0,0), #000 size, #000 'calc(100% - %s)' % size, rgba(0,0,0,0))
+
+fadeMaskTop(size)
+  linear-gradient(to bottom, rgba(0,0,0,0), #000 size)
+
+fadeMaskBottom(size)
+  linear-gradient(to top, rgba(0,0,0,0), #000 size)
+
+fadeMaskLeft(size)
+  linear-gradient(to right, rgba(0,0,0,0), #000 size)
+
+fadeMaskRight(size)
+  linear-gradient(to left, rgba(0,0,0,0), #000 size)
