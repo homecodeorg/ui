@@ -12,12 +12,14 @@ export type Props = ComponentType &
     innerClassName?: string;
     // CSS class to apply to the scrollbar thumb element
     thumbClassName?: string;
+    // CSS class to apply to the horizontal scrollbar element
+    xScrollbarClassName?: string;
+    // CSS class to apply to the vertical scrollbar element
+    yScrollbarClassName?: string;
     // Additional HTML attributes to apply to the inner container element
     innerProps?: HTMLAttributes<HTMLDivElement>;
     // Callback to get a reference to the inner container element
     onInnerRef?: (ref: HTMLDivElement | null) => void;
-    // Whether to display an extra-wide scrollbar thumb.
-    extraWide?: boolean;
     // Whether to enable horizontal scrolling.
     x?: boolean;
     // Whether to enable vertical scrolling.

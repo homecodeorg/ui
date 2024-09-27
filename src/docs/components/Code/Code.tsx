@@ -103,6 +103,7 @@ export class Code extends Component<Props> {
           y
           fadeSize="m"
           className={S.editorContainer}
+          yScrollbarClassName={S.scrollbar}
           offset={{ y: { before: 14, after: 14 } }}
         >
           <Editor id={id} code={code} />

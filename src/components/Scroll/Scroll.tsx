@@ -294,15 +294,15 @@ export class Scroll extends Component<T.Props> {
   };
 
   onPointerMove = e => {
-    const { activeAxis: axis } = this.store;
+    const { activeAxis } = this.store;
 
-    if (!axis) return;
+    if (!activeAxis) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    this.updateScroll(axis, e);
-    this.updatePos(axis);
+    this.updateScroll(activeAxis, e);
+    this.updatePos(activeAxis);
   };
 
   onPointerUp = e => {
@@ -327,8 +327,14 @@ export class Scroll extends Component<T.Props> {
       [posField]: this.getPosStyle(axis),
     };
 
+    const className = cn(
+      S.bar,
+      S[axis],
+      activeAxis === axis && S.isActive,
+      this.props[`${axis}ScrollbarClassName`]
+    );
     const barProps = {
-      className: cn(S.bar, S[axis], activeAxis === axis && S.isActive),
+      className,
       style: this.getOffset(axis),
       onPointerDown: this.onPointerDown.bind(this, axis),
     };
@@ -375,7 +381,7 @@ export class Scroll extends Component<T.Props> {
   }
 
   render() {
-    const { y, x, size, fadeSize, extraWide, autoHide, className } = this.props;
+    const { y, x, size, fadeSize, autoHide, className } = this.props;
     const { isScrolling, activeAxis } = this.store;
 
     const classes = cn(
@@ -385,9 +391,8 @@ export class Scroll extends Component<T.Props> {
       S[`size-${size}`],
       fadeSize && S[`fadeSize-${fadeSize}`],
       autoHide && S.autoHide,
-      extraWide && S.extraWide,
       (isScrolling || activeAxis) && S.isScrolling,
-      this.isTouch && S.isTouch,
+      this.isTouch ? S.isTouch : S.isDesktop,
       className
     );
     const props = omit(this.props, [
@@ -404,7 +409,6 @@ export class Scroll extends Component<T.Props> {
       'thumbClassName',
       'autoHide',
       'children',
-      'extraWide',
     ]);
 
     return (
