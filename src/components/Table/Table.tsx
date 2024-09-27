@@ -45,7 +45,14 @@ export class Table extends Component<T.Props> {
 
     return (
       <div className={cn(S.root, blur && S.blur, className)}>
-        <Scroll x y offset={{ x: { before: 10, after: 10 } }}>
+        <Scroll
+          x
+          y
+          offset={{ x: { before: 10, after: 10 } }}
+          className={S.scroll}
+          xScrollbarClassName={S.xScrollbar}
+          yScrollbarClassName={S.yScrollbar}
+        >
           <table>
             <thead>
               <tr>{columns.map(this.renderHeaderColumn)}</tr>

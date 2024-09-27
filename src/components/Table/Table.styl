@@ -1,8 +1,10 @@
 .root
+  --brad: var(--border-radius-l)
   position relative
   overflow hidden
-  border-radius var(--border-radius-l)
+  border-radius var(--brad)
   box-shadow 0 0 0 2px var(--accent-color-alpha-100)
+  max-height 100%
 
   table
     min-width 100%
@@ -33,6 +35,16 @@
 
   tr:last-child td
     padding-bottom var(--indent-l) // for scrollbar
+    border-bottom-left-radius var(--brad)
+    border-bottom-right-radius var(--brad)
+
+.scroll
+  position static
+
+.xScrollbar
+  transform translateY(4px)
+.yScrollbar
+  transform translateX(4px)
 
 .sticky
   position sticky
