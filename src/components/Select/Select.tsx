@@ -162,10 +162,6 @@ export class Select extends Component<T.Props, T.State> {
     return { [value]: true };
   }
 
-  isDisabled() {
-    return this.props.disabled || this.items.length === 0;
-  }
-
   isClickedInside = elem =>
     elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`);
 
@@ -812,7 +808,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   render() {
-    const { className, popupProps, size, error, blur } = this.props;
+    const { className, popupProps, size, error, blur, disabled } = this.props;
     const { isOpen, isFocused } = this.store;
     const classes = cn(S.root, className, S[`size-${size}`]);
 
@@ -826,10 +822,10 @@ export class Select extends Component<T.Props, T.State> {
           hoverControl={isFocused}
           blur={blur}
           isOpen={isOpen}
+          disabled={disabled}
           {...popupProps}
           onOpen={this.onPopupOpen}
           onClose={this.onPopupClose}
-          disabled={this.isDisabled()}
           trigger={this.renderTrigger()}
           triggerProps={{
             onFocus: this.onFocus,
