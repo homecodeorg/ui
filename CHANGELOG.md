@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.61](https://github.com/foreverido/uilib/compare/v4.18.60...v4.18.61) (2024-11-03)
+
+
+### Features
+
+* Select (isSearchable) - onSeachChange ([6526ade](https://github.com/foreverido/uilib/commit/6526ade1a95b4242479dc358a09f036faa66820b))
+
 ### [4.18.60](https://github.com/foreverido/uilib/compare/v4.18.59...v4.18.60) (2024-11-03)
 
 
