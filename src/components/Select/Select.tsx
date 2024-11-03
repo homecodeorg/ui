@@ -244,6 +244,7 @@ export class Select extends Component<T.Props, T.State> {
 
   onSearchChange = (e, value) => {
     this.setSearchVal(value);
+    this.props.onSeachChange?.(value);
   };
 
   onExpandClick(e, id) {
@@ -566,10 +567,10 @@ export class Select extends Component<T.Props, T.State> {
     const value = this.getInputVal();
     const props = {
       ...this.getTriggerProps(),
-      ...inputProps,
-      error: this.isErrorVisible(),
       // addonLeft: this.renderSelectedItems(),
       addonRight: this.renderTriggerArrow(),
+      ...inputProps,
+      error: this.isErrorVisible(),
       value,
       onChange: this.onSearchChange,
       ref: this.triggerInputRef,

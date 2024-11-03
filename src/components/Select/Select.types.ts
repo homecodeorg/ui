@@ -82,6 +82,7 @@ export type Props = FormControl<Value> &
     // Expand selected items on first open
     expandSelected?: boolean;
     onChange: (value: Value) => void;
+    onSeachChange?: (value: string) => void;
     onOpen?: () => void;
     onClose?: () => void;
     // Whether to show the search input field
