@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.60](https://github.com/foreverido/uilib/compare/v4.18.59...v4.18.60) (2024-11-03)
+
+
+### Bug Fixes
+
+* Select -> Popup - disasbled prop ([de634e8](https://github.com/foreverido/uilib/commit/de634e84b0857dad34e5fcc3054040de2ff00deb))
+
 ### [4.18.59](https://github.com/foreverido/uilib/compare/v4.18.58...v4.18.59) (2024-09-27)
 
 
