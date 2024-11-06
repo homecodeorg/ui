@@ -4,8 +4,8 @@ module.exports = {
   ReactComponent: function SvgMock(props) {
     return React.createElement('svg', {
       ...props,
-      'data-testid': 'svg-mock'
+      'data-testid': 'svg-mock',
     });
   },
-  default: 'SvgMock'
+  default: 'SvgMock',
 };

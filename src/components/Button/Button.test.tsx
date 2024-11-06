@@ -41,7 +41,7 @@ describe('Button', () => {
     const button = screen.getByRole('button');
     expect(button).toHaveClass('loading');
     expect(screen.getByText('Loading')).toBeInTheDocument();
-    // expect(screen.getByTestId('spinner')).toBeInTheDocument();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
 
   test('renders in checked state', () => {
