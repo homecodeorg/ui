@@ -45,6 +45,7 @@ export default {
   undo: () => import('./undo.svg'),
   requiredStar: () => import('./requiredStar.svg'),
   rewind: () => import('./rewind.svg'),
+  route: () => import('./route.svg'),
   save: () => import('./save.svg'),
   search: () => import('./search.svg'),
   send: () => import('./send.svg'),
