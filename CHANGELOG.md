@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.63](https://github.com/foreverido/uilib/compare/v4.18.62...v4.18.63) (2024-11-11)
+
+
+### Features
+
+* Select - props.searchValue to control search input value ([33fd34c](https://github.com/foreverido/uilib/commit/33fd34cc8106769dcbed059957d7e335b1990a17))
+
 ### [4.18.62](https://github.com/foreverido/uilib/compare/v4.18.61...v4.18.62) (2024-11-11)
 
 
