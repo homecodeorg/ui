@@ -79,6 +79,8 @@ export type Props = FormControl<Value> &
     //
     // Pass array for multiple selection
     value?: Value;
+    // Control search input value
+    searchValue?: string;
     // Expand selected items on first open
     expandSelected?: boolean;
     onChange: (value: Value) => void;

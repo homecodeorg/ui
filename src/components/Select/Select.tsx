@@ -69,10 +69,14 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   componentDidUpdate(prevProps) {
-    const { options, value } = this.props;
+    const { options, value, searchValue } = this.props;
 
     if (!compare(value, prevProps.value)) {
       this.store.selected = this.getDefaultSelected();
+    }
+
+    if (!compare(searchValue, prevProps.searchValue)) {
+      this.setSearchVal(searchValue);
     }
 
     if (!compare(options, prevProps.options)) {
@@ -230,7 +234,6 @@ export class Select extends Component<T.Props, T.State> {
   onFocus = e => {
     const { onFocus } = this.props;
 
-    this.setSearchVal('');
     this.store.isFocused = true;
     onFocus?.(e);
   };
@@ -474,9 +477,10 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getInputVal(): T.Value {
-    const { isFocused, searchVal, selected } = this.store;
+    const { isFocused, selected } = this.store;
+    const searchValue = this.props.searchValue ?? this.store.searchVal;
 
-    if (isFocused && searchVal) return searchVal as T.Id;
+    if (isFocused && searchValue) return searchValue;
 
     const selectedPlain = Object.entries(selected).reduce((acc, entry) => {
       const parentId = this.coerceType(entry[0]);
@@ -491,6 +495,8 @@ export class Select extends Component<T.Props, T.State> {
 
       return acc;
     }, [] as T.Id[]);
+
+    if (selectedPlain.length === 0) return searchValue;
 
     return selectedPlain.map(id => this.getItem(id)?.label).join(', ');
   }
