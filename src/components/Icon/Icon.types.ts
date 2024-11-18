@@ -8,6 +8,7 @@ export type IconSize = 'xs' | Size;
 export type IconType = keyof typeof CUSTOM_ICONS;
 
 export type Props = ComponentType & {
-  type: IconType;
+  icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  type?: IconType;
   size: IconSize;
 };

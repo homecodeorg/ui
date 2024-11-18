@@ -11,12 +11,16 @@ export const icons = ICONS;
 export type { IconType } from './Icon.types';
 
 export function Icon(props: T.Props) {
-  const { className, type, size, ...rest } = props;
+  const { className, icon: CustomIcon, type, size, ...rest } = props;
+
   const iconProps = {
     className: cn(S.root, S[`size-${size}`], className),
     role: 'img',
     ...rest,
   };
+
+  if (CustomIcon) return <CustomIcon {...iconProps} />;
+
   const localIcon = ICONS[type];
 
   if (!localIcon) {
