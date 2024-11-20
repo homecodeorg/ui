@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.65](https://github.com/foreverido/uilib/compare/v4.18.64...v4.18.65) (2024-11-20)
+
+
+### Features
+
+* Icon - star, flyover, clearAll ([611c027](https://github.com/foreverido/uilib/commit/611c027e6c3b268dd3c14836bf74a37155d47de7))
+
 ### [4.18.64](https://github.com/foreverido/uilib/compare/v4.18.63...v4.18.64) (2024-11-18)
 
 
