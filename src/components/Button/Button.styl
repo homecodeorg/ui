@@ -22,10 +22,14 @@
 
   &.checked
     &
+    &:focus
     &:hover
       color var(--decent-color)
-      background-color var(--accent-color)
+      background-color var(--accent-color) !important
       box-shadow none
+
+    &:focus
+      box-shadow 0 0 0 2px var(--active-color)
 
     path
       fill var(--decent-color)
@@ -74,7 +78,7 @@
 .round
   &.size-s
     border-radius 'calc(%s / 2)' % $controlSizeS
-    
+
   &.size-m
     border-radius 'calc(%s / 2)' % $controlSizeM
   &.size-l
