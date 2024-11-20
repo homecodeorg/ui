@@ -334,14 +334,14 @@ export class Input extends Component<T.Props> {
           y
           size={size}
           fadeSize="s"
-          {...scrollProps}
           className={cn(S.scroller, S.controlWrapper, scrollProps?.className)}
+          offset={{
+            y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
+          }}
+          {...scrollProps}
           innerProps={{
             suppressHydrationWarning: true,
             style: { clipPath: labelClipPath },
-          }}
-          offset={{
-            y: { before: TEXTAREA_SCROLL_TOP_OFFSET[size], after: 20 },
           }}
           key="scroller"
         >

@@ -1,25 +1,25 @@
-import { Component, createRef, ReactNode } from 'react';
-import cn from 'classnames';
-import compare from 'compareq';
-import pick from 'lodash.pick';
-import omit from 'lodash.omit';
-import { createStore } from 'justorm/react';
-import Time from 'timen';
+import * as H from './Select.helpers';
+import * as T from './Select.types';
 
-import { Icon } from 'uilib/components/Icon/Icon';
+import { Component, ReactNode, createRef } from 'react';
+import { INTERACTION_MODE, getInteractionMode } from 'uilib/tools/dom';
+
+import { AssistiveText } from 'uilib/components/AssistiveText/AssistiveText';
 import { Button } from 'uilib/components/Button/Button';
+import { Icon } from 'uilib/components/Icon/Icon';
 import { Input } from 'uilib/components/Input/Input';
 import { Label } from 'uilib/components/Label/Label';
 import { Popup } from 'uilib/components/Popup/Popup';
-import { Scroll } from 'uilib/components/Scroll/Scroll';
 import { RequiredStar } from 'uilib/components/RequiredStar/RequiredStar';
-import { AssistiveText } from 'uilib/components/AssistiveText/AssistiveText';
-import { getInteractionMode, INTERACTION_MODE } from 'uilib/tools/dom';
-import throttle from 'uilib/tools/throttle';
-
-import * as T from './Select.types';
-import * as H from './Select.helpers';
 import S from './Select.styl';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
+import Time from 'timen';
+import cn from 'classnames';
+import compare from 'compareq';
+import { createStore } from 'justorm/react';
+import omit from 'lodash.omit';
+import pick from 'lodash.pick';
+import throttle from 'uilib/tools/throttle';
 
 export const SelectHelpers = H;
 
@@ -480,7 +480,7 @@ export class Select extends Component<T.Props, T.State> {
     const { isFocused, selected } = this.store;
     const searchValue = this.props.searchValue ?? this.store.searchVal;
 
-    if (isFocused && searchValue) return searchValue;
+    if (isFocused) return searchValue ?? '';
 
     const selectedPlain = Object.entries(selected).reduce((acc, entry) => {
       const parentId = this.coerceType(entry[0]);
