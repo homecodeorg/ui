@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.66](https://github.com/foreverido/uilib/compare/v4.18.65...v4.18.66) (2024-11-20)
+
+
+### Bug Fixes
+
+* Button - checked - :hover :focus - styles ([907c4a9](https://github.com/foreverido/uilib/commit/907c4a9ded344ce2f0af02f8a8385ffe456d2886))
+
 ### [4.18.65](https://github.com/foreverido/uilib/compare/v4.18.64...v4.18.65) (2024-11-20)
 
 
