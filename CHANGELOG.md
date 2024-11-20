@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.67](https://github.com/foreverido/uilib/compare/v4.18.66...v4.18.67) (2024-11-20)
+
+
+### Bug Fixes
+
+* Input type=textarea - allow override scrollProps ([779b504](https://github.com/foreverido/uilib/commit/779b504302dae3d2d311863d2c662a7806c1d6b0))
+
 ### [4.18.66](https://github.com/foreverido/uilib/compare/v4.18.65...v4.18.66) (2024-11-20)
 
 
