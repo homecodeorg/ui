@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.18.68](https://github.com/foreverido/uilib/compare/v4.18.67...v4.18.68) (2025-01-05)
+
+
+### Bug Fixes
+
+* Select- isSearchable - manage searchVal when isFocused or not ([f9cb40d](https://github.com/foreverido/uilib/commit/f9cb40d74c50b292f878c44c4904a9725fcd3683))
+
 ### [4.18.67](https://github.com/foreverido/uilib/compare/v4.18.66...v4.18.67) (2024-11-20)
 
 
