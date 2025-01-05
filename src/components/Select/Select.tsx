@@ -312,8 +312,10 @@ export class Select extends Component<T.Props, T.State> {
   };
 
   setSearchVal(searchVal) {
-    this.searchValLower = searchVal.toLowerCase();
-    this.store.searchVal = searchVal;
+    const searchString = String(searchVal);
+
+    this.searchValLower = searchString.toLowerCase();
+    this.store.searchVal = searchString;
   }
 
   getItems = () => [...this.props.additionalOptions, ...this.optionsTree];
@@ -477,10 +479,14 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getInputVal(): T.Value {
-    const { isFocused, selected } = this.store;
+    const { value, options } = this.props;
+    const { isFocused, selected, isOpen } = this.store;
     const searchValue = this.props.searchValue ?? this.store.searchVal;
 
-    if (isFocused) return searchValue ?? '';
+    if (isFocused) {
+      if (isOpen) return searchValue ?? '';
+      if (value) return value;
+    }
 
     const selectedPlain = Object.entries(selected).reduce((acc, entry) => {
       const parentId = this.coerceType(entry[0]);
@@ -496,9 +502,11 @@ export class Select extends Component<T.Props, T.State> {
       return acc;
     }, [] as T.Id[]);
 
-    if (selectedPlain.length === 0) return searchValue;
+    if (selectedPlain.length > 0) {
+      return selectedPlain.map(id => this.getItem(id)?.label).join(', ');
+    }
 
-    return selectedPlain.map(id => this.getItem(id)?.label).join(', ');
+    return searchValue;
   }
 
   getLabel(id): string {
