@@ -96,15 +96,15 @@ export class Select extends Component<T.Props, T.State> {
     this.ids = H.mapById(options);
     this.optionsTree = H.buildOptionsTree(options, this.ids);
     this.items = this.getItems();
-    this.maxIndex = Math.max(0, this.items.length - 1);
+    this.maxIndex = this.items.length;
 
     if (!this.store) return;
 
     this.store.optionsUpdated += 1;
 
-    if (this.store.focusedItemIndex > this.maxIndex) {
+    if (this.store.focusedItemIndex > this.maxIndex && this.maxIndex >= 0) {
       this.store.focusedItemIndex = this.maxIndex;
-      this.focusedItemId = this.items[this.maxIndex].id;
+      this.focusedItemId = this.items[this.maxIndex]?.id;
     }
   }
 
