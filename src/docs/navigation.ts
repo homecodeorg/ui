@@ -146,6 +146,10 @@ export default [
         id: 'Link',
         loader: () => import('./examples/Link'),
       },
+      {
+        id: 'Menu',
+        loader: () => import('./examples/Menu'),
+      },
     ],
   },
 ] as GroupItem[];

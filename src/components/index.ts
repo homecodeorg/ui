@@ -18,6 +18,7 @@ export * from './InputFile/InputFile';
 export * from './Label/Label';
 export * from './Lazy/Lazy';
 export * from './LightBox/LightBox';
+export * from './Menu/Menu';
 export * from './Notifications/Notifications';
 export * from './Paranja/Paranja';
 export * from './Popup/Popup';
