@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.19.0](https://github.com/foreverido/uilib/compare/v4.18.70...v4.19.0) (2025-01-08)
+
+
+### Features
+
+* + Autocomplete, Shimmer ([3076091](https://github.com/foreverido/uilib/commit/3076091df3c0ab2f04ee5d52721fa0b3070dd2cd))
+* + Menu ([70d126e](https://github.com/foreverido/uilib/commit/70d126ed138989a9d05d573e165db8cb8a739e22))
+
 ### [4.18.70](https://github.com/foreverido/uilib/compare/v4.18.69...v4.18.70) (2025-01-06)
 
 ### [4.18.69](https://github.com/foreverido/uilib/compare/v4.18.68...v4.18.69) (2025-01-06)
