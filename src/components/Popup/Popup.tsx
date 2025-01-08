@@ -430,7 +430,7 @@ export class Popup extends Component<T.Props> {
 
     if (!trigger) return null;
 
-    const disableTrigger = disabled || !content;
+    const disableTrigger = disabled || !trigger;
     const classesTrigger = cn(
       S.trigger,
       isOpen && S.isOpen,

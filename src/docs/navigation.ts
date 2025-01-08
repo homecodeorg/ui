@@ -75,6 +75,10 @@ export default [
         loader: () => import('./examples/Input'),
       },
       {
+        id: 'Autocomplete',
+        loader: () => import('./examples/Autocomplete'),
+      },
+      {
         id: 'InputFile',
         loader: () => import('./examples/InputFile'),
       },

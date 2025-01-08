@@ -13,9 +13,9 @@ export type FormFieldChangeHandler = (
   value: any
 ) => void | boolean;
 
-export type FormControl<T> = {
+export type FormControl<T, E = HTMLInputElement> = {
   value: T;
-  onChange?: (e: ChangeEvent | null, value: T) => void | boolean;
+  onChange?: (e: ChangeEvent<E> | null, value: T) => void | boolean;
   required?: boolean;
   disabled?: boolean;
   error?: string | boolean;

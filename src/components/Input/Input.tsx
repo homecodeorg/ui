@@ -206,10 +206,10 @@ export class Input extends Component<T.Props> {
   handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = this.getValue(e.target.value);
 
-    this.onChange(value);
+    this.onChange(value, e);
   };
 
-  onChange = (value, e?) => {
+  onChange = (value: string, e?: ChangeEvent<HTMLInputElement>) => {
     const { onChange, changeOnEnd, type } = this.props;
     const isNumber = type === 'number';
 

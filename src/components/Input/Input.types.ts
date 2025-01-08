@@ -1,4 +1,4 @@
-import { ReactNode, HTMLProps, InputHTMLAttributes } from 'react';
+import { ReactNode, HTMLProps, InputHTMLAttributes, ChangeEvent } from 'react';
 
 import type { ComponentType, FormControl, Size, Variant } from '../../types';
 import type { Props as ScrollProps } from '../Scroll/Scroll.types';
@@ -6,8 +6,8 @@ import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;
 export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
-  Omit<ControlProps, 'ref'> &
-  FormControl<Value> & {
+  Omit<ControlProps, 'ref' | 'onChange'> &
+  FormControl<Value, HTMLInputElement> & {
     name?: string;
     // Step value for number inputs
     step?: number;

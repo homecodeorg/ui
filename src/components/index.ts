@@ -1,4 +1,5 @@
 export * from './AssistiveText/AssistiveText';
+export * from './Autocomplete/Autocomplete';
 export * from './Button/Button';
 export * from './ButtonGroup/ButtonGroup';
 export * from './Calendar/Calendar';
@@ -28,6 +29,7 @@ export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';
 export * from './Scroll/Scroll';
+export * from './Shimmer/Shimmer';
 export * from './Spinner/Spinner';
 export * from './Table/Table';
 export * from './Tabs/Tabs';
