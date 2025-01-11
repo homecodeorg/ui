@@ -135,8 +135,14 @@ export function Autocomplete(props: T.Props) {
             value={searchValue}
             onChange={handleInputChange}
             className={inputProps.className}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => Time.after(100, () => setIsFocused(false))}
+            onFocus={e => {
+              setIsFocused(true);
+              inputProps.onFocus?.(e);
+            }}
+            onBlur={e => {
+              setIsFocused(false);
+              inputProps.onBlur?.(e);
+            }}
           />
           {isLoading && <Shimmer className={S.shimmer} size={size} />}
         </div>
