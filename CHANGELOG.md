@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.1](https://github.com/foreverido/uilib/compare/v4.19.0...v4.19.1) (2025-01-11)
+
+
+### Bug Fixes
+
+* Autocomplete - inputProps: pass onFocus/onBlur ([792cd42](https://github.com/foreverido/uilib/commit/792cd42078824b69ad23468a766c492ae70f3bfe))
+* Shimmer.styl - import theme (prod build) ([09e9ac1](https://github.com/foreverido/uilib/commit/09e9ac11f8850b38222d565c00515b67e49bd6b5))
+
 ## [4.19.0](https://github.com/foreverido/uilib/compare/v4.18.70...v4.19.0) (2025-01-08)
 
 
