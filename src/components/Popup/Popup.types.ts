@@ -1,5 +1,5 @@
-import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 import { ComponentType, Size } from '../../types';
+import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
 
 export type TriggerPropsType = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
@@ -70,8 +70,14 @@ export type Props = ComponentType & {
   contentProps?: any;
   // Function called when the popup is opened
   onOpen?: () => void;
+  // Function called after the popup is opened
+  // If animated is true, it will be called after the animation is finished
+  onAfterOpen?: () => void;
   // Function called when the popup is closed
   onClose?: () => void;
+  // Function called after the popup is closed
+  // If animated is true, it will be called after the animation is finished
+  onAfterClose?: () => void;
 };
 
 export type State = {

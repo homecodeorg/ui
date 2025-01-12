@@ -1,19 +1,19 @@
+import * as H from './Popup.helpers';
+import * as T from './Popup.types';
+import * as resizeObserver from 'uilib/tools/resizeObserver';
+
 import { Component, createRef } from 'react';
-import cn from 'classnames';
-import { createStore } from 'justorm/react';
-import Time from 'timen';
 
 import { Paranja } from 'uilib/components/Paranja/Paranja';
 import { Portal } from 'uilib/components/Portal/Portal';
-import { getCoords } from 'uilib/tools/dom';
-import * as resizeObserver from 'uilib/tools/resizeObserver';
-import { isBrowser } from 'uilib/tools/env';
-import debounce from 'uilib/tools/debounce';
-import throttle from 'uilib/tools/throttle';
-
 import S from './Popup.styl';
-import * as H from './Popup.helpers';
-import * as T from './Popup.types';
+import Time from 'timen';
+import cn from 'classnames';
+import { createStore } from 'justorm/react';
+import debounce from 'uilib/tools/debounce';
+import { getCoords } from 'uilib/tools/dom';
+import { isBrowser } from 'uilib/tools/env';
+import throttle from 'uilib/tools/throttle';
 
 export const ANIMATION_DURATION = 100;
 const OFFSET_GAP = 10;
@@ -385,10 +385,12 @@ export class Popup extends Component<T.Props> {
   };
 
   changeState(isOpen: boolean, callback) {
-    const { animated } = this.props;
+    const { animated, onOpen, onClose } = this.props;
 
     this.timers.clear();
     this.store.isOpen = isOpen;
+
+    isOpen ? onOpen?.() : onClose?.();
 
     if (animated) {
       this.store.animating = true;
@@ -402,13 +404,13 @@ export class Popup extends Component<T.Props> {
   }
 
   afterOpen = () => {
-    this.props.onOpen?.();
+    this.props.onAfterOpen?.();
   };
 
   afterClose = () => {
     this.store.isContentVisible = false;
     this.dropOffset();
-    this.props.onClose?.();
+    this.props.onAfterClose?.();
   };
 
   dropOffset() {
