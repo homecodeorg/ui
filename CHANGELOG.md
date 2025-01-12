@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.2](https://github.com/foreverido/uilib/compare/v4.19.1...v4.19.2) (2025-01-12)
+
+
+### Features
+
+* Input - 'round' props for rounded corners ([b2f6202](https://github.com/foreverido/uilib/commit/b2f620220b7f4ca154bcec3b9ad8c1ef37cb523d))
+* Popup - onAfterOpen, onAfterClose ([bc26109](https://github.com/foreverido/uilib/commit/bc26109d7e58936f89ba77f7cefccf6df7f7d640))
+
 ### [4.19.1](https://github.com/foreverido/uilib/compare/v4.19.0...v4.19.1) (2025-01-11)
 
 
