@@ -13,7 +13,6 @@ import { Popup } from 'uilib/components/Popup/Popup';
 import { RequiredStar } from 'uilib/components/RequiredStar/RequiredStar';
 import S from './Select.styl';
 import { Scroll } from 'uilib/components/Scroll/Scroll';
-import Time from 'timen';
 import cn from 'classnames';
 import compare from 'compareq';
 import { createStore } from 'justorm/react';
@@ -32,7 +31,6 @@ export class Select extends Component<T.Props, T.State> {
   onScrollInnerRef = elem => (this.scrollInnerElem = elem);
   focusedElem: HTMLDivElement;
 
-  timers = Time.create();
   items = [];
   maxIndex = -1;
   isFirstSelectedMeet = false;
@@ -85,7 +83,6 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   componentWillUnmount() {
-    this.timers.clear();
     this.unDocumetnKeyDown();
     this.unDocumentClick();
   }
@@ -307,10 +304,6 @@ export class Select extends Component<T.Props, T.State> {
     this.store.focusedItemIndex = index;
   };
 
-  toggle = () => {
-    this.store.isOpen = !this.store.isOpen;
-  };
-
   setSearchVal(searchVal) {
     const searchString = String(searchVal);
 
@@ -479,7 +472,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getInputVal(): T.Value {
-    const { value, options } = this.props;
+    const { value } = this.props;
     const { isFocused, selected, isOpen } = this.store;
     const searchValue = this.props.searchValue ?? this.store.searchVal;
 

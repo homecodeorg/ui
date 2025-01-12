@@ -382,6 +382,7 @@ export class Input extends Component<T.Props> {
       variant,
       error,
       hasClear,
+      round,
       required,
       hideRequiredStar,
       disabled,
@@ -402,6 +403,7 @@ export class Input extends Component<T.Props> {
       error && S.hasError,
       hasClear && S.hasClear,
       disabled && S.isDisabled,
+      round && S.round,
       className
     );
 

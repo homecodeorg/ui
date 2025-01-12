@@ -89,6 +89,7 @@ controlDisabled()
 $controlSizeS = 30px
 $controlSizeM = 40px
 $controlSizeL = 50px
+$controlSizeXL = 60px
 
 controlSize(size)
   if size == 's'
@@ -106,6 +107,11 @@ controlSize(size)
     min-width $controlSizeL
     borderRadiusSize('l')
 
+  if size == 'xl'
+    min-height $controlSizeXL
+    min-width $controlSizeXL
+    borderRadiusSize('xl')
+
 controlFontSize(size)
   if size == 's'
     font-size 16px
@@ -113,10 +119,13 @@ controlFontSize(size)
     font-size 20px
   if size == 'l'
     font-size 24px
+  if size == 'xl'
+    font-size 28px
 
-$controlPaddingS = 8px
-$controlPaddingM = 12px
-$controlPaddingL = 14px
+$controlPaddingS = 14px
+$controlPaddingM = 16px
+$controlPaddingL = 18px
+$controlPaddingXL = 20px
 
 controlPaddingSize(size)
   if size == 's'
@@ -125,6 +134,8 @@ controlPaddingSize(size)
     padding '0 %s' % $controlPaddingM
   if size == 'l'
     padding '0 %s' % $controlPaddingL
+  if size == 'xl'
+    padding '0 %s' % $controlPaddingXL
 
 $borderRadiusS = 4px
 $borderRadiusM = 6px
@@ -140,3 +151,13 @@ borderRadiusSize(size)
     border-radius $borderRadiusL
   if size == 'xl'
     border-radius $borderRadiusXL
+
+borderRadiusRoundSize(size)
+  if size == 's'
+    border-radius 'calc(%s / 2)' % $controlSizeS
+  if size == 'm'
+    border-radius 'calc(%s / 2)' % $controlSizeM
+  if size == 'l'
+    border-radius 'calc(%s / 2)' % $controlSizeL
+  if size == 'xl'
+    border-radius 'calc(%s / 2)' % $controlSizeXL
