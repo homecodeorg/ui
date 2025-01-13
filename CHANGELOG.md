@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.4](https://github.com/foreverido/uilib/compare/v4.19.3...v4.19.4) (2025-01-13)
+
+
+### Bug Fixes
+
+* Draggable - debounce->throttle ([328620a](https://github.com/foreverido/uilib/commit/328620aff187fc4ed6ec3cd38ece0ab61a46aa21))
+
 ### [4.19.3](https://github.com/foreverido/uilib/compare/v4.19.2...v4.19.3) (2025-01-13)
 
 
