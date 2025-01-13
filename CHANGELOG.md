@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.3](https://github.com/foreverido/uilib/compare/v4.19.2...v4.19.3) (2025-01-13)
+
+
+### Features
+
+* Draggable - renderItem(id, index, isDragging) - added index ([c40b176](https://github.com/foreverido/uilib/commit/c40b1767e5e67bcf86dc49a6ffe507646de8ace4))
+
 ### [4.19.2](https://github.com/foreverido/uilib/compare/v4.19.1...v4.19.2) (2025-01-12)
 
 
