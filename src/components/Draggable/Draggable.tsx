@@ -1,11 +1,12 @@
 import * as T from './Draggable.types';
 
+import { debounce, throttle } from 'uilib/tools';
+
 import { Component } from 'react';
 import S from './Draggable.styl';
 import Time from 'timen';
 import cn from 'classnames';
 import { createStore } from 'justorm/react';
-import { debounce } from 'uilib/tools';
 
 export class Draggable extends Component<T.Props> {
   store;
@@ -76,7 +77,7 @@ export class Draggable extends Component<T.Props> {
     this.checkUnderElem(x, y);
   };
 
-  checkUnderElem = debounce((x: number, y: number) => {
+  checkUnderElem = throttle((x: number, y: number) => {
     const underItem = document.elementFromPoint(x, y)?.closest(`.${S.item}`);
 
     if (!underItem) {
