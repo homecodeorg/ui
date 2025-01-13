@@ -1,12 +1,11 @@
-import { Component } from 'react';
-import { createStore } from 'justorm/react';
-import cn from 'classnames';
-import Time from 'timen';
-
-import { debounce } from 'uilib/tools';
-
 import * as T from './Draggable.types';
+
+import { Component } from 'react';
 import S from './Draggable.styl';
+import Time from 'timen';
+import cn from 'classnames';
+import { createStore } from 'justorm/react';
+import { debounce } from 'uilib/tools';
 
 export class Draggable extends Component<T.Props> {
   store;
@@ -170,7 +169,7 @@ export class Draggable extends Component<T.Props> {
 
     return (
       <div className={cn(S.root, draggingId && S.dragging, className)}>
-        {items.map(id => (
+        {items.map((id, index) => (
           <div
             key={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
@@ -181,7 +180,7 @@ export class Draggable extends Component<T.Props> {
               className={S.inner}
               style={underId === id ? { transform: underOffset } : null}
             >
-              {renderItem(id, id === draggingId)}
+              {renderItem(id, index, id === draggingId)}
             </div>
           </div>
         ))}

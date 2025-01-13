@@ -7,7 +7,7 @@ export type Props = {
   // Callback to render each item
   // - id: The id from items array
   // - isActive: Whether the item is being dragged
-  renderItem: (id: string, isActive: boolean) => ReactNode;
+  renderItem: (id: string, index: number, isActive: boolean) => ReactNode;
   // mode: 'swap' | 'push'
   // Called when dragging starts
   onDragStart?: (id: string) => void;
