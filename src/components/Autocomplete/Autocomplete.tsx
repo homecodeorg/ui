@@ -1,14 +1,14 @@
+import * as T from './Autocomplete.types';
+
 import { Input, Menu, Popup } from 'uilib/components';
-import cn from 'classnames';
-import { useEffect, useState, useRef, useMemo } from 'react';
-import debounce from 'uilib/tools/debounce';
-import { useIsMounted } from 'uilib/hooks/useIsMounted';
-import Time from 'timen';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import S from './Autocomplete.styl';
-import * as T from './Autocomplete.types';
-import Shimmer from 'uilib/components/Shimmer/Shimmer';
+import { Shimmer } from 'uilib/components/Shimmer/Shimmer';
 import { Size } from 'uilib/types';
+import cn from 'classnames';
+import debounce from 'uilib/tools/debounce';
+import { useIsMounted } from 'uilib/hooks/useIsMounted';
 import { useListKeyboardControl } from 'uilib/hooks/useListKeyboardControl';
 
 export function Autocomplete(props: T.Props) {
@@ -34,7 +34,7 @@ export function Autocomplete(props: T.Props) {
   const currentRequest = useRef('');
   const inputRef = useRef<Input>(null);
 
-  const isOpen = isFocused && options.length > 0;
+  const isOpen = options.length > 0;
   const classes = cn(S.root, className);
 
   const handleInputChange = (
