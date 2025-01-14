@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.5](https://github.com/foreverido/uilib/compare/v4.19.4...v4.19.5) (2025-01-14)
+
+
+### Bug Fixes
+
+* export Shimmer ([7f6b3ea](https://github.com/foreverido/uilib/commit/7f6b3ea3dee3a550a1620447976010bc60a4dc2b))
+
 ### [4.19.4](https://github.com/foreverido/uilib/compare/v4.19.3...v4.19.4) (2025-01-13)
 
 
