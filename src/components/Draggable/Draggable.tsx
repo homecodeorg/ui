@@ -1,6 +1,6 @@
 import * as T from './Draggable.types';
 
-import { debounce, throttle } from 'uilib/tools';
+import { throttle } from 'uilib/tools';
 
 import { Component } from 'react';
 import S from './Draggable.styl';
@@ -169,10 +169,11 @@ export class Draggable extends Component<T.Props> {
     const { draggingId, underId, underOffset } = this.store;
 
     return (
-      <div className={cn(S.root, draggingId && S.dragging, className)}>
+      <div className={cn(S.root, draggingId && S.isDragging, className)}>
         {items.map((id, index) => (
           <div
             key={id}
+            data-id={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
             onPointerDown={this.onPointerDown}
           >
