@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.6](https://github.com/foreverido/uilib/compare/v4.19.5...v4.19.6) (2025-01-25)
+
+
+### Features
+
+* Icon - bookmark, ookmarkAdd ([0126707](https://github.com/foreverido/uilib/commit/0126707ced2a47e9dfd4920cf4fec8c9a5ddb2eb))
+
 ### [4.19.5](https://github.com/foreverido/uilib/compare/v4.19.4...v4.19.5) (2025-01-14)
 
 
