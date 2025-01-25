@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.19.9](https://github.com/foreverido/uilib/compare/v4.19.8...v4.19.9) (2025-01-25)
+
+
+### Bug Fixes
+
+* build ([24fdcfe](https://github.com/foreverido/uilib/commit/24fdcfed3d3e7591d892d13629ab4aa6c7c3d154))
+* Draggable - data-id ([1577239](https://github.com/foreverido/uilib/commit/1577239533733e2dc681c49b1c7110102c198e65))
+
 ### [4.19.8](https://github.com/foreverido/uilib/compare/v4.19.7...v4.19.8) (2025-01-25)
 
 ### [4.19.7](https://github.com/foreverido/uilib/compare/v4.19.6...v4.19.7) (2025-01-25)
