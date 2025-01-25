@@ -185,7 +185,7 @@ export class Draggable extends Component<T.Props> {
             </div>
           </div>
         ))}
-        {children}
+        {/* {children} */}
       </div>
     );
   }
