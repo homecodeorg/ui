@@ -27,7 +27,9 @@ import json from '@rollup/plugin-json';
 // import { babel } from '@rollup/plugin-babel';
 import typescript from 'rollup-plugin-typescript2';
 
-import pkg from './package.json' assert { type: 'json' };
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
 
 /* initialize CSS files because of a catch-22 situation:
    https://github.com/rollup/rollup/issues/1404 */

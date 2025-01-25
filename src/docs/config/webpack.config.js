@@ -8,11 +8,12 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import HtmlWebpackPartialsPlugin from 'html-webpack-partials-plugin';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+
+import paths from './paths.ts';
 const FaviconWebpackPlugin = require('favicons-webpack-plugin');
 
 // @ts-ignore
-import pkg from '../../../package.json' assert { type: 'json' };
-import paths from './paths.ts';
+const pkg = require('../../../package.json');
 
 export default (env, argv) => {
   const isDev = argv.mode === 'development';
