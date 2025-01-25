@@ -1,5 +1,7 @@
 export default {
   avatar: () => import('./avatar.svg'),
+  bookmark: () => import('./bookmark.svg'),
+  bookmarkAdd: () => import('./bookmarkAdd.svg'),
   brokenImage: () => import('./brokenImage.svg'),
   camera: () => import('./camera.svg'),
   check: () => import('./check.svg'),
