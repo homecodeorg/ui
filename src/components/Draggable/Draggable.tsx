@@ -175,7 +175,6 @@ export class Draggable extends Component<T.Props> {
             key={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
             onPointerDown={this.onPointerDown}
-            data-id={id}
           >
             <div
               className={S.inner}
@@ -185,7 +184,7 @@ export class Draggable extends Component<T.Props> {
             </div>
           </div>
         ))}
-        {/* {children} */}
+        {children}
       </div>
     );
   }
