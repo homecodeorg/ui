@@ -119,9 +119,9 @@ $paddingSide = 12px
     .round&
       borderRadiusRoundSize('l')
 
-.isTextArea
-  .main
-    padding-left 0
+// .isTextArea
+//   .main
+//     padding-left 0
 
 .isDisabled
   color var(--accent-color-alpha-500)
@@ -168,27 +168,51 @@ $paddingSide = 12px
   outline none
   transition border-color 0.15s ease-in-out 0s
 
-  .isTextArea &
+  // remove browser(Chrome) autofill-styles
+  &:-internal-autofill-selected
+  &:-webkit-autofill
+    animation-name clearBg
+    animation-fill-mode both
+
+  .hasClear &
+    .size-s&
+      padding-right 20px
+    .size-m&
+      padding-right 24px
+    .size-l&
+      padding-right 28px
+
+  &::placeholder
+    color var(--accent-color-alpha-500)
+
+  &::selection
+    background-color var(--active-color-alpha-300)
+
+@-webkit-keyframes clearBg
+  to
+    background transparent
+
+.isTextArea .control
+  display block
+  width 100%
+  height 100%
+  min-height 100%
+
+  &:hover
+    cursor text
+
+  &::after
     display block
-    width 100%
-    height 100%
-    min-height 100%
+    content ''
 
-    &:hover
-      cursor text
+.control[type=number]
+  -moz-appearance textfield
+  margin-right 14px
 
-    &::after
-      display block
-      content ''
-
-  &[type=number]
-    -moz-appearance textfield
-    margin-right 14px
-
-    // Chrome, Safari, Edge, Opera
-    &::-webkit-outer-spin-button
-    &::-webkit-inner-spin-button
-      -webkit-appearance none
+  // Chrome, Safari, Edge, Opera
+  &::-webkit-outer-spin-button
+  &::-webkit-inner-spin-button
+    -webkit-appearance none
 
 .numberArrows
   position absolute
@@ -249,30 +273,8 @@ $paddingSide = 12px
     &::after
       height 12px
 
-.control
-  // remove browser(Chrome) autofill-styles
-  &:-internal-autofill-selected
-  &:-webkit-autofill
-    animation-name clearBg
-    animation-fill-mode both
+  padding-left 0 !important
 
-  .hasClear &
-    .size-s&
-      padding-right 20px
-    .size-m&
-      padding-right 24px
-    .size-l&
-      padding-right 28px
-
-  &::placeholder
-    color var(--accent-color-alpha-500)
-
-  &::selection
-    background-color var(--active-color-alpha-300)
-
-@-webkit-keyframes clearBg
-  to
-    background transparent
 
 .placeholder
   position absolute
@@ -296,12 +298,12 @@ $paddingSide = 12px
   min-width 0 // to enable ellipsis work in flex
   user-select none
 
-  .size-s &
-    min-width calc(var(--indent-s) * 2)
-  .size-m &
-    min-width calc(var(--indent-m) * 2)
-  .size-l &
-    min-width calc(var(--indent-l) * 2)
+  // .size-s &
+  //   min-width calc(var(--indent-s) * 2)
+  // .size-m &
+  //   min-width calc(var(--indent-m) * 2)
+  // .size-l &
+  //   min-width calc(var(--indent-l) * 2)
 
   & > span
     white-space nowrap

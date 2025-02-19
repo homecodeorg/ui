@@ -1,6 +1,7 @@
-import { Component } from 'react';
 import { VirtualizedListScroll, array, Spinner } from 'uilib';
-import { createStore, withStore } from 'justorm/react';
+import { createStore } from 'justorm';
+import { useStore } from 'justorm/react';
+import { useEffect } from 'react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
 
@@ -15,44 +16,43 @@ function setData(nextData, startIndex = store.data.length) {
   store.data = array.insert(store.data, nextData, startIndex);
 }
 
-export default withStore('example')(
-  class Example extends Component {
-    componentDidMount() {
-      loadNextData(0, PAGE_SIZE).then(setData);
-    }
+export default function Example() {
+  const {
+    example: { data },
+  } = useStore({ example: ['data'] });
 
-    onScrollEnd() {
-      const count = store.data.length;
-      loadNextData(count, count + PAGE_SIZE).then(setData);
-    }
+  const itemsCount = data.length;
 
-    render() {
-      const { data } = store.originalObject;
-      const itemsCount = data.length;
+  useEffect(() => {
+    loadNextData(0, PAGE_SIZE).then(setData);
+  }, []);
 
-      return (
-        <VirtualizedListScroll
-          className={S.root}
-          scrollProps={{ y: true }}
-          totalCount={totalCount}
-          itemsCount={itemsCount}
-          overlapCount={10}
-          itemHeight={40}
-          renderItem={itemProps =>
-            renderSimpleItems(itemProps, data[itemProps.key])
-          }
-          onScrollEnd={() => this.onScrollEnd()}
-          contentAfter={
-            itemsCount !== totalCount && (
-              <>
-                <Spinner size="s" style={{ marginRight: 10 }} />
-                loading items...
-              </>
-            )
-          }
-          pageSize={PAGE_SIZE}
-        />
-      );
-    }
-  }
-);
+  const onScrollEnd = () => {
+    const count = store.data.length;
+    loadNextData(count, count + PAGE_SIZE).then(setData);
+  };
+
+  return (
+    <VirtualizedListScroll
+      className={S.root}
+      scrollProps={{ y: true }}
+      totalCount={totalCount}
+      itemsCount={itemsCount}
+      overlapCount={10}
+      itemHeight={40}
+      renderItem={itemProps =>
+        renderSimpleItems(itemProps, data[itemProps.key])
+      }
+      onScrollEnd={onScrollEnd}
+      contentAfter={
+        itemsCount !== totalCount && (
+          <>
+            <Spinner size="s" style={{ marginRight: 10 }} />
+            loading items...
+          </>
+        )
+      }
+      pageSize={PAGE_SIZE}
+    />
+  );
+}

@@ -8,6 +8,7 @@ import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator'
 import S from './styles.styl';
 
 const name = 'DatePicker';
+const scope = { S };
 const Docs = () => (
   <>
     <p>UI date picker component. </p>
@@ -33,8 +34,8 @@ export default () => (
     name={name}
     docs={Docs}
     examples={[
-      { id: 'single', label: 'Single', code: single },
-      { id: 'range', label: 'Range', code: range },
+      { id: 'single', label: 'Single', code: single, scope },
+      { id: 'range', label: 'Range', code: range, scope },
     ]}
     scope={{ S }}
   />

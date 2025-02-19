@@ -32,6 +32,7 @@ export function Autocomplete(props: T.Props) {
   const [isFocused, setIsFocused] = useState(false);
 
   const currentRequest = useRef('');
+  // @ts-ignore
   const inputRef = useRef<Input>(null);
 
   const isOpen = options.length > 0;

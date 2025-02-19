@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { nanoid } from 'nanoid';
-import { createStore, withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
+import { createStore } from 'justorm';
 import _i18n from 'roddeh-i18n';
 
 import LS from 'uilib/tools/localStorage';
@@ -9,6 +10,12 @@ import { queryParams } from 'uilib/tools/queryParams';
 type LangLoader = () => Promise<{ default: object }>;
 type RegisterConfig = {
   [lang: string]: LangLoader;
+};
+
+type I18NProps = {
+  id?: string;
+  children?: React.ReactNode;
+  props?: number | Record<string, any>; // should be: plural, params, context
 };
 
 const DEFAULT_LANG = 'en';
@@ -73,19 +80,23 @@ export function init(config: RegisterConfig) {
     componentStore,
 
     // hook (update when componentStore._updated changed)
-    withI18N: Component => withStore(storeName)(Component),
+    withI18N: Component => props => {
+      useStore({ [storeName]: true });
+      return <Component {...props} />;
+    },
 
     i18n: (key, props?) => getTrans(key, props),
 
-    I18N: memo(
-      withStore({
+    I18N: memo(function I18N({ id, children, props }: I18NProps) {
+      useStore({
         i18n: ['lang'], // subscribe to lang changes
         [storeName]: true,
-      })(function I18N({ id, children, props }) {
-        const key = id ?? children;
+      });
 
-        return <>{getTrans(key, props)}</>;
-      })
-    ),
+      const key = id ?? children;
+
+      // @ts-ignore
+      return <>{getTrans(key, props)}</>;
+    }),
   };
 }

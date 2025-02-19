@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import cn from 'classnames';
-import { withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Button } from 'uilib/components/Button/Button';
@@ -110,17 +110,17 @@ type Props = { store?: any };
 
 export const NotificationsStore = STORE;
 
-export const Notifications = withStore({
-  notifications: ['items', 'data'],
-})(function Notifications({ store, ...rest }: Props) {
-  const { notifications } = store;
+export const Notifications = function Notifications(props: Props) {
+  const { notifications } = useStore({
+    notifications: ['items', 'data'],
+  });
   const { items, data, pause, unpause, close } = notifications;
   const api = { pause, unpause, close };
   const classes = cn(S.root, items.length === 0 && S.empty);
 
   return (
     <Scroll
-      {...rest}
+      {...props}
       y
       size="s"
       className={classes}
@@ -132,4 +132,4 @@ export const Notifications = withStore({
       ))}
     </Scroll>
   );
-});
+};

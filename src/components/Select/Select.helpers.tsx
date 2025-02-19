@@ -31,7 +31,7 @@ type IdsMap = {
   childIds: { [key: string]: Option['id'][] };
 };
 
-export function mapById(options): IdsMap {
+export function mapById(options: Option[]): IdsMap {
   return options.reduce(
     (acc, item) => {
       const { items, childIds } = acc;

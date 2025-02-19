@@ -1,5 +1,5 @@
 import { useCallback, useContext, useMemo, useRef } from 'react';
-import { withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 import cn from 'classnames';
 
 import { Icon } from 'uilib/components/Icon/Icon';
@@ -11,95 +11,93 @@ import * as T from './Link.types';
 
 const isStartFromDoubleSlash = href => /^\/\//.test(href);
 
-export const Link = withStore({ router: ['path'] })(
-  ({
-    className,
-    exactClassName,
-    children,
-    href: hrefProp,
-    isClear = false,
-    isDisabled = false,
-    disableExternalIcon = false,
-    inline = false,
-    store: { router },
-    isPartialExact = false,
-    onClick,
-    ...rest
-  }: T.Props) => {
-    const { path } = router;
-    const isFromRoot = isStartFromDoubleSlash(hrefProp);
+export const Link = ({
+  className,
+  exactClassName,
+  children,
+  href: hrefProp,
+  isClear = false,
+  isDisabled = false,
+  disableExternalIcon = false,
+  inline = false,
+  isPartialExact = false,
+  onClick,
+  ...rest
+}: T.Props) => {
+  const { router } = useStore({ router: ['path'] });
+  const { path } = router;
+  const isFromRoot = isStartFromDoubleSlash(hrefProp);
 
-    const domElem = useRef(null);
-    const { basePath } = useContext(Context);
+  const domElem = useRef(null);
+  const { basePath } = useContext(Context);
 
-    const isExternal = useMemo(() => /\./.test(hrefProp), [hrefProp]);
-    const rootPath = useMemo(() => {
-      if (isExternal || isFromRoot) return '';
-      return basePath ?? '';
-    }, [isExternal, isFromRoot, basePath]);
+  const isExternal = useMemo(() => /\./.test(hrefProp), [hrefProp]);
+  const rootPath = useMemo(() => {
+    if (isExternal || isFromRoot) return '';
+    return basePath ?? '';
+  }, [isExternal, isFromRoot, basePath]);
 
-    const href = useMemo(() => {
-      let str = hrefProp;
+  const href = useMemo(() => {
+    let str = hrefProp;
 
-      if (isFromRoot) str = str.replace(/^\//, '');
+    if (isFromRoot) str = str.replace(/^\//, '');
 
-      if (str === '/') str = '';
+    if (str === '/') str = '';
 
-      return `${rootPath}${str}`;
-    }, [hrefProp, rootPath]);
+    return `${rootPath}${str}`;
+  }, [hrefProp, rootPath]);
 
-    const handleClick = useCallback(
-      e => {
-        onClick?.(e, href);
-        if (!isExternal && router.path !== href) {
-          e.preventDefault();
+  const handleClick = useCallback(
+    e => {
+      onClick?.(e, href);
+      if (!isExternal && router.path !== href) {
+        e.preventDefault();
 
-          if (e.ctrlKey || e.metaKey) {
-            window.open(href, '_blank');
-          } else {
-            router.go(href);
-          }
-
-          domElem.current?.blur();
+        if (e.ctrlKey || e.metaKey) {
+          window.open(href, '_blank');
+        } else {
+          router.go(href);
         }
-      },
-      [href, isExternal, onClick]
-    );
 
-    const isExact = useMemo(() => {
-      if (isPartialExact) return path.startsWith(href);
-      return path === href;
-    }, [path, href, isPartialExact]);
+        domElem.current?.blur();
+      }
+    },
+    [href, isExternal, onClick]
+  );
 
-    const props = { ...rest, href };
-    const isNested = !/^\//.test(href) && !isExternal;
+  const isExact = useMemo(() => {
+    if (isPartialExact) return path.startsWith(href);
+    return path === href;
+  }, [path, href, isPartialExact]);
 
-    const classes = cn(
-      S.root,
-      isDisabled && S.disabled,
-      isExternal && S.external,
-      isExact && cn(S.exact, exactClassName),
-      isClear && S.clear,
-      inline && S.inline,
-      className
-    );
+  const props = { ...rest, href };
+  const isNested = !/^\//.test(href) && !isExternal;
 
-    if (isNested) {
-      props.href = `${path.replace(/\/$/, '')}/${href}`;
-    }
+  const classes = cn(
+    S.root,
+    isDisabled && S.disabled,
+    isExternal && S.external,
+    isExact && cn(S.exact, exactClassName),
+    isClear && S.clear,
+    inline && S.inline,
+    className
+  );
 
-    if (isExternal) {
-      props.target = '_blank';
-      if (!/^http/.test(href)) props.href = `http://${href}`;
-    }
-
-    return (
-      <a className={classes} {...props} onClick={handleClick} ref={domElem}>
-        {children}
-        {isExternal && !disableExternalIcon && (
-          <Icon type="externalLink" className={S.externalIcon} />
-        )}
-      </a>
-    );
+  if (isNested) {
+    props.href = `${path.replace(/\/$/, '')}/${href}`;
   }
-);
+
+  if (isExternal) {
+    props.target = '_blank';
+    if (!/^http/.test(href)) props.href = `http://${href}`;
+  }
+
+  return (
+    <a className={classes} {...props} onClick={handleClick} ref={domElem}>
+      {children}
+      {isExternal && !disableExternalIcon && (
+        <Icon type="externalLink" className={S.externalIcon} />
+      )}
+    </a>
+  );
+};

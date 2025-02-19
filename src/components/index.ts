@@ -28,6 +28,7 @@ export * from './PopupMenu/PopupMenu';
 export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';
+export * from './Select/Select2';
 export * from './Scroll/Scroll';
 export * from './Shimmer/Shimmer';
 export * from './Spinner/Spinner';

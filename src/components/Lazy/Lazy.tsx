@@ -12,6 +12,8 @@ function compare(cb1: T.Loader, cb2: T.Loader) {
 
 const loaded = new Map<T.Loader, ComponentType>();
 
+export type LazyProps = T.Props;
+
 export class Lazy extends Component<T.Props> {
   store: T.State;
   Node?: ComponentType<any>;

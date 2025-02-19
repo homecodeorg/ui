@@ -3,7 +3,7 @@ module.exports = {
   testEnvironment: 'jsdom',
   moduleNameMapper: {
     '\\.(css|less|sass|scss|styl)$': 'identity-obj-proxy',
-    '^justorm/react$': 'justorm/dist/esm/src/plugins/react',
+    // '^justorm/react$': 'justorm/dist/esm/plugins/react',
     '^uilib(.*)$': '<rootDir>/src$1',
     '\\.svg$': '<rootDir>/tests/mocks/svgMock.js',
   },

@@ -1,6 +1,6 @@
 import { Heading, Table } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
-import { withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 
 import demo from '!!raw-loader!./Demo';
 import { useCallback, useEffect } from 'react';
@@ -151,7 +151,9 @@ const Docs = () => (
   </>
 );
 
-export default withStore({ app: 'theme' })(({ store: { app } }) => {
+export default function Theme() {
+  const { app } = useStore({ app: ['theme'] });
+
   const onDocClick = useCallback(e => {
     if (e.target.type === 'checkbox') {
       app.toggleTheme();
@@ -163,7 +165,7 @@ export default withStore({ app: 'theme' })(({ store: { app } }) => {
     return () => {
       document.removeEventListener('click', onDocClick, true);
     };
-  });
+  }, []);
 
   return (
     <ComponentLayout
@@ -173,4 +175,4 @@ export default withStore({ app: 'theme' })(({ store: { app } }) => {
       scope={{ currTheme: app.theme }}
     />
   );
-});
+}

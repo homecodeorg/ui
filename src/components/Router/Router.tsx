@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo } from 'react';
-import { useStore } from 'justorm/dist/esm/src/plugins/react';
+import { useStore } from 'justorm/react';
 
 import STORE from './store';
 import type { RouterStore as RouterStoreType } from './store';

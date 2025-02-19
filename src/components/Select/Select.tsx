@@ -24,7 +24,7 @@ export const SelectHelpers = H;
 
 export class Select extends Component<T.Props, T.State> {
   store;
-  inputRef = createRef<Input>();
+  inputRef = createRef<typeof Input>();
   triggerInputRef = createRef<HTMLDivElement>();
   contentRef = createRef<HTMLDivElement>();
   scrollInnerElem: HTMLDivElement;
@@ -244,7 +244,7 @@ export class Select extends Component<T.Props, T.State> {
 
   onSearchChange = (e, value) => {
     this.setSearchVal(value);
-    this.props.onSeachChange?.(value);
+    this.props.onSearchChange?.(value);
   };
 
   onExpandClick(e, id) {
@@ -510,7 +510,7 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   getFieldLabel(label) {
-    const { showSelectedCount, disableLable, value } = this.props;
+    const { showSelectedCount, disableLabel: disableLable, value } = this.props;
 
     if (disableLable) return null;
 
@@ -713,8 +713,9 @@ export class Select extends Component<T.Props, T.State> {
       onPointerEnter: () => this.onOptionHover(id),
     } as T.OptionElemProps;
 
-    // @ts-ignore
-    if (isFocused) props.ref = this.onFocusedElemRef;
+    if (isFocused || (isSelected && !this.onFocusedElemRef))
+      // @ts-ignore
+      props.ref = this.onFocusedElemRef;
 
     if (isIndeterminate || (isSelected && !this.isFirstSelectedMeet)) {
       this.isFirstSelectedMeet = true;

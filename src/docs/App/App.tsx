@@ -1,5 +1,5 @@
-import { Component, createRef } from 'react';
-import { withStore } from 'justorm/react';
+import { useRef } from 'react';
+import { useStore } from 'justorm/react';
 import cn from 'classnames';
 
 import {
@@ -11,6 +11,7 @@ import {
   Route,
   Theme,
   Lazy,
+  LazyProps,
   dom,
   VH,
 } from 'uilib';
@@ -23,98 +24,84 @@ import S from './App.styl';
 
 dom.watchControllerFlag();
 
-@withStore('app')
-class App extends Component<{ store?: any }> {
-  colorPickerRef = createRef<HTMLInputElement>();
+const App = () => {
+  const colorPickerRef = useRef<HTMLInputElement>(null);
+  const { app } = useStore({
+    app: ['currThemeConfig', 'activeColor', 'isMenuOpen'],
+  });
+  const { currThemeConfig, activeColor, isMenuOpen } = app;
 
-  // @ts-ignore
-  pickActiveColor = () => this.colorPickerRef.current.click();
+  const pickActiveColor = () => colorPickerRef.current?.click();
 
-  renderItem(groupId, { id, loader }) {
+  const renderItem = (groupId, { id, loader }) => {
     const path = `/${groupId}/${id}`;
+    // @ts-ignore
+    return <Route path={path} component={Lazy} loader={loader} key={path} />;
+  };
 
-    return (
-      // @ts-ignore
-      <Route path={path} component={Lazy} loader={loader} key={path} />
-    );
-  }
-
-  render() {
-    const { app } = this.props.store;
-    const { currThemeConfig, activeColor, isMenuOpen } = app;
-
-    return (
-      <>
-        <VH />
-        <Theme config={currThemeConfig.originalObject} />
-
-        <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>
-          <div className={S.nav}>
-            <div className={S.configBar}>
-              {/* @ts-ignore */}
-              <span className={S.version}>v{VERSION}</span>
-              <Button
-                className={S.cfgButton}
-                variant="clear"
-                size="l"
-                square
-                onClick={app.toggleTheme}
-              >
-                {app.isDarkTheme() ? '🌙' : '🌕'}
-              </Button>
-
-              <Button
-                className={S.cfgButton}
-                variant="clear"
-                size="l"
-                square
-                onClick={this.pickActiveColor}
-              >
-                <div className={S.activeColor} />
-                <input
-                  type="color"
-                  ref={this.colorPickerRef}
-                  className={S.colorPicker}
-                  onChange={e => app.setActiveColor(e.target.value)}
-                  value={activeColor}
-                />
-              </Button>
-
-              <div className={S.cfgBarMenuButtonPlaceholder} />
-            </div>
-            <Sidebar />
-          </div>
-
-          <Container fullWidth className={S.content}>
-            <Router single>
-              {/* <Route exact path="/" component={() => <>HOME</>} /> */}
-              {/* <Route exact path="/post/:id" component={({pathParams}) => <>POST ${pathParams.id}</>} /> */}
-              {/* <Route exact path="/post/:id/edit" component={({pathParams}) => <>POST ${pathParams.id}</>} /> */}
-              <Route
-                component={Redirect}
-                exact
-                path="/"
-                to="/intro/about"
-                key="/"
+  return (
+    <>
+      <VH />
+      <Theme config={currThemeConfig.originalObject} />
+      <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>
+        <div className={S.nav}>
+          <div className={S.configBar}>
+            {/* @ts-ignore */}
+            <span className={S.version}>v{VERSION}</span>
+            <Button
+              className={S.cfgButton}
+              variant="clear"
+              size="l"
+              square
+              onClick={app.toggleTheme}
+            >
+              {app.isDarkTheme() ? '🌙' : '🌕'}
+            </Button>
+            <Button
+              className={S.cfgButton}
+              variant="clear"
+              size="l"
+              square
+              onClick={pickActiveColor}
+            >
+              <div className={S.activeColor} />
+              <input
+                type="color"
+                ref={colorPickerRef}
+                className={S.colorPicker}
+                onChange={e => app.setActiveColor(e.target.value)}
+                value={activeColor}
               />
-              {NAV_CONFIG.map(({ id, items }) =>
-                items.map(item => this.renderItem(id, item))
-              )}
-            </Router>
-          </Container>
-
-          <Button
-            className={S.menuButton}
-            variant="clear"
-            size="l"
-            onClick={app.toggleMenu}
-          >
-            <Icon type="menu" size="l" />
-          </Button>
+            </Button>
+            <div className={S.cfgBarMenuButtonPlaceholder} />
+          </div>
+          <Sidebar />
         </div>
-      </>
-    );
-  }
-}
+        <Container fullWidth className={S.content}>
+          <Router single>
+            <Route
+              component={Redirect}
+              exact
+              path="/"
+              to="/intro/about"
+              key="/"
+            />
+            {NAV_CONFIG.map(({ id, items }) =>
+              items.map(item => renderItem(id, item))
+            )}
+          </Router>
+        </Container>
+        <Button
+          className={S.menuButton}
+          variant="clear"
+          size="l"
+          onClick={app.toggleMenu}
+        >
+          <Icon type="menu" size="l" />
+        </Button>
+      </div>
+    </>
+  );
+};
 
 export default App;

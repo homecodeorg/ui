@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { LiveEditor } from 'react-live';
-import { withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 
 import vsDark from 'prism-react-renderer/themes/vsDark';
 import vsLight from 'prism-react-renderer/themes/vsLight';
@@ -8,9 +8,9 @@ import vsLight from 'prism-react-renderer/themes/vsLight';
 import S from '../Code.styl';
 import STORE from '../store';
 
-const Editor = withStore({
-  app: ['theme'],
-})(function Editor({ id, code, store: { app } }) {
+export default function Editor({ id, code }) {
+  const { app } = useStore({ app: ['theme'] });
+
   const onChange = useCallback(newCode => {
     if (newCode !== STORE.editedCode) {
       STORE.onChange(id, newCode);
@@ -29,6 +29,4 @@ const Editor = withStore({
       onChange={onChange}
     />
   );
-});
-
-export default Editor;
+}

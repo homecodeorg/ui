@@ -1,6 +1,5 @@
-import { Component, createRef, ChangeEvent, useEffect, Fragment } from 'react';
+import { ChangeEvent, useEffect, useState, useRef, useMemo } from 'react';
 import cn from 'classnames';
-import { createStore } from 'justorm/react';
 import omit from 'lodash.omit';
 
 import { Label } from 'uilib/components/Label/Label';
@@ -25,268 +24,222 @@ const TEXTAREA_SCROLL_TOP_OFFSET = {
 
 export type InputProps = T.Props;
 
-export class Input extends Component<T.Props> {
-  inputRef = createRef<HTMLInputElement>();
+type InputValue = string | number;
 
-  isClearPressed = false;
-  cursorPos = 0;
-  prevLabelText = '';
-  store: any;
-  uid = generateUID();
+export const Input = (props: T.Props) => {
+  const {
+    type = 'text',
+    size = 'm',
+    variant = 'default',
+    value,
+    defaultValue = '',
+    onChange,
+    onFocus,
+    onBlur,
+    onClear,
+    onInput,
+    changeOnEnd,
+    checkAutofill,
+    hasClear,
+    required,
+    hideRequiredStar,
+    disabled,
+    error,
+    label,
+    placeholder,
+    addonLeft,
+    addonRight,
+    forceLabelOnTop,
+    scrollProps,
+    step = 1,
+    round,
+    className,
+  } = props;
 
-  static defaultProps = {
-    type: 'text',
-    size: 'm',
-    variant: 'default',
-  };
-
-  constructor(props: T.Props) {
-    super(props);
-
-    const inputValue = props.value ?? props.defaultValue ?? '';
-    const hasValue = this.hasValue(inputValue);
-
-    this.store = createStore(this, {
-      isFocused: false,
-      isLabelOnTop: this.isLabelOnTop(hasValue),
-      inputValue,
-      hasValue,
-      labelClipPath: '',
-      autoComplete: null,
-    });
-  }
-
-  componentDidMount() {
-    document.addEventListener('keyup', this.onDocKeyUp, true);
-
-    if (this.isTextArea()) {
-      this.inputRef.current.innerText = this.store.inputValue;
-      document.addEventListener('paste', this.onTextareaPaste, true);
-    }
-  }
-
-  componentDidUpdate(prevProps: T.Props) {
-    const { value } = this.props;
-
-    this.updateSelection();
-    this.updateAutoComplete();
-
-    if (value !== prevProps.value && value !== this.store.inputValue) {
-      this.store.inputValue = value;
-      // @ts-ignore
-      if (this.isTextArea()) this.inputRef.current.innerText = value;
-      this.updateHasValue();
-      this.updateLabelPosition();
-    }
-  }
-
-  updateAutoComplete() {
-    const form = this.inputRef.current?.closest('form');
+  const updateAutoComplete = () => {
+    const form = inputRef.current?.closest('form');
     const val = form?.getAttribute('autocomplete');
 
-    if (this.store.autoComplete !== val) this.store.autoComplete = val;
-  }
+    if (autoComplete !== val) setAutoComplete(val);
+  };
 
-  updateSelection() {
-    const { type } = this.props;
-    const { isFocused } = this.store;
-    const elem = this.inputRef.current;
+  const updateSelection = () => {
+    const { type } = props;
+    const elem = inputRef.current;
 
     if (!isFocused || !elem || type !== 'text') return;
 
-    elem.selectionStart = this.cursorPos;
-    elem.selectionEnd = this.cursorPos;
-  }
+    elem.selectionStart = cursorPos.current;
+    elem.selectionEnd = cursorPos.current;
+  };
 
-  updateLabelPosition() {
-    this.store.isLabelOnTop = this.isLabelOnTop();
-  }
+  const inputRef = useRef<HTMLInputElement>(null);
+  const isFocusedRef = useRef(false);
+  const [isFocused, _setIsFocused] = useState(false);
+  const setIsFocused = (val: boolean) => {
+    isFocusedRef.current = val;
+    _setIsFocused(val);
+  };
+  const [inputValue, setInputValue] = useState<InputValue>(
+    (value ?? defaultValue ?? '') as InputValue
+  );
+  const [labelClipPath, setLabelClipPath] = useState('');
+  const [autoComplete, setAutoComplete] = useState('');
+  const uid = generateUID();
 
-  updateHasValue() {
-    this.store.hasValue = this.hasValue();
-  }
+  const isTextArea = type === 'textarea';
+  const isNumber = type === 'number';
+  const hasValue = isNumber || Boolean(value || inputValue || defaultValue);
+  const isLabelOnTop =
+    forceLabelOnTop || Boolean(addonLeft) || hasValue || isFocused;
 
-  hasValue(value = this.store.inputValue) {
-    const { type, defaultValue } = this.props;
+  const cursorPos = useRef(0);
 
-    return type === 'number' || Boolean(value || defaultValue);
-  }
-
-  isTextArea = () => this.props.type === 'textarea';
-  isNumber = () => this.props.type === 'number';
-
-  isLabelOnTop(hasValue = this.store?.hasValue) {
-    const { forceLabelOnTop, addonLeft } = this.props;
-
-    return (
-      forceLabelOnTop || Boolean(addonLeft) || hasValue || this.store?.isFocused
-    );
-  }
-
-  getValue(val = this.store.inputValue) {
-    const { type } = this.props;
-
+  const getValue = (val = inputValue): InputValue => {
     if (type === 'number') {
-      if (val) return parseFloat(val);
+      if (val) return parseFloat(val as string);
       return 0;
     }
 
-    if (this.isTextArea())
-      return this.inputRef.current.innerText.replace('/n', '');
+    if (isTextArea) return inputRef.current.innerText.replace(/\n/g, '');
 
     return val;
-  }
+  };
 
-  onTextareaPaste = e => {
-    if (!this.store.isFocused) return;
+  const onTextareaPaste = e => {
+    if (!isFocusedRef.current) return;
 
     e.preventDefault();
     e.stopPropagation();
 
-    this.pasteToTextarea(e.clipboardData.getData('text/plain'));
+    pasteToTextarea(e.clipboardData.getData('text/plain'));
   };
 
-  pasteToTextarea = debounce((text: string) => {
-    console.log('onTextareaPaste');
-
-    const sel = window.getSelection();
-    const textarea = this.inputRef.current;
-    const prevText = textarea.innerText;
+  const setTextareaValue = (value: string) => {
     // @ts-ignore
-    const startPos = sel.extentOffset;
+    if (inputRef.current) inputRef.current.innerText = value;
+  };
+
+  const pasteToTextarea = debounce((text: string) => {
+    const sel = window.getSelection();
+    const textarea = inputRef.current;
+    const prevText = textarea.innerText;
+    const startPos = sel.getRangeAt(0).startOffset;
     const nextText =
       prevText.substring(0, startPos) + text + prevText.substring(startPos);
 
     textarea.innerText = nextText;
+    onChangeValue(nextText);
 
-    sel.setPosition(textarea.firstChild, startPos + text.length);
+    setTimeout(() => {
+      try {
+        window
+          .getSelection()
+          .setPosition(textarea.firstChild, startPos + text.length);
+      } catch (e) {}
+    }, 100);
   }, 100);
 
-  onClearPress = e => {
-    const { onChange, onClear } = this.props;
-    const isTextArea = this.isTextArea();
-
+  const onClearPress = e => {
     e.preventDefault();
     e.stopPropagation();
 
     onClear?.();
 
-    if (this.isTextArea()) {
-      this.inputRef.current.innerText = '';
+    if (isTextArea) {
+      inputRef.current.innerText = '';
     }
 
     if (onChange) {
-      this.onChange('');
+      onChangeValue('');
     } else {
-      if (!this.isTextArea) {
-        this.inputRef.current.value = '';
+      if (!isTextArea) {
+        inputRef.current.value = '';
       }
     }
 
-    this.inputRef.current?.focus();
+    inputRef.current?.focus();
   };
 
-  onDocKeyUp = (e: KeyboardEvent) => {
-    const { changeOnEnd } = this.props;
-    const { isFocused } = this.store;
+  const onDocKeyUp = (e: KeyboardEvent) => {
+    const { changeOnEnd } = props;
 
     if (changeOnEnd && e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      this.onTypingEnd();
+      onTypingEnd();
     }
 
     if (isFocused && e.key === 'Escape') {
       e.preventDefault();
       e.stopPropagation();
-      this.inputRef.current?.blur();
+      inputRef.current?.blur();
     }
   };
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = this.getValue(e.target.value);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = getValue(e.target.value);
 
-    this.onChange(value, e);
+    onChangeValue(val, e);
   };
 
-  onChange = (value: string, e?: ChangeEvent<HTMLInputElement>) => {
-    const { onChange, changeOnEnd, type } = this.props;
-    const isNumber = type === 'number';
-
-    if (!isNumber) this.cursorPos = this.inputRef.current.selectionStart;
-
-    if (changeOnEnd) {
-      this.store.inputValue = value;
-      this.updateHasValue();
-    } else if (onChange) {
-      onChange(e, value);
-    } else {
-      this.store.inputValue = value;
+  const onChangeValue = (
+    value: InputValue,
+    e?: ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!isNumber && inputRef.current) {
+      cursorPos.current = inputRef.current.selectionStart;
     }
+
+    setInputValue(value);
+    onChange?.(e, value);
   };
 
-  onNumberWheel = delta => {
-    const { onChange, step = 1 } = this.props;
-    const value = this.getValue() + step * delta;
+  const onNumberWheel = delta => {
+    const value = (getValue() as number) + step * delta;
 
-    this.onChange(value);
+    onChangeValue(value);
     onChange?.(null, value);
   };
 
-  onTextAreaInput = e => {
-    const { onInput } = this.props;
-
-    this.store.inputValue = e.target.innerText;
-    this.updateHasValue();
-    this.handleChange(e);
+  const onTextAreaInput = e => {
+    setInputValue(e.target.innerText);
+    handleChange(e);
     onInput?.(e);
   };
 
-  onLabelClipPathChange = (clipPath: string) =>
-    (this.store.labelClipPath = clipPath);
+  const onLabelClipPathChange = (clipPath: string) =>
+    setLabelClipPath(clipPath);
 
-  onTypingEnd = () => {
-    const { onChange } = this.props;
-    onChange?.(null, this.getValue());
+  const onTypingEnd = () => {
+    onChange?.(null, getValue());
   };
 
-  onFocus = e => {
-    const { onFocus } = this.props;
-
-    this.store.isFocused = true;
-    this.updateLabelPosition();
+  const handleFocus = e => {
+    setIsFocused(true);
     onFocus?.(e);
   };
 
-  onBlur = e => {
-    if (this.props.changeOnEnd) this.onTypingEnd();
-    if (this.isClearPressed) {
-      e.preventDefault();
-      return;
-    }
+  const handleBlur = e => {
+    if (changeOnEnd) onTypingEnd();
 
-    // @ts-ignore
-    const val = this.getValue(e?.target?.value);
-    const { onBlur, onChange, value, checkAutofill } = this.props;
+    const val = getValue(e?.target?.value);
 
-    this.store.isFocused = false;
-    this.updateLabelPosition();
-    // some browsers not fire `onchange` after autofill
-    if (checkAutofill && onChange && !value && val) onChange(null, val);
+    setIsFocused(false);
+    if (checkAutofill && onChange && !value && val)
+      onChange(null, val as T.Value);
+
     if (onBlur) onBlur(e);
   };
 
-  getControlProps(): T.ControlProps {
-    const { value, label, controlProps, placeholder, ...rest } = this.props;
-    const { autoComplete, isLabelOnTop, inputValue } = this.store;
-
-    const props = {
-      ...omit(rest, [
+  const controlProps = useMemo((): T.ControlProps => {
+    const controlProps = {
+      ...omit(props, [
         'className',
         'clear',
         'onClear',
         'hasClear',
-        // 'required',
+        'placeholder',
         'hideRequiredStar',
         'size',
         'error',
@@ -298,36 +251,35 @@ export class Input extends Component<T.Props> {
         'scrollProps',
       ]),
       value: inputValue,
-      ...controlProps,
-      onChange: this.handleChange,
-      onFocus: this.onFocus,
-      onBlur: this.onBlur,
+      ...props.controlProps,
+      onChange: handleChange,
+      onFocus: handleFocus,
+      onBlur: handleBlur,
     };
 
-    if (this.isTextArea()) {
-      props.contentEditable = true;
-      props.onInput = this.onTextAreaInput;
+    if (isTextArea) {
+      controlProps.contentEditable = true;
+      controlProps.onInput = onTextAreaInput;
     }
 
-    if (placeholder && !value && (!label || isLabelOnTop)) {
-      props.placeholder = placeholder;
+    if (placeholder && !inputValue && (!label || isLabelOnTop)) {
+      controlProps.placeholder = placeholder;
     }
 
     if (!autoComplete) {
-      props.suppressHydrationWarning = true;
-      props.autoComplete = this.uid;
-      delete props.name;
+      controlProps.suppressHydrationWarning = true;
+      controlProps.autoComplete = uid;
+      delete controlProps.name;
     }
 
-    if (props.value === undefined) props.value = ' ';
+    if (controlProps.value === undefined) controlProps.value = ' ';
 
-    return props;
-  }
+    return controlProps;
+  }, [value, isLabelOnTop, inputValue]);
 
-  wrapControll(control) {
-    if (this.isTextArea()) {
-      const { size, scrollProps } = this.props;
-      const { labelClipPath } = this.store;
+  const wrapControl = control => {
+    if (isTextArea) {
+      const { size } = props;
 
       return (
         <Scroll
@@ -351,141 +303,146 @@ export class Input extends Component<T.Props> {
     }
 
     return <div className={S.controlWrapper}>{control}</div>;
-  }
+  };
 
-  renderAddon(type: 'right' | 'left') {
+  const renderAddon = (type: 'right' | 'left') => {
     const name = `addon${capitalize(type)}`;
-    const content = this.props[name];
+    const content = props[name];
 
     if (!content) return null;
 
-    const props = {
-      // @ts-ignore
-      className: cn(S[name], this.props[`${name}ClassName`]),
+    const addonProps = {
+      className: cn(S[name], props[`${name}ClassName`]),
       key: name,
     };
     const isString = typeof content === 'string';
     const elem = isString ? <span>{content}</span> : content;
 
     // @ts-ignore
-    if (isString) props.title = content;
+    if (isString) addonProps.title = content;
 
-    return <div {...props}>{elem}</div>;
-  }
+    return <div {...addonProps}>{elem}</div>;
+  };
 
-  render() {
-    const {
-      className,
-      size,
-      label,
-      value,
-      variant,
-      error,
-      hasClear,
-      round,
-      required,
-      hideRequiredStar,
-      disabled,
-      addonRight,
-    } = this.props;
-    const { isFocused, hasValue, labelClipPath, isLabelOnTop } = this.store;
-    const isNumber = this.isNumber();
-    const isTextArea = this.isTextArea();
+  useEffect(() => {
+    document.addEventListener('keydown', onDocKeyUp);
+    if (isTextArea) {
+      inputRef.current.addEventListener('paste', onTextareaPaste);
+    }
 
-    const Control = isTextArea ? 'span' : 'input';
-    const controlProps = this.getControlProps();
-    const classes = cn(
-      S.root,
-      isTextArea && S.isTextArea,
-      S[`size-${size}`],
-      S[`variant-${variant}`],
-      isFocused && S.isFocused,
-      error && S.hasError,
-      hasClear && S.hasClear,
-      disabled && S.isDisabled,
-      round && S.round,
-      className
-    );
+    return () => {
+      document.removeEventListener('keydown', onDocKeyUp);
+      inputRef.current?.removeEventListener('paste', onTextareaPaste);
+    };
+  }, [isTextArea]);
 
-    return (
-      // @ts-ignore
-      <div className={classes} title={value}>
-        <label className={S.main} key="main">
-          <div
-            className={S.border}
-            suppressHydrationWarning
-            style={{ clipPath: labelClipPath }}
-            key="border"
-          />
-          {this.renderAddon('left')}
-          {this.wrapControll(
-            <>
-              <Control
-                {...controlProps}
-                className={cn(S.control, controlProps?.className)}
-                ref={this.inputRef}
-                key="control"
-              />
-              {isTextArea && controlProps.placeholder && (
-                <span className={S.placeholder} spellCheck={false}>
-                  {controlProps.placeholder}
-                </span>
-              )}
-            </>
-          )}
-          {isNumber && (
-            <div className={S.numberArrows}>
-              <Button
-                variant="clear"
-                onClick={() => this.onNumberWheel(1)}
-                tabIndex={-1}
-              >
-                <Icon type="chevronUp" size={size} />
-              </Button>
-              <Button
-                variant="clear"
-                onClick={() => this.onNumberWheel(-1)}
-                tabIndex={-1}
-              >
-                <Icon type="chevronDown" size={size} />
-              </Button>
-            </div>
-          )}
+  useEffect(() => {
+    updateSelection();
+    updateAutoComplete();
 
-          <Label
-            className={cn(S.label, addonRight && S.hasAddonRight)}
-            size={size}
-            isOnTop={isLabelOnTop}
-            isError={Boolean(error)}
-            onClipPathChange={this.onLabelClipPathChange}
-            key="label"
-          >
-            {label}
-          </Label>
-          {this.renderAddon('right')}
-          {required && !hideRequiredStar && (
-            <RequiredStar size={size} key="required-star" />
-          )}
-        </label>
-        {hasClear && !disabled && hasValue && (
-          <Button
-            className={S.clearButton}
-            variant="clear"
-            size={size}
-            square
-            onClick={this.onClearPress}
-            title=""
-            key="clear"
-          >
-            <Icon className={S.clearIcon} size={size} type="close" />
-          </Button>
+    if (value !== inputValue) {
+      setInputValue(value);
+      // setTextareaValue(String(value));
+    }
+  }, [value]);
+
+  useEffect(() => {
+    if (isTextArea) setTextareaValue(String(value));
+  }, []);
+
+  const Control = isTextArea ? 'span' : 'input';
+
+  const classes = cn(
+    S.root,
+    isTextArea && S.isTextArea,
+    S[`size-${size}`],
+    S[`variant-${variant}`],
+    isFocused && S.isFocused,
+    error && S.hasError,
+    hasClear && S.hasClear,
+    disabled && S.isDisabled,
+    round && S.round,
+    className
+  );
+
+  return (
+    <div className={classes} title={String(value)}>
+      <label className={S.main} key="main">
+        <div
+          className={S.border}
+          suppressHydrationWarning
+          style={{ clipPath: labelClipPath }}
+          key="border"
+        />
+        {renderAddon('left')}
+        {wrapControl(
+          <>
+            <Control
+              {...controlProps}
+              className={cn(S.control, controlProps?.className)}
+              ref={inputRef}
+              key="control"
+            />
+            {isTextArea && controlProps.placeholder && !controlProps.value && (
+              <span className={S.placeholder} spellCheck={false}>
+                {controlProps.placeholder}
+              </span>
+            )}
+          </>
         )}
-        {!disabled && typeof error === 'string' && (
-          <AssistiveText variant="danger" size={size} key="assistive-text">
-            {error}
-          </AssistiveText>
+        {isNumber && (
+          <div className={S.numberArrows}>
+            <Button
+              variant="clear"
+              onClick={() => onNumberWheel(1)}
+              tabIndex={-1}
+            >
+              <Icon type="chevronUp" size={size} />
+            </Button>
+            <Button
+              variant="clear"
+              onClick={() => onNumberWheel(-1)}
+              tabIndex={-1}
+            >
+              <Icon type="chevronDown" size={size} />
+            </Button>
+          </div>
         )}
-      </div>
-    );
-  }
-}
+
+        <Label
+          className={cn(S.label, addonRight && S.hasAddonRight)}
+          size={size}
+          isOnTop={isLabelOnTop}
+          isError={Boolean(error)}
+          onClipPathChange={onLabelClipPathChange}
+          key="label"
+        >
+          {label}
+        </Label>
+        {renderAddon('right')}
+        {required && !hideRequiredStar && (
+          <RequiredStar size={size} key="required-star" />
+        )}
+      </label>
+
+      {hasClear && !disabled && hasValue && (
+        <Button
+          className={S.clearButton}
+          variant="clear"
+          size={size}
+          square
+          onClick={onClearPress}
+          title=""
+          key="clear"
+        >
+          <Icon className={S.clearIcon} size={size} type="close" />
+        </Button>
+      )}
+      {!disabled && typeof error === 'string' && (
+        <AssistiveText variant="danger" size={size} key="assistive-text">
+          {error}
+        </AssistiveText>
+      )}
+    </div>
+  );
+};

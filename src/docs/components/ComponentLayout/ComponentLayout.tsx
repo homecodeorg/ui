@@ -1,4 +1,4 @@
-import { withStore } from 'justorm/react';
+import { useStore } from 'justorm/react';
 
 import { Router, Route, Link, RequiredStar, Portal } from 'uilib/components';
 import { Code, SidebarLink } from 'docs/components';
@@ -29,30 +29,29 @@ export const Required = ({ text }) => (
   </span>
 );
 
-const ComponentHeader = withStore('router')(
-  ({ name, rootPath, examples, store }) => {
-    const { path } = store.router;
-    const isRoot = path === rootPath;
-    const matchedExample =
-      !isRoot &&
-      examples.find(({ id }) => path.startsWith(`${rootPath}/${id}`));
+const ComponentHeader = ({ name, rootPath, examples }) => {
+  const {
+    router: { path },
+  } = useStore({ router: ['path'] });
+  const isRoot = path === rootPath;
+  const matchedExample =
+    !isRoot && examples.find(({ id }) => path.startsWith(`${rootPath}/${id}`));
 
-    return (
-      <>
-        {isRoot ? (
-          name
-        ) : (
-          <Link href="/" className={S.headerLink}>
-            {name}
-          </Link>
-        )}
-        {matchedExample && (
-          <div className={S.headerSubItem}>/&nbsp;{matchedExample.label}</div>
-        )}
-      </>
-    );
-  }
-);
+  return (
+    <>
+      {isRoot ? (
+        name
+      ) : (
+        <Link href="/" className={S.headerLink}>
+          {name}
+        </Link>
+      )}
+      {matchedExample && (
+        <div className={S.headerSubItem}>/&nbsp;{matchedExample.label}</div>
+      )}
+    </>
+  );
+};
 
 const SidebarItem = ({ id, label, rootPath = '', items = null }) => {
   const path = `${rootPath}/${id}`;
@@ -112,38 +111,42 @@ const renderSidebarRoute = (
   return content;
 };
 
-export const ComponentLayout = withStore('router')(
-  ({ name, examples, scope, docs: Docs, store: { router } }: Props) => {
-    const basePath = `/components/${name}`;
-    const isRoot = router.path === basePath;
+export const ComponentLayout = ({
+  name,
+  examples,
+  scope,
+  docs: Docs,
+}: Props) => {
+  const basePath = `/components/${name}`;
+  const { router } = useStore({ router: ['path'] });
+  const isRoot = router.path === basePath;
 
-    return (
-      <Page
-        innerClassName={!isRoot && S.demoWrapper}
-        contentClassName={!isRoot && S.demo}
-        header={
-          <>
-            <ComponentHeader
-              name={name}
-              rootPath={basePath}
-              examples={examples}
-            />
-            {examples && (
-              <Portal selector={`#sidebar-item-${name}`}>
-                {examples.map(props => (
-                  <SidebarItem {...props} key={props.id} />
-                ))}
-              </Portal>
-            )}
-          </>
-        }
-      >
-        <Router>
-          {/* @ts-ignore */}
-          <Route component={Docs} path="/" exact />
-          {examples?.map(props => renderSidebarRoute(name, props, scope))}
-        </Router>
-      </Page>
-    );
-  }
-);
+  return (
+    <Page
+      innerClassName={!isRoot && S.demoWrapper}
+      contentClassName={!isRoot && S.demo}
+      header={
+        <>
+          <ComponentHeader
+            name={name}
+            rootPath={basePath}
+            examples={examples}
+          />
+          {examples && (
+            <Portal selector={`#sidebar-item-${name}`}>
+              {examples.map(props => (
+                <SidebarItem {...props} key={props.id} />
+              ))}
+            </Portal>
+          )}
+        </>
+      }
+    >
+      <Router>
+        {/* @ts-ignore */}
+        <Route component={Docs} path="/" exact />
+        {examples?.map(props => renderSidebarRoute(name, props, scope))}
+      </Router>
+    </Page>
+  );
+};

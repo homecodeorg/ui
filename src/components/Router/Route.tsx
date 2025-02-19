@@ -1,4 +1,6 @@
 import * as T from './Router.types';
 
-export const Route = (props: T.RouteProps) => null;
+export function Route<T extends T.RouteProps>(props: T.RouteProps) {
+  return null;
+}
 Route.displayName = 'Route';

@@ -51,6 +51,8 @@ export type Props = FormControl<Value> &
     className?: string;
     // Use this prop to control the open state
     isOpen?: boolean;
+    // Whether to close the popup when an option is selected
+    closeOnSelect?: boolean;
     // CSS class for styling the list items wrapper
     optionsClassName?: string;
     // CSS class that will be applied to every list options
@@ -62,7 +64,7 @@ export type Props = FormControl<Value> &
     // Show the number of selected items in the label
     showSelectedCount?: boolean;
     // Disabled label rendering
-    disableLable?: boolean;
+    disableLabel?: boolean;
     // Applies a blur effect to the options list
     blur?: boolean;
     // An array of options
@@ -84,7 +86,7 @@ export type Props = FormControl<Value> &
     // Expand selected items on first open
     expandSelected?: boolean;
     onChange: (value: Value) => void;
-    onSeachChange?: (value: string) => void;
+    onSearchChange?: (value: string) => void;
     onOpen?: () => void;
     onClose?: () => void;
     // Whether to show the search input field
@@ -111,7 +113,8 @@ export type State = {
   searchVal: string;
   options: Option[];
   labelClipPath: string;
-  optionsTreeUpd: number; // store in state to receive updates
+  optionsUpdated: number;
+  focusedItemIndex: number;
 };
 
 export type OptionElemProps = HTMLAttributes<HTMLDivElement> & {

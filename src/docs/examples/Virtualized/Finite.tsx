@@ -1,6 +1,7 @@
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
 import { VirtualizedList, uid } from 'uilib';
-import { createStore, withStore } from 'justorm/react';
+import { createStore } from 'justorm';
+import { useStore } from 'justorm/react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
 
@@ -24,40 +25,40 @@ function setData(nextData, startIndex = Object.keys(store.data).length) {
   store.data = data;
 }
 
-export default withStore('example')(
-  class Example extends Component {
-    componentDidMount() {
-      updateId = uid.generateUID();
-      loadNextData(0, PAGE_SIZE).then(setData);
-    }
+export default function Example() {
+  const {
+    example: { data },
+  } = useStore({ example: ['data'] });
 
-    onScroll({ first, last }) {
-      updateId = uid.generateUID();
-      const currId = updateId;
+  console.log(data);
 
-      loadNextData(first, last).then(nextData => {
-        if (currId !== updateId) return;
-        setData(nextData, first);
-      });
-    }
+  useEffect(() => {
+    updateId = uid.generateUID();
+    loadNextData(0, PAGE_SIZE).then(setData);
+  }, []);
 
-    render() {
-      const { data } = store.originalObject;
+  const onScroll = ({ first, last }) => {
+    updateId = uid.generateUID();
+    const currId = updateId;
 
-      return (
-        <VirtualizedList
-          className={S.root}
-          id={updateId}
-          totalCount={totalCount}
-          itemsCount={totalCount}
-          overlapCount={10}
-          itemHeight={40}
-          renderItem={itemProps =>
-            renderSimpleItems(itemProps, data[itemProps.key])
-          }
-          onScroll={state => this.onScroll(state)}
-        />
-      );
-    }
-  }
-);
+    loadNextData(first, last).then(nextData => {
+      if (currId !== updateId) return;
+      setData(nextData, first);
+    });
+  };
+
+  return (
+    <VirtualizedList
+      className={S.root}
+      id={updateId}
+      totalCount={totalCount}
+      itemsCount={totalCount}
+      overlapCount={10}
+      itemHeight={40}
+      renderItem={itemProps =>
+        renderSimpleItems(itemProps, data[itemProps.key])
+      }
+      onScroll={onScroll}
+    />
+  );
+}

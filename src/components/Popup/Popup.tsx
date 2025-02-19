@@ -9,7 +9,7 @@ import { Portal } from 'uilib/components/Portal/Portal';
 import S from './Popup.styl';
 import Time from 'timen';
 import cn from 'classnames';
-import { createStore } from 'justorm/react';
+import { createStore } from 'justorm';
 import debounce from 'uilib/tools/debounce';
 import { getCoords } from 'uilib/tools/dom';
 import { isBrowser } from 'uilib/tools/env';
@@ -47,7 +47,6 @@ export class Popup extends Component<T.Props> {
   id;
   parentPopupContent;
 
-  store;
   timers = Time.create();
   scrollParent;
   offset = { ...INITIAL_OFFSET };
@@ -58,20 +57,18 @@ export class Popup extends Component<T.Props> {
     animated: true,
   };
 
+  state = {
+    rootPopupId: null,
+    isOpen: Boolean(this.props.isOpen),
+    isContentVisible: Boolean(this.props.isOpen),
+    animating: false,
+    direction: this.props.direction,
+    triggerBounds: null,
+  };
+
   constructor(props) {
     super(props);
-
-    const isOpen = Boolean(props.isOpen);
-
     this.id = H.getId();
-    this.store = createStore(this, {
-      rootPopupId: null,
-      isOpen,
-      isContentVisible: isOpen,
-      animating: false,
-      direction: props.direction,
-      triggerBounds: null,
-    } as T.State);
   }
 
   componentDidMount() {
@@ -84,9 +81,11 @@ export class Popup extends Component<T.Props> {
     document.addEventListener('pointerup', this.onDocPointerUp, true);
 
     if (parentPopupContent) {
-      this.store.rootPopupId =
+      const rootPopupId =
         H.getPopupId(parentPopupContent, 'data-root-popup-id') ||
         H.getPopupId(parentPopupContent, 'data-popup-id');
+
+      this.setState({ rootPopupId });
     }
 
     if (focusControl) {
@@ -102,7 +101,7 @@ export class Popup extends Component<T.Props> {
     const { isOpen, disabled, hoverControl } = this.props;
 
     if (disabled) {
-      this.store.isOpen = false; // close when receive disabled=true
+      this.setState({ isOpen: false }); // close when receive disabled=true
       return;
     }
 
@@ -168,7 +167,7 @@ export class Popup extends Component<T.Props> {
   }
 
   updateBounds() {
-    if (this.store.animating || !this.containerElem) return;
+    if (this.state.animating || !this.containerElem) return;
 
     if (!this.triggerElem.current) return;
 
@@ -189,8 +188,7 @@ export class Popup extends Component<T.Props> {
       });
 
       this.updateOffset();
-
-      this.store.triggerBounds = bounds;
+      this.setState({ triggerBounds: bounds });
     },
     200,
     { trailing: true }
@@ -243,7 +241,7 @@ export class Popup extends Component<T.Props> {
   checkHover = debounce((e: any) => {
     if (this.isPointerPressedInside) return;
 
-    const { isOpen, rootPopupId } = this.store;
+    const { isOpen, rootPopupId } = this.state;
     const overTrigger = this.isPointerOver(e.target, S.trigger);
     const overContent = this.isPointerOver(e.target, S.content);
 
@@ -290,7 +288,7 @@ export class Popup extends Component<T.Props> {
   }
 
   onScroll = throttle(e => {
-    if (!this.store.isOpen) {
+    if (!this.state.isOpen) {
       const { top, left } = this.offset;
 
       if (left || top) {
@@ -316,7 +314,7 @@ export class Popup extends Component<T.Props> {
   };
 
   onDocKeyUp = (e: KeyboardEvent) => {
-    if (this.store.isOpen && e.key === 'Escape') {
+    if (this.state.isOpen && e.key === 'Escape') {
       e.stopPropagation();
       this.close();
       return;
@@ -364,21 +362,21 @@ export class Popup extends Component<T.Props> {
   };
 
   open = throttle(() => {
-    const { rootPopupId } = this.store;
+    const { rootPopupId } = this.state;
 
-    if (this.store.isOpen) return;
+    if (this.state.isOpen) return;
 
     this.updateBounds();
     this.subscribeSizeChange();
     this.subscribeScroll();
-    this.store.isContentVisible = true;
+    this.setState({ isContentVisible: true });
     this.changeState(true, this.afterOpen);
 
     if (rootPopupId) H.setChild(rootPopupId, this.id);
   }, 100);
 
   close = () => {
-    if (!this.store.isOpen) return;
+    if (!this.state.isOpen) return;
 
     this.unsubscribeSizeChange();
     this.changeState(false, this.afterClose);
@@ -388,14 +386,14 @@ export class Popup extends Component<T.Props> {
     const { animated, onOpen, onClose } = this.props;
 
     this.timers.clear();
-    this.store.isOpen = isOpen;
+    this.setState({ isOpen });
 
     isOpen ? onOpen?.() : onClose?.();
 
     if (animated) {
-      this.store.animating = true;
+      this.setState({ animating: true });
       this.timers.after(ANIMATION_DURATION + 500, () => {
-        this.store.animating = false;
+        this.setState({ animating: false });
         callback();
       });
     } else {
@@ -408,7 +406,7 @@ export class Popup extends Component<T.Props> {
   };
 
   afterClose = () => {
-    this.store.isContentVisible = false;
+    this.setState({ isContentVisible: false });
     this.dropOffset();
     this.props.onAfterClose?.();
   };
@@ -421,14 +419,14 @@ export class Popup extends Component<T.Props> {
   }
 
   toggle = throttle(() => {
-    this.store.isOpen ? this.close() : this.open();
+    this.state.isOpen ? this.close() : this.open();
   }, 100);
 
   renderTrigger() {
     const { trigger, content, disabled, focusControl, hoverControl, ...rest } =
       this.props;
     const triggerProps = { ...rest.triggerProps };
-    const { isOpen } = this.store;
+    const { isOpen } = this.state;
 
     if (!trigger) return null;
 
@@ -492,7 +490,7 @@ export class Popup extends Component<T.Props> {
       direction,
       triggerBounds,
       rootPopupId,
-    } = this.store;
+    } = this.state;
 
     if (disabled) return null;
 

@@ -3,6 +3,7 @@ import timen from 'timen';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 import cn from 'classnames';
 import * as justorm from 'justorm/react';
+import { useStore } from 'justorm/react';
 import * as uilib from 'uilib';
 import * as helpers from 'helpers';
 
@@ -10,10 +11,9 @@ import S from '../Code.styl';
 
 const SCOPE = { uilib, React, justorm, timen, cn, helpers };
 
-const Result = justorm.withStore({
-  editor: ['execCode', 'scope'],
-})(function Result({ store }) {
-  const { execCode, scope } = store.editor.originalObject;
+const Result = () => {
+  const { editor } = useStore({ editor: ['execCode', 'scope'] });
+  const { execCode, scope } = editor;
   const currScope = useMemo(() => ({ ...SCOPE, ...scope }), [scope]);
 
   return (
@@ -25,6 +25,6 @@ const Result = justorm.withStore({
       </LiveProvider>
     </div>
   );
-});
+};
 
 export default Result;
