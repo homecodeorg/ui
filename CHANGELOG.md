@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-1](https://github.com/foreverido/uilib/compare/v4.20.0-beta-0...v4.20.0-beta-1) (2025-02-20)
+
+
+### Bug Fixes
+
+* Select2 - show trigger arrow ([36ec721](https://github.com/foreverido/uilib/commit/36ec721ae848394162bd6345f56d7b2ccf3ac7ee))
+
 ## [4.20.0-beta-0](https://github.com/foreverido/uilib/compare/v4.19.9...v4.20.0-beta-0) (2025-02-19)
 
 ### [4.19.9](https://github.com/foreverido/uilib/compare/v4.19.8...v4.19.9) (2025-01-25)
