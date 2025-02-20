@@ -16,11 +16,17 @@
   animation shimmer 1.5s linear infinite
 
 .size-s
-  border-radius $borderRadiusS
+  borderRadiusSize('s')
+  .round&
+    borderRadiusRoundSize('s')
 .size-m
-  border-radius $borderRadiusM
+  borderRadiusSize('m')
+  .round&
+    borderRadiusRoundSize('m')
 .size-l
-  border-radius $borderRadiusL
+  borderRadiusSize('l')
+  .round&
+    borderRadiusRoundSize('l')
 
 @keyframes shimmer
   0%

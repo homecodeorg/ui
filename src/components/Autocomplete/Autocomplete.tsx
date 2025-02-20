@@ -29,7 +29,6 @@ export function Autocomplete(props: T.Props) {
   const [searchValue, setSearchValue] = useState(value);
   const [options, setOptions] = useState<T.Option[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
 
   const currentRequest = useRef('');
   // @ts-ignore
@@ -103,7 +102,11 @@ export function Autocomplete(props: T.Props) {
     if (!options.length) return null;
 
     return (
-      <Menu className={S.options} size={size}>
+      <Menu
+        className={S.options}
+        size={size}
+        offset={{ y: { before: 20, after: 20 } }}
+      >
         {options.map((option, index) => (
           <Menu.Item
             key={option.id}
@@ -125,6 +128,7 @@ export function Autocomplete(props: T.Props) {
       isOpen={isOpen}
       focusControl
       size={size}
+      direction="bottom"
       {...popupProps}
       trigger={
         <div className={inputWrapperClassName}>
@@ -136,16 +140,14 @@ export function Autocomplete(props: T.Props) {
             value={searchValue}
             onChange={handleInputChange}
             className={inputProps.className}
-            onFocus={e => {
-              setIsFocused(true);
-              inputProps.onFocus?.(e);
-            }}
-            onBlur={e => {
-              setIsFocused(false);
-              inputProps.onBlur?.(e);
-            }}
           />
-          {isLoading && <Shimmer className={S.shimmer} size={size} />}
+          {isLoading && (
+            <Shimmer
+              className={S.shimmer}
+              size={size}
+              round={inputProps?.round}
+            />
+          )}
         </div>
       }
       content={optionsList}

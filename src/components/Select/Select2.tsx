@@ -29,6 +29,7 @@ export function Select2(props: T.Props) {
     inputProps,
     popupProps,
     size = 'm',
+    round = false,
     optionClassName,
     additionalOptions = [],
     options,
@@ -84,10 +85,11 @@ export function Select2(props: T.Props) {
     () => ({
       label,
       size,
+      round,
       variant,
       ...props.triggerProps,
     }),
-    [props.triggerProps, label, size, variant]
+    [props.triggerProps, label, size, round, variant]
   );
 
   // Simplified isSelected check
