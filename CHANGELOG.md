@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-2](https://github.com/foreverido/uilib/compare/v4.20.0-beta-1...v4.20.0-beta-2) (2025-02-20)
+
+
+### Bug Fixes
+
+* Autocomplete/Select - Shimmer rounding ([5222ea0](https://github.com/foreverido/uilib/commit/5222ea0d49681d87b25b09267c36374991559268))
+
 ## [4.20.0-beta-1](https://github.com/foreverido/uilib/compare/v4.20.0-beta-0...v4.20.0-beta-1) (2025-02-20)
 
 
