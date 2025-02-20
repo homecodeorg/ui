@@ -10,13 +10,15 @@ import omit from 'lodash.omit';
 import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';
 import { Input } from '../Input/Input';
+import { Icon } from '../Icon/Icon';
 import { Label } from '../Label/Label';
 import { Popup } from '../Popup/Popup';
 import { RequiredStar } from '../RequiredStar/RequiredStar';
-import S from './Select.styl';
 import { Scroll } from '../Scroll/Scroll';
 import { useThrottle } from 'uilib/hooks/useThrottle';
 import useEvent from 'uilib/hooks/useEvent';
+
+import S from './Select.styl';
 
 export function Select2(props: T.Props) {
   const {
@@ -239,9 +241,17 @@ export function Select2(props: T.Props) {
   }, [isMultiple, value]);
   // console.log('selectedLabel::', selectedLabel);
 
-  const renderTriggerArrow = () => {
-    return null;
-  };
+  const triggerArrow = useMemo(() => {
+    if (inputProps?.hasClear && searchVal) return null;
+
+    return (
+      <Icon
+        type="chevronDown"
+        className={cn(S.triggerArrow, isOpen && S.isOpen)}
+        size={size}
+      />
+    );
+  }, [isOpen, searchVal]);
 
   const renderTriggerInput = () => {
     return (
@@ -249,7 +259,7 @@ export function Select2(props: T.Props) {
         {...triggerProps}
         {...inputProps}
         // TODO: autoComplete
-        addonRight={renderTriggerArrow()}
+        addonRight={triggerArrow}
         error={isErrorVisible}
         value={isFocused ? searchVal : selectedLabel}
         onChange={handleSearchChange}
@@ -271,7 +281,6 @@ export function Select2(props: T.Props) {
     const hasSelected = fullSelectedLabel.length > 0;
     const displayLabel = hasSelected ? fullSelectedLabel : label;
     const title = hasSelected ? fullSelectedLabel : null;
-    const triggerArrow = renderTriggerArrow();
     const isError = isErrorVisible;
     const classes = cn(
       S.triggerButton,
