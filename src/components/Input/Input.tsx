@@ -1,4 +1,12 @@
-import { ChangeEvent, useEffect, useState, useRef, useMemo } from 'react';
+import {
+  ChangeEvent,
+  useEffect,
+  useState,
+  useRef,
+  useMemo,
+  forwardRef,
+  MutableRefObject,
+} from 'react';
 import cn from 'classnames';
 import omit from 'lodash.omit';
 
@@ -26,7 +34,7 @@ export type InputProps = T.Props;
 
 type InputValue = string | number;
 
-export const Input = (props: T.Props) => {
+export const Input = forwardRef<HTMLInputElement, T.Props>((props, ref) => {
   const {
     type = 'text',
     size = 'm',
@@ -56,6 +64,8 @@ export const Input = (props: T.Props) => {
     className,
   } = props;
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const updateAutoComplete = () => {
     const form = inputRef.current?.closest('form');
     const val = form?.getAttribute('autocomplete');
@@ -73,7 +83,6 @@ export const Input = (props: T.Props) => {
     elem.selectionEnd = cursorPos.current;
   };
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const isFocusedRef = useRef(false);
   const [isFocused, _setIsFocused] = useState(false);
   const setIsFocused = (val: boolean) => {
@@ -327,7 +336,7 @@ export const Input = (props: T.Props) => {
   useEffect(() => {
     document.addEventListener('keydown', onDocKeyUp);
     if (isTextArea) {
-      inputRef.current.addEventListener('paste', onTextareaPaste);
+      inputRef.current?.addEventListener('paste', onTextareaPaste);
     }
 
     return () => {
@@ -445,4 +454,4 @@ export const Input = (props: T.Props) => {
       )}
     </div>
   );
-};
+});
