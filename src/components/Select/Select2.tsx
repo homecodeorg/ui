@@ -117,8 +117,11 @@ export function Select2(props: T.Props) {
     setFocusedItemIndex(index);
   };
 
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
   const handleSearchChange = (e, value: string) => {
     setSearchVal(value);
+    setIsSearchActive(true);
     onSearchChange?.(value);
     setNewItems(options.filter(filterOption));
   };
@@ -165,6 +168,8 @@ export function Select2(props: T.Props) {
 
   const onPopupClose = () => {
     setIsOpen(false);
+    setSearchVal('');
+    setIsSearchActive(false);
     setItemFocus(0);
   };
 
@@ -263,7 +268,7 @@ export function Select2(props: T.Props) {
         // TODO: autoComplete
         addonRight={triggerArrow}
         error={isErrorVisible}
-        value={isFocused ? searchVal : selectedLabel}
+        value={isFocused && isSearchActive ? searchVal : selectedLabel}
         onChange={handleSearchChange}
         label={getFieldLabel(label)}
       />
