@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-4](https://github.com/foreverido/uilib/compare/v4.20.0-beta-3...v4.20.0-beta-4) (2025-03-05)
+
+
+### Bug Fixes
+
+* Input - forwardRef ([ef4b8e1](https://github.com/foreverido/uilib/commit/ef4b8e1c609554dc4ab331b5ad4c92d9908d20a6))
+* Select2 - update selectedLabel when options changes ([feba450](https://github.com/foreverido/uilib/commit/feba4507133bee9ecdc5867e1dd25c768ac8a72b))
+
 ## [4.20.0-beta-3](https://github.com/foreverido/uilib/compare/v4.20.0-beta-2...v4.20.0-beta-3) (2025-02-23)
 
 ## [4.20.0-beta-2](https://github.com/foreverido/uilib/compare/v4.20.0-beta-1...v4.20.0-beta-2) (2025-02-20)
