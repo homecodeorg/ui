@@ -29,7 +29,7 @@ export function Select2(props: T.Props) {
     inputProps,
     popupProps,
     size = 'm',
-    round = false,
+    round,
     optionClassName,
     additionalOptions = [],
     options,
@@ -240,7 +240,7 @@ export function Select2(props: T.Props) {
         }, [] as string[])
         .join(', ')
     );
-  }, [isMultiple, value]);
+  }, [isMultiple, value, ids]);
   // console.log('selectedLabel::', selectedLabel);
 
   const triggerArrow = useMemo(() => {

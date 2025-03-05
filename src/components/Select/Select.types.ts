@@ -96,6 +96,7 @@ export type Props = FormControl<Value> &
       InputProps,
       'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
     >;
+    round?: boolean;
     // Custom trigger element
     trigger?: ReactNode;
     triggerProps?: any;
