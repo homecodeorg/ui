@@ -32,6 +32,10 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     // Addon to be displayed to the right of the input field
     addonRight?: string | ReactNode;
     addonRightClassName?: string;
+    // Whether to clear the padding of the input field to the left
+    clearPaddingLeft?: boolean;
+    // Whether to clear the padding of the input field to the right
+    clearPaddingRight?: boolean;
     // A callback function that is called when the input field's value is cleared using the clear button (if hasClear is true)
     onClear?: () => void;
     // Additional props for the underlying HTML input element

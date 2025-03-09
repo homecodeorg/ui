@@ -70,6 +70,8 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       placeholder,
       addonLeft,
       addonRight,
+      clearPaddingLeft,
+      clearPaddingRight,
       forceLabelOnTop,
       scrollProps,
       step = 1,
@@ -395,7 +397,14 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
 
     return (
       <div className={classes} title={String(value)}>
-        <label className={S.main} key="main">
+        <label
+          className={cn(
+            S.main,
+            clearPaddingLeft && S.clearPaddingLeft,
+            clearPaddingRight && S.clearPaddingRight
+          )}
+          key="main"
+        >
           <div
             className={S.border}
             suppressHydrationWarning
@@ -440,7 +449,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
           )}
 
           <Label
-            className={cn(S.label, addonRight && S.hasAddonRight)}
+            className={S.label}
             size={size}
             isOnTop={isLabelOnTop}
             isError={Boolean(error)}
@@ -449,25 +458,25 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
           >
             {label}
           </Label>
+          {hasClear && !disabled && hasValue && (
+            <Button
+              className={S.clearButton}
+              variant="clear"
+              size={size}
+              square
+              onClick={onClearPress}
+              title=""
+              key="clear"
+            >
+              <Icon className={S.clearIcon} size={size} type="close" />
+            </Button>
+          )}
           {renderAddon('right')}
           {required && !hideRequiredStar && (
             <RequiredStar size={size} key="required-star" />
           )}
         </label>
 
-        {hasClear && !disabled && hasValue && (
-          <Button
-            className={S.clearButton}
-            variant="clear"
-            size={size}
-            square
-            onClick={onClearPress}
-            title=""
-            key="clear"
-          >
-            <Icon className={S.clearIcon} size={size} type="close" />
-          </Button>
-        )}
         {!disabled && typeof error === 'string' && (
           <AssistiveText variant="danger" size={size} key="assistive-text">
             {error}

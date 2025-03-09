@@ -25,6 +25,11 @@ $paddingSide = 12px
   max-width 100%
   border-radius inherit
 
+  &.clearPaddingRight
+    padding-right 0 !important
+  &.clearPaddingLeft
+    padding-left 0 !important
+
   .isTextArea &
     height auto // !important
     max-height inherit !important
@@ -139,9 +144,6 @@ $paddingSide = 12px
   pointer-events none
 
 .label
-  &.hasAddonRight
-    padding-right 2em
-
   .isTextArea &
     max-height 40px
 
@@ -355,13 +357,8 @@ $paddingSide = 12px
 
 .clearButton
   z-index 1
-  position absolute
-  top 0
-  right 0
   bottom 1px
   height auto
-  border-top-left-radius 0
-  border-bottom-left-radius 0
 
   &:hover
     background-color var(--accent-color-alpha-0) !important
