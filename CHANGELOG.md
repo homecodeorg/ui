@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-8](https://github.com/foreverido/uilib/compare/v4.20.0-beta-7...v4.20.0-beta-8) (2025-03-09)
+
+
+### Bug Fixes
+
+* Input - controlProps deps memo ([05c7f41](https://github.com/foreverido/uilib/commit/05c7f41cbe5f7ba3cc8a5b695966bf8a4ee8a3eb))
+
 ## [4.20.0-beta-7](https://github.com/foreverido/uilib/compare/v4.20.0-beta-6...v4.20.0-beta-7) (2025-03-09)
 
 
