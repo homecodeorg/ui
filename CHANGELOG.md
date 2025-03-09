@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-9](https://github.com/foreverido/uilib/compare/v4.20.0-beta-8...v4.20.0-beta-9) (2025-03-09)
+
+
+### Bug Fixes
+
+* Input - clearPaddingLeft/Right ([a44734d](https://github.com/foreverido/uilib/commit/a44734d2e0f420ba6fdf26a5cc2b0d0270cef12c))
+
 ## [4.20.0-beta-8](https://github.com/foreverido/uilib/compare/v4.20.0-beta-7...v4.20.0-beta-8) (2025-03-09)
 
 
