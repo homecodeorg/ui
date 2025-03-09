@@ -254,23 +254,11 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
 
     const controlProps = useMemo((): T.ControlProps => {
       const controlProps = {
-        ...omit(props, [
-          'className',
-          'clear',
-          'onClear',
-          'hasClear',
-          'placeholder',
-          'hideRequiredStar',
-          'size',
-          'error',
-          'checkAutofill',
-          'addonLeft',
-          'addonRight',
-          'forceLabelOnTop',
-          'changeOnEnd',
-          'scrollProps',
-        ]),
+        type,
         value: inputValue,
+        step,
+        required,
+        disabled,
         ...props.controlProps,
         onChange: handleChange,
         onFocus: handleFocus,
@@ -295,7 +283,27 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       if (controlProps.value === undefined) controlProps.value = ' ';
 
       return controlProps;
-    }, [value, isLabelOnTop, inputValue]);
+    }, [
+      type,
+      size,
+      variant,
+      inputValue,
+      defaultValue,
+      step,
+      required,
+      disabled,
+      props.controlProps,
+      handleChange,
+      onFocus,
+      onBlur,
+      isTextArea,
+      onTextAreaInput,
+      placeholder,
+      label,
+      isLabelOnTop,
+      autoComplete,
+      uid,
+    ]);
 
     const wrapControl = control => {
       if (isTextArea) {
