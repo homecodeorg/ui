@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0-beta-7](https://github.com/foreverido/uilib/compare/v4.20.0-beta-6...v4.20.0-beta-7) (2025-03-09)
+
+
+### Bug Fixes
+
+* Input - forward ref ([0d26922](https://github.com/foreverido/uilib/commit/0d269229cc81102b612e1a19e59248fe99bca891))
+
 ## [4.20.0-beta-6](https://github.com/foreverido/uilib/compare/v4.20.0-beta-5...v4.20.0-beta-6) (2025-03-05)
 
 ## [4.20.0-beta-5](https://github.com/foreverido/uilib/compare/v4.20.0-beta-4...v4.20.0-beta-5) (2025-03-05)
