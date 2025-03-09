@@ -30,6 +30,7 @@ export class Select extends Component<T.Props, T.State> {
   scrollInnerElem: HTMLDivElement;
   onScrollInnerRef = elem => (this.scrollInnerElem = elem);
   focusedElem: HTMLDivElement;
+  selectedElem: HTMLDivElement;
 
   items = [];
   maxIndex = -1;
@@ -171,7 +172,6 @@ export class Select extends Component<T.Props, T.State> {
 
     if (elem) {
       const content = this.contentRef.current;
-
       if (!content) return;
 
       const { top, bottom } = elem.getBoundingClientRect();
@@ -184,6 +184,10 @@ export class Select extends Component<T.Props, T.State> {
         list.scrollTop += bottom - rect.bottom;
       }
     }
+  };
+
+  onSelectedElemRef = elem => {
+    this.selectedElem = elem;
   };
 
   onDocumentClick = e => {
@@ -232,6 +236,7 @@ export class Select extends Component<T.Props, T.State> {
     const { onFocus } = this.props;
 
     this.store.isFocused = true;
+
     onFocus?.(e);
   };
 
@@ -713,9 +718,8 @@ export class Select extends Component<T.Props, T.State> {
       onPointerEnter: () => this.onOptionHover(id),
     } as T.OptionElemProps;
 
-    if (isFocused || (isSelected && !this.onFocusedElemRef))
-      // @ts-ignore
-      props.ref = this.onFocusedElemRef;
+    // @ts-ignore
+    if (isFocused || isSelected) props.ref = this.onFocusedElemRef;
 
     if (isIndeterminate || (isSelected && !this.isFirstSelectedMeet)) {
       this.isFirstSelectedMeet = true;
@@ -834,7 +838,7 @@ export class Select extends Component<T.Props, T.State> {
           disabled={disabled}
           {...popupProps}
           onOpen={this.onPopupOpen}
-          onClose={this.onPopupClose}
+          onAfterClose={this.onPopupClose}
           trigger={this.renderTrigger()}
           triggerProps={{
             onFocus: this.onFocus,
