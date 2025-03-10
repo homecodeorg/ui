@@ -42,7 +42,7 @@ export function Autocomplete(props: T.Props) {
   const inputRef = useRef<Input>(null);
 
   const isOpen = options.length > 0;
-  const classes = cn(S.root, className);
+  const classes = cn(S.root, className, popupProps.className);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
