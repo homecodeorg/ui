@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.5](https://github.com/foreverido/uilib/compare/v4.20.4...v4.20.5) (2025-03-10)
+
+
+### Bug Fixes
+
+* Autocomplete - popupProps.className ([c8956cf](https://github.com/foreverido/uilib/commit/c8956cf8f0280cce6e2d53dc934c04fb350fcf31))
+
 ### [4.20.4](https://github.com/foreverido/uilib/compare/v4.20.3...v4.20.4) (2025-03-10)
 
 
