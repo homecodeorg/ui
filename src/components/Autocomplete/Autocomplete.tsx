@@ -1,7 +1,7 @@
 import * as T from './Autocomplete.types';
 
 import { Input, Menu, Popup } from 'uilib/components';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import S from './Autocomplete.styl';
 import { Shimmer } from 'uilib/components/Shimmer/Shimmer';
@@ -26,9 +26,15 @@ export function Autocomplete(props: T.Props) {
   } = props;
 
   const isMounted = useIsMounted();
-  const [searchValue, setSearchValue] = useState(value);
   const [options, setOptions] = useState<T.Option[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const searchValRef = useRef(value);
+  const [searchValue, _setSearchValue] = useState(value);
+
+  const setSearchValue = (val: string) => {
+    searchValRef.current = val;
+    _setSearchValue(val);
+  };
 
   const currentRequest = useRef('');
   // @ts-ignore
@@ -95,7 +101,11 @@ export function Autocomplete(props: T.Props) {
   }, debounceDelay);
 
   useEffect(() => {
-    setSearchValue(value);
+    if (value !== searchValRef.current) {
+      if (isOpen) fetchOptions(value);
+    } else {
+      setSearchValue(value);
+    }
   }, [value]);
 
   const optionsList = useMemo(() => {
