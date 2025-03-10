@@ -46,7 +46,6 @@ export function Autocomplete(props: T.Props) {
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
-    fetchOptions(searchValue);
     inputProps?.onFocus?.(e);
   };
 
@@ -74,7 +73,7 @@ export function Autocomplete(props: T.Props) {
 
     // set input caret to the end
     requestAnimationFrame(() => {
-      const input = inputRef.current?.inputRef.current;
+      const input = inputRef.current;
       if (!input) return;
       input.focus();
       input.setSelectionRange(value.length, value.length);
@@ -115,7 +114,7 @@ export function Autocomplete(props: T.Props) {
   useEffect(() => {
     setSearchValue(value);
     setOptions([]);
-    if (isFocusedRef.current || isOpen) fetchOptions(value);
+    if (isFocusedRef.current) fetchOptions(value);
   }, [value]);
 
   const optionsList = useMemo(() => {
