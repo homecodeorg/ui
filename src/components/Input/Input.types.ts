@@ -15,6 +15,8 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     label?: string;
     variant?: Variant;
     round?: boolean;
+    // Whether the input field should be focused when the component is mounted
+    autoFocus?: boolean;
     // Hide the required star symbol
     hideRequiredStar?: boolean;
     // For label to be on top of the input,

@@ -76,6 +76,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       scrollProps,
       step = 1,
       round,
+      autoFocus,
       className,
     } = props;
 
@@ -374,7 +375,11 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
         setInputValue(value);
         // setTextareaValue(String(value));
       }
-    }, [value]);
+
+      if (autoFocus && inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, [value, autoFocus]);
 
     useEffect(() => {
       if (isTextArea) setTextareaValue(String(value));
@@ -464,6 +469,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
               variant="clear"
               size={size}
               square
+              round={round}
               onClick={onClearPress}
               title=""
               key="clear"
