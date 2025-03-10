@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.4](https://github.com/foreverido/uilib/compare/v4.20.3...v4.20.4) (2025-03-10)
+
+
+### Bug Fixes
+
+* Autocomplete - fix inputRef; disable fetchOptions() on focus ([26a520f](https://github.com/foreverido/uilib/commit/26a520f6e143fa042866bd297f9599bef446795e))
+
 ### [4.20.3](https://github.com/foreverido/uilib/compare/v4.20.2...v4.20.3) (2025-03-10)
 
 
