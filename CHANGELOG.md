@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.20.0](https://github.com/foreverido/uilib/compare/v4.20.0-beta-9...v4.20.0) (2025-03-10)
+
+
+### Features
+
+* Input - autoFocus ([9964f1f](https://github.com/foreverido/uilib/commit/9964f1f3fa50a7506afe48917a5a157733be4e8d))
+
+
+### Bug Fixes
+
+* Button variant=text disabled styles ([d8abacb](https://github.com/foreverido/uilib/commit/d8abacb6a7063819fb1f65c4e73721a5964d1a73))
+
 ## [4.20.0-beta-9](https://github.com/foreverido/uilib/compare/v4.20.0-beta-8...v4.20.0-beta-9) (2025-03-09)
 
 
