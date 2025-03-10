@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.2](https://github.com/foreverido/uilib/compare/v4.20.1...v4.20.2) (2025-03-10)
+
+
+### Bug Fixes
+
+* Autocomplete - re-fetchOptions() wheh value changes ([1e79660](https://github.com/foreverido/uilib/commit/1e7966023daca506e415681c6091376450e35509))
+
 ### [4.20.1](https://github.com/foreverido/uilib/compare/v4.20.0...v4.20.1) (2025-03-10)
 
 
