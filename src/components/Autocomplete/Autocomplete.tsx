@@ -28,6 +28,7 @@ export function Autocomplete(props: T.Props) {
   const isMounted = useIsMounted();
   const [options, setOptions] = useState<T.Option[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isFocusedRef = useRef(false);
   const searchValRef = useRef(value);
   const [searchValue, _setSearchValue] = useState(value);
 
@@ -42,6 +43,17 @@ export function Autocomplete(props: T.Props) {
 
   const isOpen = options.length > 0;
   const classes = cn(S.root, className);
+
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    isFocusedRef.current = true;
+    fetchOptions(searchValue);
+    inputProps?.onFocus?.(e);
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    isFocusedRef.current = false;
+    inputProps?.onBlur?.(e);
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -101,11 +113,9 @@ export function Autocomplete(props: T.Props) {
   }, debounceDelay);
 
   useEffect(() => {
-    if (value !== searchValRef.current) {
-      if (isOpen) fetchOptions(value);
-    } else {
-      setSearchValue(value);
-    }
+    setSearchValue(value);
+    setOptions([]);
+    if (isFocusedRef.current || isOpen) fetchOptions(value);
   }, [value]);
 
   const optionsList = useMemo(() => {
@@ -149,6 +159,8 @@ export function Autocomplete(props: T.Props) {
             {...inputProps}
             value={searchValue}
             onChange={handleInputChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
             className={inputProps.className}
           />
           {isLoading && (
