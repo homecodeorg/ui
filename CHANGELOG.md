@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.20.6](https://github.com/foreverido/uilib/compare/v4.20.5...v4.20.6) (2025-03-12)
+
+
+### Features
+
+* Tabs - scrollable x ([abb61a3](https://github.com/foreverido/uilib/commit/abb61a3ca65a719cfd8f9134a0b15d827076e680))
+
 ### [4.20.5](https://github.com/foreverido/uilib/compare/v4.20.4...v4.20.5) (2025-03-10)
 
 
