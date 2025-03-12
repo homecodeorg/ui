@@ -1,7 +1,5 @@
-import { Component, createRef } from 'react';
+import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import cn from 'classnames';
-import { createStore } from 'justorm/react';
-import omit from 'lodash.omit';
 import Time from 'timen';
 
 import { isTouch } from 'uilib/tools/dom';
@@ -9,14 +7,15 @@ import * as resizeObserver from 'uilib/tools/resizeObserver';
 
 import S from './Scroll.styl';
 import * as T from './Scroll.types';
-import debounce from 'uilib/tools/debounce';
+import useEvent from '../../hooks/useEvent';
+import { useDebounce } from '../../hooks/useDebounce';
 
 const getEventCoords = e => ({
   x: e.clientX,
   y: e.clientY,
 });
 
-const OFFSET_THRESHOL = 5;
+const OFFSET_THRESHOLD = 5;
 const AXES = ['x', 'y'];
 const BY_AXIS = {
   x: {
@@ -37,183 +36,171 @@ const BY_AXIS = {
   },
 };
 
-export class Scroll extends Component<T.Props> {
-  innerElem: HTMLDivElement;
-  onInnerRef = elem => {
-    if (this.innerElem) {
-      resizeObserver.unobserve(this.innerElem, this.updateAll);
-    }
+export function Scroll(props: T.Props) {
+  const {
+    x,
+    y,
+    offset,
+    size = 'm',
+    fadeSize,
+    smooth,
+    className,
+    innerClassName,
+    xScrollbarClassName,
+    yScrollbarClassName,
+    innerProps,
+    onInnerRef,
+    thumbClassName,
+    autoHide,
+    children,
+    onScroll,
+    ...rest
+  } = props;
 
-    this.innerElem = elem;
-    this.props.onInnerRef?.(elem);
-
-    if (elem) {
-      this.updateAll();
-      resizeObserver.observe(elem, this.updateAll);
-    }
+  const innerElemRef = useRef<HTMLDivElement>(null);
+  const thumbXRef = useRef<HTMLDivElement>(null);
+  const thumbYRef = useRef<HTMLDivElement>(null);
+  const thumbElemRef = {
+    x: thumbXRef,
+    y: thumbYRef,
   };
 
-  thumbELem = {
-    x: createRef<HTMLDivElement>(),
-    y: createRef<HTMLDivElement>(),
-  };
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [activeAxis, setActiveAxis] = useState(null);
+  const [coeff, setCoeff] = useState({ x: 0, y: 0 });
+  const [hasOffset, setHasOffset] = useState({
+    top: false,
+    left: false,
+    right: false,
+    bottom: false,
+  });
 
-  store;
-  isTouch;
-  timers = Time.create();
+  const isTouchDevice = useMemo(() => isTouch(), []);
 
-  currAxis;
-  pos = { x: 0, y: 0 };
-  prevCoords = { x: 0, y: 0 };
-  prevScrolls = { x: 0, y: 0 };
-  prevBoundings = { x: 0, y: 0 };
+  const posRef = useRef({ x: 0, y: 0 });
+  const prevCoordsRef = useRef({ x: 0, y: 0 });
+  const prevScrollsRef = useRef({ x: 0, y: 0 });
+  const prevBoundingsRef = useRef({ x: 0, y: 0 });
 
-  unsubscribeScrollHeightObserver;
+  const eachAxis = useCallback(
+    fn => AXES.map(axis => props[axis] && fn(axis)),
+    [x, y]
+  );
 
-  static defaultProps = { size: 'm' };
+  const getOffsetSize = axis => innerElemRef.current[BY_AXIS[axis].offsetSize];
+  const getInnerSize = axis => innerElemRef.current[BY_AXIS[axis].innerSize];
+  const getScrollSize = axis => innerElemRef.current[BY_AXIS[axis].scrollSize];
+  const getScrollPos = axis => innerElemRef.current[BY_AXIS[axis].scrollPos];
+  const getThumbSize = axis =>
+    thumbElemRef[axis].current[BY_AXIS[axis].offsetSize];
 
-  constructor(props) {
-    super(props);
-    this.isTouch = isTouch();
-    this.store = createStore(this, {
-      isScrolling: false,
-      activeAxis: null,
-      coeff: { x: 0, y: 0 },
-      hasOffset: {
-        top: false,
-        left: false,
-        right: false,
-        bottom: false,
-      },
-    });
-  }
+  const getOffset = useCallback(
+    axis => {
+      const axisOffset = offset?.[axis];
+      const isVertical = axis === 'y';
+      const before = isVertical ? 'top' : 'left';
+      const after = isVertical ? 'bottom' : 'right';
 
-  componentDidMount() {
-    this.updateAll();
+      return {
+        [before]: axisOffset?.before || 0,
+        [after]: axisOffset?.after || 0,
+      };
+    },
+    [offset]
+  );
 
-    this.unsubscribeScrollHeightObserver = Time.every(
-      100,
-      this.observeScrollHeight
-    );
+  const getCoeffStyle = useCallback(axis => `${coeff[axis] * 100}%`, [coeff]);
 
-    document.addEventListener('scroll', this.onDocScroll);
-  }
+  const getPosStyle = axis => `${posRef.current[axis]}px`;
 
-  componentWillUnmount() {
-    this.unsubscribeScrollHeightObserver?.();
-    this.unsubscribePointerMoveUp();
-    document.removeEventListener('scroll', this.onDocScroll);
-  }
+  const isScrollSizeChanged = useCallback(
+    axis => {
+      const currScrolls = getScrollSize(axis);
+      const isChanged = prevScrollsRef.current[axis] !== currScrolls;
 
-  eachAxis = fn => AXES.map(axis => this.props[axis] && fn(axis));
+      if (isChanged) prevScrollsRef.current[axis] = currScrolls;
 
-  observeScrollHeight = () => {
-    this.eachAxis(axis => {
-      const needUpdate =
-        (this.props[axis] && this.isScrollSizeChanged(axis)) ||
-        this.isBoudingsChanged(axis);
+      return isChanged;
+    },
+    [getScrollSize]
+  );
 
-      if (needUpdate) this.update(axis);
-    });
-  };
+  const isBoudingsChanged = useCallback(
+    axis => {
+      const curroffsetSize = getOffsetSize(axis);
+      const isChanged = prevBoundingsRef.current[axis] !== curroffsetSize;
 
-  isScrollSizeChanged(axis) {
-    const currScrolls = this.getScrollSize(axis);
-    const isChanged = this.prevScrolls[axis] !== currScrolls[axis];
+      if (isChanged) prevBoundingsRef.current[axis] = curroffsetSize;
 
-    if (isChanged) this.prevScrolls[axis] = currScrolls;
+      return isChanged;
+    },
+    [getOffsetSize]
+  );
 
-    return isChanged;
-  }
+  // Update functions
+  const updateCoeff = useCallback(
+    axis => {
+      const thumb = thumbElemRef[axis].current;
+      if (!innerElemRef.current) return;
 
-  isBoudingsChanged(axis) {
-    const curroffsetSize = this.getoffsetSize(axis);
-    const isChanged = this.prevBoundings[axis] !== curroffsetSize[axis];
+      const sizeField = BY_AXIS[axis].size;
+      const newCoeff = getInnerSize(axis) / getScrollSize(axis);
 
-    if (isChanged) this.prevBoundings[axis] = curroffsetSize[axis];
+      // Only update if the value has changed
+      if (coeff[axis] !== newCoeff) {
+        setCoeff(prev => ({
+          ...prev,
+          [axis]: newCoeff,
+        }));
+      }
 
-    return isChanged;
-  }
+      if (thumb) thumb.style[sizeField] = `${newCoeff * 100}%`;
+    },
+    [coeff, getInnerSize, getScrollSize, thumbElemRef]
+  );
 
-  getoffsetSize = axis => this.innerElem[BY_AXIS[axis].offsetSize];
-  getInnerSize = axis => this.innerElem[BY_AXIS[axis].innerSize];
-  getScrollSize = axis => this.innerElem[BY_AXIS[axis].scrollSize];
-  getScrollPos = axis => this.innerElem[BY_AXIS[axis].scrollPos];
-  getThumbSize = axis => this.thumbELem[axis].current[BY_AXIS[axis].offsetSize];
+  const updatePos = useCallback(
+    axis => {
+      const thumb = thumbElemRef[axis].current;
+      if (!innerElemRef.current || !thumb) return;
 
-  getOffset(axis) {
-    const offset = this.props.offset?.[axis];
+      const offsetBefore = offset?.[axis]?.before || 0;
+      const offsetAfter = offset?.[axis]?.after || 0;
+      const innerSize = getInnerSize(axis);
+      const thumbSize = getThumbSize(axis);
+      const scrollSize = getScrollSize(axis);
+      const scrollPos = getScrollPos(axis);
+      const posField = BY_AXIS[axis].posField;
 
-    const isVertical = axis === 'y';
-    const before = isVertical ? 'top' : 'left';
-    const after = isVertical ? 'bottom' : 'right';
+      const pos = thumbSize
+        ? (innerSize - thumbSize - offsetBefore - offsetAfter) *
+          (scrollPos / (scrollSize - innerSize))
+        : 0;
 
-    return {
-      [before]: offset?.before || 0,
-      [after]: offset?.after || 0,
-    };
-  }
+      posRef.current[axis] = pos;
+      thumb.style[posField] = `${pos}px`;
+    },
+    [
+      getInnerSize,
+      getScrollPos,
+      getScrollSize,
+      getThumbSize,
+      offset,
+      thumbElemRef,
+    ]
+  );
 
-  getCoeffStyle = axis => `${this.store.coeff[axis] * 100}%`;
-  getPosStyle = axis => `${this.pos[axis]}px`;
+  const update = useCallback(
+    axis => {
+      updateCoeff(axis);
+      updatePos(axis);
+    },
+    [updateCoeff, updatePos]
+  );
 
-  updateAll = () => {
-    this.eachAxis(this.update);
-    this.updateHasOffsets();
-  };
+  const updateHasOffsets = useCallback(() => {
+    if (!innerElemRef.current) return;
 
-  update = axis => {
-    this.updateCoeff(axis);
-    this.updatePos(axis);
-  };
-
-  updateCoeff(axis) {
-    const thumb = this.thumbELem[axis].current;
-
-    if (!this.innerElem) return;
-
-    const sizeField = BY_AXIS[axis].size;
-
-    this.store.coeff[axis] = this.getInnerSize(axis) / this.getScrollSize(axis);
-    if (thumb) thumb.style[sizeField] = this.getCoeffStyle(axis);
-  }
-
-  updatePos(axis) {
-    const thumb = this.thumbELem[axis].current;
-
-    if (!this.innerElem || !thumb) return;
-
-    const { offset } = this.props;
-    const offsetBefore = offset?.[axis]?.before || 0;
-    const offsetAfter = offset?.[axis]?.after || 0;
-    const innerSize = this.getInnerSize(axis);
-    const thumbSize = this.getThumbSize(axis);
-    const scrollSize = this.getScrollSize(axis);
-    const scrollPos = this.getScrollPos(axis);
-    const posField = BY_AXIS[axis].posField;
-    // const AXIS = axis.toUpperCase();
-    const pos = thumbSize
-      ? (innerSize - thumbSize - offsetBefore - offsetAfter) *
-        (scrollPos / (scrollSize - innerSize))
-      : 0;
-
-    this.pos[axis] = pos;
-    // thumb.style.transform = `translate${AXIS}(${pos}px)`;
-    thumb.style[posField] = this.getPosStyle(axis);
-  }
-
-  updateScroll(axis, e) {
-    const coords = getEventCoords(e);
-    const scrollPos = BY_AXIS[axis].scrollPos;
-    const pos = coords[axis] - this.prevCoords[axis];
-
-    this.prevCoords = coords;
-    this.innerElem[scrollPos] += pos / this.store.coeff[axis];
-  }
-
-  updateHasOffsets() {
-    const { x, y } = this.props;
-    const { hasOffset } = this.store;
     const {
       scrollTop,
       scrollLeft,
@@ -221,139 +208,213 @@ export class Scroll extends Component<T.Props> {
       scrollWidth,
       offsetHeight,
       offsetWidth,
-    } = this.innerElem;
+    } = innerElemRef.current;
 
-    if (y) {
-      hasOffset.top = scrollTop > 0;
-      hasOffset.bottom =
-        scrollHeight - (scrollTop + offsetHeight) > OFFSET_THRESHOL;
-    }
+    setHasOffset(prev => {
+      const newHasOffset = { ...prev };
 
-    if (x && !(hasOffset.top || hasOffset.bottom)) {
-      hasOffset.left = scrollLeft > 0;
-      hasOffset.right =
-        scrollWidth - (scrollLeft + offsetWidth) > OFFSET_THRESHOL;
-    }
-  }
+      if (y) {
+        newHasOffset.top = scrollTop > 0;
+        newHasOffset.bottom =
+          scrollHeight - (scrollTop + offsetHeight) > OFFSET_THRESHOLD;
+      }
 
-  dropScrollingState = debounce(() => (this.store.isScrolling = false), 2000);
+      if (x && !(newHasOffset.top || newHasOffset.bottom)) {
+        newHasOffset.left = scrollLeft > 0;
+        newHasOffset.right =
+          scrollWidth - (scrollLeft + offsetWidth) > OFFSET_THRESHOLD;
+      }
 
-  subscribePointerMoveUp = () => {
-    document.addEventListener('pointermove', this.onPointerMove, {
-      passive: false, // do not generate passive event warning
+      return newHasOffset;
     });
-    document.addEventListener('pointerup', this.onPointerUp);
-  };
+  }, [x, y]);
 
-  unsubscribePointerMoveUp = () => {
-    document.removeEventListener('pointermove', this.onPointerMove);
-    document.removeEventListener('pointerup', this.onPointerUp);
-  };
+  const updateAll = useCallback(() => {
+    if (!innerElemRef.current) return;
 
-  onDocScroll = e => {
-    const { activeAxis } = this.store;
+    eachAxis(axis => update(axis));
+    updateHasOffsets();
+  }, [eachAxis, update, updateHasOffsets]);
 
-    // if dragging thumb - prevent any other scrolls
-    if (activeAxis && this.innerElem !== e.target) {
+  const updateScroll = useCallback(
+    (axis, e) => {
+      const coords = getEventCoords(e);
+      const scrollPos = BY_AXIS[axis].scrollPos;
+      const pos = coords[axis] - prevCoordsRef.current[axis];
+
+      prevCoordsRef.current = coords;
+      innerElemRef.current[scrollPos] += pos / coeff[axis];
+    },
+    [coeff]
+  );
+
+  // Event handlers
+  const dropScrollingState = useDebounce(() => {
+    setIsScrolling(false);
+  }, 2000);
+
+  const observeScrollHeight = useCallback(() => {
+    eachAxis(axis => {
+      const needUpdate =
+        (props[axis] && isScrollSizeChanged(axis)) || isBoudingsChanged(axis);
+
+      if (needUpdate) update(axis);
+    });
+  }, [props, isBoudingsChanged, isScrollSizeChanged, update]);
+
+  const onDocScroll = useCallback(
+    e => {
+      // if dragging thumb - prevent any other scrolls
+      if (activeAxis && innerElemRef.current !== e.target) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    },
+    [activeAxis]
+  );
+
+  const onInnerScroll = useCallback(
+    e => {
+      if (innerElemRef.current !== e.target) return;
+
+      updateHasOffsets();
+      onScroll?.(e);
+      if (!activeAxis) eachAxis(updatePos);
+      if (!isScrolling) setIsScrolling(true);
+      dropScrollingState();
+    },
+    [
+      activeAxis,
+      dropScrollingState,
+      eachAxis,
+      isScrollSizeChanged,
+      isScrolling,
+      onScroll,
+      update,
+      updateHasOffsets,
+    ]
+  );
+
+  const onPointerDown = useCallback((axis, e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    prevCoordsRef.current = getEventCoords(e);
+    setActiveAxis(axis);
+  }, []);
+
+  const onPointerMove = useCallback(
+    e => {
+      if (!activeAxis) return;
+
       e.preventDefault();
       e.stopPropagation();
+
+      updateScroll(activeAxis, e);
+      updatePos(activeAxis);
+    },
+    [activeAxis, updatePos, updateScroll]
+  );
+
+  const onPointerUp = useCallback(
+    e => {
+      e.stopPropagation();
+      setActiveAxis(null);
+      dropScrollingState();
+    },
+    [dropScrollingState]
+  );
+
+  useEffect(() => {
+    if (innerElemRef.current) {
+      // Initial update
+      updateAll();
+
+      // Set up resize observer
+      resizeObserver.observe(innerElemRef.current, updateAll);
+      onInnerRef?.(innerElemRef.current);
+
+      return () => {
+        resizeObserver.unobserve(innerElemRef.current, updateAll);
+      };
     }
-  };
+  }, [onInnerRef]); // Remove updateAll from dependencies
 
-  onInnerScroll = e => {
-    if (this.innerElem !== e.target) return;
-
-    const { onScroll } = this.props;
-    const { activeAxis, isScrolling } = this.store;
-
-    this.updateHasOffsets();
-
-    onScroll?.(e);
-
-    if (!activeAxis) {
-      this.eachAxis(axis => {
-        if (this.isScrollSizeChanged(axis)) this.update(axis);
-      });
-    }
-
-    if (!isScrolling) this.store.isScrolling = true;
-
-    this.dropScrollingState();
-  };
-
-  onPointerDown = (axis, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    // TOOD: if target is bar(not thumb) - move thumb to target coords
-
-    this.prevCoords = getEventCoords(e);
-    this.store.activeAxis = axis;
-
-    this.subscribePointerMoveUp();
-  };
-
-  onPointerMove = e => {
-    const { activeAxis } = this.store;
-
-    if (!activeAxis) return;
-
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.updateScroll(activeAxis, e);
-    this.updatePos(activeAxis);
-  };
-
-  onPointerUp = e => {
-    e.stopPropagation();
-
-    this.store.activeAxis = null;
-
-    this.dropScrollingState();
-    this.unsubscribePointerMoveUp();
-  };
-
-  renderBar = axis => {
-    const { thumbClassName } = this.props;
-    const { activeAxis, coeff } = this.store;
-
-    if (coeff[axis] === 1) return null;
-
-    const sizeField = BY_AXIS[axis].size;
-    const posField = BY_AXIS[axis].posField;
-    const thumbStyle = {
-      [sizeField]: this.getCoeffStyle(axis),
-      [posField]: this.getPosStyle(axis),
-    };
-
-    const className = cn(
-      S.bar,
-      S[axis],
-      activeAxis === axis && S.isActive,
-      this.props[`${axis}ScrollbarClassName`]
+  useEffect(() => {
+    const unsubscribeScrollHeightObserver = Time.every(
+      100,
+      observeScrollHeight
     );
-    const barProps = {
-      className,
-      style: this.getOffset(axis),
-      onPointerDown: this.onPointerDown.bind(this, axis),
+
+    return () => {
+      unsubscribeScrollHeightObserver?.();
     };
+  }, [observeScrollHeight]);
 
-    return (
-      <div {...barProps} key={`bar-${axis}`}>
-        <div
-          className={cn(S.thumb, thumbClassName)}
-          style={thumbStyle}
-          ref={this.thumbELem[axis]}
-        />
-      </div>
-    );
-  };
+  useEvent({
+    elem: document,
+    event: 'scroll',
+    callback: onDocScroll,
+  });
 
-  renderInner() {
-    const { innerClassName, innerProps, children, smooth } = this.props;
-    const { activeAxis, hasOffset } = this.store;
+  useEvent({
+    elem: document,
+    event: ['pointermove', 'pointerup'],
+    callback: e => {
+      if (e.type === 'pointermove') onPointerMove(e);
+      else if (e.type === 'pointerup') onPointerUp(e);
+    },
+    isActive: !!activeAxis,
+  });
 
+  const renderBar = useCallback(
+    axis => {
+      if (!props[axis] || coeff[axis] === 1) return null;
+
+      const sizeField = BY_AXIS[axis].size;
+      const posField = BY_AXIS[axis].posField;
+      const thumbStyle = {
+        [sizeField]: getCoeffStyle(axis),
+        [posField]: getPosStyle(axis),
+      };
+
+      const className = cn(
+        S.bar,
+        S[axis],
+        activeAxis === axis && S.isActive,
+        props[`${axis}ScrollbarClassName`]
+      );
+
+      const barProps = {
+        className,
+        style: getOffset(axis),
+        onPointerDown: e => onPointerDown(axis, e),
+      };
+
+      return (
+        <div {...barProps} key={`bar-${axis}`}>
+          <div
+            className={cn(S.thumb, thumbClassName)}
+            style={thumbStyle}
+            ref={thumbElemRef[axis]}
+          />
+        </div>
+      );
+    },
+    [
+      activeAxis,
+      coeff,
+      getCoeffStyle,
+      getOffset,
+      getPosStyle,
+      onPointerDown,
+      props,
+      thumbClassName,
+      thumbElemRef,
+    ]
+  );
+
+  const renderInner = useCallback(() => {
     const innerClasses = cn(
       S.inner,
       innerProps?.className,
@@ -364,60 +425,41 @@ export class Scroll extends Component<T.Props> {
       hasOffset.right && S.hasOffsetRight,
       hasOffset.left && S.hasOffsetLeft
     );
-    const props = { ...innerProps };
 
-    props.onScrollCapture = this.onInnerScroll;
+    const props = { ...innerProps };
+    props.onScrollCapture = onInnerScroll;
 
     return (
-      <div
-        {...props}
-        className={innerClasses}
-        ref={this.onInnerRef}
-        key="inner"
-      >
+      <div {...props} className={innerClasses} ref={innerElemRef} key="inner">
         {children}
       </div>
     );
-  }
+  }, [
+    activeAxis,
+    children,
+    hasOffset,
+    innerClassName,
+    innerProps,
+    onInnerScroll,
+    smooth,
+  ]);
 
-  render() {
-    const { y, x, size, fadeSize, autoHide, className } = this.props;
-    const { isScrolling, activeAxis } = this.store;
+  const classes = cn(
+    S.root,
+    y && S.y,
+    x && S.x,
+    S[`size-${size}`],
+    fadeSize && S[`fadeSize-${fadeSize}`],
+    autoHide && S.autoHide,
+    (isScrolling || activeAxis) && S.isScrolling,
+    isTouchDevice ? S.isTouch : S.isDesktop,
+    className
+  );
 
-    const classes = cn(
-      S.root,
-      y && S.y,
-      x && S.x,
-      S[`size-${size}`],
-      fadeSize && S[`fadeSize-${fadeSize}`],
-      autoHide && S.autoHide,
-      (isScrolling || activeAxis) && S.isScrolling,
-      this.isTouch ? S.isTouch : S.isDesktop,
-      className
-    );
-    const props = omit(this.props, [
-      'x',
-      'y',
-      'offset',
-      'size',
-      'fadeSize',
-      'smooth',
-      'className',
-      'innerClassName',
-      'xScrollbarClassName',
-      'yScrollbarClassName',
-      'innerProps',
-      'onInnerRef',
-      'thumbClassName',
-      'autoHide',
-      'children',
-    ]);
-
-    return (
-      <div className={classes} {...props}>
-        {this.renderInner()}
-        {this.eachAxis(this.renderBar)}
-      </div>
-    );
-  }
+  return (
+    <div className={classes} {...rest}>
+      {renderInner()}
+      {AXES.map(renderBar)}
+    </div>
+  );
 }
