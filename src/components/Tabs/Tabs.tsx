@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import cn from 'classnames';
 
+import { Scroll } from '../Scroll/Scroll';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
 
@@ -81,6 +82,7 @@ export function Tabs(props: T.Props) {
     return (
       <Button
         {...rest}
+        className={cn(S.tab, rest.className)}
         size={size}
         key={id}
         onClick={e => onTabClick(e, params)}
@@ -93,9 +95,18 @@ export function Tabs(props: T.Props) {
 
   const tabs =
     tabsButtons.length === 1 && hideTabsIfSingle ? null : (
-      <ButtonGroup className={className} {...rest}>
-        {tabsButtons}
-      </ButtonGroup>
+      <Scroll
+        x
+        offset={{ x: { before: 10, after: 10 } }}
+        innerClassName={cn(S.tabsScroll, S[`size-${size}`])}
+        autoHide
+        fadeSize={size}
+        size={size}
+      >
+        <ButtonGroup className={className} {...rest}>
+          {tabsButtons}
+        </ButtonGroup>
+      </Scroll>
     );
 
   if (typeof children === 'function') {
