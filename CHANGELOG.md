@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.21.0](https://github.com/foreverido/uilib/compare/v4.20.6...v4.21.0) (2025-03-30)
+
+
+### Features
+
+* Icon - brain,globe,compas,routeFrom,routeTo ([f5f4520](https://github.com/foreverido/uilib/commit/f5f452098028802209d853d3418dca35c0c0a54c))
+
 ### [4.20.6](https://github.com/foreverido/uilib/compare/v4.20.5...v4.20.6) (2025-03-12)
 
 
