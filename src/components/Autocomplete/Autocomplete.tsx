@@ -66,10 +66,10 @@ export function Autocomplete(props: T.Props) {
     return true;
   };
 
-  const handleSelect = (value: string) => {
-    setSearchValue(value);
+  const handleSelect = (option: T.Option) => {
+    setSearchValue(option.label);
     setOptions([]);
-    onSelect(value);
+    onSelect(option);
 
     // set input caret to the end
     requestAnimationFrame(() => {
@@ -83,9 +83,7 @@ export function Autocomplete(props: T.Props) {
   const { focusedIndex, setFocusedIndex } = useListKeyboardControl({
     isActive: isOpen,
     itemsCount: options.length,
-    onSelect: index => {
-      handleSelect(options[index].label);
-    },
+    onSelect: index => handleSelect(options[index]),
   });
 
   const fetchOptions = debounce(async (inputValue: string) => {
@@ -131,7 +129,7 @@ export function Autocomplete(props: T.Props) {
             key={option.id}
             focused={focusedIndex === index}
             className={S.option}
-            onClick={() => handleSelect(option.label)}
+            onClick={() => handleSelect(option)}
             onMouseEnter={() => setFocusedIndex(index)}
           >
             {option.label}
