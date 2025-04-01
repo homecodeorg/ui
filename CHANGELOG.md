@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.1](https://github.com/foreverido/uilib/compare/v4.21.0...v4.21.1) (2025-04-01)
+
+
+### Bug Fixes
+
+* Autocomplete - onSelect(option:{id,label}) ([635e4ae](https://github.com/foreverido/uilib/commit/635e4ae7d10971fdc792142398dca994a6ff9635))
+
 ## [4.21.0](https://github.com/foreverido/uilib/compare/v4.20.6...v4.21.0) (2025-03-30)
 
 
