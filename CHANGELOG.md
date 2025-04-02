@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.2](https://github.com/foreverido/uilib/compare/v4.21.1...v4.21.2) (2025-04-02)
+
+
+### Features
+
+* Shimmer - support css variable --shimmer-color ([1e938f3](https://github.com/foreverido/uilib/commit/1e938f33ef8e7d624a8d5afac848cdc1c42e60f3))
+
 ### [4.21.1](https://github.com/foreverido/uilib/compare/v4.21.0...v4.21.1) (2025-04-01)
 
 
