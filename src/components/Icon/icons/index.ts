@@ -36,6 +36,7 @@ export default {
   image: () => import('./image.svg'),
   instagram: () => import('./instagram.svg'),
   home: () => import('./home.svg'),
+  layers: () => import('./layers.svg'),
   link: () => import('./link.svg'),
   loader: () => import('./loader.svg'),
   map: () => import('./map.svg'),
