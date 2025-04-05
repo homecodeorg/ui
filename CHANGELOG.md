@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.21.4](https://github.com/foreverido/uilib/compare/v4.21.3...v4.21.4) (2025-04-05)
+
+
+### Features
+
+* hooks/useResizeObserver ([1dc91d7](https://github.com/foreverido/uilib/commit/1dc91d77e1e5fc70afeadb4e49c001216c6c9f4b))
+* Icon - layers ([89bc9d9](https://github.com/foreverido/uilib/commit/89bc9d9b6eaeb4b311e505be36e2fd6afab2d15a))
+
 ### [4.21.3](https://github.com/foreverido/uilib/compare/v4.21.2...v4.21.3) (2025-04-02)
 
 ### [4.21.2](https://github.com/foreverido/uilib/compare/v4.21.1...v4.21.2) (2025-04-02)
