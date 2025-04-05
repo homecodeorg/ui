@@ -11,7 +11,7 @@ src/***/*.d.ts
 
 # development
 src/docs/localLib.json
-.vscode
+.vscode/
 .env
 
 # production
