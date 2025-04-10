@@ -23,6 +23,7 @@ export default function ListScroll({ scrollProps, ...rest }: Props) {
     <List
       {...rest}
       customWrapElem={{
+        // @ts-ignore
         component: Scroll,
         props,
         // @ts-ignore
