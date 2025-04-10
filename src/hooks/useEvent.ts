@@ -10,6 +10,7 @@ export type UseEventParams = {
   event: string | string[];
   callback: (event: Event) => void;
   isActive?: boolean;
+  isCapture?: boolean;
 };
 
 export default function useEvent({
@@ -17,6 +18,7 @@ export default function useEvent({
   event,
   callback,
   isActive = true,
+  isCapture = false,
 }: UseEventParams): void {
   useEffect(() => {
     const events = Array.isArray(event) ? event : [event];
@@ -24,24 +26,20 @@ export default function useEvent({
     const getElem = (el: RefObject<HTMLElement> | HTMLElement | Document) =>
       el && ('current' in el ? el.current : el);
 
-    const each = cb => {
+    const each = (cb: (el: HTMLElement | Document, ev: string) => void) => {
       events.forEach(ev => {
         elems.forEach(el => cb(getElem(el), ev));
       });
     };
 
     const enable = () => {
-      each((el, ev) => el?.addEventListener(ev, callback));
+      each((el, ev) => el?.addEventListener(ev, callback, isCapture));
     };
     const disable = () => {
       each((el, ev) => el?.removeEventListener(ev, callback));
     };
 
-    const hasRef = !elem || elems.some(getElem);
-
-    if (isActive && hasRef) {
-      enable();
-    }
+    if (isActive) enable();
 
     return () => {
       disable();
