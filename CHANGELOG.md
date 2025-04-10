@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.4](https://github.com/foreverido/uilib/compare/v4.22.3...v4.22.4) (2025-04-10)
+
+
+### Features
+
+* components/Flex ([d416013](https://github.com/foreverido/uilib/commit/d416013771f97461b836090365da4bd617321a35))
+
 ### [4.22.3](https://github.com/foreverido/uilib/compare/v4.22.2...v4.22.3) (2025-04-10)
 
 
