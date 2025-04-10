@@ -11,7 +11,7 @@
   position relative
   display flex
   align-items center
-  width calc(100% - 2px)
+  width 100%
   padding-top 0 !important
   padding-bottom 0 !important
   cursor pointer
@@ -34,19 +34,19 @@
     text-overflow ellipsis
     overflow hidden
 
-  &.size-s
+  .size-s &
     controlPaddingSize('s')
     controlFontSize('s')
     height 34px
-  &.size-m
+  .size-m &
     controlPaddingSize('m')
     controlFontSize('m')
     height 38px
-  &.size-l
+  .size-l &
     controlPaddingSize('l')
     controlFontSize('l')
     height 42px
-  &.size-xl
+  .size-xl &
     controlPaddingSize('xl')
     controlFontSize('xl')
     height 46px

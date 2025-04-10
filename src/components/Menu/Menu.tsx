@@ -5,10 +5,19 @@ import { Scroll } from 'uilib/components/Scroll/Scroll';
 import { MenuGroupProps, MenuItemProps, MenuProps } from './Menu.types';
 import S from './Menu.styl';
 
+// @ts-ignore
 const MenuComponent = forwardRef<Scroll, MenuProps>(
   ({ children, className, ...props }, ref) => {
+    const size = props.size || 'm';
+
     return (
-      <Scroll y ref={ref} className={cn(S.root, className)} {...props}>
+      // @ts-ignore
+      <Scroll
+        y
+        ref={ref}
+        className={cn(S.root, className, S[`size-${size}`])}
+        {...props}
+      >
         {children}
       </Scroll>
     );
@@ -24,13 +33,11 @@ const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>((props, ref) => {
     disabled,
     level = 0,
     onClick,
-    size = 'm',
     ...rest
   } = props;
 
   const classes = cn(
     S.item,
-    S[`size-${size}`],
     level > 0 && S[`level-${level}`],
     selected && S.selected,
     focused && S.focused,
@@ -54,11 +61,20 @@ const MenuGroup: React.FC<MenuGroupProps> = ({
   children,
   className,
   label,
+  size = 'm',
   ...props
 }) => {
   return (
     <>
-      <div className={cn(S.group, className)} {...props}>
+      <div
+        className={cn(
+          S.group,
+          className,
+
+          S[`size-${size}`]
+        )}
+        {...props}
+      >
         {label}
       </div>
       {children}

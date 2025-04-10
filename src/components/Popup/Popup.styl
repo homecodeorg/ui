@@ -1,4 +1,4 @@
-@import '../../theme'
+@import '~theme'
 
 $openTransform = scale3d(1, 1, 1)
 $hideTransformVertical = scale3d(1,.5, 1)
@@ -46,16 +46,22 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
   backface-visibility hidden
   pointer-events none
 
-  .blur &
+  &.blur
     backdrop-filter blur(50px)
     background-color var(--decent-color-alpha-500)
 
   &.size-s
     borderRadiusSize('s')
+    &.round
+      borderRadiusRoundSize('s')
   &.size-m
     borderRadiusSize('m')
+    &.round
+      borderRadiusRoundSize('m')
   &.size-l
     borderRadiusSize('l')
+    &.round
+      borderRadiusRoundSize('l')
 
   &.elevation-1
     box-shadow $contentShadow, 0 0 var(--indent-s) 2px var(--decent-color-alpha-500)

@@ -50,10 +50,14 @@ export type Props = ComponentType & {
   paranja?: boolean;
   // Applies a blur effect to the background.
   blur?: boolean;
+  // Adds a round border to the popup.
+  round?: boolean;
   // Set corresponding paddings and border-radius
   size?: Size;
   // Adds a shadow
   elevation?: 1 | 2;
+  // Offset from trigger element
+  offset?: { top?: number; right?: number; bottom?: number; left?: number };
   // Direction to open.
   //
   // If not specified, it will be automatically calculated.

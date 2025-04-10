@@ -177,10 +177,12 @@ export class Popup extends Component<T.Props> {
   updateBoundsThrottled = throttle(
     () => {
       const trigger = this.triggerElem.current;
+      const offset = this.props.offset || {};
+      const n = (num: number) => num || 0;
       const bounds = {
-        minHeight: trigger.offsetHeight,
-        minWidth: trigger.offsetWidth,
-        ...getCoords(trigger),
+        minHeight: trigger.offsetHeight - n(offset.top) - n(offset.bottom),
+        minWidth: trigger.offsetWidth - n(offset.left) - n(offset.right),
+        ...getCoords(trigger, this.props.direction, this.props.offset),
       };
 
       Object.entries(bounds).forEach(([key, value]) => {
@@ -481,6 +483,7 @@ export class Popup extends Component<T.Props> {
       animated,
       paranja,
       blur,
+      round,
       elevation,
     } = this.props;
     const {
@@ -496,7 +499,6 @@ export class Popup extends Component<T.Props> {
 
     const wrapperClasses = cn(
       S.contentWrapper,
-      blur && S.blur,
       inline && S.inline,
       isOpen && S.isOpen,
       wrapperProps.className
@@ -512,6 +514,8 @@ export class Popup extends Component<T.Props> {
       S[`size-${size}`],
       S[`axis-${axis}`],
       S[`float-${float || 'middle'}`],
+      blur && S.blur,
+      round && S.round,
       contentProps.className
     );
 
@@ -529,7 +533,7 @@ export class Popup extends Component<T.Props> {
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
           style={{
-            marginTop: this.offset.top,
+            marginTop: 100, //this.offset.top,
             marginLeft: this.offset.left,
           }}
         >
