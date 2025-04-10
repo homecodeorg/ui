@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.3](https://github.com/foreverido/uilib/compare/v4.22.2...v4.22.3) (2025-04-10)
+
+
+### Features
+
+* Autocomplete - option.render() ([94bb066](https://github.com/foreverido/uilib/commit/94bb066fd15aab5692e19089a29bc79604b6ba15))
+
 ### [4.22.2](https://github.com/foreverido/uilib/compare/v4.22.1...v4.22.2) (2025-04-10)
 
 
