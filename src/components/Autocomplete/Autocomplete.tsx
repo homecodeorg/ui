@@ -172,7 +172,7 @@ export function Autocomplete(props: T.Props) {
       }
       content={optionsList}
       contentProps={{
-        className: S.popupContent,
+        className: cn(S.popupContent, popupProps?.contentProps?.className),
       }}
     />
   );
