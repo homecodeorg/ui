@@ -20,4 +20,6 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   debounceDelay?: number;
   inputProps?: Partial<InputProps>;
   popupProps?: Partial<PopupProps>;
+  round?: boolean;
+  blur?: boolean;
 };

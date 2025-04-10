@@ -21,6 +21,8 @@ export function Autocomplete(props: T.Props) {
     getOptions,
     onSelect,
     debounceDelay = 300,
+    round = false,
+    blur = false,
     inputProps = {},
     popupProps = {},
   } = props;
@@ -144,7 +146,9 @@ export function Autocomplete(props: T.Props) {
       className={classes}
       isOpen={isOpen}
       focusControl
+      round={round}
       size={size}
+      blur={blur}
       direction="bottom"
       {...popupProps}
       trigger={
@@ -153,6 +157,7 @@ export function Autocomplete(props: T.Props) {
             ref={inputRef}
             // @ts-ignore
             size={size}
+            round={round}
             {...inputProps}
             value={searchValue}
             onChange={handleInputChange}
@@ -161,11 +166,7 @@ export function Autocomplete(props: T.Props) {
             className={inputProps.className}
           />
           {isLoading && (
-            <Shimmer
-              className={S.shimmer}
-              size={size}
-              round={inputProps?.round}
-            />
+            <Shimmer className={S.shimmer} size={size} round={round} />
           )}
         </div>
       }
