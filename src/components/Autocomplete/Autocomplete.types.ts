@@ -6,6 +6,7 @@ import { Props as PopupProps } from 'uilib/components/Popup/Popup.types';
 export type Option = {
   id: string;
   label: string;
+  render?: (option: Option) => React.ReactNode;
 };
 
 export type Value = string;

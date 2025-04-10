@@ -134,7 +134,7 @@ export function Autocomplete(props: T.Props) {
             onClick={() => handleSelect(option)}
             onMouseEnter={() => setFocusedIndex(index)}
           >
-            {option.label}
+            {option.render ? option.render(option) : option.label}
           </Menu.Item>
         ))}
       </Menu>
