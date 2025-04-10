@@ -11,9 +11,9 @@ const MenuComponent = forwardRef<Scroll, MenuProps>(
     const size = props.size || 'm';
 
     return (
-      // @ts-ignore
       <Scroll
         y
+        // @ts-ignore
         ref={ref}
         className={cn(S.root, className, S[`size-${size}`])}
         {...props}
