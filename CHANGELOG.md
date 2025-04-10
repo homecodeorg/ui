@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.1](https://github.com/foreverido/uilib/compare/v4.21.4...v4.22.1) (2025-04-10)
+
+
+### Features
+
+* hooks/useClickOutside.ts ([e2498aa](https://github.com/foreverido/uilib/commit/e2498aaebf0b47c0e685c8b2be83c553981fe1b9))
+* Popup - offset; fix: round,size ([e66f3b2](https://github.com/foreverido/uilib/commit/e66f3b20dafbdb2869e940f0d26fc62d503955dd))
+
+
+### Bug Fixes
+
+* Autocomplete - blur, round ([695284e](https://github.com/foreverido/uilib/commit/695284e1fb2444107c71f0df623df27f6d379cf9))
+* Menu - sizes ([b29dd30](https://github.com/foreverido/uilib/commit/b29dd3039e4e72f79e79f8543ff8bd5833ea5ed4))
+
 ## [4.22.0](https://github.com/foreverido/uilib/compare/v4.21.4...v4.22.0) (2025-04-10)
 
 
