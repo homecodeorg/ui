@@ -10,6 +10,7 @@ export * from './DatePickerInput/DatePickerInput';
 export * from './DateTime/DateTime';
 export * from './Draggable/Draggable';
 export * from './Expand/Expand';
+export * from './Flex/Flex';
 export * from './Form/Form';
 export * from './Gallery/Gallery';
 export * from './Heading/Heading';
