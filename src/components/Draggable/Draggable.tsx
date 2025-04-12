@@ -34,11 +34,26 @@ export class Draggable extends Component<T.Props> {
     if (prevProps.items.join(',') !== this.props.items.join(',')) {
       this.dropUnder();
     }
+
+    if (prevProps.disabled !== this.props.disabled) {
+      this.dropUnder();
+      if (this.props.disabled) this.unsubscribeMoveUp();
+    }
   }
 
   componentWillUnmount() {
     this.timers.clear();
   }
+
+  subscribeMoveUp = () => {
+    document.addEventListener('pointermove', this.onPointerMove);
+    document.addEventListener('pointerup', this.onPointerUp);
+  };
+
+  unsubscribeMoveUp = () => {
+    document.removeEventListener('pointermove', this.onPointerMove);
+    document.removeEventListener('pointerup', this.onPointerUp);
+  };
 
   onPointerDown = e => {
     const { clientX: x, clientY: y, currentTarget } = e;
@@ -51,12 +66,11 @@ export class Draggable extends Component<T.Props> {
     this.draggingElem = currentTarget;
     this.draggingElemBounds = currentTarget.getBoundingClientRect();
 
-    document.addEventListener('pointermove', this.onPointerMove);
-    document.addEventListener('pointerup', this.onPointerUp);
+    this.subscribeMoveUp();
   };
 
   onPointerMove = e => {
-    if (!this.draggingElem) return;
+    if (!this.draggingElem || this.props.disabled) return;
 
     const { clientX: x, clientY: y } = e;
 
@@ -121,8 +135,7 @@ export class Draggable extends Component<T.Props> {
       e.preventDefault();
     }
 
-    document.removeEventListener('pointermove', this.onPointerMove);
-    document.removeEventListener('pointerup', this.onPointerUp);
+    this.unsubscribeMoveUp();
 
     this.dragStartFired = false;
     this.startPos = null;
@@ -164,7 +177,7 @@ export class Draggable extends Component<T.Props> {
   }
 
   render() {
-    const { items, className, itemClassName, renderItem, children } =
+    const { items, className, itemClassName, renderItem, children, disabled } =
       this.props;
     const { draggingId, underId, underOffset } = this.store;
 
@@ -175,7 +188,7 @@ export class Draggable extends Component<T.Props> {
             key={id}
             data-id={id}
             className={cn(S.item, itemClassName, id === draggingId && S.active)}
-            onPointerDown={this.onPointerDown}
+            onPointerDown={disabled ? undefined : this.onPointerDown}
           >
             <div
               className={S.inner}

@@ -4,6 +4,8 @@ export type Props = {
   items: string[];
   className?: string;
   itemClassName?: string;
+  // Whether the draggable items are disabled
+  disabled?: boolean;
   // Callback to render each item
   // - id: The id from items array
   // - isActive: Whether the item is being dragged
