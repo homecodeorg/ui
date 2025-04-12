@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.8](https://github.com/foreverido/uilib/compare/v4.22.7...v4.22.8) (2025-04-12)
+
+
+### Features
+
+* Icon - dragHandlerHorizontal/Vertical ([cfd77a7](https://github.com/foreverido/uilib/commit/cfd77a77549b784843d4fff6c052533b3aeb0dd3))
+
 ### [4.22.7](https://github.com/foreverido/uilib/compare/v4.22.6...v4.22.7) (2025-04-12)
 
 
