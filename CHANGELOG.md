@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.5](https://github.com/foreverido/uilib/compare/v4.22.4...v4.22.5) (2025-04-12)
+
+
+### Bug Fixes
+
+* Autocomplete - pass menuProps to Menu component ([a6f1484](https://github.com/foreverido/uilib/commit/a6f1484bc23a661b98d76ddcdcc1a302aaabc453))
+
 ### [4.22.4](https://github.com/foreverido/uilib/compare/v4.22.3...v4.22.4) (2025-04-10)
 
 
