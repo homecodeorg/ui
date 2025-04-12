@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.7](https://github.com/foreverido/uilib/compare/v4.22.6...v4.22.7) (2025-04-12)
+
+
+### Features
+
+* Draggable - 'disabled' prop ([cdc541c](https://github.com/foreverido/uilib/commit/cdc541c9be7922186df10853874ae0ce163a934f))
+
 ### [4.22.6](https://github.com/foreverido/uilib/compare/v4.22.5...v4.22.6) (2025-04-12)
 
 
