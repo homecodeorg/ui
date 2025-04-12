@@ -18,6 +18,8 @@ export default {
   clearAll: () => import('./clearAll.svg'),
   delete: () => import('./delete.svg'),
   draft: () => import('./draft.svg'),
+  dragHandlerHorizontal: () => import('./dragHandlerHorizontal.svg'),
+  dragHandlerVertical: () => import('./dragHandlerVertical.svg'),
   edit: () => import('./edit.svg'),
   email: () => import('./email.svg'),
   externalLink: () => import('./externalLink.svg'),
