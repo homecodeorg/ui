@@ -25,6 +25,7 @@ export function Autocomplete(props: T.Props) {
     blur = false,
     inputProps = {},
     popupProps = {},
+    menuProps = {},
   } = props;
 
   const isMounted = useIsMounted();
@@ -125,6 +126,7 @@ export function Autocomplete(props: T.Props) {
         className={S.options}
         size={size}
         offset={{ y: { before: 20, after: 20 } }}
+        {...menuProps}
       >
         {options.map((option, index) => (
           <Menu.Item
