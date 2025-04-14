@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.10](https://github.com/foreverido/uilib/compare/v4.22.9...v4.22.10) (2025-04-14)
+
+
+### Bug Fixes
+
+* Tabs - tabsWrapperClassName, tabsClassName ([c020496](https://github.com/foreverido/uilib/commit/c0204966c392a7a4ea451034152d1c4b18c0930c))
+
 ### [4.22.9](https://github.com/foreverido/uilib/compare/v4.22.8...v4.22.9) (2025-04-14)
 
 
