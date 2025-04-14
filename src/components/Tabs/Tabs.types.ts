@@ -20,6 +20,8 @@ export type RenderProps = {
 export type Props = {
   size?: Size;
   className?: string;
+  tabsWrapperClassName?: string;
+  tabsClassName?: string;
   contentClassName?: string;
   items: Item[];
   hideTabsIfSingle?: boolean;

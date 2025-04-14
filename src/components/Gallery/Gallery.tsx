@@ -293,8 +293,8 @@ export class Gallery extends Component<T.Props> {
         {showDots && (
           <Lazy
             hideSpinner
-            // @ts-ignore
             loader={() => import('./Dots/Dots')}
+            // @ts-ignore
             index={this.index % items.length}
             count={items.length}
           />

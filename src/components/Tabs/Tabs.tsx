@@ -15,6 +15,8 @@ export function Tabs(props: T.Props) {
   const {
     size = 'm',
     className,
+    tabsWrapperClassName,
+    tabsClassName,
     contentClassName,
     items,
     hideTabsIfSingle = false,
@@ -39,7 +41,7 @@ export function Tabs(props: T.Props) {
     (e, { id, onClick } = {} as T.Item) => {
       // @ts-ignore
       if (onClick && !onClick(e)) {
-        e.peventDefault();
+        e.preventDefault();
         return;
       }
 
@@ -98,12 +100,13 @@ export function Tabs(props: T.Props) {
       <Scroll
         x
         offset={{ x: { before: 10, after: 10 } }}
+        className={tabsWrapperClassName}
         innerClassName={cn(S.tabsScroll, S[`size-${size}`])}
         autoHide
         fadeSize={size}
         size={size}
       >
-        <ButtonGroup className={className} {...rest}>
+        <ButtonGroup className={tabsClassName} {...rest}>
           {tabsButtons}
         </ButtonGroup>
       </Scroll>
