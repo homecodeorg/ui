@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.9](https://github.com/foreverido/uilib/compare/v4.22.8...v4.22.9) (2025-04-14)
+
+
+### Features
+
+* Lazy - render,children,spinnerTimeout; +Flex upgrade ([b129812](https://github.com/foreverido/uilib/commit/b129812cc714a24a04e5aadbbcaa99922eb7e8f4))
+
 ### [4.22.8](https://github.com/foreverido/uilib/compare/v4.22.7...v4.22.8) (2025-04-12)
 
 
