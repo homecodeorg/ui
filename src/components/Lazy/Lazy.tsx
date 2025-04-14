@@ -5,19 +5,23 @@ import { createStore } from 'justorm/react';
 import { Container } from '../Container/Container';
 import { Spinner } from '../Spinner/Spinner';
 import * as T from './Lazy.types';
+import { Flex } from 'uilib/components/Flex/Flex';
 
 function compare(cb1: T.Loader, cb2: T.Loader) {
   return cb1?.toString() === cb2?.toString();
 }
 
-const loaded = new Map<T.Loader, ComponentType>();
+const loaded = new Map<T.Loader, T.ImportData>();
 
 export type LazyProps = T.Props;
 
 export class Lazy extends Component<T.Props> {
   store: T.State;
-  Node?: ComponentType<any>;
-  hasNode = false;
+
+  importData?: T.ImportData;
+  DefaultNode?: ComponentType<any>;
+
+  isLoaded = false;
   clearSpinnerTimeout: null;
 
   static defaultProps = {
@@ -27,18 +31,19 @@ export class Lazy extends Component<T.Props> {
   constructor(props: T.Props) {
     super(props);
 
-    this.Node = loaded.get(this.props.loader);
+    this.importData = loaded.get(this.props.loader);
+    this.DefaultNode = this.importData?.default;
 
-    this.hasNode = Boolean(this.Node);
+    const isLoaded = !!this.importData;
 
     this.store = createStore(this, {
-      loading: !this.hasNode,
-      spinnerTimeout: this.hasNode,
+      loading: !isLoaded,
+      spinnerTimeout: isLoaded,
     });
   }
 
   componentDidMount() {
-    if (!this.hasNode) this.update();
+    if (!this.importData) this.update();
   }
 
   componentDidUpdate({ loader }) {
@@ -50,38 +55,50 @@ export class Lazy extends Component<T.Props> {
   }
 
   update() {
-    const { loader } = this.props;
+    const { loader, spinnerTimeout = 500 } = this.props;
 
-    this.clearSpinnerTimeout = Time.after(500, () =>
+    this.clearSpinnerTimeout = Time.after(spinnerTimeout, () =>
       this.setState({ spinnerTimeout: false })
     );
 
     this.store.loading = true;
-    loader().then(({ default: Node }: any) => {
+    loader().then((data: T.ImportData) => {
       if (!compare(this.props.loader, loader)) return;
-      this.Node = Node;
-      loaded.set(loader, Node);
+
+      this.importData = data;
+      this.DefaultNode = data.default;
+      loaded.set(loader, data);
+
       this.store.loading = false;
     });
   }
 
   render() {
-    const { Node } = this;
-    const { progressElem, loader, hideSpinner, ...props } = this.props;
+    const { DefaultNode, importData } = this;
+    const { progressElem, loader, render, children, hideSpinner, ...props } =
+      this.props;
     const { loading, spinnerTimeout } = this.store;
 
-    if (Node) return <Node {...props} />;
-
-    if (!spinnerTimeout && loading && !hideSpinner) {
+    if (loading && !spinnerTimeout && !hideSpinner) {
       return (
         progressElem ?? (
-          <Container fullHeight fullWidth>
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            flexGrow={1}
+            width="100%"
+            height="100%"
+          >
             <Spinner size={props.size} />
-          </Container>
+          </Flex>
         )
       );
     }
 
-    return null;
+    if (render) return render(importData);
+    if (typeof children === 'function') return children(importData);
+    if (DefaultNode) return <DefaultNode {...props} />;
+
+    return children;
   }
 }
