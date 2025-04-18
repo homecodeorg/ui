@@ -269,6 +269,8 @@ export class Popup extends Component<T.Props> {
     }
   }, 100);
 
+  isControllable = () => typeof this.props.isOpen === 'boolean';
+
   isLastClickInside = () =>
     this.pointerDownTarget &&
     (this.pointerDownTarget.closest(`.${S.trigger}`) ||
@@ -342,12 +344,15 @@ export class Popup extends Component<T.Props> {
     this.focused = true;
     this.props.triggerProps?.onFocus?.(e);
 
-    if (!this.pointerPressed) this.open();
+    if (!this.pointerPressed && (!this.isControllable() || this.props.isOpen))
+      this.open();
   };
 
   onBlur = e => {
     this.focused = false;
     this.props.triggerProps?.onBlur?.(e);
+
+    if (this.isControllable() && this.props.isOpen) return;
 
     // give time to fire clicks inside popup
     this.timers.after(60, () => {
