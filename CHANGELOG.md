@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.11](https://github.com/foreverido/uilib/compare/v4.22.10...v4.22.11) (2025-04-18)
+
+
+### Bug Fixes
+
+* Popup - isOpen: opacity on contentWrapper ([70726bb](https://github.com/foreverido/uilib/commit/70726bb6043e780f63c701e504f5f6931e3ecc62))
+
 ### [4.22.10](https://github.com/foreverido/uilib/compare/v4.22.9...v4.22.10) (2025-04-14)
 
 
