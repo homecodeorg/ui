@@ -501,6 +501,7 @@ export class Popup extends Component<T.Props> {
       S.contentWrapper,
       inline && S.inline,
       isOpen && S.isOpen,
+      animating && S.animating,
       wrapperProps.className
     );
 

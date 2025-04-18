@@ -11,6 +11,15 @@ $hideTransformHorizontal = scale3d(.5, 1, 1)
 .contentWrapper
   pointer-events none
   position absolute
+  opacity 0
+  pointer-events none
+
+  &.animating
+    transition opacity .1s ease-out
+
+  &.isOpen
+    opacity 1
+    pointer-events all
 
   &.inline.isOpen
     position relative
@@ -41,10 +50,8 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
   overflow hidden
   background-color var(--decent-color)
   box-shadow $contentShadow
-  opacity 0
   transform-origin top center
   backface-visibility hidden
-  pointer-events none
 
   &.blur
     backdrop-filter blur(50px)
