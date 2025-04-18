@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.12](https://github.com/foreverido/uilib/compare/v4.22.11...v4.22.12) (2025-04-18)
+
+
+### Bug Fixes
+
+* Popup - isControllable & focusControl - works together ([3d330ea](https://github.com/foreverido/uilib/commit/3d330ea8d8027b38e5593695fd783da2e9f5553d))
+
 ### [4.22.11](https://github.com/foreverido/uilib/compare/v4.22.10...v4.22.11) (2025-04-18)
 
 
