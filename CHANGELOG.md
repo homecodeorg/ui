@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.14](https://github.com/foreverido/uilib/compare/v4.22.13...v4.22.14) (2025-04-30)
+
+
+### Features
+
+* DatePickerProps - buttonProps ([00f60b0](https://github.com/foreverido/uilib/commit/00f60b0fa29f94934ac6b90c9c755090da4eab0d))
+
+
+### Bug Fixes
+
+* Flex - props as CSSProperties do not pass to DOM ([ba25fb7](https://github.com/foreverido/uilib/commit/ba25fb79cb28ccc27218db30545930a9e45c4af2))
+
 ### [4.22.13](https://github.com/foreverido/uilib/compare/v4.22.12...v4.22.13) (2025-04-30)
 
 
