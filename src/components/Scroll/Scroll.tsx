@@ -36,6 +36,8 @@ const BY_AXIS = {
   },
 };
 
+export type ScrollProps = T.Props;
+
 export function Scroll(props: T.Props) {
   const {
     x,

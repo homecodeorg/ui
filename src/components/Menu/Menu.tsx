@@ -82,6 +82,8 @@ const MenuGroup: React.FC<MenuGroupProps> = ({
   );
 };
 
+export { type MenuProps };
+
 export const Menu = Object.assign(MenuComponent, {
   Item: MenuItem,
   Group: MenuGroup,
