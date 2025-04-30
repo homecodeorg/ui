@@ -15,6 +15,7 @@ export function DatePickerInput(props: T.Props) {
     variant = 'default',
     size = 'm',
     popupProps,
+    buttonProps,
     displayFormat = 'MMM Do YYYY',
   } = props;
 
