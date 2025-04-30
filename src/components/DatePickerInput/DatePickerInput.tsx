@@ -29,7 +29,7 @@ export function DatePickerInput(props: T.Props) {
       {...popupProps}
       trigger={
         // @ts-ignore
-        <Button variant={variant} size={size}>
+        <Button variant={variant} size={size} {...buttonProps}>
           {isRange ? (
             <>
               <DateTime value={strToDate(value[0])} format={displayFormat} />
