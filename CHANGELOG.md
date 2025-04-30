@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.13](https://github.com/foreverido/uilib/compare/v4.22.12...v4.22.13) (2025-04-30)
+
+
+### Features
+
+* Icon - chat ([c629cd8](https://github.com/foreverido/uilib/commit/c629cd88df29c27753fe8108079c3843518593e7))
+
+
+### Bug Fixes
+
+* DatePickerInput - pass popupProps.contentProps.className ([f0b77b2](https://github.com/foreverido/uilib/commit/f0b77b2609e2cae61264d276563687b02175e36d))
+* export types - MenuProps, ScrollProps ([d642dfa](https://github.com/foreverido/uilib/commit/d642dfa39f231781354c7198e5e6c0a2e1d7e5d4))
+
 ### [4.22.12](https://github.com/foreverido/uilib/compare/v4.22.11...v4.22.12) (2025-04-18)
 
 
