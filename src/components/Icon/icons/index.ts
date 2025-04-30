@@ -5,6 +5,7 @@ export default {
   brain: () => import('./brain.svg'),
   brokenImage: () => import('./brokenImage.svg'),
   camera: () => import('./camera.svg'),
+  chat: () => import('./chat.svg'),
   check: () => import('./check.svg'),
   close: () => import('./close.svg'),
   colors: () => import('./colors.svg'),
