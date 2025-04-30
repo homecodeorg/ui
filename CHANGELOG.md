@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.15](https://github.com/foreverido/uilib/compare/v4.22.14...v4.22.15) (2025-04-30)
+
+
+### Bug Fixes
+
+* DatePickerProps - buttonProps ([40fc1dd](https://github.com/foreverido/uilib/commit/40fc1dd1945e420f1fe7e4eb4a94107c455243e1))
+
 ### [4.22.14](https://github.com/foreverido/uilib/compare/v4.22.13...v4.22.14) (2025-04-30)
 
 
