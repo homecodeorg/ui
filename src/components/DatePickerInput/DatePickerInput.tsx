@@ -44,7 +44,8 @@ export function DatePickerInput(props: T.Props) {
         className: cn(
           S.popupContent,
           props.doubleCalendar && S.doubleCalendar,
-          S[`size-${size}`]
+          S[`size-${size}`],
+          popupProps?.contentProps?.className
         ),
       }}
       content={
