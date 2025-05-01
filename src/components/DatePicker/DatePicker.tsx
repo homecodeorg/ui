@@ -33,7 +33,7 @@ export function DatePicker(props: T.Props) {
 
       if (isRange && isPicking) {
         props.onPointerOver = () => {
-          const newVal = H.isDateAfter(H.strigToDate(value[0]), val)
+          const newVal = H.isDateAfter(H.stringToDate(value[0]), val)
             ? [valStr, value[0]]
             : [value[0], valStr];
 
@@ -44,8 +44,8 @@ export function DatePicker(props: T.Props) {
       const classes = [className, S.day];
 
       if (isRange) {
-        const from = H.strigToDate(value[0]);
-        const to = H.strigToDate(value[1]);
+        const from = H.stringToDate(value[0]);
+        const to = H.stringToDate(value[1]);
 
         if (H.isDateBetween(val, from, to)) classes.push(S.between);
         if (H.isDateEqual(val, from)) classes.push(S.start);
@@ -84,7 +84,7 @@ export function DatePicker(props: T.Props) {
         hideOtherMonthDays={isRange}
         {...calendarProps}
         renderDay={renderDay}
-        value={H.strigToDate(isRange ? value[0] : value)}
+        value={H.stringToDate(isRange ? value[0] : value)}
         onDayPointerDown={onFirstDateChange}
         onDayPointerUp={undefined!} // NOTE: TS error only when build rollup
       />
@@ -94,7 +94,7 @@ export function DatePicker(props: T.Props) {
           hideOtherMonthDays={isRange}
           {...calendarProps}
           renderDay={renderDay}
-          value={H.strigToDate(value[1])}
+          value={H.stringToDate(value[1])}
           onDayPointerDown={val => onChange([value[0], H.dateToString(val)])}
           onDayPointerUp={val => onChange([value[0], H.dateToString(val)])}
         />

@@ -1,10 +1,12 @@
 import type { Date } from 'uilib/types';
 
 export function dateToString(date: Date) {
-  return `${date.year}-${date.month}-${date.day}`;
+  const month = String(date.month).padStart(2, '0');
+  const day = String(date.day).padStart(2, '0');
+  return `${date.year}-${month}-${day}`;
 }
 
-export function strigToDate(dateString: string) {
+export function stringToDate(dateString: string) {
   const [year, month, day] = dateString.split('-');
   return {
     year: Number(year),
