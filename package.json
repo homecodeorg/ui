@@ -1,6 +1,6 @@
 {
   "name": "@homecode/ui",
-  "version": "4.22.15",
+  "version": "4.22.16",
   "description": "React UI components library",
   "scripts": {
     "test": "jest",

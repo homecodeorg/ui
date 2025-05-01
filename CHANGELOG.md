@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.16](https://github.com/foreverido/uilib/compare/v4.22.15...v4.22.16) (2025-05-01)
+
+
+### Bug Fixes
+
+* DatePicker - pad single digit month/day with zero ([c5ad2c9](https://github.com/foreverido/uilib/commit/c5ad2c9704d58375fe607b9990304d20232bc252))
+
 ### [4.22.15](https://github.com/foreverido/uilib/compare/v4.22.14...v4.22.15) (2025-04-30)
 
 
