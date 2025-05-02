@@ -70,4 +70,5 @@ export default {
   syncArrows: () => import('./syncArrows.svg'),
   table: () => import('./table.svg'),
   telegram: () => import('./telegram.svg'),
+  trafficLight: () => import('./trafficLight.svg'),
 };
