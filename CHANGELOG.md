@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.17](https://github.com/foreverido/uilib/compare/v4.22.16...v4.22.17) (2025-05-02)
+
+
+### Features
+
+* Icon - trafficLight ([3d6a1b6](https://github.com/foreverido/uilib/commit/3d6a1b6047916ed99b7db6bbf9623088d22be502))
+
 ### [4.22.16](https://github.com/foreverido/uilib/compare/v4.22.15...v4.22.16) (2025-05-01)
 
 
