@@ -16,6 +16,8 @@ type FlexProps = HTMLAttributes<HTMLDivElement> &
     | 'order'
     | 'alignSelf'
     | 'flexFlow'
+    | 'width'
+    | 'height'
   > & {
     children: React.ReactNode;
   };
@@ -33,6 +35,8 @@ export const Flex = ({
   order,
   alignSelf,
   flexFlow,
+  width,
+  height,
   ...props
 }: FlexProps) => {
   return (
@@ -51,6 +55,8 @@ export const Flex = ({
         order,
         alignSelf,
         flexFlow,
+        width,
+        height,
       }}
     >
       {children}
