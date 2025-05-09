@@ -7,6 +7,7 @@ import * as H from './Calendar.helpers';
 
 import { Input } from 'uilib/components/Input/Input';
 import { Select } from 'uilib/components/Select/Select';
+import { useDebounceCallback } from 'uilib/hooks/useDebounce';
 
 const MONTHS = [
   'January',
@@ -83,6 +84,33 @@ export function Calendar({
     if (year < MIN_YEAR) setYear(MIN_YEAR);
   };
 
+  const handleWheelScroll = useDebounceCallback(
+    (event: React.WheelEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      if (event.deltaY < 0) {
+        // Scroll Up
+        setMonth(prevMonth => {
+          if (prevMonth === 1) {
+            setYear(prevYear => prevYear - 1);
+            return 12;
+          }
+          return prevMonth - 1;
+        });
+      } else if (event.deltaY > 0) {
+        // Scroll Down
+        setMonth(prevMonth => {
+          if (prevMonth === 12) {
+            setYear(prevYear => prevYear + 1);
+            return 1;
+          }
+          return prevMonth + 1;
+        });
+      }
+    },
+    1000,
+    [setMonth, setYear]
+  );
+
   const classes = cn(
     S.root,
     S[`size-${size}`],
@@ -128,7 +156,7 @@ export function Calendar({
         ))}
       </div>
 
-      <div className={S.days}>
+      <div className={S.days} onWheel={handleWheelScroll}>
         {daysArray.map((day, weekdayIndex) => {
           const className = cn(
             S.day,
