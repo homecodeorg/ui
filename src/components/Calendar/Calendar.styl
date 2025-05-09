@@ -129,3 +129,118 @@
 
 :global(.pointer) .day:focus
   background-color transparent
+
+
+// Keyframes for View Transitions
+@keyframes vt-fade-in
+  from
+    opacity 0
+  to
+    opacity 1
+
+@keyframes vt-fade-out
+  from
+    opacity 1
+  to
+    opacity 0
+
+@keyframes vt-slide-from-top
+  from
+    transform translateY(-20px) // Adjust distance as needed
+    opacity 0
+  to
+    transform translateY(0)
+    opacity 1
+
+@keyframes vt-slide-to-bottom
+  from
+    transform translateY(0)
+    opacity 1
+  to
+    transform translateY(20px) // Adjust distance as needed
+    opacity 0
+
+@keyframes vt-slide-from-bottom
+  from
+    transform translateY(20px) // Adjust distance as needed
+    opacity 0
+  to
+    transform translateY(0)
+    opacity 1
+
+@keyframes vt-slide-to-top
+  from
+    transform translateY(0)
+    opacity 1
+  to
+    transform translateY(-20px) // Adjust distance as needed
+    opacity 0
+
+@keyframes vt-slide-from-left
+  from
+    transform translateX(-30px) // Adjust distance as needed
+    opacity 0
+  to
+    transform translateX(0)
+    opacity 1
+
+@keyframes vt-slide-to-right
+  from
+    transform translateX(0)
+    opacity 1
+  to
+    transform translateX(30px) // Adjust distance as needed
+    opacity 0
+
+@keyframes vt-slide-from-right
+  from
+    transform translateX(30px) // Adjust distance as needed
+    opacity 0
+  to
+    transform translateX(0)
+    opacity 1
+
+@keyframes vt-slide-to-left
+  from
+    transform translateX(0)
+    opacity 1
+  to
+    transform translateX(-30px) // Adjust distance as needed
+    opacity 0
+
+// Base setup for the calendar-days transition
+// This helps ensure old and new content don't blend awkwardly during slide animations
+::view-transition-image-pair(calendar-days)
+  isolation isolate
+
+// Default animation (e.g., a simple fade if no specific direction is matched)
+// This will be overridden by directional animations when data-calendar-transition-direction is set
+::view-transition-old(calendar-days)
+  animation 250ms ease-in-out vt-fade-out forwards
+::view-transition-new(calendar-days)
+  animation 250ms ease-in-out vt-fade-in forwards
+
+// Directional animations for 'calendar-days'
+// Scroll Up (prev month) -> old slides DOWN, new slides FROM TOP
+:root[data-calendar-transition-direction="up"]::view-transition-old(calendar-days)
+  animation 250ms ease-in-out vt-slide-to-bottom forwards
+:root[data-calendar-transition-direction="up"]::view-transition-new(calendar-days)
+  animation 250ms ease-in-out vt-slide-from-top forwards
+
+// Scroll Down (next month) -> old slides UP, new slides FROM BOTTOM
+:root[data-calendar-transition-direction="down"]::view-transition-old(calendar-days)
+  animation 250ms ease-in-out vt-slide-to-top forwards
+:root[data-calendar-transition-direction="down"]::view-transition-new(calendar-days)
+  animation 250ms ease-in-out vt-slide-from-bottom forwards
+
+// Scroll Left (prev month) -> old slides RIGHT, new slides FROM LEFT
+:root[data-calendar-transition-direction="left"]::view-transition-old(calendar-days)
+  animation 250ms ease-in-out vt-slide-to-right forwards
+:root[data-calendar-transition-direction="left"]::view-transition-new(calendar-days)
+  animation 250ms ease-in-out vt-slide-from-left forwards
+
+// Scroll Right (next month) -> old slides LEFT, new slides FROM RIGHT
+:root[data-calendar-transition-direction="right"]::view-transition-old(calendar-days)
+  animation 250ms ease-in-out vt-slide-to-left forwards
+:root[data-calendar-transition-direction="right"]::view-transition-new(calendar-days)
+  animation 250ms ease-in-out vt-slide-from-right forwards

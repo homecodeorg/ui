@@ -7,7 +7,7 @@ import * as H from './Calendar.helpers';
 
 import { Input } from 'uilib/components/Input/Input';
 import { Select } from 'uilib/components/Select/Select';
-import { useDebounceCallback } from 'uilib/hooks/useDebounce';
+import { useThrottleCallback } from 'uilib/hooks/useThrottle';
 
 const MONTHS = [
   'January',
@@ -75,29 +75,17 @@ export function Calendar({
     [renderMonthLabel]
   );
 
-  const onYearChange = useCallback((e, val) => {
-    if (String(val).length === 4) setYear(Math.max(MIN_YEAR, val));
-    else setYear(val);
-  }, []);
-
-  const onYearBlur = () => {
-    if (year < MIN_YEAR) setYear(MIN_YEAR);
-  };
-
-  const handleWheelScroll = useDebounceCallback(
-    (event: React.WheelEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      if (event.deltaY < 0) {
-        // Scroll Up
+  const updateMonthYear = useCallback(
+    (direction: 'forward' | 'backward') => {
+      if (direction === 'backward') {
         setMonth(prevMonth => {
           if (prevMonth === 1) {
-            setYear(prevYear => prevYear - 1);
+            setYear(prevYear => Math.max(MIN_YEAR, prevYear - 1));
             return 12;
           }
           return prevMonth - 1;
         });
-      } else if (event.deltaY > 0) {
-        // Scroll Down
+      } else {
         setMonth(prevMonth => {
           if (prevMonth === 12) {
             setYear(prevYear => prevYear + 1);
@@ -107,9 +95,74 @@ export function Calendar({
         });
       }
     },
-    1000,
     [setMonth, setYear]
   );
+
+  const triggerMonthChangeWithTransition = useCallback(
+    (scrollDirection: string, monthDirection: 'forward' | 'backward') => {
+      // @ts-ignore
+      if (!document.startViewTransition) {
+        updateMonthYear(monthDirection);
+        return;
+      }
+
+      document.documentElement.dataset.calendarTransitionDirection =
+        scrollDirection;
+      // @ts-ignore
+      const transition = document.startViewTransition(() => {
+        updateMonthYear(monthDirection);
+      });
+
+      transition.finished.finally(() => {
+        delete document.documentElement.dataset.calendarTransitionDirection;
+      });
+    },
+    [updateMonthYear]
+  );
+
+  const handleWheelScroll = useThrottleCallback(
+    (event: React.WheelEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const { deltaX, deltaY } = event;
+      let scrollDirection = '';
+      let monthDirection: 'forward' | 'backward' | null = null;
+
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        if (deltaY < 0) {
+          scrollDirection = 'up';
+          monthDirection = 'backward';
+        } else {
+          scrollDirection = 'down';
+          monthDirection = 'forward';
+        }
+      } else if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX < 0) {
+          scrollDirection = 'left';
+          monthDirection = 'backward';
+        } else {
+          scrollDirection = 'right';
+          monthDirection = 'forward';
+        }
+      }
+
+      if (scrollDirection && monthDirection) {
+        triggerMonthChangeWithTransition(scrollDirection, monthDirection);
+      }
+    },
+    200, // Throttle time in ms
+    [triggerMonthChangeWithTransition]
+  );
+
+  const onYearChange = useCallback((e, val) => {
+    if (String(val).length === 4) setYear(Math.max(MIN_YEAR, val));
+    else setYear(val);
+  }, []);
+
+  const onYearBlur = () => {
+    if (year < MIN_YEAR) setYear(MIN_YEAR);
+  };
 
   const classes = cn(
     S.root,
@@ -156,7 +209,12 @@ export function Calendar({
         ))}
       </div>
 
-      <div className={S.days} onWheel={handleWheelScroll}>
+      <div
+        className={S.days}
+        onWheelCapture={handleWheelScroll}
+        // @ts-ignore
+        style={{ viewTransitionName: 'calendar-days' }}
+      >
         {daysArray.map((day, weekdayIndex) => {
           const className = cn(
             S.day,
