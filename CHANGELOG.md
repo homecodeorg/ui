@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.22.18](https://github.com/foreverido/uilib/compare/v4.22.17...v4.22.18) (2025-05-09)
+
+
+### Features
+
+* Calendar - scroll(wheel) - switch monthes ([d781e05](https://github.com/foreverido/uilib/commit/d781e05d116650f5195ac59f64dc2b8521806d59))
+* Calendar - View Transition API for switch months via scrolling ([36defce](https://github.com/foreverido/uilib/commit/36defceee93b5102e3f0c7481d6f84dc3a29ca5d))
+* Flex props: width,height ([9e35b17](https://github.com/foreverido/uilib/commit/9e35b179eebc118841a4fb5c4bdbaee759608676))
+* useDebounceCallback() hook ([fa8d32c](https://github.com/foreverido/uilib/commit/fa8d32c9484d5a9e871ff27629a7e53b105ac4ae))
+* useThrottleCallback() hook ([fd1a915](https://github.com/foreverido/uilib/commit/fd1a9153e495430a5f75b5898ecabf7711d7dcba))
+
 ### [4.22.17](https://github.com/foreverido/uilib/compare/v4.22.16...v4.22.17) (2025-05-02)
 
 
