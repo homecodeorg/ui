@@ -8,7 +8,7 @@ export function useThrottle<T extends any[]>(
   cb: (...args: T) => void,
   limit: number,
   options: ThrottleOptions = { trailing: false },
-  deps: any[] = [],
+  deps: any[] = []
 ) {
   const lastRun = useRef(0);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
@@ -36,6 +36,14 @@ export function useThrottle<T extends any[]>(
         timeoutId.current = setTimeout(execute, remaining);
       }
     },
-    [limit, options.trailing, ...deps],
+    [limit, options.trailing, ...deps]
   );
+}
+
+export function useThrottleCallback<T extends any[]>(
+  cb: (...args: T) => void,
+  limit: number,
+  deps: any[] = []
+) {
+  return useCallback(useThrottle(cb, limit, { trailing: true }, deps), deps);
 }
