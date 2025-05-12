@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.23.0](https://github.com/foreverido/uilib/compare/v4.22.18...v4.23.0) (2025-05-12)
+
+
+### Features
+
+* Icon - rocket ([d3841e7](https://github.com/foreverido/uilib/commit/d3841e774ad54a8d427cd1ca1d5b17a9ecd6d9f0))
+
+
+### Bug Fixes
+
+* Select - line-height for non-searchable ([0c0dc56](https://github.com/foreverido/uilib/commit/0c0dc56ebd69d5bf39e57f8bd28805c01f745a80))
+
 ### [4.22.18](https://github.com/foreverido/uilib/compare/v4.22.17...v4.22.18) (2025-05-09)
 
 
