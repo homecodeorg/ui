@@ -66,6 +66,7 @@ export default {
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
+  soundWave: () => import('./soundWave.svg'),
   sparks: () => import('./sparks.svg'),
   star: () => import('./star.svg'),
   syncArrows: () => import('./syncArrows.svg'),
