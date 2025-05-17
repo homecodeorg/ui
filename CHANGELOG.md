@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.1](https://github.com/foreverido/uilib/compare/v4.23.0...v4.23.1) (2025-05-17)
+
+
+### Features
+
+* Icon - soundWave ([cbd1e16](https://github.com/foreverido/uilib/commit/cbd1e16f434ceb715d0e1f9334d955e16d303dd3))
+
 ## [4.23.0](https://github.com/foreverido/uilib/compare/v4.22.18...v4.23.0) (2025-05-12)
 
 
