@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.2](https://github.com/foreverido/uilib/compare/v4.23.1...v4.23.2) (2025-05-19)
+
+
+### Features
+
+* Icon - cubes,tool,usage, update syncArrows ([a8a3e30](https://github.com/foreverido/uilib/commit/a8a3e307fb008481559baf6dfb57bc55402dee60))
+
 ### [4.23.1](https://github.com/foreverido/uilib/compare/v4.23.0...v4.23.1) (2025-05-17)
 
 
