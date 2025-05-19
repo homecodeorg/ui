@@ -17,6 +17,7 @@ export default {
   chevronRight: () => import('./chevronRight.svg'),
   chevronLeft: () => import('./chevronLeft.svg'),
   clearAll: () => import('./clearAll.svg'),
+  cubes: () => import('./cubes.svg'),
   delete: () => import('./delete.svg'),
   draft: () => import('./draft.svg'),
   dragHandlerHorizontal: () => import('./dragHandlerHorizontal.svg'),
@@ -55,6 +56,7 @@ export default {
   plus: () => import('./plus.svg'),
   redo: () => import('./redo.svg'),
   undo: () => import('./undo.svg'),
+  usage: () => import('./usage.svg'),
   requiredStar: () => import('./requiredStar.svg'),
   rewind: () => import('./rewind.svg'),
   rocket: () => import('./rocket.svg'),
@@ -72,5 +74,6 @@ export default {
   syncArrows: () => import('./syncArrows.svg'),
   table: () => import('./table.svg'),
   telegram: () => import('./telegram.svg'),
+  tool: () => import('./tool.svg'),
   trafficLight: () => import('./trafficLight.svg'),
 };
