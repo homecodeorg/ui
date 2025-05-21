@@ -1,4 +1,8 @@
 export default {
+  arrowRight: () => import('./arrowRight.svg'),
+  arrowLeft: () => import('./arrowLeft.svg'),
+  arrowUp: () => import('./arrowUp.svg'),
+  arrowDown: () => import('./arrowDown.svg'),
   avatar: () => import('./avatar.svg'),
   bookmark: () => import('./bookmark.svg'),
   bookmarkAdd: () => import('./bookmarkAdd.svg'),
