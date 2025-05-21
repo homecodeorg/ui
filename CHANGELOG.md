@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.3](https://github.com/foreverido/uilib/compare/v4.23.2...v4.23.3) (2025-05-21)
+
+
+### Features
+
+* Icon - arrowUp/Down/LeftRight ([827a379](https://github.com/foreverido/uilib/commit/827a379363506e5c0b935db49762fabe1face50d))
+* Popup - highlighted background ([c76113e](https://github.com/foreverido/uilib/commit/c76113e5611d3c8ba6ec7c6e66e1a036f0d0ac0b))
+
+
+### Bug Fixes
+
+* Autocomplete - pass popupProps.contentProps ([96564ef](https://github.com/foreverido/uilib/commit/96564ef2ca03d6c4377abe4c71983853289b5024))
+
 ### [4.23.2](https://github.com/foreverido/uilib/compare/v4.23.1...v4.23.2) (2025-05-19)
 
 
