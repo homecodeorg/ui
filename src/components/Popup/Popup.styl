@@ -54,6 +54,16 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
   backface-visibility hidden
   transition background-color .1s ease-in-out
 
+  &::before
+    content ''
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background-color var(--accent-color-alpha-50)
+    pointer-events none
+
   &.blur
     backdrop-filter blur(50px)
     background-color var(--decent-color-alpha-500)
@@ -90,7 +100,6 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
     pointer-events all
     transform $openTransform
     opacity 1
-    background-color var(--accent-color-alpha-50)
 
 .animating
   transition 70ms ease-out
