@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.23.4](https://github.com/foreverido/uilib/compare/v4.23.3...v4.23.4) (2025-05-22)
+
+
+### Bug Fixes
+
+* Popup - bg highlight ([fa6ec66](https://github.com/foreverido/uilib/commit/fa6ec660939e167deb273ca7b5eb8c991cd0743d))
+
 ### [4.23.3](https://github.com/foreverido/uilib/compare/v4.23.2...v4.23.3) (2025-05-21)
 
 
