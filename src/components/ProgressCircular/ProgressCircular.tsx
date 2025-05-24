@@ -54,6 +54,7 @@ export function ProgressCircular({
         strokeDasharray={circumference}
         strokeDashoffset={strokeDashoffset}
         transform={`rotate(-90 ${pixelSize / 2} ${pixelSize / 2})`}
+        className={S.progress}
       />
       {/* Display percentage in the center */}
       {showPercentage && (
