@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.24.0](https://github.com/foreverido/uilib/compare/v4.23.4...v4.24.0) (2025-05-24)
+
+
+### Features
+
+* Progress and ProgerssCircular ([8b088b3](https://github.com/foreverido/uilib/commit/8b088b3b2efa41d8329fc50dbb2b718f11997cfc))
+
 ### [4.23.4](https://github.com/foreverido/uilib/compare/v4.23.3...v4.23.4) (2025-05-22)
 
 
