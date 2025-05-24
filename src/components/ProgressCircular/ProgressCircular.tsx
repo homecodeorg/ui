@@ -18,6 +18,7 @@ export function ProgressCircular({
   showPercentage,
   size = 'm',
   strokeWidth,
+  className,
 }: ProgressCircularProps) {
   const progress = calculateProgress(value);
   const pixelSize = SIZE_MAP[size];
@@ -31,7 +32,7 @@ export function ProgressCircular({
       width={pixelSize}
       height={pixelSize}
       viewBox={`0 0 ${pixelSize} ${pixelSize}`}
-      className={cn(S.root, value > 0 && S.animated)}
+      className={cn(S.root, value > 0 && S.animated, className)}
     >
       {/* Background cirecle */}
       <circle

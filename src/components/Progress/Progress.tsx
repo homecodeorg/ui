@@ -9,13 +9,15 @@ export function Progress({
   showPercentage,
   size = 'm',
   alignText = 'center',
+  className,
 }: ProgressProps) {
   const progress = calculateProgress(value);
   const classes = cn(
     S.root,
     S[`size-${size}`],
     S[`align-${alignText}`],
-    value > 0 && S.animated
+    value > 0 && S.animated,
+    className
   );
 
   return (
