@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.1](https://github.com/foreverido/uilib/compare/v4.24.0...v4.24.1) (2025-05-24)
+
+
+### Bug Fixes
+
+* ProgressCircular - enalble animation ([a2ec591](https://github.com/foreverido/uilib/commit/a2ec59103b98ecaf7c5385fc155825ba5e6ef4dc))
+
 ## [4.24.0](https://github.com/foreverido/uilib/compare/v4.23.4...v4.24.0) (2025-05-24)
 
 
