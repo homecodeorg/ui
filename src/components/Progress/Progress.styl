@@ -1,0 +1,41 @@
+.root
+  position relative
+  width 100%
+  border-radius 50px
+  background-color var(--accent-color-alpha-100)
+
+.size-s
+  height 2px
+  font-size 14px
+.size-m
+  height 8px
+  font-size 16px
+.size-l
+  height 12px
+  font-size 18px
+
+.bar
+  height 100%
+  border-radius inherit
+  background-color var(--active-color)
+
+  .animated &
+    transition width 0.3s ease
+
+.hasLabel
+  margin-top 1em
+
+.label
+  position absolute
+  bottom 100%
+  margin-bottom 4px
+  font-weight bold
+  color var(--accent-color)
+
+  .align-left &
+    left var(--indent-s)
+  .align-center &
+    left 50%
+    transform translate(-50%, 0)
+  .align-right &
+    right var(--indent-s)

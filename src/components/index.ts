@@ -26,6 +26,8 @@ export * from './Paranja/Paranja';
 export * from './Popup/Popup';
 export * from './Portal/Portal';
 export * from './PopupMenu/PopupMenu';
+export * from './Progress/Progress';
+export * from './ProgressCircular/ProgressCircular';
 export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';

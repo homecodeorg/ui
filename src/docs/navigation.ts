@@ -43,24 +43,20 @@ export default [
     label: 'Components',
     items: [
       {
-        id: 'Theme',
-        loader: () => import('./examples/Theme'),
+        id: 'Autocomplete',
+        loader: () => import('./examples/Autocomplete'),
       },
       {
         id: 'Button',
         loader: () => import('./examples/Button'),
       },
       {
-        id: 'Checkbox',
-        loader: () => import('./examples/Checkbox'),
-      },
-      {
-        id: 'Tabs',
-        loader: () => import('./examples/Tabs'),
-      },
-      {
         id: 'Calendar',
         loader: () => import('./examples/Calendar'),
+      },
+      {
+        id: 'Checkbox',
+        loader: () => import('./examples/Checkbox'),
       },
       {
         id: 'DatePicker',
@@ -71,16 +67,52 @@ export default [
         loader: () => import('./examples/DatePickerInput'),
       },
       {
+        id: 'DateTime',
+        loader: () => import('./examples/DateTime'),
+      },
+      {
+        id: 'Draggable',
+        loader: () => import('./examples/Draggable'),
+      },
+      {
+        id: 'Form',
+        loader: () => import('./examples/Form'),
+      },
+      {
+        id: 'Gallery',
+        loader: () => import('./examples/Gallery'),
+      },
+      {
+        id: 'Icon',
+        loader: () => import('./examples/Icon'),
+      },
+      {
         id: 'Input',
         loader: () => import('./examples/Input'),
       },
       {
-        id: 'Autocomplete',
-        loader: () => import('./examples/Autocomplete'),
-      },
-      {
         id: 'InputFile',
         loader: () => import('./examples/InputFile'),
+      },
+      {
+        id: 'Lazy',
+        loader: () => import('./examples/Lazy'),
+      },
+      {
+        id: 'LightBox',
+        loader: () => import('./examples/LightBox'),
+      },
+      {
+        id: 'Link',
+        loader: () => import('./examples/Link'),
+      },
+      {
+        id: 'Menu',
+        loader: () => import('./examples/Menu'),
+      },
+      {
+        id: 'Notifications',
+        loader: () => import('./examples/Notifications'),
       },
       {
         id: 'Popup',
@@ -91,68 +123,40 @@ export default [
         loader: () => import('./examples/PopupMenu'),
       },
       {
-        id: 'Select',
-        loader: () => import('./examples/Select'),
-      },
-      {
-        id: 'Form',
-        loader: () => import('./examples/Form'),
-      },
-      {
-        id: 'Spinner',
-        loader: () => import('./examples/Spinner'),
-      },
-      {
-        id: 'Icon',
-        loader: () => import('./examples/Icon'),
-      },
-      {
-        id: 'DateTime',
-        loader: () => import('./examples/DateTime'),
-      },
-      {
-        id: 'Scroll',
-        loader: () => import('./examples/Scroll'),
-      },
-      {
-        id: 'Gallery',
-        loader: () => import('./examples/Gallery'),
-      },
-      {
-        id: 'LightBox',
-        loader: () => import('./examples/LightBox'),
-      },
-      {
-        id: 'Table',
-        loader: () => import('./examples/Table'),
-      },
-      {
-        id: 'Virtualized',
-        loader: () => import('./examples/Virtualized'),
-      },
-      {
-        id: 'Draggable',
-        loader: () => import('./examples/Draggable'),
-      },
-      {
-        id: 'Notifications',
-        loader: () => import('./examples/Notifications'),
-      },
-      {
-        id: 'Lazy',
-        loader: () => import('./examples/Lazy'),
+        id: 'Progress',
+        loader: () => import('./examples/Progress'),
       },
       {
         id: 'Router',
         loader: () => import('./examples/Router'),
       },
       {
-        id: 'Link',
-        loader: () => import('./examples/Link'),
+        id: 'Scroll',
+        loader: () => import('./examples/Scroll'),
       },
       {
-        id: 'Menu',
-        loader: () => import('./examples/Menu'),
+        id: 'Select',
+        loader: () => import('./examples/Select'),
+      },
+      {
+        id: 'Spinner',
+        loader: () => import('./examples/Spinner'),
+      },
+      {
+        id: 'Table',
+        loader: () => import('./examples/Table'),
+      },
+      {
+        id: 'Tabs',
+        loader: () => import('./examples/Tabs'),
+      },
+      {
+        id: 'Theme',
+        loader: () => import('./examples/Theme'),
+      },
+      {
+        id: 'Virtualized',
+        loader: () => import('./examples/Virtualized'),
       },
     ],
   },
