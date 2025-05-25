@@ -15,7 +15,7 @@ export default isBrowser
       },
 
       set(key, val) {
-        if (!val) {
+        if (val === undefined || val === null) {
           this.remove(key);
           return;
         }
