@@ -5,11 +5,9 @@ import {
   useRef,
   useMemo,
   forwardRef,
-  MutableRefObject,
   ForwardedRef,
 } from 'react';
 import cn from 'classnames';
-import omit from 'lodash.omit';
 
 import { Label } from 'uilib/components/Label/Label';
 import { RequiredStar } from 'uilib/components/RequiredStar/RequiredStar';
@@ -372,8 +370,8 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       updateAutoComplete();
 
       if (value !== inputValue) {
+        if (isTextArea) setTextareaValue(String(value));
         setInputValue(value);
-        // setTextareaValue(String(value));
       }
 
       if (autoFocus && inputRef.current) {
