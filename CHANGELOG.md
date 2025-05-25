@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.3](https://github.com/foreverido/uilib/compare/v4.24.2...v4.24.3) (2025-05-25)
+
+
+### Bug Fixes
+
+* Input textarea - programmatically set value ([0b8bb87](https://github.com/foreverido/uilib/commit/0b8bb875761e4c36311b8ef138a8b4e296e31e1a))
+
 ### [4.24.2](https://github.com/foreverido/uilib/compare/v4.24.1...v4.24.2) (2025-05-24)
 
 
