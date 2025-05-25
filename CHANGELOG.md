@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.24.4](https://github.com/foreverido/uilib/compare/v4.24.3...v4.24.4) (2025-05-25)
+
+
+### Bug Fixes
+
+* LS.set - do not skip false or zero ([9c48ff8](https://github.com/foreverido/uilib/commit/9c48ff890324e8756aab431409847d3c8c33f441))
+
 ### [4.24.3](https://github.com/foreverido/uilib/compare/v4.24.2...v4.24.3) (2025-05-25)
 
 
