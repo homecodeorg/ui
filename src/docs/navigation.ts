@@ -151,6 +151,10 @@ export default [
         loader: () => import('./examples/Tabs'),
       },
       {
+        id: 'Tooltip',
+        loader: () => import('./examples/Tooltip'),
+      },
+      {
         id: 'Theme',
         loader: () => import('./examples/Theme'),
       },
