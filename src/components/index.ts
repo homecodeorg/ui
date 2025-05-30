@@ -37,6 +37,7 @@ export * from './Shimmer/Shimmer';
 export * from './Spinner/Spinner';
 export * from './Table/Table';
 export * from './Tabs/Tabs';
+export * from './Tooltip/Tooltip';
 export * from './Text/Text';
 export * from './Theme/Theme';
 export * from './VH/VH';
