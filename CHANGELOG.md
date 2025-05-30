@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.25.1](https://github.com/foreverido/uilib/compare/v4.25.0...v4.25.1) (2025-05-30)
+
+
+### Features
+
+* Icon - stopInCircle ([8b9e436](https://github.com/foreverido/uilib/commit/8b9e43692c8e907aa9afe5779b74fd184737c38b))
+
 ## [4.25.0](https://github.com/foreverido/uilib/compare/v4.24.4...v4.25.0) (2025-05-30)
 
 
