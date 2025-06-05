@@ -21,7 +21,6 @@ import { generateUID } from 'uilib/tools/uid';
 
 import S from './Input.styl';
 import * as T from './Input.types';
-import { debounce } from 'uilib';
 
 const TEXTAREA_SCROLL_TOP_OFFSET = {
   s: 30,
@@ -128,38 +127,19 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     };
 
     const onTextareaPaste = e => {
-      if (!isFocusedRef.current) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-
-      pasteToTextarea(e.clipboardData.getData('text/plain'));
+      // wait for native paste operation completes in DOM
+      setTimeout(() => {
+        if (inputRef.current) {
+          const newValue = inputRef.current.innerText;
+          onChangeValue(newValue);
+        }
+      }, 0);
     };
 
     const setTextareaValue = (value: string) => {
       // @ts-ignore
       if (inputRef.current) inputRef.current.innerText = value;
     };
-
-    const pasteToTextarea = debounce((text: string) => {
-      const sel = window.getSelection();
-      const textarea = inputRef.current;
-      const prevText = textarea.innerText;
-      const startPos = sel.getRangeAt(0).startOffset;
-      const nextText =
-        prevText.substring(0, startPos) + text + prevText.substring(startPos);
-
-      textarea.innerText = nextText;
-      onChangeValue(nextText);
-
-      setTimeout(() => {
-        try {
-          window
-            .getSelection()
-            .setPosition(textarea.firstChild, startPos + text.length);
-        } catch (e) {}
-      }, 100);
-    }, 100);
 
     const onClearPress = e => {
       e.preventDefault();
