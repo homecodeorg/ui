@@ -121,7 +121,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
         return 0;
       }
 
-      if (isTextArea) return inputRef.current.innerText.replace(/\n/g, '');
+      if (isTextArea) return inputRef.current.innerText; //.replace(/\n/g, '');
 
       return val;
     };
