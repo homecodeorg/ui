@@ -1,9 +1,6 @@
-import { Component } from 'react';
-import { createStore } from 'justorm/react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import cn from 'classnames';
 import compare from 'compareq';
-import pick from 'lodash.pick';
-import omit from 'lodash.omit';
 
 import { Input } from '../Input/Input';
 
@@ -12,19 +9,7 @@ import * as H from './Form.helpers';
 import * as T from './Form.types';
 import { Validator } from './Validator';
 
-const STORE_FIELDS_EXPOSED = [
-  'isDirty',
-  'isEmpty',
-  'isValid',
-  'isLoading',
-  'values',
-  'errors',
-  'touched',
-  'changed',
-  'disabled',
-];
-
-function Field(props: T.FormFieldProps) {
+const Field = function Field(props: T.FormFieldProps) {
   const {
     value,
     error,
@@ -78,320 +63,336 @@ function Field(props: T.FormFieldProps) {
       {children}
     </div>
   );
-}
+};
 
-export class Form extends Component<T.Props> {
-  store: any;
-
-  validationSchema: T.FormValidationSchema;
-
-  defaultValues: T.FormValues = {};
-
-  constructor(props: T.Props) {
-    super(props);
-
-    const { initialValues, validationSchema, defaultDisabled } = props;
-
-    this.updateDefaultValues();
-
-    this.validationSchema = validationSchema;
-
-    const values = H.cloneValues(initialValues);
-    const notEmpty = H.getNotEmpty(this.defaultValues, initialValues);
-    const disabled = Object(defaultDisabled);
-
-    this.store = createStore(this, {
-      values,
-      touched: H.getInitialTouched(initialValues),
-      changed: {},
-      notEmpty,
-      disabled,
-      isLoading: false,
-      isDirty: false,
-      // TODO: do not validate here (only when Field is mounted)
-      ...this.getValidationState({ values, disabled }),
-      isEmpty: Object.keys(notEmpty).length === 0,
-    });
-  }
-
-  componentDidMount() {
-    this.calcChangedAll();
-    this.validate();
-    this.onInit();
-  }
-
-  shouldComponentUpdate({
-    defaultValues,
-    initialValues,
+export function Form(props: T.Props) {
+  const {
+    className,
+    children,
+    initialValues = {},
     validationSchema,
-  }: T.Props) {
-    const validationChanged = !compare(
-      validationSchema,
-      this.props.validationSchema
-    );
-    const initialValsChanged = !compare(
-      initialValues,
-      this.props.initialValues
-    );
-    const defaultValsChanged = !compare(
-      defaultValues,
-      this.props.defaultValues
-    );
+    defaultDisabled = {},
+    defaultValues,
+    markEdited,
+    onInit,
+    onChange,
+    onSubmit,
+    ...restProps
+  } = props;
 
-    this.validationSchema = validationSchema;
+  const validationSchemaRef = useRef(validationSchema);
+  const defaultValuesRef = useRef<T.FormValues>({});
 
-    if (initialValsChanged) {
-      this.setInitialVals(initialValues);
-    }
-
-    if (defaultValsChanged) this.updateDefaultValues();
-
-    if (initialValsChanged || defaultValsChanged) {
-      this.calcChangedAll(initialValues);
-    }
-
-    if (initialValsChanged || validationChanged) {
-      this.validate();
-    }
-
-    return true;
-  }
-
-  updateDefaultValues(props = this.props) {
-    const { defaultValues, initialValues } = props;
-
-    return defaultValues || H.cloneValues(initialValues);
-  }
-
-  setInitialVals(initialValues = {}) {
-    this.store.values = H.cloneValues(initialValues);
-
-    this.validate();
-    this.onInit();
-  }
-
-  setValue = (field, val) => {
-    const { values } = this.store;
-
-    values[field] = val;
-    this.calcChanged(field, val);
-    this.validate();
+  // Update default values helper
+  const updateDefaultValues = (propsToUse = props) => {
+    const { defaultValues: dv, initialValues: iv } = propsToUse;
+    return dv || H.cloneValues(iv);
   };
 
-  setValues = vals => {
-    const { values } = this.store;
+  // Initialize default values
+  defaultValuesRef.current = updateDefaultValues();
 
-    Object.assign(values, vals);
-    this.calcChangedAll();
-    this.validate();
+  // Separate states
+  const [values, _setValues] = useState(() => H.cloneValues(initialValues));
+  const [touched, _setTouched] = useState(() =>
+    H.getInitialTouched(initialValues)
+  );
+  const [changed, _setChanged] = useState({});
+  const [disabled, setDisabled] = useState(() => ({ ...defaultDisabled }));
+  const [isLoading, setIsLoading] = useState(false);
+  const [isDirty, setIsDirty] = useState(false);
+  const [isValid, setIsValid] = useState(true);
+  const [errors, _setErrors] = useState({});
+  const [isEmpty, setIsEmpty] = useState(
+    () =>
+      Object.keys(H.getChanged(defaultValuesRef.current, initialValues))
+        .length === 0
+  );
 
+  // Refs for stable handlers
+  const valuesRef = useRef(values);
+  const changedRef = useRef(changed);
+  const touchedRef = useRef(touched);
+  const errorsRef = useRef(errors);
+  const onChangeRef = useRef(onChange);
+
+  const setValues = (newValues: T.FormAPI['values']) => {
+    _setValues(newValues);
+    valuesRef.current = newValues;
+  };
+
+  const setValue = (field: string, val: any) => {
+    setValues({ ...valuesRef.current, [field]: val });
+  };
+
+  const setErrors = (newErrors: T.FormAPI['errors']) => {
+    _setErrors(newErrors);
+    errorsRef.current = newErrors;
+  };
+
+  const setTouched = (newTouched: T.FormAPI['touched']) => {
+    _setTouched(newTouched);
+    touchedRef.current = newTouched;
+  };
+
+  const setFieldTouched = (field: string, isTouched: boolean) => {
+    setTouched({ ...touchedRef.current, [field]: isTouched });
+  };
+
+  const setChanged = (newChanged: T.FormAPI['changed']) => {
+    _setChanged(newChanged);
+    changedRef.current = newChanged;
+  };
+
+  // Update refs
+  onChangeRef.current = onChange;
+
+  const updateIsDirty = () => {
+    const newIsDirty = Object.keys(changedRef.current).length > 0;
+    setIsDirty(newIsDirty);
+  };
+
+  const updateIsEmpty = () => {
+    const newNotEmpty = H.getChanged(
+      defaultValuesRef.current,
+      valuesRef.current
+    );
+    setIsEmpty(Object.keys(newNotEmpty).length === 0);
+  };
+
+  // Validation functions
+  const getValidationErrors = useCallback(
+    (valuesData = valuesRef.current, disabledData = disabled) => {
+      if (!validationSchemaRef.current) return {};
+
+      const schema = Object.entries(validationSchemaRef.current).reduce(
+        (acc, [field, { ...rule }]) => {
+          const { type, check } = rule as T.FormValidationRule;
+
+          if (disabledData[field]) return acc;
+
+          if (type === 'custom') {
+            rule.check = function checkWrap(...args) {
+              return check.call(this, ...args, valuesData);
+            };
+          }
+
+          return { ...acc, [field]: rule };
+        },
+        {}
+      );
+
+      const res = Validator.validate(valuesData, schema);
+      if (typeof res === 'object')
+        return H.patchWithCustomMessages(res, schema);
+      return {};
+    },
+    [values, disabled]
+  );
+
+  const validate = useCallback(() => {
+    const newErrors = getValidationErrors();
+    const newIsValid = Object.keys(newErrors).length === 0;
+
+    setErrors(newErrors);
+    setIsValid(newIsValid);
+  }, [getValidationErrors]);
+
+  const calcChanged = useCallback(
+    (field: string, val: any) => {
+      const newChanged = { ...changedRef.current };
+
+      if (compare(val, initialValues[field])) {
+        delete newChanged[field];
+      } else {
+        newChanged[field] = true;
+      }
+
+      setChanged(newChanged);
+      updateIsDirty();
+      updateIsEmpty();
+    },
+    [initialValues]
+  );
+
+  const calcChangedAll = (initValues = initialValues) => {
+    const newChanged = Object.entries(values).reduce(
+      (acc, [field, val]) =>
+        compare(initValues[field], val) ? acc : { ...acc, [field]: true },
+      {}
+    );
+
+    setChanged(newChanged);
+    updateIsDirty();
+    updateIsEmpty();
+  };
+
+  // Form API methods
+  const setValueAPI = (field: string, val: any) => {
+    setValue(field, val);
+    calcChanged(field, val);
+    validate();
+  };
+
+  const setValuesAPI = vals => {
+    const newValues = { ...valuesRef.current, ...vals };
+    setValues(newValues);
+    calcChangedAll();
+    validate();
     return values;
   };
 
-  setDisabled = (name: string | object, isDisabled?) => {
-    const { disabled } = this.store;
+  const setDisabledAPI = useCallback(
+    (name: string | object, isDisabledFlag?) => {
+      setDisabled(prev => {
+        const newDisabled = { ...prev };
 
-    if (typeof name === 'object') {
-      Object.assign(disabled, name);
-      return;
-    }
-
-    if (isDisabled) {
-      disabled[name] = true;
-    } else {
-      delete disabled[name];
-    }
-  };
-
-  reset = () => {
-    const { initialValues } = this.props;
-
-    this.setValues(initialValues);
-    this.store.touched = H.getInitialTouched(initialValues);
-  };
-
-  field = (props: T.FieldProps) => <Field {...this.getFieldProps(props)} />;
-
-  getFieldProps(props): T.FormFieldProps {
-    const { markEdited } = this.props;
-    const { name } = props;
-    const { values, changed, touched, errors } = this.store.originalObject;
-    const fieldProps = {
-      ...props,
-      value: values[name],
-      markEdited,
-      isChanged: changed[name],
-      isTouched: touched[name],
-      error: errors?.[name],
-      handleChange: this.onChange,
-      handleBlur: this.onBlur,
-    };
-
-    if (this.validationSchema?.[name].empty === false)
-      fieldProps.required = true;
-
-    return fieldProps;
-  }
-
-  getFormAPI(): T.FormAPI {
-    return {
-      ...pick(this.store.originalObject, STORE_FIELDS_EXPOSED),
-      Field: this.field,
-      setValue: this.setValue,
-      setValues: this.setValues,
-      setDisabled: this.setDisabled,
-      reset: this.reset,
-      submit: this.onSubmit,
-    };
-  }
-
-  getValidationState(store?): T.ValidationState {
-    const errors = this.getValidationErrors(store);
-    const isValid = Object.keys(errors).length === 0;
-
-    return { isValid, errors };
-  }
-
-  getValidationErrors(
-    store: T.ValidationStateParams = this.store.originalObject
-  ) {
-    const { values, disabled } = store;
-
-    if (!this.validationSchema) return {};
-
-    // @ts-ignore
-    const schema = Object.entries(this.validationSchema).reduce(
-      (acc, [field, { ...rule }]) => {
-        const { type, check } = rule as T.FormValidationRule;
-
-        if (disabled[field]) return acc;
-
-        if (type === 'custom') {
-          // NOTE: pass all `values` to custom checker function
-          // to allow create validator for dependent fields
-          // @ts-ignore
-          rule.check = function checkWrap(...args) {
-            // @ts-ignore
-            return check.call(this, ...args, values);
-          };
+        if (typeof name === 'object') {
+          Object.assign(newDisabled, name);
+        } else if (isDisabledFlag) {
+          newDisabled[name] = true;
+        } else {
+          delete newDisabled[name];
         }
 
-        return { ...acc, [field]: rule };
-      },
-      {}
-    );
+        return newDisabled;
+      });
+    },
+    []
+  );
 
-    const res = Validator.validate(values, schema);
+  const reset = useCallback(() => {
+    setValues(H.cloneValues(initialValues));
+    setTouched({});
+    setChanged({});
+    updateIsDirty();
+    updateIsEmpty();
+    validate();
+  }, [initialValues]);
 
-    if (typeof res === 'object') return H.patchWithCustomMessages(res, schema);
-    return {};
-  }
+  // Event handlers - memoized to prevent field recreation
+  const onChangeHandler = useCallback(
+    (field: string, val: any) => {
+      if (valuesRef.current[field] === val) return;
 
-  calcChanged(field: string, val: any) {
-    const { initialValues } = this.props;
-    const { changed, notEmpty } = this.store;
+      const newValues = { ...valuesRef.current, [field]: val };
 
-    if (compare(val, initialValues[field])) {
-      delete changed[field];
-    } else {
-      changed[field] = true;
-    }
+      if (onChangeRef.current && !onChangeRef.current(newValues)) return;
 
-    if (compare(val, this.defaultValues[field])) {
-      delete notEmpty[field];
-    } else {
-      notEmpty[field] = true;
-    }
+      setValue(field, val);
+      setFieldTouched(field, true);
+      calcChanged(field, val);
+      validate();
+    },
+    [calcChanged, validate]
+  );
 
-    Object.assign(this.store, {
-      isDirty: Object.keys(changed).length > 0,
-      isEmpty: Object.keys(notEmpty).length === 0,
-    });
-  }
+  const onBlurHandler = useCallback((name: string) => {
+    setFieldTouched(name, true);
+  }, []);
 
-  calcChangedAll(initialValues = this.props.initialValues) {
-    const { values } = this.store.originalObject;
-    const notEmpty = H.getNotEmpty(this.defaultValues, values);
-    const changed = Object.entries(values).reduce(
-      (acc, [field, val]) =>
-        compare(initialValues[field], val) ? acc : { ...acc, [field]: true },
-      {}
-    );
-
-    Object.assign(this.store, {
-      changed,
-      isDirty: Object.keys(changed).length > 0,
-      isEmpty: Object.keys(notEmpty).length === 0,
-    });
-  }
-
-  validate() {
-    Object.assign(this.store, this.getValidationState());
-  }
-
-  onInit() {
-    const { onInit } = this.props;
-    if (onInit) onInit(this.getFormAPI());
-  }
-
-  onSubmit = async e => {
-    const { onSubmit } = this.props;
-    const { values } = this.store.originalObject;
-
+  const onSubmitHandler = async e => {
     e?.preventDefault();
     H.dropFocusFromSubmit();
 
     if (!onSubmit) return;
-    this.store.isLoading = true;
+    setIsLoading(true);
     await onSubmit({ ...values });
-    this.store.isLoading = false;
+    setIsLoading(false);
   };
 
-  onChange = (field: string, val: any) => {
-    const { onChange } = this.props;
-    const { values, touched } = this.store;
+  // Simple field component - let memo on Field handle optimization
+  const FieldComponent = useRef((fieldProps: T.FieldProps) => {
+    const { name } = fieldProps;
+    const fullProps: any = {
+      ...fieldProps,
+      value: valuesRef.current[name],
+      error: errorsRef.current[name],
+      markEdited,
+      isChanged: changedRef.current[name],
+      isTouched: touchedRef.current[name],
+      handleChange: onChangeHandler,
+      handleBlur: onBlurHandler,
+    };
 
-    if (values[field] === val) return;
+    if (validationSchemaRef.current?.[name]?.empty === false) {
+      fullProps.required = true;
+    }
 
-    const newValues = { ...values.originalObject, [field]: val };
+    return <Field {...fullProps} />;
+  });
 
-    // @ts-ignore
-    if (onChange && onChange(newValues) === false) return;
-
-    values[field] = val;
-    touched[field] = true;
-    this.handleChange(field, val);
+  const formAPI = {
+    values,
+    touched,
+    changed,
+    disabled,
+    isLoading,
+    isDirty,
+    isValid,
+    isEmpty,
+    errors,
+    Field: FieldComponent.current,
+    setValue: setValueAPI,
+    setValues: setValuesAPI,
+    setDisabled: setDisabledAPI,
+    reset,
+    submit: onSubmitHandler,
   };
 
-  onBlur = (name: string) => {
-    this.store.touched[name] = true;
-  };
+  // Effects
+  useEffect(() => {
+    validationSchemaRef.current = validationSchema;
+  }, [validationSchema]);
 
-  handleChange(field: string, val: any) {
-    this.calcChanged(field, val);
-    this.validate();
-  }
+  useEffect(() => {
+    calcChangedAll();
+    validate();
+    if (onInit) onInit(formAPI);
+  }, []);
 
-  render() {
-    const { className, children, ...rest } = this.props;
-    const { isLoading } = this.store;
-    const classes = cn(S.root, className, isLoading && S.isLoading);
-    const formProps = omit(rest, [
-      'defaultValues',
-      'defaultDisabled',
-      'initialValues',
-      'validationSchema',
-      'onInit',
-      'onChange',
-      'onSubmit',
-    ]);
-
-    return (
-      <form className={classes} {...formProps} onSubmit={this.onSubmit}>
-        {children(this.getFormAPI())}
-      </form>
+  useEffect(() => {
+    const validationChanged = !compare(
+      validationSchema,
+      validationSchemaRef.current
     );
-  }
+    const initialValsChanged = !compare(initialValues, props.initialValues);
+    const defaultValsChanged = !compare(defaultValues, props.defaultValues);
+
+    if (initialValsChanged) {
+      setValues(H.cloneValues(initialValues));
+      validate();
+      if (onInit) onInit(formAPI);
+    }
+
+    if (defaultValsChanged) {
+      defaultValuesRef.current = updateDefaultValues();
+    }
+
+    if (initialValsChanged || defaultValsChanged) {
+      calcChangedAll(initialValues);
+    }
+
+    if (initialValsChanged || validationChanged) {
+      validate();
+    }
+  }, [
+    initialValues,
+    validationSchema,
+    defaultValues,
+    onInit,
+    formAPI,
+    calcChangedAll,
+    validate,
+  ]);
+
+  const classes = cn(S.root, className, isLoading && S.isLoading);
+
+  return (
+    <form className={classes} {...restProps} onSubmit={onSubmitHandler}>
+      {children(formAPI)}
+    </form>
+  );
 }
 
 export * from './SubmitButtons/SubmitButtons';

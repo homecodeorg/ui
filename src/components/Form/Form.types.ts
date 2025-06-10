@@ -78,7 +78,8 @@ export type Props = ComponentType & {
   // Called after the form is initialized.
   onInit?: (api: FormAPI) => boolean | void;
   // Called whenever the form values change and receives the current form values as an argument.
-  onChange?: (values: FormValues) => void;
+  // Return false to prevent the form from changes.
+  onChange?: (values: FormValues) => void | boolean;
   // Called when the form is submitted and receives the current form values as an argument
   //
   // It should return a promise that resolves when the submission is complete to properly update isLoading state.

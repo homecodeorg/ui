@@ -29,7 +29,7 @@ export function getInitialTouched(initialValues) {
   );
 }
 
-export function getNotEmpty(_defaultValues, values) {
+export function getChanged(_defaultValues, values) {
   const defaultValues = _defaultValues || values;
 
   return Object.entries(values).reduce(

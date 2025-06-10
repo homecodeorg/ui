@@ -105,7 +105,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     );
     const [labelClipPath, setLabelClipPath] = useState('');
     const [autoComplete, setAutoComplete] = useState('');
-    const uid = generateUID();
+    const uid = useRef(generateUID());
 
     const isTextArea = type === 'textarea';
     const isNumber = type === 'number';
@@ -257,7 +257,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
 
       if (!autoComplete) {
         controlProps.suppressHydrationWarning = true;
-        controlProps.autoComplete = uid;
+        controlProps.autoComplete = uid.current;
         delete controlProps.name;
       }
 
@@ -283,7 +283,6 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       label,
       isLabelOnTop,
       autoComplete,
-      uid,
     ]);
 
     const wrapControl = control => {

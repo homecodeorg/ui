@@ -3,7 +3,8 @@
   "version": "4.25.3",
   "description": "React UI components library",
   "scripts": {
-    "test": "jest",
+    "tests": "jest",
+    "tests:watch": "jest --watch",
     "ts": "tsc --noUnusedLocals",
     "dev": "NODE_OPTIONS='--loader ts-node/esm' NODE_ENV=development webpack-dev-server --mode=development --config ./src/docs/config/webpack.config.js --progress",
     "build": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
