@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.26.0](https://github.com/foreverido/uilib/compare/v4.25.3...v4.26.0) (2025-06-10)
+
+
+### Bug Fixes
+
+* Form - class=>hooks, state revalidation ([00422e1](https://github.com/foreverido/uilib/commit/00422e173e171c465cbb66c1c02aad5fac6a72e8))
+
 ### [4.25.3](https://github.com/foreverido/uilib/compare/v4.25.2...v4.25.3) (2025-06-09)
 
 
