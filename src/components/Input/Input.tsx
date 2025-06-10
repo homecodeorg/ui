@@ -378,7 +378,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     );
 
     return (
-      <div className={classes} title={String(value)}>
+      <div className={classes}>
         <label
           className={cn(
             S.main,
