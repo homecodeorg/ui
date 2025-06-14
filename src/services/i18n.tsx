@@ -99,3 +99,5 @@ export function init(config: RegisterConfig) {
     }),
   };
 }
+
+export type I18NStore = typeof store;
