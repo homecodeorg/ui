@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.5](https://github.com/foreverido/uilib/compare/v4.26.4...v4.26.5) (2025-06-14)
+
 ### [4.26.4](https://github.com/foreverido/uilib/compare/v4.26.3...v4.26.4) (2025-06-14)
 
 
