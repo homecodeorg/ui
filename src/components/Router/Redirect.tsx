@@ -6,7 +6,7 @@ import * as T from './Router.types';
 
 export const Redirect = (props: T.RedirectProps) => {
   useEffect(() => {
-    STORE.replaceState(props.to, { replace: true });
+    STORE.replaceState(props.to);
   }, []);
 
   return null;

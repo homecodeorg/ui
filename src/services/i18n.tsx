@@ -81,7 +81,7 @@ export function init(config: RegisterConfig) {
 
     // hook (update when componentStore._updated changed)
     withI18N: Component => props => {
-      useStore({ [storeName]: true });
+      useStore({ [storeName]: [] });
       return <Component {...props} />;
     },
 
@@ -90,7 +90,7 @@ export function init(config: RegisterConfig) {
     I18N: memo(function I18N({ id, children, props }: I18NProps) {
       useStore({
         i18n: ['lang'], // subscribe to lang changes
-        [storeName]: true,
+        [storeName]: [],
       });
 
       const key = id ?? children;
