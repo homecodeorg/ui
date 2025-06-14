@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.2](https://github.com/foreverido/uilib/compare/v4.26.1...v4.26.2) (2025-06-14)
+
+
+### Features
+
+* typings for: NotificationStore,RouterStore (justorm@3.0.2) ([b76af37](https://github.com/foreverido/uilib/commit/b76af372f3a9196e3836eaa72b4898181d9562ed))
+
 ### [4.26.1](https://github.com/foreverido/uilib/compare/v4.26.0...v4.26.1) (2025-06-10)
 
 ## [4.26.0](https://github.com/foreverido/uilib/compare/v4.25.3...v4.26.0) (2025-06-10)
