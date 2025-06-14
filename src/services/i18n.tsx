@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import { nanoid } from 'nanoid';
-import { useStore } from 'justorm/react';
-import { createStore } from 'justorm';
+import { useStore, createStore } from 'justorm/react';
 import _i18n from 'roddeh-i18n';
 
 import LS from 'uilib/tools/localStorage';

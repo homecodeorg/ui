@@ -1,4 +1,4 @@
-import { createStore } from 'justorm';
+import { createStore } from 'justorm/react';
 import { LS, debounce } from 'uilib/tools';
 
 import * as H from './Code.helpers';

@@ -9,7 +9,6 @@ import { Portal } from 'uilib/components/Portal/Portal';
 import S from './Popup.styl';
 import Time from 'timen';
 import cn from 'classnames';
-import { createStore } from 'justorm';
 import debounce from 'uilib/tools/debounce';
 import { getCoords } from 'uilib/tools/dom';
 import { isBrowser } from 'uilib/tools/env';

@@ -1,5 +1,5 @@
 import { VirtualizedListScroll, Spinner } from 'uilib';
-import { createStore, useStore } from 'justorm';
+import { createStore, useStore } from 'justorm/react';
 
 const { renderSimpleItems } = helpers;
 

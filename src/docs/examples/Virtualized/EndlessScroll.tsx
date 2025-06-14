@@ -1,5 +1,5 @@
 import { VirtualizedListScroll, array, Spinner } from 'uilib';
-import { createStore } from 'justorm';
+import { createStore } from 'justorm/react';
 import { useStore } from 'justorm/react';
 import { useEffect } from 'react';
 

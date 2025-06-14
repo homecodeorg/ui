@@ -1,6 +1,6 @@
 import { Component, useEffect } from 'react';
 import { VirtualizedListScroll, uid } from 'uilib';
-import { createStore } from 'justorm';
+import { createStore } from 'justorm/react';
 import { useStore } from 'justorm/react';
 
 const { getSimpleItemData, renderSimpleItems, loadData } = helpers;
