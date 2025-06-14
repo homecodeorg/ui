@@ -28,6 +28,7 @@
       }
     ],
     "paths": {
+      "justorm/react": ["./node_modules/justorm/dist/esm/plugins/react"],
       "uilib": ["./src"],
       "uilib/*": ["./src/*"],
       "docs/*": ["./src/docs/*"]

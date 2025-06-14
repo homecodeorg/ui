@@ -30,6 +30,7 @@ export default (env, argv) => {
         'docs/components': `${paths.docs}/components`,
         uilib: paths.src,
         theme: `${paths.src}/theme.styl`,
+        'justorm/react': 'justorm/dist/esm/plugins/react.js',
       },
     },
 

@@ -74,3 +74,4 @@ Time.every(50, function tick() {
 });
 
 export default STORE;
+export type NotificationsStore = typeof STORE;
