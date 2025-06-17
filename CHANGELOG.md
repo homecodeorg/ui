@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.8](https://github.com/foreverido/uilib/compare/v4.26.7...v4.26.8) (2025-06-17)
+
+
+### Bug Fixes
+
+* Container - forwardRef ([6daa394](https://github.com/foreverido/uilib/commit/6daa3946a4f7df7dc98190398ad9af6f1e846927))
+
 ### [4.26.7](https://github.com/foreverido/uilib/compare/v4.26.6...v4.26.7) (2025-06-17)
 
 
