@@ -2,8 +2,9 @@ import cn from 'classnames';
 
 import S from './Container.styl';
 import * as T from './Container.types';
+import { forwardRef } from 'react';
 
-export function Container(props: T.Props) {
+export const Container = forwardRef<HTMLDivElement, T.Props>((props, ref) => {
   const {
     className,
     children,
@@ -33,8 +34,8 @@ export function Container(props: T.Props) {
   const stylesObj = { ...style } as any;
 
   return (
-    <div className={classes} {...rest} style={stylesObj}>
+    <div className={classes} {...rest} style={stylesObj} ref={ref}>
       {children}
     </div>
   );
-}
+});
