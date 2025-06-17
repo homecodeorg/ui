@@ -1,4 +1,5 @@
 export default {
+  attach: () => import('./attach.svg'),
   arrowRight: () => import('./arrowRight.svg'),
   arrowLeft: () => import('./arrowLeft.svg'),
   arrowUp: () => import('./arrowUp.svg'),
@@ -48,6 +49,8 @@ export default {
   layers: () => import('./layers.svg'),
   link: () => import('./link.svg'),
   loader: () => import('./loader.svg'),
+  lock: () => import('./lock.svg'),
+  lockOpen: () => import('./lockOpen.svg'),
   map: () => import('./map.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
@@ -72,6 +75,7 @@ export default {
   send: () => import('./send.svg'),
   settings: () => import('./settings.svg'),
   shoppingBag: () => import('./shoppingBag.svg'),
+  smile: () => import('./smile.svg'),
   soundWave: () => import('./soundWave.svg'),
   sparks: () => import('./sparks.svg'),
   star: () => import('./star.svg'),
