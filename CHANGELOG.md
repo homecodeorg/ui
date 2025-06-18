@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.9](https://github.com/foreverido/uilib/compare/v4.26.8...v4.26.9) (2025-06-18)
+
+
+### Bug Fixes
+
+* Icon - lock, lockOpen - viewBox ([4e1bd6c](https://github.com/foreverido/uilib/commit/4e1bd6c31e41e5f4688f1f1a026235bec4d8ff7b))
+
 ### [4.26.8](https://github.com/foreverido/uilib/compare/v4.26.7...v4.26.8) (2025-06-17)
 
 
