@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.26.10](https://github.com/foreverido/uilib/compare/v4.26.9...v4.26.10) (2025-06-19)
+
+
+### Bug Fixes
+
+* Icon - attach, avatar ([03fc3bd](https://github.com/foreverido/uilib/commit/03fc3bdd8452b6147aec5659165621f57343c285))
+
 ### [4.26.9](https://github.com/foreverido/uilib/compare/v4.26.8...v4.26.9) (2025-06-18)
 
 
