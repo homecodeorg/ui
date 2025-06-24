@@ -42,3 +42,4 @@ export * from './Text/Text';
 export * from './Theme/Theme';
 export * from './VH/VH';
 export * from './Virtualized';
+export * from './Toggle/Toggle';

@@ -1,89 +1,69 @@
-import { Component } from 'react';
+import { FC } from 'react';
 import cn from 'classnames';
-import { createStore } from 'justorm/react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
-import { generateUID } from 'uilib/tools/uid';
+import { useToggleState } from 'uilib/hooks';
 
 import S from './Checkbox.styl';
 import * as T from './Checkbox.types';
 
-export class Checkbox extends Component<T.Props> {
-  id;
-  store;
+export const Checkbox: FC<T.Props> = ({
+  className,
+  label = '',
+  size = 'm',
+  variant = 'default',
+  error,
+  checked = false,
+  disabled,
+  id,
+  onFocus,
+  onBlur,
+  ...props
+}) => {
+  const {
+    id: componentId,
+    isActive,
+    isFocused,
+    handlers,
+  } = useToggleState({
+    id,
+    onFocus,
+    onBlur,
+  });
 
-  static defaultProps = {
-    size: 'm',
-    variant: 'default',
-    label: '',
-    checked: false,
-  };
+  const classes = cn(
+    S.root,
+    S[`size-${size}`],
+    S[`variant-${variant}`],
+    checked && S.checked,
+    disabled && S.disabled,
+    error && S.hasError,
+    isActive && S.isActive,
+    isFocused && S.isFocused,
+    className
+  );
 
-  constructor(props) {
-    super(props);
-    this.id = props.id || generateUID();
-    this.store = createStore(this, { isActive: false, isFocused: false });
-  }
-
-  onMouseDown = () => {
-    this.store.isActive = true;
-  };
-
-  onMouseUp = () => {
-    this.store.isActive = false;
-  };
-
-  onFocus = (e: any) => {
-    const { onFocus } = this.props;
-
-    this.store.isFocused = true;
-    onFocus?.(e);
-  };
-
-  onBlur = (e: any) => {
-    const { onBlur } = this.props;
-
-    this.store.isFocused = false;
-    onBlur?.(e);
-  };
-
-  render() {
-    const { className, label, size, variant, error, ...props } = this.props;
-    const { checked, disabled } = props;
-    const { isActive, isFocused } = this.store;
-
-    const classes = cn(
-      S.root,
-      S[`size-${size}`],
-      S[`variant-${variant}`],
-      checked && S.checked,
-      disabled && S.disabled,
-      error && S.hasError,
-      isActive && S.isActive,
-      isFocused && S.isFocused,
-      className
-    );
-
-    return (
-      <label
-        className={classes}
-        onMouseDown={this.onMouseDown}
-        onMouseUp={this.onMouseUp}
-      >
-        <div className={S.controlWrapper}>
-          <input
-            className={S.control}
-            {...props}
-            onFocus={this.onFocus}
-            onBlur={this.onBlur}
-            id={this.id}
-            type="checkbox"
-            tabIndex={0}
-          />
-          <Icon type="check" className={S.checkmark} size={size} />
-        </div>
-        {label}
-      </label>
-    );
-  }
-}
+  return (
+    <label
+      className={classes}
+      onPointerDown={handlers.onPointerDown}
+      onPointerUp={handlers.onPointerUp}
+    >
+      <div className={S.controlWrapper}>
+        <input
+          className={S.control}
+          {...props}
+          onFocus={handlers.onFocus}
+          onBlur={handlers.onBlur}
+          id={componentId}
+          type="checkbox"
+          checked={checked}
+          disabled={disabled}
+          tabIndex={0}
+        />
+        <Icon type="check" className={S.checkmark} size={size} />
+      </div>
+      {label}
+    </label>
+  );
+};

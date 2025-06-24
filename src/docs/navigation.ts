@@ -151,6 +151,10 @@ export default [
         loader: () => import('./examples/Tabs'),
       },
       {
+        id: 'Toggle',
+        loader: () => import('./examples/Toggle'),
+      },
+      {
         id: 'Tooltip',
         loader: () => import('./examples/Tooltip'),
       },

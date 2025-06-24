@@ -1,0 +1,98 @@
+@import '../../theme'
+
+.root
+  cursor pointer
+  display inline-flex
+  align-items center
+  box-sizing border-box
+  color inherit
+  user-select none
+  gap 0.5em
+
+.disabled
+  opacity .4
+  pointer-events none
+
+.toggleWrapper
+  position relative
+  display block
+  transition .2s ease-out
+  transition-property opacity, box-shadow
+
+// input[type="checkbox"]
+.control
+  control()
+  opacity 0
+  position absolute
+  pointer-events none
+
+.track
+  position relative
+  padding 2px
+  border-radius 100px
+  background-color var(--accent-color-alpha-100)
+  transition .3s ease-out
+  transition-property background-color, border-color
+  cursor pointer
+
+  .checked &
+    background-color var(--active-color)
+
+  .isActive &
+  .isFocused &
+    background-color var(--active-color-alpha-500)
+
+
+.thumb
+  opacity .9
+  background-color var(--accent-color-alpha-900)
+  border-radius 50%
+  transition .2s ease-out
+  transition-property transform, opacity
+  box-shadow 0 2px 4px rgba(0, 0, 0, 0.2)
+
+  .isActive &
+  .root:hover &
+    opacity 1
+
+.label
+  font-size inherit
+  line-height inherit
+
+$widthFactor = 1.7
+$offsetFactor = $widthFactor - 1
+
+.size-s
+  controlFontSize(var(--font-size-s))
+  .track
+    width 'calc(%s * %s)' % ($controlSizeS $widthFactor)
+    height $controlSizeS
+  .thumb
+    height 'calc(%s - 4px)' % $controlSizeS
+    width 'calc(%s - 4px)' % $controlSizeS
+    .checked&
+      transform 'translateX(calc(%s * %s))' % ($controlSizeS $offsetFactor)
+
+.size-m
+  controlFontSize(var(--font-size-m))
+
+  .track
+    width 'calc(%s * %s)' % ($controlSizeM $widthFactor)
+    height $controlSizeM
+  .thumb
+    height 'calc(%s - 4px)' % $controlSizeM
+    width 'calc(%s - 4px)' % $controlSizeM
+    .checked&
+      transform 'translateX(calc(%s * %s))' % ($controlSizeM $offsetFactor)
+
+.size-l
+  controlFontSize(var(--font-size-l))
+
+  .track
+    width 'calc(%s * %s)' % ($controlSizeL $widthFactor)
+    height $controlSizeL
+  .thumb
+    height 'calc(%s - 4px)' % $controlSizeL
+    width 'calc(%s - 4px)' % $controlSizeL
+    .checked&
+      transform 'translateX(calc(%s * %s))' % ($controlSizeL $offsetFactor)
