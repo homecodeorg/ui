@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.27.0](https://github.com/foreverido/uilib/compare/v4.26.10...v4.27.0) (2025-06-24)
+
+
+### Features
+
+* Toggle - modern checkbox component ([49b8090](https://github.com/foreverido/uilib/commit/49b80900eb809e14fd609bc99cba024819b13f8e))
+
 ### [4.26.10](https://github.com/foreverido/uilib/compare/v4.26.9...v4.26.10) (2025-06-19)
 
 
