@@ -1,5 +1,6 @@
 export default {
   attach: () => import('./attach.svg'),
+  apple: () => import('./apple.svg'),
   arrowRight: () => import('./arrowRight.svg'),
   arrowLeft: () => import('./arrowLeft.svg'),
   arrowUp: () => import('./arrowUp.svg'),
@@ -41,7 +42,9 @@ export default {
   gear: () => import('./gear.svg'),
   geolocation: () => import('./geolocation.svg'),
   globe: () => import('./globe.svg'),
+  google: () => import('./google.svg'),
   group: () => import('./group.svg'),
+  github: () => import('./github.svg'),
   history: () => import('./history.svg'),
   image: () => import('./image.svg'),
   instagram: () => import('./instagram.svg'),
