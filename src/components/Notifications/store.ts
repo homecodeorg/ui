@@ -4,6 +4,7 @@ import Time from 'timen';
 import { spliceWhere } from 'uilib/tools/array';
 import { generateUID } from 'uilib/tools/uid';
 import C from './Notifications.constants.json';
+import { ItemParams } from './Notifications.types';
 
 const SHOW_TIME = 5000;
 
@@ -11,10 +12,10 @@ type ID = string;
 
 const STORE = createStore('notifications', {
   items: [] as ID[],
-  autohide: [] as ID[],
+  autoHide: [] as ID[],
   data: {},
   paused: false,
-  show(data) {
+  show(data: ItemParams) {
     const id = generateUID();
 
     this.items.push(id);
@@ -25,9 +26,7 @@ const STORE = createStore('notifications', {
 
     Time.after(C.ANIMATION_DURATION, () => (this.data[id].visible = true));
 
-    if (data.autohide !== false) {
-      this.autohide.push(id);
-    }
+    if (data.autoHide !== false) this.autoHide.push(id);
 
     return id;
   },
@@ -38,7 +37,7 @@ const STORE = createStore('notifications', {
   unpause() {
     const pauseTime = Date.now() - this.pausedAt;
 
-    this.autohide.forEach(id => {
+    this.autoHide.forEach(id => {
       this.data[id].createdAt += pauseTime;
     });
 
@@ -49,7 +48,7 @@ const STORE = createStore('notifications', {
     Time.after(C.ANIMATION_DURATION, () => this.remove(id));
   },
   remove(id) {
-    spliceWhere(this.autohide, id);
+    spliceWhere(this.autoHide, id);
     spliceWhere(this.items, id);
     delete this.data[id];
   },
@@ -57,13 +56,13 @@ const STORE = createStore('notifications', {
 
 // worker
 Time.every(50, function tick() {
-  const { paused, autohide, data } = STORE;
+  const { paused, autoHide, data } = STORE;
 
-  if (paused || autohide.length === 0) {
+  if (paused || autoHide.length === 0) {
     return;
   }
 
-  const id = autohide[0]; // TODO: move trough all autohide until some will !readyToHide
+  const id = autoHide[0]; // TODO: move trough all autoHide until some will !readyToHide
   const item = data[id];
   const readyToHide = Date.now() - item.createdAt > SHOW_TIME;
 

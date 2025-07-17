@@ -6,6 +6,7 @@ export type ItemParams = {
   type?: NotificationType;
   title?: string;
   content?: string;
+  autoHide?: boolean;
 };
 
 export type Methods = {
