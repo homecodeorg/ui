@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.5](https://github.com/foreverido/uilib/compare/v4.27.4...v4.27.5) (2025-07-21)
+
+
+### Bug Fixes
+
+* Icon - stop - scale ([eac2932](https://github.com/foreverido/uilib/commit/eac2932db246b50926bc808ce7ba47cc51309a07))
+
 ### [4.27.4](https://github.com/foreverido/uilib/compare/v4.27.3...v4.27.4) (2025-07-21)
 
 
