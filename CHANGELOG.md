@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.3](https://github.com/foreverido/uilib/compare/v4.27.2...v4.27.3) (2025-07-21)
+
+
+### Features
+
+* Icon - micMute ([0c10947](https://github.com/foreverido/uilib/commit/0c1094754cf154fe42a72a75db4718816d055e62))
+
+
+### Bug Fixes
+
+* RouterStore.on((path, query) => {}) - pass query too ([fdc21fa](https://github.com/foreverido/uilib/commit/fdc21fa280b20c6e0dc31df3f2b8b0cf43b7db92))
+
 ### [4.27.2](https://github.com/foreverido/uilib/compare/v4.27.1...v4.27.2) (2025-07-17)
 
 ### [4.27.1](https://github.com/foreverido/uilib/compare/v4.27.0...v4.27.1) (2025-06-25)
