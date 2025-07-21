@@ -83,6 +83,7 @@ export default {
   soundWave: () => import('./soundWave.svg'),
   sparks: () => import('./sparks.svg'),
   star: () => import('./star.svg'),
+  stop: () => import('./stop.svg'),
   stopInCircle: () => import('./stopInCircle.svg'),
   syncArrows: () => import('./syncArrows.svg'),
   table: () => import('./table.svg'),
