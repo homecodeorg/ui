@@ -61,7 +61,7 @@ function onRouteChange(path = window.location.pathname) {
   STORE.query = parseQueryParams();
   STORE.path = path.replace(/\?.+/, '') || '/';
 
-  LISTENERS.forEach(cb => cb(STORE.path));
+  LISTENERS.forEach(cb => cb(STORE.path, STORE.query));
 }
 
 function updateRouteState() {
