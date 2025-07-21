@@ -4,6 +4,8 @@ import S from './Tooltip.styl';
 import cn from 'classnames';
 
 export interface TooltipProps {
+  className?: string;
+  contentClassName?: string;
   children: React.ReactNode;
   content?: React.ReactNode;
   delay?: number;
@@ -18,6 +20,8 @@ declare module 'react' {
 }
 
 export const Tooltip = ({
+  className,
+  contentClassName,
   children,
   content,
   delay = 0,
@@ -104,13 +108,13 @@ export const Tooltip = ({
 
   return (
     <>
-      <div ref={triggerRef} className={S.trigger}>
+      <div ref={triggerRef} className={cn(S.trigger, className)}>
         {children}
       </div>
       <div
         ref={tooltipRef}
         popover="manual"
-        className={cn(S.tooltip, blur && S.blur)}
+        className={cn(S.tooltip, blur && S.blur, contentClassName)}
         data-direction={direction}
       >
         {content}
