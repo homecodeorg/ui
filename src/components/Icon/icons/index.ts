@@ -57,6 +57,7 @@ export default {
   map: () => import('./map.svg'),
   menu: () => import('./menu.svg'),
   mic: () => import('./mic.svg'),
+  micMuted: () => import('./micMuted.svg'),
   minus: () => import('./minus.svg'),
   moreVertical: () => import('./moreVertical.svg'),
   moreHorizontal: () => import('./moreHorizontal.svg'),
