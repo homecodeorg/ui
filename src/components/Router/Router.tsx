@@ -96,6 +96,6 @@ Router.displayName = 'Router';
 export * from './Route';
 export * from './Redirect';
 export * from './Link/Link';
+export { type RouterStore as RouterStoreType } from './store';
 export const RouterStore = STORE;
 export const RouterContext = Context;
-export type RouterStore = RouterStoreType;

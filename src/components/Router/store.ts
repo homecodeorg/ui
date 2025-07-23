@@ -41,7 +41,7 @@ const STORE = createStore('router', {
     history[action]({}, '', pathStr);
     onRouteChange(pathStr);
   },
-  setParams(queryParams: Record<string, any>) {
+  setQuery(queryParams: Record<string, any>) {
     this.query = queryParams;
     this.queryString = applyQueryParams(this.path, queryParams);
     onRouteChange();
