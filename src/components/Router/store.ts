@@ -46,6 +46,20 @@ const STORE = createStore('router', {
     this.queryString = applyQueryParams(this.path, queryParams);
     onRouteChange();
   },
+  addQuery(query: Record<string, any>) {
+    this.query = { ...this.query, ...query };
+    this.queryString = applyQueryParams(this.path, this.query);
+    onRouteChange();
+  },
+  removeQuery(fields: string[]) {
+    const newQuery = { ...this.query };
+
+    for (const field of fields) delete newQuery[field];
+
+    this.query = newQuery;
+    this.queryString = applyQueryParams(this.path, newQuery);
+    onRouteChange();
+  },
   back() {
     history.back();
     onRouteChange();
