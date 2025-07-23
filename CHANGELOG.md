@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.7](https://github.com/foreverido/uilib/compare/v4.27.6...v4.27.7) (2025-07-23)
+
+
+### Bug Fixes
+
+* Router - addQuery, removeQuery ([c1a016e](https://github.com/foreverido/uilib/commit/c1a016e5626f7f8177f89e8aa6fe3c1c77767254))
+
 ### [4.27.6](https://github.com/foreverido/uilib/compare/v4.27.5...v4.27.6) (2025-07-21)
 
 
