@@ -18,7 +18,7 @@ export type Column = {
   render?: (itemData: Data) => ReactNode;
 };
 
-export type Data = { id: string } & any;
+export type Data = { id: string; className?: string } & any;
 
 export type Props = ComponentType & {
   // Config that describes the structure of the table

@@ -15,11 +15,11 @@ export class Table extends Component<T.Props> {
     </th>
   );
 
-  renderRow = data => {
+  renderRow = (data: T.Data) => {
     const { columns } = this.props;
 
     return (
-      <tr key={data.id}>
+      <tr key={data.id} className={data.className}>
         {columns.map(param => this.renderDataCol(param, data))}
       </tr>
     );
