@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.10](https://github.com/foreverido/uilib/compare/v4.27.9...v4.27.10) (2025-08-06)
+
+
+### Features
+
+* Table - data.className field ([b54c2cf](https://github.com/foreverido/uilib/commit/b54c2cf43435d35d0593bf63beb5311ee0ab9b28))
+
 ### [4.27.9](https://github.com/foreverido/uilib/compare/v4.27.8...v4.27.9) (2025-07-24)
 
 
