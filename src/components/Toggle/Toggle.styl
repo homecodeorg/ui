@@ -62,37 +62,27 @@
 $widthFactor = 1.7
 $offsetFactor = $widthFactor - 1
 
+
+
 .size-s
-  controlFontSize(var(--font-size-s))
-  .track
-    width 'calc(%s * %s)' % ($controlSizeS $widthFactor)
-    height $controlSizeS
-  .thumb
-    height 'calc(%s - 4px)' % $controlSizeS
-    width 'calc(%s - 4px)' % $controlSizeS
-    .checked&
-      transform 'translateX(calc(%s * %s))' % ($controlSizeS $offsetFactor)
+  controlFontSize('s')
+  --size 'calc(%s * 0.7)' % $controlSizeS
 
 .size-m
-  controlFontSize(var(--font-size-m))
-
-  .track
-    width 'calc(%s * %s)' % ($controlSizeM $widthFactor)
-    height $controlSizeM
-  .thumb
-    height 'calc(%s - 4px)' % $controlSizeM
-    width 'calc(%s - 4px)' % $controlSizeM
-    .checked&
-      transform 'translateX(calc(%s * %s))' % ($controlSizeM $offsetFactor)
+  controlFontSize('m')
+  --size 'calc(%s * 0.7)' % $controlSizeM
 
 .size-l
-  controlFontSize(var(--font-size-l))
+  controlFontSize('l')
+  --size 'calc(%s * 0.7)' % $controlSizeL
 
-  .track
-    width 'calc(%s * %s)' % ($controlSizeL $widthFactor)
-    height $controlSizeL
-  .thumb
-    height 'calc(%s - 4px)' % $controlSizeL
-    width 'calc(%s - 4px)' % $controlSizeL
-    .checked&
-      transform 'translateX(calc(%s * %s))' % ($controlSizeL $offsetFactor)
+.track
+  width 'calc(var(--size) * %s)' % $widthFactor
+  height var(--size)
+
+.thumb
+  height calc(var(--size) - 4px)
+  width calc(var(--size) - 4px)
+
+  .checked &
+    transform 'translateX(calc(var(--size) * %s))' % $offsetFactor
