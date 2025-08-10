@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.11](https://github.com/foreverido/uilib/compare/v4.27.10...v4.27.11) (2025-08-10)
+
+
+### Bug Fixes
+
+* Toggle - sizes ([6a5a6ac](https://github.com/foreverido/uilib/commit/6a5a6acec66d14ba126ccd47a7da34eda4478e99))
+
 ### [4.27.10](https://github.com/foreverido/uilib/compare/v4.27.9...v4.27.10) (2025-08-06)
 
 
