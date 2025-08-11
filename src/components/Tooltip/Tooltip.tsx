@@ -11,6 +11,7 @@ export interface TooltipProps {
   delay?: number;
   direction?: 'top' | 'bottom' | 'left' | 'right';
   blur?: boolean;
+  disabled?: boolean;
 }
 
 declare module 'react' {
@@ -19,7 +20,18 @@ declare module 'react' {
   }
 }
 
-export const Tooltip = ({
+/**
+ * TooltipBase component contains the core tooltip functionality including:
+ * - Positioning logic that calculates optimal tooltip placement based on direction
+ * - Event handlers for mouse and keyboard interactions (hover, focus)
+ * - Viewport boundary detection to keep tooltips visible
+ * - Delay handling for show/hide animations
+ * - Popover API integration for native browser tooltip behavior
+ *
+ * This component should only be used when the tooltip is enabled and has content.
+ * For disabled tooltips, use the main Tooltip component which returns early.
+ */
+const TooltipBase = ({
   className,
   contentClassName,
   children,
@@ -27,7 +39,7 @@ export const Tooltip = ({
   delay = 0,
   direction = 'top',
   blur = false,
-}: TooltipProps) => {
+}: Omit<TooltipProps, 'disabled'>) => {
   const triggerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<number>();
@@ -104,8 +116,6 @@ export const Tooltip = ({
     };
   }, [content, delay, direction]);
 
-  if (!content) return <>{children}</>;
-
   return (
     <>
       <div ref={triggerRef} className={cn(S.trigger, className)}>
@@ -120,5 +130,30 @@ export const Tooltip = ({
         {content}
       </div>
     </>
+  );
+};
+
+export const Tooltip = ({
+  className,
+  contentClassName,
+  children,
+  content,
+  delay = 0,
+  direction = 'top',
+  blur = false,
+  disabled = false,
+}: TooltipProps) => {
+  if (disabled || !content) return <>{children}</>;
+
+  return (
+    <TooltipBase
+      className={className}
+      contentClassName={contentClassName}
+      children={children}
+      content={content}
+      delay={delay}
+      direction={direction}
+      blur={blur}
+    />
   );
 };
