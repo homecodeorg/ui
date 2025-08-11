@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.12](https://github.com/foreverido/uilib/compare/v4.27.11...v4.27.12) (2025-08-11)
+
+
+### Features
+
+* Tooltip - props.disabled ([9d205f4](https://github.com/foreverido/uilib/commit/9d205f4e4daa12eb1c585909ea2782b9136549d8))
+
 ### [4.27.11](https://github.com/foreverido/uilib/compare/v4.27.10...v4.27.11) (2025-08-10)
 
 
