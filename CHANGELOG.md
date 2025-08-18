@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.14](https://github.com/foreverido/uilib/compare/v4.27.13...v4.27.14) (2025-08-18)
+
+
+### Features
+
+* Form API - resetErrors() ([8113027](https://github.com/foreverido/uilib/commit/8113027b4127e224791a2680e558b383b4113972))
+
 ### [4.27.13](https://github.com/foreverido/uilib/compare/v4.27.12...v4.27.13) (2025-08-18)
 
 
