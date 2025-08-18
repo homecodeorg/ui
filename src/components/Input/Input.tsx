@@ -179,7 +179,11 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const val = getValue(e.target.value);
+      let val = getValue(e.target.value);
+
+      if (isTextArea && !(val as string).trim()) {
+        val = '';
+      }
 
       onChangeValue(val, e);
     };
