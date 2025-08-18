@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.13](https://github.com/foreverido/uilib/compare/v4.27.12...v4.27.13) (2025-08-18)
+
+
+### Bug Fixes
+
+* Input textarea - on change - check if val is empty ([3d4f018](https://github.com/foreverido/uilib/commit/3d4f018f666d100970a406ea3c5c4339f899279b))
+
 ### [4.27.12](https://github.com/foreverido/uilib/compare/v4.27.11...v4.27.12) (2025-08-11)
 
 
