@@ -35,20 +35,30 @@ export type FormAPI = ValidationState & {
   isDirty: boolean;
   // Whether the form is currently submitting.
   isLoading: boolean;
-  // Current form field values
+  // Whether the form is currently empty.
+  isEmpty: boolean;
+  // Current form field values.
   values: FormValues;
   // Whether each form field has been touched by the user.
   touched: FieldsFlags;
   // Whether each form field value has changed.
   changed: FieldsFlags;
+  // Whether the form is currently disabled.
+  disabled: FieldsFlags;
+  // Submit the form.
+  submit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   // Set the value of a specific form field.
   setValue: (field: string, val: any) => void;
   // Set the values of all form fields.
   setValues: (values: FormValues) => void;
+  // Set the disabled state for a specific form field.
+  setDisabled: (field: string, disabled: boolean) => void;
   // Reset the form to its initial state.
   reset: () => void;
   // React component used to render individual form fields.
   Field: (props: FormFieldProps) => ReactNode;
+  // Reset the validation errors for the form fields.
+  resetErrors: () => void;
 };
 
 export type FormValidationRule = {

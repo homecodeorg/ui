@@ -322,7 +322,7 @@ export function Form(props: T.Props) {
     return <Field {...fullProps} />;
   });
 
-  const formAPI = {
+  const formAPI: T.FormAPI = {
     values,
     touched,
     changed,
@@ -336,6 +336,7 @@ export function Form(props: T.Props) {
     setValue: setValueAPI,
     setValues: setValuesAPI,
     setDisabled: setDisabledAPI,
+    resetErrors: () => setErrors({}),
     reset,
     submit: onSubmitHandler,
   };
