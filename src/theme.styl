@@ -41,8 +41,9 @@ controlButtonVariant(variant)
     outline(var(--accent-color))
 
   if variant == 'primary'
+    --active-button-color #000
     background-color var(--active-color)
-    color var(--accent-color-alpha-900)
+    color var(--active-button-color)
 
 controlButtonVariantHover(variant)
   if variant == 'text'
