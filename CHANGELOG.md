@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.15](https://github.com/foreverido/uilib/compare/v4.27.14...v4.27.15) (2025-08-20)
+
+
+### Features
+
+* Button variant=primary - text color [#000](https://github.com/foreverido/uilib/issues/000) ([12aa951](https://github.com/foreverido/uilib/commit/12aa95175ce3a7258804fcea3c8338dbba062e31))
+
 ### [4.27.14](https://github.com/foreverido/uilib/compare/v4.27.13...v4.27.14) (2025-08-18)
 
 
