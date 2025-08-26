@@ -7,7 +7,7 @@ import S from './Menu.styl';
 
 // @ts-ignore
 const MenuComponent = forwardRef<Scroll, MenuProps>(
-  ({ children, className, ...props }, ref) => {
+  ({ children, className, textOverflow, ...props }, ref) => {
     const size = props.size || 'm';
 
     return (
@@ -15,7 +15,12 @@ const MenuComponent = forwardRef<Scroll, MenuProps>(
         y
         // @ts-ignore
         ref={ref}
-        className={cn(S.root, className, S[`size-${size}`])}
+        className={cn(
+          S.root,
+          className,
+          S[`size-${size}`],
+          textOverflow && S.textOverflow
+        )}
         {...props}
       >
         {children}
@@ -33,6 +38,7 @@ const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>((props, ref) => {
     disabled,
     level = 0,
     onClick,
+    textOverflow,
     ...rest
   } = props;
 
@@ -42,6 +48,7 @@ const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>((props, ref) => {
     selected && S.selected,
     focused && S.focused,
     disabled && S.disabled,
+    textOverflow && S.textOverflow,
     className
   );
 
@@ -52,7 +59,7 @@ const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>((props, ref) => {
       onClick={disabled ? undefined : onClick}
       {...rest}
     >
-      <span>{children}</span>
+      {textOverflow ? children : <span>{children}</span>}
     </div>
   );
 });

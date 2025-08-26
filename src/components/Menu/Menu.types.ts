@@ -7,6 +7,7 @@ export interface MenuProps extends ScrollProps {
   children: ReactNode;
   className?: string;
   size?: Size;
+  textOverflow?: boolean; // for simple items that contain only text
 }
 
 export interface MenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -17,6 +18,7 @@ export interface MenuItemProps extends React.HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   level?: number;
   size?: Size;
+  textOverflow?: boolean;
 }
 
 export interface MenuGroupProps {

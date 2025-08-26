@@ -29,11 +29,6 @@
     border-bottom-left-radius 2px
     border-bottom-right-radius 2px
 
-  & > span
-    white-space nowrap
-    text-overflow ellipsis
-    overflow hidden
-
   .size-s &
     controlPaddingSize('s')
     controlFontSize('s')
@@ -61,6 +56,11 @@
   :global(.pointer) &:hover
   :global(.keyboard) &.focused
     box-shadow inset 100vw 0 0 0px var(--accent-color-alpha-200)
+
+.textOverflow .item > span
+  white-space nowrap
+  text-overflow ellipsis
+  overflow hidden
 
 .group
   position sticky
