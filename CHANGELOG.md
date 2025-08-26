@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.16](https://github.com/foreverido/uilib/compare/v4.27.15...v4.27.16) (2025-08-26)
+
+
+### Features
+
+* Menu - control item's textOverflow via prop ([6e20f4d](https://github.com/foreverido/uilib/commit/6e20f4d5441a78c83d535b0c4af8beff67d68238))
+
 ### [4.27.15](https://github.com/foreverido/uilib/compare/v4.27.14...v4.27.15) (2025-08-20)
 
 
