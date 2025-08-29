@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.17](https://github.com/foreverido/uilib/compare/v4.27.16...v4.27.17) (2025-08-29)
+
+
+### Bug Fixes
+
+* Form - state rebuild after updating props.initialValues ([f47577d](https://github.com/foreverido/uilib/commit/f47577de0cc3a80ac3d66c06f822d9029c90ad5d))
+* Form - when initialValues updated - reset touched,changed,isDirty,isEmpty ([d44f3de](https://github.com/foreverido/uilib/commit/d44f3dec35f46606cce1bf8de80473aa10145641))
+* Tabs - typings for props.content ([38c1cf4](https://github.com/foreverido/uilib/commit/38c1cf4cd655521aa2ffd05cb8683e80cf15b65d))
+
 ### [4.27.16](https://github.com/foreverido/uilib/compare/v4.27.15...v4.27.16) (2025-08-26)
 
 
