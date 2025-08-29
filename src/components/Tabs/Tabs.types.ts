@@ -1,15 +1,17 @@
 import { Size } from 'uilib/types';
 import { ButtonProps } from '../Button/Button';
+import { ReactNode } from 'react';
 
 type ID = string | number;
 
-export type Item = ButtonProps & {
+export type Item = Omit<ButtonProps, 'children'> & {
   id: ID;
   label: string;
-  content: React.ReactNode | (() => React.ReactNode);
+  content: ReactNode | (() => ReactNode);
   contentClassName?: string;
   forceRender?: boolean;
   onClick?: (e: MouseEvent) => boolean | void;
+  children?: ButtonProps['children'];
 };
 
 export type RenderProps = {
