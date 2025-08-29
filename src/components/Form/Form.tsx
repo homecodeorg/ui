@@ -115,6 +115,8 @@ export function Form(props: T.Props) {
   const touchedRef = useRef(touched);
   const errorsRef = useRef(errors);
   const onChangeRef = useRef(onChange);
+  const onChangeHandlerRef = useRef<any>(null); // Add this
+  const onBlurHandlerRef = useRef<any>(null); // Add this
 
   const setValues = (newValues: T.FormAPI['values']) => {
     _setValues(newValues);
@@ -279,17 +281,23 @@ export function Form(props: T.Props) {
 
       if (onChangeRef.current && !onChangeRef.current(newValues)) return;
 
+      const isTouched = !compare(val, initialValues[field]);
+
       setValue(field, val);
-      setFieldTouched(field, true);
+      setFieldTouched(field, isTouched);
       calcChanged(field, val);
       validate();
     },
-    [calcChanged, validate]
+    [calcChanged, validate, initialValues]
   );
 
   const onBlurHandler = useCallback((name: string) => {
     setFieldTouched(name, true);
   }, []);
+
+  // Update refs to always point to latest handlers
+  onChangeHandlerRef.current = onChangeHandler;
+  onBlurHandlerRef.current = onBlurHandler;
 
   const onSubmitHandler = async e => {
     e?.preventDefault();
@@ -301,7 +309,6 @@ export function Form(props: T.Props) {
     setIsLoading(false);
   };
 
-  // Simple field component - let memo on Field handle optimization
   const FieldComponent = useRef((fieldProps: T.FieldProps) => {
     const { name } = fieldProps;
     const fullProps: any = {
@@ -311,8 +318,8 @@ export function Form(props: T.Props) {
       markEdited,
       isChanged: changedRef.current[name],
       isTouched: touchedRef.current[name],
-      handleChange: onChangeHandler,
-      handleBlur: onBlurHandler,
+      handleChange: (...args) => onChangeHandlerRef.current(...args),
+      handleBlur: (...args) => onBlurHandlerRef.current(...args),
     };
 
     if (validationSchemaRef.current?.[name]?.empty === false) {
@@ -344,7 +351,23 @@ export function Form(props: T.Props) {
   // Effects
   useEffect(() => {
     validationSchemaRef.current = validationSchema;
+    validate();
   }, [validationSchema]);
+
+  useEffect(() => {
+    defaultValuesRef.current = updateDefaultValues();
+    calcChangedAll(initialValues);
+  }, [defaultValues]);
+
+  useEffect(() => {
+    setValues(H.cloneValues(initialValues));
+    setTouched({});
+    setChanged({});
+    setIsDirty(false);
+    updateIsEmpty();
+    validate();
+    if (onInit) onInit(formAPI);
+  }, [initialValues]);
 
   useEffect(() => {
     calcChangedAll();
@@ -352,44 +375,7 @@ export function Form(props: T.Props) {
     if (onInit) onInit(formAPI);
   }, []);
 
-  useEffect(() => {
-    const validationChanged = !compare(
-      validationSchema,
-      validationSchemaRef.current
-    );
-    const initialValsChanged = !compare(initialValues, props.initialValues);
-    const defaultValsChanged = !compare(defaultValues, props.defaultValues);
-
-    if (initialValsChanged) {
-      setValues(H.cloneValues(initialValues));
-      setTouched({});
-      setChanged({});
-      setIsDirty(false);
-      updateIsEmpty();
-      validate();
-      if (onInit) onInit(formAPI);
-    }
-
-    if (defaultValsChanged) {
-      defaultValuesRef.current = updateDefaultValues();
-    }
-
-    if (initialValsChanged || defaultValsChanged) {
-      calcChangedAll(initialValues);
-    }
-
-    if (initialValsChanged || validationChanged) {
-      validate();
-    }
-  }, [
-    initialValues,
-    validationSchema,
-    defaultValues,
-    onInit,
-    formAPI,
-    calcChangedAll,
-    validate,
-  ]);
+  console.log('FORM: initialValues', initialValues);
 
   const classes = cn(S.root, className, isLoading && S.isLoading);
 

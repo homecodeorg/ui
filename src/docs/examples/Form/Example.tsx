@@ -1,6 +1,7 @@
 import { Form, SubmitButtons, Select } from 'uilib';
+import { useState, useEffect } from 'react';
 
-const initialValues = {
+const INITIAL_VALUES = {
   name: 'Alise',
   age: 18,
   groupId: [],
@@ -19,6 +20,17 @@ const groupsOptions = [
 ];
 
 export default () => {
+  const [initialValues, setInitialValues] = useState(INITIAL_VALUES);
+
+  console.log('initialValues', initialValues);
+  useEffect(() => {
+    console.log('initial useEffect()');
+    setTimeout(() => {
+      console.log('setInitialValues.... Bob');
+      setInitialValues({ ...INITIAL_VALUES, name: 'Bob' });
+    }, 1000);
+  }, []);
+
   return (
     <Form
       initialValues={initialValues}
