@@ -362,6 +362,10 @@ export function Form(props: T.Props) {
 
     if (initialValsChanged) {
       setValues(H.cloneValues(initialValues));
+      setTouched({});
+      setChanged({});
+      setIsDirty(false);
+      updateIsEmpty();
       validate();
       if (onInit) onInit(formAPI);
     }
