@@ -91,6 +91,8 @@ export default (env, argv) => {
               loader: '@svgr/webpack',
               options: {
                 icon: true,
+                ext: 'tsx',
+                typescript: true,
                 exportType: 'default', // Set to 'default' to use default import
               },
             },
