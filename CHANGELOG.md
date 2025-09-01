@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.18](https://github.com/foreverido/uilib/compare/v4.27.17...v4.27.18) (2025-09-01)
+
+
+### Bug Fixes
+
+* declarations.d.ts and svg types ([45ac43b](https://github.com/foreverido/uilib/commit/45ac43b246ea9d6b048bbe7212aa33808628f509))
+* Inpput - paste plain text; no 'undefined' when empty value ([d7d8f52](https://github.com/foreverido/uilib/commit/d7d8f52922030c6f59394c24a3dda30f2ff2eeac))
+
 ### [4.27.17](https://github.com/foreverido/uilib/compare/v4.27.16...v4.27.17) (2025-08-29)
 
 
