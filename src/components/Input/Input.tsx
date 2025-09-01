@@ -127,7 +127,26 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     };
 
     const onTextareaPaste = e => {
-      // wait for native paste operation completes in DOM
+      // Prevent default paste behavior to strip formatting
+      e.preventDefault();
+
+      // Get plain text from clipboard
+      const text =
+        (e.clipboardData || window.clipboardData)?.getData('text/plain') || '';
+
+      // Insert plain text at cursor position
+      if (document.queryCommandSupported('insertText')) {
+        document.execCommand('insertText', false, text);
+      } else {
+        // Fallback for older browsers
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
+        selection.deleteFromDocument();
+        selection.getRangeAt(0).insertNode(document.createTextNode(text));
+        selection.collapseToEnd();
+      }
+
+      // Update the value after paste
       setTimeout(() => {
         if (inputRef.current) {
           const newValue = inputRef.current.innerText;
@@ -353,7 +372,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       updateAutoComplete();
 
       if (value !== inputValue) {
-        if (isTextArea) setTextareaValue(String(value));
+        if (isTextArea) setTextareaValue(String(value ?? ''));
         setInputValue(value);
       }
 
@@ -363,7 +382,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     }, [value, autoFocus]);
 
     useEffect(() => {
-      if (isTextArea) setTextareaValue(String(value));
+      if (isTextArea) setTextareaValue(String(value ?? ''));
     }, []);
 
     const Control = isTextArea ? 'span' : 'input';

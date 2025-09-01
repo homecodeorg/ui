@@ -7,7 +7,7 @@ yarn-error.log*
 # typescript
 tsconfig.tsbuildinfo
 src/***/*.d.ts
-!src/declaration.d.ts
+!declarations.d.ts
 
 # development
 src/docs/localLib.json
