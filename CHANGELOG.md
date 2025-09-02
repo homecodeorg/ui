@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.19](https://github.com/foreverido/uilib/compare/v4.27.18...v4.27.19) (2025-09-02)
+
+
+### Bug Fixes
+
+* Scroll - style transition 'mask-image' ([cfa562b](https://github.com/foreverido/uilib/commit/cfa562beba9037ce0c247ffd199ed9cb5b58f17a))
+
 ### [4.27.18](https://github.com/foreverido/uilib/compare/v4.27.17...v4.27.18) (2025-09-01)
 
 
