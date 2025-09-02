@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.20](https://github.com/foreverido/uilib/compare/v4.27.19...v4.27.20) (2025-09-02)
+
+
+### Features
+
+* Popup/Select - reduce animations on open ([860d979](https://github.com/foreverido/uilib/commit/860d97941d89303d51574079440875ca7b1d4568))
+
 ### [4.27.19](https://github.com/foreverido/uilib/compare/v4.27.18...v4.27.19) (2025-09-02)
 
 
