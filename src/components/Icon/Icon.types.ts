@@ -10,5 +10,5 @@ export type IconType = keyof typeof CUSTOM_ICONS;
 export type Props = ComponentType & {
   icon?: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   type?: IconType;
-  size: IconSize;
+  size?: IconSize;
 };

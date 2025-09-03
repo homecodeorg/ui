@@ -11,7 +11,7 @@ export const icons = ICONS;
 export type { IconType } from './Icon.types';
 
 export function Icon(props: T.Props) {
-  const { className, icon: CustomIcon, type, size, ...rest } = props;
+  const { className, icon: CustomIcon, type, size = 'm', ...rest } = props;
 
   const iconProps = {
     className: cn(S.root, S[`size-${size}`], className),
@@ -31,7 +31,3 @@ export function Icon(props: T.Props) {
   // @ts-ignore
   return <Lazy loader={localIcon} hideSpinner {...iconProps} />;
 }
-
-Icon.defaultProps = {
-  size: 'm' as T.IconSize,
-};
