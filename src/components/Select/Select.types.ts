@@ -120,6 +120,5 @@ export type State = {
 
 export type OptionElemProps = HTMLAttributes<HTMLDivElement> & {
   className: string;
-  key: Option['id'];
   ref?: RefObject<HTMLDivElement>;
 };

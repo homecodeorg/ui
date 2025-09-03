@@ -390,7 +390,6 @@ export function Select2(props: T.Props) {
     );
     const optionProps = {
       className,
-      key: id,
       onPointerUp: () => onItemToggle(id),
       onPointerEnter: () => onOptionHover(id),
     } as T.OptionElemProps;
@@ -403,7 +402,11 @@ export function Select2(props: T.Props) {
     }
 
     if (filterOption(item)) {
-      items.unshift(<div {...optionProps}>{H.renderLabel(item)}</div>);
+      items.unshift(
+        <div key={id} {...optionProps}>
+          {H.renderLabel(item)}
+        </div>
+      );
     }
 
     return items;
