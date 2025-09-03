@@ -26,6 +26,7 @@ export default {
   clearAll: () => import('./clearAll.svg'),
   cubes: () => import('./cubes.svg'),
   delete: () => import('./delete.svg'),
+  discord: () => import('./discord.svg'),
   draft: () => import('./draft.svg'),
   dragHandlerHorizontal: () => import('./dragHandlerHorizontal.svg'),
   dragHandlerVertical: () => import('./dragHandlerVertical.svg'),
@@ -52,6 +53,7 @@ export default {
   home: () => import('./home.svg'),
   layers: () => import('./layers.svg'),
   link: () => import('./link.svg'),
+  linkedin: () => import('./linkedin.svg'),
   loader: () => import('./loader.svg'),
   lock: () => import('./lock.svg'),
   lockOpen: () => import('./lockOpen.svg'),
@@ -91,4 +93,5 @@ export default {
   telegram: () => import('./telegram.svg'),
   tool: () => import('./tool.svg'),
   trafficLight: () => import('./trafficLight.svg'),
+  youtube: () => import('./youtube.svg'),
 };
