@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.23](https://github.com/foreverido/uilib/compare/v4.27.22...v4.27.23) (2025-09-03)
+
+
+### Features
+
+* Icon - discord, linkedin, youtube ([1dc9134](https://github.com/foreverido/uilib/commit/1dc91348f4594754a8d332cb3af7f29c25b16e93))
+
 ### [4.27.22](https://github.com/foreverido/uilib/compare/v4.27.21...v4.27.22) (2025-09-03)
 
 
