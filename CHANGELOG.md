@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.21](https://github.com/foreverido/uilib/compare/v4.27.20...v4.27.21) (2025-09-03)
+
+
+### Bug Fixes
+
+* Popup - componentDidUpdate - check disabled changed ([108bd20](https://github.com/foreverido/uilib/commit/108bd204555c4aa955ba8e0fe4a8f1e10c50b576))
+* Select - options full width ([bdc0e31](https://github.com/foreverido/uilib/commit/bdc0e312a59f83fe3480c7bd8c823bcf93d9ff6b))
+
 ### [4.27.20](https://github.com/foreverido/uilib/compare/v4.27.19...v4.27.20) (2025-09-02)
 
 
