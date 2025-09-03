@@ -99,7 +99,7 @@ export class Popup extends Component<T.Props> {
   componentDidUpdate(prevProps: T.Props) {
     const { isOpen, disabled, hoverControl } = this.props;
 
-    if (disabled) {
+    if (disabled !== prevProps.disabled) {
       this.setState({ isOpen: false }); // close when receive disabled=true
       return;
     }
