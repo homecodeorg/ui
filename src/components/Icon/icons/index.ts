@@ -10,6 +10,7 @@ export default {
   bookmarkAdd: () => import('./bookmarkAdd.svg'),
   brain: () => import('./brain.svg'),
   brokenImage: () => import('./brokenImage.svg'),
+  call: () => import('./call.svg'),
   camera: () => import('./camera.svg'),
   chat: () => import('./chat.svg'),
   check: () => import('./check.svg'),
