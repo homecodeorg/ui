@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.25](https://github.com/foreverido/uilib/compare/v4.27.24...v4.27.25) (2025-09-03)
+
+
+### Bug Fixes
+
+* Select2 - do not spread 'key' prop ([c711471](https://github.com/foreverido/uilib/commit/c711471a6c97bfde677a8635fa39a7511a39ff94))
+
 ### [4.27.24](https://github.com/foreverido/uilib/compare/v4.27.23...v4.27.24) (2025-09-03)
 
 
