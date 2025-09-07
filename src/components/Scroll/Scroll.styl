@@ -3,9 +3,9 @@
 $offset = 8px
 $minLength = 30px
 
-$sizeS = 1px
-$sizeM = 5px
-$sizeL = 9px
+$barSizeS = 1px
+$barSizeM = 5px
+$barSizeL = 9px
 
 .root
   position relative
@@ -152,13 +152,13 @@ $sizeL = 9px
     transform translateY(-50%)
 
     .size-s > &
-      height $sizeS
+      height $barSizeS
       border-radius 'calc(%s / 2)' % $sizeS
     .size-m > &
-      height $sizeM
+      height $barSizeM
       border-radius 'calc(%s / 2)' % $sizeM
     .size-l > &
-      height $sizeL
+      height $barSizeL
       border-radius 'calc(%s / 2)' % $sizeL
 
 .bar.y
