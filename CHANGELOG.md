@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.27](https://github.com/foreverido/uilib/compare/v4.27.26...v4.27.27) (2025-09-07)
+
+
+### Bug Fixes
+
+* Scroll - var name ([2e63186](https://github.com/foreverido/uilib/commit/2e6318646564d5c7e14629a823b222606cdd4579))
+
 ### [4.27.26](https://github.com/foreverido/uilib/compare/v4.27.25...v4.27.26) (2025-09-07)
 
 
