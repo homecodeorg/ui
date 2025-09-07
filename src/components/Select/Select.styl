@@ -24,19 +24,10 @@ $levelGap = 24px
   position relative
 
 .triggerArrow
-  margin-left var(--indent-s)
+  margin-left .3em
+  margin-right -.1em
   transition transform .2s ease-out
   flex-shrink 0
-
-  .size-m &
-    margin-left var(--indent-m)
-
-  .size-l &
-    margin-left var(--indent-l)
-
-  .triggerButton &
-  // .isTextarea &
-    margin-right 0
 
   &.isOpen
     transform rotateX(-180deg)
