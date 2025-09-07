@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.27.26](https://github.com/foreverido/uilib/compare/v4.27.25...v4.27.26) (2025-09-07)
+
+
+### Bug Fixes
+
+* Scroll - fadeSize:xl - types ([5b3cdb5](https://github.com/foreverido/uilib/commit/5b3cdb53aadc1e2d1a8649682ff5fc11dac50bbc))
+* Select - triggerArrow side margins ([5d6898a](https://github.com/foreverido/uilib/commit/5d6898a9e35cc3a3db96ed683388ab7645947f37))
+
 ### [4.27.25](https://github.com/foreverido/uilib/compare/v4.27.24...v4.27.25) (2025-09-03)
 
 
