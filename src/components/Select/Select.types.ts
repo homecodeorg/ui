@@ -4,6 +4,7 @@ import type { FormControl, Size } from 'uilib/types';
 
 import { InputProps } from '../Input/Input';
 import { PopupProps } from '../Popup/Popup';
+import { ScrollProps } from 'uilib/components/Scroll/Scroll';
 
 export type Id = string | number;
 
@@ -96,6 +97,9 @@ export type Props = FormControl<Value> &
       InputProps,
       'value' | 'onChange' | 'onFocus' | 'onBlur' | 'size'
     >;
+    // Props for the <Scroll> component
+    scrollProps?: Partial<ScrollProps>;
+    // Whether to round the edges of the component
     round?: boolean;
     // Custom trigger element
     trigger?: ReactNode;

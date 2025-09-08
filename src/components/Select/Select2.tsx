@@ -29,6 +29,7 @@ export function Select2(props: T.Props) {
     disableTriggerArrow,
     inputProps,
     popupProps,
+    scrollProps,
     size = 'm',
     round,
     optionClassName,
@@ -480,8 +481,9 @@ export function Select2(props: T.Props) {
         {renderPresets()}
         <Scroll
           y
+          {...scrollProps}
           offset={{ y: { before: 10, after: 10 } }}
-          className={cn(S.options, S[`size-${size}`])}
+          className={cn(S.options, S[`size-${size}`], scrollProps?.className)}
           onInnerRef={elem => (scrollInnerRef.current = elem)}
           key="items-scroll"
         >
