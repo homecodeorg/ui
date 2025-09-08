@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.3](https://github.com/foreverido/uilib/compare/v4.28.2...v4.28.3) (2025-09-08)
+
+
+### Features
+
+* Select - disableTriggerArrow prop ([46bd231](https://github.com/foreverido/uilib/commit/46bd23148b0fb53846a1065f87d369348bd2fcad))
+
 ### [4.28.2](https://github.com/foreverido/uilib/compare/v4.28.1...v4.28.2) (2025-09-08)
 
 
