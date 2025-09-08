@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.4](https://github.com/foreverido/uilib/compare/v4.28.3...v4.28.4) (2025-09-08)
+
+
+### Bug Fixes
+
+* Select - disableTriggerArrow ([fa2b284](https://github.com/foreverido/uilib/commit/fa2b284fb4269b90382a2b442748b406d380bb9b))
+
 ### [4.28.3](https://github.com/foreverido/uilib/compare/v4.28.2...v4.28.3) (2025-09-08)
 
 
