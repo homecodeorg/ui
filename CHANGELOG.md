@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.2](https://github.com/foreverido/uilib/compare/v4.28.1...v4.28.2) (2025-09-08)
+
+
+### Bug Fixes
+
+* Icon - brain - size ([4533ddb](https://github.com/foreverido/uilib/commit/4533ddbb773dce46f362bc10c55f53b56c9e3db4))
+
 ### [4.28.1](https://github.com/foreverido/uilib/compare/v4.28.0...v4.28.1) (2025-09-08)
 
 
