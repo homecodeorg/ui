@@ -99,7 +99,11 @@ export type Props = FormControl<Value> &
     round?: boolean;
     // Custom trigger element
     trigger?: ReactNode;
+    // Props for the trigger element
     triggerProps?: any;
+    // Whether to disable the trigger arrow
+    disableTriggerArrow?: boolean;
+    // Props for the popup component
     popupProps?: SelectPopupProps;
     // Hide the required star symbol
     hideRequiredStar?: boolean;

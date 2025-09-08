@@ -642,10 +642,10 @@ export class Select extends Component<T.Props, T.State> {
   }
 
   renderTriggerArrow() {
-    const { size, inputProps } = this.props;
+    const { size, inputProps, disableTriggerArrow } = this.props;
     const { isOpen, searchVal } = this.store;
 
-    if (inputProps?.hasClear && searchVal) return null;
+    if (disableTriggerArrow && inputProps?.hasClear && searchVal) return null;
 
     return (
       <Icon
