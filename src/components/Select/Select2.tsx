@@ -250,7 +250,7 @@ export function Select2(props: T.Props) {
   // console.log('selectedLabel::', selectedLabel);
 
   const triggerArrow = useMemo(() => {
-    if (disableTriggerArrow && inputProps?.hasClear && searchVal) return null;
+    if (disableTriggerArrow || (inputProps?.hasClear && searchVal)) return null;
 
     return (
       <Icon
