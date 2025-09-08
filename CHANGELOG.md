@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.1](https://github.com/foreverido/uilib/compare/v4.28.0...v4.28.1) (2025-09-08)
+
+
+### Features
+
+* Form and Field now supports - disableErrorReporting ([746743e](https://github.com/foreverido/uilib/commit/746743ec80e23402c2605ddb4c5515a7b57c3c73))
+
 ## [4.28.0](https://github.com/foreverido/uilib/compare/v4.27.27...v4.28.0) (2025-09-08)
 
 
