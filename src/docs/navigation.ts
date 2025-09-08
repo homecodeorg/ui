@@ -168,4 +168,15 @@ export default [
       },
     ],
   },
+  {
+    id: 'services',
+    label: 'Services',
+    items: [
+      {
+        id: 'i18n',
+        label: 'i18n',
+        loader: () => import('./examples/i18n'),
+      },
+    ],
+  },
 ] as GroupItem[];

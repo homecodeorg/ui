@@ -6,16 +6,7 @@ import _i18n from 'roddeh-i18n';
 import LS from 'uilib/tools/localStorage';
 import { queryParams } from 'uilib/tools/queryParams';
 
-type LangLoader = () => Promise<{ default: object }>;
-type RegisterConfig = {
-  [lang: string]: LangLoader;
-};
-
-type I18NProps = {
-  id?: string;
-  children?: React.ReactNode;
-  props?: number | Record<string, any>; // should be: plural, params, context
-};
+import * as T from './i18n.types';
 
 const DEFAULT_LANG = 'en';
 const modules = {};
@@ -36,7 +27,7 @@ export const store = createStore('i18n', {
   },
 });
 
-export function init(config: RegisterConfig) {
+export function init(config: T.RegisterConfig) {
   const langs = Object.keys(config);
   const texts = langs.reduce(
     (acc, lang) => ({ ...acc, [lang]: _i18n.create({ values: {} }) }),
@@ -51,8 +42,54 @@ export function init(config: RegisterConfig) {
     return null;
   };
 
-  function getTrans(key, props: any[] = []) {
-    return _getText(store.lang, key, props) || key;
+  function getTrans(key, props?) {
+    // Handle different prop formats according to roddeh-i18n
+    if (!props) {
+      return _getText(store.lang, key, []) || key;
+    }
+
+    // If props is a number, it's for pluralization
+    if (typeof props === 'number') {
+      return _getText(store.lang, key, [props]) || key;
+    }
+
+    // If props is an object, handle different cases
+    if (typeof props === 'object') {
+      const args = [];
+
+      // For plural forms with parameters
+      if ('plural' in props) {
+        args.push(props.plural);
+      }
+
+      // For parameters/formatting
+      if ('params' in props) {
+        args.push(props.params);
+      } else if ('plural' in props && 'params' in props) {
+        // If we have both plural and params, params comes second
+      } else if (!('plural' in props) && !('context' in props)) {
+        // If it's just a plain object without our special keys, treat it as params
+        args.push(props);
+      }
+
+      // Context comes last
+      if ('context' in props) {
+        // If we don't have params but have context, add empty params
+        if (!('params' in props) && !('plural' in props)) {
+          args.push({});
+        }
+        args.push(props.context);
+      }
+
+      return _getText(store.lang, key, args) || key;
+    }
+
+    // For backward compatibility with array format
+    if (Array.isArray(props)) {
+      return _getText(store.lang, key, props) || key;
+    }
+
+    return key;
   }
 
   const storeName = `i18n-${nanoid()}`;
@@ -72,7 +109,7 @@ export function init(config: RegisterConfig) {
     modules[lang].push(() => callLoader(loader, lang));
   });
 
-  // TODO: revert ability to register modules
+  // TODO: bring back the ability to register modules
 
   return {
     storeName,
@@ -80,16 +117,16 @@ export function init(config: RegisterConfig) {
 
     // hook (update when componentStore._updated changed)
     withI18N: Component => props => {
-      useStore({ [storeName]: [] });
+      useStore({ [storeName]: ['_updated'] });
       return <Component {...props} />;
     },
 
     i18n: (key, props?) => getTrans(key, props),
 
-    I18N: memo(function I18N({ id, children, props }: I18NProps) {
+    I18N: memo(function I18N({ id, children, props }: T.I18NProps) {
       useStore({
         i18n: ['lang'], // subscribe to lang changes
-        [storeName]: [],
+        [storeName]: ['_updated'], // explicitly subscribe to _updated
       });
 
       const key = id ?? children;
@@ -100,4 +137,5 @@ export function init(config: RegisterConfig) {
   };
 }
 
-export type I18NStore = typeof store;
+export const useI18N = (fields: keyof T.I18NStore = 'lang') =>
+  useStore({ i18n: [fields] }).i18n;

@@ -18,6 +18,7 @@ export * from './Icon/Icon';
 export * from './Input/Input';
 export * from './InputFile/InputFile';
 export * from './Label/Label';
+export * from './LangSelector/LangSelector';
 export * from './Lazy/Lazy';
 export * from './LightBox/LightBox';
 export * from './Menu/Menu';

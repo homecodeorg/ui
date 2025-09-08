@@ -213,6 +213,7 @@ function parseComponentDir(dir, name) {
 
 const types = {
   global: parseComponentTypes('src/types.ts'),
+  services: parseComponentTypes('src/services/index.ts'),
   // ...parseComponentTypes('bin/test.ts'),
 };
 
