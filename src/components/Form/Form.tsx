@@ -24,6 +24,7 @@ const Field = function Field(props: T.FormFieldProps) {
     handleChange,
     handleBlur,
     children,
+    disableErrorReporting,
     ...controlProps
   } = props;
   const { name, isHidden } = controlProps;
@@ -53,7 +54,7 @@ const Field = function Field(props: T.FormFieldProps) {
     [valField]: value,
     onChange: handleFieldChange,
     onBlur: handleFieldBlur,
-    error: isTouched && error?.message,
+    error: disableErrorReporting ? undefined : isTouched && error?.message,
   });
 
   return (
@@ -74,6 +75,7 @@ export function Form(props: T.Props) {
     defaultDisabled = {},
     defaultValues,
     markEdited,
+    disableErrorReporting,
     onInit,
     onChange,
     onSubmit,
@@ -279,7 +281,7 @@ export function Form(props: T.Props) {
 
       const newValues = { ...valuesRef.current, [field]: val };
 
-      if (onChangeRef.current && !onChangeRef.current(newValues)) return;
+      onChange?.(newValues);
 
       const isTouched = !compare(val, initialValues[field]);
 
@@ -288,7 +290,7 @@ export function Form(props: T.Props) {
       calcChanged(field, val);
       validate();
     },
-    [calcChanged, validate, initialValues]
+    [calcChanged, validate, initialValues, onChange]
   );
 
   const onBlurHandler = useCallback((name: string) => {
@@ -310,7 +312,8 @@ export function Form(props: T.Props) {
   };
 
   const FieldComponent = useRef((fieldProps: T.FieldProps) => {
-    const { name } = fieldProps;
+    const { name, disableErrorReporting: fieldDisableErrorReporting } =
+      fieldProps;
     const fullProps: any = {
       ...fieldProps,
       value: valuesRef.current[name],
@@ -320,6 +323,8 @@ export function Form(props: T.Props) {
       isTouched: touchedRef.current[name],
       handleChange: (...args) => onChangeHandlerRef.current(...args),
       handleBlur: (...args) => onBlurHandlerRef.current(...args),
+      disableErrorReporting:
+        fieldDisableErrorReporting ?? disableErrorReporting,
     };
 
     if (validationSchemaRef.current?.[name]?.empty === false) {
@@ -374,8 +379,6 @@ export function Form(props: T.Props) {
     validate();
     if (onInit) onInit(formAPI);
   }, []);
-
-  console.log('FORM: initialValues', initialValues);
 
   const classes = cn(S.root, className, isLoading && S.isLoading);
 

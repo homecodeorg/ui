@@ -83,6 +83,8 @@ export type Props = ComponentType & {
   validationSchema?: FormValidationSchema;
   // Mark fields as edited when they are changed.
   markEdited?: boolean;
+  // Disable error reporting for all form fields.
+  disableErrorReporting?: boolean;
   // Render prop function that receives the form API as an argument and returns the form custom layout for the form fields.
   children: (api: FormAPI) => ReactNode | ReactNode[];
   // Called after the form is initialized.
@@ -112,6 +114,8 @@ export type FieldProps = {
   value: any;
   // Do not render component if true.
   isHidden: boolean;
+  // Disable error reporting for this specific field (overrides form-level setting).
+  disableErrorReporting?: boolean;
   // Component used to render the form field.
   component?: (props: FormFieldProps) => ReactNode;
   // Additional content to render below the form field.
