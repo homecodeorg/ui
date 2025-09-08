@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.5](https://github.com/foreverido/uilib/compare/v4.28.4...v4.28.5) (2025-09-08)
+
+
+### Features
+
+* Select - scrollProps ([9f4d829](https://github.com/foreverido/uilib/commit/9f4d82981bba1793bbd39712ea684ee80446ba9e))
+
 ### [4.28.4](https://github.com/foreverido/uilib/compare/v4.28.3...v4.28.4) (2025-09-08)
 
 
