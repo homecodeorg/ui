@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.28.0](https://github.com/foreverido/uilib/compare/v4.27.27...v4.28.0) (2025-09-08)
+
+
+### Bug Fixes
+
+* Select - trigger arrow spacing ([16b49fb](https://github.com/foreverido/uilib/commit/16b49fbecf64014022bbb6cb4f917bde5a4ed5d0))
+* services/i18n - update when lang loaded; params according to roddeh-i18n ([a9d7c90](https://github.com/foreverido/uilib/commit/a9d7c9088cf241479a301b1a0346e18610196269))
+
 ### [4.27.27](https://github.com/foreverido/uilib/compare/v4.27.26...v4.27.27) (2025-09-07)
 
 
