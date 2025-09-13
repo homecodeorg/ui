@@ -22,7 +22,9 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
 
   const editorId = useRef(`editor-${uid.generateUID()}`);
 
-  const [isBgEnabled, setIsBgEnabled] = useState(!LS.get('codeBgDisabled'));
+  const [isBgEnabled, setIsBgEnabled] = useState(
+    LS.get('codeBgDisabled') as unknown as boolean
+  );
   const [code, setCode] = useState('');
 
   useEffect(() => {
