@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, ComponentType } from 'react';
 import type { Size } from 'uilib/types';
 
-export type ImportData = Record<string | 'default', any>;
+export type ImportData = Record<string, any>;
 
 export type Loader = () => Promise<ImportData>;
 type RenderFunction = (importData: ImportData) => ReactNode;

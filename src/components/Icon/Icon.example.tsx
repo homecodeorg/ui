@@ -1,7 +1,7 @@
 import { Container } from '../Container/Container';
 
 import { Icon } from './Icon';
-import CUSTOM_ICONS from './icons/index';
+import * as CUSTOM_ICONS from './icons';
 
 import S from './Icon.example.styl';
 

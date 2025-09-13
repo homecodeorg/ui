@@ -1,12 +1,9 @@
 import cn from 'classnames';
 
-import { Lazy } from 'uilib/components/Lazy/Lazy';
-
 import S from './Icon.styl';
 import * as T from './Icon.types';
-import ICONS from './icons';
 
-export const icons = ICONS;
+import * as icons from './icons';
 
 export type { IconType } from './Icon.types';
 
@@ -21,13 +18,8 @@ export function Icon(props: T.Props) {
 
   if (CustomIcon) return <CustomIcon {...iconProps} />;
 
-  const localIcon = ICONS[type];
+  const LibIcon = icons[type];
+  if (LibIcon) return <LibIcon {...iconProps} />;
 
-  if (!localIcon) {
-    console.warn(`Icon: type="${type}" is unknown`);
-    return null;
-  }
-
-  // @ts-ignore
-  return <Lazy loader={localIcon} hideSpinner {...iconProps} />;
+  return null;
 }

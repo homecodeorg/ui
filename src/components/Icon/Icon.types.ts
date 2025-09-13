@@ -1,6 +1,6 @@
 import { ComponentType, Size } from 'uilib/types';
 
-import CUSTOM_ICONS from './icons';
+import * as CUSTOM_ICONS from './icons';
 
 export type IconSize = 'xs' | Size;
 

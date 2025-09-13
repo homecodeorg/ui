@@ -1,4 +1,4 @@
-import { Icon, icons, Scroll } from 'uilib';
+import { Icon, Scroll, icons } from 'uilib';
 
 const iconNames = Object.keys(icons);
 
@@ -23,7 +23,7 @@ export default () => {
               viewBox="0 0 20 20"
               {...props}
             >
-              <path stroke-width="3" d="m1.695 7.106 7.384 8.35 9.32-11.099" />
+              <path strokeWidth="3" d="m1.695 7.106 7.384 8.35 9.32-11.099" />
             </svg>
           )}
           size="l"

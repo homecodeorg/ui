@@ -1,97 +1,95 @@
-export default {
-  attach: () => import('./attach.svg'),
-  apple: () => import('./apple.svg'),
-  arrowRight: () => import('./arrowRight.svg'),
-  arrowLeft: () => import('./arrowLeft.svg'),
-  arrowUp: () => import('./arrowUp.svg'),
-  arrowDown: () => import('./arrowDown.svg'),
-  avatar: () => import('./avatar.svg'),
-  bookmark: () => import('./bookmark.svg'),
-  bookmarkAdd: () => import('./bookmarkAdd.svg'),
-  brain: () => import('./brain.svg'),
-  brokenImage: () => import('./brokenImage.svg'),
-  call: () => import('./call.svg'),
-  camera: () => import('./camera.svg'),
-  chat: () => import('./chat.svg'),
-  check: () => import('./check.svg'),
-  close: () => import('./close.svg'),
-  colors: () => import('./colors.svg'),
-  compass: () => import('./compass.svg'),
-  copy: () => import('./copy.svg'),
-  checkers: () => import('./checkers.svg'),
-  chevronUp: () => import('./chevronUp.svg'),
-  chevronDown: () => import('./chevronDown.svg'),
-  chevronRight: () => import('./chevronRight.svg'),
-  chevronLeft: () => import('./chevronLeft.svg'),
-  clearAll: () => import('./clearAll.svg'),
-  cubes: () => import('./cubes.svg'),
-  delete: () => import('./delete.svg'),
-  discord: () => import('./discord.svg'),
-  draft: () => import('./draft.svg'),
-  dragHandlerHorizontal: () => import('./dragHandlerHorizontal.svg'),
-  dragHandlerVertical: () => import('./dragHandlerVertical.svg'),
-  edit: () => import('./edit.svg'),
-  email: () => import('./email.svg'),
-  externalLink: () => import('./externalLink.svg'),
-  eye: () => import('./eye.svg'),
-  forward: () => import('./forward.svg'),
-  folder: () => import('./folder.svg'),
-  folderOpen: () => import('./folderOpen.svg'),
-  fullscreen: () => import('./fullscreen.svg'),
-  fullscreenExit: () => import('./fullscreenExit.svg'),
-  function: () => import('./function.svg'),
-  flyover: () => import('./flyover.svg'),
-  gear: () => import('./gear.svg'),
-  geolocation: () => import('./geolocation.svg'),
-  globe: () => import('./globe.svg'),
-  google: () => import('./google.svg'),
-  group: () => import('./group.svg'),
-  github: () => import('./github.svg'),
-  history: () => import('./history.svg'),
-  image: () => import('./image.svg'),
-  instagram: () => import('./instagram.svg'),
-  home: () => import('./home.svg'),
-  layers: () => import('./layers.svg'),
-  link: () => import('./link.svg'),
-  linkedin: () => import('./linkedin.svg'),
-  loader: () => import('./loader.svg'),
-  lock: () => import('./lock.svg'),
-  lockOpen: () => import('./lockOpen.svg'),
-  map: () => import('./map.svg'),
-  menu: () => import('./menu.svg'),
-  mic: () => import('./mic.svg'),
-  micMuted: () => import('./micMuted.svg'),
-  minus: () => import('./minus.svg'),
-  moreVertical: () => import('./moreVertical.svg'),
-  moreHorizontal: () => import('./moreHorizontal.svg'),
-  output: () => import('./output.svg'),
-  pause: () => import('./pause.svg'),
-  play: () => import('./play.svg'),
-  plus: () => import('./plus.svg'),
-  redo: () => import('./redo.svg'),
-  undo: () => import('./undo.svg'),
-  usage: () => import('./usage.svg'),
-  requiredStar: () => import('./requiredStar.svg'),
-  rewind: () => import('./rewind.svg'),
-  rocket: () => import('./rocket.svg'),
-  route: () => import('./route.svg'),
-  routeFrom: () => import('./routeFrom.svg'),
-  routeTo: () => import('./routeTo.svg'),
-  save: () => import('./save.svg'),
-  search: () => import('./search.svg'),
-  send: () => import('./send.svg'),
-  settings: () => import('./settings.svg'),
-  shoppingBag: () => import('./shoppingBag.svg'),
-  smile: () => import('./smile.svg'),
-  soundWave: () => import('./soundWave.svg'),
-  sparks: () => import('./sparks.svg'),
-  star: () => import('./star.svg'),
-  stop: () => import('./stop.svg'),
-  stopInCircle: () => import('./stopInCircle.svg'),
-  syncArrows: () => import('./syncArrows.svg'),
-  table: () => import('./table.svg'),
-  telegram: () => import('./telegram.svg'),
-  tool: () => import('./tool.svg'),
-  trafficLight: () => import('./trafficLight.svg'),
-  youtube: () => import('./youtube.svg'),
-};
+export { default as attach } from './attach.svg';
+export { default as apple } from './apple.svg';
+export { default as arrowRight } from './arrowRight.svg';
+export { default as arrowLeft } from './arrowLeft.svg';
+export { default as arrowUp } from './arrowUp.svg';
+export { default as arrowDown } from './arrowDown.svg';
+export { default as avatar } from './avatar.svg';
+export { default as bookmark } from './bookmark.svg';
+export { default as bookmarkAdd } from './bookmarkAdd.svg';
+export { default as brain } from './brain.svg';
+export { default as brokenImage } from './brokenImage.svg';
+export { default as call } from './call.svg';
+export { default as camera } from './camera.svg';
+export { default as chat } from './chat.svg';
+export { default as check } from './check.svg';
+export { default as close } from './close.svg';
+export { default as colors } from './colors.svg';
+export { default as compass } from './compass.svg';
+export { default as copy } from './copy.svg';
+export { default as checkers } from './checkers.svg';
+export { default as chevronUp } from './chevronUp.svg';
+export { default as chevronDown } from './chevronDown.svg';
+export { default as chevronRight } from './chevronRight.svg';
+export { default as chevronLeft } from './chevronLeft.svg';
+export { default as clearAll } from './clearAll.svg';
+export { default as cubes } from './cubes.svg';
+export { default as deleteIcon } from './delete.svg';
+export { default as discord } from './discord.svg';
+export { default as draft } from './draft.svg';
+export { default as dragHandlerHorizontal } from './dragHandlerHorizontal.svg';
+export { default as dragHandlerVertical } from './dragHandlerVertical.svg';
+export { default as edit } from './edit.svg';
+export { default as email } from './email.svg';
+export { default as externalLink } from './externalLink.svg';
+export { default as eye } from './eye.svg';
+export { default as forward } from './forward.svg';
+export { default as folder } from './folder.svg';
+export { default as folderOpen } from './folderOpen.svg';
+export { default as fullscreen } from './fullscreen.svg';
+export { default as fullscreenExit } from './fullscreenExit.svg';
+export { default as functionIcon } from './function.svg';
+export { default as flyover } from './flyover.svg';
+export { default as gear } from './gear.svg';
+export { default as geolocation } from './geolocation.svg';
+export { default as globe } from './globe.svg';
+export { default as google } from './google.svg';
+export { default as group } from './group.svg';
+export { default as github } from './github.svg';
+export { default as history } from './history.svg';
+export { default as image } from './image.svg';
+export { default as instagram } from './instagram.svg';
+export { default as home } from './home.svg';
+export { default as layers } from './layers.svg';
+export { default as link } from './link.svg';
+export { default as linkedin } from './linkedin.svg';
+export { default as loader } from './loader.svg';
+export { default as lock } from './lock.svg';
+export { default as lockOpen } from './lockOpen.svg';
+export { default as map } from './map.svg';
+export { default as menu } from './menu.svg';
+export { default as mic } from './mic.svg';
+export { default as micMuted } from './micMuted.svg';
+export { default as minus } from './minus.svg';
+export { default as moreVertical } from './moreVertical.svg';
+export { default as moreHorizontal } from './moreHorizontal.svg';
+export { default as output } from './output.svg';
+export { default as pause } from './pause.svg';
+export { default as play } from './play.svg';
+export { default as plus } from './plus.svg';
+export { default as redo } from './redo.svg';
+export { default as undo } from './undo.svg';
+export { default as usage } from './usage.svg';
+export { default as requiredStar } from './requiredStar.svg';
+export { default as rewind } from './rewind.svg';
+export { default as rocket } from './rocket.svg';
+export { default as route } from './route.svg';
+export { default as routeFrom } from './routeFrom.svg';
+export { default as routeTo } from './routeTo.svg';
+export { default as save } from './save.svg';
+export { default as search } from './search.svg';
+export { default as send } from './send.svg';
+export { default as settings } from './settings.svg';
+export { default as shoppingBag } from './shoppingBag.svg';
+export { default as smile } from './smile.svg';
+export { default as soundWave } from './soundWave.svg';
+export { default as sparks } from './sparks.svg';
+export { default as star } from './star.svg';
+export { default as stop } from './stop.svg';
+export { default as stopInCircle } from './stopInCircle.svg';
+export { default as syncArrows } from './syncArrows.svg';
+export { default as table } from './table.svg';
+export { default as telegram } from './telegram.svg';
+export { default as tool } from './tool.svg';
+export { default as trafficLight } from './trafficLight.svg';
+export { default as youtube } from './youtube.svg';

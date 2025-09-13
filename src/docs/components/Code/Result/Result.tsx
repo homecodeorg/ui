@@ -6,10 +6,19 @@ import * as justorm from 'justorm/react';
 import { useStore } from 'justorm/react';
 import * as uilib from 'uilib';
 import * as helpers from 'helpers';
+import * as icons from 'uilib/components/Icon/icons';
 
 import S from '../Code.styl';
 
-const SCOPE = { uilib, React, justorm, timen, cn, helpers };
+const SCOPE = {
+  uilib,
+  icons,
+  React,
+  justorm,
+  timen,
+  cn,
+  helpers,
+};
 
 const Result = () => {
   const { editor } = useStore({ editor: ['execCode', 'scope'] });
