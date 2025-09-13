@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.29.0](https://github.com/foreverido/uilib/compare/v4.28.5...v4.29.0) (2025-09-13)
+
+
+### Features
+
+* Icon - allow import from @homecode/ui/icons ([22e1ef6](https://github.com/foreverido/uilib/commit/22e1ef648f55d37443b449f389c548ecca0c3b4a))
+
+
+### Bug Fixes
+
+* Icon - deprecate lazy feature ([9d6e234](https://github.com/foreverido/uilib/commit/9d6e234dd8e67c5b0b1bc5267459143dee4ac9e6))
+
 ### [4.28.5](https://github.com/foreverido/uilib/compare/v4.28.4...v4.28.5) (2025-09-08)
 
 
