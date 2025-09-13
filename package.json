@@ -40,6 +40,16 @@
   "module": "dist/esm",
   "types": "dist/esm/types/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "types": "./dist/esm/types/index.d.ts"
+    },
+    "./icons": {
+      "import": "./dist/esm/src/components/Icon/icons/index.js",
+      "types": "./dist/esm/types/src/components/Icon/icons/index.d.ts"
+    }
+  },
   "bugs": {
     "url": "https://github.com/apostololeg/uilib/issues"
   },
