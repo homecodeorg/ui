@@ -37,6 +37,7 @@ export function Select2(props: T.Props) {
     options,
     variant,
     label,
+    additionalLabel,
     error,
     blur,
     disabled,
@@ -248,7 +249,6 @@ export function Select2(props: T.Props) {
         .join(', ')
     );
   }, [isMultiple, value, ids]);
-  // console.log('selectedLabel::', selectedLabel);
 
   const triggerArrow = useMemo(() => {
     if (disableTriggerArrow || (inputProps?.hasClear && searchVal)) return null;
@@ -277,14 +277,10 @@ export function Select2(props: T.Props) {
     );
   };
 
-  const renderAdditionalLabel = () => {
-    return null;
-  };
-
   const renderTriggerButton = () => {
     const { label, className, ...rest } = triggerProps;
     const props = omit(rest, ['name', 'inputProps']);
-    const fullSelectedLabel = [selectedLabel, renderAdditionalLabel()].filter(
+    const fullSelectedLabel = [selectedLabel, label, additionalLabel].filter(
       Boolean
     );
     const hasSelected = fullSelectedLabel.length > 0;
@@ -314,6 +310,7 @@ export function Select2(props: T.Props) {
           </div>
           {triggerArrow}
         </Button>
+
         <Label
           size={size}
           isOnTop={hasSelected}
@@ -429,6 +426,10 @@ export function Select2(props: T.Props) {
 
     setNewItems(items);
   }, [options]);
+
+  useEffect(() => {
+    setIsOpen(props.isOpen);
+  }, [props.isOpen]);
 
   useEffect(() => {
     const searchVal = props.searchValue;
