@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.29.1](https://github.com/foreverido/uilib/compare/v4.29.0...v4.29.1) (2025-09-14)
+
+
+### Bug Fixes
+
+* Select2 - update isOpen; render edditionalLabel ([5af5e59](https://github.com/foreverido/uilib/commit/5af5e59ed7fccd7281b4cdf0e83638f8e8fe9a7d))
+
 ## [4.29.0](https://github.com/foreverido/uilib/compare/v4.28.5...v4.29.0) (2025-09-13)
 
 
