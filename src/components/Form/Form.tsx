@@ -7,6 +7,8 @@ import { Input } from '../Input/Input';
 import S from './Form.styl';
 import * as H from './Form.helpers';
 import * as T from './Form.types';
+export * from './Form.types';
+
 import { Validator } from './Validator';
 
 const Field = function Field(props: T.FormFieldProps) {
