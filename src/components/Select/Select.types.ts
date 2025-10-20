@@ -87,8 +87,13 @@ export type Props = FormControl<Value> &
     // Expand selected items on first open
     expandSelected?: boolean;
     onChange: (value: Value) => void;
+    // Callback function that is called when a chip is clicked
+    onChipClick?: (id: Id) => void;
+    // Callback function that is called when the search input value changes
     onSearchChange?: (value: string) => void;
+    // Callback function that is called when the popup is opened
     onOpen?: () => void;
+    // Callback function that is called when the popup is closed
     onClose?: () => void;
     // Whether to show the search input field
     isSearchable?: boolean;
@@ -111,6 +116,8 @@ export type Props = FormControl<Value> &
     popupProps?: SelectPopupProps;
     // Hide the required star symbol
     hideRequiredStar?: boolean;
+    // Tooltip for chip remove button in multiple selection mode
+    selectedChipRemoveTooltip?: ReactNode;
   };
 
 export type State = {

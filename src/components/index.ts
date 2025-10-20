@@ -4,6 +4,7 @@ export * from './Button/Button';
 export * from './ButtonGroup/ButtonGroup';
 export * from './Calendar/Calendar';
 export * from './Checkbox/Checkbox';
+export * from './Chip/Chip';
 export * from './Container/Container';
 export * from './DatePicker/DatePicker';
 export * from './DatePickerInput/DatePickerInput';

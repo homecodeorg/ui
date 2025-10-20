@@ -9,6 +9,7 @@ import omit from 'lodash.omit';
 
 import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';
+import { Chip } from '../Chip/Chip';
 import { Input } from '../Input/Input';
 import { Icon } from '../Icon/Icon';
 import { Label } from '../Label/Label';
@@ -25,6 +26,7 @@ export function Select2(props: T.Props) {
     className,
     value,
     onChange,
+    onChipClick,
     onSearchChange,
     disableTriggerArrow,
     inputProps,
@@ -50,6 +52,7 @@ export function Select2(props: T.Props) {
     clearButton,
     showSelectedCount,
     disableLabel,
+    selectedChipRemoveTooltip,
   } = props;
   const isMultiple = H.isMultiple(value);
   const closeOnSelect = props.closeOnSelect ?? !isMultiple;
@@ -250,6 +253,28 @@ export function Select2(props: T.Props) {
     );
   }, [isMultiple, value, ids]);
 
+  const renderSelectedChips = () => {
+    if (!isMultiple || !value || !(value as T.Id[]).length) return null;
+
+    return (value as T.Id[]).map(id => {
+      const label = getLabel(id);
+      if (!label) return null;
+
+      return (
+        <Chip
+          className={S.chip}
+          key={id}
+          size={size}
+          onRemove={() => onItemToggle(id)}
+          onClick={() => onChipClick?.(id)}
+          removeTooltip={selectedChipRemoveTooltip}
+        >
+          {label}
+        </Chip>
+      );
+    });
+  };
+
   const triggerArrow = useMemo(() => {
     if (disableTriggerArrow || (inputProps?.hasClear && searchVal)) return null;
 
@@ -263,6 +288,15 @@ export function Select2(props: T.Props) {
   }, [isOpen, searchVal]);
 
   const renderTriggerInput = () => {
+    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
+    const inputValue = isMultiple
+      ? isFocused && isSearchActive
+        ? searchVal
+        : ''
+      : isFocused && isSearchActive
+      ? searchVal
+      : selectedLabel;
+
     return (
       <Input
         {...triggerProps}
@@ -270,9 +304,10 @@ export function Select2(props: T.Props) {
         // TODO: autoComplete
         addonRight={triggerArrow}
         error={isErrorVisible}
-        value={isFocused && isSearchActive ? searchVal : selectedLabel}
+        value={inputValue}
         onChange={handleSearchChange}
         label={getFieldLabel(label)}
+        placeholder={hasChips && !inputValue ? '' : inputProps?.placeholder}
       />
     );
   };
@@ -280,12 +315,13 @@ export function Select2(props: T.Props) {
   const renderTriggerButton = () => {
     const { label, className, ...rest } = triggerProps;
     const props = omit(rest, ['name', 'inputProps']);
-    const fullSelectedLabel = [selectedLabel, label, additionalLabel].filter(
-      Boolean
-    );
+    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
+    const fullSelectedLabel = [label, additionalLabel].filter(Boolean);
+    // ?
+    // : [selectedLabel, label, additionalLabel].filter(Boolean);
     const hasSelected = fullSelectedLabel.length > 0;
     const displayLabel = hasSelected ? fullSelectedLabel : label;
-    const title = hasSelected ? fullSelectedLabel : null;
+    const title = hasSelected && !isMultiple ? fullSelectedLabel : null;
     const isError = isErrorVisible;
     const classes = cn(
       S.triggerButton,
@@ -311,14 +347,16 @@ export function Select2(props: T.Props) {
           {triggerArrow}
         </Button>
 
-        <Label
-          size={size}
-          isOnTop={hasSelected}
-          isError={isError}
-          onClipPathChange={setLabelClipPath}
-        >
-          {getFieldLabel(label)}
-        </Label>
+        {!isMultiple && (
+          <Label
+            size={size}
+            isOnTop={hasSelected}
+            isError={isError}
+            onClipPathChange={setLabelClipPath}
+          >
+            {getFieldLabel(label)}
+          </Label>
+        )}
       </div>
     );
   };
@@ -330,8 +368,22 @@ export function Select2(props: T.Props) {
       ? renderTriggerInput()
       : renderTriggerButton();
 
+    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
+
     return (
       <div className={S.trigger}>
+        {hasChips && (
+          <Scroll
+            y
+            className={S.chipsContainer}
+            innerClassName={S.chipContainerInner}
+            size={size}
+            fadeSize={size}
+            autoHide
+          >
+            {renderSelectedChips()}
+          </Scroll>
+        )}
         {triggerElem}
         {required && !hideRequiredStar && <RequiredStar size={size} />}
       </div>
