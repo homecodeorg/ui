@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.30.0](https://github.com/foreverido/uilib/compare/v4.29.1...v4.30.0) (2025-10-26)
+
+
+### Features
+
+* Select - multiple - render Chips ([bfeb1a4](https://github.com/foreverido/uilib/commit/bfeb1a4bed2b7687125e7fe73ca2c282ba6328f2))
+
 ### [4.29.1](https://github.com/foreverido/uilib/compare/v4.29.0...v4.29.1) (2025-09-14)
 
 
