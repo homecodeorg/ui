@@ -94,23 +94,25 @@ export function Lazy(props: T.Props) {
 
   if (loading && !spinnerTimeoutState && !hideSpinner) {
     return (
-      progressElem ?? (
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          flexGrow={1}
-          width="100%"
-          height="100%"
-        >
-          <Spinner size={size} />
-        </Flex>
-      )
+      <>
+        {progressElem ?? (
+          <Flex
+            justifyContent="center"
+            alignItems="center"
+            flexGrow={1}
+            width="100%"
+            height="100%"
+          >
+            <Spinner size={size} />
+          </Flex>
+        )}
+      </>
     );
   }
 
-  if (render) return render(importData!);
-  if (typeof children === 'function') return children(importData!);
+  if (render) return <>{render(importData!)}</>;
+  if (typeof children === 'function') return <>{children(importData!)}</>;
   if (DefaultNode) return <DefaultNode {...restProps} />;
 
-  return children;
+  return <>{children}</>;
 }

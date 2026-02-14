@@ -9,7 +9,7 @@ export default () => (
         label: 'Lazy 1',
         content: (
           <Lazy
-            loader={() => import('../Button/Example')}
+            loader={() => import('../Button')}
             progressElem="Loading..."
           />
         ),
@@ -19,7 +19,7 @@ export default () => (
         label: 'Lazy 2',
         content: (
           <Lazy
-            loader={() => import('./Tabs/Example')}
+            loader={() => import('../Tabs/Example')}
             progressElem="Loading..."
           />
         ),
