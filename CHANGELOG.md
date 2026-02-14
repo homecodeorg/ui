@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.1](https://github.com/foreverido/uilib/compare/v4.30.0...v4.30.1) (2026-02-14)
+
+
+### Bug Fixes
+
+* Autocomplete - Prevent [object Object] on invalid value prop ([2de2d94](https://github.com/foreverido/uilib/commit/2de2d94929ca908dac49af1157794e294a04c777))
+* Lazy - Fix TypeScript JSX component return type error ([b909cf8](https://github.com/foreverido/uilib/commit/b909cf8f937835afb3d33885bb62e42262397edc))
+
 ## [4.30.0](https://github.com/foreverido/uilib/compare/v4.29.1...v4.30.0) (2025-10-26)
 
 
