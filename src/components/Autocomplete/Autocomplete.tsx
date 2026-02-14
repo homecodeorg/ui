@@ -1,7 +1,7 @@
 import * as T from './Autocomplete.types';
 
 import { Input, Menu, Popup } from 'uilib/components';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import S from './Autocomplete.styl';
 import { Shimmer } from 'uilib/components/Shimmer/Shimmer';
@@ -113,6 +113,7 @@ export function Autocomplete(props: T.Props) {
   }, debounceDelay);
 
   useEffect(() => {
+    if (typeof value !== 'string') return;
     setSearchValue(value);
     setOptions([]);
     if (isFocusedRef.current) fetchOptions(value);

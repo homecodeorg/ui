@@ -19,8 +19,8 @@ export default () => {
   return (
     <Autocomplete
       value={value}
-      onChange={setValue}
-      onSelect={setValue}
+      onChange={(_, val) => setValue(val)}
+      onSelect={option => setValue(option.label)}
       getOptions={getOptions}
       placeholder="Type to search..."
     />
