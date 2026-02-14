@@ -1,6 +1,29 @@
 // NOTE: Example simulate low network speed
-import { Lazy } from 'uilib';
+import { Lazy, Tabs } from 'uilib';
 
 export default () => (
-  <Lazy loader={LazyComponentExample} progressElem="Loading..." />
+  <Tabs
+    items={[
+      {
+        id: 'lazy1',
+        label: 'Lazy 1',
+        content: (
+          <Lazy
+            loader={() => import('../Button/Example')}
+            progressElem="Loading..."
+          />
+        ),
+      },
+      {
+        id: 'lazy2',
+        label: 'Lazy 2',
+        content: (
+          <Lazy
+            loader={() => import('./Tabs/Example')}
+            progressElem="Loading..."
+          />
+        ),
+      },
+    ]}
+  />
 );
