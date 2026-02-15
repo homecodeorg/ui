@@ -9,7 +9,7 @@ import type { Props as ListProps } from './List';
 import S from './ListScroll.styl';
 
 type Props = ListProps & {
-  scrollProps: ScrollProps;
+  scrollProps: Omit<ScrollProps, 'children'>;
 };
 
 export default function ListScroll({ scrollProps, ...rest }: Props) {

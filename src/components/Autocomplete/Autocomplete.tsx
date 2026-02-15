@@ -248,8 +248,7 @@ export function Autocomplete(props: T.Props) {
         className={cn(S.options, menuProps.className)}
         scrollProps={{
           y: true,
-          innerClassName: S.inner,
-          style: { height: '200px' },
+          className: S.scroll,
         }}
         itemHeight={itemHeight}
         itemsCount={displayItems.length}
