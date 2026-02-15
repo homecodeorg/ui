@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.3](https://github.com/foreverido/uilib/compare/v4.30.2...v4.30.3) (2026-02-15)
+
+
+### Bug Fixes
+
+* Scroll bars - disable default alignment styles ([9793528](https://github.com/foreverido/uilib/commit/97935282a756b61454ae68c9e294199f87635cdc))
+
 ### [4.30.2](https://github.com/foreverido/uilib/compare/v4.30.1...v4.30.2) (2026-02-15)
 
 
