@@ -1,4 +1,12 @@
-import { useRef, useState, useCallback, useMemo, useEffect } from 'react';
+import {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  useEffect,
+} from 'react';
 import cn from 'classnames';
 import Time from 'timen';
 
@@ -38,7 +46,14 @@ const BY_AXIS = {
 
 export type ScrollProps = T.Props;
 
-export function Scroll(props: T.Props) {
+export type ScrollRef = {
+  innerElem: HTMLDivElement | null;
+};
+
+export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
+  props,
+  ref
+) {
   const {
     x,
     y,
@@ -66,6 +81,10 @@ export function Scroll(props: T.Props) {
     x: thumbXRef,
     y: thumbYRef,
   };
+
+  useImperativeHandle(ref, () => ({
+    innerElem: innerElemRef.current,
+  }));
 
   const [isScrolling, setIsScrolling] = useState(false);
   const [activeAxis, setActiveAxis] = useState(null);
@@ -464,4 +483,4 @@ export function Scroll(props: T.Props) {
       {AXES.map(renderBar)}
     </div>
   );
-}
+});
