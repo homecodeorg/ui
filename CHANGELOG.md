@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.2](https://github.com/foreverido/uilib/compare/v4.30.1...v4.30.2) (2026-02-15)
+
+
+### Features
+
+* Autocomplete - Expose renderItem prop for custom item rendering ([ac1d3b6](https://github.com/foreverido/uilib/commit/ac1d3b662e3410214034eeadb702f8e67b716d63))
+* Autocomplete - Use virtualized list with items loading ([5f9b566](https://github.com/foreverido/uilib/commit/5f9b5669c95b904e3c6dfd4048ad29a645d12791))
+
+
+### Bug Fixes
+
+* Scroll - Restrict isScrolling styles to direct children ([b22dcc5](https://github.com/foreverido/uilib/commit/b22dcc5faba22bbf457a24af76ff6e6f399d3289))
+* Virtualized - Wrap element init and scroll innerClassName ([e5a3bec](https://github.com/foreverido/uilib/commit/e5a3bec9afe8e80a8d59c377be2398c421745864))
+
 ### [4.30.1](https://github.com/foreverido/uilib/compare/v4.30.0...v4.30.1) (2026-02-14)
 
 
