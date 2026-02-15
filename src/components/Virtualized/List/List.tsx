@@ -124,7 +124,10 @@ class List extends Component<Props> {
 
     // @ts-ignore
     this.wrapElem = this.props.customWrapElem?.getRef?.(ref) || ref;
-    if (!this.store.hasWrap) this.store.hasWrap = true;
+    if (!this.store.hasWrap) {
+      this.store.hasWrap = true;
+      this.forceUpdate();
+    }
   };
 
   renderLayout = ({ state, items, ...rest }) => {
@@ -178,6 +181,15 @@ class List extends Component<Props> {
     if (customWrapElem) {
       Elem = customWrapElem.component;
       Object.assign(props, customWrapElem?.props);
+      const prevOnInnerRef = props.onInnerRef;
+      props.onInnerRef = (el: Element | null) => {
+        if (el) {
+          this.wrapElem = el;
+          if (!this.store.hasWrap) this.store.hasWrap = true;
+          this.forceUpdate();
+        }
+        prevOnInnerRef?.(el);
+      };
     }
 
     return (

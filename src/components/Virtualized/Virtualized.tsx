@@ -5,6 +5,7 @@ import compare from 'compareq';
 import Time from 'timen';
 
 import debounce from 'uilib/tools/debounce';
+import throttle from 'uilib/tools/throttle';
 
 import * as T from './Virtualized.types';
 import * as H from './Virtualized.helpers';
@@ -15,6 +16,9 @@ class Virtualized extends Component<T.Props, T.State> {
   scrollTopInited = false;
   scrollElem: Element;
   lastScrollEndIndex = 0;
+
+  onScrollThrottled: (e: MouseEvent) => void;
+  onScrollDebounced: (e: MouseEvent) => void;
 
   static defaultProps = {
     overlapCount: 10,
@@ -31,7 +35,8 @@ class Virtualized extends Component<T.Props, T.State> {
       isFreezed: false,
     };
 
-    this.onScroll = debounce(this.onScroll, 150);
+    this.onScrollThrottled = throttle(this._onScroll, 150);
+    this.onScrollDebounced = debounce(this._onScroll, 150);
     this.checkIfEnd = debounce(this.checkIfEnd, 200);
   }
 
@@ -43,7 +48,6 @@ class Virtualized extends Component<T.Props, T.State> {
   }
 
   componentDidMount() {
-    // Time.after(100, () => {
     const indexes = this.getIndexes();
     this.setState(indexes); // eslint-disable-line
     // });
@@ -158,7 +162,7 @@ class Virtualized extends Component<T.Props, T.State> {
     });
   }
 
-  onScroll = e => {
+  _onScroll = e => {
     this.scrollElem = e.target;
 
     const { onScroll } = this.props;
@@ -173,6 +177,11 @@ class Virtualized extends Component<T.Props, T.State> {
       this.setState({ ...indexes });
 
     this.unfreeze();
+  };
+
+  onScroll = (e: MouseEvent) => {
+    this.onScrollThrottled(e);
+    this.onScrollDebounced(e);
   };
 
   checkIfEnd = () => {
