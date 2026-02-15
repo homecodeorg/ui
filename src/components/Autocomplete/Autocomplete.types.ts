@@ -17,8 +17,12 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   inputWrapperClassName?: string;
   size?: Size;
   value: Value;
-  getOptions: (value: Value) => Promise<Option[]>;
+  isOpen?: boolean;
+  getOptions: (filter: string, offset: number) => Promise<Option[]>;
   onSelect: (option: Option) => void;
+  items?: Option[];
+  itemHeight?: number;
+  pageSize?: number;
   debounceDelay?: number;
   inputProps?: Partial<InputProps>;
   popupProps?: Partial<PopupProps>;

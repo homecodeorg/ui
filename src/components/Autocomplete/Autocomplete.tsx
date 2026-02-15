@@ -1,7 +1,7 @@
 import * as T from './Autocomplete.types';
 
-import { Input, Menu, Popup } from 'uilib/components';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Input, Menu, Popup, VirtualizedListScroll } from 'uilib/components';
+import { useEffect, useMemo, useRef, useState, useCallback } from 'react';
 
 import S from './Autocomplete.styl';
 import { Shimmer } from 'uilib/components/Shimmer/Shimmer';
@@ -10,6 +10,12 @@ import cn from 'classnames';
 import debounce from 'uilib/tools/debounce';
 import { useIsMounted } from 'uilib/hooks/useIsMounted';
 import { useListKeyboardControl } from 'uilib/hooks/useListKeyboardControl';
+
+const SIZE_TO_ITEM_HEIGHT: Record<Size, number> = {
+  s: 30,
+  m: 40,
+  l: 50,
+};
 
 export function Autocomplete(props: T.Props) {
   const {
@@ -20,6 +26,9 @@ export function Autocomplete(props: T.Props) {
     size = 'm' as Size,
     getOptions,
     onSelect,
+    items,
+    itemHeight = SIZE_TO_ITEM_HEIGHT[size],
+    pageSize = 20,
     debounceDelay = 300,
     round = false,
     blur = false,
@@ -29,8 +38,14 @@ export function Autocomplete(props: T.Props) {
   } = props;
 
   const isMounted = useIsMounted();
-  const [options, setOptions] = useState<T.Option[]>([]);
+  const [filteredItems, setFilteredItems] = useState<T.Option[]>([]);
+  const [currentFilter, setCurrentFilter] = useState('');
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isOpen, setIsOpen] = useState(props.isOpen);
+  const [isFocused, setIsFocused] = useState(isOpen);
   const isFocusedRef = useRef(false);
   const searchValRef = useRef(value);
   const [searchValue, _setSearchValue] = useState(value);
@@ -44,16 +59,19 @@ export function Autocomplete(props: T.Props) {
   // @ts-ignore
   const inputRef = useRef<Input>(null);
 
-  const isOpen = options.length > 0;
+  const displayItems = currentFilter ? filteredItems : items || [];
+  const hasMore = currentFilter ? filteredItems.length < totalCount : false;
   const classes = cn(S.root, className, popupProps.className);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
+    setIsFocused(true);
     inputProps?.onFocus?.(e);
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = false;
+    setIsFocused(false);
     inputProps?.onBlur?.(e);
   };
 
@@ -62,16 +80,29 @@ export function Autocomplete(props: T.Props) {
     value: string
   ) => {
     const val = (value || e?.target.value) ?? '';
-    setOptions([]);
     setSearchValue(val);
     onChange(e, val);
-    fetchOptions(val);
+
+    if (!val) {
+      setCurrentFilter('');
+      setFilteredItems([]);
+      setCurrentOffset(0);
+      setTotalCount(0);
+    } else {
+      setCurrentFilter(val);
+      setCurrentOffset(0);
+      fetchOptions(val, 0);
+    }
+
     return true;
   };
 
   const handleSelect = (option: T.Option) => {
     setSearchValue(option.label);
-    setOptions([]);
+    setCurrentFilter('');
+    setFilteredItems([]);
+    setCurrentOffset(0);
+    setTotalCount(0);
     onSelect(option);
 
     // set input caret to the end
@@ -85,64 +116,153 @@ export function Autocomplete(props: T.Props) {
 
   const { focusedIndex, setFocusedIndex } = useListKeyboardControl({
     isActive: isOpen,
-    itemsCount: options.length,
-    onSelect: index => handleSelect(options[index]),
+    itemsCount: displayItems.length,
+    onSelect: index => handleSelect(displayItems[index]),
   });
 
-  const fetchOptions = debounce(async (inputValue: string) => {
-    if (!inputValue) {
-      setOptions([]);
+  const fetchOptions = debounce(async (filter: string, offset: number) => {
+    if (!filter) {
+      setFilteredItems([]);
       return;
     }
 
-    currentRequest.current = inputValue;
-    setIsLoading(true);
+    const requestKey = `${filter}:${offset}`;
+    currentRequest.current = requestKey;
+
+    if (offset === 0) {
+      setIsLoading(true);
+    } else {
+      setIsLoadingMore(true);
+    }
 
     try {
-      const newOptions = await getOptions(inputValue);
+      const newOptions = await getOptions(filter, offset);
 
       if (!isMounted.current) return;
-      if (currentRequest.current !== inputValue) return;
+      if (currentRequest.current !== requestKey) return;
 
-      setOptions(newOptions);
+      if (offset === 0) {
+        setFilteredItems(newOptions);
+        setCurrentOffset(newOptions.length);
+        setTotalCount(
+          newOptions.length + (newOptions.length === pageSize ? 1 : 0)
+        );
+      } else {
+        setFilteredItems(prev => [...prev, ...newOptions]);
+        const newOffset = offset + newOptions.length;
+        setCurrentOffset(newOffset);
+        setTotalCount(newOffset + (newOptions.length === pageSize ? 1 : 0));
+      }
     } catch (error) {
-      setOptions([]);
+      if (offset === 0) {
+        setFilteredItems([]);
+        setCurrentOffset(0);
+        setTotalCount(0);
+      }
     } finally {
       setIsLoading(false);
+      setIsLoadingMore(false);
     }
   }, debounceDelay);
+
+  const handleScrollEnd = useCallback(() => {
+    if (currentFilter && hasMore && !isLoading && !isLoadingMore) {
+      fetchOptions(currentFilter, currentOffset);
+    }
+  }, [
+    currentFilter,
+    hasMore,
+    isLoading,
+    isLoadingMore,
+    currentOffset,
+    fetchOptions,
+  ]);
 
   useEffect(() => {
     if (typeof value !== 'string') return;
     setSearchValue(value);
-    setOptions([]);
-    if (isFocusedRef.current) fetchOptions(value);
+
+    if (!value) {
+      setCurrentFilter('');
+      setFilteredItems([]);
+      setCurrentOffset(0);
+      setTotalCount(0);
+    } else if (isFocusedRef.current) {
+      setCurrentFilter(value);
+      setCurrentOffset(0);
+      fetchOptions(value, 0);
+    }
   }, [value]);
 
-  const optionsList = useMemo(() => {
-    if (!options.length) return null;
+  const renderItem = useCallback(
+    (itemProps: {
+      key: number;
+      style?: React.CSSProperties;
+      className?: string;
+    }) => {
+      const option = displayItems[itemProps.key];
+      if (!option) return null;
 
+      return (
+        <Menu.Item
+          key={itemProps.key}
+          focused={focusedIndex === itemProps.key}
+          className={cn(S.option, itemProps.className)}
+          onClick={() => handleSelect(option)}
+          onMouseEnter={() => setFocusedIndex(itemProps.key)}
+          style={itemProps.style}
+        >
+          {option.render ? option.render(option) : option.label}
+        </Menu.Item>
+      );
+    },
+    [displayItems, focusedIndex, handleSelect, setFocusedIndex]
+  );
+
+  const optionsList = useMemo(() => {
+    if (!displayItems.length) return null;
+
+    const computedTotalCount = currentFilter ? totalCount : displayItems.length;
     return (
-      <Menu
-        className={S.options}
-        size={size}
-        offset={{ y: { before: 20, after: 20 } }}
-        {...menuProps}
-      >
-        {options.map((option, index) => (
-          <Menu.Item
-            key={option.id}
-            focused={focusedIndex === index}
-            className={S.option}
-            onClick={() => handleSelect(option)}
-            onMouseEnter={() => setFocusedIndex(index)}
-          >
-            {option.render ? option.render(option) : option.label}
-          </Menu.Item>
-        ))}
-      </Menu>
+      <VirtualizedListScroll
+        className={cn(S.options, menuProps.className)}
+        scrollProps={{
+          y: true,
+          innerClassName: S.inner,
+          style: { height: '200px' },
+        }}
+        itemHeight={itemHeight}
+        itemsCount={displayItems.length}
+        totalCount={computedTotalCount}
+        overlapCount={10}
+        pageSize={pageSize}
+        onScrollEnd={handleScrollEnd}
+        renderItem={renderItem}
+        contentAfter={
+          hasMore &&
+          isLoadingMore && (
+            <div style={{ padding: '8px 12px', textAlign: 'center' }}>
+              <Shimmer size={size} round={round} />
+            </div>
+          )
+        }
+      />
     );
-  }, [options, focusedIndex]);
+  }, [
+    displayItems,
+    focusedIndex,
+    currentFilter,
+    totalCount,
+    hasMore,
+    isLoadingMore,
+    itemHeight,
+    pageSize,
+    handleScrollEnd,
+    renderItem,
+    size,
+    round,
+    menuProps.className,
+  ]);
 
   return (
     <Popup
