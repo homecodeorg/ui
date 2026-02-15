@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.4](https://github.com/foreverido/uilib/compare/v4.30.3...v4.30.4) (2026-02-15)
+
+
+### Bug Fixes
+
+* Scroll - Add forwardRef for ref support in VirtualizedListScroll ([ad00605](https://github.com/foreverido/uilib/commit/ad00605f48e2f2e7bbd04b7eea731c1056708f5a))
+
 ### [4.30.3](https://github.com/foreverido/uilib/compare/v4.30.2...v4.30.3) (2026-02-15)
 
 
