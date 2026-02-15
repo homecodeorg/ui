@@ -29,4 +29,15 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   menuProps?: Partial<MenuProps>;
   round?: boolean;
   blur?: boolean;
+  renderItem?: (props: RenderItemProps) => React.ReactElement;
+};
+
+export type RenderItemProps = {
+  option: Option;
+  key: number;
+  className?: string;
+  style?: React.CSSProperties;
+  focused: boolean;
+  onClick: () => void;
+  onMouseEnter: () => void;
 };

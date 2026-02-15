@@ -197,26 +197,46 @@ export function Autocomplete(props: T.Props) {
   const renderItem = useCallback(
     (itemProps: {
       key: number;
-      style?: React.CSSProperties;
       className?: string;
+      style?: React.CSSProperties;
     }) => {
       const option = displayItems[itemProps.key];
       if (!option) return null;
 
+      const itemPropsForRender: T.RenderItemProps = {
+        option,
+        key: itemProps.key,
+        className: cn(S.option, itemProps.className),
+        style: itemProps.style,
+        focused: focusedIndex === itemProps.key,
+        onClick: () => handleSelect(option),
+        onMouseEnter: () => setFocusedIndex(itemProps.key),
+      };
+
+      if (props.renderItem) {
+        return props.renderItem(itemPropsForRender);
+      }
+
       return (
         <Menu.Item
-          key={itemProps.key}
-          focused={focusedIndex === itemProps.key}
-          className={cn(S.option, itemProps.className)}
-          onClick={() => handleSelect(option)}
-          onMouseEnter={() => setFocusedIndex(itemProps.key)}
-          style={itemProps.style}
+          {...itemProps}
+          focused={itemPropsForRender.focused}
+          className={itemPropsForRender.className}
+          onClick={itemPropsForRender.onClick}
+          onMouseEnter={itemPropsForRender.onMouseEnter}
+          style={itemPropsForRender.style}
         >
           {option.render ? option.render(option) : option.label}
         </Menu.Item>
       );
     },
-    [displayItems, focusedIndex, handleSelect, setFocusedIndex]
+    [
+      displayItems,
+      focusedIndex,
+      handleSelect,
+      setFocusedIndex,
+      props.renderItem,
+    ]
   );
 
   const optionsList = useMemo(() => {
