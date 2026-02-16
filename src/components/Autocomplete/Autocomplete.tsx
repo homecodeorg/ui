@@ -35,6 +35,7 @@ export function Autocomplete(props: T.Props) {
     inputProps = {},
     popupProps = {},
     menuProps = {},
+    scrollProps = {},
   } = props;
 
   const isMounted = useIsMounted();
@@ -248,7 +249,8 @@ export function Autocomplete(props: T.Props) {
         className={cn(S.options, menuProps.className)}
         scrollProps={{
           y: true,
-          className: S.scroll,
+          ...scrollProps,
+          className: cn(S.scroll, scrollProps?.className),
         }}
         itemHeight={itemHeight}
         itemsCount={displayItems.length}

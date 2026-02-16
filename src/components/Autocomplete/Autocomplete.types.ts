@@ -3,6 +3,7 @@ import { FormControl, Size } from 'uilib/types';
 import { Props as InputProps } from 'uilib/components/Input/Input.types';
 import { Props as PopupProps } from 'uilib/components/Popup/Popup.types';
 import { MenuProps } from 'uilib/components/Menu/Menu.types';
+import { ScrollProps } from 'uilib/components/Scroll/Scroll';
 
 export type Option = {
   id: string;
@@ -26,6 +27,7 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   debounceDelay?: number;
   inputProps?: Partial<InputProps>;
   popupProps?: Partial<PopupProps>;
+  scrollProps?: Partial<ScrollProps>;
   menuProps?: Partial<MenuProps>;
   round?: boolean;
   blur?: boolean;
