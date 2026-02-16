@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.6](https://github.com/foreverido/uilib/compare/v4.30.5...v4.30.6) (2026-02-16)
+
+
+### Bug Fixes
+
+* Autocomplete - pass scrollProps to Scroll ([91aef6f](https://github.com/foreverido/uilib/commit/91aef6fafc7b3fe6a4d675aee4efed043958742c))
+
 ### [4.30.5](https://github.com/foreverido/uilib/compare/v4.30.4...v4.30.5) (2026-02-15)
 
 ### [4.30.4](https://github.com/foreverido/uilib/compare/v4.30.3...v4.30.4) (2026-02-15)
