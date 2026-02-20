@@ -19,7 +19,7 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   size?: Size;
   value: Value;
   isOpen?: boolean;
-  getOptions: (filter: string, offset: number) => Promise<Option[]>;
+  getOptions: (filter: string, offset: number) => Promise<{items: Option[], total?: number}>;
   onSelect: (option: Option) => void;
   items?: Option[];
   itemHeight?: number;

@@ -17,6 +17,16 @@ const SIZE_TO_ITEM_HEIGHT: Record<Size, number> = {
   l: 50,
 };
 
+const getTotalCount = (
+  total?: number,
+  newItemsCount: number = 0,
+  offset: number = 0,
+  pageSize: number = 20
+) => {
+  if (total !== undefined) return total;
+  return offset + (newItemsCount === pageSize ? 1 : 0);
+};
+
 export function Autocomplete(props: T.Props) {
   const {
     className,
@@ -40,6 +50,9 @@ export function Autocomplete(props: T.Props) {
 
   const isMounted = useIsMounted();
   const [filteredItems, setFilteredItems] = useState<T.Option[]>([]);
+  const [itemsWithoutFilter, setItemsWithoutFilter] = useState<T.Option[]>(
+    () => items ?? []
+  );
   const [currentFilter, setCurrentFilter] = useState('');
   const [currentOffset, setCurrentOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -60,8 +73,13 @@ export function Autocomplete(props: T.Props) {
   // @ts-ignore
   const inputRef = useRef<Input>(null);
 
-  const displayItems = currentFilter ? filteredItems : items || [];
-  const hasMore = currentFilter ? filteredItems.length < totalCount : false;
+  const displayItems = currentFilter
+    ? filteredItems
+    : itemsWithoutFilter.length
+      ? itemsWithoutFilter
+      : items ?? [];
+  const displayCount = displayItems.length;
+  const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -87,6 +105,7 @@ export function Autocomplete(props: T.Props) {
     if (!val) {
       setCurrentFilter('');
       setFilteredItems([]);
+      setItemsWithoutFilter(items ?? []);
       setCurrentOffset(0);
       setTotalCount(0);
     } else {
@@ -121,12 +140,7 @@ export function Autocomplete(props: T.Props) {
     onSelect: index => handleSelect(displayItems[index]),
   });
 
-  const fetchOptions = debounce(async (filter: string, offset: number) => {
-    if (!filter) {
-      setFilteredItems([]);
-      return;
-    }
-
+  const fetchOptionsCore = useCallback(async (filter: string, offset: number) => {
     const requestKey = `${filter}:${offset}`;
     currentRequest.current = requestKey;
 
@@ -137,26 +151,44 @@ export function Autocomplete(props: T.Props) {
     }
 
     try {
-      const newOptions = await getOptions(filter, offset);
+      const result = await getOptions(filter, offset);
+      const newOptions = result.items;
+      const total = result.total;
 
       if (!isMounted.current) return;
       if (currentRequest.current !== requestKey) return;
 
-      if (offset === 0) {
-        setFilteredItems(newOptions);
-        setCurrentOffset(newOptions.length);
-        setTotalCount(
-          newOptions.length + (newOptions.length === pageSize ? 1 : 0)
-        );
+      const newTotal = getTotalCount(
+        total,
+        newOptions.length,
+        offset + newOptions.length,
+        pageSize
+      );
+
+      if (filter) {
+        if (offset === 0) {
+          setFilteredItems(newOptions);
+        } else {
+          setFilteredItems(prev => [...prev, ...newOptions]);
+        }
+        setCurrentOffset(offset + newOptions.length);
+        setTotalCount(newTotal);
       } else {
-        setFilteredItems(prev => [...prev, ...newOptions]);
-        const newOffset = offset + newOptions.length;
-        setCurrentOffset(newOffset);
-        setTotalCount(newOffset + (newOptions.length === pageSize ? 1 : 0));
+        if (offset === 0) {
+          setItemsWithoutFilter(newOptions);
+        } else {
+          setItemsWithoutFilter(prev => [...prev, ...newOptions]);
+        }
+        setCurrentOffset(offset + newOptions.length);
+        setTotalCount(newTotal);
       }
     } catch (error) {
       if (offset === 0) {
-        setFilteredItems([]);
+        if (filter) {
+          setFilteredItems([]);
+        } else {
+          setItemsWithoutFilter(items ?? []);
+        }
         setCurrentOffset(0);
         setTotalCount(0);
       }
@@ -164,11 +196,24 @@ export function Autocomplete(props: T.Props) {
       setIsLoading(false);
       setIsLoadingMore(false);
     }
-  }, debounceDelay);
+  }, [getOptions, isMounted, pageSize, items]);
+
+  const fetchOptions = useMemo(
+    () => debounce(fetchOptionsCore, debounceDelay),
+    [fetchOptionsCore, debounceDelay]
+  );
 
   const handleScrollEnd = useCallback(() => {
-    if (currentFilter && hasMore && !isLoading && !isLoadingMore) {
-      fetchOptions(currentFilter, currentOffset);
+    if (!hasMore || isLoading || isLoadingMore) return;
+    const filter = currentFilter;
+    const offset = currentOffset;
+    if (offset > 0) {
+      setIsLoadingMore(true);
+      requestAnimationFrame(() => {
+        fetchOptionsCore(filter, offset);
+      });
+    } else {
+      fetchOptionsCore(filter, offset);
     }
   }, [
     currentFilter,
@@ -176,7 +221,7 @@ export function Autocomplete(props: T.Props) {
     isLoading,
     isLoadingMore,
     currentOffset,
-    fetchOptions,
+    fetchOptionsCore,
   ]);
 
   useEffect(() => {
@@ -186,6 +231,7 @@ export function Autocomplete(props: T.Props) {
     if (!value) {
       setCurrentFilter('');
       setFilteredItems([]);
+      setItemsWithoutFilter(items ?? []);
       setCurrentOffset(0);
       setTotalCount(0);
     } else if (isFocusedRef.current) {
@@ -194,6 +240,19 @@ export function Autocomplete(props: T.Props) {
       fetchOptions(value, 0);
     }
   }, [value]);
+
+  useEffect(() => {
+    if (!currentFilter && items?.length) {
+      setItemsWithoutFilter(items);
+    }
+  }, [currentFilter, items]);
+
+  useEffect(() => {
+    const open = isOpen ?? isFocused;
+    if (open && !currentFilter && items?.length && totalCount === 0) {
+      fetchOptionsCore('', 0);
+    }
+  }, [isOpen, isFocused, currentFilter, items?.length, totalCount, fetchOptionsCore]);
 
   const renderItem = useCallback(
     (itemProps: {
@@ -243,7 +302,9 @@ export function Autocomplete(props: T.Props) {
   const optionsList = useMemo(() => {
     if (!displayItems.length) return null;
 
-    const computedTotalCount = currentFilter ? totalCount : displayItems.length;
+    const computedTotalCount =
+      totalCount > 0 ? totalCount : displayItems.length;
+
     return (
       <VirtualizedListScroll
         className={cn(S.options, menuProps.className)}
@@ -260,10 +321,10 @@ export function Autocomplete(props: T.Props) {
         onScrollEnd={handleScrollEnd}
         renderItem={renderItem}
         contentAfter={
-          hasMore &&
-          isLoadingMore && (
+          hasMore && (
             <div style={{ padding: '8px 12px', textAlign: 'center' }}>
-              <Shimmer size={size} round={round} />
+              {isLoadingMore && <Shimmer size={size} round={round} />}
+              Loading...
             </div>
           )
         }
@@ -272,7 +333,6 @@ export function Autocomplete(props: T.Props) {
   }, [
     displayItems,
     focusedIndex,
-    currentFilter,
     totalCount,
     hasMore,
     isLoadingMore,
@@ -283,6 +343,7 @@ export function Autocomplete(props: T.Props) {
     size,
     round,
     menuProps.className,
+    scrollProps,
   ]);
 
   return (
