@@ -56,6 +56,7 @@ export function Autocomplete(props: T.Props) {
   const [currentFilter, setCurrentFilter] = useState('');
   const [currentOffset, setCurrentOffset] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [scrollTop, setScrollTop] = useState<number | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isOpen, setIsOpen] = useState(props.isOpen);
@@ -108,9 +109,11 @@ export function Autocomplete(props: T.Props) {
       setItemsWithoutFilter(items ?? []);
       setCurrentOffset(0);
       setTotalCount(0);
+      setScrollTop(0); // Reset scroll when filter is cleared
     } else {
       setCurrentFilter(val);
       setCurrentOffset(0);
+      setScrollTop(0); // Reset scroll when filter changes
       fetchOptions(val, 0);
     }
 
@@ -168,6 +171,7 @@ export function Autocomplete(props: T.Props) {
       if (filter) {
         if (offset === 0) {
           setFilteredItems(newOptions);
+          setScrollTop(0); // Reset scroll when new filter results load
         } else {
           setFilteredItems(prev => [...prev, ...newOptions]);
         }
@@ -176,11 +180,19 @@ export function Autocomplete(props: T.Props) {
       } else {
         if (offset === 0) {
           setItemsWithoutFilter(newOptions);
+          setScrollTop(0); // Reset scroll when loading initial items
         } else {
           setItemsWithoutFilter(prev => [...prev, ...newOptions]);
         }
         setCurrentOffset(offset + newOptions.length);
         setTotalCount(newTotal);
+      }
+      
+      // Clear scrollTop after reset to allow normal scrolling
+      if (offset === 0) {
+        requestAnimationFrame(() => {
+          setScrollTop(undefined);
+        });
       }
     } catch (error) {
       if (offset === 0) {
@@ -234,9 +246,11 @@ export function Autocomplete(props: T.Props) {
       setItemsWithoutFilter(items ?? []);
       setCurrentOffset(0);
       setTotalCount(0);
+      setScrollTop(0); // Reset scroll when value is cleared
     } else if (isFocusedRef.current) {
       setCurrentFilter(value);
       setCurrentOffset(0);
+      setScrollTop(0); // Reset scroll when filter changes
       fetchOptions(value, 0);
     }
   }, [value]);
@@ -318,6 +332,7 @@ export function Autocomplete(props: T.Props) {
         totalCount={computedTotalCount}
         overlapCount={10}
         pageSize={pageSize}
+        scrollTop={scrollTop}
         onScrollEnd={handleScrollEnd}
         renderItem={renderItem}
         contentAfter={
@@ -344,6 +359,7 @@ export function Autocomplete(props: T.Props) {
     round,
     menuProps.className,
     scrollProps,
+    scrollTop,
   ]);
 
   return (
