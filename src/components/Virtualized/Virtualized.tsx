@@ -188,7 +188,9 @@ class Virtualized extends Component<T.Props, T.State> {
     const { itemsCount, totalCount, pageSize, onScrollEnd } = this.props;
 
     if (itemsCount === totalCount) return;
-    if (itemsCount < this.lastScrollEndIndex) return;
+    if (itemsCount < this.lastScrollEndIndex) {
+      this.lastScrollEndIndex = 0; // Reset when list shrinks (e.g. filter cleared)
+    }
 
     this.lastScrollEndIndex = Math.min(itemsCount + pageSize, totalCount);
     onScrollEnd?.();
