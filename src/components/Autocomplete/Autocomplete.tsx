@@ -64,6 +64,7 @@ export function Autocomplete(props: T.Props) {
   const [isOpen, setIsOpen] = useState(props.isOpen);
   const [isFocused, setIsFocused] = useState(isOpen);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
   const isFocusedRef = useRef(false);
   const searchValRef = useRef(value);
   const [searchValue, _setSearchValue] = useState(value);
@@ -77,11 +78,16 @@ export function Autocomplete(props: T.Props) {
   // @ts-ignore
   const inputRef = useRef<Input>(null);
 
+  const inputDisplayValue =
+    selectable && !isFocused && selectedLabel != null
+      ? selectedLabel
+      : searchValue;
+
   const displayItems = currentFilter
     ? filteredItems
     : itemsWithoutFilter.length
-    ? itemsWithoutFilter
-    : items ?? [];
+      ? itemsWithoutFilter
+      : (items ?? []);
   const displayCount = displayItems.length;
   const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
@@ -126,6 +132,7 @@ export function Autocomplete(props: T.Props) {
   const handleSelect = (option: T.Option) => {
     if (selectable) {
       setSelectedId(option.id);
+      setSelectedLabel(option.label);
       onSelect?.(option);
       return;
     }
@@ -270,6 +277,13 @@ export function Autocomplete(props: T.Props) {
   }, [value]);
 
   useEffect(() => {
+    if (selectable && !value) {
+      setSelectedId(null);
+      setSelectedLabel(null);
+    }
+  }, [selectable, value]);
+
+  useEffect(() => {
     if (!currentFilter && items?.length) {
       setItemsWithoutFilter(items);
     }
@@ -411,11 +425,14 @@ export function Autocomplete(props: T.Props) {
           size={size}
           round={round}
           {...inputProps}
-          value={searchValue}
+          value={inputDisplayValue}
           onChange={handleInputChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          className={inputProps.className}
+          className={cn(
+            inputProps.className,
+            selectable && !isFocused && S.inputSelectableDisplay
+          )}
         />
       }
       content={optionsList}
