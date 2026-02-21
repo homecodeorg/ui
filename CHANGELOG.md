@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.7](https://github.com/foreverido/uilib/compare/v4.30.6...v4.30.7) (2026-02-21)
+
+
+### Features
+
+* Autocomplete - Add selectable mode and loading placeholder ([c1a3df7](https://github.com/foreverido/uilib/commit/c1a3df7b1ccbfa2bf2f37e9267ecfe9f77e2ebc7))
+* Autocomplete - Reset scroll when filter changes ([cb9b67c](https://github.com/foreverido/uilib/commit/cb9b67ce072069a83c09d695d365c469b464ffbe))
+* DatePickerInput - Add controlled/uncontrolled state management ([3314af6](https://github.com/foreverido/uilib/commit/3314af6c4cf35d94dd2e570d821e307f3206b4fa))
+
+
+### Bug Fixes
+
+* Autocomplete - Load more on scroll without filter and loading placeholder race ([1050701](https://github.com/foreverido/uilib/commit/1050701ff1be3a617b0038e832cb55a770f73f6d))
+* Virtualized - Fix onScrollEnd not firing when list shrinks ([da04178](https://github.com/foreverido/uilib/commit/da0417834606ebd8b5cc493cb62dacef7f807f0c))
+
 ### [4.30.6](https://github.com/foreverido/uilib/compare/v4.30.5...v4.30.6) (2026-02-16)
 
 
