@@ -34,6 +34,8 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   round?: boolean;
   blur?: boolean;
   selectable?: boolean;
+  defaultSelected?: string;
+  scrollToSelected?: boolean;
   renderItem?: (props: RenderItemProps) => React.ReactElement;
   loadingPlaceholder?: React.ReactNode;
 };

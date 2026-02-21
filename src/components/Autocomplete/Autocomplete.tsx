@@ -42,6 +42,8 @@ export function Autocomplete(props: T.Props) {
     round = false,
     blur = false,
     selectable = false,
+    defaultSelected,
+    scrollToSelected = false,
     inputProps = {},
     popupProps = {},
     menuProps = {},
@@ -75,6 +77,7 @@ export function Autocomplete(props: T.Props) {
 
   const currentRequest = useRef('');
   const savedScrollTopRef = useRef<number | undefined>(undefined);
+  const defaultSelectedAppliedRef = useRef(false);
   // @ts-ignore
   const inputRef = useRef<Input>(null);
 
@@ -95,10 +98,12 @@ export function Autocomplete(props: T.Props) {
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
     setIsFocused(true);
-    const saved = savedScrollTopRef.current;
-    if (saved != null && saved > 0) {
-      setScrollTop(saved);
-      requestAnimationFrame(() => setScrollTop(undefined));
+    if (!scrollToSelected || !selectable || !selectedId) {
+      const saved = savedScrollTopRef.current;
+      if (saved != null && saved > 0) {
+        setScrollTop(saved);
+        requestAnimationFrame(() => setScrollTop(undefined));
+      }
     }
     inputProps?.onFocus?.(e);
   };
@@ -297,8 +302,25 @@ export function Autocomplete(props: T.Props) {
     if (selectable && !value) {
       setSelectedId(null);
       setSelectedLabel(null);
+      defaultSelectedAppliedRef.current = false;
     }
   }, [selectable, value]);
+
+  useEffect(() => {
+    if (
+      selectable &&
+      defaultSelected &&
+      !defaultSelectedAppliedRef.current &&
+      displayItems.length
+    ) {
+      const item = displayItems.find(o => o.id === defaultSelected);
+      if (item) {
+        defaultSelectedAppliedRef.current = true;
+        setSelectedId(item.id);
+        setSelectedLabel(item.label);
+      }
+    }
+  }, [selectable, defaultSelected, displayItems]);
 
   useEffect(() => {
     if (!currentFilter && items?.length) {
@@ -319,6 +341,7 @@ export function Autocomplete(props: T.Props) {
     totalCount,
     fetchOptionsCore,
   ]);
+
 
   const renderItem = useCallback(
     (itemProps: {
@@ -384,9 +407,20 @@ export function Autocomplete(props: T.Props) {
     const computedTotalCount =
       totalCount > 0 ? totalCount : displayItems.length;
 
+    const open = isOpen ?? isFocused;
+    let initialScrollTop: number | undefined;
+    if (open && scrollToSelected && selectable && selectedId) {
+      const idx = displayItems.findIndex(o => o.id === selectedId);
+      initialScrollTop =
+        idx >= 0 ? Math.max(0, idx * itemHeight - itemHeight) : undefined;
+    }
+
     return (
       <VirtualizedListScroll
         {...(selectable && { id: selectedId ?? 'none' })}
+        {...(typeof initialScrollTop === 'number' && {
+          initialScrollTop,
+        })}
         className={cn(S.options, menuProps.className)}
         scrollProps={{
           y: true,
@@ -424,6 +458,9 @@ export function Autocomplete(props: T.Props) {
     scrollTop,
     selectable,
     selectedId,
+    isOpen,
+    isFocused,
+    scrollToSelected,
     LoadingPlaceholder,
   ]);
 

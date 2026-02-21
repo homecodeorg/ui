@@ -26,6 +26,8 @@ export default () => {
   const [value, setValue] = useState('');
   const defaultOptions = useMemo(() => allItems.slice(0, PAGE_SIZE), []);
 
+  // defaultSelected: Option 10 is pre-selected by id
+  // scrollToSelected: when opening dropdown, list scrolls to show selected item
   return (
     <Autocomplete
       items={defaultOptions}
@@ -34,6 +36,8 @@ export default () => {
       getOptions={getOptions}
       pageSize={PAGE_SIZE}
       selectable
+      defaultSelected="10"
+      scrollToSelected
       placeholder="Type to search..."
       renderItem={({
         option,
