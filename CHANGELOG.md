@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.8](https://github.com/foreverido/uilib/compare/v4.30.7...v4.30.8) (2026-02-21)
+
+
+### Features
+
+* Autocomplete - Selectable display mode ([8be6cb3](https://github.com/foreverido/uilib/commit/8be6cb31a61ab603341bee1f6ffff543bf16b083))
+
 ### [4.30.7](https://github.com/foreverido/uilib/compare/v4.30.6...v4.30.7) (2026-02-21)
 
 
