@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Autocomplete } from 'uilib';
+import { Autocomplete, Menu } from 'uilib';
 
 const PAGE_SIZE = 20;
 const TOTAL_ITEMS = 200; // Large dataset to demonstrate pagination
@@ -28,10 +28,6 @@ const getOptions = (filter, offset) => {
       // Return paginated slice
       const paginated = filtered.slice(offset, offset + PAGE_SIZE);
 
-      console.log(
-        `Loading page: items=${paginated.length}, total=${filtered.length}`
-      );
-
       resolve({
         items: paginated,
         total: filtered.length,
@@ -53,6 +49,24 @@ export default () => {
       getOptions={getOptions}
       pageSize={PAGE_SIZE}
       placeholder="Type to search or scroll down to load more..."
+      renderItem={({
+        option,
+        className,
+        style,
+        focused,
+        onClick,
+        onMouseEnter,
+      }) => (
+        <Menu.Item
+          className={className}
+          style={{ ...style, height: '40px' }}
+          focused={focused}
+          onClick={onClick}
+          onMouseEnter={onMouseEnter}
+        >
+          {option.label}
+        </Menu.Item>
+      )}
     />
   );
 };

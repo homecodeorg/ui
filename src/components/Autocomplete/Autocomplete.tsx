@@ -42,10 +42,12 @@ export function Autocomplete(props: T.Props) {
     debounceDelay = 300,
     round = false,
     blur = false,
+    selectable = false,
     inputProps = {},
     popupProps = {},
     menuProps = {},
     scrollProps = {},
+    loadingPlaceholder,
   } = props;
 
   const isMounted = useIsMounted();
@@ -61,6 +63,7 @@ export function Autocomplete(props: T.Props) {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isOpen, setIsOpen] = useState(props.isOpen);
   const [isFocused, setIsFocused] = useState(isOpen);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
   const isFocusedRef = useRef(false);
   const searchValRef = useRef(value);
   const [searchValue, _setSearchValue] = useState(value);
@@ -77,8 +80,8 @@ export function Autocomplete(props: T.Props) {
   const displayItems = currentFilter
     ? filteredItems
     : itemsWithoutFilter.length
-      ? itemsWithoutFilter
-      : items ?? [];
+    ? itemsWithoutFilter
+    : items ?? [];
   const displayCount = displayItems.length;
   const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
@@ -121,19 +124,27 @@ export function Autocomplete(props: T.Props) {
   };
 
   const handleSelect = (option: T.Option) => {
+    if (selectable) {
+      setSelectedId(option.id);
+      onSelect?.(option);
+      return;
+    }
+
     setSearchValue(option.label);
-    setCurrentFilter('');
+    setCurrentFilter(option.label);
     setFilteredItems([]);
     setCurrentOffset(0);
     setTotalCount(0);
-    onSelect(option);
+    setScrollTop(0);
+    fetchOptionsCore(option.label, 0);
+    onSelect?.(option);
 
     // set input caret to the end
     requestAnimationFrame(() => {
       const input = inputRef.current;
       if (!input) return;
       input.focus();
-      input.setSelectionRange(value.length, value.length);
+      input.setSelectionRange(option.label.length, option.label.length);
     });
   };
 
@@ -143,72 +154,75 @@ export function Autocomplete(props: T.Props) {
     onSelect: index => handleSelect(displayItems[index]),
   });
 
-  const fetchOptionsCore = useCallback(async (filter: string, offset: number) => {
-    const requestKey = `${filter}:${offset}`;
-    currentRequest.current = requestKey;
+  const fetchOptionsCore = useCallback(
+    async (filter: string, offset: number) => {
+      const requestKey = `${filter}:${offset}`;
+      currentRequest.current = requestKey;
 
-    if (offset === 0) {
-      setIsLoading(true);
-    } else {
-      setIsLoadingMore(true);
-    }
-
-    try {
-      const result = await getOptions(filter, offset);
-      const newOptions = result.items;
-      const total = result.total;
-
-      if (!isMounted.current) return;
-      if (currentRequest.current !== requestKey) return;
-
-      const newTotal = getTotalCount(
-        total,
-        newOptions.length,
-        offset + newOptions.length,
-        pageSize
-      );
-
-      if (filter) {
-        if (offset === 0) {
-          setFilteredItems(newOptions);
-          setScrollTop(0); // Reset scroll when new filter results load
-        } else {
-          setFilteredItems(prev => [...prev, ...newOptions]);
-        }
-        setCurrentOffset(offset + newOptions.length);
-        setTotalCount(newTotal);
+      if (offset === 0) {
+        setIsLoading(true);
       } else {
-        if (offset === 0) {
-          setItemsWithoutFilter(newOptions);
-          setScrollTop(0); // Reset scroll when loading initial items
-        } else {
-          setItemsWithoutFilter(prev => [...prev, ...newOptions]);
-        }
-        setCurrentOffset(offset + newOptions.length);
-        setTotalCount(newTotal);
+        setIsLoadingMore(true);
       }
-      
-      // Clear scrollTop after reset to allow normal scrolling
-      if (offset === 0) {
-        requestAnimationFrame(() => {
-          setScrollTop(undefined);
-        });
-      }
-    } catch (error) {
-      if (offset === 0) {
+
+      try {
+        const result = await getOptions(filter, offset);
+        const newOptions = result.items;
+        const total = result.total;
+
+        if (!isMounted.current) return;
+        if (currentRequest.current !== requestKey) return;
+
+        const newTotal = getTotalCount(
+          total,
+          newOptions.length,
+          offset + newOptions.length,
+          pageSize
+        );
+
         if (filter) {
-          setFilteredItems([]);
+          if (offset === 0) {
+            setFilteredItems(newOptions);
+            setScrollTop(0); // Reset scroll when new filter results load
+          } else {
+            setFilteredItems(prev => [...prev, ...newOptions]);
+          }
+          setCurrentOffset(offset + newOptions.length);
+          setTotalCount(newTotal);
         } else {
-          setItemsWithoutFilter(items ?? []);
+          if (offset === 0) {
+            setItemsWithoutFilter(newOptions);
+            setScrollTop(0); // Reset scroll when loading initial items
+          } else {
+            setItemsWithoutFilter(prev => [...prev, ...newOptions]);
+          }
+          setCurrentOffset(offset + newOptions.length);
+          setTotalCount(newTotal);
         }
-        setCurrentOffset(0);
-        setTotalCount(0);
+
+        // Clear scrollTop after reset to allow normal scrolling
+        if (offset === 0) {
+          requestAnimationFrame(() => {
+            setScrollTop(undefined);
+          });
+        }
+      } catch (error) {
+        if (offset === 0) {
+          if (filter) {
+            setFilteredItems([]);
+          } else {
+            setItemsWithoutFilter(items ?? []);
+          }
+          setCurrentOffset(0);
+          setTotalCount(0);
+        }
+      } finally {
+        setIsLoading(false);
+        setIsLoadingMore(false);
       }
-    } finally {
-      setIsLoading(false);
-      setIsLoadingMore(false);
-    }
-  }, [getOptions, isMounted, pageSize, items]);
+    },
+    [getOptions, isMounted, pageSize, items]
+  );
 
   const fetchOptions = useMemo(
     () => debounce(fetchOptionsCore, debounceDelay),
@@ -266,7 +280,14 @@ export function Autocomplete(props: T.Props) {
     if (open && !currentFilter && items?.length && totalCount === 0) {
       fetchOptionsCore('', 0);
     }
-  }, [isOpen, isFocused, currentFilter, items?.length, totalCount, fetchOptionsCore]);
+  }, [
+    isOpen,
+    isFocused,
+    currentFilter,
+    items?.length,
+    totalCount,
+    fetchOptionsCore,
+  ]);
 
   const renderItem = useCallback(
     (itemProps: {
@@ -283,6 +304,7 @@ export function Autocomplete(props: T.Props) {
         className: cn(S.option, itemProps.className),
         style: itemProps.style,
         focused: focusedIndex === itemProps.key,
+        isSelected: selectable && option.id === selectedId,
         onClick: () => handleSelect(option),
         onMouseEnter: () => setFocusedIndex(itemProps.key),
       };
@@ -295,6 +317,7 @@ export function Autocomplete(props: T.Props) {
         <Menu.Item
           {...itemProps}
           focused={itemPropsForRender.focused}
+          selected={itemPropsForRender.isSelected}
           className={itemPropsForRender.className}
           onClick={itemPropsForRender.onClick}
           onMouseEnter={itemPropsForRender.onMouseEnter}
@@ -307,20 +330,32 @@ export function Autocomplete(props: T.Props) {
     [
       displayItems,
       focusedIndex,
+      selectedId,
+      selectable,
       handleSelect,
       setFocusedIndex,
       props.renderItem,
     ]
   );
 
+  const LoadingPlaceholder = loadingPlaceholder ?? (
+    <div className={S.loadingPlaceholder}>
+      {isLoadingMore && <Shimmer size={size} round={round} />}
+      Loading...
+    </div>
+  );
+
   const optionsList = useMemo(() => {
-    if (!displayItems.length) return null;
+    if (!displayItems.length) {
+      return !selectable && isLoading ? LoadingPlaceholder : null;
+    }
 
     const computedTotalCount =
       totalCount > 0 ? totalCount : displayItems.length;
 
     return (
       <VirtualizedListScroll
+        {...(selectable && { id: selectedId ?? 'none' })}
         className={cn(S.options, menuProps.className)}
         scrollProps={{
           y: true,
@@ -335,14 +370,7 @@ export function Autocomplete(props: T.Props) {
         scrollTop={scrollTop}
         onScrollEnd={handleScrollEnd}
         renderItem={renderItem}
-        contentAfter={
-          hasMore && (
-            <div style={{ padding: '8px 12px', textAlign: 'center' }}>
-              {isLoadingMore && <Shimmer size={size} round={round} />}
-              Loading...
-            </div>
-          )
-        }
+        contentAfter={hasMore && LoadingPlaceholder}
       />
     );
   }, [
@@ -350,6 +378,7 @@ export function Autocomplete(props: T.Props) {
     focusedIndex,
     totalCount,
     hasMore,
+    isLoading,
     isLoadingMore,
     itemHeight,
     pageSize,
@@ -360,6 +389,9 @@ export function Autocomplete(props: T.Props) {
     menuProps.className,
     scrollProps,
     scrollTop,
+    selectable,
+    selectedId,
+    LoadingPlaceholder,
   ]);
 
   return (
@@ -373,23 +405,18 @@ export function Autocomplete(props: T.Props) {
       direction="bottom"
       {...popupProps}
       trigger={
-        <div className={inputWrapperClassName}>
-          <Input
-            ref={inputRef}
-            // @ts-ignore
-            size={size}
-            round={round}
-            {...inputProps}
-            value={searchValue}
-            onChange={handleInputChange}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            className={inputProps.className}
-          />
-          {isLoading && (
-            <Shimmer className={S.shimmer} size={size} round={round} />
-          )}
-        </div>
+        <Input
+          ref={inputRef}
+          // @ts-ignore
+          size={size}
+          round={round}
+          {...inputProps}
+          value={searchValue}
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={inputProps.className}
+        />
       }
       content={optionsList}
       contentProps={{

@@ -19,8 +19,11 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   size?: Size;
   value: Value;
   isOpen?: boolean;
-  getOptions: (filter: string, offset: number) => Promise<{items: Option[], total?: number}>;
-  onSelect: (option: Option) => void;
+  getOptions: (
+    filter: string,
+    offset: number
+  ) => Promise<{ items: Option[]; total?: number }>;
+  onSelect?: (option: Option) => void;
   items?: Option[];
   itemHeight?: number;
   pageSize?: number;
@@ -31,7 +34,9 @@ export type Props = FormControl<Value, HTMLInputElement> & {
   menuProps?: Partial<MenuProps>;
   round?: boolean;
   blur?: boolean;
+  selectable?: boolean;
   renderItem?: (props: RenderItemProps) => React.ReactElement;
+  loadingPlaceholder?: React.ReactNode;
 };
 
 export type RenderItemProps = {
@@ -40,6 +45,7 @@ export type RenderItemProps = {
   className?: string;
   style?: React.CSSProperties;
   focused: boolean;
+  isSelected: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
 };

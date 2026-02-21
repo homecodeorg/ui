@@ -1,7 +1,8 @@
 import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
-import example from '!!raw-loader!./Example';
+import exampleFilterable from '!!raw-loader!./Filterable';
+import exampleSelectable from '!!raw-loader!./Selectable';
 
 const Docs = () => (
   <>
@@ -21,6 +22,13 @@ export default () => (
   <ComponentLayout
     name="Autocomplete"
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    examples={[
+      { id: 'filterable', label: 'Filterable', code: exampleFilterable },
+      {
+        id: 'selectable',
+        label: 'Selectable',
+        code: exampleSelectable,
+      },
+    ]}
   />
 );
