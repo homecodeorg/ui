@@ -15,7 +15,6 @@ export type Value = string;
 
 export type Props = FormControl<Value, HTMLInputElement> & {
   className?: string;
-  inputWrapperClassName?: string;
   size?: Size;
   value: Value;
   isOpen?: boolean;

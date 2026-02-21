@@ -30,7 +30,6 @@ const getTotalCount = (
 export function Autocomplete(props: T.Props) {
   const {
     className,
-    inputWrapperClassName,
     value,
     onChange,
     size = 'm' as Size,
@@ -48,6 +47,7 @@ export function Autocomplete(props: T.Props) {
     menuProps = {},
     scrollProps = {},
     loadingPlaceholder,
+    isOpen,
   } = props;
 
   const isMounted = useIsMounted();
@@ -61,7 +61,6 @@ export function Autocomplete(props: T.Props) {
   const [scrollTop, setScrollTop] = useState<number | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [isOpen, setIsOpen] = useState(props.isOpen);
   const [isFocused, setIsFocused] = useState(isOpen);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedLabel, setSelectedLabel] = useState<string | null>(null);
@@ -75,6 +74,7 @@ export function Autocomplete(props: T.Props) {
   };
 
   const currentRequest = useRef('');
+  const savedScrollTopRef = useRef<number | undefined>(undefined);
   // @ts-ignore
   const inputRef = useRef<Input>(null);
 
@@ -86,8 +86,8 @@ export function Autocomplete(props: T.Props) {
   const displayItems = currentFilter
     ? filteredItems
     : itemsWithoutFilter.length
-      ? itemsWithoutFilter
-      : (items ?? []);
+    ? itemsWithoutFilter
+    : items ?? [];
   const displayCount = displayItems.length;
   const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
@@ -95,6 +95,11 @@ export function Autocomplete(props: T.Props) {
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
     setIsFocused(true);
+    const saved = savedScrollTopRef.current;
+    if (saved != null && saved > 0) {
+      setScrollTop(saved);
+      requestAnimationFrame(() => setScrollTop(undefined));
+    }
     inputProps?.onFocus?.(e);
   };
 
@@ -113,6 +118,7 @@ export function Autocomplete(props: T.Props) {
     onChange(e, val);
 
     if (!val) {
+      savedScrollTopRef.current = undefined;
       setCurrentFilter('');
       setFilteredItems([]);
       setItemsWithoutFilter(items ?? []);
@@ -120,6 +126,7 @@ export function Autocomplete(props: T.Props) {
       setTotalCount(0);
       setScrollTop(0); // Reset scroll when filter is cleared
     } else {
+      savedScrollTopRef.current = undefined;
       setCurrentFilter(val);
       setCurrentOffset(0);
       setScrollTop(0); // Reset scroll when filter changes
@@ -142,7 +149,6 @@ export function Autocomplete(props: T.Props) {
     setFilteredItems([]);
     setCurrentOffset(0);
     setTotalCount(0);
-    setScrollTop(0);
     fetchOptionsCore(option.label, 0);
     onSelect?.(option);
 
@@ -189,6 +195,7 @@ export function Autocomplete(props: T.Props) {
 
         if (filter) {
           if (offset === 0) {
+            savedScrollTopRef.current = undefined;
             setFilteredItems(newOptions);
             setScrollTop(0); // Reset scroll when new filter results load
           } else {
@@ -198,6 +205,7 @@ export function Autocomplete(props: T.Props) {
           setTotalCount(newTotal);
         } else {
           if (offset === 0) {
+            savedScrollTopRef.current = undefined;
             setItemsWithoutFilter(newOptions);
             setScrollTop(0); // Reset scroll when loading initial items
           } else {
@@ -236,6 +244,13 @@ export function Autocomplete(props: T.Props) {
     [fetchOptionsCore, debounceDelay]
   );
 
+  const handleScroll = useCallback(
+    ({ scrollTop: top }: { scrollTop: number }) => {
+      savedScrollTopRef.current = top;
+    },
+    []
+  );
+
   const handleScrollEnd = useCallback(() => {
     if (!hasMore || isLoading || isLoadingMore) return;
     const filter = currentFilter;
@@ -262,6 +277,7 @@ export function Autocomplete(props: T.Props) {
     setSearchValue(value);
 
     if (!value) {
+      savedScrollTopRef.current = undefined;
       setCurrentFilter('');
       setFilteredItems([]);
       setItemsWithoutFilter(items ?? []);
@@ -269,6 +285,7 @@ export function Autocomplete(props: T.Props) {
       setTotalCount(0);
       setScrollTop(0); // Reset scroll when value is cleared
     } else if (isFocusedRef.current) {
+      savedScrollTopRef.current = undefined;
       setCurrentFilter(value);
       setCurrentOffset(0);
       setScrollTop(0); // Reset scroll when filter changes
@@ -382,6 +399,7 @@ export function Autocomplete(props: T.Props) {
         overlapCount={10}
         pageSize={pageSize}
         scrollTop={scrollTop}
+        onScroll={handleScroll}
         onScrollEnd={handleScrollEnd}
         renderItem={renderItem}
         contentAfter={hasMore && LoadingPlaceholder}
@@ -396,6 +414,7 @@ export function Autocomplete(props: T.Props) {
     isLoadingMore,
     itemHeight,
     pageSize,
+    handleScroll,
     handleScrollEnd,
     renderItem,
     size,
