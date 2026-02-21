@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.10](https://github.com/foreverido/uilib/compare/v4.30.9...v4.30.10) (2026-02-21)
+
+
+### Features
+
+* Autocomplete - Add defaultSelected and scrollToSelected ([7834a0b](https://github.com/foreverido/uilib/commit/7834a0b46fda0db9fde3a38d8a74f01723ba46b0))
+
 ### [4.30.9](https://github.com/foreverido/uilib/compare/v4.30.8...v4.30.9) (2026-02-21)
 
 
