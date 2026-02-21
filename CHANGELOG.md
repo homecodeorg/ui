@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.9](https://github.com/foreverido/uilib/compare/v4.30.8...v4.30.9) (2026-02-21)
+
+
+### Bug Fixes
+
+* Autocomplete - Preserve scroll position when popup reopens ([0c6f1d1](https://github.com/foreverido/uilib/commit/0c6f1d13c0044bde24a43cbf0e78c823f47c068f))
+
 ### [4.30.8](https://github.com/foreverido/uilib/compare/v4.30.7...v4.30.8) (2026-02-21)
 
 
