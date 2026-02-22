@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.11](https://github.com/foreverido/uilib/compare/v4.30.10...v4.30.11) (2026-02-22)
+
+
+### Features
+
+* Select2 - Add selectedChipIds prop for chip selection state ([fc8f348](https://github.com/foreverido/uilib/commit/fc8f348a154717dc4b0d01d7d5c14d74d9ba877f))
+
 ### [4.30.10](https://github.com/foreverido/uilib/compare/v4.30.9...v4.30.10) (2026-02-21)
 
 
