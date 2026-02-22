@@ -118,6 +118,8 @@ export type Props = FormControl<Value> &
     hideRequiredStar?: boolean;
     // Tooltip for chip remove button in multiple selection mode
     selectedChipRemoveTooltip?: ReactNode;
+    // Ids of chips that should appear selected (for multi-select highlight)
+    selectedChipIds?: Id[];
   };
 
 export type State = {

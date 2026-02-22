@@ -2,6 +2,7 @@ import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import exampleSelectedChips from '!!raw-loader!./SelectedChips';
 import * as helpers from './helpers';
 
 // const OPTIONS = H.generateOptions();
@@ -53,7 +54,10 @@ export default () => (
   <ComponentLayout
     name={name}
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    examples={[
+      { id: 'demo', label: 'Demo', code: example },
+      { id: 'selected-chips', label: 'Selected Chips', code: exampleSelectedChips },
+    ]}
     scope={{ helpers }}
   />
 );

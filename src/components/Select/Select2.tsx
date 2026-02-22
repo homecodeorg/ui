@@ -53,6 +53,7 @@ export function Select2(props: T.Props) {
     showSelectedCount,
     disableLabel,
     selectedChipRemoveTooltip,
+    selectedChipIds,
   } = props;
   const isMultiple = H.isMultiple(value);
   const closeOnSelect = props.closeOnSelect ?? !isMultiple;
@@ -265,6 +266,7 @@ export function Select2(props: T.Props) {
           className={S.chip}
           key={id}
           size={size}
+          selected={selectedChipIds?.includes(id)}
           onRemove={() => onItemToggle(id)}
           onClick={() => onChipClick?.(id)}
           removeTooltip={selectedChipRemoveTooltip}
