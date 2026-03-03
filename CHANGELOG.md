@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.12](https://github.com/foreverido/uilib/compare/v4.30.11...v4.30.12) (2026-03-03)
+
+
+### Bug Fixes
+
+* Autocomplete - Sync selectedLabel when value prop changes externally ([270596d](https://github.com/foreverido/uilib/commit/270596d09f51afeee1ebe450c3516fabf2a65407))
+
 ### [4.30.11](https://github.com/foreverido/uilib/compare/v4.30.10...v4.30.11) (2026-02-22)
 
 
