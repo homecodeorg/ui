@@ -89,8 +89,8 @@ export function Autocomplete(props: T.Props) {
   const displayItems = currentFilter
     ? filteredItems
     : itemsWithoutFilter.length
-    ? itemsWithoutFilter
-    : items ?? [];
+      ? itemsWithoutFilter
+      : (items ?? []);
   const displayCount = displayItems.length;
   const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
@@ -280,6 +280,9 @@ export function Autocomplete(props: T.Props) {
   useEffect(() => {
     if (typeof value !== 'string') return;
     setSearchValue(value);
+    if (selectable && value) {
+      setSelectedLabel(value);
+    }
 
     if (!value) {
       savedScrollTopRef.current = undefined;
@@ -296,7 +299,7 @@ export function Autocomplete(props: T.Props) {
       setScrollTop(0); // Reset scroll when filter changes
       fetchOptions(value, 0);
     }
-  }, [value]);
+  }, [value, selectable]);
 
   useEffect(() => {
     if (selectable && !value) {
@@ -341,7 +344,6 @@ export function Autocomplete(props: T.Props) {
     totalCount,
     fetchOptionsCore,
   ]);
-
 
   const renderItem = useCallback(
     (itemProps: {

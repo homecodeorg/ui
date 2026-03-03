@@ -3,6 +3,7 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import exampleFilterable from '!!raw-loader!./Filterable';
 import exampleSelectable from '!!raw-loader!./Selectable';
+import exampleExternalValueUpdate from '!!raw-loader!./ExternalValueUpdate';
 
 const Docs = () => (
   <>
@@ -28,6 +29,11 @@ export default () => (
         id: 'selectable',
         label: 'Selectable',
         code: exampleSelectable,
+      },
+      {
+        id: 'external-value-update',
+        label: 'External value update',
+        code: exampleExternalValueUpdate,
       },
     ]}
   />
