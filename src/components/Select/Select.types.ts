@@ -39,7 +39,8 @@ type SelectPopupProps = Omit<
   | 'trigger'
   | 'content'
 > &
-  Partial<{ direction: PopupProps['direction'] }>;
+  Partial<{ direction: PopupProps['direction'] }> &
+  Partial<Pick<PopupProps, 'onOpen' | 'onClose'>>;
 
 type Selected = Record<string, true | Id[]>;
 

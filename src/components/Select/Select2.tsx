@@ -54,6 +54,8 @@ export function Select2(props: T.Props) {
     disableLabel,
     selectedChipRemoveTooltip,
     selectedChipIds,
+    onOpen,
+    onClose,
   } = props;
   const isMultiple = H.isMultiple(value);
   const closeOnSelect = props.closeOnSelect ?? !isMultiple;
@@ -119,7 +121,6 @@ export function Select2(props: T.Props) {
   };
 
   const setItemFocus = index => {
-    console.log('setItemFocus::', index);
     focusedItemId.current = items[index]?.id;
     setFocusedItemIndex(index);
   };
@@ -171,6 +172,9 @@ export function Select2(props: T.Props) {
     if (focusedItemIndex === -1) {
       setItemFocus(0);
     }
+
+    popupProps?.onOpen?.();
+    onOpen?.();
   };
 
   const onPopupClose = () => {
@@ -178,6 +182,9 @@ export function Select2(props: T.Props) {
     setSearchVal('');
     setIsSearchActive(false);
     setItemFocus(0);
+
+    popupProps?.onClose?.();
+    onClose?.();
   };
 
   const onFocus = () => {
