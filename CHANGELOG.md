@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.13](https://github.com/foreverido/uilib/compare/v4.30.12...v4.30.13) (2026-03-22)
+
+
+### Bug Fixes
+
+* Select2 - call onOpen/onClose callbacks ([aaa30f3](https://github.com/foreverido/uilib/commit/aaa30f3464323de15b4fda138a895e58ae39202e))
+
 ### [4.30.12](https://github.com/foreverido/uilib/compare/v4.30.11...v4.30.12) (2026-03-03)
 
 
