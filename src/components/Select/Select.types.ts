@@ -16,6 +16,8 @@ export type Option = {
   sortingKey?: string | number;
   children?: Option[];
   render?: (label: string) => string;
+  /** Applied to the selected chip in multi-select mode */
+  chipClassName?: string;
 };
 
 type Preset = {
@@ -59,6 +61,8 @@ export type Props = FormControl<Value> &
     optionsClassName?: string;
     // CSS class that will be applied to every list options
     optionClassName?: string;
+    // CSS class on chips whose id is in selectedChipIds (multi-select)
+    selectedChipClassName?: string;
     // ReactNode that will be added to to label
     additionalLabel?: ReactNode;
     size?: Size;

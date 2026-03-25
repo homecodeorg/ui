@@ -5,6 +5,8 @@ import example from '!!raw-loader!./Example';
 import exampleSelectedChips from '!!raw-loader!./SelectedChips';
 import * as helpers from './helpers';
 
+import S from './SelectedChips.styl';
+
 // const OPTIONS = H.generateOptions();
 // const TREE_OPTIONS = H.generateTreeOptions();
 // const PRESET_LETER = getRandomItem(OPTIONS).label[0];
@@ -56,9 +58,13 @@ export default () => (
     docs={Docs}
     examples={[
       { id: 'demo', label: 'Demo', code: example },
-      { id: 'selected-chips', label: 'Selected Chips', code: exampleSelectedChips },
+      {
+        id: 'selected-chips',
+        label: 'Selected Chips',
+        code: exampleSelectedChips,
+      },
     ]}
-    scope={{ helpers }}
+    scope={{ helpers, S }}
   />
 );
 

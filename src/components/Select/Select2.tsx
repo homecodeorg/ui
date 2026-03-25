@@ -35,6 +35,7 @@ export function Select2(props: T.Props) {
     size = 'm',
     round,
     optionClassName,
+    selectedChipClassName,
     additionalOptions = [],
     options,
     variant,
@@ -270,7 +271,11 @@ export function Select2(props: T.Props) {
 
       return (
         <Chip
-          className={S.chip}
+          className={cn(
+            S.chip,
+            selectedChipIds?.includes(id) && selectedChipClassName,
+            ids.items[id]?.chipClassName
+          )}
           key={id}
           size={size}
           selected={selectedChipIds?.includes(id)}
@@ -303,8 +308,8 @@ export function Select2(props: T.Props) {
         ? searchVal
         : ''
       : isFocused && isSearchActive
-      ? searchVal
-      : selectedLabel;
+        ? searchVal
+        : selectedLabel;
 
     return (
       <Input

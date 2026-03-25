@@ -2,8 +2,14 @@ import { useState } from 'react';
 import { Select2 } from 'uilib';
 import { OPTIONS } from 'helpers';
 
+import S from './SelectedChips.styl';
+
 export default () => {
-  const [value, setValue] = useState([OPTIONS[0].id, OPTIONS[1].id, OPTIONS[2].id]);
+  const [value, setValue] = useState([
+    OPTIONS[0].id,
+    OPTIONS[1].id,
+    OPTIONS[2].id,
+  ]);
   const [selectedChipIds, setSelectedChipIds] = useState([OPTIONS[1].id]);
 
   return (
@@ -13,6 +19,7 @@ export default () => {
       options={OPTIONS}
       value={value}
       onChange={setValue}
+      selectedChipClassName={S.customChipStyle}
       selectedChipIds={selectedChipIds}
       onChipClick={id =>
         setSelectedChipIds(prev =>
