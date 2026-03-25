@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.14](https://github.com/foreverido/uilib/compare/v4.30.13...v4.30.14) (2026-03-25)
+
+
+### Features
+
+* Select2 - Chip class names from options and selectedChipIds ([fa8dddf](https://github.com/foreverido/uilib/commit/fa8dddf281dd4636b1aea367486e5fe3eb97e1ae))
+
 ### [4.30.13](https://github.com/foreverido/uilib/compare/v4.30.12...v4.30.13) (2026-03-22)
 
 
