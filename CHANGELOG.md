@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.15](https://github.com/foreverido/uilib/compare/v4.30.14...v4.30.15) (2026-03-29)
+
+
+### Bug Fixes
+
+* Select2 - render label ([743ee3e](https://github.com/foreverido/uilib/commit/743ee3ede31974e885d838a9a970b68c7e9ffbc3))
+
 ### [4.30.14](https://github.com/foreverido/uilib/compare/v4.30.13...v4.30.14) (2026-03-25)
 
 
