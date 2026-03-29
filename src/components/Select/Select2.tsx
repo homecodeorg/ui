@@ -330,9 +330,7 @@ export function Select2(props: T.Props) {
     const { label, className, ...rest } = triggerProps;
     const props = omit(rest, ['name', 'inputProps']);
     const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
-    const fullSelectedLabel = [label, additionalLabel].filter(Boolean);
-    // ?
-    // : [selectedLabel, label, additionalLabel].filter(Boolean);
+    const fullSelectedLabel = [selectedLabel, additionalLabel].filter(Boolean);
     const hasSelected = fullSelectedLabel.length > 0;
     const displayLabel = hasSelected ? fullSelectedLabel : label;
     const title = hasSelected && !isMultiple ? fullSelectedLabel : null;
