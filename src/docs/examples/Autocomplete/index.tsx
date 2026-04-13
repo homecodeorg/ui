@@ -1,6 +1,7 @@
 import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
+import exampleSimple from '!!raw-loader!./Simple';
 import exampleFilterable from '!!raw-loader!./Filterable';
 import exampleSelectable from '!!raw-loader!./Selectable';
 import exampleExternalValueUpdate from '!!raw-loader!./ExternalValueUpdate';
@@ -24,6 +25,7 @@ export default () => (
     name="Autocomplete"
     docs={Docs}
     examples={[
+      { id: 'simple', label: 'Simple', code: exampleSimple },
       { id: 'filterable', label: 'Filterable', code: exampleFilterable },
       {
         id: 'selectable',

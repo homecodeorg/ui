@@ -377,7 +377,7 @@ export function Autocomplete(props: T.Props) {
           className={itemPropsForRender.className}
           onClick={itemPropsForRender.onClick}
           onMouseEnter={itemPropsForRender.onMouseEnter}
-          style={itemPropsForRender.style}
+          style={{ ...itemProps.style, height: itemHeight }}
         >
           {option.render ? option.render(option) : option.label}
         </Menu.Item>
@@ -391,6 +391,7 @@ export function Autocomplete(props: T.Props) {
       handleSelect,
       setFocusedIndex,
       props.renderItem,
+      itemHeight,
     ]
   );
 
