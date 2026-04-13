@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.30.16](https://github.com/foreverido/uilib/compare/v4.30.15...v4.30.16) (2026-04-13)
+
+
+### Features
+
+* Autocomplete - Default Menu.Item row height and Simple example ([15408cd](https://github.com/foreverido/uilib/commit/15408cd79ed7259594595e6660586208642430b7))
+
+
+### Bug Fixes
+
+* Autocomplete - Controlled popup isOpen behavior ([518528b](https://github.com/foreverido/uilib/commit/518528b1cc85afbac5519e28cf8fdb4adc4f7d04))
+
 ### [4.30.15](https://github.com/foreverido/uilib/compare/v4.30.14...v4.30.15) (2026-03-29)
 
 
