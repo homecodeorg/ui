@@ -5,6 +5,7 @@ import exampleSimple from '!!raw-loader!./Simple';
 import exampleFilterable from '!!raw-loader!./Filterable';
 import exampleSelectable from '!!raw-loader!./Selectable';
 import exampleExternalValueUpdate from '!!raw-loader!./ExternalValueUpdate';
+import exampleControllablePopup from '!!raw-loader!./ControllablePopup';
 
 const Docs = () => (
   <>
@@ -36,6 +37,11 @@ export default () => (
         id: 'external-value-update',
         label: 'External value update',
         code: exampleExternalValueUpdate,
+      },
+      {
+        id: 'controllable-popup',
+        label: 'Controllable popup',
+        code: exampleControllablePopup,
       },
     ]}
   />

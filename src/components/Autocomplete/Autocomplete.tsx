@@ -94,6 +94,7 @@ export function Autocomplete(props: T.Props) {
   const displayCount = displayItems.length;
   const hasMore = totalCount > 0 && displayCount < totalCount;
   const classes = cn(S.root, className, popupProps.className);
+  const mergedPopupIsOpen = isOpen !== undefined ? isOpen : popupProps?.isOpen;
 
   const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
     isFocusedRef.current = true;
@@ -157,17 +158,23 @@ export function Autocomplete(props: T.Props) {
     fetchOptionsCore(option.label, 0);
     onSelect?.(option);
 
-    // set input caret to the end
-    requestAnimationFrame(() => {
-      const input = inputRef.current;
-      if (!input) return;
-      input.focus();
-      input.setSelectionRange(option.label.length, option.label.length);
-    });
+    // Uncontrolled only: refocusing fires input onFocus; with controlled isOpen that often reopens
+    // the popup right after onSelect closed it (see ControllablePopup pattern).
+    if (isOpen === undefined) {
+      requestAnimationFrame(() => {
+        const input = inputRef.current;
+        if (!input) return;
+        input.focus();
+        input.setSelectionRange(option.label.length, option.label.length);
+      });
+    }
   };
 
+  const isPopupOpenForInput =
+    isOpen !== undefined ? isOpen : isFocused;
+
   const { focusedIndex, setFocusedIndex } = useListKeyboardControl({
-    isActive: isOpen,
+    isActive: isPopupOpenForInput,
     itemsCount: displayItems.length,
     onSelect: index => handleSelect(displayItems[index]),
   });
@@ -470,13 +477,13 @@ export function Autocomplete(props: T.Props) {
   return (
     <Popup
       className={classes}
-      isOpen={isOpen}
       focusControl
       round={round}
       size={size}
       blur={blur}
       direction="bottom"
       {...popupProps}
+      isOpen={mergedPopupIsOpen}
       trigger={
         <Input
           ref={inputRef}
