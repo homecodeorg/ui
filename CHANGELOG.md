@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/foreverido/uilib/compare/v4.30.16...v5.0.0) (2026-04-14)
+
+
+### Features
+
+* Theme - Design refresh, Card, Dialogue, ThemeProvider ([ba34358](https://github.com/foreverido/uilib/commit/ba343586b46ba022f0bfeda9ddd0fa29d12d84e1))
+
 ### [4.30.16](https://github.com/foreverido/uilib/compare/v4.30.15...v4.30.16) (2026-04-13)
 
 
