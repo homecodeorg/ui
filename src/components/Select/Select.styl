@@ -25,7 +25,7 @@ $levelGap = 24px
 
 .triggerArrow
   margin-left .3em
-  margin-right -.3em
+  margin-right .7em
   transition transform .2s ease-out
   flex-shrink 0
 
@@ -94,6 +94,10 @@ $levelGap = 24px
   .isTree & // TODO: remove?
     min-height 36px
 
+  .size-xs &
+    controlPaddingSize('xs')
+    controlFontSize('xs')
+    height '%spx' % ITEM_HEIGHT_BY_SIZE-xs
   .size-s &
     controlPaddingSize('s')
     controlFontSize('s')
@@ -194,10 +198,16 @@ $levelGap = 24px
     width 100px
     height calc(100% + 20px)
 
+  .size-xs &
+    margin-left -34px
+  .size-s &
+    margin-left -37px
   .size-m &
     margin-left -40px
   .size-l &
     margin-left -46px
+  .size-xl &
+    margin-left -52px
 
 .expandIcon
   transition transform .1s ease-out
@@ -217,12 +227,16 @@ $levelGap = 24px
   padding 4px 0
   overflow-y auto
 
+  .size-xs &
+    max-height 90px
   .size-s &
     max-height 108px
   .size-m &
     max-height 180px
   .size-l &
     max-height 220px
+  .size-xl &
+    max-height 260px
 
 .chipContainerInner
   display flex

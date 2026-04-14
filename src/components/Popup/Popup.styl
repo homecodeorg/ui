@@ -68,6 +68,10 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
     backdrop-filter blur(50px)
     background-color var(--decent-color-alpha-500)
 
+  &.size-xs
+    borderRadiusSize('xs')
+    &.round
+      borderRadiusRoundSize('xs')
   &.size-s
     borderRadiusSize('s')
     &.round
@@ -80,11 +84,15 @@ $contentShadow = inset 0 0 0 1px var(--accent-color-alpha-50)
     borderRadiusSize('l')
     &.round
       borderRadiusRoundSize('l')
+  &.size-xl
+    borderRadiusSize('xl')
+    &.round
+      borderRadiusRoundSize('xl')
 
   &.elevation-1
-    box-shadow $contentShadow, 0 0 var(--indent-s) 2px var(--decent-color-alpha-500)
+    box-shadow $contentShadow, 0 0 var(--p-3) 2px var(--decent-color-alpha-500)
   &.elevation-2
-    box-shadow $contentShadow, 0 0 var(--indent-m) 2px var(--decent-color-alpha-500)
+    box-shadow $contentShadow, 0 0 var(--p-5) 2px var(--decent-color-alpha-500)
 
   &.outlined::after
     content ''

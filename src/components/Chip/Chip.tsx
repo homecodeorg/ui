@@ -8,8 +8,6 @@ import S from './Chip.styl';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
 import { Icon } from 'uilib/components/Icon/Icon';
 
-type ChipSize = 'xs' | 's' | 'm' | 'l';
-
 type Props = {
   children: ReactNode;
   className?: string;
@@ -17,7 +15,7 @@ type Props = {
   onRemove?: () => void;
   onClick?: () => void;
   removeTooltip?: ReactNode;
-  size?: ChipSize;
+  size?: Size;
 };
 
 export function Chip({
@@ -29,9 +27,7 @@ export function Chip({
   removeTooltip,
   size = 'm',
 }: Props) {
-  const buttonSize: Size = size === 'xs' ? 's' : (size as Size);
-
-  const closeIcon = <Icon type="close" size={buttonSize} />;
+  const closeIcon = <Icon type="close" size={size} />;
 
   return (
     <div
@@ -49,7 +45,7 @@ export function Chip({
           round
           square
           variant="clear"
-          size={buttonSize}
+          size={size}
           className={S.remove}
           onClick={e => {
             e.stopPropagation();

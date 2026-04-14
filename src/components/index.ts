@@ -5,10 +5,12 @@ export * from './ButtonGroup/ButtonGroup';
 export * from './Calendar/Calendar';
 export * from './Checkbox/Checkbox';
 export * from './Chip/Chip';
+export * from './Card';
 export * from './Container/Container';
 export * from './DatePicker/DatePicker';
 export * from './DatePickerInput/DatePickerInput';
 export * from './DateTime/DateTime';
+export * from './Dialogue';
 export * from './Draggable/Draggable';
 export * from './Expand/Expand';
 export * from './Flex/Flex';
@@ -42,6 +44,11 @@ export * from './Tabs/Tabs';
 export * from './Tooltip/Tooltip';
 export * from './Text/Text';
 export * from './Theme/Theme';
+export { ThemeProvider, useTheme } from './Theme/ThemeProvider';
+export type {
+  ThemeContextValue,
+  ThemeProviderProps,
+} from './Theme/ThemeProvider';
 export * from './VH/VH';
 export * from './Virtualized';
 export * from './Toggle/Toggle';

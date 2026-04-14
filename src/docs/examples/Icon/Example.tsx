@@ -1,4 +1,4 @@
-import { Icon, Scroll, icons } from 'uilib';
+import { Icon, Scroll } from 'uilib';
 
 const iconNames = Object.keys(icons);
 

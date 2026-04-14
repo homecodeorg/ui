@@ -18,6 +18,16 @@ $borderRadiusFactor = 2;
 .doubleCalendar .calendar
   width 50%
 
+.size-xs
+  border-radius 'calc(%s * 1.5)' % $borderRadiusXS !important
+
+  .content
+    padding $controlPaddingXS
+    min-width 10em
+
+    .doubleCalendar&
+      min-width 'calc(20em + %s)' % $gap
+
 .size-s
   border-radius 'calc(%s * 1.5)' % $borderRadiusS !important
 
@@ -47,3 +57,13 @@ $borderRadiusFactor = 2;
 
     .doubleCalendar&
       min-width 'calc(40em + %s)' % $gap
+
+.size-xl
+  border-radius 'calc(%s * 1.5)' % $borderRadiusXL !important
+
+  .content
+    padding $controlPaddingXL
+    min-width 24em
+
+    .doubleCalendar&
+      min-width 'calc(48em + %s)' % $gap

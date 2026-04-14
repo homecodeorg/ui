@@ -3,9 +3,11 @@
 $offset = 8px
 $minLength = 30px
 
+$barSizeXS = 1px
 $barSizeS = 1px
 $barSizeM = 5px
 $barSizeL = 9px
+$barSizeXL = 14px
 
 .root
   position relative
@@ -35,6 +37,8 @@ $barSizeL = 9px
     max-width 100%
     overflow-x auto
 
+  .fadeSize-xs &
+    --fade-size: 6px;
   .fadeSize-s &
     --fade-size: 10px;
   .fadeSize-m &
@@ -150,6 +154,9 @@ $barSizeL = 9px
   & .thumb
     bottom 0
 
+    .size-xs > &
+      height $barSizeXS
+      border-radius 'calc(%s / 2)' % $barSizeXS
     .size-s > &
       height $barSizeS
       border-radius 'calc(%s / 2)' % $barSizeS
@@ -159,6 +166,9 @@ $barSizeL = 9px
     .size-l > &
       height $barSizeL
       border-radius 'calc(%s / 2)' % $barSizeL
+    .size-xl > &
+      height $barSizeXL
+      border-radius 'calc(%s / 2)' % $barSizeXL
 
 .bar.y
   width 32px
@@ -167,6 +177,9 @@ $barSizeL = 9px
   & .thumb
     right 0
 
+    .size-xs > &
+      width $barSizeXS
+      border-radius 'calc(%s / 2)' % $barSizeXS
     .size-s > &
       width $barSizeS
     .size-m > &
@@ -175,3 +188,6 @@ $barSizeL = 9px
     .size-l > &
       width $barSizeL
       border-radius 'calc(%s / 2)' % $barSizeL
+    .size-xl > &
+      width $barSizeXL
+      border-radius 'calc(%s / 2)' % $barSizeXL

@@ -1,6 +1,6 @@
 export type Props = {
   className?: string;
-  size?: 's' | 'm' | 'l' | 'xl';
+  size?: 'xs' | 's' | 'm' | 'l' | 'xl';
   children: any;
   alignItemsCenter?: boolean;
   justifyContentCenter?: boolean;

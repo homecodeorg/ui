@@ -343,7 +343,7 @@ export class Popup extends Component<T.Props> {
     this.focused = true;
     this.props.triggerProps?.onFocus?.(e);
 
-    if (!this.pointerPressed && (!this.isControllable() || this.props.isOpen))
+    if (!this.pointerPressed && !this.state.isOpen)
       this.open();
   };
 

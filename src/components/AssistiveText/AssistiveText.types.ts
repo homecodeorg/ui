@@ -1,8 +1,10 @@
 import { ReactNode, HTMLAttributes } from 'react';
 
+import type { Size } from 'uilib/types';
+
 export type Props = HTMLAttributes<HTMLDivElement> & {
   className?: string;
-  size?: 's' | 'm' | 'l';
+  size?: Size;
   variant?: 'default' | 'danger';
   children: ReactNode;
 };

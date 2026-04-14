@@ -44,6 +44,15 @@
 .postfix:not(:first-child)
   margin-left .5em
 
+.size-xs
+  controlSize('xs')
+  controlFontSize('xs')
+  controlPaddingSize('xs')
+
+  &.square
+    width @min-height
+    max-height @min-height
+
 .size-s
   controlSize('s')
   controlFontSize('s')
@@ -71,17 +80,30 @@
     width @max-height
     max-height @min-height
 
+.size-xl
+  controlSize('xl')
+  controlFontSize('xl')
+  controlPaddingSize('xl')
+
+  &.square
+    width @min-height
+    max-height @min-height
+
 .square
   padding 0
   justify-content center
 
 .round
+  &.size-xs
+    border-radius 'calc(%s / 2)' % $controlSizeXS
   &.size-s
     border-radius 'calc(%s / 2)' % $controlSizeS
   &.size-m
     border-radius 'calc(%s / 2)' % $controlSizeM
   &.size-l
     border-radius 'calc(%s / 2)' % $controlSizeL
+  &.size-xl
+    border-radius 'calc(%s / 2)' % $controlSizeXL
 
 .variant-clear
 .variant-default
@@ -129,4 +151,4 @@
     controlButtonVariantFocus('primary')
 
 .spinner
-  margin-left var(--indent-s)
+  margin-left var(--p-3)

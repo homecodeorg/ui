@@ -9,9 +9,8 @@ import {
   Redirect,
   Router,
   Route,
-  Theme,
   Lazy,
-  LazyProps,
+  useTheme,
   dom,
   VH,
 } from 'uilib';
@@ -27,9 +26,10 @@ dom.watchControllerFlag();
 const App = () => {
   const colorPickerRef = useRef<HTMLInputElement>(null);
   const { app } = useStore({
-    app: ['currThemeConfig', 'activeColor', 'isMenuOpen'],
+    app: ['isMenuOpen'],
   });
-  const { currThemeConfig, activeColor, isMenuOpen } = app;
+  const { isMenuOpen } = app;
+  const { activeColor, isDarkTheme, toggleTheme, setActiveColor } = useTheme();
 
   const pickActiveColor = () => colorPickerRef.current?.click();
 
@@ -42,7 +42,6 @@ const App = () => {
   return (
     <>
       <VH />
-      <Theme config={currThemeConfig.originalObject} />
       <div className={cn(S.root, isMenuOpen && S.isMenuOpen)}>
         <div className={S.nav}>
           <div className={S.configBar}>
@@ -53,9 +52,9 @@ const App = () => {
               variant="clear"
               size="l"
               square
-              onClick={app.toggleTheme}
+              onClick={toggleTheme}
             >
-              {app.isDarkTheme() ? '🌙' : '🌕'}
+              {isDarkTheme ? '🌙' : '🌕'}
             </Button>
             <Button
               className={S.cfgButton}
@@ -69,7 +68,7 @@ const App = () => {
                 type="color"
                 ref={colorPickerRef}
                 className={S.colorPicker}
-                onChange={e => app.setActiveColor(e.target.value)}
+                onChange={e => setActiveColor(e.target.value)}
                 value={activeColor}
               />
             </Button>

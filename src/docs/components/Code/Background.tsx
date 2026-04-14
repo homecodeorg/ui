@@ -1,9 +1,12 @@
 import { useEffect, useRef } from 'react';
 import Time from 'timen';
 
-import app from 'docs/App/store';
+import { useTheme } from 'uilib';
 
-function initGradientCanvas(canvas) {
+function initGradientCanvas(
+  canvas,
+  getTheme: () => 'light' | 'dark'
+) {
   const ctx = canvas.getContext('2d');
   const rotationSpeed = 0.01;
   let rotation = 0;
@@ -17,7 +20,7 @@ function initGradientCanvas(canvas) {
     duration = 500;
 
   function randomColor() {
-    const isLightTheme = app.theme === 'light';
+    const isLightTheme = getTheme() === 'light';
     const maxBrightness = isLightTheme ? 225 : 51; // (255 * 0.2) to limit the brightness to 20%
     const minDarkness = isLightTheme ? 204 : 20; // (255 * 0.8) to limit the darkness to 80%
     const r = Math.floor(
@@ -88,10 +91,10 @@ function initGradientCanvas(canvas) {
   function draw(timestamp) {
     if (prevTimestamp === null) prevTimestamp = timestamp;
     const elapsedTime = timestamp - prevTimestamp;
-    const isThemeChanged = prevTheme !== app.theme;
+    const isThemeChanged = prevTheme !== getTheme();
 
     if (isThemeChanged) {
-      prevTheme = app.theme;
+      prevTheme = getTheme();
       duration = 10;
       Time.after(100, () => (duration = 500));
     }
@@ -112,10 +115,13 @@ function initGradientCanvas(canvas) {
 
 export default function Background() {
   const canvasRef = useRef(null);
+  const { theme } = useTheme();
+  const themeRef = useRef(theme);
+  themeRef.current = theme;
 
   useEffect(() => {
     if (canvasRef.current) {
-      initGradientCanvas(canvasRef.current);
+      initGradientCanvas(canvasRef.current, () => themeRef.current);
     }
   }, []);
 

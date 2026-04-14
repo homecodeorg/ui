@@ -8,7 +8,7 @@ export default () => {
       value={date}
       // format="DD.MM.YYYY"
       format="toNow"
-      locale="ru"
+      locale="uk"
     />
   );
 };

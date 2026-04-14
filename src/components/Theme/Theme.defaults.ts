@@ -1,10 +1,15 @@
 import * as T from './Theme.types';
-import { colorsConfigToVars } from './Theme.helpers';
+import { colorsConfigToVars, mixColor } from './Theme.helpers';
+
+const pScale = Object.fromEntries(
+  Array.from({ length: 20 }, (_, i) => {
+    const n = i + 1;
+    return [`p-${n}`, `${n * 4}px`];
+  })
+) as Record<string, string>;
 
 export const baseConfig = {
-  'indent-s': '10px',
-  'indent-m': '20px',
-  'indent-l': '30px',
+  ...pScale,
   'border-radius-s': '2px',
   'border-radius-m': '4px',
   'border-radius-l': '6px',
@@ -33,18 +38,16 @@ export function getColors({
   return {
     active: {
       color: active,
-      mods: { alpha: [100, 300, 500, 800] /* mix: [['accent', 300]] */ },
+      mods: { alpha: colorsAlphaModes /* mix: [['accent', 300]] */ },
     },
     warning: {
       color: warning,
-      mods: { alpha: [100, 300, 500] },
+      mods: { alpha: colorsAlphaModes },
     },
     danger: {
       color: danger,
-      mods: { alpha: [100, 300, 500] },
+      mods: { alpha: colorsAlphaModes },
     },
-    disabled,
-    link,
     accent: {
       color: accent,
       mods: { alpha: colorsAlphaModes },
@@ -53,6 +56,13 @@ export function getColors({
       color: decent,
       mods: { alpha: colorsAlphaModes },
     },
+    disabled,
+    link,
+    surface: mixColor(
+      typeof decent === 'string' ? decent : colors.dark,
+      typeof accent === 'string' ? accent : colors.light,
+      0.12
+    ),
   };
 }
 

@@ -74,6 +74,22 @@
   opacity 0
   pointer-events none
 
+.size-xs
+  controlFontSize('xs')
+
+  .border
+  .item
+    borderRadiusSize('xs')
+
+  .items
+    controlPaddingSize('xs')
+    padding-top $controlPaddingXS
+    padding-bottom $controlPaddingXS
+
+  .item
+    height 40px
+    width 40px
+
 .size-s
   controlFontSize('s')
 
@@ -121,6 +137,22 @@
   .item
     height 100px
     width 100px
+
+.size-xl
+  controlFontSize('xl')
+
+  .border
+  .item
+    borderRadiusSize('xl')
+
+  .items
+    controlPaddingSize('xl')
+    padding-top $controlPaddingXL
+    padding-bottom $controlPaddingXL
+
+  .item
+    height 120px
+    width 120px
 
 .draggable
   width 100%

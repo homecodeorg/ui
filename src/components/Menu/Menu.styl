@@ -29,6 +29,10 @@
     border-bottom-left-radius 2px
     border-bottom-right-radius 2px
 
+  .size-xs &
+    controlPaddingSize('xs')
+    controlFontSize('xs')
+    height $controlSizeXS
   .size-s &
     controlPaddingSize('s')
     controlFontSize('s')
@@ -74,7 +78,7 @@
   background-color var(--decent-color)
 
 .levelIndent
-  --menu-indent-size var(--indent-s)
+  --menu-indent-size var(--p-3)
   &.level-1
     padding-left calc(var(--menu-indent-size) * 2)
   &.level-2

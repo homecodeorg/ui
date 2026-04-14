@@ -12,9 +12,11 @@ import { useIsMounted } from 'uilib/hooks/useIsMounted';
 import { useListKeyboardControl } from 'uilib/hooks/useListKeyboardControl';
 
 const SIZE_TO_ITEM_HEIGHT: Record<Size, number> = {
+  xs: 24,
   s: 30,
   m: 40,
   l: 50,
+  xl: 58,
 };
 
 const getTotalCount = (

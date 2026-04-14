@@ -1,6 +1,5 @@
-import { Heading, Table } from 'uilib';
+import { Heading, Table, useTheme } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
-import { useStore } from 'justorm/react';
 
 import demo from '!!raw-loader!./Demo';
 import { useCallback, useEffect } from 'react';
@@ -20,7 +19,9 @@ const Docs = () => (
     <p>
       Just pass a JSON object to the component with the desired colors, sizes,
       and other styles. The component then applies those styles to all the
-      library components using CSS variables.
+      library components using CSS variables. In apps, wrap the tree with{' '}
+      <code>ThemeProvider</code> (it renders <code>Theme</code> and exposes{' '}
+      <code>useTheme()</code>).
     </p>
 
     <Heading id="props" text="Props" />
@@ -48,9 +49,7 @@ const Docs = () => (
           field: 'base',
           description: (
             <ul>
-              <li>indent-s</li>
-              <li>indent-m</li>
-              <li>indent-l</li>
+              <li>p-1 … p-20 (spacing scale, 4px per step)</li>
               <li>border-radius-s</li>
               <li>border-radius-m</li>
               <li>border-radius-l</li>
@@ -64,6 +63,7 @@ const Docs = () => (
               <li>active</li>
               <li>accent</li>
               <li>decent</li>
+              <li>surface</li>
               <li>warning</li>
               <li>danger</li>
               <li>disabled</li>
@@ -152,13 +152,13 @@ const Docs = () => (
 );
 
 export default function Theme() {
-  const { app } = useStore({ app: ['theme'] });
+  const { toggleTheme } = useTheme();
 
   const onDocClick = useCallback(e => {
     if (e.target.type === 'checkbox') {
-      app.toggleTheme();
+      toggleTheme();
     }
-  }, []);
+  }, [toggleTheme]);
 
   useEffect(() => {
     document.addEventListener('click', onDocClick, true);
@@ -168,11 +168,6 @@ export default function Theme() {
   }, []);
 
   return (
-    <ComponentLayout
-      name="Theme"
-      examples={examples}
-      docs={Docs}
-      scope={{ currTheme: app.theme }}
-    />
+    <ComponentLayout name="Theme" examples={examples} docs={Docs} />
   );
 }

@@ -2,6 +2,9 @@ import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import complex from '!!raw-loader!./Complex';
+
+import S from './styles.styl';
 
 const Docs = () => (
   <>
@@ -21,6 +24,10 @@ export default () => (
   <ComponentLayout
     name="Checkbox"
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    examples={[
+      { id: 'demo', label: 'Demo', code: example },
+      { id: 'complex', label: 'Complex', code: complex },
+    ]}
+    scope={{ S }}
   />
 );

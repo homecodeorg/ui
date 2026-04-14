@@ -1,0 +1,122 @@
+@import '../../theme'
+
+.dialogOverlay
+  position fixed
+  inset 0
+  z-index 50
+  background-color var(--decent-color-alpha-900)
+  backdrop-filter blur(4px)
+  opacity 0
+  transition opacity 200ms ease-out
+
+  &.isOpen
+    opacity 1
+    animation-name fadeIn
+    animation-duration 200ms
+    animation-timing-function ease-out
+    animation-fill-mode forwards
+
+.dialogContent
+  position fixed
+  left 50%
+  top 50%
+  z-index 50
+  display flex
+  flex-direction column
+  width fit-content
+  max-height calc(100% - var(--p-5))
+  border-radius var(--border-radius-l)
+  box-shadow 0 10px 20px rgba(0, 0, 0, 0.3), 0 0 0 2px var(--decent-color-alpha-800)
+  transition opacity 200ms ease-out, transform 200ms ease-out
+  opacity 0
+  transform translateX(-50%) translateY(-50%) scale(0.95)
+
+  &.isOpen
+    opacity 1
+    transform translateX(-50%) translateY(-50%) scale(1)
+    animation-name dialogueIn
+    animation-duration 200ms
+    animation-timing-function ease-out
+    animation-fill-mode forwards
+
+  &.isClosed
+    opacity 0
+    transform translateX(-50%) translateY(-50%) scale(0.95)
+    animation-name dialogueOut
+    animation-duration 200ms
+    animation-timing-function ease-in
+    animation-fill-mode forwards
+    pointer-events none
+
+  @media (max-width: $tablet)
+    width calc(100% - var(--p-5))
+    max-width @width
+
+.size-default
+  max-width 40rem
+
+.size-login
+  max-width 24rem
+
+.size-wide
+  max-width calc(100% - var(--p-5))
+  @media (min-width: $tablet)
+    max-width 80rem
+
+.dialogClose
+  position absolute
+  right var(--p-3)
+  top var(--p-3)
+  z-index 10
+  display flex
+  align-items center
+  justify-content center
+  height 2rem
+  width 2rem
+  border-radius var(--border-radius-s)
+  opacity 0.7
+  outline none
+  transition opacity 200ms ease, transform 200ms ease
+  transform-origin center
+  cursor pointer
+  background-color transparent
+  border none
+  color var(--accent-color)
+  &:hover
+    opacity 1
+    transform scale(1.1)
+  &:focus-visible
+    box-shadow 0 0 0 2px var(--active-color)
+  &:disabled
+    pointer-events none
+
+@keyframes fadeIn
+  from
+    opacity 0
+  to
+    opacity 1
+
+@keyframes dialogueIn
+  from
+    opacity 0
+    transform translateX(-50%) translateY(-50%) scale(0.95)
+  to
+    opacity 1
+    transform translateX(-50%) translateY(-50%) scale(1)
+
+@keyframes dialogueOut
+  from
+    opacity 1
+    transform translateX(-50%) translateY(-50%) scale(1)
+  to
+    opacity 0
+    transform translateX(-50%) translateY(-50%) scale(0.95)
+
+.footerAlignLeft
+  justify-content flex-start
+
+.footerAlignCenter
+  justify-content center
+
+.footerAlignRight
+  justify-content flex-end

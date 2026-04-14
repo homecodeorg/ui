@@ -5,6 +5,7 @@ import { calculateProgress } from '../Progress/Progress.helpers';
 import S from './ProgressCircular.styl';
 
 const SIZE_MAP = {
+  xs: 14,
   s: 20,
   m: 30,
   l: 60,

@@ -55,6 +55,10 @@ export default [
         loader: () => import('./examples/Calendar'),
       },
       {
+        id: 'Card',
+        loader: () => import('./examples/Card'),
+      },
+      {
         id: 'Checkbox',
         loader: () => import('./examples/Checkbox'),
       },
@@ -69,6 +73,10 @@ export default [
       {
         id: 'DateTime',
         loader: () => import('./examples/DateTime'),
+      },
+      {
+        id: 'Dialogue',
+        loader: () => import('./examples/Dialogue'),
       },
       {
         id: 'Draggable',

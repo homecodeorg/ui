@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-export type Size = 's' | 'm' | 'l';
+export type Size = 'xs' | 's' | 'm' | 'l' | 'xl';
 
 export type Variant = 'clean' | 'default' | 'outlined';
 
