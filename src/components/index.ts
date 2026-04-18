@@ -32,6 +32,8 @@ export * from './Portal/Portal';
 export * from './PopupMenu/PopupMenu';
 export * from './Progress/Progress';
 export * from './ProgressCircular/ProgressCircular';
+export * from './RadioButton/RadioButton';
+export * from './RadioGroup/RadioGroup';
 export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';

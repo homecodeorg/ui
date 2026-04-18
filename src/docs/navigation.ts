@@ -135,6 +135,10 @@ export default [
         loader: () => import('./examples/Progress'),
       },
       {
+        id: 'RadioGroup',
+        loader: () => import('./examples/RadioGroup'),
+      },
+      {
         id: 'Router',
         loader: () => import('./examples/Router'),
       },
