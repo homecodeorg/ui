@@ -63,6 +63,10 @@ export default [
         loader: () => import('./examples/Checkbox'),
       },
       {
+        id: 'ControlsShowcase',
+        loader: () => import('./examples/ControlsShowcase'),
+      },
+      {
         id: 'DatePicker',
         loader: () => import('./examples/DatePicker'),
       },

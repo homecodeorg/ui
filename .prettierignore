@@ -1,1 +1,4 @@
 tsconfig.json
+
+# Preserve manual multiline import layout in doc examples (Prettier collapses when line fits printWidth)
+src/docs/examples/

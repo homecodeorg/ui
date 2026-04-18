@@ -1,0 +1,67 @@
+.scroll
+  max-height: 100%
+
+.section
+  // display flex
+  // flex-direction column
+  // flex-wrap wrap
+  gap 16px
+  padding var(--p-8)
+  margin-bottom 32px
+
+  // div
+  //   max-width 200px
+
+.row
+  display flex
+  flex-wrap wrap
+  align-items center
+
+.item
+  margin-top 4px
+  text-transform capitalize
+
+  & + &
+    margin-left 4px
+
+.matrixItem
+  margin-top 4px
+  text-transform capitalize
+
+  & + &
+    margin-left 20px
+
+// fieldset is bad flex child (often stays full width) — tile is plain div
+.radioMatrix
+  display grid
+  // Stylus min() != CSS min(); unquote so min(100%,200px) survives compile
+  grid-template-columns unquote('repeat(auto-fit, minmax(min(100%, 200px), 200px))')
+  gap 16px
+  justify-content start
+  align-items start
+
+.radioBlock
+  box-sizing border-box
+  min-width 0
+  max-width 200px
+
+  // stretch RadioGroup fieldset to tile; avoid fieldset min-intrinsic width quirks
+  & > fieldset
+    box-sizing border-box
+    width 100%
+    max-width 100%
+    min-width 0
+
+.inputGrid
+  display grid
+  grid-template-columns repeat(auto-fill, minmax(260px, 1fr))
+  gap 16px
+
+.inputSizeRow
+  display flex
+  flex-wrap wrap
+  gap 12px
+  align-items flex-end
+
+.extraRow
+  margin-top 12px

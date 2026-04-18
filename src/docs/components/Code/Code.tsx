@@ -1,7 +1,6 @@
-import { Component, useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useStore } from 'justorm/react';
 import cn from 'classnames';
-import compare from 'compareq';
 import { Scroll, uid, Portal, Button, Icon, LS } from 'uilib';
 
 import FullscreenButton from './FullscreenButton/FullscreenButton';
@@ -25,6 +24,9 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
   const [isBgEnabled, setIsBgEnabled] = useState(
     LS.get('codeBgDisabled') as unknown as boolean
   );
+  const [showLineNumbers, setShowLineNumbers] = useState(
+    Boolean(LS.get('codeEditorLineNumbers'))
+  );
   const [code, setCode] = useState('');
 
   useEffect(() => {
@@ -42,6 +44,12 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
   const onColorButtonClick = () => {
     setIsBgEnabled(!isBgEnabled);
     LS.set('codeBgDisabled', !isBgEnabled);
+  };
+
+  const onLineNumbersClick = () => {
+    const next = !showLineNumbers;
+    setShowLineNumbers(next);
+    LS.set('codeEditorLineNumbers', next);
   };
 
   const isFullscreen = () => editor.isFullscreen;
@@ -66,11 +74,20 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
         yScrollbarClassName={S.scrollbar}
         offset={{ y: { before: 14, after: 14 } }}
       >
-        <Editor id={id} code={code} />
+        <Editor id={id} code={code} showLineNumbers={showLineNumbers} />
       </Scroll>
       <Result />
       <div className={S.toolbar}>
         <FullscreenButton isFullscreen={isFullscreen()} />
+        <Button
+          onClick={onLineNumbersClick}
+          className={S.lineNumbersButton}
+          title="Toggle line numbers"
+          aria-label="Toggle line numbers"
+          aria-pressed={showLineNumbers}
+        >
+          <Icon type="usage" />
+        </Button>
         <Button
           onClick={onColorButtonClick}
           className={S.colorButton}
