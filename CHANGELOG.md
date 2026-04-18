@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.0.1](https://github.com/foreverido/uilib/compare/v5.0.0...v5.0.1) (2026-04-18)
+
+
+### Features
+
+* Docs - ControlsShowcase gallery, code line numbers ([65b3925](https://github.com/foreverido/uilib/commit/65b392530614acf90d98ffad81db10ec5a75c6ef))
+* RadioGroup - Add RadioButton and RadioGroup ([4e2a85c](https://github.com/foreverido/uilib/commit/4e2a85cfe55d5dc5c36333fdeeb622b4b103f5d2))
+
 ## [5.0.0](https://github.com/foreverido/uilib/compare/v4.30.16...v5.0.0) (2026-04-14)
 
 
