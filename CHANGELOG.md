@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1](https://github.com/foreverido/uilib/compare/v5.1.0...v5.1.1) (2026-05-01)
+
+
+### Features
+
+* Input - fitContentWidth via field-sizing ([71a3eeb](https://github.com/foreverido/uilib/commit/71a3eebe1176929b9722c7731cd1b53ad3cb228d))
+
 ## [5.1.0](https://github.com/foreverido/uilib/compare/v5.0.1...v5.1.0) (2026-05-01)
 
 
