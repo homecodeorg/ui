@@ -75,6 +75,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       round,
       autoFocus,
       className,
+      fitContentWidth,
     } = props;
 
     const updateAutoComplete = () => {
@@ -397,6 +398,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       hasClear && S.hasClear,
       disabled && S.isDisabled,
       round && S.round,
+      fitContentWidth && !isTextArea && S.fitContentWidth,
       className
     );
 

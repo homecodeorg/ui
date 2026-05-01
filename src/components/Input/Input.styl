@@ -469,3 +469,23 @@ $paddingSide = 12px
   .size-xl &
     height 16px
     width @height
+
+@supports (field-sizing: content)
+  .root.fitContentWidth
+    width fit-content
+    max-width 100%
+
+    .main
+      width fit-content
+      max-width 100%
+
+    .controlWrapper
+      flex 0 1 auto
+      width fit-content
+      max-width 100%
+
+    .control
+      flex-grow 0
+      width auto
+      max-width 100%
+      field-sizing content

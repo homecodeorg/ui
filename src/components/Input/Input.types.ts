@@ -46,4 +46,6 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     checkAutofill?: boolean;
     // In case of type=textarea, you can pass props for [Scroll|//components/Scroll] component
     scrollProps?: Partial<ScrollProps>;
+    /** When true, width follows text via CSS `field-sizing: content` (non-textarea only). */
+    fitContentWidth?: boolean;
   };
