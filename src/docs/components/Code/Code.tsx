@@ -71,7 +71,6 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
         y
         fadeSize="m"
         className={S.editorContainer}
-        yScrollbarClassName={S.scrollbar}
         offset={{ y: { before: 14, after: 14 } }}
       >
         <Editor id={id} code={code} showLineNumbers={showLineNumbers} />
@@ -86,7 +85,7 @@ export const Code = ({ id, scope, code: initialCode }: Props) => {
           aria-label="Toggle line numbers"
           aria-pressed={showLineNumbers}
         >
-          <Icon type="usage" />
+          <Icon type="table" />
         </Button>
         <Button
           onClick={onColorButtonClick}

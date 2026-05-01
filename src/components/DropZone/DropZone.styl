@@ -1,0 +1,61 @@
+@import '../../theme'
+
+.root
+  display flex
+  flex-direction column
+  gap var(--p-2)
+
+.dropArea
+  position relative
+  border 2px dashed var(--decent-color-alpha-200)
+  border-radius var(--p-4)
+  padding var(--p-4)
+  text-align center
+  cursor pointer
+  transition all 0.2s ease
+  background-color var(--accent-color-alpha-100)
+
+  & label::before
+    content ''
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    border-radius var(--p-4)
+
+  &:hover:not(.disabled)
+  &.isDragging
+    border 2px dashed var(--active-color-alpha-500)
+
+  &:hover:not(.disabled)
+    background-color var(--accent-color-alpha-50)
+
+  &.isDragging
+    position fixed
+    top var(--p-1)
+    left var(--p-1)
+    width calc(100% - var(--p-2))
+    height calc(100% - var(--p-2))
+    z-index 9999
+    display flex
+    align-items center
+    justify-content center
+
+    background-color var(--decent-color-alpha-900) !important
+    backdrop-filter blur(10px)
+
+  &.disabled
+    opacity 0.6
+    cursor not-allowed
+
+.fileInput
+  display none
+
+.label
+  cursor pointer
+
+.error
+  color var(--danger-color)
+  font-size 0.875rem
+  padding var(--p-1) var(--p-2)

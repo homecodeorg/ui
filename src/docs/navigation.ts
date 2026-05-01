@@ -87,6 +87,10 @@ export default [
         loader: () => import('./examples/Draggable'),
       },
       {
+        id: 'DropZone',
+        loader: () => import('./examples/DropZone'),
+      },
+      {
         id: 'Form',
         loader: () => import('./examples/Form'),
       },

@@ -12,6 +12,7 @@ export * from './DatePickerInput/DatePickerInput';
 export * from './DateTime/DateTime';
 export * from './Dialogue';
 export * from './Draggable/Draggable';
+export * from './DropZone/DropZone';
 export * from './Expand/Expand';
 export * from './Flex/Flex';
 export * from './Form/Form';

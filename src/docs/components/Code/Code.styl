@@ -5,7 +5,7 @@
   display flex
   flex-grow 1
   width calc(100% - 2px)
-  max-height calc(100 * var(--vh) - 110px)
+  max-height calc(100 * var(--vh) - 90px)
   margin 1px
   margin-top 2px
   box-shadow inset 0 0 20px var(--accent-color-alpha-50), 0 0 0 1px var(--accent-color-alpha-50)
@@ -48,9 +48,6 @@
 
   .colorButton
     filter saturate(0)  brightness(2)
-
-.scrollbar
-  transform translateX(4px)
 
 .editorContainer
 .editorResult
@@ -106,23 +103,18 @@
   font-size 80%
 
   & > pre
-    padding-right 50px !important // for fullscreen button
+    padding-right var(--p-4) !important // for fullscreen button
     background-color unset !important
 
     & > div
       min-height 1.45em
-
-@media(max-width: $tablet)
-  .editor
-  .error
-    font-size 80%
 
 .editor.runtime
   display none
 
 .error
 .preview
-  padding 16px
+  padding var(--p-4)
 
 .error
   white-space break-spaces
@@ -131,7 +123,6 @@
 .preview
   flex 1
   margin-top -1px
-  padding-top var(--p-5)
   border-top-left-radius 0
   border-top-right-radius 0
 
@@ -146,29 +137,30 @@
 
 .toolbar
   position absolute
-  top 0
-  right 24px
+  bottom 0
+  right 50%
+  margin-right var(--p-5)
 
   display flex
-  flex-direction row
   align-items center
   justify-content center
 
-  background-color var(--accent-color-alpha-50)
   backdrop-filter blur(10px)
-  border-bottom-left-radius $borderRadiusL
-  border-bottom-right-radius $borderRadiusL
-  // box-shadow 0 0 0 1px var(--accent-color-alpha-50)
+  border-radius var(--p-3)
 
   & > button
+    padding 0
     background-color transparent !important
-    transition transform 0.2s ease-in-out
+    transition transform 0.1s ease-in-out
 
     &:hover
       transform scale(1.2)
 
-  .fullscreen &
-    flex-direction row
+
+@media(max-width: $tablet)
+  .editor
+  .error
+    font-size 80%
 
 @media (orientation: portrait)
   .root
@@ -186,11 +178,14 @@
       height 1px
       width unset
 
+  .toolbar
+    bottom 50%
+    right 0
+
 .lineNumbersButton
   &[aria-pressed='false']
     opacity 0.55
 
 @media (orientation: landscape)
   .preview
-    padding-top 50px
     max-height 100%

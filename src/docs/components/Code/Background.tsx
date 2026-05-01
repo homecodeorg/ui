@@ -3,12 +3,11 @@ import Time from 'timen';
 
 import { useTheme } from 'uilib';
 
-function initGradientCanvas(
-  canvas,
-  getTheme: () => 'light' | 'dark'
-) {
+const DURATION = 5000;
+
+function initGradientCanvas(canvas, getTheme: () => 'light' | 'dark') {
   const ctx = canvas.getContext('2d');
-  const rotationSpeed = 0.01;
+  const rotationSpeed = 0.005;
   let rotation = 0;
   let prevTimestamp = null;
   let prevTheme;
@@ -16,8 +15,8 @@ function initGradientCanvas(
   let currentGradient = createRandomGradient(ctx),
     targetGradient = createRandomGradient(ctx),
     t = 1,
-    step = 20,
-    duration = 500;
+    step = 10,
+    duration = DURATION;
 
   function randomColor() {
     const isLightTheme = getTheme() === 'light';
@@ -96,7 +95,7 @@ function initGradientCanvas(
     if (isThemeChanged) {
       prevTheme = getTheme();
       duration = 10;
-      Time.after(100, () => (duration = 500));
+      Time.after(100, () => (duration = DURATION));
     }
 
     if (elapsedTime >= step || isThemeChanged) {
