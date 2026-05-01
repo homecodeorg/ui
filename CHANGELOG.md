@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/foreverido/uilib/compare/v5.0.1...v5.1.0) (2026-05-01)
+
+
+### Features
+
+* DropZone - Add component and docs ([0a06711](https://github.com/foreverido/uilib/commit/0a06711f0a91cad993e3604a8030fdd6a1890f3d))
+
 ### [5.0.1](https://github.com/foreverido/uilib/compare/v5.0.0...v5.0.1) (2026-04-18)
 
 
