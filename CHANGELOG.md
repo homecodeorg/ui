@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.3](https://github.com/foreverido/uilib/compare/v5.1.2...v5.1.3) (2026-05-02)
+
+
+### Features
+
+* Theme - Expand colorsAlphaModes scale ([68ddfa7](https://github.com/foreverido/uilib/commit/68ddfa775eb98aaa502d43ae67256afc2c188831))
+
 ### [5.1.2](https://github.com/foreverido/uilib/compare/v5.1.1...v5.1.2) (2026-05-02)
 
 
