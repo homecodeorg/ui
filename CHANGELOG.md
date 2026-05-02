@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.2](https://github.com/foreverido/uilib/compare/v5.1.1...v5.1.2) (2026-05-02)
+
+
+### Bug Fixes
+
+* Gallery - Carousel sync for justorm v3 ([38258b8](https://github.com/foreverido/uilib/commit/38258b84d69be6c14b374d193f877b39204218fa))
+
 ### [5.1.1](https://github.com/foreverido/uilib/compare/v5.1.0...v5.1.1) (2026-05-01)
 
 
