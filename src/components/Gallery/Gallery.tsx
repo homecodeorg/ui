@@ -1,4 +1,11 @@
-import { Component, createRef, CSSProperties } from 'react';
+import {
+  Component,
+  createRef,
+  CSSProperties,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 import compare from 'compareq';
@@ -24,6 +31,20 @@ const DIR_NAME = {
 
 type Direction = -1 | 1;
 
+type GalleryStoreTarget = {
+  items: string[];
+  movingDirection: number;
+  isDragging: boolean;
+};
+
+function galleryStoreTarget(store: unknown): GalleryStoreTarget {
+  const o = store as { originalObject?: GalleryStoreTarget };
+  if (o.originalObject == null) {
+    throw new Error('Gallery: justorm store missing originalObject');
+  }
+  return o.originalObject;
+}
+
 function getInitialState(items: T.Props['items'], startIndex) {
   return circularSlice(items, startIndex, 3);
 }
@@ -41,19 +62,65 @@ function Arr({ className, size, icon, ...rest }) {
   );
 }
 
-function Item({ src, size, isLoaded, isError, onLoad, onError }) {
+function Item({ src, size }) {
+  const [loaded, setLoaded] = useState(false);
+  const [isError, setIsError] = useState(false);
   const style = {} as CSSProperties;
+  const imgRef = useRef<HTMLImageElement | null>(null);
 
-  if (isLoaded) style.backgroundImage = `url(${src})`;
+  useLayoutEffect(() => {
+    const img = imgRef.current;
+    if (!img || isError) return;
+
+    let cancelled = false;
+    const notify = () => {
+      if (!cancelled) setLoaded(true);
+    };
+
+    // Cached images may never fire `load` after mount; `decode()` covers that path.
+    if (img.complete && img.naturalWidth > 0 && img.naturalHeight > 0) {
+      notify();
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    if (typeof img.decode === 'function') {
+      img.decode().then(notify).catch(() => {});
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    requestAnimationFrame(() => {
+      if (
+        !cancelled &&
+        img.complete &&
+        (img.naturalWidth > 0 || img.naturalHeight > 0)
+      )
+        notify();
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [src, isError]);
+
+  if (loaded) style.backgroundImage = `url(${src})`;
 
   return (
     <div className={S.item} style={style}>
-      {!isLoaded &&
+      {!loaded &&
         (isError ? (
           <Icon type="brokenImage" className={S.brokenImage} />
         ) : (
           <>
-            <img src={src} onLoad={onLoad} onError={onError} />
+            <img
+              ref={imgRef}
+              src={src}
+              onLoad={() => setLoaded(true)}
+              onError={() => setIsError(true)}
+            />
             <Spinner size={size} />
           </>
         ))}
@@ -79,15 +146,13 @@ export class Gallery extends Component<T.Props> {
   constructor(props) {
     super(props);
 
-    const { startIndex, items } = props;
+    const { startIndex } = props;
 
     this.recenter();
     this.index = startIndex;
     this.store = createStore(this, {
       items: this.getStateItems(),
       movingDirection: 0,
-      loading: {}, // [src]: boolean
-      errors: {}, // [src]: boolean
       isDragging: false,
     });
   }
@@ -109,7 +174,9 @@ export class Gallery extends Component<T.Props> {
     ) {
       this.index = startIndex;
       this.recenter();
-      this.store.items = this.getStateItems();
+      const next = this.getStateItems();
+      Object.assign(galleryStoreTarget(this.store), { items: next });
+      this.setState({});
     }
   }
 
@@ -206,18 +273,18 @@ export class Gallery extends Component<T.Props> {
 
   switch(direction: Direction) {
     this.index += direction * -1;
-    this.store.items = circularSlice(this.items, this.index, 3);
-    this.store.movingDirection = 0;
+    const nextItems = circularSlice(this.items, this.index, 3);
+    // justorm v3: proxy set skips when compareq sees no change; bypass via originalObject.
+    Object.assign(galleryStoreTarget(this.store), {
+      items: nextItems,
+      movingDirection: 0,
+    });
     this.removeTransformDelta();
+    this.setState({});
 
     const { onChange } = this.props;
-    const { items, loading } = this.store;
 
     onChange?.(this.index, this.items[this.index]);
-
-    items.forEach(src => {
-      if (typeof loading[src] !== 'boolean') loading[src] = false;
-    });
   }
 
   render() {
@@ -230,7 +297,7 @@ export class Gallery extends Component<T.Props> {
       cover,
       ...rest
     } = this.props;
-    const { items, movingDirection, loading, errors, isDragging } = this.store;
+    const { items, movingDirection, isDragging } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
 
@@ -261,15 +328,7 @@ export class Gallery extends Component<T.Props> {
       <div className={classes} {...props}>
         <div className={innerClasses} ref={this.innerRef}>
           {items.map((src, i) => (
-            <Item
-              key={`${i}_${src}`}
-              src={src}
-              size={size}
-              isLoaded={loading[src]}
-              isError={errors[src]}
-              onLoad={() => (loading[src] = true)}
-              onError={() => (errors[src] = true)} // TODO: add retry
-            />
+            <Item key={`${i}_${src}`} src={src} size={size} />
           ))}
         </div>
 
