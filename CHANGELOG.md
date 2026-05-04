@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.4](https://github.com/foreverido/uilib/compare/v5.1.3...v5.1.4) (2026-05-04)
+
+
+### Bug Fixes
+
+* Virtualized - Repaint when renderItem and list props change ([604755f](https://github.com/foreverido/uilib/commit/604755f188a68a627eafa3c49807bcf2cea6cb4c))
+
 ### [5.1.3](https://github.com/foreverido/uilib/compare/v5.1.2...v5.1.3) (2026-05-02)
 
 
