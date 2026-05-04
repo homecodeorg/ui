@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [Unreleased]
+
+### Features
+
+- **Popup**: Shift positioning so the floating panel clamps to the visual viewport intersected with the portal mount (`boundary: 'clipping'`, default for portaled popups); optional `boundary: 'viewport'`, `shiftPadding`, and `boundaryMountSelector`. Replaces window-only margin adjustment and removes the previous content-size / 100ms deferral in favor of `requestAnimationFrame` + `ResizeObserver` triggers. Correction is applied as `translate3d` on the content wrapper after layout commits (fixes `bottom-left`/`right`-anchored panels where margins did not move the painted box). When the natural width exceeds the padded boundary width, applies an inline max-width (`overflow-x: auto`) after measuring so narrow viewports cannot clip horizontally after shifting.
+
 ### [5.1.4](https://github.com/foreverido/uilib/compare/v5.1.3...v5.1.4) (2026-05-04)
 
 

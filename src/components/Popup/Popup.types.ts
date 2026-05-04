@@ -1,5 +1,6 @@
 import { ComponentType, Size } from '../../types';
 import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import type { BoundaryFit } from './Popup.helpers';
 
 export type TriggerPropsType = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
@@ -58,6 +59,12 @@ export type Props = ComponentType & {
   elevation?: 1 | 2;
   // Offset from trigger element
   offset?: { top?: number; right?: number; bottom?: number; left?: number };
+  // Extra padding inside the boundary when clamping (adds to the base gap).
+  shiftPadding?: number;
+  // `viewport` — visual viewport only; `clipping` — intersect viewport with portal mount (default when portaled; inline defaults to viewport).
+  boundary?: 'viewport' | 'clipping';
+  // CSS selector for the clipping mount (default `#config.appOverlayId`, same as <Portal />). Set to match a custom <Portal selector="…">.
+  boundaryMountSelector?: string;
   // Direction to open.
   //
   // If not specified, it will be automatically calculated.
@@ -85,6 +92,11 @@ export type Props = ComponentType & {
 };
 
 export type State = {
+  rootPopupId: number | null;
   isOpen: boolean;
   isContentVisible: boolean;
+  animating: boolean;
+  direction: Direction | string;
+  triggerBounds: Record<string, number> | null;
+  boundaryFit: BoundaryFit;
 };

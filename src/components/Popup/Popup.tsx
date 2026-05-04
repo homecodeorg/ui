@@ -6,6 +6,7 @@ import { Component, createRef } from 'react';
 
 import { Paranja } from 'uilib/components/Paranja/Paranja';
 import { Portal } from 'uilib/components/Portal/Portal';
+import { config } from 'uilib/tools/config';
 import S from './Popup.styl';
 import Time from 'timen';
 import cn from 'classnames';
@@ -16,11 +17,11 @@ import throttle from 'uilib/tools/throttle';
 
 export const ANIMATION_DURATION = 100;
 const OFFSET_GAP = 10;
-const INITIAL_OFFSET = { top: 0, left: 0 };
+const BOUNDARY_FIT_EPSILON = 1;
 
 export type PopupProps = T.Props;
 
-export class Popup extends Component<T.Props> {
+export class Popup extends Component<T.Props, T.State> {
   rootElem = createRef<HTMLDivElement>();
   triggerElem = createRef<HTMLDivElement>();
   containerElem: HTMLDivElement = null;
@@ -32,6 +33,10 @@ export class Popup extends Component<T.Props> {
     if (elem) {
       this.unsubscribeSizeChange();
       this.subscribeSizeChange();
+
+      if (this.state.isOpen) {
+        this.updateBounds();
+      }
     }
   };
 
@@ -41,14 +46,13 @@ export class Popup extends Component<T.Props> {
   subscribedSizeChange = false;
   pointerDownTarget = null;
   isPointerPressedInside = false;
-  needDropOffset = false;
-
   id;
   parentPopupContent;
 
   timers = Time.create();
   scrollParent;
-  offset = { ...INITIAL_OFFSET };
+  shiftOuterRafId = 0;
+  shiftInnerRafId = 0;
 
   static defaultProps = {
     size: 'm',
@@ -56,13 +60,14 @@ export class Popup extends Component<T.Props> {
     animated: true,
   };
 
-  state = {
+  state: T.State = {
     rootPopupId: null,
     isOpen: Boolean(this.props.isOpen),
     isContentVisible: Boolean(this.props.isOpen),
     animating: false,
     direction: this.props.direction,
     triggerBounds: null,
+    boundaryFit: H.ZERO_BOUNDARY_FIT,
   };
 
   constructor(props) {
@@ -72,6 +77,13 @@ export class Popup extends Component<T.Props> {
 
   componentDidMount() {
     const { hoverControl, focusControl } = this.props;
+
+    const vv = isBrowser ? window.visualViewport : null;
+
+    if (vv) {
+      vv.addEventListener('resize', this.onBoundaryGeometryChange);
+      vv.addEventListener('scroll', this.onBoundaryGeometryChange);
+    }
     const parentPopupContent = this.triggerElem.current.closest(
       `.${S.content}`
     );
@@ -94,9 +106,21 @@ export class Popup extends Component<T.Props> {
 
     if (hoverControl) this.subscribeHoverControl();
     this.subscribeScroll();
+
+    if (
+      this.state.isOpen &&
+      this.state.isContentVisible &&
+      this.containerElem
+    ) {
+      this.scheduleComputeShift();
+    }
   }
 
-  componentDidUpdate(prevProps: T.Props) {
+  onBoundaryGeometryChange = throttle(() => {
+    if (this.state.isOpen) this.scheduleComputeShift();
+  }, 100);
+
+  componentDidUpdate(prevProps: T.Props, prevState: T.State) {
     const { isOpen, disabled, hoverControl } = this.props;
 
     if (disabled !== prevProps.disabled) {
@@ -110,11 +134,38 @@ export class Popup extends Component<T.Props> {
     if (typeof isOpen === 'boolean' && isOpen !== prevProps.isOpen) {
       isOpen ? this.open() : this.close();
     }
+
+    const justOpened =
+      !prevState.isOpen &&
+      this.state.isOpen &&
+      this.state.isContentVisible &&
+      Boolean(this.containerElem);
+
+    const triggerBoundsCommitted =
+      this.state.isOpen &&
+      this.state.isContentVisible &&
+      Boolean(this.containerElem) &&
+      prevState.triggerBounds === null &&
+      this.state.triggerBounds !== null;
+
+    if (justOpened || triggerBoundsCommitted) {
+      this.scheduleComputeShift();
+    }
   }
 
   componentWillUnmount() {
     this.timers.clear();
-    document.removeEventListener('keyup', this.onDocKeyUp, true);
+    cancelAnimationFrame(this.shiftOuterRafId);
+    cancelAnimationFrame(this.shiftInnerRafId);
+
+    const vv = isBrowser ? window.visualViewport : null;
+
+    if (vv) {
+      vv.removeEventListener('resize', this.onBoundaryGeometryChange);
+      vv.removeEventListener('scroll', this.onBoundaryGeometryChange);
+    }
+
+    document.removeEventListener('keyup', this.onDocKeyUp);
 
     if (this.scrollParent) {
       this.scrollParent.removeEventListener('scroll', this.close);
@@ -166,7 +217,7 @@ export class Popup extends Component<T.Props> {
   }
 
   updateBounds() {
-    if (this.state.animating || !this.containerElem) return;
+    if (!this.containerElem) return;
 
     if (!this.triggerElem.current) return;
 
@@ -188,55 +239,116 @@ export class Popup extends Component<T.Props> {
         this.triggerElem.current.style[key] = value;
       });
 
-      this.updateOffset();
       this.setState({ triggerBounds: bounds });
+      this.scheduleComputeShift();
     },
     200,
     { trailing: true }
   );
 
-  prevContentBounds = { width: 0, height: 0 };
+  scheduleComputeShift() {
+    if (!isBrowser) return;
 
-  updateOffset = () => {
-    const content = this.containerElem.getBoundingClientRect();
+    cancelAnimationFrame(this.shiftOuterRafId);
+    cancelAnimationFrame(this.shiftInnerRafId);
 
+    this.shiftOuterRafId = window.requestAnimationFrame(() => {
+      this.shiftOuterRafId = 0;
+      this.shiftInnerRafId = window.requestAnimationFrame(() => {
+        this.shiftInnerRafId = 0;
+        this.computeBoundaryShift();
+      });
+    });
+  }
+
+  computeBoundaryShift = () => {
     if (
-      !content.height ||
-      !content.width ||
-      this.prevContentBounds.width !== content.width ||
-      this.prevContentBounds.height !== content.height
+      !this.containerElem ||
+      !this.state.isOpen ||
+      !this.state.isContentVisible
     ) {
-      this.prevContentBounds = content;
-      Time.after(100, this.updateOffset);
-
       return;
     }
 
-    const { offset } = this;
-    const { innerHeight, innerWidth } = window;
-    const bottom = content.top + content.height + OFFSET_GAP - offset.top;
-    const right = content.left + content.width + OFFSET_GAP - offset.left;
+    const el = this.containerElem;
+    const wrapper = el.parentElement;
 
-    if (content.top < 0) {
-      offset.top = -content.top + OFFSET_GAP;
-    } else if (bottom > innerHeight) {
-      offset.top = innerHeight - bottom;
+    if (!(wrapper instanceof HTMLElement)) {
+      return;
     }
 
-    if (content.left < 0) {
-      offset.left = -content.left + OFFSET_GAP;
-    } else if (right > innerWidth) {
-      offset.left = innerWidth - right;
-    }
+    const { boundary, boundaryMountSelector, inline, shiftPadding, offset } =
+      this.props;
+    const bounds = H.popupBoundaryEdges({
+      boundary,
+      boundaryMountSelector: boundaryMountSelector ?? `#${config.appOverlayId}`,
+      inline,
+      padding: H.popupBoundaryPadding(OFFSET_GAP + (shiftPadding ?? 0), offset),
+    });
+    const availWidth = H.edgesWidth(bounds);
+    const fitWidth =
+      availWidth >= BOUNDARY_FIT_EPSILON ? Math.floor(availWidth) : null;
+    const measured = this.measureBoundaryRect(
+      el,
+      wrapper,
+      fitWidth,
+      bounds
+    );
 
-    this.applyOffset();
+    this.setBoundaryFit(
+      H.fitRectToBoundary(measured.rect, bounds, measured.maxWidth)
+    );
   };
 
-  applyOffset() {
-    const { left, top } = this.offset;
+  measureBoundaryRect(
+    el: HTMLDivElement,
+    wrapper: HTMLElement,
+    fitWidth: number | null,
+    bounds: H.ClientRectEdges
+  ): { rect: DOMRect; maxWidth: number | null } {
+    const transform = wrapper.style.transform;
+    const maxWidth = el.style.maxWidth;
+    const overflowX = el.style.overflowX;
+    const overflowY = el.style.overflowY;
 
-    this.containerElem.style.marginTop = `${top}px`;
-    this.containerElem.style.marginLeft = `${left}px`;
+    wrapper.style.transform = '';
+    el.style.maxWidth = '';
+    el.style.overflowX = '';
+    el.style.overflowY = '';
+    void wrapper.offsetHeight;
+
+    let rect = el.getBoundingClientRect();
+
+    const shouldClamp =
+      fitWidth !== null &&
+      rect.width > H.edgesWidth(bounds) + BOUNDARY_FIT_EPSILON;
+
+    if (shouldClamp) {
+      el.style.maxWidth = `${fitWidth}px`;
+      el.style.overflowX = 'auto';
+      el.style.overflowY = 'hidden';
+      void el.offsetHeight;
+      rect = el.getBoundingClientRect();
+    }
+
+    wrapper.style.transform = transform;
+    el.style.maxWidth = maxWidth;
+    el.style.overflowX = overflowX;
+    el.style.overflowY = overflowY;
+
+    return { rect, maxWidth: shouldClamp ? fitWidth : null };
+  }
+
+  setBoundaryFit(boundaryFit: H.BoundaryFit) {
+    const prev = this.state.boundaryFit;
+
+    if (
+      prev.left !== boundaryFit.left ||
+      prev.top !== boundaryFit.top ||
+      prev.maxWidth !== boundaryFit.maxWidth
+    ) {
+      this.setState({ boundaryFit });
+    }
   }
 
   checkHover = debounce((e: any) => {
@@ -292,11 +404,10 @@ export class Popup extends Component<T.Props> {
 
   onScroll = throttle(e => {
     if (!this.state.isOpen) {
-      const { top, left } = this.offset;
+      const { top, left, maxWidth } = this.state.boundaryFit;
 
-      if (left || top) {
-        this.offset = { ...INITIAL_OFFSET };
-        this.applyOffset();
+      if (left || top || maxWidth !== null) {
+        this.setState({ boundaryFit: H.ZERO_BOUNDARY_FIT });
       }
 
       return;
@@ -307,7 +418,6 @@ export class Popup extends Component<T.Props> {
       !this.isPointerOver(e.target, S.content) &&
       !H.childs[this.id]?.length
     ) {
-      this.needDropOffset = true;
       this.close();
     }
   }, 200);
@@ -375,7 +485,10 @@ export class Popup extends Component<T.Props> {
     this.updateBounds();
     this.subscribeSizeChange();
     this.subscribeScroll();
-    this.setState({ isContentVisible: true });
+    this.setState({
+      isContentVisible: true,
+      boundaryFit: H.ZERO_BOUNDARY_FIT,
+    });
     this.changeState(true, this.afterOpen);
 
     if (rootPopupId) H.setChild(rootPopupId, this.id);
@@ -412,17 +525,12 @@ export class Popup extends Component<T.Props> {
   };
 
   afterClose = () => {
-    this.setState({ isContentVisible: false });
-    this.dropOffset();
+    this.setState({
+      isContentVisible: false,
+      boundaryFit: H.ZERO_BOUNDARY_FIT,
+    });
     this.props.onAfterClose?.();
   };
-
-  dropOffset() {
-    if (!this.needDropOffset) return;
-
-    this.offset = { ...INITIAL_OFFSET };
-    this.applyOffset();
-  }
 
   toggle = throttle(() => {
     this.state.isOpen ? this.close() : this.open();
@@ -497,6 +605,7 @@ export class Popup extends Component<T.Props> {
       direction,
       triggerBounds,
       rootPopupId,
+      boundaryFit,
     } = this.state;
 
     if (disabled) return null;
@@ -525,7 +634,15 @@ export class Popup extends Component<T.Props> {
     );
 
     if (trigger && !inline && triggerBounds) {
-      wrapperProps.style = { ...triggerBounds };
+      const shiftTf =
+        boundaryFit.left !== 0 || boundaryFit.top !== 0
+          ? `translate3d(${boundaryFit.left}px, ${boundaryFit.top}px, 0)`
+          : undefined;
+      wrapperProps.style = {
+        ...triggerBounds,
+        ...wrapperProps.style,
+        ...(shiftTf ? { transform: shiftTf } : {}),
+      };
     }
 
     const contentNode = (
@@ -538,8 +655,14 @@ export class Popup extends Component<T.Props> {
           data-popup-id={this.id}
           data-root-popup-id={rootPopupId}
           style={{
-            marginTop: 100, //this.offset.top,
-            marginLeft: this.offset.left,
+            ...(contentProps.style ?? {}),
+            ...(boundaryFit.maxWidth !== null && boundaryFit.maxWidth > 0
+              ? {
+                  maxWidth: boundaryFit.maxWidth,
+                  overflowX: 'auto',
+                  overflowY: 'hidden',
+                }
+              : {}),
           }}
         >
           {paranja && !rootPopupId && (

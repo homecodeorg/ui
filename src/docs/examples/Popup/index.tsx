@@ -2,12 +2,16 @@ import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import basic from '!!raw-loader!./Basic';
+import wideShift from '!!raw-loader!./WideShift';
 // import multiple from '!!raw-loader!./Multiple';
 // import uploadOnDemand from '!!raw-loader!./UploadOnDemand';
 import S from './Popup.styl';
 
 const name = 'Popup';
-const examples = [{ id: 'basic', label: 'Basic', code: basic }];
+const examples = [
+  { id: 'basic', label: 'Basic', code: basic },
+  { id: 'wide-shift', label: 'Wide panel + boundary shift', code: wideShift },
+];
 
 const Docs = () => (
   <>
@@ -16,6 +20,14 @@ const Docs = () => (
       It consists of a trigger element and a content element. When the trigger
       element is clicked/focused, the content element is shown relative to the
       trigger.
+    </p>
+    <p>
+      When portaled, the panel is shifted along both axes (similar to Floating
+      UI <code>shift</code>) so it stays inside the visual viewport and the
+      configured overlay mount (see <code>boundary</code>,{' '}
+      <code>boundaryMountSelector</code>, <code>shiftPadding</code> on{' '}
+      <code>Props</code>). Use <code>boundary=&quot;viewport&quot;</code> if
+      the portal target is full-viewport and you only need viewport clamping.
     </p>
     <p>
       This is also a building block for{' '}
