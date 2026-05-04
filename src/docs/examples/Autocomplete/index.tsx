@@ -6,6 +6,7 @@ import exampleFilterable from '!!raw-loader!./Filterable';
 import exampleSelectable from '!!raw-loader!./Selectable';
 import exampleExternalValueUpdate from '!!raw-loader!./ExternalValueUpdate';
 import exampleControllablePopup from '!!raw-loader!./ControllablePopup';
+import exampleVirtualizedRowRefresh from '!!raw-loader!./VirtualizedRowRefresh';
 
 const Docs = () => (
   <>
@@ -42,6 +43,11 @@ export default () => (
         id: 'controllable-popup',
         label: 'Controllable popup',
         code: exampleControllablePopup,
+      },
+      {
+        id: 'virtualized-row-refresh',
+        label: 'Virtualized row refresh (open menu)',
+        code: exampleVirtualizedRowRefresh,
       },
     ]}
   />

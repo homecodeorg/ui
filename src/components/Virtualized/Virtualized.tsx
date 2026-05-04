@@ -73,6 +73,11 @@ class Virtualized extends Component<T.Props, T.State> {
     if (nextProps.id !== this.props.id) return true;
     if (nextProps.itemsCount !== this.props.itemsCount) return true;
     if (nextProps.wrapElem !== this.props.wrapElem) return true;
+    if (nextProps.renderItem !== this.props.renderItem) return true;
+    if (nextProps.totalCount !== this.props.totalCount) return true;
+    if (nextProps.itemHeight !== this.props.itemHeight) return true;
+    if (nextProps.overlapCount !== this.props.overlapCount) return true;
+    if (nextProps.getItemProps !== this.props.getItemProps) return true;
     if (!compare(nextState, this.state)) return true;
 
     return false;
