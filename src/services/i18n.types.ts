@@ -4,13 +4,8 @@ export type LangLoader =
 
 export type RegisterConfig = Record<string, LangLoader>;
 
-export type I18NPropsField =
-  | number
-  | {
-      plural?: number;
-      params?: Record<string, any>;
-      context?: string;
-    };
+/** Number = plural count. Object: roddeh keys `plural` / `params` / `context`, or any other keys → interpolation params (see getTrans). */
+export type I18NPropsField = number | Record<string, unknown>;
 
 export type I18NProps = {
   id?: string;
