@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.6](https://github.com/foreverido/uilib/compare/v5.1.5...v5.1.6) (2026-05-05)
+
+
+### Bug Fixes
+
+* I18N - Widen props type for interpolation params ([9a8b5e8](https://github.com/foreverido/uilib/commit/9a8b5e827122a86a2d57576763be878d914dfe2d))
+
 ### [5.1.5](https://github.com/foreverido/uilib/compare/v5.1.4...v5.1.5) (2026-05-04)
 
 
