@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.7](https://github.com/foreverido/uilib/compare/v5.1.6...v5.1.7) (2026-05-07)
+
+
+### Bug Fixes
+
+* Select2 - Multi-select stale handlers and picks ([88451a1](https://github.com/foreverido/uilib/commit/88451a1db474395c116c181d4e5ecb31f78d8fb6))
+* Select2 - trigger button padding for arrow ([4a66ba6](https://github.com/foreverido/uilib/commit/4a66ba6a739d776889985e6143bcf0581fcc0f28))
+
 ### [5.1.6](https://github.com/foreverido/uilib/compare/v5.1.5...v5.1.6) (2026-05-05)
 
 
