@@ -1,26 +1,29 @@
 import { useEffect, useState } from 'react';
-import { Select } from 'uilib';
+import { Select2 } from 'uilib';
 import { OPTIONS } from 'helpers';
 
 export default () => {
   const [value, setValue] = useState([OPTIONS[2].id]);
+  const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
-      setValue(`Ask Alice, I think she know`);
+      setSearchValue(`Ask Alice, I think she know`);
     }, 5000);
   }, []);
 
   return (
-    <Select
+    <Select2
       // variant="outlined"
       // popupProps={{ direction: 'top' }}
       isSearchable
       blur
       label="Label"
       options={OPTIONS}
-      searchValue={value}
-      onChange={val => setValue(val)}
+      value={value}
+      searchValue={searchValue}
+      onChange={setValue}
+      onSearchChange={setSearchValue}
     />
   );
 };

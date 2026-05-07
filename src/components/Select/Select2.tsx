@@ -102,13 +102,16 @@ export function Select2(props: T.Props) {
     [props.triggerProps, label, size, round, variant]
   );
 
-  // Simplified isSelected check
   const isSelected = (id: T.Id) =>
-    // @ts-ignore
-    isMultiple ? (selected as T.Id[])?.includes(id) : selected === id;
+    isMultiple
+      ? (selected as T.Id[]).includes(id)
+      : selected[0] === id;
 
-  const isClickedInside = elem =>
-    elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`);
+  const isClickedInside = (elem: EventTarget | null) =>
+    !!(
+      elem instanceof Element &&
+      (elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`))
+    );
 
   const setNewItems = (newItems: T.Option[]) => {
     maxIndex.current = newItems.length - 1;
@@ -521,7 +524,7 @@ export function Select2(props: T.Props) {
         onItemToggle(items[currIndex].id);
       }
     },
-    [items, focusedItemIndex, isOpen]
+    [items, focusedItemIndex, isOpen, selected]
   );
 
   useEvent({
@@ -534,7 +537,7 @@ export function Select2(props: T.Props) {
     event: 'click',
     // isActive: isMultiple,
     callback: e => {
-      if (!isClickedInside(e.target)) {
+      if (!isClickedInside(e.target as EventTarget | null)) {
         setIsOpen(false);
       }
     },
@@ -556,7 +559,7 @@ export function Select2(props: T.Props) {
         </Scroll>
       </div>
     ),
-    [items, searchVal, focusedItemIndex]
+    [items, searchVal, focusedItemIndex, selected]
   );
 
   const classes = cn(S.root, className, S[`size-${size}`]);
