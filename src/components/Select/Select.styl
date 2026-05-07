@@ -40,8 +40,11 @@ $levelGap = 24px
   width 100%
   text-align left
 
-  &.hasTriggerArrow > span
-    max-width calc(100% - 22px)
+  &.hasTriggerArrow
+    padding-right 0
+
+    & > span
+      max-width calc(100% - 22px)
 
   &.isError
     box-shadow inset 0 0 0 2px var(--danger-color)
