@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.8](https://github.com/foreverido/uilib/compare/v5.1.7...v5.1.8) (2026-05-14)
+
+
+### Bug Fixes
+
+* Scroll - Track alignment ([af96cb8](https://github.com/foreverido/uilib/commit/af96cb8be958f224cbd7789070bcf5fff85ab9fa))
+
 ### [5.1.7](https://github.com/foreverido/uilib/compare/v5.1.6...v5.1.7) (2026-05-07)
 
 
