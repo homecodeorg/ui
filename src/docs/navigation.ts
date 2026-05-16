@@ -171,6 +171,10 @@ export default [
         loader: () => import('./examples/Tabs'),
       },
       {
+        id: 'TextShimmer',
+        loader: () => import('./examples/TextShimmer'),
+      },
+      {
         id: 'Toggle',
         loader: () => import('./examples/Toggle'),
       },

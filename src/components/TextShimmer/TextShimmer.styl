@@ -1,0 +1,20 @@
+.root
+  position relative
+  display inline-block
+  animation textShimmer var(--text-shimmer-duration, 1s) linear infinite
+  background-size 200% 100%
+  background-repeat repeat-x
+  -webkit-background-clip text
+  background-clip text
+  color transparent !important
+  -webkit-text-fill-color transparent
+  -webkit-font-smoothing antialiased
+  --txt-sh-fill var(--text-shimmer-decent-tone, var(--accent-color))
+  --txt-sh-highlight var(--text-shimmer-accent-tone, var(--decent-color))
+
+// One loop distance must match repeat period (bg width = 200% of box ⇒ 100% − (−100%) span).
+@keyframes textShimmer
+  from
+    background-position 100% center
+  to
+    background-position -100% center
