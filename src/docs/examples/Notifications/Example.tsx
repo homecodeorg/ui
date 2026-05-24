@@ -30,7 +30,7 @@ const showRichContent = () =>
     content: (
       <>
         Not only plain text — try <strong>bold</strong> or a{' '}
-        <Button size="s" round onClick={e => e.preventDefault()}>
+        <Button size="xs" round onClick={e => e.preventDefault()}>
           link
         </Button>
         .
@@ -42,6 +42,7 @@ const showAll = () => {
   Object.keys(params).forEach(type =>
     Time.after((delay += 200), () => show(type))
   );
+  showRichContent();
 };
 
 export default () => (
