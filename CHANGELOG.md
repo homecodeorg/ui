@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.10](https://github.com/foreverido/uilib/compare/v5.1.9...v5.1.10) (2026-05-24)
+
+
+### Features
+
+* Notifications - Support ReactNode content ([1a2cef7](https://github.com/foreverido/uilib/commit/1a2cef781b157dfde3bd95f3947bca99279b1a6a))
+* TextShimmer - Add animated text shimmer ([1978c2c](https://github.com/foreverido/uilib/commit/1978c2c03e8af0798b7fffcbad4862ca2c174bbe))
+
 ### [5.1.9](https://github.com/foreverido/uilib/compare/v5.1.8...v5.1.9) (2026-05-14)
 
 ### [5.1.8](https://github.com/foreverido/uilib/compare/v5.1.7...v5.1.8) (2026-05-14)
