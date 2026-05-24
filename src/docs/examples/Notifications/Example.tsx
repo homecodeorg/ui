@@ -24,6 +24,19 @@ const params = {
 };
 
 const show = type => NotificationsStore.show(params[type]);
+const showRichContent = () =>
+  NotificationsStore.show({
+    title: 'Rich content',
+    content: (
+      <>
+        Not only plain text — try <strong>bold</strong> or a{' '}
+        <Button size="s" round onClick={e => e.preventDefault()}>
+          link
+        </Button>
+        .
+      </>
+    ),
+  });
 const showAll = () => {
   let delay = 0;
   Object.keys(params).forEach(type =>
@@ -38,6 +51,7 @@ export default () => (
       <Button onClick={() => show('warning')}>Warning</Button>
       <Button onClick={() => show('error')}>Error</Button>
       <Button onClick={() => show('loading')}>Loading</Button>
+      <Button onClick={showRichContent}>Rich content</Button>
       <Button onClick={showAll}>All</Button>
     </div>
     <Notifications />

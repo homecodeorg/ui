@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type NotificationType = 'warning' | 'danger' | 'loading';
 
 type Id = string;
@@ -5,7 +7,7 @@ type Id = string;
 export type ItemParams = {
   type?: NotificationType;
   title?: string;
-  content?: string;
+  content?: ReactNode;
   autoHide?: boolean;
 };
 
@@ -26,8 +28,9 @@ export type Methods = {
   remove: (id: Id) => void;
 };
 
-export type ItemProps = ItemParams &
+export type ItemProps = Omit<ItemParams, 'content'> &
   Methods & {
     id: string;
     visible: boolean;
+    content?: ReactNode | (() => ReactNode);
   };

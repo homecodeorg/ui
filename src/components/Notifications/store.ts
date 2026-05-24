@@ -10,6 +10,16 @@ const SHOW_TIME = 5000;
 
 type ID = string;
 
+function normalizeContent(content: ItemParams['content']) {
+  if (content == null) return content;
+  if (typeof content === 'string' || typeof content === 'function') {
+    return content;
+  }
+
+  // justorm proxies nested objects; React elements break on internal _store.
+  return () => content;
+}
+
 const STORE = createStore('notifications', {
   items: [] as ID[],
   autoHide: [] as ID[],
@@ -17,10 +27,12 @@ const STORE = createStore('notifications', {
   paused: false,
   show(data: ItemParams) {
     const id = generateUID();
+    const { content, ...rest } = data;
 
     this.items.push(id);
     this.data[id] = {
-      ...data,
+      ...rest,
+      content: normalizeContent(content),
       createdAt: Date.now(),
     };
 

@@ -89,7 +89,11 @@ class Item extends Component<T.ItemProps> {
           {(title || content) && (
             <div className={S.text}>
               {title && <div className={S.title}>{title}</div>}
-              {content && <div className={S.content}>{content}</div>}
+              {content != null && (
+                <div className={S.content}>
+                  {typeof content === 'function' ? content() : content}
+                </div>
+              )}
             </div>
           )}
           <Button
