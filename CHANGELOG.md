@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.12](https://github.com/foreverido/uilib/compare/v5.1.11...v5.1.12) (2026-05-30)
+
+
+### Features
+
+* Slider - Add range input component ([168d8f0](https://github.com/foreverido/uilib/commit/168d8f0f31be60096cb3dbe547e60002eb0ec8ff))
+
+
+### Bug Fixes
+
+* Card styles and exmaples ([31290f6](https://github.com/foreverido/uilib/commit/31290f63410dd04659c2257133eb108fdc930821))
+* Notification - shadow rendering ([8c9c6bb](https://github.com/foreverido/uilib/commit/8c9c6bb2f00737d1cdd31b94aa9981d6c0bd9e12))
+
 ### [5.1.11](https://github.com/foreverido/uilib/compare/v5.1.10...v5.1.11) (2026-05-24)
 
 ### [5.1.10](https://github.com/foreverido/uilib/compare/v5.1.9...v5.1.10) (2026-05-24)
