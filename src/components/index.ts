@@ -40,6 +40,7 @@ export * from './RequiredStar/RequiredStar';
 export * from './Select/Select';
 export * from './Select/Select2';
 export * from './Scroll/Scroll';
+export * from './Slider/Slider';
 export * from './Shimmer/Shimmer';
 export * from './Spinner/Spinner';
 export * from './Table/Table';

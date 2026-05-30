@@ -1,0 +1,124 @@
+@import '../../theme'
+
+.root
+  position relative
+  width 100%
+  color var(--accent-color)
+
+.disabled
+  opacity .4
+  pointer-events none
+
+  .control[disabled]
+    opacity 1
+
+.hasLabel
+  display flex
+  align-items center
+  gap var(--p-2)
+
+.label
+  white-space nowrap
+  font-size inherit
+  color inherit
+
+.trackWrap
+  position relative
+  flex 1
+  min-width 0
+  display flex
+  align-items center
+
+.control
+  control()
+  appearance none
+  width 100%
+  height var(--thumb-size)
+  margin 0
+  padding 0
+  cursor pointer
+  background transparent
+  --track-radius 50px
+
+  &:hover
+  &:focus
+    background transparent !important
+  &:focus
+    outline none
+
+  &::-webkit-slider-runnable-track
+    height var(--track-height)
+    border-radius var(--track-radius)
+    background linear-gradient(to right, var(--active-color) 0%, var(--active-color) var(--progress), var(--accent-color-alpha-100) var(--progress), var(--accent-color-alpha-100) 100%)
+
+  &::-webkit-slider-thumb
+    appearance none
+    width var(--thumb-size)
+    height var(--thumb-size)
+    margin-top calc((var(--track-height) - var(--thumb-size)) / 2)
+    border-radius 50%
+    background var(--active-color)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
+    cursor pointer
+
+  &::-moz-range-track
+    height var(--track-height)
+    border-radius var(--track-radius)
+    background var(--accent-color-alpha-100)
+
+  &::-moz-range-progress
+    height var(--track-height)
+    border-radius var(--track-radius)
+    background var(--active-color)
+
+  &::-moz-range-thumb
+    width var(--thumb-size)
+    height var(--thumb-size)
+    border none
+    border-radius 50%
+    background var(--active-color)
+    box-shadow 0 1px 3px rgba(0, 0, 0, 0.2)
+    cursor pointer
+
+.ghost
+  position absolute
+  top 50%
+  width var(--ghost-size)
+  height var(--ghost-size)
+  margin-left calc(var(--ghost-size) * -0.3125)
+  transform translateY(-50%)
+  border-radius 50%
+  background var(--accent-color)
+  opacity 0.45
+  pointer-events none
+  z-index 2
+
+.size-xs
+  --track-height 1px
+  --thumb-size 10px
+  --ghost-size 10px
+  font-size 12px
+
+.size-s
+  --track-height 2px
+  --thumb-size 12px
+  --ghost-size 12px
+  font-size 14px
+
+.size-m
+  --track-height 8px
+  --thumb-size 16px
+  --ghost-size 16px
+  font-size 16px
+
+.size-l
+  --track-height 12px
+  --thumb-size 20px
+  --ghost-size 20px
+  font-size 18px
+
+.size-xl
+  --track-height 16px
+  --thumb-size 24px
+  --ghost-size 24px
+  font-size 20px

@@ -159,6 +159,10 @@ export default [
         loader: () => import('./examples/Select'),
       },
       {
+        id: 'Slider',
+        loader: () => import('./examples/Slider'),
+      },
+      {
         id: 'Spinner',
         loader: () => import('./examples/Spinner'),
       },
