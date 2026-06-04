@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.14](https://github.com/foreverido/uilib/compare/v5.1.12...v5.1.14) (2026-06-04)
+
+
+### Features
+
+* Slider - Timeline markers with tooltips ([a39de62](https://github.com/foreverido/uilib/commit/a39de622d1b6e3deac174a74eeb44860fedc117c))
+
 ### [5.1.12](https://github.com/foreverido/uilib/compare/v5.1.11...v5.1.12) (2026-05-30)
 
 
