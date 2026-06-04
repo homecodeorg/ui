@@ -1,13 +1,26 @@
 import cn from 'classnames';
-import { useCallback, useRef, useState, ChangeEvent, CSSProperties } from 'react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  ChangeEvent,
+  CSSProperties,
+} from 'react';
 
+import { Tooltip } from '../Tooltip/Tooltip';
 import S from './Slider.styl';
 import * as T from './Slider.types';
 
 export type SliderProps = T.Props;
+export type SliderMarker = T.SliderMarker;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
+
+const valueToPct = (value: number, min: number, max: number) => {
+  const range = max - min;
+  return range > 0 ? `${((value - min) / range) * 100}%` : '0%';
+};
 
 export function Slider({
   className,
@@ -19,6 +32,9 @@ export function Slider({
   size = 'm',
   disabled = false,
   showGhost = false,
+  markers,
+  markerClassName,
+  onMarkerClick,
   onChange,
   onInput,
   ...inputProps
@@ -27,8 +43,7 @@ export function Slider({
   const [ghostRatio, setGhostRatio] = useState<number | null>(null);
 
   const range = max - min;
-  const progressPct =
-    range > 0 ? `${((value - min) / range) * 100}%` : '0%';
+  const progressPct = valueToPct(value, min, max);
 
   const updateGhostFromPointer = useCallback(
     (clientX: number) => {
@@ -57,7 +72,7 @@ export function Slider({
       {label ? <span className={S.label}>{label}</span> : null}
       <div
         ref={trackWrapRef}
-        className={S.trackWrap}
+        className={cn(S.trackWrap, markers?.length ? S.hasMarkers : null)}
         onPointerEnter={
           showGhost ? e => updateGhostFromPointer(e.clientX) : undefined
         }
@@ -66,30 +81,71 @@ export function Slider({
         }
         onPointerLeave={showGhost ? clearGhost : undefined}
       >
-        <input
-          type="range"
-          className={S.control}
-          style={{ '--progress': progressPct } as CSSProperties}
-          value={value}
-          min={min}
-          max={max}
-          step={step}
-          disabled={disabled}
-          onInput={e => {
-            onInput?.(e);
-            onChange?.(
-              Number(e.currentTarget.value),
-              e as ChangeEvent<HTMLInputElement>
-            );
-          }}
-          {...inputProps}
-        />
-        {showGhost && ghostRatio !== null && !disabled ? (
-          <span
-            className={S.ghost}
-            style={{ left: `${ghostRatio * 100}%` }}
-            aria-hidden
+        <div className={S.trackRow}>
+          <input
+            type="range"
+            className={S.control}
+            style={{ '--progress': progressPct } as CSSProperties}
+            value={value}
+            min={min}
+            max={max}
+            step={step}
+            disabled={disabled}
+            onInput={e => {
+              onInput?.(e);
+              onChange?.(
+                Number(e.currentTarget.value),
+                e as ChangeEvent<HTMLInputElement>
+              );
+            }}
+            {...inputProps}
           />
+          {showGhost && ghostRatio !== null && !disabled ? (
+            <span
+              className={S.ghost}
+              style={{ left: `${ghostRatio * 100}%` }}
+              aria-hidden
+            />
+          ) : null}
+        </div>
+        {markers?.length ? (
+          <div className={S.markersRow}>
+            {markers.map((marker, index) => {
+              const markerButton = (
+                <button
+                  type="button"
+                  className={cn(S.marker, markerClassName)}
+                  aria-label={
+                    typeof marker.label === 'string' ? marker.label : undefined
+                  }
+                  disabled={disabled}
+                  onPointerDown={e => {
+                    e.stopPropagation();
+                  }}
+                  onClick={e => {
+                    e.stopPropagation();
+                    if (!disabled) onMarkerClick?.(marker.value);
+                  }}
+                />
+              );
+
+              return (
+                <span
+                  key={marker.key ?? index}
+                  className={S.markerWrap}
+                  style={{ left: valueToPct(marker.value, min, max) }}
+                >
+                  {marker.label ? (
+                    <Tooltip content={marker.label} direction="top">
+                      {markerButton}
+                    </Tooltip>
+                  ) : (
+                    markerButton
+                  )}
+                </span>
+              );
+            })}
+          </div>
         ) : null}
       </div>
     </div>

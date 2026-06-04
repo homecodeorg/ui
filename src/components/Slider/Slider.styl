@@ -27,7 +27,47 @@
   flex 1
   min-width 0
   display flex
+  flex-direction column
+
+.hasMarkers
+  gap var(--p-1)
+
+.trackRow
+  position relative
+  display flex
   align-items center
+  width 100%
+
+.markersRow
+  position relative
+  width 100%
+  height var(--marker-size)
+  flex-shrink 0
+
+.markerWrap
+  position absolute
+  top 50%
+  transform translate(-50%, -50%)
+  pointer-events auto
+
+.marker
+  display block
+  width var(--marker-size)
+  height var(--marker-size)
+  margin 0
+  padding 0
+  border none
+  border-radius 50%
+  background var(--accent-color)
+  box-shadow 0 0 0 1px var(--decent-color-alpha-800)
+  cursor pointer
+
+  &:hover
+    background var(--active-color)
+
+  &:disabled
+    cursor default
+    opacity 0.5
 
 .control
   control()
@@ -39,6 +79,8 @@
   cursor pointer
   background transparent
   --track-radius 50px
+  position relative
+  z-index 2
 
   &:hover
   &:focus
@@ -83,10 +125,10 @@
 .ghost
   position absolute
   top 50%
+  left 0
   width var(--ghost-size)
   height var(--ghost-size)
-  margin-left calc(var(--ghost-size) * -0.3125)
-  transform translateY(-50%)
+  transform translate(-50%, -50%)
   border-radius 50%
   background var(--accent-color)
   opacity 0.45
@@ -97,28 +139,33 @@
   --track-height 1px
   --thumb-size 10px
   --ghost-size 10px
+  --marker-size 6px
   font-size 12px
 
 .size-s
   --track-height 2px
   --thumb-size 12px
   --ghost-size 12px
+  --marker-size 7px
   font-size 14px
 
 .size-m
   --track-height 8px
   --thumb-size 16px
   --ghost-size 16px
+  --marker-size 8px
   font-size 16px
 
 .size-l
   --track-height 12px
   --thumb-size 20px
   --ghost-size 20px
+  --marker-size 10px
   font-size 18px
 
 .size-xl
   --track-height 16px
   --thumb-size 24px
   --ghost-size 24px
+  --marker-size 12px
   font-size 20px
