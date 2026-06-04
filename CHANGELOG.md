@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.15](https://github.com/foreverido/uilib/compare/v5.1.14...v5.1.15) (2026-06-04)
+
+
+### Features
+
+* Slider - support markerTooltipProps ([97aa000](https://github.com/foreverido/uilib/commit/97aa000b581bff83caed6e9feb29d25e42569ce6))
+
 ### [5.1.14](https://github.com/foreverido/uilib/compare/v5.1.12...v5.1.14) (2026-06-04)
 
 
