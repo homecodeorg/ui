@@ -37,6 +37,7 @@ export function Slider({
   onMarkerClick,
   onChange,
   onInput,
+  markerTooltipProps = {},
   ...inputProps
 }: SliderProps) {
   const trackWrapRef = useRef<HTMLDivElement>(null);
@@ -136,7 +137,11 @@ export function Slider({
                   style={{ left: valueToPct(marker.value, min, max) }}
                 >
                   {marker.label ? (
-                    <Tooltip content={marker.label} direction="top">
+                    <Tooltip
+                      direction="bottom"
+                      {...markerTooltipProps}
+                      content={marker.label}
+                    >
                       {markerButton}
                     </Tooltip>
                   ) : (
