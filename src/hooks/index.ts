@@ -1,3 +1,4 @@
+export * from './useAwake';
 export * from './useThrottle';
 export * from './useDebounce';
 export * from './useEvent';
