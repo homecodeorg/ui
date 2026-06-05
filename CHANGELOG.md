@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.17](https://github.com/foreverido/uilib/compare/v5.1.15...v5.1.17) (2026-06-05)
+
+
+### Features
+
+* useAwake - Screen wake lock hook ([1e3cbb8](https://github.com/foreverido/uilib/commit/1e3cbb89496b2b52e92fded3332a38b07fc02624))
+
 ### [5.1.15](https://github.com/foreverido/uilib/compare/v5.1.14...v5.1.15) (2026-06-04)
 
 
