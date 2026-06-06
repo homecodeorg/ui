@@ -39,18 +39,19 @@
   width 100%
 
 .markersRow
-  position relative
+  z-index 2
+  position absolute
   width 100%
-  height var(--marker-size)
+  height 0
   flex-shrink 0
 
 .markerWrap
   position absolute
-  top 50%
-  transform translate(-50%, -50%)
+  top -3px
   pointer-events auto
 
 .marker
+  position relative
   display block
   width var(--marker-size)
   height var(--marker-size)
@@ -61,6 +62,17 @@
   background var(--accent-color)
   box-shadow 0 0 0 1px var(--decent-color-alpha-800)
   cursor pointer
+
+  &::before
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    content ''
+    display block
+    width 40px
+    height 40px
+    border-radius 50%
 
   &:hover
     background var(--active-color)
@@ -142,6 +154,7 @@
   --marker-size 6px
   font-size 12px
 
+
 .size-s
   --track-height 2px
   --thumb-size 12px
@@ -149,23 +162,35 @@
   --marker-size 7px
   font-size 14px
 
+  .markersRow
+    top -1px
+
 .size-m
   --track-height 8px
   --thumb-size 16px
   --ghost-size 16px
-  --marker-size 8px
+  --marker-size 12px
   font-size 16px
+
+  .markersRow
+    top 1px
 
 .size-l
   --track-height 12px
   --thumb-size 20px
   --ghost-size 20px
-  --marker-size 10px
+  --marker-size 16px
   font-size 18px
+
+  .markersRow
+    top 4px
 
 .size-xl
   --track-height 16px
   --thumb-size 24px
   --ghost-size 24px
-  --marker-size 12px
+  --marker-size 20px
   font-size 20px
+
+  .markersRow
+    top 5px
