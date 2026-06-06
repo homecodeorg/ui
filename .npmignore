@@ -17,3 +17,4 @@ tsconfig.json
 .prettierignore
 yarn-error.log
 .vscode/
+.cursor/
