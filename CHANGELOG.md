@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.18](https://github.com/foreverido/uilib/compare/v5.1.17...v5.1.18) (2026-06-06)
+
+
+### Bug Fixes
+
+* Slider - marker positioning and hit area ([6335b84](https://github.com/foreverido/uilib/commit/6335b84d3b30be7cfbc7ad1550d3637cd6592a75))
+
 ### [5.1.17](https://github.com/foreverido/uilib/compare/v5.1.15...v5.1.17) (2026-06-05)
 
 
