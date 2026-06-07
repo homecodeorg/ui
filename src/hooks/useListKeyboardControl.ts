@@ -43,7 +43,10 @@ export const useListKeyboardControl = ({
       }
 
       if (e.key === 'Enter') {
-        onSelect(newIndex);
+        if (newIndex < 0 || newIndex >= itemsCount) return;
+        e.preventDefault();
+        e.stopPropagation();
+        onSelect?.(newIndex);
         return;
       }
     },
@@ -58,10 +61,14 @@ export const useListKeyboardControl = ({
   });
 
   useEffect(() => {
-    if (itemsCount < focusedIndex) {
+    if (itemsCount <= 0) {
+      setFocusedIndex(-1);
+      return;
+    }
+    if (focusedIndex >= itemsCount) {
       setFocusedIndex(itemsCount - 1);
     }
-  }, [itemsCount]);
+  }, [itemsCount, focusedIndex]);
 
   return {
     focusedIndex,

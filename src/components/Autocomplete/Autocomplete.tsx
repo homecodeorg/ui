@@ -144,7 +144,8 @@ export function Autocomplete(props: T.Props) {
     return true;
   };
 
-  const handleSelect = (option: T.Option) => {
+  const handleSelect = (option?: T.Option) => {
+    if (!option) return;
     if (selectable) {
       setSelectedId(option.id);
       setSelectedLabel(option.label);
@@ -178,7 +179,11 @@ export function Autocomplete(props: T.Props) {
   const { focusedIndex, setFocusedIndex } = useListKeyboardControl({
     isActive: isPopupOpenForInput,
     itemsCount: displayItems.length,
-    onSelect: index => handleSelect(displayItems[index]),
+    onSelect: index => {
+      const option = displayItems[index];
+      if (!option) return;
+      handleSelect(option);
+    },
   });
 
   const fetchOptionsCore = useCallback(
