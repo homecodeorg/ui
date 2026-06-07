@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.2](https://github.com/foreverido/uilib/compare/v5.3.1...v5.3.2) (2026-06-07)
+
+
+### Bug Fixes
+
+* PromptComposer - guard destroyed editor ([cdd9852](https://github.com/foreverido/uilib/commit/cdd985298f16e61dc5fd462f8e9d9c1b4fc636a4))
+
 ### [5.3.1](https://github.com/foreverido/uilib/compare/v5.3.0...v5.3.1) (2026-06-07)
 
 
