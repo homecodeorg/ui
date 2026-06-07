@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.1](https://github.com/foreverido/uilib/compare/v5.3.0...v5.3.1) (2026-06-07)
+
+
+### Bug Fixes
+
+* Autocomplete - guard invalid keyboard select ([c9f5c57](https://github.com/foreverido/uilib/commit/c9f5c57b717559e606317eb3c87f32831f10e511))
+
 ## [5.3.0](https://github.com/foreverido/uilib/compare/v5.1.18...v5.3.0) (2026-06-07)
 
 
