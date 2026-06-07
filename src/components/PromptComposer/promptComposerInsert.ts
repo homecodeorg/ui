@@ -167,9 +167,11 @@ export function createPromptComposerHandle(
     insertAtCaret: (content, options) =>
       insertPromptComposerContentAtCaret(editor, content, options),
     focus: () => {
+      if (editor.isDestroyed) return;
       editor.commands.focus();
     },
     reset: () => {
+      if (editor.isDestroyed) return;
       editor.chain().clearContent().focus().run();
     },
     getText: () => editor.getText(),

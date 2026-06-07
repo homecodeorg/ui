@@ -2,6 +2,20 @@
 export const PROMPT_COMPOSER_MAX_HEIGHT_PX = 200;
 export const PROMPT_COMPOSER_MIN_HEIGHT_PX = 40;
 
+export function safePromptComposerEditorText(
+  editor:
+    | { readonly isDestroyed?: boolean; getText?: () => string }
+    | null
+    | undefined
+): string | null {
+  if (!editor || editor.isDestroyed) return null;
+  try {
+    return editor.getText?.() ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export function promptComposerSafeEditorDom(
   editor: { readonly isDestroyed?: boolean } | null | undefined
 ): HTMLElement | null {

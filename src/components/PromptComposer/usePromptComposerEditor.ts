@@ -22,6 +22,7 @@ import type {
 } from '../../tiptap/slash-mention';
 import {
   promptComposerSafeEditorDom,
+  safePromptComposerEditorText,
   syncPromptComposerHeight,
 } from './PromptComposer.helpers';
 import {
@@ -134,7 +135,8 @@ export function usePromptComposerEditor({
 
   const editorDomRef = useRef<HTMLElement | null>(null);
   const bindEditorDom = useCallback(({ editor }: { editor: Editor }) => {
-    const nextText = editor.getText();
+    const nextText = safePromptComposerEditorText(editor);
+    if (nextText == null) return;
     setText(nextText);
     queueMicrotask(() => {
       const dom = promptComposerSafeEditorDom(editor);
@@ -197,8 +199,9 @@ export function usePromptComposerEditor({
         handleKeyDown: handleEditorKeyDown,
       },
       onTransaction: ({ editor: activeEditor }) => {
+        const nextText = safePromptComposerEditorText(activeEditor);
+        if (nextText == null) return;
         const dom = promptComposerSafeEditorDom(activeEditor);
-        const nextText = activeEditor.getText();
         if (dom) {
           syncPromptComposerHeight(dom, nextText);
         }
@@ -233,22 +236,34 @@ export function usePromptComposerEditor({
   }, [editor]);
 
   useEffect(() => {
-    if (!editor || prefillMessage == null) return;
+    if (!editor || prefillMessage == null || editor.isDestroyed) return;
 
-    const current = editor.getText();
+    const current = safePromptComposerEditorText(editor);
+    if (current == null) return;
+
     const next = prefillMessage;
     if (current === next) return;
 
-    if (next === '') {
-      editor.commands.setContent(PROMPT_COMPOSER_EMPTY_DOC);
-    } else {
-      editor.commands.setContent(promptComposerParagraphDoc(next));
+    try {
+      if (next === '') {
+        editor.commands.setContent(PROMPT_COMPOSER_EMPTY_DOC);
+      } else {
+        editor.commands.setContent(promptComposerParagraphDoc(next));
+      }
+    } catch {
+      return;
     }
 
-    setText(editor.getText());
+    const synced = safePromptComposerEditorText(editor);
+    if (synced != null) setText(synced);
+
     queueMicrotask(() => {
+      if (editor.isDestroyed) return;
       const dom = promptComposerSafeEditorDom(editor);
-      if (dom) syncPromptComposerHeight(dom, editor.getText());
+      const heightText = safePromptComposerEditorText(editor);
+      if (dom && heightText != null) {
+        syncPromptComposerHeight(dom, heightText);
+      }
       if (!disabled && !editor.isDestroyed) {
         editor.chain().focus('end').run();
       }
