@@ -33,6 +33,7 @@ export * from './Portal/Portal';
 export * from './PopupMenu/PopupMenu';
 export * from './Progress/Progress';
 export * from './ProgressCircular/ProgressCircular';
+export * from './PromptComposer';
 export * from './RadioButton/RadioButton';
 export * from './RadioGroup/RadioGroup';
 export * from './Router/Router';

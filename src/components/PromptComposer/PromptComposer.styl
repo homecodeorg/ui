@@ -1,0 +1,43 @@
+INPUT_MAX_HEIGHT = 200px
+
+.root
+  width 100%
+
+.editorMount
+  display flex
+  flex 1
+  flex-direction column
+  min-width 0
+  min-height 40px
+  max-height INPUT_MAX_HEIGHT
+  border none
+  padding 0 !important
+  border-radius 0 !important
+  box-shadow none !important
+  background transparent
+
+  &:focus-within
+    box-shadow none !important
+
+  & :global(.promptComposerEditor)
+    outline none !important
+    border none !important
+    flex 1
+    padding var(--p-2) 0 0 !important
+    margin 0
+    white-space pre-wrap
+    word-break break-word
+    resize none !important
+    box-shadow none !important
+    min-height 40px !important
+    max-height INPUT_MAX_HEIGHT !important
+    overflow-y auto !important
+    overflow-x hidden !important
+
+  & :global(.promptComposerEmptyEditor .promptComposerEmptyNode::before)
+    color var(--muted-foreground)
+    content attr(data-placeholder)
+    float left
+    height 0
+    pointer-events none
+

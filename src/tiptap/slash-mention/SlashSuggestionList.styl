@@ -1,0 +1,68 @@
+.root
+  position relative
+  min-width 220px
+  max-width min(340px, 90vw)
+  background-color var(--decent-color)
+  box-shadow inset 0 0 0 1px var(--accent-color-alpha-50), 0 8px 24px rgba(0, 0, 0, 0.2)
+  border-radius var(--radius-lg, 8px)
+  color var(--foreground)
+  overflow hidden
+
+  &::before
+    content ''
+    position absolute
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background-color var(--accent-color-alpha-50)
+    pointer-events none
+
+  :global(.dark) &
+    box-shadow inset 0 0 0 1px var(--accent-color-alpha-50), 0 8px 24px rgba(0, 0, 0, 0.5)
+
+.menu
+  max-height min(260px, 40vh)
+  margin 0
+
+.item
+  position relative
+  display flex
+  flex-direction column
+  align-items flex-start
+  justify-content center
+  width 100%
+  min-height 0
+  height auto !important
+  padding var(--p-1) var(--p-2) !important
+  border-radius var(--p-2)
+  white-space normal !important
+  text-overflow initial !important
+  overflow visible !important
+
+  &:hover
+    box-shadow inset 100vw 0 0 0 var(--accent-color-alpha-200)
+
+.itemHighlighted
+  box-shadow inset 100vw 0 0 0 var(--accent-color-alpha-200)
+
+.itemLabel
+  font-weight 600
+
+.itemDesc
+  font-size 80%
+  color var(--muted-foreground)
+  white-space normal
+
+.mention
+  display inline-flex
+  align-items center
+  padding 0 var(--p-1)
+  margin 0 var(--p-1)
+
+  border-radius var(--p-1)
+  background var(--muted)
+  line-height 1.4
+  white-space nowrap
+  user-select none
+  vertical-align baseline

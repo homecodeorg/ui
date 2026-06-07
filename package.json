@@ -1,6 +1,6 @@
 {
   "name": "@homecode/ui",
-  "version": "5.1.18",
+  "version": "5.2.0",
   "description": "React UI components library",
   "scripts": {
     "tests": "jest",
@@ -60,6 +60,13 @@
     "@homecode/ui": "^4.17.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@rollup/plugin-typescript": "^11.0.0",
+    "@tiptap/core": "^3.22.1",
+    "@tiptap/extension-mention": "^3.22.1",
+    "@tiptap/extensions": "^3.22.1",
+    "@tiptap/pm": "^3.22.1",
+    "@tiptap/react": "^3.22.1",
+    "@tiptap/starter-kit": "^3.22.1",
+    "@tiptap/suggestion": "^3.22.1",
     "@svgr/webpack": "^8.1.0",
     "classnames": "^2.3.2",
     "compareq": "^1.2.2",

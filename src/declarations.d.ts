@@ -24,3 +24,24 @@ declare module '*.styl' {
   const content: { [className: string]: string };
   export default content;
 }
+
+declare module 'justorm/react' {
+  import type React from 'react';
+
+  export type StoreConfig =
+    | string
+    | string[]
+    | Record<string, string[]>
+    | Array<string | Record<string, string[]>>;
+
+  export function createStore<T extends Record<string, any>>(
+    instance: string | React.Component<any, any>,
+    obj: T
+  ): T;
+  export function useStore<T = Record<string, any>>(config?: StoreConfig): T;
+  export function withStore(
+    config?: StoreConfig
+  ): (
+    WrappedComponent: React.FunctionComponent<any>
+  ) => React.FunctionComponent<any>;
+}

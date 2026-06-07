@@ -107,6 +107,10 @@ export default [
         loader: () => import('./examples/Input'),
       },
       {
+        id: 'PromptComposer',
+        loader: () => import('./examples/PromptComposer'),
+      },
+      {
         id: 'InputFile',
         loader: () => import('./examples/InputFile'),
       },
