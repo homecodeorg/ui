@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.3.0](https://github.com/foreverido/uilib/compare/v5.1.18...v5.3.0) (2026-06-07)
+
+
+### Features
+
+* PromptComposer - add slash-enabled composer ([f1ab04e](https://github.com/foreverido/uilib/commit/f1ab04ed543cf38d54ae2f4382314b553982eaf6))
+
 ### [5.1.18](https://github.com/foreverido/uilib/compare/v5.1.17...v5.1.18) (2026-06-06)
 
 
