@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.5](https://github.com/foreverido/uilib/compare/v5.3.4...v5.3.5) (2026-06-09)
+
+
+### Bug Fixes
+
+* Gallery - Dots use full items list length ([54aa71b](https://github.com/foreverido/uilib/commit/54aa71b725142e6fa1ed882348cb3ac2073ec86d))
+
 ### [5.3.4](https://github.com/foreverido/uilib/compare/v5.3.2...v5.3.4) (2026-06-09)
 
 
