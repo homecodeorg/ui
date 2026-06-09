@@ -430,8 +430,8 @@ export class Gallery extends Component<T.Props> {
             hideSpinner
             loader={() => import('./Dots/Dots')}
             // @ts-ignore
-            index={this.index % items.length}
-            count={items.length}
+            index={this.index % this.props.items.length}
+            count={this.props.items.length}
           />
         )}
       </div>
