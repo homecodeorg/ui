@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.4](https://github.com/foreverido/uilib/compare/v5.3.2...v5.3.4) (2026-06-09)
+
+
+### Features
+
+* Gallery - Mixed image and video items ([f588fdf](https://github.com/foreverido/uilib/commit/f588fdfe59bde76882efbc0a5681ee3f486e8e43))
+* PromptComposer - Scroll long editor content ([8326e10](https://github.com/foreverido/uilib/commit/8326e102729ba0c1a13af3fb4596a6e4f344b19c))
+
 ### [5.3.2](https://github.com/foreverido/uilib/compare/v5.3.1...v5.3.2) (2026-06-07)
 
 
