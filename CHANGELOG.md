@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.6](https://github.com/foreverido/uilib/compare/v5.3.5...v5.3.6) (2026-06-09)
+
+
+### Bug Fixes
+
+* PromptComposer - Omit DOM onSubmit/onChange from props ([6ba7743](https://github.com/foreverido/uilib/commit/6ba774346332a86a6e751eb4ede9d883bfe8631f))
+
 ### [5.3.5](https://github.com/foreverido/uilib/compare/v5.3.4...v5.3.5) (2026-06-09)
 
 
