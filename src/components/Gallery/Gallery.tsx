@@ -2,6 +2,7 @@ import {
   Component,
   createRef,
   CSSProperties,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -22,6 +23,18 @@ import S from './Gallery.styl';
 import * as T from './Gallery.types';
 import { Lazy } from '../Lazy/Lazy';
 
+export type { GalleryItem } from './Gallery.types';
+
+export function normalizeGalleryItem(item: T.GalleryItem): {
+  src: string;
+  kind: 'image' | 'video';
+} {
+  if (typeof item === 'string') return { src: item, kind: 'image' };
+  return { src: item.src, kind: item.kind ?? 'image' };
+}
+
+type NormalizedItem = ReturnType<typeof normalizeGalleryItem>;
+
 const THRESHOLD = 50;
 const DURATION = 200;
 const DIR_NAME = {
@@ -32,7 +45,7 @@ const DIR_NAME = {
 type Direction = -1 | 1;
 
 type GalleryStoreTarget = {
-  items: string[];
+  items: NormalizedItem[];
   movingDirection: number;
   isDragging: boolean;
 };
@@ -45,7 +58,7 @@ function galleryStoreTarget(store: unknown): GalleryStoreTarget {
   return o.originalObject;
 }
 
-function getInitialState(items: T.Props['items'], startIndex) {
+function getInitialState(items: NormalizedItem[], startIndex) {
   return circularSlice(items, startIndex, 3);
 }
 
@@ -62,13 +75,58 @@ function Arr({ className, size, icon, ...rest }) {
   );
 }
 
-function Item({ src, size }) {
+function VideoItem({
+  src,
+  size,
+  isActive,
+}: {
+  src: string;
+  size: T.Props['size'];
+  isActive: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || isActive) return;
+    video.pause();
+  }, [isActive, src]);
+
+  return (
+    <div className={cn(S.item, S.videoItem)}>
+      <video
+        ref={videoRef}
+        src={src}
+        controls
+        playsInline
+        className={S.video}
+        onLoadedData={() => setLoaded(true)}
+      />
+      {!loaded && <Spinner size={size} />}
+    </div>
+  );
+}
+
+function Item({
+  src,
+  kind,
+  size,
+  isActive,
+}: {
+  src: string;
+  kind: 'image' | 'video';
+  size: T.Props['size'];
+  isActive: boolean;
+}) {
   const [loaded, setLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
   const style = {} as CSSProperties;
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   useLayoutEffect(() => {
+    if (kind === 'video') return;
+
     const img = imgRef.current;
     if (!img || isError) return;
 
@@ -86,7 +144,10 @@ function Item({ src, size }) {
     }
 
     if (typeof img.decode === 'function') {
-      img.decode().then(notify).catch(() => {});
+      img
+        .decode()
+        .then(notify)
+        .catch(() => {});
       return () => {
         cancelled = true;
       };
@@ -104,7 +165,11 @@ function Item({ src, size }) {
     return () => {
       cancelled = true;
     };
-  }, [src, isError]);
+  }, [src, isError, kind]);
+
+  if (kind === 'video') {
+    return <VideoItem src={src} size={size} isActive={isActive} />;
+  }
 
   if (loaded) style.backgroundImage = `url(${src})`;
 
@@ -130,7 +195,7 @@ function Item({ src, size }) {
 
 export class Gallery extends Component<T.Props> {
   store;
-  items;
+  items: NormalizedItem[];
   index = 0;
   timers = Time.create();
   startX = null;
@@ -180,14 +245,18 @@ export class Gallery extends Component<T.Props> {
     }
   }
 
+  get normalizedItems(): NormalizedItem[] {
+    return this.props.items.map(normalizeGalleryItem);
+  }
+
   getStateItems() {
     return this.isSingle()
-      ? [this.props.items[0]]
+      ? [this.normalizedItems[0]]
       : getInitialState(this.items, this.index);
   }
 
   recenter() {
-    const [...items] = this.props.items;
+    const [...items] = this.normalizedItems;
     this.items = [items.pop(), ...items];
   }
 
@@ -283,8 +352,9 @@ export class Gallery extends Component<T.Props> {
     this.setState({});
 
     const { onChange } = this.props;
+    const active = this.items[this.index];
 
-    onChange?.(this.index, this.items[this.index]);
+    onChange?.(this.index, active.src);
   }
 
   render() {
@@ -327,8 +397,14 @@ export class Gallery extends Component<T.Props> {
     return (
       <div className={classes} {...props}>
         <div className={innerClasses} ref={this.innerRef}>
-          {items.map((src, i) => (
-            <Item key={`${i}_${src}`} src={src} size={size} />
+          {items.map((item, i) => (
+            <Item
+              key={`${i}_${item.src}_${item.kind}`}
+              src={item.src}
+              kind={item.kind}
+              size={size}
+              isActive={isSingle ? i === 0 : i === 1}
+            />
           ))}
         </div>
 

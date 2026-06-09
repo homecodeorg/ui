@@ -4,6 +4,7 @@ import { Heading, Link } from 'uilib';
 
 import basic from '!!raw-loader!./Basic';
 import grid from '!!raw-loader!./Grid';
+import mixedMedia from '!!raw-loader!./MixedMedia';
 
 import S from './Gallery.styl';
 
@@ -12,6 +13,12 @@ const scope = { S };
 const examples = [
   { id: 'basic', label: 'Basic', code: basic, scope },
   { id: 'grid', label: 'Grid', code: grid, scope },
+  {
+    id: 'mixedMedia',
+    label: 'Mixed image + video',
+    code: mixedMedia,
+    scope,
+  },
 ];
 
 const Docs = () => (
