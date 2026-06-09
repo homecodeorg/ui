@@ -7,7 +7,10 @@ import type {
 } from '../../tiptap/slash-mention';
 import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
-export type Props = HTMLAttributes<HTMLDivElement> & {
+export type Props = Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onSubmit' | 'onChange'
+> & {
   disabled?: boolean;
   placeholder?: string;
   slashCommandItems?: SlashCommandItem[];
