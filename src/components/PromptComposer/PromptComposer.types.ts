@@ -5,6 +5,7 @@ import type {
   SlashCommandItem,
   SlashOnItemCommand,
 } from '../../tiptap/slash-mention';
+import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
 export type Props = HTMLAttributes<HTMLDivElement> & {
   disabled?: boolean;
@@ -20,6 +21,7 @@ export type Props = HTMLAttributes<HTMLDivElement> & {
   onSubmit?: (text: string, editor: Editor) => void;
   /** Called on every transaction with plain text value. */
   onChange?: (text: string, editor: Editor) => void;
+  scrollProps?: Partial<ScrollProps>;
 };
 
 export type PromptComposerProps = Props;

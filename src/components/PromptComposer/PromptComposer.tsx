@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { forwardRef, useImperativeHandle, useMemo } from 'react';
 
 import { EditorContent } from '@tiptap/react';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
 
 import S from './PromptComposer.styl';
 import type { PromptComposerProps } from './PromptComposer.types';
@@ -31,6 +32,7 @@ export const PromptComposer = forwardRef<
     allowEnterSubmit = true,
     onSubmit,
     onChange,
+    scrollProps = {},
   },
   ref
 ) {
@@ -71,7 +73,9 @@ export const PromptComposer = forwardRef<
       className={cn(S.root, className)}
       data-disabled={disabled ? 'true' : 'false'}
     >
-      <EditorContent editor={editor} className={S.editorMount} />
+      <Scroll y fadeSize="s" {...scrollProps} className={S.scroller}>
+        <EditorContent editor={editor} className={S.editorMount} />
+      </Scroll>
     </div>
   );
 });

@@ -42,7 +42,7 @@ function promptComposerFloorPx(cs: CSSStyleDeclaration): number {
   return Math.max(PROMPT_COMPOSER_MIN_HEIGHT_PX, Math.ceil(linePx + padY));
 }
 
-/** Autosize `.ProseMirror` root: empty -> floor, text -> measured height with clamp. */
+/** Autosize `.ProseMirror` root: empty -> floor, text -> measured content height. */
 export function syncPromptComposerHeight(el: HTMLElement, text: string): void {
   const floor = promptComposerFloorPx(getComputedStyle(el));
 
@@ -57,12 +57,8 @@ export function syncPromptComposerHeight(el: HTMLElement, text: string): void {
     contentHeight = el.scrollHeight;
   }
 
-  const h = Math.min(
-    Math.max(contentHeight, floor),
-    PROMPT_COMPOSER_MAX_HEIGHT_PX
-  );
+  const h = Math.max(contentHeight, floor);
 
   el.style.height = `${h}px`;
-  el.style.overflowY =
-    contentHeight > PROMPT_COMPOSER_MAX_HEIGHT_PX ? 'auto' : 'hidden';
+  el.style.overflowY = 'hidden';
 }
