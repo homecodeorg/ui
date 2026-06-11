@@ -1,10 +1,10 @@
-import cn from 'classnames';
-import type { RefObject } from 'react';
 import { useCallback, useEffect, useImperativeHandle, useState } from 'react';
-import { Menu } from 'uilib/components/Menu/Menu';
 
+import { Menu } from 'uilib/components/Menu/Menu';
+import type { RefObject } from 'react';
 import S from './SlashSuggestionList.styl';
 import type { SlashCommandItem } from './types';
+import cn from 'classnames';
 
 export type SlashSuggestionListHandle = {
   onKeyboardEvent: (event: KeyboardEvent) => boolean;
@@ -79,7 +79,11 @@ function SlashSuggestionListInner({
             key={`${item.id}-${idx}`}
             role="option"
             aria-selected={idx === safeSel}
-            className={cn(S.item, idx === safeSel && S.itemHighlighted)}
+            className={cn(
+              S.item,
+              idx === safeSel && S.itemHighlighted,
+              item.className
+            )}
             onMouseDown={e => e.preventDefault()}
             onMouseEnter={() => setSelected(idx)}
             onClick={() => onPick(idx)}
