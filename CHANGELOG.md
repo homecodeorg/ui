@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.7](https://github.com/foreverido/uilib/compare/v5.3.6...v5.3.7) (2026-06-11)
+
+
+### Bug Fixes
+
+* SlashSuggestionList - styles ([fca1c79](https://github.com/foreverido/uilib/commit/fca1c79fad2f84d26fea55497bc5d94e67bec2bb))
+
 ### [5.3.6](https://github.com/foreverido/uilib/compare/v5.3.5...v5.3.6) (2026-06-09)
 
 
