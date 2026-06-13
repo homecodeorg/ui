@@ -6,6 +6,7 @@ export {
   getPromptComposerTokenRangeBeforePos,
   createPromptComposerHandle,
   insertPromptComposerContentAtCaret,
+  openPromptComposerSlashSuggestion,
   promptComposerChipHtml,
   promptComposerMentionNode,
   PROMPT_COMPOSER_COMMAND_CHIP_CLASS,

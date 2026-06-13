@@ -90,7 +90,7 @@ function SlashSuggestionListInner({
             onClick={() => onPick(idx)}
             textOverflow
           >
-            <span className={S.itemLabel}>/{item.label}</span>
+            <span className={S.itemLabel}>{item.label}</span>
             {item.description ? (
               <span className={S.itemDesc}>{item.description}</span>
             ) : null}

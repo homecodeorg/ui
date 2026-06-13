@@ -60,6 +60,7 @@ export const PromptComposer = forwardRef<
       getEditor: () => {
         throw new Error('PromptComposer editor is not ready yet');
       },
+      openSlashSuggestion: () => undefined,
     }),
     []
   );

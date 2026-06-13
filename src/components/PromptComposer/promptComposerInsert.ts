@@ -30,6 +30,8 @@ export type PromptComposerHandle = {
     options?: { focus?: boolean; atEnd?: boolean }
   ) => void;
   getEditor: () => Editor;
+  /** Inserts `/` (with leading space when needed) to open slash suggestions. */
+  openSlashSuggestion: (slashChar?: string) => void;
 };
 
 export function getPromptComposerTokenRangeBeforePos(
@@ -160,6 +162,29 @@ function setPromptComposerEditorText(
   }
 }
 
+export function openPromptComposerSlashSuggestion(
+  editor: Editor,
+  slashChar = '/'
+): void {
+  if (editor.isDestroyed) return;
+
+  editor.chain().focus('end').run();
+
+  const { doc, selection } = editor.state;
+  const pos = selection.to;
+  const $pos = doc.resolve(pos);
+
+  let insert = slashChar;
+  if ($pos.parentOffset > 0) {
+    const before = doc.textBetween(pos - 1, pos);
+    if (!/\s/.test(before)) {
+      insert = ` ${slashChar}`;
+    }
+  }
+
+  editor.chain().focus('end').insertContent(insert).run();
+}
+
 export function createPromptComposerHandle(
   editor: Editor
 ): PromptComposerHandle {
@@ -179,5 +204,7 @@ export function createPromptComposerHandle(
       setPromptComposerEditorText(editor, text, options);
     },
     getEditor: () => editor,
+    openSlashSuggestion: slashChar =>
+      openPromptComposerSlashSuggestion(editor, slashChar),
   };
 }
