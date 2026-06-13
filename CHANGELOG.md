@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.8](https://github.com/foreverido/uilib/compare/v5.3.7...v5.3.8) (2026-06-13)
+
+
+### Features
+
+* PromptComposer - openSlashSuggestion API ([4ebee73](https://github.com/foreverido/uilib/commit/4ebee73904d6f7cc20af4ad6dd20eef6654fae6e))
+
+
+### Bug Fixes
+
+* PromptComposer - Slash menu focus and stable extensions ([3438572](https://github.com/foreverido/uilib/commit/34385721e6a56e0697b6c0f9f3dc9a3825e23098))
+
 ### [5.3.7](https://github.com/foreverido/uilib/compare/v5.3.6...v5.3.7) (2026-06-11)
 
 
