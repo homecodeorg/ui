@@ -53,6 +53,7 @@ function SlashSuggestionListInner({
       }
       if (event.key === 'Enter') {
         event.preventDefault();
+        event.stopPropagation();
         const max = Math.max(items.length - 1, 0);
         const idx = Math.min(selected, max);
         const item = items[idx];

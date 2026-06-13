@@ -4,6 +4,7 @@ import type { HTMLAttributes } from 'react';
 import type {
   SlashCommandItem,
   SlashOnItemCommand,
+  SlashSuggestionPlacement,
 } from '../../tiptap/slash-mention';
 import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
@@ -14,6 +15,8 @@ export type Props = Omit<
   disabled?: boolean;
   placeholder?: string;
   slashCommandItems?: SlashCommandItem[];
+  /** Slash menu vertical placement; defaults to above chat input. */
+  slashSuggestionPlacement?: SlashSuggestionPlacement;
   onSlashItemCommand?: SlashOnItemCommand;
   prefillMessage?: string | null;
   /** Staged attachment count - Enter can submit even when text empty. */

@@ -19,6 +19,7 @@ import {
 import type {
   SlashCommandItem,
   SlashOnItemCommand,
+  SlashSuggestionPlacement,
 } from '../../tiptap/slash-mention';
 import {
   promptComposerSafeEditorDom,
@@ -34,6 +35,7 @@ export type UsePromptComposerEditorOptions = {
   disabled: boolean;
   placeholder?: string;
   slashCommandItems?: SlashCommandItem[];
+  slashSuggestionPlacement?: SlashSuggestionPlacement;
   onSlashItemCommand?: SlashOnItemCommand;
   prefillMessage?: string | null;
   attachmentsCount?: number;
@@ -56,6 +58,7 @@ export function usePromptComposerEditor({
   disabled,
   placeholder,
   slashCommandItems,
+  slashSuggestionPlacement = 'above',
   onSlashItemCommand,
   prefillMessage,
   attachmentsCount = 0,
@@ -82,7 +85,7 @@ export function usePromptComposerEditor({
   const slashItemsFingerprint = JSON.stringify(slashCommandItems ?? null);
   const slashItemsStable = useMemo(
     () => slashCommandItems ?? DEFAULT_CHAT_SLASH_ITEMS,
-    [slashCommandItems, slashItemsFingerprint]
+    [slashItemsFingerprint]
   );
 
   const placeholderText = useMemo(() => {
@@ -121,7 +124,7 @@ export function usePromptComposerEditor({
       exts.push(
         createSlashMentionExtension({
           items: slashItemsStable,
-          suggestionPlacement: 'above',
+          suggestionPlacement: slashSuggestionPlacement,
           onSuggestionUiActiveChange: suggestionActiveUpdater,
           onItemCommand: ctx => onSlashItemCommandRef.current?.(ctx) === true,
         })
@@ -129,7 +132,12 @@ export function usePromptComposerEditor({
     }
 
     return exts;
-  }, [placeholderText, slashItemsStable, suggestionActiveUpdater]);
+  }, [
+    placeholderText,
+    slashItemsStable,
+    slashSuggestionPlacement,
+    suggestionActiveUpdater,
+  ]);
 
   const [text, setText] = useState('');
 

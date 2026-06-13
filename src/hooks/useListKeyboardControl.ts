@@ -44,6 +44,14 @@ export const useListKeyboardControl = ({
 
       if (e.key === 'Enter') {
         if (newIndex < 0 || newIndex >= itemsCount) return;
+        const active = document.activeElement;
+        if (
+          active?.closest(
+            '.promptComposerEditor, .ProseMirror, [contenteditable="true"], [aria-label="Slash commands"]',
+          )
+        ) {
+          return;
+        }
         e.preventDefault();
         e.stopPropagation();
         onSelect?.(newIndex);

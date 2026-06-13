@@ -47,12 +47,15 @@ const SUGGESTION_GAP_PX = 4;
 function placeSlashSuggestionPopup(
   popupElement: HTMLElement,
   clientRect: DOMRect | null | undefined,
-  placement: SlashSuggestionPlacement
+  placement: SlashSuggestionPlacement,
+  editorElement?: HTMLElement | null
 ): void {
   if (!clientRect) return;
 
   const el = popupElement;
-  const popupHeight = el.getBoundingClientRect().height;
+  const popupRect = el.getBoundingClientRect();
+  const popupHeight = popupRect.height;
+  const popupWidth = popupRect.width;
   const spaceBelow = window.innerHeight - clientRect.bottom - SUGGESTION_GAP_PX;
   const spaceAbove = clientRect.top - SUGGESTION_GAP_PX;
 
@@ -68,7 +71,12 @@ function placeSlashSuggestionPopup(
       )
     : clientRect.bottom + SUGGESTION_GAP_PX;
 
-  el.style.left = `${clientRect.left}px`;
+  const editorRect = editorElement?.getBoundingClientRect();
+  let left = editorRect ? editorRect.left : clientRect.left;
+  const maxLeft = window.innerWidth - popupWidth - SUGGESTION_GAP_PX;
+  left = Math.max(SUGGESTION_GAP_PX, Math.min(left, maxLeft));
+
+  el.style.left = `${left}px`;
   el.style.top = `${top}px`;
 }
 
@@ -98,14 +106,15 @@ export function slashMentionSuggestionRender(
   const place = (
     props: Pick<
       SuggestionProps<SlashCommandItem, SlashCommandItem>,
-      'clientRect'
+      'clientRect' | 'editor'
     >
   ) => {
     if (!popup?.element) return;
     placeSlashSuggestionPopup(
       popup.element,
       props.clientRect?.() ?? null,
-      placement
+      placement,
+      props.editor.view.dom
     );
   };
 
