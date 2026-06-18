@@ -52,8 +52,6 @@ const external = [
   'compareq',
   'classnames',
   'nanoid',
-  'lodash.omit',
-  'lodash.pick',
 ];
 
 const { COMPRESS } = process.env;

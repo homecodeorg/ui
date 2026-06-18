@@ -5,10 +5,10 @@ import {
   ReactNode,
   RefObject,
 } from 'react';
-import omit from 'lodash.omit';
 import { createStore } from 'justorm/react';
 import Time from 'timen';
 import { number } from 'uilib/tools';
+import { omit } from 'uilib/tools/object';
 
 import Virtualized from '../Virtualized';
 import * as T from '../Virtualized.types';

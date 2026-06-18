@@ -5,7 +5,7 @@ import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { INTERACTION_MODE, getInteractionMode } from 'uilib/tools/dom';
 
 import cn from 'classnames';
-import omit from 'lodash.omit';
+import { omit } from 'uilib/tools/object';
 
 import { AssistiveText } from '../AssistiveText/AssistiveText';
 import { Button } from '../Button/Button';

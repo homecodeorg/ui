@@ -1,7 +1,6 @@
 import { Component, createRef } from 'react';
 import { createStore } from 'justorm/react';
 import cn from 'classnames';
-import pick from 'lodash.pick';
 import compare from 'compareq';
 import Time from 'timen';
 
@@ -10,6 +9,7 @@ import { Icon } from 'uilib/components/Icon/Icon';
 import { Scroll } from 'uilib/components/Scroll/Scroll';
 import { toBase64 } from 'uilib/tools/file';
 import { spliceWhere } from 'uilib/tools/array';
+import { pick } from 'uilib/tools/object';
 
 import S from './InputFile.styl';
 import Item from './Item/Item';

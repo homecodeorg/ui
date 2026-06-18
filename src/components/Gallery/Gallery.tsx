@@ -11,13 +11,12 @@ import { createStore } from 'justorm/react';
 import Time from 'timen';
 import compare from 'compareq';
 import cn from 'classnames';
-import omit from 'lodash.omit';
-
 import { Button } from 'uilib/components/Button/Button';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Spinner } from 'uilib/components/Spinner/Spinner';
 import throttle from 'uilib/tools/throttle';
 import { circularSlice } from 'uilib/tools/array';
+import { omit } from 'uilib/tools/object';
 
 import S from './Gallery.styl';
 import * as T from './Gallery.types';

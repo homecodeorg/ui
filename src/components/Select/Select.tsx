@@ -16,8 +16,7 @@ import { Scroll } from 'uilib/components/Scroll/Scroll';
 import cn from 'classnames';
 import compare from 'compareq';
 import { createStore } from 'justorm/react';
-import omit from 'lodash.omit';
-import pick from 'lodash.pick';
+import { omit, pick } from 'uilib/tools/object';
 import throttle from 'uilib/tools/throttle';
 
 export const SelectHelpers = H;

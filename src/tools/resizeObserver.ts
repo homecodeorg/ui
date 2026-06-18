@@ -1,8 +1,7 @@
 import Time from 'timen';
 import compare from 'compareq';
-import pick from 'lodash.pick';
-
 import { addUniq, spliceWhere } from './array';
+import { pick } from './object';
 import { isBrowser } from './env';
 
 const ITEMS = new Map();

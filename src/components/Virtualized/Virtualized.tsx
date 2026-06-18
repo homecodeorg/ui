@@ -1,10 +1,10 @@
 import { Component, ReactNode } from 'react';
 import cn from 'classnames';
-import pick from 'lodash.pick';
 import compare from 'compareq';
 import Time from 'timen';
 
 import debounce from 'uilib/tools/debounce';
+import { pick } from 'uilib/tools/object';
 import throttle from 'uilib/tools/throttle';
 
 import * as T from './Virtualized.types';

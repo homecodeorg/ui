@@ -1,7 +1,5 @@
 declare module '*.png';
 declare module '*.json';
-declare module 'lodash.pick';
-declare module 'lodash.omit';
 declare module 'compareq';
 declare module 'timen';
 declare module 'nanoid';
