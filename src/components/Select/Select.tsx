@@ -557,7 +557,7 @@ export class Select extends Component<T.Props, T.State> {
         'variant',
         // 'inputProps',
         // 'required',
-        'autocomplete',
+        'autoComplete',
         // 'hideRequiredStar',
       ]),
       ...triggerProps,

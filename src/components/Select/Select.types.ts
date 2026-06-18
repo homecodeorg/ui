@@ -48,7 +48,9 @@ type Selected = Record<string, true | Id[]>;
 
 export type Value = Id | Id[] | null;
 
-type InheritedInputProps = Partial<Pick<InputProps, 'onFocus' | 'onBlur'>>;
+type InheritedInputProps = Partial<
+  Pick<InputProps, 'onFocus' | 'onBlur' | 'autoComplete'>
+>;
 
 export type Props = FormControl<Value> &
   InheritedInputProps & {
