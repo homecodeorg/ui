@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.9](https://github.com/foreverido/uilib/compare/v5.3.8...v5.3.9) (2026-06-18)
+
+
+### Bug Fixes
+
+* Select - autoComplete prop TypeScript alignment ([7943b61](https://github.com/foreverido/uilib/commit/7943b6150f4314ad8a11d5228822311e8fc80883))
+
 ### [5.3.8](https://github.com/foreverido/uilib/compare/v5.3.7...v5.3.8) (2026-06-13)
 
 
