@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.10](https://github.com/foreverido/uilib/compare/v5.3.9...v5.3.10) (2026-06-22)
+
+
+### Bug Fixes
+
+* PromptComposer - link colors and styles ([5cd56b2](https://github.com/foreverido/uilib/commit/5cd56b2d017eeb4de3eb730fb7de51fe42331d83))
+
 ### [5.3.9](https://github.com/foreverido/uilib/compare/v5.3.8...v5.3.9) (2026-06-18)
 
 
