@@ -12,6 +12,7 @@ import { Placeholder } from '@tiptap/extensions';
 import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
+import S from './PromptComposer.styl';
 import {
   DEFAULT_CHAT_SLASH_ITEMS,
   createSlashMentionExtension,
@@ -50,8 +51,6 @@ export type UsePromptComposerEditorResult = {
   trimmedText: string;
 };
 
-const PROMPT_COMPOSER_EDITOR_CLASS = 'promptComposerEditor';
-const PROMPT_COMPOSER_EMPTY_EDITOR_CLASS = 'promptComposerEmptyEditor';
 const PROMPT_COMPOSER_EMPTY_NODE_CLASS = 'promptComposerEmptyNode';
 
 export function usePromptComposerEditor({
@@ -115,8 +114,7 @@ export function usePromptComposerEditor({
       Placeholder.configure({
         placeholder: placeholderText,
         showOnlyWhenEditable: true,
-        emptyEditorClass: PROMPT_COMPOSER_EMPTY_EDITOR_CLASS,
-        emptyNodeClass: PROMPT_COMPOSER_EMPTY_NODE_CLASS,
+        emptyNodeClass: S.promptComposerEmptyNode,
       }),
     ];
 
@@ -202,7 +200,7 @@ export function usePromptComposerEditor({
         attributes: {
           spellcheck: 'true',
           'aria-label': ariaLabelComposer,
-          class: PROMPT_COMPOSER_EDITOR_CLASS,
+          class: S.promptComposerEditor,
         },
         handleKeyDown: handleEditorKeyDown,
       },

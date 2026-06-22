@@ -24,7 +24,7 @@ INPUT_MAX_HEIGHT = 200px
   &:focus-within
     box-shadow none !important
 
-  & :global(.promptComposerEditor)
+  .promptComposerEditor
     outline none !important
     border none !important
     flex 1
@@ -37,7 +37,15 @@ INPUT_MAX_HEIGHT = 200px
     min-height 40px !important
     overflow hidden !important
 
-  & :global(.promptComposerEmptyEditor .promptComposerEmptyNode::before)
+    transition opacity .1s ease-out
+
+    a
+      color var(--link-color)
+      &:hover
+        opacity 0.8
+        cursor pointer
+
+  & .promptComposerEmptyEditor .promptComposerEmptyNode::before
     color var(--muted-foreground)
     content attr(data-placeholder)
     float left
