@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.11](https://github.com/foreverido/uilib/compare/v5.3.10...v5.3.11) (2026-07-03)
+
+
+### Features
+
+* Notifications - horizontal wheel swipe to dismiss ([21d927e](https://github.com/foreverido/uilib/commit/21d927efe76af24244bee8e599c1179913522699))
+
 ### [5.3.10](https://github.com/foreverido/uilib/compare/v5.3.9...v5.3.10) (2026-06-22)
 
 
