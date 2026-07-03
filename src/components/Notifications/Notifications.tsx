@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, createRef } from 'react';
 import cn from 'classnames';
 import { useStore } from 'justorm/react';
 
@@ -23,9 +23,96 @@ function getDeltaPos(p1, p2) {
 }
 
 const TOUCH_MOVE_TRESHOLD = 50;
+const WHEEL_MOVE_THRESHOLD = 20;
+const WHEEL_RESET_MS = 150;
+
+const wheelGesture = {
+  itemId: null as string | null,
+  deltaX: 0,
+  deltaY: 0,
+  resetTimer: null as ReturnType<typeof setTimeout> | null,
+};
+
+function resetWheelGesture() {
+  wheelGesture.itemId = null;
+  wheelGesture.deltaX = 0;
+  wheelGesture.deltaY = 0;
+
+  if (wheelGesture.resetTimer) {
+    clearTimeout(wheelGesture.resetTimer);
+    wheelGesture.resetTimer = null;
+  }
+}
+
+function scheduleWheelGestureReset() {
+  if (wheelGesture.resetTimer) {
+    clearTimeout(wheelGesture.resetTimer);
+  }
+
+  wheelGesture.resetTimer = setTimeout(resetWheelGesture, WHEEL_RESET_MS);
+}
+
+type WheelDelta = Pick<WheelEvent, 'deltaX' | 'deltaY'>;
+
+function isHorizontalWheel(e: WheelDelta, id: string) {
+  const absX = Math.abs(e.deltaX);
+  const absY = Math.abs(e.deltaY);
+
+  if (absX > absY) return true;
+
+  return (
+    wheelGesture.itemId === id && wheelGesture.deltaX >= wheelGesture.deltaY
+  );
+}
+
+function handleNotificationWheel(
+  id: string,
+  e: WheelDelta,
+  unpause: () => void,
+  close: (id: string) => void
+) {
+  scheduleWheelGestureReset();
+
+  if (wheelGesture.itemId !== null && wheelGesture.itemId !== id) {
+    return;
+  }
+
+  if (wheelGesture.itemId === null) {
+    wheelGesture.itemId = id;
+  }
+
+  wheelGesture.deltaX += Math.abs(e.deltaX);
+  wheelGesture.deltaY += Math.abs(e.deltaY);
+
+  if (
+    wheelGesture.deltaX > wheelGesture.deltaY &&
+    wheelGesture.deltaX > WHEEL_MOVE_THRESHOLD
+  ) {
+    const closingId = wheelGesture.itemId;
+
+    unpause();
+    wheelGesture.deltaX = 0;
+    wheelGesture.deltaY = 0;
+    close(closingId);
+  }
+}
 
 class Item extends Component<T.ItemProps> {
   startPos = null;
+  itemRef = createRef<HTMLDivElement>();
+
+  componentDidMount() {
+    this.itemRef.current?.addEventListener('wheel', this.onWheelNative, {
+      passive: false,
+      capture: true,
+    });
+  }
+
+  componentWillUnmount() {
+    this.itemRef.current?.removeEventListener('wheel', this.onWheelNative, {
+      capture: true,
+    });
+  }
 
   onTouchStart = e => {
     this.startPos = getTouchPos(e);
@@ -57,6 +144,17 @@ class Item extends Component<T.ItemProps> {
 
   onTouchCancel = () => (this.startPos = null);
 
+  onWheelNative = (e: WheelEvent) => {
+    const { id, unpause, close } = this.props;
+
+    if (isHorizontalWheel(e, id)) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    handleNotificationWheel(id, e, unpause, close);
+  };
+
   closeMe = () => {
     const { id, close } = this.props;
     close(id);
@@ -75,6 +173,7 @@ class Item extends Component<T.ItemProps> {
 
     return (
       <div
+        ref={this.itemRef}
         className={classes}
         onMouseOver={pause}
         onFocus={pause}
