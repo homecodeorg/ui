@@ -1,5 +1,6 @@
+import { ComponentType, Size } from 'uilib/types';
+
 import { ReactNode } from 'react';
-import { ComponentType } from 'uilib/types';
 
 export type Column = {
   // Unique id of the column
@@ -21,6 +22,8 @@ export type Column = {
 export type Data = { id: string; className?: string } & any;
 
 export type Props = ComponentType & {
+  // Whether the table should have no borders and backgrounds
+  clear?: boolean;
   // Config that describes the structure of the table
   columns: Column[];
   // Actual content of the table
@@ -31,4 +34,6 @@ export type Props = ComponentType & {
   loadingText?: ReactNode;
   // Applies a blur effect to the background
   blur?: boolean;
+  // Cell padding size
+  size?: Size;
 };

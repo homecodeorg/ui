@@ -1,12 +1,11 @@
-import { Component } from 'react';
-import cn from 'classnames';
+import * as T from './Table.types';
 
+import { Component } from 'react';
 import { Paranja } from 'uilib/components/Paranja/Paranja';
+import S from './Table.styl';
 import { Scroll } from 'uilib/components/Scroll/Scroll';
 import { Spinner } from 'uilib/components/Spinner/Spinner';
-
-import S from './Table.styl';
-import * as T from './Table.types';
+import cn from 'classnames';
 
 export class Table extends Component<T.Props> {
   renderHeaderColumn = ({ id, label, sticky }: T.Column) => (
@@ -41,10 +40,20 @@ export class Table extends Component<T.Props> {
       loadingText,
       blur,
       data,
+      clear,
+      size = 'm',
     } = this.props;
 
     return (
-      <div className={cn(S.root, blur && S.blur, className)}>
+      <div
+        className={cn(
+          S.root,
+          S[`size-${size}`],
+          clear && S.clear,
+          blur && S.blur,
+          className
+        )}
+      >
         <Scroll
           x
           y

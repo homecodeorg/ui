@@ -31,7 +31,14 @@ const columns = [
 
 export default () => (
   <>
-    <Table columns={columns} data={testData} loadingText="Loading..." blur />
+    <Table
+      columns={columns}
+      data={testData}
+      loadingText="Loading..."
+      blur
+      size="m"
+    />
+    <Table columns={columns} data={testData.slice(0, 2)} size="s" />
     <style>{`th {min-width: 200px !important}`}</style>
   </>
 );
