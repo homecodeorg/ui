@@ -36,6 +36,9 @@ function applyOverTriggerStyles(
   contentEl.style.width = `${rect.width + paddingLeft + paddingRight + borderLeft + borderRight}px`;
   contentEl.style.boxSizing = 'border-box';
   applyTriggerTextStyles(contentEl, getTextStyleSource(triggerEl));
+  // Trigger ancestors (e.g. menu items) often use nowrap for ellipsis; allow wrap here.
+  contentEl.style.setProperty('white-space', 'normal');
+  contentEl.style.setProperty('overflow-wrap', 'break-word');
 }
 
 function clearOverTriggerStyles(contentEl: HTMLElement | null) {
@@ -46,6 +49,8 @@ function clearOverTriggerStyles(contentEl: HTMLElement | null) {
   contentEl.style.removeProperty('transform');
   contentEl.style.removeProperty('width');
   contentEl.style.removeProperty('box-sizing');
+  contentEl.style.removeProperty('white-space');
+  contentEl.style.removeProperty('overflow-wrap');
   clearTriggerTextStyles(contentEl);
 }
 
