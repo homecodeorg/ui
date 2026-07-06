@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.4.1](https://github.com/foreverido/uilib/compare/v5.4.0...v5.4.1) (2026-07-06)
+
+
+### Bug Fixes
+
+* Tooltip - Match trigger text styles in tooltips ([c6e7fc2](https://github.com/foreverido/uilib/commit/c6e7fc22d90fd1c4eb7b571e7190057b8247bb59))
+* TooltipOverTrigger - Allow tooltip text wrap ([39c71e6](https://github.com/foreverido/uilib/commit/39c71e6518fdfb648fa9c1483d714965b357085f))
+
 ## [5.4.0](https://github.com/foreverido/uilib/compare/v5.3.13...v5.4.0) (2026-07-06)
 
 
