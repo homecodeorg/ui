@@ -40,7 +40,7 @@ export class Table extends Component<T.Props> {
       loadingText,
       blur,
       data,
-      clear,
+      variant = 'default',
       size = 'm',
     } = this.props;
 
@@ -49,7 +49,7 @@ export class Table extends Component<T.Props> {
         className={cn(
           S.root,
           S[`size-${size}`],
-          clear && S.clear,
+          S[`variant-${variant}`],
           blur && S.blur,
           className
         )}

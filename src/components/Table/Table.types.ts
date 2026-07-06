@@ -22,8 +22,11 @@ export type Column = {
 export type Data = { id: string; className?: string } & any;
 
 export type Props = ComponentType & {
-  // Whether the table should have no borders and backgrounds
-  clear?: boolean;
+  // Variant of the table
+  // - default: default table with borders and backgrounds
+  // - plain: table with borders inside
+  // - clear: table with no borders and backgrounds
+  variant?: 'default' | 'clear' | 'plain';
   // Config that describes the structure of the table
   columns: Column[];
   // Actual content of the table

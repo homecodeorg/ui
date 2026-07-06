@@ -30,7 +30,9 @@
     border-bottom-left-radius var(--brad)
     border-bottom-right-radius var(--brad)
 
-.root:not(.clear)
+// .variant-clear - no borders and backgrounds, nothing to clear
+
+.variant-default
   box-shadow 0 0 0 2px var(--accent-color-alpha-100)
 
   th
@@ -38,6 +40,20 @@
   td
     box-shadow inset 0 1px 0 0 var(--accent-color-alpha-100)
 
+.variant-plain
+  th
+    border-bottom 1px solid var(--accent-color-alpha-100)
+
+  th
+  td
+    border-bottom 1px solid var(--accent-color-alpha-100)
+    border-right 1px solid var(--accent-color-alpha-100)
+
+    &:last-child
+      border-right none
+
+  tr:last-child td
+    border-bottom none
 
 .size-xs
   --cell-padding: 2px
