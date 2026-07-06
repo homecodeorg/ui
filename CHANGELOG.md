@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.12](https://github.com/foreverido/uilib/compare/v5.3.11...v5.3.12) (2026-07-06)
+
+
+### Features
+
+* Table - add size and clear props ([d2cf0c2](https://github.com/foreverido/uilib/commit/d2cf0c2ca20d5a8588ef5d7bf43fed6687981a77))
+
 ### [5.3.11](https://github.com/foreverido/uilib/compare/v5.3.10...v5.3.11) (2026-07-03)
 
 
