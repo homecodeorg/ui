@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.3.13](https://github.com/foreverido/uilib/compare/v5.3.12...v5.3.13) (2026-07-06)
+
+
+### Bug Fixes
+
+* Table - varnant=default|clear|plain ([3c930b0](https://github.com/foreverido/uilib/commit/3c930b014c98e216cf9e9e686796f46a05efb5e5))
+
 ### [5.3.12](https://github.com/foreverido/uilib/compare/v5.3.11...v5.3.12) (2026-07-06)
 
 
