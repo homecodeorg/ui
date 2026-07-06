@@ -1,0 +1,11 @@
+// Tooltip default trigger is inline-block; in flex column it shrink-wraps and breaks
+// line-clamp on the inner box. Force block + full width of the flex item.
+.tooltipTrigger
+  display block !important
+  width 100%
+  max-width 100%
+  box-sizing border-box
+
+// Tooltip.styl caps bubble at 250px; unset so inner wrapper can own max-width (px).
+.tooltipShell
+  max-width none !important

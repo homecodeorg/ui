@@ -678,11 +678,15 @@
     }
   },
   "Gallery": {
+    "GalleryItem": {
+      "value": "string | { src: string; kind?: 'image' | 'video' }",
+      "isPlain": true
+    },
     "Props": {
       "kind": "type",
       "ext": ["ComponentType"],
       "items": {
-        "value": "string[]",
+        "value": "GalleryItem[]",
         "comment": "Items to be displayed in the gallery."
       },
       "size": { "value": "Size", "optional": true },
@@ -712,11 +716,12 @@
         "optional": true
       },
       "cover": {
-        "value": "true",
-        "comment": "Item will be displayed as cover, which means it will be stretched to cover the whole height and width of the gallery."
+        "value": "boolean",
+        "comment": "Item will be displayed as cover, which means it will be stretched to cover the whole height and width of the gallery.",
+        "optional": true
       },
       "onChange": {
-        "value": "(index: number, item: string) => void",
+        "value": "(index: number, src: string) => void",
         "comment": "Called when the active item in the gallery changes.",
         "optional": true
       }
@@ -1244,10 +1249,16 @@
   "PromptComposer": {
     "Props": {
       "kind": "type",
-      "ext": ["HTMLAttributes<HTMLDivElement>"],
+      "ext": [
+        "Omit<  HTMLAttributes<HTMLDivElement>,  'onSubmit' | 'onChange'>"
+      ],
       "disabled": { "value": "boolean", "optional": true },
       "placeholder": { "value": "string", "optional": true },
       "slashCommandItems": { "value": "SlashCommandItem[]", "optional": true },
+      "slashSuggestionPlacement": {
+        "value": "SlashSuggestionPlacement",
+        "optional": true
+      },
       "onSlashItemCommand": { "value": "SlashOnItemCommand", "optional": true },
       "prefillMessage": {
         "value": "string | null",
@@ -1263,7 +1274,8 @@
       "onChange": {
         "value": "(text: string, editor: Editor) => void",
         "optional": true
-      }
+      },
+      "scrollProps": { "value": "Partial<ScrollProps>", "optional": true }
     },
     "PromptComposerProps": { "value": "Props", "isPlain": true }
   },
@@ -1522,8 +1534,8 @@
     "Selected": { "value": "Record<string, true | Id[]>", "isPlain": true },
     "Value": { "value": "Id | Id[] | null", "isPlain": true },
     "InheritedInputProps": {
-      "value": "Partial<Pick<InputProps, 'onFocus' | 'onBlur'>>",
-      "isPlain": true
+      "kind": "type",
+      "value": "Partial<  Pick<InputProps, 'onFocus' | 'onBlur' | 'autoComplete'>>;"
     },
     "Props": {
       "kind": "type",
@@ -1760,6 +1772,12 @@
     "Props": {
       "kind": "type",
       "ext": ["ComponentType"],
+      "variant": {
+        "value": "'default' | 'clear' | 'plain'",
+        "comment": "Variant of the table\n- default: default table with borders and backgrounds\n- plain: table with borders inside\n- clear: table with no borders and backgrounds",
+        "enum": ["'default'", "'clear'", "'plain';"],
+        "optional": true
+      },
       "columns": {
         "value": "Column[]",
         "comment": "Config that describes the structure of the table"
@@ -1778,6 +1796,11 @@
       "blur": {
         "value": "boolean",
         "comment": "Applies a blur effect to the background",
+        "optional": true
+      },
+      "size": {
+        "value": "Size",
+        "comment": "Cell padding size",
         "optional": true
       }
     }
@@ -1831,6 +1854,37 @@
     }
   },
   "TextShimmer": {},
+  "TextWithDeferTooltip": {
+    "TooltipSide": {
+      "value": "'top' | 'bottom' | 'left' | 'right'",
+      "isPlain": true
+    },
+    "Props": {
+      "kind": "type",
+      "ext": ["HTMLAttributes<HTMLDivElement>"],
+      "width": {
+        "value": "number",
+        "comment": "Explicit tooltip content width in px. Defaults to trigger width.",
+        "optional": true
+      },
+      "maxWidth": {
+        "value": "number",
+        "comment": "Max width of the tooltip popover content, in px.",
+        "optional": true
+      },
+      "side": {
+        "value": "TooltipSide",
+        "comment": "Tooltip placement when not using overTrigger mode.",
+        "optional": true
+      },
+      "overTrigger": {
+        "value": "boolean",
+        "comment": "Expand tooltip over the trigger with matching typography.",
+        "optional": true
+      }
+    },
+    "TextWithDeferTooltipProps": { "value": "Props", "isPlain": true }
+  },
   "Theme": {
     "ThemeConfig": {
       "kind": "type",

@@ -1,0 +1,29 @@
+.block
+  margin-top 16px
+
+  &:first-child
+    margin-top 0
+
+.subtitle
+  font-size 12px
+  opacity 0.65
+  margin-bottom 6px
+
+.box
+  max-width 120px
+  border 1px dashed var(--border-color, rgba(255, 255, 255, 0.2))
+  padding 8px
+
+.clamped
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.clampedMulti
+  display -webkit-box
+  -webkit-line-clamp 2
+  -webkit-box-orient vertical
+  overflow hidden
+
+.wideBox
+  max-width 320px

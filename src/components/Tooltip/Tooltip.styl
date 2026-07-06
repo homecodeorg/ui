@@ -60,6 +60,18 @@
   &:popover-open
     animation: fadeIn 0.2s ease-out
 
+  &.tooltipOverTrigger
+    box-sizing border-box
+    height fit-content
+    max-width none
+    word-wrap normal
+
+    &::after
+      display none
+
+    &:popover-open
+      animation fadeIn 0.15s ease-out
+
 @keyframes fadeIn
   from
     opacity: 0

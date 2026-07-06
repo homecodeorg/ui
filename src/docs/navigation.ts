@@ -183,6 +183,10 @@ export default [
         loader: () => import('./examples/TextShimmer'),
       },
       {
+        id: 'TextWithDeferTooltip',
+        loader: () => import('./examples/TextWithDeferTooltip'),
+      },
+      {
         id: 'Toggle',
         loader: () => import('./examples/Toggle'),
       },

@@ -47,6 +47,7 @@ export * from './Spinner/Spinner';
 export * from './Table/Table';
 export * from './Tabs/Tabs';
 export * from './TextShimmer/TextShimmer';
+export * from './TextWithDeferTooltip';
 export * from './Tooltip/Tooltip';
 export * from './Text/Text';
 export * from './Theme/Theme';
