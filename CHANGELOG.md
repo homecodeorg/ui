@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.4.0](https://github.com/foreverido/uilib/compare/v5.3.13...v5.4.0) (2026-07-06)
+
+
+### Features
+
+* TextWithDeferTooltip - Port deferred overflow tooltip ([9f6569e](https://github.com/foreverido/uilib/commit/9f6569ee718224b429c6633e39d85155d6937e5a))
+
 ### [5.3.13](https://github.com/foreverido/uilib/compare/v5.3.12...v5.3.13) (2026-07-06)
 
 
