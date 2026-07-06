@@ -2,6 +2,11 @@
 import { useEffect, useRef } from 'react';
 import { TooltipCore, TooltipPositionSetupOptions } from './TooltipCore';
 import type { TooltipProps } from './Tooltip';
+import {
+  applyTriggerTextStyles,
+  clearTriggerTextStyles,
+  getTextStyleSource,
+} from './tooltipTextStyles';
 
 const useSimplePositionSetup = ({
   triggerRef,
@@ -59,6 +64,7 @@ const useSimplePositionSetup = ({
 
     const showTooltip = () => {
       timeoutRef.current = window.setTimeout(() => {
+        applyTriggerTextStyles(tooltip, getTextStyleSource(trigger));
         tooltip.showPopover?.();
         positionTooltip();
       }, delay);
@@ -67,6 +73,7 @@ const useSimplePositionSetup = ({
     const hideTooltip = () => {
       clearTimeout(timeoutRef.current);
       tooltip.hidePopover?.();
+      clearTriggerTextStyles(tooltip);
     };
 
     trigger.addEventListener('mouseenter', showTooltip);
@@ -76,6 +83,7 @@ const useSimplePositionSetup = ({
 
     return () => {
       clearTimeout(timeoutRef.current);
+      clearTriggerTextStyles(tooltip);
       trigger.removeEventListener('mouseenter', showTooltip);
       trigger.removeEventListener('mouseleave', hideTooltip);
       trigger.removeEventListener('focus', showTooltip);

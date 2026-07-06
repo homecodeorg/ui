@@ -3,54 +3,11 @@ import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
 import S from './Tooltip.styl';
 import { TooltipCore, TooltipPositionSetupOptions } from './TooltipCore';
 import type { TooltipProps } from './Tooltip';
-
-const TRIGGER_TEXT_STYLE_PROPS = [
-  'font-family',
-  'font-size',
-  'font-weight',
-  'font-style',
-  'font-variant',
-  'font-stretch',
-  'line-height',
-  'letter-spacing',
-  'word-spacing',
-  'text-transform',
-  'text-indent',
-  'text-decoration-line',
-  'text-decoration-color',
-  'text-decoration-style',
-  'text-decoration-thickness',
-  'text-underline-offset',
-  'font-feature-settings',
-  'font-variation-settings',
-  'font-kerning',
-  'font-optical-sizing',
-  'font-synthesis',
-  'font-variant-numeric',
-  'font-variant-ligatures',
-  'font-variant-caps',
-  'font-variant-east-asian',
-  'tab-size',
-  'color',
-  'word-break',
-  'overflow-wrap',
-  'hyphens',
-] as const;
-
-function applyTriggerTextStyles(
-  contentEl: HTMLElement,
-  computed: CSSStyleDeclaration
-) {
-  for (const prop of TRIGGER_TEXT_STYLE_PROPS) {
-    contentEl.style.setProperty(prop, computed.getPropertyValue(prop));
-  }
-}
-
-function clearTriggerTextStyles(contentEl: HTMLElement) {
-  for (const prop of TRIGGER_TEXT_STYLE_PROPS) {
-    contentEl.style.removeProperty(prop);
-  }
-}
+import {
+  applyTriggerTextStyles,
+  clearTriggerTextStyles,
+  getTextStyleSource,
+} from './tooltipTextStyles';
 
 function parsePx(value: string) {
   return Number.parseFloat(value) || 0;
@@ -61,7 +18,6 @@ function applyOverTriggerStyles(
   triggerEl: HTMLElement
 ) {
   const rect = triggerEl.getBoundingClientRect();
-  const triggerComputed = window.getComputedStyle(triggerEl);
   const contentComputed = window.getComputedStyle(contentEl);
 
   const paddingLeft = parsePx(contentComputed.paddingLeft);
@@ -79,7 +35,7 @@ function applyOverTriggerStyles(
   contentEl.style.setProperty('transform', 'none');
   contentEl.style.width = `${rect.width + paddingLeft + paddingRight + borderLeft + borderRight}px`;
   contentEl.style.boxSizing = 'border-box';
-  applyTriggerTextStyles(contentEl, triggerComputed);
+  applyTriggerTextStyles(contentEl, getTextStyleSource(triggerEl));
 }
 
 function clearOverTriggerStyles(contentEl: HTMLElement | null) {
