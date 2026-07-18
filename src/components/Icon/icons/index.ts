@@ -88,6 +88,8 @@ export { default as star } from './star.svg';
 export { default as stop } from './stop.svg';
 export { default as stopInCircle } from './stopInCircle.svg';
 export { default as syncArrows } from './syncArrows.svg';
+export { default as volume } from './volume.svg';
+export { default as volumeOff } from './volumeOff.svg';
 export { default as table } from './table.svg';
 export { default as telegram } from './telegram.svg';
 export { default as tool } from './tool.svg';

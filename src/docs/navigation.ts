@@ -199,6 +199,10 @@ export default [
         loader: () => import('./examples/Theme'),
       },
       {
+        id: 'VideoPlayer',
+        loader: () => import('./examples/VideoPlayer'),
+      },
+      {
         id: 'Virtualized',
         loader: () => import('./examples/Virtualized'),
       },

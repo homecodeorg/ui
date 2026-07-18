@@ -7,7 +7,8 @@ const Docs = () => (
   <>
     <p>
       Range slider for playback scrubbing and settings. Opt-in hover ghost via{' '}
-      <code>showGhost</code>.{' '}
+      <code>showGhost</code>. Use <code>vertical</code> for height-based
+      orientation (e.g. volume).{' '}
       <Link inline href="/demo">
         Demo
       </Link>

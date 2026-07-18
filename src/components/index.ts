@@ -57,5 +57,6 @@ export type {
   ThemeProviderProps,
 } from './Theme/ThemeProvider';
 export * from './VH/VH';
+export * from './VideoPlayer/VideoPlayer';
 export * from './Virtualized';
 export * from './Toggle/Toggle';

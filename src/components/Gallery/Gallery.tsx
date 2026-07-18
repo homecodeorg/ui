@@ -14,6 +14,7 @@ import cn from 'classnames';
 import { Button } from 'uilib/components/Button/Button';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Spinner } from 'uilib/components/Spinner/Spinner';
+import { VideoPlayer } from 'uilib/components/VideoPlayer/VideoPlayer';
 import throttle from 'uilib/tools/throttle';
 import { circularSlice } from 'uilib/tools/array';
 import { omit } from 'uilib/tools/object';
@@ -83,26 +84,21 @@ function VideoItem({
   size: T.Props['size'];
   isActive: boolean;
 }) {
-  const [loaded, setLoaded] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video || isActive) return;
-    video.pause();
+    if (isActive) return;
+    wrapRef.current?.querySelector('video')?.pause();
   }, [isActive, src]);
 
   return (
-    <div className={cn(S.item, S.videoItem)}>
-      <video
-        ref={videoRef}
+    <div ref={wrapRef} className={cn(S.item, S.videoItem)}>
+      <VideoPlayer
         src={src}
-        controls
-        playsInline
+        size={size}
+        storageKey={`Gallery:${src}`}
         className={S.video}
-        onLoadedData={() => setLoaded(true)}
       />
-      {!loaded && <Spinner size={size} />}
     </div>
   );
 }

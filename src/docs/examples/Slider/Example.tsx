@@ -50,6 +50,21 @@ export default () => {
         onChange={setSpeed}
         aria-label="Speed"
       />
+
+      <div>
+        <div style={{ marginBottom: 8 }}>Vertical volume</div>
+        <div style={{ height: 120, display: 'flex', justifyContent: 'center' }}>
+          <Slider
+            vertical
+            min={0}
+            max={1}
+            step={0.01}
+            value={progress}
+            aria-label="Volume"
+            onChange={setProgress}
+          />
+        </div>
+      </div>
     </div>
   );
 };

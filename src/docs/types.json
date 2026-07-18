@@ -1938,6 +1938,53 @@
       }
     }
   },
+  "VideoPlayer": {
+    "Props": {
+      "kind": "type",
+      "ext": ["ComponentType"],
+      "src": { "value": "string", "comment": "Video source URL" },
+      "poster": {
+        "value": "string",
+        "comment": "Poster image URL shown before playback",
+        "optional": true
+      },
+      "storageKey": {
+        "value": "string",
+        "comment": "localStorage key; defaults to `VideoPlayer:${src}`",
+        "optional": true
+      },
+      "size": {
+        "value": "Size",
+        "comment": "Size of control buttons and progress slider",
+        "optional": true
+      },
+      "autoPlay": {
+        "value": "boolean",
+        "comment": "Autoplay after enough data is loaded",
+        "optional": true
+      },
+      "muted": {
+        "value": "boolean",
+        "comment": "Mute audio",
+        "optional": true
+      },
+      "loop": {
+        "value": "boolean",
+        "comment": "Loop playback",
+        "optional": true
+      },
+      "onPlayChange": {
+        "value": "(playing: boolean) => void",
+        "comment": "Called when play/pause state changes",
+        "optional": true
+      },
+      "onTimeUpdate": {
+        "value": "(currentTime: number, duration: number) => void",
+        "comment": "Called when current time updates",
+        "optional": true
+      }
+    }
+  },
   "Virtualized": {
     "IndexesType": {
       "kind": "type",
