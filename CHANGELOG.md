@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.5.0](https://github.com/foreverido/uilib/compare/v5.4.1...v5.5.0) (2026-07-18)
+
+
+### Features
+
+* VideoPlayer - Add player with vertical Slider volume ([bfaf104](https://github.com/foreverido/uilib/commit/bfaf1042604067b02e1e897bcf2108c31265773b))
+
+
+### Bug Fixes
+
+* Portal - Resolve React 18 type build errors ([d54cd80](https://github.com/foreverido/uilib/commit/d54cd8099138fedf8699266d4c26ff04b7a42581))
+* types - Align @types/react with consumers ([06ccd92](https://github.com/foreverido/uilib/commit/06ccd92d5917fc2cb6c0a0666fef99bcd011f7f2))
+
 ### [5.4.1](https://github.com/foreverido/uilib/compare/v5.4.0...v5.4.1) (2026-07-06)
 
 
