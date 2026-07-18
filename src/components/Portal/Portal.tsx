@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState, useMemo } from 'react';
+import { useLayoutEffect, useState, useMemo, type ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 import { config } from 'uilib/tools/config';
 import { isBrowser } from 'uilib/tools/env';
@@ -12,7 +12,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function Portal(props: Props) {
+export function Portal(props: Props): ReactElement | null {
   const { selector = DEFAULT_SELECTOR, children } = props;
 
   // Start with immediate rendering if we're in browser
@@ -38,5 +38,5 @@ export function Portal(props: Props) {
     return null;
   }
 
-  return createPortal(<>{children}</>, targetElement);
+  return createPortal(<>{children}</>, targetElement) as ReactElement;
 }

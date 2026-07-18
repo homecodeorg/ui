@@ -64,7 +64,10 @@ export function Tabs(props: T.Props) {
       ...rest
     } = params;
     const isActive = activeId === id;
-    const tabContent = typeof content === 'function' ? content() : content;
+    const tabContent =
+      typeof content === 'function'
+        ? (content as () => React.ReactNode)()
+        : content;
 
     if (renderAll || forceRender || isActive) {
       tabsContent.push(
