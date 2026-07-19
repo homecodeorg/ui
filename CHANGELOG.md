@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.6.1](https://github.com/foreverido/uilib/compare/v5.6.0...v5.6.1) (2026-07-19)
+
+
+### Features
+
+* Gap - Add flex-grow spacer ([0e48b30](https://github.com/foreverido/uilib/commit/0e48b30e064595dcebb384896986322bf006ebe2))
+
 ## [5.6.0](https://github.com/foreverido/uilib/compare/v5.5.0...v5.6.0) (2026-07-19)
 
 
