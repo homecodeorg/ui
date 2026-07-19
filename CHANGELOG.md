@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.6.0](https://github.com/foreverido/uilib/compare/v5.5.0...v5.6.0) (2026-07-19)
+
+
+### Features
+
+* GridLayout - Port responsive CSS grid ([3e477d9](https://github.com/foreverido/uilib/commit/3e477d9d0ac55ff778f4f9e62dce08595ffaf2c3))
+
 ## [5.5.0](https://github.com/foreverido/uilib/compare/v5.4.1...v5.5.0) (2026-07-18)
 
 
