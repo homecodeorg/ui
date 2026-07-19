@@ -17,7 +17,9 @@ export * from './Expand/Expand';
 export * from './Flex/Flex';
 export * from './Form/Form';
 export * from './Gallery/Gallery';
+export * from './GridLayout/GridLayout';
 export * from './Heading/Heading';
+
 export * from './Icon/Icon';
 export * from './Input/Input';
 export * from './InputFile/InputFile';

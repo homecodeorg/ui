@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Button, LightBox, Gallery } from 'uilib';
+import { Button, GridLayout, LightBox, Gallery } from 'uilib';
 
 const { getRandomImageUrl } = helpers;
 const items = [
@@ -20,16 +20,18 @@ export default () => {
 
   return (
     <>
-      {items.map((item, i) => (
-        <Button
-          varinat="clear"
-          className={S.gridItem}
-          key={i}
-          onClick={() => open(i)}
-        >
-          <img src={item} alt="" />
-        </Button>
-      ))}
+      <GridLayout colWidth={100} gap="var(--p-3)">
+        {items.map((item, i) => (
+          <Button
+            varinat="clear"
+            className={S.gridItem}
+            key={i}
+            onClick={() => open(i)}
+          >
+            <img src={item} alt="" />
+          </Button>
+        ))}
+      </GridLayout>
       <LightBox isOpen={isOpen} onClose={() => setOpen(false)} blur>
         <Gallery items={items} startIndex={index} onChange={setIndex} />
       </LightBox>

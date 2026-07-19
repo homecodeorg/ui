@@ -1,6 +1,6 @@
 .gridItem
-  width 100px
-  height @width
+  width 100%
+  aspect-ratio 1
   padding 0
   transition .1s ease-out
   transition-property transform, box-shadow
@@ -10,9 +10,6 @@
     transform scale(1.1)
     z-index 1
     box-shadow 0 0 50px var(--decent-color)
-
-  & + &
-    margin-left var(--p-3)
 
   img
     object-fit cover

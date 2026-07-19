@@ -99,9 +99,14 @@ export default [
         loader: () => import('./examples/Gallery'),
       },
       {
+        id: 'GridLayout',
+        loader: () => import('./examples/GridLayout'),
+      },
+      {
         id: 'Icon',
         loader: () => import('./examples/Icon'),
       },
+
       {
         id: 'Input',
         loader: () => import('./examples/Input'),
