@@ -2,7 +2,9 @@ import type { Editor } from '@tiptap/core';
 import type { HTMLAttributes } from 'react';
 
 import type {
+  PromptMentionConfig,
   SlashCommandItem,
+  SlashGetItems,
   SlashOnItemCommand,
   SlashSuggestionPlacement,
 } from '../../tiptap/slash-mention';
@@ -18,6 +20,15 @@ export type Props = Omit<
   /** Slash menu vertical placement; defaults to above chat input. */
   slashSuggestionPlacement?: SlashSuggestionPlacement;
   onSlashItemCommand?: SlashOnItemCommand;
+  /**
+   * Extra mention triggers (e.g. `@` files). `/` still comes from
+   * slashCommandItems when provided.
+   */
+  mentionConfigs?: PromptMentionConfig[];
+  /** Convenience for `@` file mentions (merged into mentionConfigs). */
+  atMentionItems?: SlashCommandItem[];
+  atMentionGetItems?: SlashGetItems;
+  onAtItemCommand?: SlashOnItemCommand;
   prefillMessage?: string | null;
   /** Staged attachment count - Enter can submit even when text empty. */
   attachmentsCount?: number;

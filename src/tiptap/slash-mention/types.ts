@@ -24,8 +24,23 @@ export type SlashOnItemCommand = (ctx: SlashItemCommandContext) => boolean;
 
 export type SlashSuggestionPlacement = 'below' | 'above' | 'auto';
 
+export type SlashGetItems = (
+  query: string
+) => SlashCommandItem[] | Promise<SlashCommandItem[]>;
+
+export type PromptMentionConfig = {
+  slashChar: string;
+  /** Static items (client-filtered). Ignored when getItems is set. */
+  items?: SlashCommandItem[];
+  /** Async/dynamic items (e.g. server search for @files). */
+  getItems?: SlashGetItems;
+  onItemCommand?: SlashOnItemCommand;
+  pluginKey?: import('@tiptap/pm/state').PluginKey;
+};
+
 export type CreateSlashMentionExtensionOptions = {
-  items: SlashCommandItem[];
+  items?: SlashCommandItem[];
+  getItems?: SlashGetItems;
   slashChar?: string;
   pluginKey?: import('@tiptap/pm/state').PluginKey;
   onItemCommand?: SlashOnItemCommand;

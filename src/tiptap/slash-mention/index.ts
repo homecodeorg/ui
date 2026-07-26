@@ -3,6 +3,8 @@ export type {
   SlashOnItemCommand,
   SlashItemCommandContext,
   SlashSuggestionPlacement,
+  SlashGetItems,
+  PromptMentionConfig,
   CreateSlashMentionExtensionOptions,
 } from './types';
 export {

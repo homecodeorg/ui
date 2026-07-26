@@ -6,7 +6,8 @@ import exampleCode from '!!raw-loader!./Example';
 const Docs = () => (
   <>
     <p>
-      Rich text prompt input powered by TipTap with slash commands.{' '}
+      Rich text prompt input powered by TipTap with{' '}
+      <code>/</code> slash commands and <code>@</code> file mentions.{' '}
       <Link inline href="/demo">
         Demo
       </Link>

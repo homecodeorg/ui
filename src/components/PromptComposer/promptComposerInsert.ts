@@ -84,8 +84,11 @@ export function promptComposerMentionNode(
     slashChar = '/',
   } = input;
 
+  const nodeType =
+    slashChar === '/' ? 'mention' : `mention_${slashChar.charCodeAt(0)}`;
+
   return {
-    type: 'mention',
+    type: nodeType,
     attrs: {
       id,
       label,

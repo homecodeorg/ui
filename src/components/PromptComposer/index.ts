@@ -21,4 +21,6 @@ export type {
   SlashItemCommandContext,
   SlashOnItemCommand,
   SlashSuggestionPlacement,
+  SlashGetItems,
+  PromptMentionConfig,
 } from '../../tiptap/slash-mention';

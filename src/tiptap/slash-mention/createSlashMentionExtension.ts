@@ -2,7 +2,7 @@ import type { MutableRefObject } from 'react';
 
 import { type Editor, mergeAttributes } from '@tiptap/core';
 import Mention from '@tiptap/extension-mention';
-import type { EditorState } from '@tiptap/pm/state';
+import { PluginKey, type EditorState } from '@tiptap/pm/state';
 import { ReactRenderer } from '@tiptap/react';
 import type { SuggestionProps } from '@tiptap/suggestion';
 
@@ -15,32 +15,41 @@ import { filterSlashItems } from './defaultChatSlashItems';
 import type {
   CreateSlashMentionExtensionOptions,
   SlashCommandItem,
+  SlashGetItems,
   SlashSuggestionPlacement,
 } from './types';
 
-const SlashMention = Mention.extend({
-  addAttributes() {
-    return {
-      ...this.parent?.(),
-      className: {
-        default: null,
-        parseHTML: element => element.getAttribute('data-slash-class'),
-        renderHTML: attributes => {
-          if (!attributes.className) return {};
-          return { 'data-slash-class': attributes.className };
+/** Keep `/` as `mention` for backward-compatible KnowledgeSelector docs. */
+function mentionExtensionName(slashChar: string): string {
+  return slashChar === '/' ? 'mention' : `mention_${slashChar.charCodeAt(0)}`;
+}
+
+function createNamedSlashMention(slashChar: string) {
+  return Mention.extend({
+    name: mentionExtensionName(slashChar),
+    addAttributes() {
+      return {
+        ...this.parent?.(),
+        className: {
+          default: null,
+          parseHTML: element => element.getAttribute('data-slash-class'),
+          renderHTML: attributes => {
+            if (!attributes.className) return {};
+            return { 'data-slash-class': attributes.className };
+          },
         },
-      },
-      color: {
-        default: null,
-        parseHTML: element => element.getAttribute('data-slash-color'),
-        renderHTML: attributes => {
-          if (!attributes.color) return {};
-          return { 'data-slash-color': attributes.color };
+        color: {
+          default: null,
+          parseHTML: element => element.getAttribute('data-slash-color'),
+          renderHTML: attributes => {
+            if (!attributes.color) return {};
+            return { 'data-slash-color': attributes.color };
+          },
         },
-      },
-    };
-  },
-});
+      };
+    },
+  });
+}
 
 const SUGGESTION_GAP_PX = 4;
 
@@ -172,13 +181,14 @@ function insertDefaultMention(
   const nodeAfter = editor.view.state.selection.$to.nodeAfter;
   const extend = nodeAfter?.text?.startsWith(' ') ? 1 : 0;
   const adjusted = extend ? { ...range, to: range.to + extend } : range;
+  const nodeType = mentionExtensionName(slashChar);
 
   editor
     .chain()
     .focus()
     .insertContentAt(adjusted, [
       {
-        type: 'mention',
+        type: nodeType,
         attrs: {
           id: item.id,
           label: item.label,
@@ -201,12 +211,14 @@ function insertDefaultMention(
 function allowSlashTrigger({
   state,
   range,
+  slashChar,
 }: {
   editor: Editor;
   state: EditorState;
   range: { from: number; to: number };
+  slashChar: string;
 }) {
-  const type = state.schema.nodes['mention'];
+  const type = state.schema.nodes[mentionExtensionName(slashChar)];
   const $from = state.doc.resolve(range.from);
   if (!type || !$from.parent.type.contentMatch.matchType(type)) return false;
   if ($from.parentOffset === 0) return true;
@@ -219,8 +231,20 @@ export type CreateSlashMentionExtensionConfiguredOptions =
     onSuggestionUiActiveChange?: (active: boolean) => void;
   };
 
+async function resolveSuggestionItems(
+  query: string,
+  staticItems: SlashCommandItem[] | undefined,
+  getItems: SlashGetItems | undefined
+): Promise<SlashCommandItem[]> {
+  if (getItems) {
+    return Promise.resolve(getItems(query));
+  }
+  return filterSlashItems(staticItems ?? [], query);
+}
+
 export function createSlashMentionExtension({
   items: resolvedItems,
+  getItems,
   slashChar = '/',
   pluginKey,
   onItemCommand,
@@ -231,9 +255,17 @@ export function createSlashMentionExtension({
     current: null,
   };
 
+  const SlashMention = createNamedSlashMention(slashChar);
+  const resolvedPluginKey =
+    pluginKey ?? new PluginKey(`slashMention${slashChar.charCodeAt(0)}`);
+
   return SlashMention.configure({
     renderText({ node }) {
-      return `/${node.attrs.id as string}`;
+      const label =
+        typeof node.attrs.label === 'string' && node.attrs.label.trim() !== ''
+          ? node.attrs.label
+          : String(node.attrs.id ?? '');
+      return `${slashChar}${label}`;
     },
     renderHTML({ options, node }) {
       const id =
@@ -267,11 +299,11 @@ export function createSlashMentionExtension({
     },
     suggestion: {
       char: slashChar,
-      pluginKey,
+      pluginKey: resolvedPluginKey,
       allowedPrefixes: [' ', '\n', '\t', '\r'],
-      allow: props => allowSlashTrigger(props),
+      allow: props => allowSlashTrigger({ ...props, slashChar }),
       items: ({ query }) =>
-        Promise.resolve(filterSlashItems(resolvedItems, query)),
+        resolveSuggestionItems(query, resolvedItems, getItems),
       command: ({ editor, range, props }) => {
         const item = props as SlashCommandItem;
         if (onItemCommand?.({ editor, range, item }) === true) {

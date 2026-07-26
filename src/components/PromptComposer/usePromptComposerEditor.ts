@@ -18,7 +18,9 @@ import {
   createSlashMentionExtension,
 } from '../../tiptap/slash-mention';
 import type {
+  PromptMentionConfig,
   SlashCommandItem,
+  SlashGetItems,
   SlashOnItemCommand,
   SlashSuggestionPlacement,
 } from '../../tiptap/slash-mention';
@@ -38,6 +40,10 @@ export type UsePromptComposerEditorOptions = {
   slashCommandItems?: SlashCommandItem[];
   slashSuggestionPlacement?: SlashSuggestionPlacement;
   onSlashItemCommand?: SlashOnItemCommand;
+  mentionConfigs?: PromptMentionConfig[];
+  atMentionItems?: SlashCommandItem[];
+  atMentionGetItems?: SlashGetItems;
+  onAtItemCommand?: SlashOnItemCommand;
   prefillMessage?: string | null;
   attachmentsCount?: number;
   allowEnterSubmit: boolean;
@@ -53,21 +59,77 @@ export type UsePromptComposerEditorResult = {
 
 const PROMPT_COMPOSER_EMPTY_NODE_CLASS = 'promptComposerEmptyNode';
 
+function buildMentionConfigs({
+  slashCommandItems,
+  onSlashItemCommand,
+  mentionConfigs,
+  atMentionItems,
+  atMentionGetItems,
+  onAtItemCommand,
+}: {
+  slashCommandItems?: SlashCommandItem[];
+  onSlashItemCommand?: SlashOnItemCommand;
+  mentionConfigs?: PromptMentionConfig[];
+  atMentionItems?: SlashCommandItem[];
+  atMentionGetItems?: SlashGetItems;
+  onAtItemCommand?: SlashOnItemCommand;
+}): PromptMentionConfig[] {
+  const configs: PromptMentionConfig[] = [];
+
+  const slashItems = slashCommandItems ?? DEFAULT_CHAT_SLASH_ITEMS;
+  if (slashItems.length > 0) {
+    configs.push({
+      slashChar: '/',
+      items: slashItems,
+      onItemCommand: onSlashItemCommand,
+    });
+  }
+
+  if (mentionConfigs?.length) {
+    configs.push(...mentionConfigs);
+  }
+
+  if (atMentionGetItems || (atMentionItems && atMentionItems.length > 0)) {
+    configs.push({
+      slashChar: '@',
+      items: atMentionItems,
+      getItems: atMentionGetItems,
+      onItemCommand: onAtItemCommand,
+    });
+  }
+
+  // Deduplicate by slashChar (first wins for `/` from slashCommandItems).
+  const seen = new Set<string>();
+  return configs.filter(cfg => {
+    if (seen.has(cfg.slashChar)) return false;
+    seen.add(cfg.slashChar);
+    return true;
+  });
+}
+
 export function usePromptComposerEditor({
   disabled,
   placeholder,
   slashCommandItems,
   slashSuggestionPlacement = 'above',
   onSlashItemCommand,
+  mentionConfigs,
+  atMentionItems,
+  atMentionGetItems,
+  onAtItemCommand,
   prefillMessage,
   attachmentsCount = 0,
   allowEnterSubmit,
   onSubmit,
   onChange,
 }: UsePromptComposerEditorOptions): UsePromptComposerEditorResult {
-  const slashOpenRef = useRef(false);
+  const suggestionOpenCountRef = useRef(0);
   const onSlashItemCommandRef = useRef(onSlashItemCommand);
   onSlashItemCommandRef.current = onSlashItemCommand;
+  const onAtItemCommandRef = useRef(onAtItemCommand);
+  onAtItemCommandRef.current = onAtItemCommand;
+  const mentionConfigsRef = useRef(mentionConfigs);
+  mentionConfigsRef.current = mentionConfigs;
 
   const onSubmitRef = useRef(onSubmit);
   onSubmitRef.current = onSubmit;
@@ -75,16 +137,47 @@ export function usePromptComposerEditor({
   const onChangeRef = useRef(onChange);
   onChangeRef.current = onChange;
 
+  const atMentionGetItemsRef = useRef(atMentionGetItems);
+  atMentionGetItemsRef.current = atMentionGetItems;
+
   const editorRef = useRef<Editor | null>(null);
 
   const suggestionActiveUpdater = useCallback((active: boolean) => {
-    slashOpenRef.current = active;
+    suggestionOpenCountRef.current = Math.max(
+      0,
+      suggestionOpenCountRef.current + (active ? 1 : -1)
+    );
   }, []);
 
   const slashItemsFingerprint = JSON.stringify(slashCommandItems ?? null);
-  const slashItemsStable = useMemo(
-    () => slashCommandItems ?? DEFAULT_CHAT_SLASH_ITEMS,
-    [slashItemsFingerprint]
+  const atItemsFingerprint = JSON.stringify(atMentionItems ?? null);
+  const mentionConfigsFingerprint = JSON.stringify(
+    (mentionConfigs ?? []).map(c => ({
+      slashChar: c.slashChar,
+      items: c.items ?? null,
+      hasGetItems: Boolean(c.getItems),
+    }))
+  );
+
+  const resolvedMentionConfigs = useMemo(
+    () =>
+      buildMentionConfigs({
+        slashCommandItems,
+        onSlashItemCommand,
+        mentionConfigs,
+        atMentionItems,
+        atMentionGetItems,
+        onAtItemCommand,
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fingerprint keys
+    [
+      slashItemsFingerprint,
+      atItemsFingerprint,
+      mentionConfigsFingerprint,
+      Boolean(atMentionGetItems),
+      Boolean(onSlashItemCommand),
+      Boolean(onAtItemCommand),
+    ]
   );
 
   const placeholderText = useMemo(() => {
@@ -118,13 +211,38 @@ export function usePromptComposerEditor({
       }),
     ];
 
-    if (slashItemsStable.length > 0) {
+    for (const cfg of resolvedMentionConfigs) {
+      const slashChar = cfg.slashChar;
       exts.push(
         createSlashMentionExtension({
-          items: slashItemsStable,
+          items: cfg.items,
+          getItems:
+            slashChar === '@' && atMentionGetItemsRef.current
+              ? query => atMentionGetItemsRef.current!(query)
+              : cfg.getItems
+                ? query => {
+                    const latest = mentionConfigsRef.current?.find(
+                      c => c.slashChar === slashChar
+                    );
+                    return (latest?.getItems ?? cfg.getItems)!(query);
+                  }
+                : undefined,
+          slashChar,
+          pluginKey: cfg.pluginKey,
           suggestionPlacement: slashSuggestionPlacement,
           onSuggestionUiActiveChange: suggestionActiveUpdater,
-          onItemCommand: ctx => onSlashItemCommandRef.current?.(ctx) === true,
+          onItemCommand: ctx => {
+            if (slashChar === '/') {
+              return onSlashItemCommandRef.current?.(ctx) === true;
+            }
+            if (slashChar === '@') {
+              return onAtItemCommandRef.current?.(ctx) === true;
+            }
+            const latest = mentionConfigsRef.current?.find(
+              c => c.slashChar === slashChar
+            );
+            return (latest?.onItemCommand ?? cfg.onItemCommand)?.(ctx) === true;
+          },
         })
       );
     }
@@ -132,7 +250,7 @@ export function usePromptComposerEditor({
     return exts;
   }, [
     placeholderText,
-    slashItemsStable,
+    resolvedMentionConfigs,
     slashSuggestionPlacement,
     suggestionActiveUpdater,
   ]);
@@ -164,19 +282,17 @@ export function usePromptComposerEditor({
 
   const handleEditorKeyDown = useCallback(
     (_view: unknown, event: KeyboardEvent) => {
-      if (
-        !(
-          event.key === 'Enter' &&
-          !event.shiftKey &&
-          !event.metaKey &&
-          !event.ctrlKey
-        )
-      ) {
+      if (!(
+        event.key === 'Enter' &&
+        !event.shiftKey &&
+        !event.metaKey &&
+        !event.ctrlKey
+      )) {
         return false;
       }
 
       if (!allowEnterSubmitRef.current) return false;
-      if (slashOpenRef.current) return false;
+      if (suggestionOpenCountRef.current > 0) return false;
       if (!trimmedTextRef.current && attachmentsCountRef.current === 0) {
         return false;
       }
