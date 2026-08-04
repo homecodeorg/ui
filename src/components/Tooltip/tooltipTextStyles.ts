@@ -31,9 +31,31 @@ export const TRIGGER_TEXT_STYLE_PROPS = [
   'hyphens',
 ] as const;
 
+function hasDirectText(el: HTMLElement) {
+  return Array.from(el.childNodes).some(
+    node =>
+      node.nodeType === Node.TEXT_NODE &&
+      (node.textContent?.trim().length ?? 0) > 0
+  );
+}
+
 export function getTextStyleSource(triggerEl: HTMLElement): HTMLElement {
-  const firstChild = triggerEl.firstElementChild;
-  return firstChild instanceof HTMLElement ? firstChild : triggerEl;
+  let source = triggerEl;
+
+  const walk = (el: HTMLElement) => {
+    if (hasDirectText(el)) {
+      source = el;
+    }
+
+    for (const child of el.children) {
+      if (child instanceof HTMLElement) {
+        walk(child);
+      }
+    }
+  };
+
+  walk(triggerEl);
+  return source;
 }
 
 export function applyTriggerTextStyles(

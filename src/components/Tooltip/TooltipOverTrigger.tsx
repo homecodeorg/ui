@@ -17,7 +17,8 @@ function applyOverTriggerStyles(
   contentEl: HTMLElement,
   triggerEl: HTMLElement
 ) {
-  const rect = triggerEl.getBoundingClientRect();
+  const textSource = getTextStyleSource(triggerEl);
+  const rect = textSource.getBoundingClientRect();
   const contentComputed = window.getComputedStyle(contentEl);
 
   const paddingLeft = parsePx(contentComputed.paddingLeft);
@@ -35,7 +36,7 @@ function applyOverTriggerStyles(
   contentEl.style.setProperty('transform', 'none');
   contentEl.style.width = `${rect.width + paddingLeft + paddingRight + borderLeft + borderRight}px`;
   contentEl.style.boxSizing = 'border-box';
-  applyTriggerTextStyles(contentEl, getTextStyleSource(triggerEl));
+  applyTriggerTextStyles(contentEl, textSource);
   // Trigger ancestors (e.g. menu items) often use nowrap for ellipsis; allow wrap here.
   contentEl.style.setProperty('white-space', 'normal');
   contentEl.style.setProperty('overflow-wrap', 'break-word');
