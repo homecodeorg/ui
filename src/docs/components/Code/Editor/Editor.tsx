@@ -7,12 +7,12 @@ import vsLight from 'prism-react-renderer/themes/vsLight';
 import { useTheme } from 'uilib';
 
 import S from '../Code.styl';
-import STORE from '../store';
 
 type Props = {
   id: string;
   code: string;
   showLineNumbers?: boolean;
+  onChange?: (code: string) => void;
 };
 
 /** Rows follow buffer `split` (aligns with react-live lines); digits only through last non-blank line. */
@@ -74,6 +74,7 @@ export default function Editor({
   id,
   code,
   showLineNumbers = false,
+  onChange: onChangeProp,
 }: Props) {
   const { theme } = useTheme();
 
@@ -83,12 +84,13 @@ export default function Editor({
     setLineSource(code);
   }, [code, id]);
 
-  const onChange = useCallback(newCode => {
-    setLineSource(newCode);
-    if (newCode !== STORE.editedCode) {
-      STORE.onChange(id, newCode);
-    }
-  }, [id]);
+  const onChange = useCallback(
+    (newCode: string) => {
+      setLineSource(newCode);
+      onChangeProp?.(newCode);
+    },
+    [onChangeProp]
+  );
 
   const onEditorColumnMouseDown = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
@@ -122,9 +124,7 @@ export default function Editor({
   const bufferLines = linesFromSource(lineSource);
   const lastNumbered = lastContentLineIndex(bufferLines);
   const nRows = Math.max(1, bufferLines.length);
-  const gutterDigits = String(
-    lastNumbered >= 0 ? lastNumbered + 1 : 1
-  ).length;
+  const gutterDigits = String(lastNumbered >= 0 ? lastNumbered + 1 : 1).length;
 
   const liveEditor = (
     <LiveEditor
@@ -138,10 +138,7 @@ export default function Editor({
   );
 
   const editorColumn = (
-    <div
-      className={S.editorColumn}
-      onMouseDown={onEditorColumnMouseDown}
-    >
+    <div className={S.editorColumn} onMouseDown={onEditorColumnMouseDown}>
       {liveEditor}
     </div>
   );

@@ -15,22 +15,32 @@ const STORE = createStore('editor', {
     return LS.get(editedLabel(id));
   },
 
+  clearEditedCode(id) {
+    this.editedCode = '';
+    LS.remove(editedLabel(id));
+  },
+
   updateHeight(id) {
     this.height = H.getPreHeight(document.getElementById(id));
   },
 
-  updateExecCode(id) {
-    this.execCode = H.wrapExample(this.editedCode, this.scope);
-    LS.set(editedLabel(id), this.editedCode);
+  /** Update live preview without changing the persisted edit buffer. */
+  setActiveCode(code) {
+    this.execCode = H.wrapExample(code, this.scope);
   },
 
   onChange(id, code) {
     this.editedCode = code;
+    this.execCode = H.wrapExample(code, this.scope);
     this.updateHeight(id);
-    updateExecCode(id);
+    persistEdited(id, code);
   },
 });
 
-const updateExecCode = debounce(id => STORE.updateExecCode(id), 1000);
+const persistEdited = debounce((id, code) => {
+  // Drop stale writes after clear/toggle races
+  if (code !== STORE.editedCode) return;
+  LS.set(editedLabel(id), code);
+}, 1000);
 
 export default STORE;
