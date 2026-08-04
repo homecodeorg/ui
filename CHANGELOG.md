@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.7.0](https://github.com/foreverido/uilib/compare/v5.6.1...v5.7.0) (2026-08-04)
+
+
+### Features
+
+* Code - Toggle between edited and original example ([f3da6e0](https://github.com/foreverido/uilib/commit/f3da6e0a12b186a87f66a6a04a9f564d3c9fd6ae))
+* PromptComposer - Dual / and @ mentions ([cf553fe](https://github.com/foreverido/uilib/commit/cf553fea34d4301c404a71ae832e2f6bebf0bd17))
+* PromptComposer - Multiline-aware Enter submit ([4cc871a](https://github.com/foreverido/uilib/commit/4cc871a640bac4cf3e176c20095532ac158bd535))
+
+
+### Bug Fixes
+
+* Tooltip - Match overTrigger size and styles to deepest text node ([4fcfe6f](https://github.com/foreverido/uilib/commit/4fcfe6f100aacfe7dcce9560fd4bdf6017aa4c61))
+
 ### [5.6.1](https://github.com/foreverido/uilib/compare/v5.6.0...v5.6.1) (2026-07-19)
 
 
