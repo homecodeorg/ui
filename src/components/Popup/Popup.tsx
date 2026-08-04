@@ -41,6 +41,7 @@ export class Popup extends Component<T.Props, T.State> {
   };
 
   focused = false;
+  isOpening = false;
   pointerPressed = false;
   subscribedHoverControl = false;
   subscribedSizeChange = false;
@@ -433,7 +434,8 @@ export class Popup extends Component<T.Props, T.State> {
       return;
     }
 
-    if (this.focused && /Enter| /.test(e.key)) {
+    // Enter/Space belong to the trigger itself when it is a text field.
+    if (this.focused && /Enter| /.test(e.key) && !H.isEditable(e.target)) {
       e.stopPropagation();
       this.toggle();
     }
@@ -477,10 +479,13 @@ export class Popup extends Component<T.Props, T.State> {
     this.updateBounds();
   };
 
-  open = throttle(() => {
+  open = () => {
     const { rootPopupId } = this.state;
 
-    if (this.state.isOpen) return;
+    // `isOpening` covers the gap until the state commits — throttling here used
+    // to swallow a re-open that came right after a close.
+    if (this.state.isOpen || this.isOpening) return;
+    this.isOpening = true;
 
     this.updateBounds();
     this.subscribeSizeChange();
@@ -492,9 +497,11 @@ export class Popup extends Component<T.Props, T.State> {
     this.changeState(true, this.afterOpen);
 
     if (rootPopupId) H.setChild(rootPopupId, this.id);
-  }, 100);
+  };
 
   close = () => {
+    this.isOpening = false;
+
     if (!this.state.isOpen) return;
 
     this.unsubscribeSizeChange();
@@ -505,7 +512,7 @@ export class Popup extends Component<T.Props, T.State> {
     const { animated, onOpen, onClose } = this.props;
 
     this.timers.clear();
-    this.setState({ isOpen });
+    this.setState({ isOpen }, () => (this.isOpening = false));
 
     isOpen ? onOpen?.() : onClose?.();
 

@@ -49,19 +49,23 @@ export const getInteractionMode = () => interactionMode;
 
 export function watchControllerFlag() {
   const classes = document.body.classList;
-  const onPointerMove = () => {
-    classes.remove(INTERACTION_MODE.KEYBOARD);
-    classes.add(INTERACTION_MODE.POINTER);
+  const setMode = (mode: INTERACTION_MODE, prevMode: INTERACTION_MODE) => {
+    interactionMode = mode;
+    classes.remove(prevMode);
+    classes.add(mode);
   };
 
   ['pointerdown', 'pointermove'].forEach(event => {
-    document.addEventListener(event, onPointerMove, true);
+    document.addEventListener(
+      event,
+      () => setMode(INTERACTION_MODE.POINTER, INTERACTION_MODE.KEYBOARD),
+      true
+    );
   });
 
-  document.addEventListener('keydown', () => {
-    classes.remove(INTERACTION_MODE.POINTER);
-    classes.add(INTERACTION_MODE.KEYBOARD);
-  });
+  document.addEventListener('keydown', () =>
+    setMode(INTERACTION_MODE.KEYBOARD, INTERACTION_MODE.POINTER)
+  );
 
   classes.add(interactionMode);
 }

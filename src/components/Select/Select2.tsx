@@ -1,7 +1,7 @@
 import * as H from './Select.helpers';
 import * as T from './Select.types';
 
-import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { INTERACTION_MODE, getInteractionMode } from 'uilib/tools/dom';
 
 import cn from 'classnames';
@@ -18,8 +18,20 @@ import { RequiredStar } from '../RequiredStar/RequiredStar';
 import { Scroll } from '../Scroll/Scroll';
 import { useThrottle } from 'uilib/hooks/useThrottle';
 import useEvent from 'uilib/hooks/useEvent';
+import { generateUID } from 'uilib/tools/uid';
+
+import {
+  useKeyboardNav,
+  useSelectOpenState,
+  useSelectOptions,
+  useSelectedIds,
+} from './Select.hooks';
 
 import S from './Select.styl';
+
+/** Time given to a pointer press inside the popup before a blur closes it. */
+const BLUR_CLOSE_DELAY = 60;
+const POINTER_PRESS_TTL = 100;
 
 export function Select2(props: T.Props) {
   const {
@@ -34,10 +46,11 @@ export function Select2(props: T.Props) {
     scrollProps,
     size = 'm',
     round,
+    optionsClassName,
     optionClassName,
     selectedChipClassName,
     additionalOptions = [],
-    options,
+    options = [],
     variant,
     label,
     additionalLabel,
@@ -57,39 +70,215 @@ export function Select2(props: T.Props) {
     selectedChipIds,
     onOpen,
     onClose,
+    onFocus,
+    onBlur,
   } = props;
+
   const isMultiple = H.isMultiple(value);
   const closeOnSelect = props.closeOnSelect ?? !isMultiple;
 
+  const instanceId = useRef(generateUID());
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollInnerRef = useRef<HTMLDivElement>(null);
-  const focusedItemId = useRef<T.Id | null>(null);
-  const focusedElem = useRef<HTMLDivElement | null>(null);
-  const maxIndex = useRef(-1);
-  const isFirstSelectedMeet = useRef(false);
+  const pointerPressedInside = useRef(false);
+  const pointerPressTimer = useRef(0);
+  const blurTimer = useRef(0);
 
-  const searchValLower = useRef('');
-  const [searchVal, _setSearchVal] = useState('');
-  const setSearchVal = (val: string) => {
-    _setSearchVal(val);
-    searchValLower.current = val.toLowerCase();
+  const [labelClipPath, setLabelClipPath] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [innerSearchVal, setInnerSearchVal] = useState('');
+
+  const searchVal = props.searchValue ?? innerSearchVal;
+  const searchQuery = isSearching ? searchVal : '';
+
+  const { selectedIds, setSelectedIds } = useSelectedIds(value);
+  const { allOptions, visibleOptions, navigableOptions, optionsById } =
+    useSelectOptions({
+      options,
+      additionalOptions,
+      searchQuery,
+    });
+
+  const handleOpen = useCallback(() => {
+    popupProps?.onOpen?.();
+    onOpen?.();
+  }, [popupProps?.onOpen, onOpen]);
+
+  const handleClose = useCallback(() => {
+    popupProps?.onClose?.();
+    onClose?.();
+  }, [popupProps?.onClose, onClose]);
+
+  const { isOpen, open, close } = useSelectOpenState({
+    isOpen: props.isOpen,
+    onOpen: handleOpen,
+    onClose: handleClose,
+  });
+
+  const isErrorVisible = !isOpen && !!error;
+  const hasChips = isMultiple && selectedIds.length > 0;
+
+  const isSelected = (id: T.Id) => selectedIds.includes(id);
+  const getLabel = (id: T.Id) => optionsById.items[id]?.label || '';
+
+  const isInsideSelect = (elem: EventTarget | null) =>
+    elem instanceof Element &&
+    Boolean(elem.closest(`[data-select-id="${instanceId.current}"]`));
+
+  const openIfEnabled = () => {
+    if (disabled) return;
+    open();
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
-  const [labelClipPath, setLabelClipPath] = useState('');
-  const [focusedItemIndex, setFocusedItemIndex] = useState(-1);
+  const resetSearch = () => {
+    setIsSearching(false);
+    setInnerSearchVal('');
+    if (searchVal) onSearchChange?.('');
+  };
 
-  // Add tree-related state from Select.tsx
-  const [items, setItems] = useState<T.Option[]>([]);
-  const ids = useMemo(() => H.mapById(props.options), [props.options]);
-  // Add basic selection state
-  const [selected, setSelected] = useState<T.Id[]>(
-    isMultiple ? (value as T.Id[]) : [value as T.Id]
+  const applySelection = (ids: T.Id[], nextValue: T.Value) => {
+    setSelectedIds(ids);
+    onChange?.(nextValue);
+  };
+
+  const onItemToggle = (id: T.Id) => {
+    if (!H.isSelectable(optionsById.items[id])) return;
+
+    if (isMultiple) {
+      const ids = isSelected(id)
+        ? selectedIds.filter(i => i !== id)
+        : [...selectedIds, id];
+
+      applySelection(ids, ids);
+    } else {
+      const nextValue = isSelected(id) ? null : id;
+
+      applySelection(nextValue === null ? [] : [id], nextValue);
+    }
+
+    resetSearch();
+
+    if (closeOnSelect) close();
+  };
+
+  const selectAll = () => {
+    const ids = allOptions.filter(H.isSelectable).map(({ id }) => id);
+
+    applySelection(ids, isMultiple ? ids : (ids[0] ?? null));
+  };
+
+  const dropSelected = () => applySelection([], isMultiple ? [] : null);
+
+  const applyPreset = (ids: T.Id[]) =>
+    applySelection(ids, isMultiple ? ids : (ids[0] ?? null));
+
+  const { focusedId, setFocusedId } = useKeyboardNav({
+    isOpen,
+    navigableOptions,
+    selectedIds,
+    onSelect: onItemToggle,
+  });
+
+  const onOptionHover = useThrottle(
+    (id: T.Id) => {
+      if (getInteractionMode() !== INTERACTION_MODE.POINTER) return;
+      setFocusedId(id);
+    },
+    100,
+    { trailing: true }
   );
 
-  const [optionsUpdated, setOptionsUpdated] = useState(0);
-  const isErrorVisible = !isOpen && !!error;
+  const onScrollInnerRef = useCallback((elem: HTMLDivElement) => {
+    scrollInnerRef.current = elem;
+  }, []);
+
+  const onFocusedElemRef = (elem: HTMLDivElement | null) => {
+    const content = contentRef.current;
+    const list = scrollInnerRef.current;
+
+    if (!elem || !content || !list) return;
+
+    const { top, bottom } = elem.getBoundingClientRect();
+    const rect = content.getBoundingClientRect();
+
+    if (top < rect.top) {
+      list.scrollTop -= rect.top - top;
+    } else if (bottom > rect.bottom) {
+      list.scrollTop += bottom - rect.bottom;
+    }
+  };
+
+  const handleSearchChange = (e, val: string) => {
+    setIsSearching(true);
+    setInnerSearchVal(val);
+    onSearchChange?.(val);
+    openIfEnabled();
+  };
+
+  const handleFocus = e => {
+    window.clearTimeout(blurTimer.current);
+    onFocus?.(e);
+  };
+
+  /**
+   * Popup skips its own blur-close while it is controlled, so closing on blur is
+   * up to Select. A press inside the popup blurs the trigger too — that one must
+   * not close the list.
+   */
+  const handleBlur = e => {
+    onBlur?.(e);
+
+    window.clearTimeout(blurTimer.current);
+    blurTimer.current = window.setTimeout(() => {
+      if (pointerPressedInside.current) return;
+      close();
+    }, BLUR_CLOSE_DELAY);
+  };
+
+  const onTriggerPointerDown = () => {
+    if (disabled) return;
+    // A searchable trigger is a text field: pressing it must never close.
+    if (isOpen && !isSearchable) close();
+    else open();
+  };
+
+  useEvent({
+    event: 'pointerdown',
+    isCapture: true,
+    callback: e => {
+      window.clearTimeout(pointerPressTimer.current);
+      pointerPressedInside.current = isInsideSelect(e.target);
+      pointerPressTimer.current = window.setTimeout(
+        () => (pointerPressedInside.current = false),
+        POINTER_PRESS_TTL
+      );
+    },
+  });
+
+  useEvent({
+    event: 'click',
+    isActive: isOpen,
+    callback: e => {
+      if (!isInsideSelect(e.target)) close();
+    },
+  });
+
+  useEffect(() => {
+    if (!isOpen) resetSearch();
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (props.searchValue === undefined) return;
+    setIsSearching(props.searchValue !== '');
+  }, [props.searchValue]);
+
+  useEffect(
+    () => () => {
+      window.clearTimeout(blurTimer.current);
+      window.clearTimeout(pointerPressTimer.current);
+    },
+    []
+  );
 
   const triggerProps = useMemo(
     () => ({
@@ -102,174 +291,39 @@ export function Select2(props: T.Props) {
     [props.triggerProps, label, size, round, variant]
   );
 
-  const isSelected = (id: T.Id) =>
-    isMultiple
-      ? (selected as T.Id[]).includes(id)
-      : selected[0] === id;
-
-  const isClickedInside = (elem: EventTarget | null) =>
-    !!(
-      elem instanceof Element &&
-      (elem.closest(`.${S.root}`) || elem.closest(`.${S.options}`))
-    );
-
-  const setNewItems = (newItems: T.Option[]) => {
-    maxIndex.current = newItems.length - 1;
-    setItems(newItems);
-    setOptionsUpdated(optionsUpdated + 1);
-
-    if (focusedItemIndex > maxIndex.current && maxIndex.current >= 0) {
-      setFocusedItemIndex(maxIndex.current);
-      focusedItemId.current = newItems[maxIndex.current]?.id;
-    }
-  };
-
-  const setItemFocus = index => {
-    focusedItemId.current = items[index]?.id;
-    setFocusedItemIndex(index);
-  };
-
-  const [isSearchActive, setIsSearchActive] = useState(false);
-
-  const handleSearchChange = (e, value: string) => {
-    setSearchVal(value);
-    setIsSearchActive(true);
-    onSearchChange?.(value);
-    setNewItems(options.filter(filterOption));
-  };
-
-  const selectAll = () => {
-    const newValue = options.map(({ id }) => id);
-
-    setSelected(newValue);
-    onChange?.(newValue);
-  };
-
-  const dropSelected = () => {
-    setSelected([]);
-    onChange?.([]);
-  };
-
-  const onFocusedElemRef = elem => {
-    focusedElem.current = elem;
-
-    if (elem) {
-      const content = contentRef.current;
-
-      if (!content) return;
-
-      const { top, bottom } = elem.getBoundingClientRect();
-      const rect = contentRef.current.getBoundingClientRect();
-      const list = scrollInnerRef.current;
-
-      if (top < rect.top) {
-        list.scrollTop -= rect.top - top;
-      } else if (bottom > rect.bottom) {
-        list.scrollTop += bottom - rect.bottom;
-      }
-    }
-  };
-
-  const onPopupOpen = () => {
-    setIsOpen(true);
-
-    if (focusedItemIndex === -1) {
-      setItemFocus(0);
-    }
-
-    popupProps?.onOpen?.();
-    onOpen?.();
-  };
-
-  const onPopupClose = () => {
-    setIsOpen(false);
-    setSearchVal('');
-    setIsSearchActive(false);
-    setItemFocus(0);
-
-    popupProps?.onClose?.();
-    onClose?.();
-  };
-
-  const onFocus = () => {
-    setIsFocused(true);
-  };
-
-  const onBlur = () => {
-    setIsFocused(false);
-  };
-
-  const onOptionHover = useThrottle(
-    id => {
-      const mode = getInteractionMode();
-      if (mode !== INTERACTION_MODE.POINTER) return;
-
-      const index = items.findIndex(item => item.id === id);
-      setItemFocus(index);
-    },
-    100,
-    { trailing: true }
-  );
-
-  const onItemToggle = (id: T.Id) => {
-    if (isMultiple) {
-      const newValue = isSelected(id)
-        ? (selected as T.Id[]).filter(i => i !== id)
-        : [...(selected as T.Id[]), id];
-
-      setSelected(newValue);
-      onChange?.(newValue);
-    } else {
-      // mono select
-      const newValue = isSelected(id) ? null : id;
-      const newSelected = isSelected(id) ? [] : [id];
-
-      setSelected(newSelected);
-      onChange?.(newValue);
-    }
-
-    setSearchVal('');
-
-    if (closeOnSelect) setIsOpen(false);
-  };
-
-  const getLabel = (id: T.Id) => ids.items[id]?.label || '';
-
   const getFieldLabel = (label: string) => {
     if (disableLabel) return null;
-
-    // @ts-ignore
-    const length = value?.length;
-
-    if (isMultiple && length && showSelectedCount)
-      return `${label} (${length})`;
+    if (isMultiple && selectedIds.length && showSelectedCount)
+      return `${label} (${selectedIds.length})`;
 
     return label;
   };
 
-  const filterOption = ({ label }) => {
-    return label.toLowerCase().includes(searchValLower.current);
-  };
+  const selectedLabel = useMemo(
+    () =>
+      selectedIds
+        .map(getLabel)
+        .filter(Boolean)
+        .join(', '),
+    [selectedIds, optionsById]
+  );
 
-  const selectedLabel = useMemo(() => {
-    if (!isMultiple) return getLabel(value as T.Id);
-    if (!value) return '';
+  const triggerArrow = useMemo(() => {
+    if (disableTriggerArrow || (inputProps?.hasClear && searchVal)) return null;
+
     return (
-      value
-        // @ts-ignore
-        .reduce((acc, id) => {
-          const label = getLabel(id);
-          return label ? [...acc, label] : acc;
-        }, [] as string[])
-        .join(', ')
+      <Icon
+        type="chevronDown"
+        className={cn(S.triggerArrow, isOpen && S.isOpen)}
+        size={size}
+      />
     );
-  }, [isMultiple, value, ids]);
+  }, [disableTriggerArrow, inputProps?.hasClear, searchVal, isOpen, size]);
 
-  const renderSelectedChips = () => {
-    if (!isMultiple || !value || !(value as T.Id[]).length) return null;
-
-    return (value as T.Id[]).map(id => {
+  const renderSelectedChips = () =>
+    selectedIds.map(id => {
       const label = getLabel(id);
+
       if (!label) return null;
 
       return (
@@ -277,7 +331,7 @@ export function Select2(props: T.Props) {
           className={cn(
             S.chip,
             selectedChipIds?.includes(id) && selectedChipClassName,
-            ids.items[id]?.chipClassName
+            optionsById.items[id]?.chipClassName
           )}
           key={id}
           size={size}
@@ -290,29 +344,9 @@ export function Select2(props: T.Props) {
         </Chip>
       );
     });
-  };
-
-  const triggerArrow = useMemo(() => {
-    if (disableTriggerArrow || (inputProps?.hasClear && searchVal)) return null;
-
-    return (
-      <Icon
-        type="chevronDown"
-        className={cn(S.triggerArrow, isOpen && S.isOpen)}
-        size={size}
-      />
-    );
-  }, [isOpen, searchVal]);
 
   const renderTriggerInput = () => {
-    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
-    const inputValue = isMultiple
-      ? isFocused && isSearchActive
-        ? searchVal
-        : ''
-      : isFocused && isSearchActive
-        ? searchVal
-        : selectedLabel;
+    const inputValue = isSearching ? searchVal : isMultiple ? '' : selectedLabel;
 
     return (
       <Input
@@ -331,16 +365,14 @@ export function Select2(props: T.Props) {
 
   const renderTriggerButton = () => {
     const { label, className, ...rest } = triggerProps;
-    const props = omit(rest, ['name', 'inputProps']);
-    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
+    const buttonProps = omit(rest, ['name', 'inputProps']);
     const fullSelectedLabel = [selectedLabel, additionalLabel].filter(Boolean);
     const hasSelected = fullSelectedLabel.length > 0;
     const displayLabel = hasSelected ? fullSelectedLabel : label;
     const title = hasSelected && !isMultiple ? fullSelectedLabel : null;
-    const isError = isErrorVisible;
     const classes = cn(
       S.triggerButton,
-      isError && S.isError,
+      isErrorVisible && S.isError,
       triggerArrow && S.hasTriggerArrow,
       className
     );
@@ -350,7 +382,7 @@ export function Select2(props: T.Props) {
         <Button
           className={classes}
           variant="default"
-          {...props}
+          {...buttonProps}
           style={{ clipPath: labelClipPath }}
           title={title?.join?.(', ')}
         >
@@ -366,7 +398,7 @@ export function Select2(props: T.Props) {
           <Label
             size={size}
             isOnTop={hasSelected}
-            isError={isError}
+            isError={isErrorVisible}
             onClipPathChange={setLabelClipPath}
           >
             {getFieldLabel(label)}
@@ -383,10 +415,8 @@ export function Select2(props: T.Props) {
       ? renderTriggerInput()
       : renderTriggerButton();
 
-    const hasChips = isMultiple && value && (value as T.Id[]).length > 0;
-
     return (
-      <div className={S.trigger}>
+      <div className={S.trigger} onPointerDown={onTriggerPointerDown}>
         {hasChips && (
           <Scroll
             y
@@ -408,7 +438,7 @@ export function Select2(props: T.Props) {
   const renderPresets = () => {
     const items = presets.map(({ label, ids }) => ({
       children: label,
-      onClick: () => setSelected(ids),
+      onClick: () => applyPreset(ids),
       key: label,
     })) as T.PresetButtonProps[];
 
@@ -432,8 +462,13 @@ export function Select2(props: T.Props) {
 
     return (
       <div className={S.presetPanel} key="preset-panel">
-        {items.map(props => (
-          <Button className={S.presetButton} variant="clear" {...props} />
+        {items.map(({ key, ...rest }) => (
+          <Button
+            className={S.presetButton}
+            variant="clear"
+            key={key}
+            {...rest}
+          />
         ))}
       </div>
     );
@@ -441,125 +476,47 @@ export function Select2(props: T.Props) {
 
   const renderOption = (item: T.Option, level = 0) => {
     const { id, isGroupHeader } = item;
-
-    const isFocused = id === focusedItemId.current;
-    const isSelected = selected.includes(id);
-    const items = [] as JSX.Element[];
-
-    const className = cn(
-      S.option,
-      isGroupHeader && S.isGroup,
-      isFocused && S.isFocused,
-      isSelected && S.isSelected,
-      S[`level-${level}`],
-      optionClassName
-    );
-    const optionProps = {
-      className,
+    const optionProps: T.OptionElemProps = {
+      className: cn(
+        S.option,
+        isGroupHeader && S.isGroup,
+        id === focusedId && S.isFocused,
+        isSelected(id) && S.isSelected,
+        S[`level-${level}`],
+        optionClassName
+      ),
       onPointerUp: () => onItemToggle(id),
       onPointerEnter: () => onOptionHover(id),
-    } as T.OptionElemProps;
+    };
 
-    // @ts-ignore
-    if (isFocused) optionProps.ref = onFocusedElemRef;
+    if (id === focusedId) optionProps.ref = onFocusedElemRef;
 
-    if (isSelected && !isFirstSelectedMeet.current) {
-      isFirstSelectedMeet.current = true;
-    }
-
-    if (filterOption(item)) {
-      items.unshift(
-        <div key={id} {...optionProps}>
-          {H.renderLabel(item)}
-        </div>
-      );
-    }
-
-    return items;
-  };
-
-  const renderOptions = () => {
-    isFirstSelectedMeet.current = false;
-
-    return [...additionalOptions, ...items]
-      .map(item => renderOption(item))
-      .flat();
-  };
-
-  useEffect(() => {
-    const items = additionalOptions?.length
-      ? [...additionalOptions, ...options]
-      : options;
-
-    setNewItems(items);
-  }, [options]);
-
-  useEffect(() => {
-    setIsOpen(props.isOpen);
-  }, [props.isOpen]);
-
-  useEffect(() => {
-    const searchVal = props.searchValue;
-
-    if (searchVal) setSearchVal(searchVal);
-  }, [props.searchValue]);
-
-  const onKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      const currIndex = focusedItemIndex;
-
-      if (e.key === 'ArrowUp') {
-        if (currIndex > 0) setItemFocus(currIndex - 1);
-      }
-
-      if (e.key === 'ArrowDown') {
-        if (currIndex < maxIndex.current) setItemFocus(currIndex + 1);
-      }
-
-      if (currIndex === -1 || !isOpen) return;
-
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        e.stopPropagation();
-        onItemToggle(items[currIndex].id);
-      }
-    },
-    [items, focusedItemIndex, isOpen, selected]
-  );
-
-  useEvent({
-    event: 'keydown',
-    isActive: isOpen,
-    callback: onKeyDown,
-  });
-
-  useEvent({
-    event: 'click',
-    // isActive: isMultiple,
-    callback: e => {
-      if (!isClickedInside(e.target as EventTarget | null)) {
-        setIsOpen(false);
-      }
-    },
-  });
-
-  const optionsList = useMemo(
-    () => (
-      <div ref={contentRef}>
-        {renderPresets()}
-        <Scroll
-          y
-          {...scrollProps}
-          offset={{ y: { before: 10, after: 10 } }}
-          className={cn(S.options, S[`size-${size}`], scrollProps?.className)}
-          onInnerRef={elem => (scrollInnerRef.current = elem)}
-          key="items-scroll"
-        >
-          {renderOptions()}
-        </Scroll>
+    return (
+      <div key={id} {...optionProps}>
+        {H.renderLabel(item)}
       </div>
-    ),
-    [items, searchVal, focusedItemIndex, selected]
+    );
+  };
+
+  const optionsList = (
+    <div ref={contentRef} data-select-id={instanceId.current}>
+      {renderPresets()}
+      <Scroll
+        y
+        {...scrollProps}
+        offset={{ y: { before: 10, after: 10 } }}
+        className={cn(
+          S.options,
+          S[`size-${size}`],
+          optionsClassName,
+          scrollProps?.className
+        )}
+        onInnerRef={onScrollInnerRef}
+        key="items-scroll"
+      >
+        {visibleOptions.map(item => renderOption(item))}
+      </Scroll>
+    </div>
   );
 
   const classes = cn(S.root, className, S[`size-${size}`]);
@@ -571,17 +528,18 @@ export function Select2(props: T.Props) {
         direction="bottom"
         size={size}
         focusControl
-        hoverControl={isFocused}
         blur={blur}
-        isOpen={isOpen}
+        round={round}
         disabled={disabled}
         {...popupProps}
-        onOpen={onPopupOpen}
-        onClose={onPopupClose}
+        isOpen={isOpen}
+        onOpen={openIfEnabled}
+        onClose={close}
         trigger={renderTrigger()}
         triggerProps={{
-          onFocus: onFocus,
-          onBlur: onBlur,
+          'data-select-id': instanceId.current,
+          onFocus: handleFocus,
+          onBlur: handleBlur,
         }}
         content={optionsList}
       />

@@ -7,6 +7,7 @@ export type TriggerPropsType = DetailedHTMLProps<
   HTMLDivElement
 > & {
   className?: string;
+  [dataAttribute: `data-${string}`]: unknown;
 };
 
 export type WrapperPropsType = DetailedHTMLProps<

@@ -67,7 +67,7 @@ export function unobserve(elem, cb?) {
 
   const data = ITEMS.get(elem);
 
-  if (!cb || data?.listeners.indexOf(cb) === -1) return;
+  if (!data || !cb || data.listeners.indexOf(cb) === -1) return;
 
   if (data.listeners.length === 1) ITEMS.delete(elem);
   else spliceWhere(data.listeners, cb);

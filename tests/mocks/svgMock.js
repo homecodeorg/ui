@@ -1,11 +1,14 @@
 const React = require('react');
 
+function SvgMock(props) {
+  return React.createElement('svg', {
+    ...props,
+    'data-testid': 'svg-mock',
+  });
+}
+
 module.exports = {
-  ReactComponent: function SvgMock(props) {
-    return React.createElement('svg', {
-      ...props,
-      'data-testid': 'svg-mock',
-    });
-  },
-  default: 'SvgMock',
+  __esModule: true,
+  default: SvgMock,
+  ReactComponent: SvgMock,
 };

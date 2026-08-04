@@ -179,6 +179,13 @@ export function fitRectToBoundary(
   };
 }
 
+export function isEditable(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable) return true;
+
+  return /^(input|textarea)$/i.test(target.tagName);
+}
+
 export const childs: Record<Id, Id[]> = {};
 
 let popupIds = 0;

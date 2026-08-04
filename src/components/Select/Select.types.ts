@@ -55,7 +55,11 @@ type InheritedInputProps = Partial<
 export type Props = FormControl<Value> &
   InheritedInputProps & {
     className?: string;
-    // Use this prop to control the open state
+    // Controls the open state.
+    //
+    // Pass a boolean to take full control — the popup then only opens/closes
+    // when this prop changes, so react to `onOpen`/`onClose`.
+    // Leave it `undefined` to let the component manage the state itself.
     isOpen?: boolean;
     // Whether to close the popup when an option is selected
     closeOnSelect?: boolean;
@@ -144,5 +148,5 @@ export type State = {
 
 export type OptionElemProps = HTMLAttributes<HTMLDivElement> & {
   className: string;
-  ref?: RefObject<HTMLDivElement>;
+  ref?: RefObject<HTMLDivElement> | ((elem: HTMLDivElement | null) => void);
 };
