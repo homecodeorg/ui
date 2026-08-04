@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
@@ -116,6 +116,32 @@ describe('Select2 open state', () => {
 
     await userEvent.click(screen.getByRole('button', { name: 'outside' }));
     await waitFor(() => expect(isOpened()).toBe(false));
+  });
+
+  test('the opening click does not close when it retargets outside mid-gesture', () => {
+    render(<Controlled isSearchable label="Label" />);
+
+    // A portalled popup can mount under the cursor; the click then targets a
+    // common ancestor outside the select (here document.body) even though the
+    // press started on the trigger.
+    fireEvent.pointerDown(getSearchInput());
+    expect(isOpened()).toBe(true);
+
+    fireEvent.pointerUp(document.body);
+    fireEvent.click(document.body);
+    expect(isOpened()).toBe(true);
+  });
+
+  test('a pointer gesture that started outside closes', () => {
+    render(<Controlled isSearchable label="Label" />);
+
+    fireEvent.pointerDown(getSearchInput());
+    expect(isOpened()).toBe(true);
+
+    fireEvent.pointerDown(document.body);
+    fireEvent.pointerUp(document.body);
+    fireEvent.click(document.body);
+    expect(isOpened()).toBe(false);
   });
 
   test('closes on blur when the focus leaves the select', async () => {

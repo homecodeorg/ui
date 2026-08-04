@@ -81,6 +81,7 @@ export function Select2(props: T.Props) {
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollInnerRef = useRef<HTMLDivElement>(null);
   const pointerPressedInside = useRef(false);
+  const pressStartedInside = useRef(false);
   const pointerPressTimer = useRef(0);
   const blurTimer = useRef(0);
 
@@ -242,16 +243,32 @@ export function Select2(props: T.Props) {
     else open();
   };
 
+  const markPressInside = (isInside: boolean) => {
+    window.clearTimeout(pointerPressTimer.current);
+    pointerPressedInside.current = isInside;
+    pointerPressTimer.current = window.setTimeout(
+      () => (pointerPressedInside.current = false),
+      POINTER_PRESS_TTL
+    );
+  };
+
   useEvent({
     event: 'pointerdown',
     isCapture: true,
     callback: e => {
-      window.clearTimeout(pointerPressTimer.current);
-      pointerPressedInside.current = isInsideSelect(e.target);
-      pointerPressTimer.current = window.setTimeout(
-        () => (pointerPressedInside.current = false),
-        POINTER_PRESS_TTL
-      );
+      pressStartedInside.current = isInsideSelect(e.target);
+      markPressInside(pressStartedInside.current);
+    },
+  });
+
+  useEvent({
+    event: 'pointerup',
+    isCapture: true,
+    callback: () => {
+      // The release can land on the portalled popup that mounted under the
+      // cursor mid-gesture, so the up-target is not a reliable inside signal.
+      if (pressStartedInside.current) markPressInside(true);
+      pressStartedInside.current = false;
     },
   });
 
@@ -259,6 +276,10 @@ export function Select2(props: T.Props) {
     event: 'click',
     isActive: isOpen,
     callback: e => {
+      // The click concluding a press that started inside must not count as an
+      // outside click: the portalled popup can mount under the cursor, which
+      // retargets the click to a common ancestor outside the select.
+      if (pointerPressedInside.current) return;
       if (!isInsideSelect(e.target)) close();
     },
   });
