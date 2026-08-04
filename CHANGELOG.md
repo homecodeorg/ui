@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.1](https://github.com/foreverido/uilib/compare/v5.7.0...v5.7.1) (2026-08-04)
+
+
+### Bug Fixes
+
+* Select2 - Opening click retargeted to body no longer closes popup ([2614b0a](https://github.com/foreverido/uilib/commit/2614b0a3ada3cbcba6c6f45f5f2f49b00b3279cd))
+
 ## [5.7.0](https://github.com/foreverido/uilib/compare/v5.6.1...v5.7.0) (2026-08-04)
 
 
