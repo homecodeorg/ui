@@ -271,8 +271,6 @@ export function usePromptComposerEditor({
   }, []);
 
   const trimmedText = text.trim();
-  const trimmedTextRef = useRef(trimmedText);
-  trimmedTextRef.current = trimmedText;
 
   const attachmentsCountRef = useRef(attachmentsCount);
   attachmentsCountRef.current = attachmentsCount;
@@ -282,25 +280,27 @@ export function usePromptComposerEditor({
 
   const handleEditorKeyDown = useCallback(
     (_view: unknown, event: KeyboardEvent) => {
-      if (!(
-        event.key === 'Enter' &&
-        !event.shiftKey &&
-        !event.metaKey &&
-        !event.ctrlKey
-      )) {
-        return false;
-      }
+      if (event.key !== 'Enter' || event.shiftKey) return false;
 
       if (!allowEnterSubmitRef.current) return false;
       if (suggestionOpenCountRef.current > 0) return false;
-      if (!trimmedTextRef.current && attachmentsCountRef.current === 0) {
+
+      const activeEditor = editorRef.current;
+      if (!activeEditor) return false;
+
+      const currentText = activeEditor.getText();
+      const hasNewlines = currentText.includes('\n');
+      const isModEnter = event.metaKey || event.ctrlKey;
+
+      // Single line: Enter submits. Multiline: Enter inserts a line; Cmd/Ctrl+Enter submits.
+      if (hasNewlines ? !isModEnter : isModEnter) return false;
+
+      if (!currentText.trim() && attachmentsCountRef.current === 0) {
         return false;
       }
 
       event.preventDefault();
-      const activeEditor = editorRef.current;
-      if (!activeEditor) return true;
-      onSubmitRef.current?.(activeEditor.getText(), activeEditor);
+      onSubmitRef.current?.(currentText, activeEditor);
       return true;
     },
     []

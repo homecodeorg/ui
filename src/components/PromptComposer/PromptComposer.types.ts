@@ -32,9 +32,14 @@ export type Props = Omit<
   prefillMessage?: string | null;
   /** Staged attachment count - Enter can submit even when text empty. */
   attachmentsCount?: number;
-  /** Mobile usually sets false so Enter inserts newline. */
+  /**
+   * When true (desktop default), Enter submits if content has no newlines yet;
+   * once newlines exist, Enter inserts another line and Cmd/Ctrl+Enter submits.
+   * Shift+Enter always inserts a newline. Mobile usually sets false so Enter
+   * always inserts a newline.
+   */
   allowEnterSubmit?: boolean;
-  /** Called when user presses Enter to submit. */
+  /** Called when user presses Enter (or Cmd/Ctrl+Enter when multiline) to submit. */
   onSubmit?: (text: string, editor: Editor) => void;
   /** Called on every transaction with plain text value. */
   onChange?: (text: string, editor: Editor) => void;
