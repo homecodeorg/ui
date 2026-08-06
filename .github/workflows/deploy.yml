@@ -50,7 +50,9 @@ jobs:
           envs: DEPLOY_PATH
           script: |
             set -e
-            mkdir -p "$DEPLOY_PATH"
+            # /var/www is root-owned; ci needs sudo to create the deploy path
+            sudo mkdir -p "$DEPLOY_PATH"
+            sudo chown "$USER:$USER" "$DEPLOY_PATH"
             TMP_DIR=$(mktemp -d)
             tar -xzf /tmp/deploy.tar.gz -C "$TMP_DIR"
             rsync -a --delete "$TMP_DIR"/ "$DEPLOY_PATH"/
