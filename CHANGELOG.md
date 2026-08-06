@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.2](https://github.com/foreverido/uilib/compare/v5.7.1...v5.7.2) (2026-08-06)
+
+
+### Features
+
+* add unified VPS deploy workflow ([d18f6ba](https://github.com/foreverido/uilib/commit/d18f6ba31ccf788d75892e9d5a581b7ee3e976d1))
+
 ### [5.7.1](https://github.com/foreverido/uilib/compare/v5.7.0...v5.7.1) (2026-08-04)
 
 
