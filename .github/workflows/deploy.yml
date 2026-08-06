@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build docs site
+        run: yarn docs:build
+
+      - name: Package build
+        run: tar -czf deploy.tar.gz -C build .
+
+      - name: Upload to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          port: ${{ vars.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: deploy.tar.gz
+          target: /tmp
+
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          DEPLOY_PATH: ${{ vars.VPS_DEPLOY_PATH }}
+        with:
+          host: ${{ vars.VPS_HOST }}
+          username: ${{ vars.VPS_USER }}
+          port: ${{ vars.VPS_PORT || 22 }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DEPLOY_PATH
+          script: |
+            set -e
+            mkdir -p "$DEPLOY_PATH"
+            TMP_DIR=$(mktemp -d)
+            tar -xzf /tmp/deploy.tar.gz -C "$TMP_DIR"
+            rsync -a --delete "$TMP_DIR"/ "$DEPLOY_PATH"/
+            rm -rf "$TMP_DIR" /tmp/deploy.tar.gz
