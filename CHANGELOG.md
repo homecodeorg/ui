@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.5](https://github.com/foreverido/uilib/compare/v5.7.4...v5.7.5) (2026-08-12)
+
+
+### Bug Fixes
+
+* PopupMenu - align items content - flex-start ([56f527e](https://github.com/foreverido/uilib/commit/56f527ee6ead13408681a5047842d7915b602a21))
+
 ### [5.7.4](https://github.com/foreverido/uilib/compare/v5.7.3...v5.7.4) (2026-08-12)
 
 
