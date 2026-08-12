@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.4](https://github.com/foreverido/uilib/compare/v5.7.3...v5.7.4) (2026-08-12)
+
+
+### Bug Fixes
+
+* Popup - Remove document listeners on unmount ([c92a17c](https://github.com/foreverido/uilib/commit/c92a17cd9a927e127597f87337295b79b6bf49c7))
+
 ### [5.7.3](https://github.com/foreverido/uilib/compare/v5.7.2...v5.7.3) (2026-08-06)
 
 
