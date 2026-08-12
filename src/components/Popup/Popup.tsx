@@ -166,6 +166,11 @@ export class Popup extends Component<T.Props, T.State> {
       vv.removeEventListener('scroll', this.onBoundaryGeometryChange);
     }
 
+    // These are registered in componentDidMount; omitting removal left orphaned
+    // capture listeners that kept calling close/onClose after portal remounts.
+    document.removeEventListener('pointerdown', this.onDocPointerDown, true);
+    document.removeEventListener('pointerup', this.onDocPointerUp, true);
+    document.removeEventListener('keydown', this.onDocKeyDown, true);
     document.removeEventListener('keyup', this.onDocKeyUp);
 
     if (this.scrollParent) {
@@ -289,12 +294,7 @@ export class Popup extends Component<T.Props, T.State> {
     const availWidth = H.edgesWidth(bounds);
     const fitWidth =
       availWidth >= BOUNDARY_FIT_EPSILON ? Math.floor(availWidth) : null;
-    const measured = this.measureBoundaryRect(
-      el,
-      wrapper,
-      fitWidth,
-      bounds
-    );
+    const measured = this.measureBoundaryRect(el, wrapper, fitWidth, bounds);
 
     this.setBoundaryFit(
       H.fitRectToBoundary(measured.rect, bounds, measured.maxWidth)
@@ -455,8 +455,7 @@ export class Popup extends Component<T.Props, T.State> {
     this.focused = true;
     this.props.triggerProps?.onFocus?.(e);
 
-    if (!this.pointerPressed && !this.state.isOpen)
-      this.open();
+    if (!this.pointerPressed && !this.state.isOpen) this.open();
   };
 
   onBlur = e => {

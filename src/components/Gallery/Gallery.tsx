@@ -1,7 +1,6 @@
 import {
   Component,
   createRef,
-  CSSProperties,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -116,7 +115,6 @@ function Item({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [isError, setIsError] = useState(false);
-  const style = {} as CSSProperties;
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   useLayoutEffect(() => {
@@ -166,24 +164,24 @@ function Item({
     return <VideoItem src={src} size={size} isActive={isActive} />;
   }
 
-  if (loaded) style.backgroundImage = `url(${src})`;
-
   return (
-    <div className={S.item} style={style}>
-      {!loaded &&
-        (isError ? (
-          <Icon type="brokenImage" className={S.brokenImage} />
-        ) : (
-          <>
-            <img
-              ref={imgRef}
-              src={src}
-              onLoad={() => setLoaded(true)}
-              onError={() => setIsError(true)}
-            />
-            <Spinner size={size} />
-          </>
-        ))}
+    <div className={S.item}>
+      {isError ? (
+        <Icon type="brokenImage" className={S.brokenImage} />
+      ) : (
+        <>
+          <img
+            ref={imgRef}
+            src={src}
+            alt=""
+            className={cn(S.image, loaded && S.imageLoaded)}
+            draggable={false}
+            onLoad={() => setLoaded(true)}
+            onError={() => setIsError(true)}
+          />
+          {!loaded && <Spinner size={size} />}
+        </>
+      )}
     </div>
   );
 }
