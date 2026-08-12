@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.6](https://github.com/foreverido/uilib/compare/v5.7.5...v5.7.6) (2026-08-12)
+
+
+### Bug Fixes
+
+* PopupMenu - Keep item labels on one line ([a58cb2c](https://github.com/foreverido/uilib/commit/a58cb2c458a59aa71b6851f61be9b84d4ac4f447))
+
 ### [5.7.5](https://github.com/foreverido/uilib/compare/v5.7.4...v5.7.5) (2026-08-12)
 
 
