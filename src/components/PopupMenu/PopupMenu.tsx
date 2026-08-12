@@ -6,7 +6,7 @@ import { Popup } from 'uilib/components/Popup/Popup';
 import S from './PopupMenu.styl';
 import * as T from './PopupMenu.types';
 
-export function PopupMenu({ items, onClose, ...props }: T.Props) {
+export function PopupMenu({ items, ...props }: T.Props) {
   if (items.length === 0) return null;
 
   const { size } = props;
