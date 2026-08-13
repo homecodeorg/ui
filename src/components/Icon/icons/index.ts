@@ -54,6 +54,7 @@ export { default as layers } from './layers.svg';
 export { default as link } from './link.svg';
 export { default as linkedin } from './linkedin.svg';
 export { default as loader } from './loader.svg';
+export { default as logout } from './logout.svg';
 export { default as lock } from './lock.svg';
 export { default as lockOpen } from './lockOpen.svg';
 export { default as map } from './map.svg';
