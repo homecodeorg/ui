@@ -11,28 +11,36 @@
   &:hover
     background var(--accent-color-alpha-200)
 
+  &:not(:has(.remove))
+    padding-right var(--chip-pad)
+
 .size_xs
-  padding-left var(--p-1)
+  --chip-pad var(--p-1)
+  padding-left var(--chip-pad)
   border-radius var(--p-1)
   controlFontSize('xs')
 
 .size_s
-  padding-left var(--p-3)
+  --chip-pad var(--p-3)
+  padding-left var(--chip-pad)
   border-radius var(--p-3)
   controlFontSize('m')
 
 .size_m
-  padding-left var(--p-5)
+  --chip-pad var(--p-5)
+  padding-left var(--chip-pad)
   border-radius var(--p-5)
   controlFontSize('l')
 
 .size_l
-  padding-left var(--p-8)
+  --chip-pad var(--p-8)
+  padding-left var(--chip-pad)
   border-radius var(--p-8)
   controlFontSize('xl')
 
 .size_xl
-  padding-left var(--p-10)
+  --chip-pad var(--p-10)
+  padding-left var(--chip-pad)
   border-radius var(--p-10)
   controlFontSize('xl')
 
