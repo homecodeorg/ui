@@ -52,6 +52,9 @@
     width calc(100% - var(--p-5))
     max-width @width
 
+  &:has(.dialogClose) [data-slot="card-header"]
+    padding-right calc(2rem + var(--p-3))
+
 .size-default
   max-width 40rem
 

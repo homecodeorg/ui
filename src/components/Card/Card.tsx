@@ -35,13 +35,23 @@ const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
   );
 });
 
-function LinkCard({ className, ...props }: LinkCardProps) {
+function LinkCard({
+  className,
+  paddingSize = 'm',
+  blur = false,
+  ...props
+}: LinkCardProps) {
   return (
     <a
       target="_blank"
       rel="noopener noreferrer"
       data-slot="link-card"
-      className={cn(S.root, className)}
+      className={cn(
+        S.root,
+        S[`padding-${paddingSize}`],
+        blur && S.blur,
+        className
+      )}
       {...props}
     />
   );
