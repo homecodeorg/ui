@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.7](https://github.com/foreverido/uilib/compare/v5.7.6...v5.7.7) (2026-08-14)
+
+
+### Features
+
+* Icon - logout ([60df2a2](https://github.com/foreverido/uilib/commit/60df2a23841a7894a1e604f27dee9a86a1c00e03))
+
+
+### Bug Fixes
+
+* Card - Align LinkCard variants and title spacing ([a2c67be](https://github.com/foreverido/uilib/commit/a2c67be25ff4cb7c9bf5bf7665fe3d24b7bbbac1))
+* Chip - Add right padding when no remove button ([4fd1911](https://github.com/foreverido/uilib/commit/4fd1911c240a939c3fc99c33b8abd5f1d7bb8778))
+
 ### [5.7.6](https://github.com/foreverido/uilib/compare/v5.7.5...v5.7.6) (2026-08-12)
 
 
