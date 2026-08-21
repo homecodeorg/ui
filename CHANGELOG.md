@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.7.8](https://github.com/foreverido/uilib/compare/v5.7.7...v5.7.8) (2026-08-21)
+
+
+### Features
+
+* SlashSuggestionList - Show icons on slash items ([4ecdd6a](https://github.com/foreverido/uilib/commit/4ecdd6ad6c10dae8ad55ef999bf47199fcf12cbf))
+
 ### [5.7.7](https://github.com/foreverido/uilib/compare/v5.7.6...v5.7.7) (2026-08-14)
 
 
