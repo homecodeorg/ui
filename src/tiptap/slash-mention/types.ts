@@ -1,9 +1,13 @@
 import type { Editor, Range } from '@tiptap/core';
 
+import type { IconType } from '../../components/Icon/Icon.types';
+
 export type SlashCommandItem = {
   id: string;
   label: string;
   description?: string;
+  /** Left icon in the slash suggestion list (`<Icon type={icon} />`). */
+  icon?: IconType;
   /** Extra class on inserted mention chip (merged with `slash-mention`). */
   className?: string;
   /** CSS color for chip text; background uses 30% color blend. */

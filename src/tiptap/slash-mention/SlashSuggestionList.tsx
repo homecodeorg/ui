@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useImperativeHandle, useState } from 'react';
 
+import { Icon } from 'uilib/components/Icon/Icon';
 import { Menu } from 'uilib/components/Menu/Menu';
 import type { RefObject } from 'react';
 import S from './SlashSuggestionList.styl';
@@ -90,10 +91,15 @@ function SlashSuggestionListInner({
             onClick={() => onPick(idx)}
             textOverflow
           >
-            <span className={S.itemLabel}>{item.label}</span>
-            {item.description ? (
-              <span className={S.itemDesc}>{item.description}</span>
-            ) : null}
+            {item.icon && (
+              <Icon type={item.icon} size="s" className={S.itemIcon} />
+            )}
+            <span className={S.itemText}>
+              <span className={S.itemLabel}>{item.label}</span>
+              {item.description && (
+                <span className={S.itemDesc}>{item.description}</span>
+              )}
+            </span>
           </Menu.Item>
         ))}
       </Menu>

@@ -29,9 +29,10 @@
 .item
   position relative
   display flex
-  flex-direction column
-  align-items flex-start
-  justify-content center
+  flex-direction row
+  align-items center
+  justify-content flex-start
+  gap var(--p-2)
 
   width 100%
   min-height 0
@@ -50,6 +51,16 @@
 
 .itemHighlighted
   box-shadow inset 100vw 0 0 0 var(--accent-color-alpha-200)
+
+.itemIcon
+  flex-shrink 0
+  color var(--accent-color-alpha-800)
+
+.itemText
+  display flex
+  flex-direction column
+  min-width 0
+  align-items flex-start
 
 .itemLabel
   font-weight 600
