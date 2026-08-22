@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.8.0](https://github.com/foreverido/uilib/compare/v5.7.8...v5.8.0) (2026-08-22)
+
+
+### Features
+
+* NestedMenu - Extract into UI library ([bc943bb](https://github.com/foreverido/uilib/commit/bc943bbe210c8c84d70b4c0547e511a20a2c60f3))
+
+
+### Bug Fixes
+
+* SlashSuggestionList - items hover style ([6a3e369](https://github.com/foreverido/uilib/commit/6a3e369a9f564a74556409069bb240685eef82e9))
+
 ### [5.7.8](https://github.com/foreverido/uilib/compare/v5.7.7...v5.7.8) (2026-08-21)
 
 
