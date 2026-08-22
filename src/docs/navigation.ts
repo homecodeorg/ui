@@ -136,6 +136,10 @@ export default [
         loader: () => import('./examples/Menu'),
       },
       {
+        id: 'NestedMenu',
+        loader: () => import('./examples/NestedMenu'),
+      },
+      {
         id: 'Notifications',
         loader: () => import('./examples/Notifications'),
       },

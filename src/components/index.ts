@@ -29,6 +29,7 @@ export * from './LangSelector/LangSelector';
 export * from './Lazy/Lazy';
 export * from './LightBox/LightBox';
 export * from './Menu/Menu';
+export * from './NestedMenu/NestedMenu';
 export * from './Notifications/Notifications';
 export * from './Paranja/Paranja';
 export * from './Popup/Popup';

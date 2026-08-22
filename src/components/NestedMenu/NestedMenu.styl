@@ -1,0 +1,139 @@
+@import '../../theme'
+
+.root
+  position relative
+  display inline-flex
+
+.trigger
+  display inline-flex
+
+.popup
+  position absolute
+  top calc(100% + 6px)
+  left 0
+  z-index 20
+  min-width 200px
+  max-width 260px
+  padding 4px
+  border-radius 10px
+  border 1px solid var(--accent-color-alpha-200)
+  background var(--decent-color)
+  box-shadow 0 8px 28px rgba(0, 0, 0, 0.45)
+
+.alignEnd
+  left auto
+  right 0
+
+.itemWrap
+  position relative
+
+.item
+.row
+.back
+  display flex
+  align-items center
+  gap 8px
+  width 100%
+  padding 6px 10px
+  border none
+  border-radius 6px
+  background none
+  color inherit
+  font inherit
+  font-size 13px
+  font-weight 500
+  letter-spacing 0.01em
+  line-height 1.3
+  text-align left
+  text-decoration none
+  cursor pointer
+
+  &:hover
+  &.itemActive
+    background var(--accent-color-alpha-100)
+
+  &:disabled
+  &.itemDisabled
+    opacity 0.55
+    cursor default
+    pointer-events none
+
+.itemDanger
+  color var(--active-color)
+
+  .icon
+    opacity 1
+    color inherit
+
+.icon
+  flex-shrink 0
+  display inline-flex
+  opacity 0.55
+
+  svg
+    display block
+
+.label
+  flex 1
+  min-width 0
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+
+.hint
+  flex-shrink 0
+  opacity 0.5
+  font-weight 400
+
+.chevron
+  flex-shrink 0
+  opacity 0.45
+
+.row svg
+  flex-shrink 0
+  color var(--active-color)
+
+.submenu
+  position absolute
+  top -4px
+  left calc(100% + 6px)
+  z-index 21
+  min-width 220px
+  max-width 280px
+  max-height unquote('min(360px, calc(100vh - 24px))')
+  overflow-x hidden
+  overflow-y auto
+  padding 4px
+  border-radius 10px
+  border 1px solid var(--accent-color-alpha-200)
+  background var(--decent-color)
+  box-shadow 0 8px 28px rgba(0, 0, 0, 0.45)
+
+  &::before
+    content ''
+    position absolute
+    top 0
+    bottom 0
+    left -6px
+    width 6px
+
+.submenuLeft
+  left auto
+  right calc(100% + 6px)
+
+  &::before
+    left auto
+    right -6px
+
+.stacked
+  display flex
+  flex-direction column
+  max-height unquote('min(360px, calc(100vh - 24px))')
+  overflow-y auto
+
+.back
+  font-weight 650
+  margin-bottom 2px
+
+.stackedBody
+  min-width 0
