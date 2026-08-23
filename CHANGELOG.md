@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.1](https://github.com/foreverido/uilib/compare/v5.9.0...v5.9.1) (2026-08-23)
+
+
+### Bug Fixes
+
+* ChatView position - a bit under Prompt ([2a1156b](https://github.com/foreverido/uilib/commit/2a1156be97847a2be36a19b651229901694c61e6))
+
 ## [5.9.0](https://github.com/foreverido/uilib/compare/v5.8.0...v5.9.0) (2026-08-23)
 
 
