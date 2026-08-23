@@ -1,14 +1,13 @@
-import cn from 'classnames';
 import { useEffect, useRef } from 'react';
 
+import { ChatMessage } from './ChatMessage';
+import type { ChatViewProps } from './types';
+import S from './ChatView.styl';
 import { Scroll } from 'uilib/components/Scroll/Scroll';
 import { TextShimmer } from 'uilib/components/TextShimmer/TextShimmer';
-import { scrollTo } from 'uilib/tools/scroll';
-
-import { ChatMessage } from './ChatMessage';
-import S from './ChatView.styl';
+import cn from 'classnames';
 import { isPlanMessageContent } from './content';
-import type { ChatViewProps } from './types';
+import { scrollTo } from 'uilib/tools/scroll';
 
 export function ChatView({
   messages,
@@ -21,7 +20,9 @@ export function ChatView({
   onButtonClick,
 }: ChatViewProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
-  const visible = messages.filter(message => !isPlanMessageContent(message.content));
+  const visible = messages.filter(
+    message => !isPlanMessageContent(message.content)
+  );
 
   useEffect(() => {
     const scroller = listRef.current;
@@ -34,8 +35,13 @@ export function ChatView({
         y
         fadeSize="l"
         autoHide
+        offset={{ y: { after: 30 } }}
         className={S.messages}
-        innerClassName={cn(S.messagesInner, messagesClassName)}
+        innerClassName={cn(
+          S.messagesInner,
+          footer && S.messagesInnerWithPrompt,
+          messagesClassName
+        )}
         onInnerRef={elem => {
           listRef.current = elem;
         }}
@@ -58,12 +64,21 @@ export function ChatView({
           );
         })}
       </Scroll>
-      {isPrompting && (
+      {footer && (
+        <div className={S.footer}>
+          {isPrompting && (
+            <div className={S.status}>
+              <TextShimmer>{promptingLabel}</TextShimmer>
+            </div>
+          )}
+          {footer}
+        </div>
+      )}
+      {!footer && isPrompting && (
         <div className={S.status}>
           <TextShimmer>{promptingLabel}</TextShimmer>
         </div>
       )}
-      {footer && <div className={S.footer}>{footer}</div>}
     </div>
   );
 }

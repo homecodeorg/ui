@@ -1,15 +1,14 @@
-import cn from 'classnames';
+import type { ChatPromptModel, ChatPromptProps } from './types';
 import { useRef, useState } from 'react';
 
 import { Button } from 'uilib/components/Button/Button';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { PromptComposer } from 'uilib/components/PromptComposer/PromptComposer';
+import S from './ChatPrompt.styl';
 import { Select2 } from 'uilib/components/Select/Select2';
 import { ThinkingOutline } from 'uilib/components/ThinkingOutline/ThinkingOutline';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
-
-import S from './ChatPrompt.styl';
-import type { ChatPromptModel, ChatPromptProps } from './types';
+import cn from 'classnames';
 
 const DEFAULT_MODELS: ChatPromptModel[] = [
   { id: 'auto', label: 'Auto Router' },
@@ -88,6 +87,7 @@ export function ChatPrompt({
             options={models}
             value={modelId}
             disabled={disabled}
+            triggerProps={{ variant: 'clear' }}
             popupProps={{
               direction: 'top-right',
               round: true,

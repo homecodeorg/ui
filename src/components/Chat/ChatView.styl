@@ -1,6 +1,8 @@
 @import '../../theme'
 
 .root
+  --prompt-height 80px
+  position relative
   display flex
   flex-direction column
   min-height 0
@@ -14,7 +16,12 @@
 .messagesInner
   display flex
   flex-direction column
+  height fit-content
+  min-height 100%
   padding var(--p-10) calc((100% - 600px) / 2) 0
+
+.messagesInnerWithPrompt
+  padding-bottom 20px
 
 .empty
   margin auto
@@ -27,6 +34,19 @@
   font-size 13px
 
 .footer
-  flex-shrink 0
   overflow visible
-  padding-top 0
+  padding 0
+  padding-bottom 10px
+  margin-top calc(-1 * var(--p-5))
+  height fit-content
+
+  .status
+    position absolute
+    top -32px
+    left 0
+    right 0
+    display flex
+    justify-content center
+    padding 6px 14px
+    font-size calc(16px * 0.8 * var(--dialogue-text-scale, 1))
+    pointer-events none

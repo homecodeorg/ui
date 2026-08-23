@@ -39,6 +39,31 @@ const INITIAL = [
     content: 'Want me to open a PR? [choice:yes|Open PR] [choice:no|Not now]',
     createdAt: at,
   },
+  {
+    id: '5',
+    role: 'USER',
+    content: 'Yes — open it and ping me when CI is green.',
+    createdAt: at,
+  },
+  {
+    id: '6',
+    role: 'AGENT',
+    content: 'Opened **#482**. I will ping you when CI is green.',
+    createdAt: at,
+  },
+  {
+    id: '7',
+    role: 'USER',
+    content: 'Also paste the canary checklist in the PR description.',
+    createdAt: at,
+  },
+  {
+    id: '8',
+    role: 'AGENT',
+    content:
+      'Done. Checklist is in the description: smoke, rollback, and watch the error rate for 15 minutes.',
+    createdAt: at,
+  },
 ];
 
 const MODELS = [
