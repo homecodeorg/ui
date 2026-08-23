@@ -40,6 +40,7 @@ export type ChatViewProps = {
   className?: string;
   messagesClassName?: string;
   footer?: ReactNode;
+  footerClassName?: string;
   onButtonClick?: ChatFormattedTextProps['onButtonClick'];
 };
 

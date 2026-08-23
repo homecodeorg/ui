@@ -18,6 +18,7 @@ export function ChatView({
   messagesClassName,
   footer,
   onButtonClick,
+  footerClassName,
 }: ChatViewProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
   const visible = messages.filter(
@@ -65,7 +66,7 @@ export function ChatView({
         })}
       </Scroll>
       {footer && (
-        <div className={S.footer}>
+        <div className={cn(S.footer, footerClassName)}>
           {isPrompting && (
             <div className={S.status}>
               <TextShimmer>{promptingLabel}</TextShimmer>

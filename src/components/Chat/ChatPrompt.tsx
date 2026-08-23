@@ -1,9 +1,12 @@
 import type { ChatPromptModel, ChatPromptProps } from './types';
-import { useRef, useState } from 'react';
+import { useRef, useState, type MouseEvent } from 'react';
 
 import { Button } from 'uilib/components/Button/Button';
 import { Icon } from 'uilib/components/Icon/Icon';
-import { PromptComposer } from 'uilib/components/PromptComposer/PromptComposer';
+import {
+  PromptComposer,
+  type PromptComposerHandle,
+} from 'uilib/components/PromptComposer/PromptComposer';
 import S from './ChatPrompt.styl';
 import { Select2 } from 'uilib/components/Select/Select2';
 import { ThinkingOutline } from 'uilib/components/ThinkingOutline/ThinkingOutline';
@@ -31,6 +34,7 @@ export function ChatPrompt({
   onModelChange,
 }: ChatPromptProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const composerRef = useRef<PromptComposerHandle>(null);
   const [uncontrolledModel, setUncontrolledModel] = useState(
     model ?? models[0]?.id ?? 'auto'
   );
@@ -42,10 +46,21 @@ export function ChatPrompt({
     onModelChange?.(id);
   };
 
+  const onButtonsWrapperClick = (e: MouseEvent) => {
+    const target = e.target;
+    if (
+      target instanceof HTMLElement &&
+      (target.classList.contains(S.buttons) || target.classList.contains(S.gap))
+    ) {
+      composerRef.current?.focus();
+    }
+  };
+
   return (
     <div className={cn(S.root, className)}>
       <ThinkingOutline active={isPrompting} />
       <PromptComposer
+        ref={composerRef}
         className={S.composer}
         disabled={disabled}
         placeholder={placeholder}
@@ -58,7 +73,7 @@ export function ChatPrompt({
           onSubmit(next);
         }}
       />
-      <div className={S.buttons}>
+      <div className={S.buttons} onClick={onButtonsWrapperClick}>
         <Button
           className={cn(S.button, S.submit)}
           variant="text"
