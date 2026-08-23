@@ -59,6 +59,10 @@ export default [
         loader: () => import('./examples/Card'),
       },
       {
+        id: 'Chat',
+        loader: () => import('./examples/Chat'),
+      },
+      {
         id: 'Checkbox',
         loader: () => import('./examples/Checkbox'),
       },

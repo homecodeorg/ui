@@ -6,11 +6,6 @@ import { Icon } from 'uilib/components/Icon/Icon';
 import S from './NestedMenu.styl';
 import * as T from './NestedMenu.types';
 
-export type {
-  NestedMenuItem,
-  Props as NestedMenuProps,
-} from './NestedMenu.types';
-
 const MOBILE_MQ = '(max-width: 720px)';
 const HOVER_MQ = '(hover: hover) and (pointer: fine)';
 

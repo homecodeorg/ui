@@ -6,6 +6,7 @@ export * from './Calendar/Calendar';
 export * from './Checkbox/Checkbox';
 export * from './Chip/Chip';
 export * from './Card';
+export * from './Chat';
 export * from './Container/Container';
 export * from './DatePicker/DatePicker';
 export * from './DatePickerInput/DatePickerInput';
@@ -30,6 +31,10 @@ export * from './Lazy/Lazy';
 export * from './LightBox/LightBox';
 export * from './Menu/Menu';
 export * from './NestedMenu/NestedMenu';
+export type {
+  NestedMenuItem,
+  NestedMenuProps,
+} from './NestedMenu/NestedMenu.types';
 export * from './Notifications/Notifications';
 export * from './Paranja/Paranja';
 export * from './Popup/Popup';
@@ -51,6 +56,7 @@ export * from './Spinner/Spinner';
 export * from './Table/Table';
 export * from './Tabs/Tabs';
 export * from './TextShimmer/TextShimmer';
+export * from './ThinkingOutline';
 export * from './TextWithDeferTooltip';
 export * from './Tooltip/Tooltip';
 export * from './Text/Text';

@@ -1,0 +1,61 @@
+@property --promptGlowAngle
+  syntax '<angle>'
+  inherits true
+  initial-value 0deg
+
+// Two tapered arcs 180deg apart, clipped to a ring of `thickness` around the inherited radius.
+// Arcs peak at 0deg/180deg so --promptGlowAngle equals their on-screen position
+glowRing(thickness)
+  content ''
+  position absolute
+  inset 0
+  padding thickness
+  border-radius inherit
+  background conic-gradient(from var(--promptGlowAngle), var(--active-color) 0deg, var(--active-color-alpha-300) 48deg, transparent 80deg, transparent 100deg, var(--active-color-alpha-300) 132deg, var(--active-color) 180deg, var(--active-color-alpha-300) 228deg, transparent 260deg, transparent 280deg, var(--active-color-alpha-300) 312deg, var(--active-color) 360deg)
+  -webkit-mask linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+  -webkit-mask-composite xor
+  mask linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
+  mask-composite exclude
+
+.root
+  position absolute
+  inset 0
+  border-radius inherit
+  transition opacity 0.5s ease-out
+  opacity 0
+  pointer-events none
+  animation orbitGlow 3.5s linear infinite
+
+  &.active
+    opacity 1
+
+  &::before
+    glowRing(1.5px)
+
+.bloom
+  position absolute
+  inset 0
+  border-radius inherit
+  opacity .55
+  filter blur(20px)
+
+  &::before
+    glowRing(6px)
+
+// Equal time per quarter over unequal spans: the 60deg sectors facing the top/bottom
+// edges get twice the time-per-degree of the 120deg sectors around the short ends
+@keyframes orbitGlow
+  0%
+    --promptGlowAngle -30deg
+  25%
+    --promptGlowAngle 30deg
+  50%
+    --promptGlowAngle 150deg
+  75%
+    --promptGlowAngle 210deg
+  100%
+    --promptGlowAngle 330deg
+
+@media (prefers-reduced-motion: reduce)
+  .root
+    animation none

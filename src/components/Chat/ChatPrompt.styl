@@ -1,0 +1,139 @@
+@import '../../theme'
+
+.root
+  position relative
+  display flex
+  flex-direction column
+  flex-wrap wrap
+  width 100%
+  max-width 600px
+  min-height calc(var(--prompt-height, 80px) - 4px)
+  margin 2px auto
+  border-radius var(--p-5)
+  background-color var(--decent-color-alpha-500)
+  backdrop-filter blur(20px)
+  background-color var(--accent-color-alpha-50)
+  box-shadow 0 0 0 1px var(--active-color-alpha-100)
+  transition box-shadow .4s ease-out, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, background-color 0.5s ease
+  font-size calc(80% * var(--dialogue-text-scale, 1))
+
+  &::after
+    content ''
+    position absolute
+    z-index -2
+    top 0
+    left 0
+    height 100%
+    width 100%
+    pointer-events none
+    box-shadow inset 0 0 0 1px var(--accent-color-alpha-100), 0 0 0 2px var(--decent-color-alpha-800), 0 0 30px 0 var(--decent-color-alpha-500)
+    border-radius inherit
+    transition box-shadow .4s ease-out
+
+  &:hover::after
+  &:focus-within::after
+    box-shadow 0 0 0 2px var(--decent-color-alpha-500), 0 0 50px 0 var(--decent-color-alpha-500)
+
+  &:hover
+  &:focus-within
+    box-shadow inset 0 0 0 1px var(--decent-color-alpha-500)
+  &:hover
+    box-shadow inset 0 0 0 1px var(--active-color-alpha-300)
+  &:focus-within
+    box-shadow inset 0 0 0 1px var(--active-color-alpha-500)
+
+.composer
+  position relative
+  z-index 1
+  width 100%
+  background-color transparent !important
+  transition opacity .2s ease-out
+
+  :global(.editorMount .promptComposerEditor)
+  :global(.ProseMirror)
+    padding 10px var(--p-7) 0 14px !important
+    min-height 1.5em !important
+    caret-color var(--accent-color)
+    font-size calc(16px * var(--dialogue-text-scale, 1)) !important
+
+  :global(.ProseMirror:focus)
+    outline none
+
+  :global(.promptComposerEmptyEditor .promptComposerEmptyNode::before)
+    color var(--accent-color-alpha-500)
+
+.buttons
+  z-index 1
+  width 100%
+  display flex
+  align-items center
+  justify-content flex-start
+  flex-wrap wrap
+  flex-direction row-reverse
+  flex-shrink 0
+  gap 6px
+  padding 0 2px 0 6px
+  transform translateY(-2px)
+  cursor text
+
+  svg
+    transition .2s ease-out
+    transition-property filter, scale
+
+.button
+  position relative
+  padding 0 var(--p-2)
+  background-color transparent !important
+
+  &:focus
+  &:hover
+    opacity 1
+
+.button.submit
+  box-shadow 0 1px 1px 0 rgba(0, 0, 0, .6)
+  background-color var(--active-color) !important
+  color var(--decent-color) !important
+  transition filter 0.2s ease-out, opacity 0.5s ease-out
+  margin-left var(--p-2)
+
+  svg
+    color var(--decent-color) !important
+
+  &:hover
+  &:focus
+  &:focus-visible
+    filter drop-shadow(0 0 14px var(--active-color))
+
+  &[disabled]
+    background-color inherit !important
+    box-shadow none
+    filter none
+    pointer-events none
+
+    svg
+      color var(--accent-color-alpha-500) !important
+
+.submitIcon
+  display block
+
+.gap
+  flex-grow 1
+
+.promptModelSelector
+  flex-shrink 0
+  max-width calc(100% - 200px)
+  transition opacity .2s ease-out
+  opacity .5
+
+  &:hover
+    opacity 1
+
+.fileInput
+  display none
+
+.attachButton
+  position relative
+  z-index 4
+  flex-shrink 0
+  margin-left -8px
+  opacity .5

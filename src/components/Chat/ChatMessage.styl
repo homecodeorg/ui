@@ -1,0 +1,110 @@
+@import '../../theme'
+
+.root
+  display flex
+  flex-direction column
+  align-items flex-start
+  max-width 100%
+  padding 0 var(--p-5) var(--p-2)
+
+  @media (max-width: 768px)
+    padding 0 var(--p-2) var(--p-2)
+
+  & + &
+    margin-top 20px
+
+  .textContent
+    padding 0
+
+  &.USER
+    align-items flex-end
+    padding-right var(--p-5)
+
+    .text
+      background-color var(--active-color-alpha-500)
+      padding 6px var(--p-2)
+
+  &.AGENT
+    .text
+    .textContent
+      width 100% !important
+
+    .text
+      padding-top 4px
+
+  &.SYSTEM
+    align-items stretch
+
+    & + &
+      margin-top -6px !important
+
+    .text
+      width 100%
+      padding 0
+      opacity 0.8
+      font-size 90%
+
+  &.stacked
+    .meta
+      display none
+
+.text
+  display flex
+  flex-direction row
+  width fit-content
+  max-width 100%
+  padding var(--p-2)
+  border-radius 14px
+  overflow hidden
+
+.textContent
+  max-width 100%
+  text-align left
+  word-break break-word
+  white-space pre-line
+
+  h1
+  h2
+  h3
+  h4
+  h5
+  h6
+    margin-top 1em
+
+  a
+    padding 0 .3em .1em .4em !important
+    margin-bottom -.1em
+    margin-top -.3em
+
+    .SYSTEM &
+      margin-top 0
+      margin-bottom 0
+
+.meta
+  font-size 11px
+  opacity 0.5
+  margin-bottom 4px
+  padding 0 4px
+
+.parts
+  display flex
+  flex-direction column
+  gap var(--p-2)
+
+.mediaPart
+  max-width 100%
+  max-height 320px
+  border-radius var(--p-2)
+
+.systemFold
+  width 100%
+
+.systemFoldTrigger
+  padding 2px 10px
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
+  max-width 100%
+
+.systemFoldContent
+  padding 0 10px

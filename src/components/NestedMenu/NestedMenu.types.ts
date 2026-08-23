@@ -22,6 +22,8 @@ export type Props = {
   className?: string;
 };
 
+export type NestedMenuProps = Props;
+
 export type NestedMenuRowProps = {
   children: ReactNode;
   className?: string;

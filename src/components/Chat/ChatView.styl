@@ -1,0 +1,32 @@
+@import '../../theme'
+
+.root
+  display flex
+  flex-direction column
+  min-height 0
+  height 100%
+  width 100%
+
+.messages
+  flex 1
+  min-height 0
+
+.messagesInner
+  display flex
+  flex-direction column
+  padding var(--p-10) calc((100% - 600px) / 2) 0
+
+.empty
+  margin auto
+  opacity 0.6
+  text-align center
+  padding 24px
+
+.status
+  padding 4px 8px 0
+  font-size 13px
+
+.footer
+  flex-shrink 0
+  overflow visible
+  padding-top 0

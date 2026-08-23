@@ -45,8 +45,11 @@ export function Dialogue({
   const [isMounted, setIsMounted] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const onOpenChangeRef = useRef(onOpenChange);
   const titleId = useId();
   const descriptionId = useId();
+
+  onOpenChangeRef.current = onOpenChange;
 
   useEffect(() => {
     setIsMounted(true);
@@ -86,7 +89,7 @@ export function Dialogue({
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        onOpenChange(false);
+        onOpenChangeRef.current(false);
         return;
       }
 
@@ -111,7 +114,7 @@ export function Dialogue({
         previousActiveElement.focus();
       }
     };
-  }, [open, onOpenChange]);
+  }, [open]);
 
   useEffect(() => {
     if (!open) return;
