@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.9.0](https://github.com/foreverido/uilib/compare/v5.8.0...v5.9.0) (2026-08-23)
+
+
+### Features
+
+* Chat - Add conversation components ([717bb44](https://github.com/foreverido/uilib/commit/717bb44b389f945e21d86decd141e2820eb27004))
+
 ## [5.8.0](https://github.com/foreverido/uilib/compare/v5.7.8...v5.8.0) (2026-08-22)
 
 
