@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.9.2](https://github.com/foreverido/uilib/compare/v5.9.1...v5.9.2) (2026-08-23)
+
+
+### Bug Fixes
+
+* ChatPrompt - focus when click on actions bar placeholder ([241edc2](https://github.com/foreverido/uilib/commit/241edc2c6d7b091ea2c76403be47012c71d8a8b6))
+
 ### [5.9.1](https://github.com/foreverido/uilib/compare/v5.9.0...v5.9.1) (2026-08-23)
 
 
