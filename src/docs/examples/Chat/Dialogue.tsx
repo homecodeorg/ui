@@ -115,6 +115,7 @@ export default () => {
             onSubmit={onSubmit}
             disabled={isPrompting}
             isPrompting={isPrompting}
+            status={isPrompting && 'Thinking…'}
             models={MODELS}
             model={model}
             onModelChange={setModel}

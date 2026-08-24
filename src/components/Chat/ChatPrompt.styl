@@ -69,7 +69,7 @@
   align-items center
   justify-content flex-start
   flex-wrap wrap
-  flex-direction row-reverse
+  flex-direction row
   flex-shrink 0
   gap 6px
   padding 0 2px 0 6px
@@ -137,3 +137,14 @@
   flex-shrink 0
   margin-left -8px
   opacity .5
+
+.status
+  display flex
+  align-items center
+  flex-shrink 0
+  font-size calc(16px * 0.8 * var(--dialogue-text-scale, 1))
+  pointer-events none
+  white-space nowrap
+
+  &:first-child
+    padding-left var(--p-3)

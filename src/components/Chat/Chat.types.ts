@@ -35,7 +35,6 @@ export type ChatMessageProps = {
 export type ChatViewProps = {
   messages: ChatMessageData[];
   isPrompting?: boolean;
-  promptingLabel?: ReactNode;
   emptyLabel?: ReactNode;
   className?: string;
   messagesClassName?: string;
@@ -54,8 +53,11 @@ export type ChatPromptProps = {
   onChange: (value: string) => void;
   onSubmit: (value: string) => void;
   disabled?: boolean;
-  /** Orbiting glow on the prompt while the agent is generating. */
+  /** Orbiting glow on the prompt while the agent is generating. Hides the model selector. */
   isPrompting?: boolean;
+  /** Shown after the attach button. Falls back to `promptingLabel` while `isPrompting`. */
+  status?: ReactNode;
+  promptingLabel?: ReactNode;
   placeholder?: string;
   className?: string;
   /** Default true. Hidden file input + plus button (no STT / live voice). */

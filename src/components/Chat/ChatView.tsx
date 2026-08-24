@@ -4,7 +4,6 @@ import { ChatMessage } from './ChatMessage';
 import type { ChatViewProps } from './types';
 import S from './ChatView.styl';
 import { Scroll } from 'uilib/components/Scroll/Scroll';
-import { TextShimmer } from 'uilib/components/TextShimmer/TextShimmer';
 import cn from 'classnames';
 import { isPlanMessageContent } from './content';
 import { scrollTo } from 'uilib/tools/scroll';
@@ -12,7 +11,6 @@ import { scrollTo } from 'uilib/tools/scroll';
 export function ChatView({
   messages,
   isPrompting,
-  promptingLabel = 'Thinking…',
   emptyLabel = 'Start the conversation',
   className,
   messagesClassName,
@@ -66,19 +64,7 @@ export function ChatView({
         })}
       </Scroll>
       {footer && (
-        <div className={cn(S.footer, footerClassName)}>
-          {isPrompting && (
-            <div className={S.status}>
-              <TextShimmer>{promptingLabel}</TextShimmer>
-            </div>
-          )}
-          {footer}
-        </div>
-      )}
-      {!footer && isPrompting && (
-        <div className={S.status}>
-          <TextShimmer>{promptingLabel}</TextShimmer>
-        </div>
+        <div className={cn(S.footer, footerClassName)}>{footer}</div>
       )}
     </div>
   );

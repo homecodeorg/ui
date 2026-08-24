@@ -9,6 +9,7 @@ import {
 } from 'uilib/components/PromptComposer/PromptComposer';
 import S from './ChatPrompt.styl';
 import { Select2 } from 'uilib/components/Select/Select2';
+import { TextShimmer } from 'uilib/components/TextShimmer/TextShimmer';
 import { ThinkingOutline } from 'uilib/components/ThinkingOutline/ThinkingOutline';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
 import cn from 'classnames';
@@ -23,6 +24,8 @@ export function ChatPrompt({
   onSubmit,
   disabled,
   isPrompting,
+  status,
+  promptingLabel = 'Thinking…',
   placeholder = 'Message',
   className,
   showAttach = true,
@@ -40,6 +43,7 @@ export function ChatPrompt({
   );
   const modelId = model ?? uncontrolledModel;
   const canSubmit = !disabled && Boolean(value.trim());
+  const statusNode = status || (isPrompting && promptingLabel);
 
   const setModel = (id: string) => {
     if (model === undefined) setUncontrolledModel(id);
@@ -74,48 +78,6 @@ export function ChatPrompt({
         }}
       />
       <div className={S.buttons} onClick={onButtonsWrapperClick}>
-        <Button
-          className={cn(S.button, S.submit)}
-          variant="text"
-          type="submit"
-          round
-          square
-          disabled={!canSubmit}
-          aria-label="Send"
-          onClick={() => {
-            const next = value.trim();
-            if (!next || disabled) return;
-            onSubmit(next);
-          }}
-        >
-          <Icon type="arrowUp" className={S.submitIcon} />
-        </Button>
-
-        {showModelSelector && (
-          <Select2
-            className={S.promptModelSelector}
-            label=""
-            size="s"
-            disableLabel
-            hideRequiredStar
-            round
-            options={models}
-            value={modelId}
-            disabled={disabled}
-            triggerProps={{ variant: 'clear' }}
-            popupProps={{
-              direction: 'top-right',
-              round: true,
-            }}
-            onChange={next => {
-              if (next == null || Array.isArray(next)) return;
-              setModel(String(next));
-            }}
-          />
-        )}
-
-        <div className={S.gap} />
-
         {showAttach && (
           <>
             <input
@@ -144,6 +106,54 @@ export function ChatPrompt({
             </Tooltip>
           </>
         )}
+
+        {statusNode && (
+          <div className={S.status}>
+            <TextShimmer>{statusNode}</TextShimmer>
+          </div>
+        )}
+
+        <div className={S.gap} />
+
+        {showModelSelector && !isPrompting && (
+          <Select2
+            className={S.promptModelSelector}
+            label=""
+            size="s"
+            disableLabel
+            hideRequiredStar
+            round
+            options={models}
+            value={modelId}
+            disabled={disabled}
+            triggerProps={{ variant: 'clear' }}
+            popupProps={{
+              direction: 'top-right',
+              round: true,
+            }}
+            onChange={next => {
+              if (next == null || Array.isArray(next)) return;
+              setModel(String(next));
+            }}
+          />
+        )}
+
+        <Button
+          className={cn(S.button, S.submit)}
+          variant="text"
+          type="submit"
+          round
+          square
+          disabled={!canSubmit}
+          aria-label="Send"
+          onClick={() => {
+            const next = value.trim();
+            if (!next || disabled) return;
+            onSubmit(next);
+          }}
+        >
+          <Icon type="arrowUp" className={S.submitIcon} />
+        </Button>
       </div>
     </div>
   );

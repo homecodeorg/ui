@@ -7,6 +7,7 @@
   flex-direction column
   min-height 0
   height 100%
+  max-height 100%
   width 100%
 
 .messages
@@ -29,23 +30,9 @@
   text-align center
   padding 24px
 
-.status
-  padding 4px 8px 0
-  font-size 13px
-
 .footer
+  position relative
   overflow visible
   padding 0
   margin-top calc(-1 * var(--p-5))
   height fit-content
-
-  .status
-    position absolute
-    top -32px
-    left 0
-    right 0
-    display flex
-    justify-content center
-    padding 6px 14px
-    font-size calc(16px * 0.8 * var(--dialogue-text-scale, 1))
-    pointer-events none
