@@ -36,6 +36,7 @@ export type {
   NestedMenuProps,
 } from './NestedMenu/NestedMenu.types';
 export * from './Notifications/Notifications';
+export * from './Nudge';
 export * from './Paranja/Paranja';
 export * from './Popup/Popup';
 export * from './Portal/Portal';

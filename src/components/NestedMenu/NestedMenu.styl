@@ -13,7 +13,7 @@
   left 0
   z-index 20
   min-width 200px
-  max-width 260px
+  max-width 280px
   padding 4px
   border-radius 10px
   border 1px solid var(--accent-color-alpha-200)
@@ -84,6 +84,22 @@
   flex-shrink 0
   opacity 0.5
   font-weight 400
+
+.multiline
+  display grid
+  grid-template-columns auto minmax(0, 1fr)
+  align-items start
+  row-gap 2px
+  min-width 252px
+
+  .label
+    overflow visible
+    text-overflow unset
+
+  .hint
+    grid-column 2
+    min-width 0
+    white-space normal
 
 .chevron
   flex-shrink 0

@@ -5,6 +5,8 @@ export type NestedMenuItem = {
   label: ReactNode;
   icon?: ReactNode;
   hint?: ReactNode;
+  /** Wrap long hint/label onto additional lines instead of clipping. */
+  wrap?: boolean;
   submenu?: ReactNode;
   onSubmenuOpen?: () => void;
   onClick?: () => void;

@@ -148,6 +148,10 @@ export default [
         loader: () => import('./examples/Notifications'),
       },
       {
+        id: 'Nudge',
+        loader: () => import('./examples/Nudge'),
+      },
+      {
         id: 'Popup',
         loader: () => import('./examples/Popup'),
       },

@@ -25,7 +25,10 @@ function useMedia(query: string) {
   return matches;
 }
 
-export function NestedMenuLabel({ children, className }: T.NestedMenuLabelProps) {
+export function NestedMenuLabel({
+  children,
+  className,
+}: T.NestedMenuLabelProps) {
   return <span className={cn(S.label, className)}>{children}</span>;
 }
 
@@ -168,6 +171,7 @@ function NestedMenuComponent({
             activeId === item.id && S.itemActive,
             item.danger && S.itemDanger,
             item.disabled && S.itemDisabled,
+            item.wrap && S.multiline,
             item.className
           )}
           role="menuitem"

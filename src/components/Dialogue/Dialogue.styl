@@ -77,7 +77,7 @@
   height 2rem
   width 2rem
   border-radius var(--border-radius-s)
-  opacity 0.7
+  opacity 0.3
   outline none
   transition opacity 200ms ease, transform 200ms ease
   transform-origin center
@@ -85,11 +85,15 @@
   background-color transparent
   border none
   color var(--accent-color)
+
   &:hover
+  &:focus-visible
     opacity 1
     transform scale(1.1)
+
   &:focus-visible
     box-shadow 0 0 0 2px var(--active-color)
+
   &:disabled
     pointer-events none
 
