@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.10.0](https://github.com/foreverido/uilib/compare/v5.9.2...v5.10.0) (2026-08-26)
+
+
+### Features
+
+* ChatPrompt - Show status in the prompt bar ([d22405e](https://github.com/foreverido/uilib/commit/d22405eef8d7780cd52061f17ef93b037400cc75))
+* Nudge - Add inline callout component ([b721d05](https://github.com/foreverido/uilib/commit/b721d0535aa0e3d5f67c541920675e138c4ee110))
+
 ### [5.9.2](https://github.com/foreverido/uilib/compare/v5.9.1...v5.9.2) (2026-08-23)
 
 
