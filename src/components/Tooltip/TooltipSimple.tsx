@@ -78,16 +78,16 @@ const useSimplePositionSetup = ({
 
     trigger.addEventListener('mouseenter', showTooltip);
     trigger.addEventListener('mouseleave', hideTooltip);
-    trigger.addEventListener('focus', showTooltip);
-    trigger.addEventListener('blur', hideTooltip);
+    trigger.addEventListener('focusin', showTooltip);
+    trigger.addEventListener('focusout', hideTooltip);
 
     return () => {
       clearTimeout(timeoutRef.current);
       clearTriggerTextStyles(tooltip);
       trigger.removeEventListener('mouseenter', showTooltip);
       trigger.removeEventListener('mouseleave', hideTooltip);
-      trigger.removeEventListener('focus', showTooltip);
-      trigger.removeEventListener('blur', hideTooltip);
+      trigger.removeEventListener('focusin', showTooltip);
+      trigger.removeEventListener('focusout', hideTooltip);
     };
   }, [content, delay, direction, tooltipRef, triggerRef]);
 };
