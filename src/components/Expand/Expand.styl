@@ -9,11 +9,16 @@
   justify-content space-between
 
 .headerIcon
-  transition transform .2s ease-out
+  transition transform .2s ease-out, opacity .2s ease-out
+  transform scale(.7)
+  opacity .4
+
+  .header:hover &
+    opacity 1
 
 .isOpen
   .header
     background-color var(--active-color-alpha-500)
 
   .headerIcon
-    transform rotate(90deg)
+    transform scale(.7) rotate(90deg)
