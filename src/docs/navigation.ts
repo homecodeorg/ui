@@ -99,6 +99,10 @@ export default [
         loader: () => import('./examples/Form'),
       },
       {
+        id: 'FormattedText',
+        loader: () => import('./examples/FormattedText'),
+      },
+      {
         id: 'Gallery',
         loader: () => import('./examples/Gallery'),
       },

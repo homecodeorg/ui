@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import type { FormattedTextProps } from '../FormattedText/FormattedText.types';
+
 export type ChatRole = 'USER' | 'AGENT' | 'SYSTEM';
 
 export type ChatContentPart = {
@@ -18,11 +20,7 @@ export type ChatMessageData = {
   createdAt?: string | Date;
 };
 
-export type ChatFormattedTextProps = {
-  text: string;
-  className?: string;
-  onButtonClick?: (params: { text: string; [name: string]: string }) => void;
-};
+export type ChatFormattedTextProps = FormattedTextProps;
 
 export type ChatMessageProps = {
   data: ChatMessageData;

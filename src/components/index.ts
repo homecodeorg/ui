@@ -17,6 +17,7 @@ export * from './DropZone/DropZone';
 export * from './Expand/Expand';
 export * from './Flex/Flex';
 export * from './Form/Form';
+export * from './FormattedText';
 export * from './Gap/Gap';
 export * from './Gallery/Gallery';
 export * from './GridLayout/GridLayout';
