@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.11.0](https://github.com/foreverido/uilib/compare/v5.10.0...v5.11.0) (2026-08-31)
+
+
+### Bug Fixes
+
+* Expand - chevron styles ([a36f719](https://github.com/foreverido/uilib/commit/a36f719a4285250cb58e85b2b19234de8e2c9347))
+* Menus hovered color and flex layout ([dca9ef5](https://github.com/foreverido/uilib/commit/dca9ef56657bb9355e35102947014fb03dc98507))
+* TooltipSimple - Show on focusin ([4071038](https://github.com/foreverido/uilib/commit/4071038e2354919da24ff35f8daafbec954f9515))
+
 ## [5.10.0](https://github.com/foreverido/uilib/compare/v5.9.2...v5.10.0) (2026-08-26)
 
 
