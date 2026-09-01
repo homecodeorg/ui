@@ -1,35 +1,31 @@
 import { FormattedText } from 'uilib';
 
-const MARKDOWN = [
-  '# Heading 1',
-  '## Heading 2',
-  '**Bold**, *italic*, and inline `code`.',
-  '',
-  '```',
-  'const hello = "world";',
-  '```',
-  '',
-  '- Bullet one',
-  '- Bullet two',
-  '',
-  '1. First',
-  '2. Second',
-  '',
-  'A divider:',
-  '',
-  '---',
-  '',
-  'Markdown link: [uilib](https://uilib.apostol.space)',
-  'Bare URL: https://example.com',
-  '',
-  'Result: {"ok":true,"count":3}',
-  '',
-  '| Name | Size |',
-  '| --- | --- |',
-  '| **Alpha** | `s` |',
-  '| Beta | m |',
-  '',
-  'Continue? [choice:yes|Yes] [choice:no|No]',
-].join('\n');
+const MARKDOWN = `
+# Heading 1
+## Heading 2
+**Bold**, *italic*, and inline \`code\`.
+---
+\`\`\`
+const hello = "world";
+\`\`\`
+---
+- Bullet one
+- Bullet two
+---
+1. First
+2. Second
+---
+Markdown link: [uilib](https://uilib.apostol.space)
+Bare URL: https://example.com
+Result: {"ok":true,"count":3}
+| Name | Size |
+| --- | --- |
+| **Alpha** | \`s\` |
+| Beta | m |
+
+---
+
+Continue? [choice:yes|Yes] [choice:no|No]
+`;
 
 export default () => <FormattedText text={MARKDOWN} />;

@@ -91,7 +91,7 @@ export function FormattedText({
   onButtonClick,
 }: FormattedTextProps) {
   const injectLines = (content: string): InjectionResult => {
-    const matches = content.match(/\n---\n/);
+    const matches = content.match(/(^|\n)---[ \t]*(?:\n|$)/);
     if (!matches) return null;
     return {
       elem: <div className={S.line} />,
@@ -242,8 +242,17 @@ export function FormattedText({
     };
   };
 
+  const injectBreaks = (content: string): InjectionResult => {
+    const index = content.indexOf('\n');
+    if (index < 0) return null;
+    return {
+      elem: <br />,
+      index,
+      length: 1,
+    };
+  };
+
   const injectButtons = (content: string): InjectionResult => {
-    if (!onButtonClick) return null;
     const matches = content.match(/\[(.*?):(.*?)\|([^\]]+)\]/);
     if (!matches) return null;
     const [data, label] = matches[0]
@@ -257,7 +266,11 @@ export function FormattedText({
           variant="default"
           size="s"
           round
-          onClick={() => onButtonClick({ text: label, [varName]: value })}
+          onClick={
+            onButtonClick
+              ? () => onButtonClick({ text: label, [varName]: value })
+              : undefined
+          }
         >
           {label}
         </Button>
@@ -313,11 +326,11 @@ export function FormattedText({
 
   const injectTables = (content: string): InjectionResult => {
     const withSep = content.match(
-      /(\n|^)(\|[^\n]+\|\s*\n)(\|[\s:-]+(?:\|[\s:-]+)*\|\s*\n)((?:\|[^\n]+\|\s*\n?)+)/,
+      /(\n|^)(\|[^\n]+\|[ \t]*\n)(\|[\t :-]+(?:\|[\t :-]+)*\|[ \t]*\n)((?:\|[^\n]+\|[ \t]*\n?)+)/,
     );
     const withoutSep = withSep
       ? null
-      : content.match(/(\n|^)(\|[^\n]+\|\s*\n)((?:\|[^\n]+\|\s*\n?)+)/);
+      : content.match(/(\n|^)(\|[^\n]+\|[ \t]*\n)((?:\|[^\n]+\|[ \t]*\n?)+)/);
     const matches = withSep || withoutSep;
     if (!matches) return null;
     const hasSeparator = Boolean(withSep);
@@ -380,6 +393,7 @@ export function FormattedText({
         injectBullet,
         injectNumbered,
         injectButtons,
+        injectBreaks,
       ])}
     </div>
   );
