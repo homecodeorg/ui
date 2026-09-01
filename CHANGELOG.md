@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.12.0](https://github.com/foreverido/uilib/compare/v5.11.0...v5.12.0) (2026-09-01)
+
+
+### Features
+
+* Input - Add selectAllOnFocus for Select2 ([84ab10e](https://github.com/foreverido/uilib/commit/84ab10ec1f5c946e47069c34745986711d847456))
+
+
+### Bug Fixes
+
+* FormattedText - Buttons, HR after table, newlines ([72654ec](https://github.com/foreverido/uilib/commit/72654ecf4a938df219dbad4e6bdeee6628a54e48))
+* PromptComposer - Empty-node placeholder selector ([934c5c9](https://github.com/foreverido/uilib/commit/934c5c9ed218fde3764a1ad538885d9cac1785f8))
+* TextWithDeferTooltip - Detect nested overflow ([d34558c](https://github.com/foreverido/uilib/commit/d34558c0afcbd9c0a266b2b4e600ce3efe57f276))
+
 ## [5.11.0](https://github.com/foreverido/uilib/compare/v5.10.0...v5.11.0) (2026-08-31)
 
 
