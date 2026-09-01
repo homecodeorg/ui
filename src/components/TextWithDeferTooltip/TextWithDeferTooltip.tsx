@@ -4,6 +4,41 @@ import { Tooltip } from '../Tooltip/Tooltip';
 import S from './TextWithDeferTooltip.styl';
 import type { TextWithDeferTooltipProps } from './TextWithDeferTooltip.types';
 
+function clipsOverflow(style: CSSStyleDeclaration, axis: 'x' | 'y') {
+  const overflow = axis === 'x' ? style.overflowX : style.overflowY;
+  if (overflow === 'hidden' || overflow === 'auto' || overflow === 'scroll') {
+    return true;
+  }
+  if (axis === 'x' && style.textOverflow === 'ellipsis') return true;
+  if (
+    axis === 'y' &&
+    style.webkitLineClamp &&
+    style.webkitLineClamp !== 'none'
+  ) {
+    return true;
+  }
+  return false;
+}
+
+function isNodeOverflowing(node: HTMLElement) {
+  const style = getComputedStyle(node);
+  if (clipsOverflow(style, 'x') && node.scrollWidth - node.clientWidth > 1) {
+    return true;
+  }
+  if (clipsOverflow(style, 'y') && node.scrollHeight - node.clientHeight > 1) {
+    return true;
+  }
+  return false;
+}
+
+function isTextOverflowing(root: HTMLElement) {
+  if (isNodeOverflowing(root)) return true;
+  for (const child of root.querySelectorAll<HTMLElement>('*')) {
+    if (isNodeOverflowing(child)) return true;
+  }
+  return false;
+}
+
 function TextWithDeferTooltip({
   className,
   children,
@@ -22,12 +57,7 @@ function TextWithDeferTooltip({
   const handleMouseEnter = () => {
     if (!ref.current) return;
 
-    const isOverflowingHorizontally =
-      ref.current.scrollWidth - ref.current.clientWidth > 3;
-    const isOverflowingVertically =
-      ref.current.scrollHeight - ref.current.clientHeight > 3;
-
-    if (isOverflowingHorizontally || isOverflowingVertically) {
+    if (isTextOverflowing(ref.current)) {
       if (width != null) {
         setTooltipWidth(width);
       } else {
