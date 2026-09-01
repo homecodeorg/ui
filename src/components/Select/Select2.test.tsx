@@ -103,6 +103,20 @@ describe('Select2 open state', () => {
     await waitFor(() => expect(isOpened()).toBe(true));
   });
 
+  test('selects all trigger text on focus', async () => {
+    render(<Controlled isSearchable initialValue="a" label="Label" />);
+
+    const input = getSearchInput();
+
+    await userEvent.click(input);
+
+    await waitFor(() => {
+      expect(input.selectionStart).toBe(0);
+      expect(input.selectionEnd).toBe(input.value.length);
+    });
+    expect(input.value).toBe('Alice');
+  });
+
   test('closes on outside click', async () => {
     render(
       <>

@@ -378,6 +378,7 @@ export function Select2(props: T.Props) {
         error={isErrorVisible}
         value={inputValue}
         onChange={handleSearchChange}
+        selectAllOnFocus
         label={getFieldLabel(label)}
         placeholder={hasChips && !inputValue ? '' : inputProps?.placeholder}
       />

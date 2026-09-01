@@ -1,6 +1,7 @@
 import {
   ChangeEvent,
   useEffect,
+  useLayoutEffect,
   useState,
   useRef,
   useMemo,
@@ -27,6 +28,43 @@ const TEXTAREA_SCROLL_TOP_OFFSET = {
   m: 40,
   l: 50,
 };
+
+function isNativeTextField(
+  el: unknown
+): el is HTMLInputElement | HTMLTextAreaElement {
+  return el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement;
+}
+
+function resolveNativeTextField(
+  el: unknown
+): HTMLInputElement | HTMLTextAreaElement | null {
+  if (isNativeTextField(el)) return el;
+  if (el instanceof Element) {
+    const nested = el.querySelector('input, textarea');
+    if (isNativeTextField(nested)) return nested;
+  }
+  return null;
+}
+
+function selectContentEditable(el: HTMLElement) {
+  const selection = window.getSelection();
+  if (!selection) return;
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
+
+function selectAllOnElement(el: unknown) {
+  const field = resolveNativeTextField(el);
+  if (field && typeof field.select === 'function') {
+    field.select();
+    return;
+  }
+  if (el instanceof HTMLElement && el.isContentEditable) {
+    selectContentEditable(el);
+  }
+}
 
 export type InputProps = T.Props;
 
@@ -76,6 +114,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       autoFocus,
       className,
       fitContentWidth,
+      selectAllOnFocus,
     } = props;
 
     const updateAutoComplete = () => {
@@ -90,6 +129,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       const elem = inputRef.current;
 
       if (!isFocused || !elem || type !== 'text') return;
+      if (elem.selectionStart !== elem.selectionEnd) return;
 
       elem.selectionStart = cursorPos.current;
       elem.selectionEnd = cursorPos.current;
@@ -115,6 +155,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       forceLabelOnTop || Boolean(addonLeft) || hasValue || isFocused;
 
     const cursorPos = useRef(0);
+    const selectAllOnFocusPending = useRef(false);
 
     const getValue = (val = inputValue): InputValue => {
       if (type === 'number') {
@@ -212,6 +253,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       value: InputValue,
       e?: ChangeEvent<HTMLInputElement>
     ) => {
+      selectAllOnFocusPending.current = false;
       if (!isNumber && inputRef.current) {
         cursorPos.current = inputRef.current.selectionStart;
       }
@@ -243,9 +285,23 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     const handleFocus = e => {
       setIsFocused(true);
       onFocus?.(e);
+
+      if (!selectAllOnFocus) return;
+      selectAllOnFocusPending.current = true;
+      selectAllOnElement(inputRef.current ?? e.target);
+    };
+
+    const handleMouseDown = e => {
+      props.controlProps?.onMouseDown?.(e);
+      if (!selectAllOnFocus || isFocusedRef.current) return;
+      e.preventDefault();
+      const el = e.currentTarget;
+      if (el instanceof HTMLElement) el.focus();
+      selectAllOnElement(el);
     };
 
     const handleBlur = e => {
+      selectAllOnFocusPending.current = false;
       if (changeOnEnd) onTypingEnd();
 
       const val = getValue(e?.target?.value);
@@ -268,6 +324,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
         onChange: handleChange,
         onFocus: handleFocus,
         onBlur: handleBlur,
+        ...(selectAllOnFocus ? { onMouseDown: handleMouseDown } : null),
       };
 
       if (isTextArea) {
@@ -299,8 +356,10 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
       disabled,
       props.controlProps,
       handleChange,
+      handleMouseDown,
       onFocus,
       onBlur,
+      selectAllOnFocus,
       isTextArea,
       onTextAreaInput,
       placeholder,
@@ -385,6 +444,21 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
     useEffect(() => {
       if (isTextArea) setTextareaValue(String(value ?? ''));
     }, []);
+
+    useLayoutEffect(() => {
+      if (!selectAllOnFocus || !selectAllOnFocusPending.current) return;
+      if (!isFocused) return;
+      const field = resolveNativeTextField(inputRef.current);
+      if (field) {
+        if (!field.value || typeof field.select !== 'function') return;
+        field.select();
+        return;
+      }
+      const node = inputRef.current;
+      if (node instanceof HTMLElement && node.isContentEditable && node.innerText) {
+        selectContentEditable(node);
+      }
+    });
 
     const Control = isTextArea ? 'span' : 'input';
 

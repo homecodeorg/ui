@@ -48,4 +48,6 @@ export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
     scrollProps?: Partial<ScrollProps>;
     /** When true, width follows text via CSS `field-sizing: content` (non-textarea only). */
     fitContentWidth?: boolean;
+    /** Select the current value when the field is focused. */
+    selectAllOnFocus?: boolean;
   };
