@@ -1,0 +1,31 @@
+---
+description: UI docs examples must not use TypeScript typings (live interpreter crashes)
+globs: src/docs/examples/**/*.{tsx,ts,jsx,js}
+alwaysApply: false
+---
+
+# Docs examples: no TypeScript typings
+
+Code under `src/docs/examples/` is loaded into a live interpreter. Typings crash it.
+
+Do **not** add:
+
+- Type annotations (`const x: string`, `(name: string) =>`)
+- `interface` / `type` aliases
+- `as` casts (`as const`, `as Option[]`)
+- Generics on hooks/JSX (`useState<string>`, `<Foo<T>>`)
+- Typed imports used only for types
+
+Write JS-friendly untyped code, same style as `Button/Simple.tsx` and `TextShimmer/Example.tsx`.
+
+```tsx
+// BAD
+const [size, setSize] = useState<string>('m');
+function toggleGroup(name: string) {}
+
+// GOOD
+const [size, setSize] = useState('m');
+function toggleGroup(name) {}
+```
+
+`index.tsx` page shells (docs copy, `TypesTable`) can stay typed. `*.styl.d.ts` is generated — leave it.

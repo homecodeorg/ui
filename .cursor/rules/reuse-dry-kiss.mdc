@@ -1,0 +1,20 @@
+---
+description: Reuse existing UI components; keep changes DRY and simple
+alwaysApply: true
+---
+
+# Reuse, DRY, KISS
+
+Prefer existing library components, hooks, and patterns over new ones. Search `src/components/` before adding a component.
+
+- **Reuse** — compose or extend what exists; do not invent a sibling unless nothing fits
+- **DRY** — share one implementation; do not copy-paste variants
+- **KISS** — smallest change that works; no extra abstractions or process
+
+```tsx
+// BAD — new wrapper for the same control
+function FancyButton(props) { return <button className="fancy" {...props} /> }
+
+// GOOD — use Button and its existing variants/props
+<Button kind="primary" size="m">{label}</Button>
+```
