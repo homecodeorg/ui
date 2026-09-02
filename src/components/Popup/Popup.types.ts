@@ -36,7 +36,8 @@ export type Props = ComponentType & {
   isOpen?: boolean;
   // Wether to animate open/close state
   animated?: boolean;
-  // Toggle open/close state on pointerover/pointerout
+  // Open on pointer enter (trigger or content). Close after a short delay
+  // when the pointer leaves both, including the gap to a nested popup.
   hoverControl?: boolean;
   // Toggle open/close state on focus/blur
   //

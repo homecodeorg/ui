@@ -12,14 +12,19 @@ $hideTransformHorizontal = scale3d(.5, 1, 1)
   pointer-events none
   position absolute
   opacity 0
-  pointer-events none
 
   &.animating
     transition opacity .1s ease-out
 
   &.isOpen
     opacity 1
-    pointer-events all
+    // Wrapper stays pointer-events:none so it cannot cover the trigger
+    // (it is sized to the trigger and only offset by a few px). Only
+    // `.content` captures pointer — otherwise hoverControl flaps.
+    // Keep shifted wrappers above sibling popups. `transform` on this
+    // node creates a stacking context that would otherwise trap
+    // `.content` z-index and hide nested menus under the parent.
+    z-index 11
 
   &.inline.isOpen
     position relative

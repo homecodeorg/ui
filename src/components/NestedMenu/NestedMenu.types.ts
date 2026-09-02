@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
 
+import { Props as PopupProps } from 'uilib/components/Popup/Popup.types';
+import { Size } from 'uilib/types';
+
 export type NestedMenuItem = {
   id: string;
   label: ReactNode;
@@ -21,7 +24,9 @@ export type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   align?: 'start' | 'end';
+  size?: Size;
   className?: string;
+  popupProps?: Partial<PopupProps>;
 };
 
 export type NestedMenuProps = Props;

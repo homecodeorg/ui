@@ -7,6 +7,7 @@ const AGENTS = ['Claude', 'ChatGPT', 'Gemini'];
 
 export default () => {
   const [open, setOpen] = useState(true);
+  const [size, setSize] = useState('m');
   const [theme, setTheme] = useState('dark');
   const [groups, setGroups] = useState(['Design']);
   const [last, setLast] = useState('Open a submenu or click an item');
@@ -34,10 +35,7 @@ export default () => {
       submenu: (
         <div>
           {GROUPS.map(name => (
-            <NestedMenu.Item
-              key={name}
-              onClick={() => toggleGroup(name)}
-            >
+            <NestedMenu.Item key={name} onClick={() => toggleGroup(name)}>
               <NestedMenu.Label>{name}</NestedMenu.Label>
               {groups.includes(name) && <Icon type="check" size="xs" />}
             </NestedMenu.Item>
@@ -73,9 +71,7 @@ export default () => {
     },
     {
       id: 'theme',
-      icon: (
-        <Icon type={theme === 'dark' ? 'eye' : 'colors'} size="xs" />
-      ),
+      icon: <Icon type={theme === 'dark' ? 'eye' : 'colors'} size="xs" />,
       label: theme === 'dark' ? 'Light theme' : 'Dark theme',
       onClick: () => setTheme(value => (value === 'dark' ? 'light' : 'dark')),
     },
@@ -90,11 +86,25 @@ export default () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', gap: 8 }}>
+        {['s', 'm', 'l'].map(value => (
+          <Button
+            key={value}
+            size="s"
+            variant={size === value ? 'primary' : 'default'}
+            onClick={() => setSize(value)}
+          >
+            {value}
+          </Button>
+        ))}
+      </div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <NestedMenu
           open={open}
           onOpenChange={setOpen}
           align="end"
+          size={size}
+          popupProps={{ blur: true }}
           trigger={
             <Button size="s" round>
               Account

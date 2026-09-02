@@ -10,7 +10,6 @@ import { config } from 'uilib/tools/config';
 import S from './Popup.styl';
 import Time from 'timen';
 import cn from 'classnames';
-import debounce from 'uilib/tools/debounce';
 import { getCoords } from 'uilib/tools/dom';
 import { isBrowser } from 'uilib/tools/env';
 import throttle from 'uilib/tools/throttle';
@@ -18,6 +17,7 @@ import throttle from 'uilib/tools/throttle';
 export const ANIMATION_DURATION = 100;
 const OFFSET_GAP = 10;
 const BOUNDARY_FIT_EPSILON = 1;
+const HOVER_CLOSE_DELAY = 160;
 
 export type PopupProps = T.Props;
 
@@ -42,11 +42,12 @@ export class Popup extends Component<T.Props, T.State> {
 
   focused = false;
   isOpening = false;
+  openedByHover = false;
   pointerPressed = false;
-  subscribedHoverControl = false;
   subscribedSizeChange = false;
   pointerDownTarget = null;
   isPointerPressedInside = false;
+  hoverCloseUnsub: (() => void) | null = null;
   id;
   parentPopupContent;
 
@@ -77,7 +78,7 @@ export class Popup extends Component<T.Props, T.State> {
   }
 
   componentDidMount() {
-    const { hoverControl, focusControl } = this.props;
+    const { focusControl } = this.props;
 
     const vv = isBrowser ? window.visualViewport : null;
 
@@ -105,7 +106,6 @@ export class Popup extends Component<T.Props, T.State> {
       document.addEventListener('keyup', this.onDocKeyUp);
     }
 
-    if (hoverControl) this.subscribeHoverControl();
     this.subscribeScroll();
 
     if (
@@ -122,15 +122,12 @@ export class Popup extends Component<T.Props, T.State> {
   }, 100);
 
   componentDidUpdate(prevProps: T.Props, prevState: T.State) {
-    const { isOpen, disabled, hoverControl } = this.props;
+    const { isOpen, disabled } = this.props;
 
     if (disabled !== prevProps.disabled) {
       this.setState({ isOpen: false }); // close when receive disabled=true
       return;
     }
-
-    if (!prevProps.hoverControl && hoverControl) this.subscribeHoverControl();
-    if (prevProps.hoverControl && !hoverControl) this.unsubscribeHoverControl();
 
     if (typeof isOpen === 'boolean' && isOpen !== prevProps.isOpen) {
       isOpen ? this.open() : this.close();
@@ -177,7 +174,7 @@ export class Popup extends Component<T.Props, T.State> {
       this.scrollParent.removeEventListener('scroll', this.close);
     }
 
-    this.unsubscribeHoverControl();
+    this.cancelHoverClose();
     this.unsubscribeSizeChange();
     this.unsubscribeScroll();
   }
@@ -204,22 +201,6 @@ export class Popup extends Component<T.Props, T.State> {
     this.subscribedSizeChange = false;
     resizeObserver.unobserve(this.triggerElem.current);
     resizeObserver.unobserve(this.containerElem);
-  }
-
-  subscribeHoverControl() {
-    if (this.subscribedHoverControl) return;
-    this.subscribedHoverControl = true;
-
-    document.addEventListener('pointermove', this.checkHover);
-    document.addEventListener('pointerup', this.checkHover);
-  }
-
-  unsubscribeHoverControl() {
-    if (!this.subscribedHoverControl) return;
-    this.subscribedHoverControl = false;
-
-    document.removeEventListener('pointermove', this.checkHover);
-    document.removeEventListener('pointerup', this.checkHover);
   }
 
   updateBounds() {
@@ -352,35 +333,6 @@ export class Popup extends Component<T.Props, T.State> {
     }
   }
 
-  checkHover = debounce((e: any) => {
-    if (this.isPointerPressedInside) return;
-
-    const { isOpen, rootPopupId } = this.state;
-    const overTrigger = this.isPointerOver(e.target, S.trigger);
-    const overContent = this.isPointerOver(e.target, S.content);
-
-    if (!isOpen) {
-      if (overTrigger) this.open();
-      return;
-    }
-
-    // isOpen
-    if (overTrigger || overContent) return;
-
-    if (typeof rootPopupId === 'number') {
-      if (H.isLastChild(rootPopupId, this.id)) {
-        this.close();
-        H.unsetChild(rootPopupId, this.id);
-      }
-    } else {
-      const isOverAnyPopupContent = e.target.closest(`.${S.content}`);
-
-      if (!isOverAnyPopupContent || !H.childs[this.id]?.length) {
-        this.close();
-      }
-    }
-  }, 100);
-
   isControllable = () => typeof this.props.isOpen === 'boolean';
 
   isLastClickInside = () =>
@@ -395,12 +347,89 @@ export class Popup extends Component<T.Props, T.State> {
   };
 
   onDocPointerUp = (e: PointerEvent) => {
-    if (!this.isPointerPressedInside) this.close();
+    const pressedInside = this.isPointerPressedInside;
     this.isPointerPressedInside = false;
+    if (!this.state.isOpen || pressedInside) return;
+    if (this.isHoverInside(e.target)) return;
+    this.close();
   };
 
   isPointerOver(target, elem) {
-    return target.closest(`.${elem}[data-popup-id="${this.id}"]`);
+    return (
+      target instanceof Element &&
+      target.closest(`.${elem}[data-popup-id="${this.id}"]`)
+    );
+  }
+
+  isHoverInside(target) {
+    return (
+      this.isPointerOver(target, S.trigger) ||
+      this.isPointerOver(target, S.content)
+    );
+  }
+
+  isRelatedHover(target) {
+    if (!(target instanceof Element)) return false;
+    if (this.isHoverInside(target)) return true;
+
+    const popupEl = target.closest('[data-popup-id]');
+    if (!popupEl) return false;
+
+    const id = H.getPopupId(popupEl);
+    if (id == null || id === this.id) return false;
+    if (H.childs[this.id]?.includes(id)) return true;
+
+    const { rootPopupId } = this.state;
+    return rootPopupId != null && H.childs[rootPopupId]?.includes(id);
+  }
+
+  cancelHoverClose() {
+    this.hoverCloseUnsub?.();
+    this.hoverCloseUnsub = null;
+  }
+
+  scheduleHoverClose() {
+    this.cancelHoverClose();
+    this.hoverCloseUnsub = Time.after(HOVER_CLOSE_DELAY, () => {
+      this.hoverCloseUnsub = null;
+      this.close();
+    });
+  }
+
+  onHoverEnter = () => {
+    if (!this.props.hoverControl) return;
+    this.cancelHoverClose();
+    if (!this.state.isOpen) {
+      this.openedByHover = true;
+      this.open();
+    }
+  };
+
+  onHoverLeave = (e: PointerEvent) => {
+    if (!this.props.hoverControl) return;
+    if (this.isRelatedHover(e.relatedTarget)) {
+      this.cancelHoverClose();
+      return;
+    }
+    this.scheduleHoverClose();
+  };
+
+  bindHoverHandlers(props: Record<string, unknown> = {}) {
+    const enter = props.onPointerEnter as
+      ((e: PointerEvent) => void) | undefined;
+    const leave = props.onPointerLeave as
+      ((e: PointerEvent) => void) | undefined;
+    return {
+      ...props,
+      onPointerEnter: (e: PointerEvent) => {
+        this.onHoverEnter();
+        enter?.(e);
+      },
+      onPointerLeave: (e: PointerEvent) => {
+        this.onHoverLeave(e);
+        leave?.(e);
+      },
+    };
   }
 
   onScroll = throttle(e => {
@@ -448,7 +477,10 @@ export class Popup extends Component<T.Props, T.State> {
 
   onTriggerPointerUp = e => {
     this.pointerPressed = false;
-    if (e.traget === this.pointerDownTarget) this.toggle();
+    if (e.target !== this.pointerDownTarget) return;
+    // Hover already opened — don't toggle shut on the same pointer.
+    if (this.state.isOpen && this.openedByHover) return;
+    this.toggle();
   };
 
   onFocus = e => {
@@ -500,8 +532,13 @@ export class Popup extends Component<T.Props, T.State> {
 
   close = () => {
     this.isOpening = false;
+    this.openedByHover = false;
+    this.cancelHoverClose();
 
     if (!this.state.isOpen) return;
+
+    const { rootPopupId } = this.state;
+    if (rootPopupId) H.unsetChild(rootPopupId, this.id);
 
     this.unsubscribeSizeChange();
     this.changeState(false, this.afterClose);
@@ -562,9 +599,17 @@ export class Popup extends Component<T.Props, T.State> {
       triggerProps.role = 'button';
 
       if (hoverControl) {
-        Object.assign(triggerProps, {
-          onPointerDown: this.onTriggerPointerDown,
-          onPointerUp: this.onTriggerPointerUp,
+        const userDown = triggerProps.onPointerDown;
+        const userUp = triggerProps.onPointerUp;
+        Object.assign(triggerProps, this.bindHoverHandlers(triggerProps), {
+          onPointerDown: e => {
+            this.onTriggerPointerDown(e);
+            userDown?.(e);
+          },
+          onPointerUp: e => {
+            this.onTriggerPointerUp(e);
+            userUp?.(e);
+          },
         });
       }
 
@@ -592,7 +637,6 @@ export class Popup extends Component<T.Props, T.State> {
   renderContent() {
     const {
       content,
-      contentProps = {},
       wrapperProps = {},
       size,
       disabled,
@@ -603,7 +647,11 @@ export class Popup extends Component<T.Props, T.State> {
       blur,
       round,
       elevation,
+      hoverControl,
     } = this.props;
+    const contentProps = hoverControl
+      ? this.bindHoverHandlers(this.props.contentProps ?? {})
+      : (this.props.contentProps ?? {});
     const {
       isOpen,
       isContentVisible,
@@ -648,6 +696,16 @@ export class Popup extends Component<T.Props, T.State> {
         ...triggerBounds,
         ...wrapperProps.style,
         ...(shiftTf ? { transform: shiftTf } : {}),
+      };
+    }
+
+    // Nested popups portal as siblings of the parent wrapper. A transform on
+    // the parent creates a stacking context, so the child needs a higher
+    // z-index or it paints under the parent (looks like it never opened).
+    if (rootPopupId) {
+      wrapperProps.style = {
+        ...wrapperProps.style,
+        zIndex: 12,
       };
     }
 

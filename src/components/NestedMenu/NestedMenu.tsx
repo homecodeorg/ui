@@ -1,13 +1,16 @@
 import cn from 'classnames';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
+import { Popup } from 'uilib/components/Popup/Popup';
 
 import S from './NestedMenu.styl';
 import * as T from './NestedMenu.types';
 
 const MOBILE_MQ = '(max-width: 720px)';
 const HOVER_MQ = '(hover: hover) and (pointer: fine)';
+
+const ICON_SIZE = { xs: 'xs', s: 'xs', m: 'xs', l: 's', xl: 'm' } as const;
 
 function useMedia(query: string) {
   const [matches, setMatches] = useState(
@@ -76,15 +79,16 @@ function NestedMenuComponent({
   open,
   onOpenChange,
   align = 'end',
+  size = 'm',
   className,
+  popupProps,
 }: T.Props) {
-  const rootRef = useRef<HTMLDivElement>(null);
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [flipLeft, setFlipLeft] = useState(false);
-  const hoverTimer = useRef(0);
   const stacked = useMedia(MOBILE_MQ);
   const canHover = useMedia(HOVER_MQ);
   const active = items.find(item => item.id === activeId);
+  const iconSize = ICON_SIZE[size];
+  const contentClass = cn(S.content, S[`size-${size}`]);
 
   function close() {
     onOpenChange(false);
@@ -106,40 +110,9 @@ function NestedMenuComponent({
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') close();
     };
-    const onPointer = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) close();
-    };
     document.addEventListener('keydown', onKey);
-    document.addEventListener('pointerdown', onPointer);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('pointerdown', onPointer);
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [open]);
-
-  useLayoutEffect(() => {
-    if (!open || !rootRef.current) return;
-    const rect = rootRef.current.getBoundingClientRect();
-    setFlipLeft(window.innerWidth - rect.right < 280);
-  }, [open, activeId]);
-
-  useEffect(() => () => window.clearTimeout(hoverTimer.current), []);
-
-  function onItemEnter(id: string) {
-    if (!canHover || stacked) return;
-    window.clearTimeout(hoverTimer.current);
-    const item = items.find(entry => entry.id === id);
-    if (item?.disabled || !item?.submenu) {
-      setActiveId(null);
-      return;
-    }
-    openSub(id, false);
-  }
-
-  function onItemLeave() {
-    if (!canHover || stacked) return;
-    hoverTimer.current = window.setTimeout(() => setActiveId(null), 160);
-  }
 
   function onItemClick(id: string) {
     const item = items.find(entry => entry.id === id);
@@ -149,89 +122,138 @@ function NestedMenuComponent({
       close();
       return;
     }
-    if (activeId === id && !stacked) {
+    if (!item.submenu) return;
+    if (activeId === id && !stacked && !canHover) {
       setActiveId(null);
       return;
     }
     openSub(id, true);
   }
 
-  function renderItems() {
-    return items.map(item => (
-      <div
-        key={item.id}
-        className={S.itemWrap}
-        onMouseEnter={() => onItemEnter(item.id)}
-        onMouseLeave={onItemLeave}
-      >
-        <button
-          type="button"
-          className={cn(
-            S.item,
-            activeId === item.id && S.itemActive,
-            item.danger && S.itemDanger,
-            item.disabled && S.itemDisabled,
-            item.wrap && S.multiline,
-            item.className
-          )}
-          role="menuitem"
-          disabled={item.disabled}
-          aria-haspopup={item.submenu ? 'menu' : undefined}
-          aria-expanded={item.submenu ? activeId === item.id : undefined}
-          onClick={() => onItemClick(item.id)}
-        >
-          {item.icon && (
-            <span className={S.icon} aria-hidden>
-              {item.icon}
-            </span>
-          )}
-          <span className={S.label}>{item.label}</span>
-          {item.hint != null && item.hint !== '' && (
-            <span className={S.hint}>{item.hint}</span>
-          )}
-          {item.submenu && (
-            <Icon className={S.chevron} type="chevronRight" size="xs" />
-          )}
-        </button>
-        {!stacked && activeId === item.id && item.submenu && (
-          <div
-            className={cn(S.submenu, flipLeft && S.submenuLeft)}
-            role="menu"
-            onMouseEnter={() => {
-              window.clearTimeout(hoverTimer.current);
-            }}
-          >
-            {item.submenu}
-          </div>
+  function renderItemButton(item: T.NestedMenuItem) {
+    return (
+      <button
+        type="button"
+        className={cn(
+          S.item,
+          activeId === item.id && S.itemActive,
+          item.danger && S.itemDanger,
+          item.disabled && S.itemDisabled,
+          item.wrap && S.multiline,
+          item.className
         )}
-      </div>
-    ));
+        role="menuitem"
+        disabled={item.disabled}
+        aria-haspopup={item.submenu ? 'menu' : undefined}
+        aria-expanded={item.submenu ? activeId === item.id : undefined}
+        onClick={() => onItemClick(item.id)}
+      >
+        {item.icon && (
+          <span className={S.icon} aria-hidden>
+            {item.icon}
+          </span>
+        )}
+        <span className={S.label}>{item.label}</span>
+        {item.hint != null && item.hint !== '' && (
+          <span className={S.hint}>{item.hint}</span>
+        )}
+        {item.submenu && (
+          <Icon className={S.chevron} type="chevronRight" size={iconSize} />
+        )}
+      </button>
+    );
+  }
+
+  function renderItems() {
+    return items.map(item => {
+      if (item.submenu && !stacked) {
+        return (
+          <Popup
+            key={item.id}
+            {...popupProps}
+            className={cn(S.itemPopup, popupProps?.className)}
+            size={size}
+            hoverControl={canHover}
+            isOpen={activeId === item.id}
+            onOpen={() => openSub(item.id, true)}
+            onClose={() => {
+              setActiveId(current => (current === item.id ? null : current));
+            }}
+            direction={align === 'end' ? 'left-top' : 'right-top'}
+            trigger={renderItemButton(item)}
+            triggerProps={{
+              ...popupProps?.triggerProps,
+              className: cn(S.itemTrigger, popupProps?.triggerProps?.className),
+            }}
+            contentProps={{
+              ...popupProps?.contentProps,
+              className: cn(contentClass, popupProps?.contentProps?.className),
+            }}
+            content={
+              <div className={S.list} role="menu">
+                {item.submenu}
+              </div>
+            }
+          />
+        );
+      }
+
+      return (
+        <div
+          key={item.id}
+          className={S.itemWrap}
+          onPointerEnter={() => {
+            if (canHover && !stacked) setActiveId(null);
+          }}
+        >
+          {renderItemButton(item)}
+        </div>
+      );
+    });
   }
 
   return (
-    <div ref={rootRef} className={cn(S.root, className)}>
-      <div className={S.trigger} onClick={() => onOpenChange(!open)}>
-        {trigger}
-      </div>
-      {open && (
-        <div className={cn(S.popup, align === 'end' && S.alignEnd)} role="menu">
-          {stacked && active && (
+    <Popup
+      {...popupProps}
+      className={cn(S.root, className, popupProps?.className)}
+      size={size}
+      isOpen={open}
+      onOpen={() => onOpenChange(true)}
+      onClose={() => {
+        onOpenChange(false);
+        setActiveId(null);
+      }}
+      direction={align === 'end' ? 'bottom-left' : 'bottom-right'}
+      trigger={trigger}
+      triggerProps={{
+        ...popupProps?.triggerProps,
+        className: cn(S.trigger, popupProps?.triggerProps?.className),
+        onClick: () => onOpenChange(!open),
+      }}
+      contentProps={{
+        ...popupProps?.contentProps,
+        className: cn(contentClass, popupProps?.contentProps?.className),
+      }}
+      content={
+        <div className={S.list} role="menu">
+          {stacked && active ? (
             <div className={S.stacked}>
               <button
                 type="button"
                 className={S.back}
                 onClick={() => setActiveId(null)}
               >
-                <Icon type="chevronLeft" size="xs" />
+                <Icon type="chevronLeft" size={iconSize} />
                 <span className={S.label}>{active.label}</span>
               </button>
               <div className={S.stackedBody}>{active.submenu}</div>
             </div>
+          ) : (
+            renderItems()
           )}
-          {(!stacked || !active) && renderItems()}
         </div>
-      )}
-    </div>
+      }
+    />
   );
 }
 

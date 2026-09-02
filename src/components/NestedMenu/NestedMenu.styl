@@ -1,31 +1,30 @@
 @import '../../theme'
 
 .root
-  position relative
   display inline-flex
 
 .trigger
   display inline-flex
 
-.popup
-  position absolute
-  top calc(100% + 6px)
-  left 0
-  display flex
-  flex-direction column
-  gap 1px
-  z-index 20
+.content
+  box-sizing border-box
   min-width 200px
   max-width 280px
   padding 4px
-  border-radius 10px
-  border 1px solid var(--accent-color-alpha-200)
-  background var(--decent-color)
-  box-shadow 0 8px 28px rgba(0, 0, 0, 0.45)
 
-.alignEnd
-  left auto
-  right 0
+.list
+  display flex
+  flex-direction column
+  gap 1px
+
+.itemPopup
+  display block
+  width 100%
+
+.itemTrigger
+  display block
+  width 100%
+  cursor unset
 
 .itemWrap
   position relative
@@ -37,13 +36,11 @@
   align-items center
   gap 8px
   width 100%
-  padding 6px 10px
   border none
   border-radius 6px
   background none
   color inherit
   font inherit
-  font-size 13px
   font-weight 500
   letter-spacing 0.01em
   line-height 1.3
@@ -113,38 +110,6 @@
   flex-shrink 0
   color var(--active-color)
 
-.submenu
-  position absolute
-  top -4px
-  left calc(100% + 6px)
-  z-index 21
-  min-width 220px
-  max-width 280px
-  max-height unquote('min(360px, calc(100vh - 24px))')
-  overflow-x hidden
-  overflow-y auto
-  padding 4px
-  border-radius 10px
-  border 1px solid var(--accent-color-alpha-200)
-  background var(--decent-color)
-  box-shadow 0 8px 28px rgba(0, 0, 0, 0.45)
-
-  &::before
-    content ''
-    position absolute
-    top 0
-    bottom 0
-    left -6px
-    width 6px
-
-.submenuLeft
-  left auto
-  right calc(100% + 6px)
-
-  &::before
-    left auto
-    right -6px
-
 .stacked
   display flex
   flex-direction column
@@ -157,3 +122,70 @@
 
 .stackedBody
   min-width 0
+
+.size-xs
+.size-s
+  .item
+  .row
+  .back
+    padding 4px 8px
+    font-size 12px
+    gap 6px
+
+  &.content
+    padding 3px
+    min-width 176px
+
+  .icon svg
+  .chevron
+  .row svg
+  .back svg
+    width 10px
+    height 10px
+
+.size-m
+  .item
+  .row
+  .back
+    padding 6px 10px
+    font-size 13px
+
+.size-l
+  .item
+  .row
+  .back
+    padding 10px 14px
+    font-size 16px
+    gap 10px
+
+  &.content
+    padding 6px
+    min-width 240px
+    max-width 320px
+
+  .icon svg
+  .chevron
+  .row svg
+  .back svg
+    width 18px
+    height 18px
+
+.size-xl
+  .item
+  .row
+  .back
+    padding 12px 16px
+    font-size 18px
+    gap 12px
+
+  &.content
+    padding 8px
+    min-width 260px
+    max-width 360px
+
+  .icon svg
+  .chevron
+  .row svg
+  .back svg
+    width 22px
+    height 22px
