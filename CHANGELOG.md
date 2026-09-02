@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.13.0](https://github.com/foreverido/uilib/compare/v5.12.0...v5.13.0) (2026-09-02)
+
+
+### Features
+
+* NestedMenu - Size variants on Popup ([c1675a2](https://github.com/foreverido/uilib/commit/c1675a2f2c0e34d5e13659e1121a96d6d35f5234))
+
+
+### Bug Fixes
+
+* TextShimmer - Inherit --txt-sh-* and avoid dark trough ([095e80d](https://github.com/foreverido/uilib/commit/095e80d1440c054ba7c16212b0bc3564e022e696))
+
 ## [5.12.0](https://github.com/foreverido/uilib/compare/v5.11.0...v5.12.0) (2026-09-01)
 
 
