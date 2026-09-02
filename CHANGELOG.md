@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.14.0](https://github.com/foreverido/uilib/compare/v5.13.0...v5.14.0) (2026-09-02)
+
+
+### Features
+
+* Tabs - Add links variant ([7ea4722](https://github.com/foreverido/uilib/commit/7ea4722f74591e6228fae6052887f98902dc4cc2))
+
 ## [5.13.0](https://github.com/foreverido/uilib/compare/v5.12.0...v5.13.0) (2026-09-02)
 
 
