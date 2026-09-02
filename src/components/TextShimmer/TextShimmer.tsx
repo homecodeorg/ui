@@ -21,12 +21,13 @@ function TextShimmerComponent({
     // Wide blend stops “vertical knife” artefacts when the ramp only spans few pixels inside the glyph mask.
     const ridgeHalf = Math.min(49, Math.max(36, raw + 17));
 
-    const baseColor = inverted
-      ? 'var(--txt-sh-highlight)'
-      : 'var(--txt-sh-fill)';
-    const bandColor = inverted
-      ? 'var(--txt-sh-fill)'
-      : 'var(--txt-sh-highlight)';
+    // Resolve on the gradient so ancestor --txt-sh-* inherit. --decent-color is the surface.
+    const fill =
+      'var(--txt-sh-fill, var(--text-shimmer-decent-tone, var(--accent-color)))';
+    const highlight =
+      'var(--txt-sh-highlight, var(--text-shimmer-accent-tone, var(--active-color)))';
+    const baseColor = inverted ? highlight : fill;
+    const bandColor = inverted ? fill : highlight;
 
     const backgroundGradient = `linear-gradient(90deg, ${baseColor} calc(50% - ${ridgeHalf}%), ${bandColor} 50%, ${baseColor} calc(50% + ${ridgeHalf}%))`;
 
