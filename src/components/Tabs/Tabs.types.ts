@@ -1,6 +1,6 @@
-import { Size } from 'uilib/types';
 import { ButtonProps } from '../Button/Button';
 import { ReactNode } from 'react';
+import { Size } from 'uilib/types';
 
 type ID = string | number;
 
@@ -21,8 +21,10 @@ export type RenderProps = {
 
 export type Props = {
   size?: Size;
+  variant?: 'default' | 'links';
   className?: string;
   tabsWrapperClassName?: string;
+  tabsInnerClassName?: string;
   tabsClassName?: string;
   contentClassName?: string;
   items: Item[];

@@ -16,3 +16,32 @@ div .inactive
 .tab
   flex-shrink 0
   white-space nowrap
+
+.variant-links
+  & > button
+    &:not(:first-child)
+      margin-left 0
+      border-radius inherit
+    &:not(:last-child)
+      border-radius inherit
+
+  .tab
+    padding var(--p-3) var(--p-5)
+    background-color transparent !important
+    box-shadow none
+
+    &:hover
+    &:focus
+      background-color transparent !important
+      box-shadow 0 2px 0 0 var(--active-color-alpha-100)
+
+  .tab.active
+    color inherit
+    background-color transparent !important
+    box-shadow 0 2px 0 0 var(--active-color)
+
+    &:hover
+    &:focus
+      color inherit
+      background-color transparent !important
+      box-shadow 0 2px 0 0 var(--active-color)

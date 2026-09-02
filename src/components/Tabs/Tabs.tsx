@@ -1,21 +1,22 @@
+import * as T from './Tabs.types';
+
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import cn from 'classnames';
-
-import { Scroll } from '../Scroll/Scroll';
 import { Button } from '../Button/Button';
 import { ButtonGroup } from '../ButtonGroup/ButtonGroup';
-
-import * as T from './Tabs.types';
 import S from './Tabs.styl';
+import { Scroll } from '../Scroll/Scroll';
+import cn from 'classnames';
 
 const isId = id => ['string', 'number'].includes(typeof id);
 
 export function Tabs(props: T.Props) {
   const {
     size = 'm',
+    variant = 'default',
     className,
     tabsWrapperClassName,
+    tabsInnerClassName,
     tabsClassName,
     contentClassName,
     items,
@@ -87,7 +88,7 @@ export function Tabs(props: T.Props) {
     return (
       <Button
         {...rest}
-        className={cn(S.tab, rest.className)}
+        className={cn(S.tab, isActive && S.active, rest.className)}
         size={size}
         key={id}
         onClick={e => onTabClick(e, params)}
@@ -104,12 +105,18 @@ export function Tabs(props: T.Props) {
         x
         offset={{ x: { before: 10, after: 10 } }}
         className={tabsWrapperClassName}
-        innerClassName={cn(S.tabsScroll, S[`size-${size}`])}
+        innerClassName={cn(S.tabsScroll, S[`size-${size}`], tabsInnerClassName)}
         autoHide
         fadeSize={size}
         size={size}
       >
-        <ButtonGroup className={tabsClassName} {...rest}>
+        <ButtonGroup
+          className={cn(
+            variant === 'links' && S['variant-links'],
+            tabsClassName
+          )}
+          {...rest}
+        >
           {tabsButtons}
         </ButtonGroup>
       </Scroll>
