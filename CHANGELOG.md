@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.14.1](https://github.com/foreverido/uilib/compare/v5.14.0...v5.14.1) (2026-09-02)
+
+
+### Bug Fixes
+
+* Dialogue - Portal stacking for NestedMenu ([6b31b1d](https://github.com/foreverido/uilib/commit/6b31b1dd576cfc2efa756f349e379209af5cabc8))
+
 ## [5.14.0](https://github.com/foreverido/uilib/compare/v5.13.0...v5.14.0) (2026-09-02)
 
 
