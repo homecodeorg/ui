@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { useEffect, useId, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import {
   Card,
@@ -9,6 +8,7 @@ import {
   CardHeader,
 } from 'uilib/components/Card/Card';
 import { Icon } from 'uilib/components/Icon/Icon';
+import { Portal } from 'uilib/components/Portal/Portal';
 import { isBrowser } from 'uilib/tools/env';
 
 import S from './Dialogue.styl';
@@ -207,11 +207,9 @@ export function Dialogue({
   return (
     <>
       {trigger && <div onClick={onTriggerClick}>{trigger}</div>}
-      {open &&
-        !disabled &&
-        isMounted &&
-        isBrowser &&
-        createPortal(dialogueContent, document.body)}
+      {open && !disabled && isMounted && isBrowser && (
+        <Portal>{dialogueContent}</Portal>
+      )}
     </>
   );
 }
