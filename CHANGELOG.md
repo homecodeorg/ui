@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.15.0](https://github.com/foreverido/uilib/compare/v5.14.1...v5.15.0) (2026-09-03)
+
+
+### Features
+
+* FoldedLine - Add shared fold-rail component ([3c3ffe5](https://github.com/foreverido/uilib/commit/3c3ffe5f4ec4a6444b50141defc02a4d79683d47))
+* Router - Parse query on popstate ([7344286](https://github.com/foreverido/uilib/commit/7344286efabbcf7bb24c79a5448bbd41fcafadb6))
+
 ### [5.14.1](https://github.com/foreverido/uilib/compare/v5.14.0...v5.14.1) (2026-09-02)
 
 
