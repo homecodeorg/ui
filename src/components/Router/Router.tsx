@@ -1,6 +1,8 @@
 import { useContext, useEffect, useMemo } from 'react';
 import { useStore } from 'justorm/react';
 
+import { parseQueryParams } from 'uilib/tools/queryParams';
+
 import STORE from './store';
 import type { RouterStore as RouterStoreType } from './store';
 import Context from './context';
@@ -18,7 +20,9 @@ export const Router = (props: T.Props) => {
 
   useEffect(() => {
     const onPopState = () => {
-      STORE.go(window.location.pathname, STORE.query, { replace: true });
+      STORE.go(window.location.pathname, parseQueryParams(), {
+        replace: true,
+      });
     };
 
     window.addEventListener('popstate', onPopState);
