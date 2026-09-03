@@ -103,6 +103,10 @@ export default [
         loader: () => import('./examples/FormattedText'),
       },
       {
+        id: 'FoldedLine',
+        loader: () => import('./examples/FoldedLine'),
+      },
+      {
         id: 'Gallery',
         loader: () => import('./examples/Gallery'),
       },

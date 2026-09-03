@@ -1,0 +1,150 @@
+@keyframes foldedLinePulse
+  0%, 100%
+    background-color var(--accent-color-alpha-400)
+  50%
+    background-color var(--active-color)
+
+.root
+  position relative
+  display flex
+  flex-direction column
+  min-height 1rem
+  padding-left calc(4px + var(--p-2))
+
+  border-radius 12px
+  transition 0.1s ease-out
+  transition-property border-radius, margin, background-color
+
+  &::before
+    content ''
+    position absolute
+    top 2px
+    bottom 2px
+    left 6px
+    width 4px
+    height calc(100% - 4px)
+    opacity .1
+    background var(--accent-color)
+    border-radius 2px
+    pointer-events none
+
+  &:not(.folded)::before
+  &:hover::before
+    opacity .7
+
+  &.folded
+    margin 0
+    border-radius 0
+
+    .scroll
+      height 1em
+
+  &.hasChildren.folded
+    cursor pointer
+
+  &.hasChildren:not(.folded)
+    .triggerInteractive
+      border-top-left-radius inherit
+      border-top-right-radius inherit
+
+  &.clear
+    padding 0
+    min-height 0
+    border-radius inherit
+
+    &::before
+      content none
+
+    &.hasChildren
+      cursor pointer
+
+    &.folded
+      display flex
+      overflow visible
+      -webkit-line-clamp unset
+      -webkit-box-orient unset
+      line-clamp unset
+      text-overflow unset
+
+    .triggerInteractive
+      opacity 1
+
+.chevron
+  margin-right var(--p-2)
+  opacity 0.3
+  transition transform 0.1s ease-out, opacity 0.1s ease-out
+
+  .root:hover &
+    opacity 1
+
+  .folded &
+    transform rotate(-90deg)
+
+.lineCompleted
+  &::before
+    background var(--active-color)
+
+.lineInProgress
+  &::before
+    animation foldedLinePulse 1.4s ease-in-out infinite
+
+.triggerInteractive
+  display flex
+  align-items center
+  gap var(--p-1)
+  cursor pointer
+  transition background-color 0.1s ease-out
+  opacity 0.8
+
+  &:hover
+    opacity 1
+    &::before
+      background-color var(--accent-color-alpha-900)
+
+.header
+  z-index 1
+  position absolute
+  cursor pointer
+  user-select none
+  width 100%
+  height 100%
+  transition opacity 0.1s ease-out
+
+.folded
+  display -webkit-box
+  -webkit-line-clamp 1
+  -webkit-box-orient vertical
+  line-clamp 1
+  text-overflow ellipsis
+  overflow hidden
+  transition opacity 0.1s ease-out
+
+  &::before
+    opacity .4
+
+  .scroll
+    max-height 1.5em
+
+.content
+  position relative
+
+.scroll
+  max-height 50vh
+
+.scrollInner > div
+  user-select text
+
+.actions
+  position absolute
+  bottom 0
+  right 0
+  display flex
+  flex-wrap wrap
+  align-items center
+  justify-content flex-end
+  gap var(--p-1)
+  padding 0 var(--p-5) var(--p-3) var(--p-2)
+  flex-shrink 0
+
+  & > button
+    backdrop-filter blur(10px)
