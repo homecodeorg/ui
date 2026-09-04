@@ -95,7 +95,6 @@ export function FoldedLine({
         className={cn(Boolean(children) && S.triggerInteractive)}
       >
         {typeof trigger === 'function' ? trigger(isFolded) : trigger}
-        <Gap />
         {showChevron && <Icon type="chevronDown" className={S.chevron} />}
       </div>
       {!isFolded && children && (
