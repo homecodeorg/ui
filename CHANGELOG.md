@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.15.1](https://github.com/foreverido/uilib/compare/v5.15.0...v5.15.1) (2026-09-04)
+
+
+### Bug Fixes
+
+* FoldedLine - title layout improve ([c326c36](https://github.com/foreverido/uilib/commit/c326c36132fbaa5c22942fd1cdafe9f001034024))
+
 ## [5.15.0](https://github.com/foreverido/uilib/compare/v5.14.1...v5.15.0) (2026-09-03)
 
 
