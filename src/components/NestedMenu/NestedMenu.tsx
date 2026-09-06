@@ -1,11 +1,11 @@
-import cn from 'classnames';
+import * as T from './NestedMenu.types';
+
 import { useEffect, useState } from 'react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Popup } from 'uilib/components/Popup/Popup';
-
 import S from './NestedMenu.styl';
-import * as T from './NestedMenu.types';
+import cn from 'classnames';
 
 const MOBILE_MQ = '(max-width: 720px)';
 const HOVER_MQ = '(hover: hover) and (pointer: fine)';

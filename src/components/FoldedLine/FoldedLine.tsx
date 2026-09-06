@@ -126,8 +126,8 @@ export function FoldedLine({
                     setFolded(true);
                   }}
                 >
-                  <Icon type="chevronUp" size="s" />
-                  Fold
+                  <Icon type="chevronUp" size="xs" />
+                  &nbsp;Fold
                 </Button>
               )}
             </div>
