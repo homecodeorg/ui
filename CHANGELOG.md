@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.15.2](https://github.com/foreverido/uilib/compare/v5.15.1...v5.15.2) (2026-09-07)
+
+
+### Features
+
+* useEvent - Add named export ([7fdc7cf](https://github.com/foreverido/uilib/commit/7fdc7cf179c677c12a5016744d8ae603a7ebfe3e))
+
+
+### Bug Fixes
+
+* FoldedLine - fold button space ([e62a0d8](https://github.com/foreverido/uilib/commit/e62a0d89c8f7665bf6727a80979b542c6234557f))
+
 ### [5.15.1](https://github.com/foreverido/uilib/compare/v5.15.0...v5.15.1) (2026-09-04)
 
 
