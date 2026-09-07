@@ -13,7 +13,7 @@ export type UseEventParams = {
   isCapture?: boolean;
 };
 
-export default function useEvent({
+export function useEvent({
   elem,
   event,
   callback,
@@ -46,3 +46,5 @@ export default function useEvent({
     };
   }, [isActive, elem, callback]);
 }
+
+export default useEvent;
