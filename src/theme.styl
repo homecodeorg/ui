@@ -155,17 +155,17 @@ $borderRadiusM = 6px
 $borderRadiusL = 8px
 $borderRadiusXL = 10px
 
-borderRadiusSize(size)
+borderRadiusSize(size, multiplier = 1)
   if size == 'xs'
-    border-radius 'calc(%s * 1.5)' % $borderRadiusXS
+    border-radius 'calc(%s * 1.5 * %s)' % ($borderRadiusXS multiplier)
   if size == 's'
-    border-radius 'calc(%s * 1.5)' % $borderRadiusS
+    border-radius 'calc(%s * 1.5 * %s)' % ($borderRadiusS multiplier)
   if size == 'm'
-    border-radius 'calc(%s * 1.5)' % $borderRadiusM
+    border-radius 'calc(%s * 1.5 * %s)' % ($borderRadiusM multiplier)
   if size == 'l'
-    border-radius 'calc(%s * 1.5)' % $borderRadiusL
+    border-radius 'calc(%s * 1.5 * %s)' % ($borderRadiusL multiplier)
   if size == 'xl'
-    border-radius 'calc(%s * 1.5)' % $borderRadiusXL
+    border-radius 'calc(%s * 1.5 * %s)' % ($borderRadiusXL multiplier)
 
 borderRadiusRoundSize(size)
   if size == 'xs'
