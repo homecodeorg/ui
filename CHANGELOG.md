@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.16.1](https://github.com/foreverido/uilib/compare/v5.16.0...v5.16.1) (2026-09-09)
+
+
+### Bug Fixes
+
+* Input - 'size' typings ([182fc20](https://github.com/foreverido/uilib/commit/182fc201c67e4affaf483a8bcadd0912b75a499a))
+
 ## [5.16.0](https://github.com/foreverido/uilib/compare/v5.15.2...v5.16.0) (2026-09-09)
 
 
