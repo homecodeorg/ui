@@ -5,8 +5,11 @@ import type { Props as ScrollProps } from '../Scroll/Scroll.types';
 
 export type ControlProps = HTMLProps<HTMLInputElement>;
 export type Value = string | number;
-export type Props = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> &
-  Omit<ControlProps, 'ref' | 'onChange'> &
+export type Props = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'onChange' | 'size'
+> &
+  Omit<ControlProps, 'ref' | 'onChange' | 'size'> &
   FormControl<Value, HTMLInputElement> & {
     name?: string;
     // Step value for number inputs
