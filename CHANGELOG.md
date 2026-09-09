@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.16.0](https://github.com/foreverido/uilib/compare/v5.15.2...v5.16.0) (2026-09-09)
+
+
+### Features
+
+* NestedMenu - Size radii, click control, docs search ([c56d4c7](https://github.com/foreverido/uilib/commit/c56d4c7df7f7f7040a4a3fe81820fcd852c39549))
+
 ### [5.15.2](https://github.com/foreverido/uilib/compare/v5.15.1...v5.15.2) (2026-09-07)
 
 
