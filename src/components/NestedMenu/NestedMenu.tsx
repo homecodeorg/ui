@@ -1,6 +1,6 @@
 import * as T from './NestedMenu.types';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type MouseEvent } from 'react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Popup } from 'uilib/components/Popup/Popup';
@@ -114,12 +114,12 @@ function NestedMenuComponent({
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
-  function onItemClick(id: string) {
+  function onItemClick(id: string, e: MouseEvent) {
     const item = items.find(entry => entry.id === id);
     if (!item || item.disabled) return;
     if (item.onClick && !item.submenu) {
-      item.onClick();
-      close();
+      item.onClick(e);
+      if (item.closeOnClick !== false && !e.defaultPrevented) close();
       return;
     }
     if (!item.submenu) return;
@@ -146,7 +146,11 @@ function NestedMenuComponent({
         disabled={item.disabled}
         aria-haspopup={item.submenu ? 'menu' : undefined}
         aria-expanded={item.submenu ? activeId === item.id : undefined}
-        onClick={() => onItemClick(item.id)}
+        onPointerDown={e => {
+          // Keep focus off underlying inputs (e.g. ChatSelector search).
+          e.preventDefault();
+        }}
+        onClick={e => onItemClick(item.id, e)}
       >
         {item.icon && (
           <span className={S.icon} aria-hidden>

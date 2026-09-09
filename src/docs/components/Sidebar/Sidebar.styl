@@ -27,6 +27,25 @@
   z-index 1
   justify-content space-between
 
+.search
+  opacity 0
+  pointer-events none
+
+  .itemHeader:hover &
+    opacity 1
+    pointer-events auto
+
+.searchInput
+  flex 1
+  min-width 0
+  background-color transparent !important
+
+  label
+  input
+    padding 0 !important
+  label > div:first-child
+    display none !important
+
 .itemContent
   padding 0 var(--p-3)
   margin-right 10px

@@ -157,15 +157,15 @@ $borderRadiusXL = 10px
 
 borderRadiusSize(size)
   if size == 'xs'
-    border-radius $borderRadiusXS
+    border-radius 'calc(%s * 1.5)' % $borderRadiusXS
   if size == 's'
-    border-radius $borderRadiusS
+    border-radius 'calc(%s * 1.5)' % $borderRadiusS
   if size == 'm'
-    border-radius $borderRadiusM
+    border-radius 'calc(%s * 1.5)' % $borderRadiusM
   if size == 'l'
-    border-radius $borderRadiusL
+    border-radius 'calc(%s * 1.5)' % $borderRadiusL
   if size == 'xl'
-    border-radius $borderRadiusXL
+    border-radius 'calc(%s * 1.5)' % $borderRadiusXL
 
 borderRadiusRoundSize(size)
   if size == 'xs'

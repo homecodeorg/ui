@@ -1,5 +1,7 @@
+@import '../../theme'
+
 .root
-  --brad: var(--border-radius-l)
+  --brad: $borderRadiusM
   position relative
   overflow hidden
   border-radius var(--brad)
@@ -56,22 +58,27 @@
     border-bottom none
 
 .size-xs
+  --brad: $borderRadiusXS
   --cell-padding: 2px
   --last-row-padding-bottom: var(--p-4)
 
 .size-s
+  --brad: $borderRadiusS
   --cell-padding: var(--p-1)
   --last-row-padding-bottom: var(--p-5)
 
 .size-m
+  --brad: $borderRadiusM
   --cell-padding: var(--p-2)
   --last-row-padding-bottom: var(--p-5)
 
 .size-l
+  --brad: $borderRadiusL
   --cell-padding: var(--p-5)
   --last-row-padding-bottom: var(--p-8)
 
 .size-xl
+  --brad: $borderRadiusXL
   --cell-padding: var(--p-8)
   --last-row-padding-bottom: var(--p-8)
 

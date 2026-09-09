@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
 
 import { Props as PopupProps } from 'uilib/components/Popup/Popup.types';
 import { Size } from 'uilib/types';
@@ -12,7 +12,9 @@ export type NestedMenuItem = {
   wrap?: boolean;
   submenu?: ReactNode;
   onSubmenuOpen?: () => void;
-  onClick?: () => void;
+  onClick?: (e: MouseEvent) => void;
+  /** When false, item click does not close the menu. Default true. */
+  closeOnClick?: boolean;
   danger?: boolean;
   disabled?: boolean;
   className?: string;

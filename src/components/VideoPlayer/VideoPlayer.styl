@@ -1,16 +1,24 @@
 @import '../../theme'
 
-$radius = var(--p-3)
-
 .root
   position relative
   display flex
   flex-direction column
   width 100%
-  border-radius $radius
   overflow hidden
   outline none
   color var(--accent-color)
+
+  &.size-xs
+    borderRadiusSize('xs')
+  &.size-s
+    borderRadiusSize('s')
+  &.size-m
+    borderRadiusSize('m')
+  &.size-l
+    borderRadiusSize('l')
+  &.size-xl
+    borderRadiusSize('xl')
 
 .videoWrap
   position relative
@@ -34,7 +42,7 @@ $radius = var(--p-3)
   align-items center
   justify-content center
   background var(--decent-color-alpha-200)
-  border-radius $radius
+  border-radius inherit
   backdrop-filter blur(10px)
   pointer-events none
 
@@ -52,8 +60,8 @@ $radius = var(--p-3)
   flex-grow 0
   flex-shrink 0
   background var(--decent-color-alpha-700)
-  border-bottom-left-radius $radius
-  border-bottom-right-radius $radius
+  border-bottom-left-radius inherit
+  border-bottom-right-radius inherit
   // backdrop-filter blur(10px)
   transform translateY(0)
   transition transform 0.25s ease
