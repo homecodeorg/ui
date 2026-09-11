@@ -1446,22 +1446,6 @@
       "boundaryFit": { "value": "BoundaryFit" }
     }
   },
-  "PopupMenu": {
-    "Item": {
-      "kind": "type",
-      "ext": ["Pick<ButtonProps, 'onClick'>"],
-      "id": { "value": "string" },
-      "title": { "value": "ReactNode" },
-      "className": { "value": "string", "optional": true }
-    },
-    "Props": {
-      "kind": "type",
-      "ext": ["Omit<PopupProps, 'content'>"],
-      "trigger": { "value": "ReactNode" },
-      "items": { "value": "Item[]" },
-      "onClose": { "value": "() => void", "optional": true }
-    }
-  },
   "Progress": {},
   "ProgressCircular": {},
   "PromptComposer": {

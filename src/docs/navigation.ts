@@ -164,10 +164,6 @@ export default [
         loader: () => import('./examples/Popup'),
       },
       {
-        id: 'PopupMenu',
-        loader: () => import('./examples/PopupMenu'),
-      },
-      {
         id: 'Progress',
         loader: () => import('./examples/Progress'),
       },

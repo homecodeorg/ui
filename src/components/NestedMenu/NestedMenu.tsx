@@ -82,6 +82,7 @@ function NestedMenuComponent({
   size = 'm',
   className,
   popupProps,
+  onItemClick,
 }: T.Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const stacked = useMedia(MOBILE_MQ);
@@ -114,15 +115,19 @@ function NestedMenuComponent({
     return () => document.removeEventListener('keydown', onKey);
   }, [open]);
 
-  function onItemClick(id: string, e: MouseEvent) {
+  function handleItemClick(id: string, e: { defaultPrevented: boolean }) {
+    onItemClick?.(id);
     const item = items.find(entry => entry.id === id);
     if (!item || item.disabled) return;
     if (item.onClick && !item.submenu) {
-      item.onClick(e);
+      item.onClick(e as MouseEvent);
       if (item.closeOnClick !== false && !e.defaultPrevented) close();
       return;
     }
-    if (!item.submenu) return;
+    if (!item.submenu) {
+      if (item.closeOnClick !== false) close();
+      return;
+    }
     if (activeId === id && !stacked && !canHover) {
       setActiveId(null);
       return;
@@ -139,7 +144,7 @@ function NestedMenuComponent({
           activeId === item.id && S.itemActive,
           item.danger && S.itemDanger,
           item.disabled && S.itemDisabled,
-          item.wrap && S.multiline,
+          item.wrap && S.wrap,
           item.className
         )}
         role="menuitem"
@@ -149,17 +154,26 @@ function NestedMenuComponent({
         onPointerDown={e => {
           // Keep focus off underlying inputs (e.g. ChatSelector search).
           e.preventDefault();
+          if (e.button === 0) handleItemClick(item.id, e);
         }}
-        onClick={e => onItemClick(item.id, e)}
+        onKeyDown={e => {
+          if (e.key !== 'Enter' && e.key !== ' ') return;
+          e.preventDefault();
+          handleItemClick(item.id, e);
+        }}
       >
         {item.icon && (
           <span className={S.icon} aria-hidden>
             {item.icon}
           </span>
         )}
-        <span className={S.label}>{item.label}</span>
-        {item.hint != null && item.hint !== '' && (
-          <span className={S.hint}>{item.hint}</span>
+        {item.hint != null && item.hint !== '' ? (
+          <span className={S.text}>
+            <span className={S.label}>{item.label}</span>
+            <span className={S.hint}>{item.hint}</span>
+          </span>
+        ) : (
+          <span className={S.label}>{item.label}</span>
         )}
         {item.submenu && (
           <Icon className={S.chevron} type="chevronRight" size={iconSize} />
@@ -216,6 +230,8 @@ function NestedMenuComponent({
     });
   }
 
+  if (items.length === 0) return null;
+
   return (
     <Popup
       {...popupProps}
@@ -227,7 +243,10 @@ function NestedMenuComponent({
         onOpenChange(false);
         setActiveId(null);
       }}
-      direction={align === 'end' ? 'bottom-left' : 'bottom-right'}
+      direction={
+        popupProps?.direction ??
+        (align === 'end' ? 'bottom-left' : 'bottom-right')
+      }
       trigger={trigger}
       triggerProps={{
         ...popupProps?.triggerProps,

@@ -25,9 +25,12 @@ glowRing(thickness)
   opacity 0
   pointer-events none
   animation orbitGlow 3.5s linear infinite
+  animation-play-state paused
 
   &.active
+  *:hover > &
     opacity 1
+    animation-play-state running
 
   &::before
     glowRing(1.5px)

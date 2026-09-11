@@ -8,7 +8,7 @@ export type NestedMenuItem = {
   label: ReactNode;
   icon?: ReactNode;
   hint?: ReactNode;
-  /** Wrap long hint/label onto additional lines instead of clipping. */
+  /** Allow long hint/label text to wrap inside the text column. */
   wrap?: boolean;
   submenu?: ReactNode;
   onSubmenuOpen?: () => void;
@@ -25,6 +25,7 @@ export type Props = {
   items: NestedMenuItem[];
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onItemClick?: (id: string) => void;
   align?: 'start' | 'end';
   size?: Size;
   className?: string;
