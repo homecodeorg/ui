@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.17.0](https://github.com/foreverido/uilib/compare/v5.16.1...v5.17.0) (2026-09-11)
+
+
+### Features
+
+* NestedMenu - Item click, wrap layout, drop PopupMenu ([3a6b1aa](https://github.com/foreverido/uilib/commit/3a6b1aaf949e5d082a35cae0d37cf924b83598be))
+* Popup - border-radius with multiplier ([cc1c5bd](https://github.com/foreverido/uilib/commit/cc1c5bd8891dbd1f8afc0f8f69d1165e110740dc))
+
 ### [5.16.1](https://github.com/foreverido/uilib/compare/v5.16.0...v5.16.1) (2026-09-09)
 
 
