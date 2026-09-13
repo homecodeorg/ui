@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.18.0](https://github.com/foreverido/uilib/compare/v5.17.0...v5.18.0) (2026-09-13)
+
+
+### Features
+
+* Chat - Add selector and live panel slot ([95c8839](https://github.com/foreverido/uilib/commit/95c88395ef1280b0094b71bccf3fbfad6319df24))
+* Resizer - Add per-section minWidth ([c44b9c8](https://github.com/foreverido/uilib/commit/c44b9c8c93b4640d6643b7636c93adaa5046bed1))
+* Resizer - Add resizable panes ([2a7d5b2](https://github.com/foreverido/uilib/commit/2a7d5b2d7d259327227075c971742f1e8b82503f))
+* Resizer - Add sizes prop ([714a150](https://github.com/foreverido/uilib/commit/714a1504a578891b628bb4fa585fe91c88759b3e))
+* Resizer - Remember pane sizes ([2e776c1](https://github.com/foreverido/uilib/commit/2e776c1122ddf5763ecc3a07a56e00bc7f91ad83))
+* Select2 - Add clear variant ([429850e](https://github.com/foreverido/uilib/commit/429850ef78a03f2136271a35ae90fe876d363262))
+
+
+### Bug Fixes
+
+* DatePickerInput - Merge calendarProps with internal className ([19a9bf2](https://github.com/foreverido/uilib/commit/19a9bf2462c219850ae4bd6947524aec22746621))
+* ThinkingOutline - Glow only when active ([71cf1d6](https://github.com/foreverido/uilib/commit/71cf1d667ac4ef62b55b246aa0f30dc4177f867e))
+
 ## [5.17.0](https://github.com/foreverido/uilib/compare/v5.16.1...v5.17.0) (2026-09-11)
 
 
