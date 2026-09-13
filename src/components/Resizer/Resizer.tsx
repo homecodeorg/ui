@@ -18,18 +18,24 @@ function writePct(el: HTMLElement, value: number) {
   el.style.setProperty('--height', v);
 }
 
-export function Resizer({ vertical = false, content, className }: T.Props) {
+export function Resizer({
+  vertical = false,
+  content,
+  className,
+  sizes,
+}: T.Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const panesRef = useRef<(HTMLDivElement | null)[]>([]);
   const n = content.length;
   const equal = n ? 100 / n : 0;
+  const sizesKey = sizes?.join(' ') ?? '';
 
   useLayoutEffect(() => {
     panesRef.current.length = n;
-    panesRef.current.forEach(el => {
-      if (el) writePct(el, equal);
+    panesRef.current.forEach((el, i) => {
+      if (el) writePct(el, sizes?.[i] ?? equal);
     });
-  }, [n, equal]);
+  }, [n, equal, sizesKey]);
 
   const onPointerDown = (index: number) => (e: React.PointerEvent) => {
     const left = panesRef.current[index];
