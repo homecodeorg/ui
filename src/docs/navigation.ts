@@ -172,6 +172,10 @@ export default [
         loader: () => import('./examples/RadioGroup'),
       },
       {
+        id: 'Resizer',
+        loader: () => import('./examples/Resizer'),
+      },
+      {
         id: 'Router',
         loader: () => import('./examples/Router'),
       },

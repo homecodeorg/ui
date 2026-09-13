@@ -49,6 +49,7 @@ export * from './RadioButton/RadioButton';
 export * from './RadioGroup/RadioGroup';
 export * from './Router/Router';
 export * from './RequiredStar/RequiredStar';
+export * from './Resizer/Resizer';
 export * from './Select/Select';
 export * from './Select/Select2';
 export * from './Scroll/Scroll';
