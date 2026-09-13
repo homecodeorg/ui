@@ -13,7 +13,10 @@ const Docs = () => (
       the pane wrappers as <code>--width</code> / <code>--height</code> (in %)
       and are written to the DOM while dragging — not React state.{' '}
       <code>vertical</code> switches to a column layout and height.{' '}
-      <code>rememberKey</code> persists those % sizes in localStorage.
+      <code>rememberKey</code> persists those % sizes in localStorage.{' '}
+      <code>minWidths</code> sets a min per pane: <code>20</code> /{' '}
+      <code>&quot;20%&quot;</code> is percent, <code>&quot;200px&quot;</code> is
+      pixels. Neighbor mins are both respected while dragging.
     </p>
 
     <Heading id="props" text="Props" />

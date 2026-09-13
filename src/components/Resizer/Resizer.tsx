@@ -5,8 +5,9 @@ import LS from 'uilib/tools/localStorage';
 
 import S from './Resizer.styl';
 import * as T from './Resizer.types';
+import { clampAll, clampPair, isPxMin, minToPct } from './Resizer.helpers';
 
-export type { Props as ResizerProps } from './Resizer.types';
+export type { Props as ResizerProps, SizeValue } from './Resizer.types';
 
 const LS_PREFIX = 'ui:resizer:';
 
@@ -52,11 +53,32 @@ function resolveSizes(
   return Array.from({ length: n }, (_, i) => sizes?.[i] ?? equal);
 }
 
+function minsToPct(
+  minWidths: T.SizeValue[] | undefined,
+  n: number,
+  totalPx: number
+) {
+  return Array.from({ length: n }, (_, i) => minToPct(minWidths?.[i], totalPx));
+}
+
+function applySizes(
+  panes: (HTMLDivElement | null)[],
+  values: number[],
+  mins: number[]
+) {
+  const next = clampAll(values, mins);
+  panes.forEach((el, i) => {
+    if (el) writePct(el, next[i]);
+  });
+  return next;
+}
+
 export function Resizer({
   vertical = false,
   content,
   className,
   sizes,
+  minWidths,
   rememberKey,
 }: T.Props) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -64,14 +86,36 @@ export function Resizer({
   const n = content.length;
   const equal = n ? 100 / n : 0;
   const sizesKey = sizes?.join(' ') ?? '';
+  const minKey = minWidths?.map(String).join(' ') ?? '';
 
   useLayoutEffect(() => {
     panesRef.current.length = n;
-    const next = resolveSizes(n, equal, sizes, rememberKey);
-    panesRef.current.forEach((el, i) => {
-      if (el) writePct(el, next[i]);
-    });
-  }, [n, equal, sizesKey, rememberKey]);
+    const root = rootRef.current;
+    const total = root ? (vertical ? root.clientHeight : root.clientWidth) : 0;
+    applySizes(
+      panesRef.current,
+      resolveSizes(n, equal, sizes, rememberKey),
+      minsToPct(minWidths, n, total)
+    );
+  }, [n, equal, sizesKey, rememberKey, minKey, vertical]);
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root || !minWidths?.some(isPxMin)) return;
+
+    const apply = () => {
+      const total = vertical ? root.clientHeight : root.clientWidth;
+      const prop = vertical ? '--height' : '--width';
+      const current = panesRef.current.map(el =>
+        el ? readPct(el, prop, equal) : equal
+      );
+      applySizes(panesRef.current, current, minsToPct(minWidths, n, total));
+    };
+
+    const ro = new ResizeObserver(apply);
+    ro.observe(root);
+    return () => ro.disconnect();
+  }, [n, equal, minKey, vertical]);
 
   const onPointerDown = (index: number) => (e: React.PointerEvent) => {
     const left = panesRef.current[index];
@@ -88,6 +132,8 @@ export function Resizer({
     const startLeft = readPct(left, prop, equal);
     const startRight = readPct(right, prop, equal);
     const combined = startLeft + startRight;
+    const minLeft = minToPct(minWidths?.[index], total);
+    const minRight = minToPct(minWidths?.[index + 1], total);
 
     root.classList.add(S.dragging);
     document.body.style.userSelect = 'none';
@@ -95,17 +141,10 @@ export function Resizer({
     const onMove = (ev: PointerEvent) => {
       const pos = vertical ? ev.clientY : ev.clientX;
       const delta = ((pos - startPos) / total) * 100;
-      let nextLeft = startLeft + delta;
-      let nextRight = startRight - delta;
-      if (nextLeft < 0) {
-        nextLeft = 0;
-        nextRight = combined;
-      } else if (nextRight < 0) {
-        nextRight = 0;
-        nextLeft = combined;
-      }
+      const nextLeft =
+        clampPair(startLeft + delta, combined, minLeft, minRight) ?? startLeft;
       writePct(left, nextLeft);
-      writePct(right, nextRight);
+      writePct(right, combined - nextLeft);
     };
 
     const onUp = () => {
@@ -144,6 +183,7 @@ export function Resizer({
             <div
               className={S.handle}
               role="separator"
+              aria-label="Resize panes"
               aria-orientation={vertical ? 'horizontal' : 'vertical'}
               onPointerDown={onPointerDown(i)}
             />

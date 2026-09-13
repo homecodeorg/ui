@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Resizer } from 'uilib';
 
-function SizeLabel() {
+function SizeLabel({ showPx }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -15,25 +15,30 @@ function SizeLabel() {
     if (!wrap) return;
 
     const sync = () => {
-      node.textContent =
+      const pct =
         wrap.style.getPropertyValue('--width') ||
         wrap.style.getPropertyValue('--height');
+      if (!showPx) {
+        node.textContent = pct;
+        return;
+      }
+      node.textContent = `${pct} · ${Math.round(wrap.offsetWidth)}px`;
     };
 
     sync();
     const obs = new MutationObserver(sync);
     obs.observe(wrap, { attributes: true, attributeFilter: ['style'] });
     return () => obs.disconnect();
-  }, []);
+  }, [showPx]);
 
   return <span className={S.size} ref={ref} />;
 }
 
-function Pane({ name }) {
+function Pane({ name, showPx }) {
   return (
     <div className={S.pane}>
       <span>{name}</span>
-      <SizeLabel />
+      <SizeLabel showPx={showPx} />
     </div>
   );
 }
@@ -45,6 +50,18 @@ export default () => (
       <Resizer
         rememberKey="docs-resizer-horizontal"
         content={[<Pane name="A" />, <Pane name="B" />, <Pane name="C" />]}
+      />
+    </div>
+
+    <div className={S.subtitle}>minWidth (% and px)</div>
+    <div className={S.box}>
+      <Resizer
+        minWidths={['120px', '20%', '80px']}
+        content={[
+          <Pane name="A ≥ 120px" showPx />,
+          <Pane name="B ≥ 20%" showPx />,
+          <Pane name="C ≥ 80px" showPx />,
+        ]}
       />
     </div>
 
