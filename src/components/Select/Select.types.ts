@@ -72,7 +72,8 @@ export type Props = FormControl<Value> &
     // ReactNode that will be added to to label
     additionalLabel?: ReactNode;
     size?: Size;
-    variant?: 'default' | 'outlined';
+    // `clear` is a transparent trigger (Button `clear` / Input `clean`)
+    variant?: 'default' | 'outlined' | 'clear';
     // Show the number of selected items in the label
     showSelectedCount?: boolean;
     // Disabled label rendering

@@ -52,6 +52,7 @@ export function Select2(props: T.Props) {
     additionalOptions = [],
     options = [],
     variant,
+    isSearchable,
     label,
     additionalLabel,
     error,
@@ -60,7 +61,6 @@ export function Select2(props: T.Props) {
     trigger,
     required,
     hideRequiredStar,
-    isSearchable,
     presets = [],
     selectAllButton,
     clearButton,
@@ -301,19 +301,22 @@ export function Select2(props: T.Props) {
     []
   );
 
+  const triggerVariant = variant === 'clear' ? 'clear' : (variant ?? 'default');
+  const fieldVariant = variant === 'clear' ? 'clean' : variant;
+  const hideFieldLabel = Boolean(disableLabel || !label);
+
   const triggerProps = useMemo(
     () => ({
-      label,
       size,
       round,
-      variant,
+      variant: isSearchable ? fieldVariant : triggerVariant,
       ...props.triggerProps,
     }),
-    [props.triggerProps, label, size, round, variant]
+    [props.triggerProps, size, round, fieldVariant, triggerVariant, isSearchable]
   );
 
   const getFieldLabel = (label: string) => {
-    if (disableLabel) return null;
+    if (hideFieldLabel) return null;
     if (isMultiple && selectedIds.length && showSelectedCount)
       return `${label} (${selectedIds.length})`;
 
@@ -386,7 +389,7 @@ export function Select2(props: T.Props) {
   };
 
   const renderTriggerButton = () => {
-    const { label, className, ...rest } = triggerProps;
+    const { className, ...rest } = triggerProps;
     const buttonProps = omit(rest, ['name', 'inputProps']);
     const fullSelectedLabel = [selectedLabel, additionalLabel].filter(Boolean);
     const hasSelected = fullSelectedLabel.length > 0;
@@ -403,7 +406,7 @@ export function Select2(props: T.Props) {
       <div>
         <Button
           className={classes}
-          variant="default"
+          variant={triggerVariant}
           {...buttonProps}
           style={{ clipPath: labelClipPath }}
           title={title?.join?.(', ')}
@@ -541,7 +544,12 @@ export function Select2(props: T.Props) {
     </div>
   );
 
-  const classes = cn(S.root, className, S[`size-${size}`]);
+  const classes = cn(
+    S.root,
+    className,
+    S[`size-${size}`],
+    variant === 'clear' && S['variant-clear']
+  );
 
   return (
     <>

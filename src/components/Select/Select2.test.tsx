@@ -468,3 +468,55 @@ describe('Select2 presets', () => {
     expect(onChange).toHaveBeenLastCalledWith([]);
   });
 });
+
+describe('Select2 variant', () => {
+  test('clear uses a transparent trigger button', () => {
+    render(
+      <Select2
+        variant="clear"
+        options={OPTIONS}
+        value="a"
+        onChange={jest.fn()}
+        popupProps={popupProps}
+      />
+    );
+
+    expect(document.querySelector('.triggerButton')).toHaveClass(
+      'variant-clear'
+    );
+  });
+
+  test('clear maps a searchable trigger to Input clean', () => {
+    render(
+      <Select2
+        variant="clear"
+        isSearchable
+        options={OPTIONS}
+        value="a"
+        onChange={jest.fn()}
+        popupProps={popupProps}
+      />
+    );
+
+    expect(getSearchInput().closest('.variant-clean')).toBeTruthy();
+  });
+
+  test('clear + searchable + empty label shows the selected title once', () => {
+    render(
+      <Select2
+        variant="clear"
+        isSearchable
+        disableLabel
+        label=""
+        options={OPTIONS}
+        value="a"
+        onChange={jest.fn()}
+        popupProps={popupProps}
+      />
+    );
+
+    expect(getSearchInput().value).toBe('Alice');
+    expect(document.querySelector('.label')).toBeNull();
+    expect(screen.queryByText('Alice', { selector: '.label' })).toBeNull();
+  });
+});
