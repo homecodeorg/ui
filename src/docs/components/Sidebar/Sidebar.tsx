@@ -1,4 +1,4 @@
-import { Button, Expand, Gap, Input, Link, Scroll } from 'uilib';
+import { Button, Expand, Gap, Icon, Input, Link, Scroll } from 'uilib';
 import {
   Fragment,
   memo,
@@ -11,7 +11,6 @@ import {
 import { I18N } from 'docs/config/i18n';
 import NAV_CONFIG from '../../navigation';
 import S from './Sidebar.styl';
-import { SearchIcon } from 'lucide-react';
 import cn from 'classnames';
 import { useStore } from 'justorm/react';
 
@@ -138,7 +137,7 @@ function Sidebar() {
                   onClick={startSearch}
                   onMouseDown={e => e.stopPropagation()}
                 >
-                  <SearchIcon size={16} />
+                  <Icon type="search" size="s" />
                 </Button>
               )}
             </>
