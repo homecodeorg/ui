@@ -19,6 +19,7 @@ export function DatePickerInput(props: T.Props) {
     popupProps,
     buttonProps,
     displayFormat = 'MMM Do YYYY',
+    calendarProps,
   } = props;
 
   const isRange = Array.isArray(value);
@@ -88,7 +89,10 @@ export function DatePickerInput(props: T.Props) {
           {...props}
           onChange={handleChange}
           className={S.content}
-          calendarProps={{ className: S.calendar }}
+          calendarProps={{
+            ...calendarProps,
+            className: cn(S.calendar, calendarProps?.className),
+          }}
         />
       }
     />
