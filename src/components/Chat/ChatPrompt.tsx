@@ -31,6 +31,7 @@ export function ChatPrompt({
   showAttach = true,
   onAttach,
   attachAccept,
+  livePanel,
   showModelSelector = true,
   models = DEFAULT_MODELS,
   model,
@@ -78,6 +79,33 @@ export function ChatPrompt({
         }}
       />
       <div className={S.buttons} onClick={onButtonsWrapperClick}>
+        <Button
+          className={cn(S.button, S.submit)}
+          variant="text"
+          type="submit"
+          round
+          square
+          disabled={!canSubmit}
+          aria-label="Send"
+          onClick={() => {
+            const next = value.trim();
+            if (!next || disabled) return;
+            onSubmit(next);
+          }}
+        >
+          <Icon type="arrowUp" className={S.submitIcon} />
+        </Button>
+
+        {livePanel && <div className={S.livePanel}>{livePanel}</div>}
+
+        <div className={S.gap} />
+
+        {statusNode && (
+          <div className={S.status}>
+            <TextShimmer>{statusNode}</TextShimmer>
+          </div>
+        )}
+
         {showAttach && (
           <>
             <input
@@ -106,55 +134,37 @@ export function ChatPrompt({
             </Tooltip>
           </>
         )}
-
-        {statusNode && (
-          <div className={S.status}>
-            <TextShimmer>{statusNode}</TextShimmer>
-          </div>
-        )}
-
-        <div className={S.gap} />
-
-        {showModelSelector && !isPrompting && (
-          <Select2
-            className={S.promptModelSelector}
-            label=""
-            size="s"
-            disableLabel
-            hideRequiredStar
-            round
-            options={models}
-            value={modelId}
-            disabled={disabled}
-            triggerProps={{ variant: 'clear' }}
-            popupProps={{
-              direction: 'top-right',
-              round: true,
-            }}
-            onChange={next => {
-              if (next == null || Array.isArray(next)) return;
-              setModel(String(next));
-            }}
-          />
-        )}
-
-        <Button
-          className={cn(S.button, S.submit)}
-          variant="text"
-          type="submit"
-          round
-          square
-          disabled={!canSubmit}
-          aria-label="Send"
-          onClick={() => {
-            const next = value.trim();
-            if (!next || disabled) return;
-            onSubmit(next);
-          }}
-        >
-          <Icon type="arrowUp" className={S.submitIcon} />
-        </Button>
       </div>
+      {showModelSelector && !isPrompting && (
+        <Select2
+          className={S.promptModelSelector}
+          label=""
+          size="xs"
+          variant="clear"
+          disableLabel
+          hideRequiredStar
+          round
+          isSearchable
+          options={models}
+          value={modelId}
+          disabled={disabled}
+          inputProps={{
+            variant: 'clean',
+            autoComplete: 'off',
+            spellCheck: false,
+            round: true,
+            fitContentWidth: true,
+          }}
+          popupProps={{
+            direction: 'top-right',
+            round: true,
+          }}
+          onChange={next => {
+            if (next == null || Array.isArray(next)) return;
+            setModel(String(next));
+          }}
+        />
+      )}
     </div>
   );
 }

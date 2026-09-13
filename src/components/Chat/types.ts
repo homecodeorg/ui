@@ -6,5 +6,7 @@ export type {
   ChatPromptModel,
   ChatPromptProps,
   ChatRole,
+  ChatSelectorItem,
+  ChatSelectorProps,
   ChatViewProps,
 } from './Chat.types';

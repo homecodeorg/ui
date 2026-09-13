@@ -46,6 +46,29 @@ export type ChatPromptModel = {
   label: string;
 };
 
+export type ChatSelectorItem = {
+  id: string;
+  title: string;
+};
+
+export type ChatSelectorProps = {
+  title: string;
+  chats: ChatSelectorItem[];
+  searchQuery: string;
+  selectedId?: string;
+  onSearch: (query: string) => void;
+  onSelectChat: (id: string) => void;
+  onRename: (title: string) => void;
+  onNewChat?: () => void;
+  onSearchOpen?: () => void;
+  onSearchClose?: () => void;
+  searchPlaceholder?: string;
+  newChatLabel?: string;
+  disabled?: boolean;
+  isLoading?: boolean;
+  className?: string;
+};
+
 export type ChatPromptProps = {
   value: string;
   onChange: (value: string) => void;
@@ -58,11 +81,16 @@ export type ChatPromptProps = {
   promptingLabel?: ReactNode;
   placeholder?: string;
   className?: string;
-  /** Default true. Hidden file input + plus button (no STT / live voice). */
+  /** Default true. Hidden file input + plus button. */
   showAttach?: boolean;
   onAttach?: (files: File[]) => void;
   attachAccept?: string;
-  /** Default true. Compact model dropdown (e.g. Auto Router). */
+  /**
+   * Presentational slot next to Send (live radio + TTS). Host app owns the
+   * node — do not import GLASS LivePanel into this package.
+   */
+  livePanel?: ReactNode;
+  /** Default true. Compact model dropdown (e.g. Auto Router). Hidden while `isPrompting`. */
   showModelSelector?: boolean;
   models?: ChatPromptModel[];
   model?: string;

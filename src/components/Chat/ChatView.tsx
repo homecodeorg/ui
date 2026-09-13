@@ -23,10 +23,12 @@ export function ChatView({
     message => !isPlanMessageContent(message.content)
   );
 
+  const lastContent = visible[visible.length - 1]?.content;
+
   useEffect(() => {
     const scroller = listRef.current;
     if (scroller) scrollTo(scroller, 0, scroller.scrollHeight + 80);
-  }, [visible.length, isPrompting]);
+  }, [visible.length, lastContent, isPrompting]);
 
   return (
     <div className={cn(S.root, className)}>

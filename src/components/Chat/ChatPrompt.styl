@@ -68,8 +68,8 @@
   display flex
   align-items center
   justify-content flex-start
-  flex-wrap wrap
-  flex-direction row
+  flex-wrap nowrap
+  flex-direction row-reverse
   flex-shrink 0
   gap 6px
   padding 0 2px 0 6px
@@ -119,11 +119,24 @@
 .gap
   flex-grow 1
 
+.livePanel
+  display flex
+  align-items center
+  flex-shrink 0
+  gap 6px
+
 .promptModelSelector
+  position absolute
+  right var(--p-1)
+  bottom 100%
   flex-shrink 0
   max-width calc(100% - 200px)
   transition opacity .2s ease-out
-  opacity .5
+  opacity .4
+
+  // Searchable trigger is an Input; hide its field chrome so only the title shows.
+  label > div:first-child
+    background-color transparent !important
 
   &:hover
     opacity 1
@@ -146,5 +159,5 @@
   pointer-events none
   white-space nowrap
 
-  &:first-child
+  &:last-child
     padding-left var(--p-3)
