@@ -2,33 +2,36 @@
 div .inactive
   display none
 
-.tabsScroll
-  padding-bottom var(--p-5)
-.size-xs.tabsScroll
-  padding-bottom var(--p-3)
-.size-s.tabsScroll
-  padding-bottom var(--p-4)
-.size-l.tabsScroll
-  padding-bottom calc(var(--p-5) * 1.2)
-.size-xl.tabsScroll
-  padding-bottom calc(var(--p-5) * 1.35)
+.variant-default
+  &.tabsScroll
+    padding-bottom var(--p-5)
+  &.size-xs.tabsScroll
+    padding-bottom var(--p-3)
+  &.size-s.tabsScroll
+    padding-bottom var(--p-4)
+  &.size-l.tabsScroll
+    padding-bottom calc(var(--p-5) * 1.2)
+  &.size-xl.tabsScroll
+    padding-bottom calc(var(--p-5) * 1.35)
 
 .tab
   flex-shrink 0
   white-space nowrap
 
 .variant-links
-  & > button
+  &.tabsScroll
+    padding-bottom 2px
+
+  .tab
+    border-radius 0 !important
+
     &:not(:first-child)
       margin-left 0
-      border-radius inherit
-    &:not(:last-child)
-      border-radius inherit
 
   .tab
     padding var(--p-3) var(--p-5)
     background-color transparent !important
-    box-shadow none
+    box-shadow 0 2px 0 0 var(--accent-color-alpha-100)
 
     &:hover
     &:focus

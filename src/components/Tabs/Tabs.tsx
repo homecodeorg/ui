@@ -105,18 +105,17 @@ export function Tabs(props: T.Props) {
         x
         offset={{ x: { before: 10, after: 10 } }}
         className={tabsWrapperClassName}
-        innerClassName={cn(S.tabsScroll, S[`size-${size}`], tabsInnerClassName)}
+        innerClassName={cn(
+          S.tabsScroll,
+          S[`size-${size}`],
+          S[`variant-${variant}`],
+          tabsInnerClassName
+        )}
         autoHide
         fadeSize={size}
         size={size}
       >
-        <ButtonGroup
-          className={cn(
-            variant === 'links' && S['variant-links'],
-            tabsClassName
-          )}
-          {...rest}
-        >
+        <ButtonGroup className={tabsClassName} {...rest}>
           {tabsButtons}
         </ButtonGroup>
       </Scroll>
