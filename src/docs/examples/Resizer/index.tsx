@@ -12,7 +12,8 @@ const Docs = () => (
       Split adjacent panes with a drag handle between each pair. Sizes live on
       the pane wrappers as <code>--width</code> / <code>--height</code> (in %)
       and are written to the DOM while dragging — not React state.{' '}
-      <code>vertical</code> switches to a column layout and height.
+      <code>vertical</code> switches to a column layout and height.{' '}
+      <code>rememberKey</code> persists those % sizes in localStorage.
     </p>
 
     <Heading id="props" text="Props" />

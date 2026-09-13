@@ -7,5 +7,7 @@ export type Props = {
   content: ReactNode[];
   // Initial pane sizes in % (same order as content). Defaults to equal split.
   sizes?: number[];
+  // Persist pane % sizes in localStorage under this key (namespaced).
+  rememberKey?: string;
   className?: string;
 };

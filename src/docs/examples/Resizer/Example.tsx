@@ -40,9 +40,10 @@ function Pane({ name }) {
 
 export default () => (
   <div className={S.root}>
-    <div className={S.subtitle}>Horizontal</div>
+    <div className={S.subtitle}>Horizontal (remembered)</div>
     <div className={S.box}>
       <Resizer
+        rememberKey="docs-resizer-horizontal"
         content={[<Pane name="A" />, <Pane name="B" />, <Pane name="C" />]}
       />
     </div>

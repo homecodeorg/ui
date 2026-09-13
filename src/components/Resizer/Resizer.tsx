@@ -1,15 +1,20 @@
 import { Fragment, useLayoutEffect, useRef } from 'react';
 import cn from 'classnames';
 
+import LS from 'uilib/tools/localStorage';
+
 import S from './Resizer.styl';
 import * as T from './Resizer.types';
 
 export type { Props as ResizerProps } from './Resizer.types';
 
+const LS_PREFIX = 'ui:resizer:';
+
 const toPct = (n: number) => `${Number(n.toFixed(4))}%`;
 
 function readPct(el: HTMLElement, prop: string, fallback: number) {
-  return parseFloat(el.style.getPropertyValue(prop)) || fallback;
+  const n = parseFloat(el.style.getPropertyValue(prop));
+  return Number.isFinite(n) ? n : fallback;
 }
 
 function writePct(el: HTMLElement, value: number) {
@@ -18,11 +23,41 @@ function writePct(el: HTMLElement, value: number) {
   el.style.setProperty('--height', v);
 }
 
+function lsKey(rememberKey: string) {
+  return `${LS_PREFIX}${rememberKey}`;
+}
+
+function isValidSizes(value: unknown, count: number): value is number[] {
+  return (
+    Array.isArray(value) &&
+    value.length === count &&
+    value.every(n => typeof n === 'number' && Number.isFinite(n))
+  );
+}
+
+function loadRemembered(rememberKey: string | undefined, count: number) {
+  if (!rememberKey) return null;
+  const stored = LS.get(lsKey(rememberKey));
+  return isValidSizes(stored, count) ? stored : null;
+}
+
+function resolveSizes(
+  n: number,
+  equal: number,
+  sizes: number[] | undefined,
+  rememberKey: string | undefined
+) {
+  const remembered = loadRemembered(rememberKey, n);
+  if (remembered) return remembered;
+  return Array.from({ length: n }, (_, i) => sizes?.[i] ?? equal);
+}
+
 export function Resizer({
   vertical = false,
   content,
   className,
   sizes,
+  rememberKey,
 }: T.Props) {
   const rootRef = useRef<HTMLDivElement>(null);
   const panesRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -32,10 +67,11 @@ export function Resizer({
 
   useLayoutEffect(() => {
     panesRef.current.length = n;
+    const next = resolveSizes(n, equal, sizes, rememberKey);
     panesRef.current.forEach((el, i) => {
-      if (el) writePct(el, sizes?.[i] ?? equal);
+      if (el) writePct(el, next[i]);
     });
-  }, [n, equal, sizesKey]);
+  }, [n, equal, sizesKey, rememberKey]);
 
   const onPointerDown = (index: number) => (e: React.PointerEvent) => {
     const left = panesRef.current[index];
@@ -77,6 +113,12 @@ export function Resizer({
       document.removeEventListener('pointerup', onUp);
       root.classList.remove(S.dragging);
       document.body.style.removeProperty('user-select');
+      if (rememberKey) {
+        const current = panesRef.current.map(el =>
+          el ? readPct(el, prop, equal) : equal
+        );
+        LS.set(lsKey(rememberKey), current);
+      }
     };
 
     document.addEventListener('pointermove', onMove);
