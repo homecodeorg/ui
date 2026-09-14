@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.1](https://github.com/foreverido/uilib/compare/v5.18.0...v5.18.1) (2026-09-14)
+
+
+### Bug Fixes
+
+* ThinkingOutline - hover - active ([99c3024](https://github.com/foreverido/uilib/commit/99c302418710f388561458ac242efa3243719036))
+
 ## [5.18.0](https://github.com/foreverido/uilib/compare/v5.17.0...v5.18.0) (2026-09-13)
 
 
