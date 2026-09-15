@@ -1,9 +1,13 @@
 .root
   display flex
   flex-direction column
+  justify-content flex-start
   align-items flex-end
+  min-height 0
+  height 100%
   padding 0 var(--p-3) var(--p-8)
-  overflow hidden
+  overflow-x hidden
+  overflow-y auto
 
 .item
 .itemContentInner
@@ -14,37 +18,19 @@
   padding var(--p-3) 0
 
 .item
-  flex-grow 1
+  flex-grow 0
   flex-shrink 0
   width 100%
   overflow hidden
   user-select none
 
-  &.opened
-    flex-shrink unset
+.opened
+  flex-grow 1
+  min-height 0
 
 .itemHeader
   z-index 1
   justify-content space-between
-
-.search
-  opacity 0
-  pointer-events none
-
-  .itemHeader:hover &
-    opacity 1
-    pointer-events auto
-
-.searchInput
-  flex 1
-  min-width 0
-  background-color transparent !important
-
-  label
-  input
-    padding 0 !important
-  label > div:first-child
-    display none !important
 
 .itemContent
   padding 0 var(--p-3)

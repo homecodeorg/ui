@@ -1,12 +1,5 @@
-import { Button, Expand, Gap, Icon, Input, Link, Scroll } from 'uilib';
-import {
-  Fragment,
-  memo,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Expand, Gap, Link, Scroll } from 'uilib';
+import { Fragment, memo, useCallback, useEffect, useState } from 'react';
 
 import { I18N } from 'docs/config/i18n';
 import NAV_CONFIG from '../../navigation';
@@ -30,15 +23,15 @@ export const SidebarLink = ({ path, label, ...rest }) => {
   );
 };
 
-function Sidebar() {
+type SidebarProps = {
+  searchQuery?: string;
+};
+
+function Sidebar({ searchQuery = '' }: SidebarProps) {
   const { router } = useStore({ router: [] });
   const { path } = router;
   const [openedGroup, setOpenedGroup] = useState(path.split('/')[1]);
   const [prevPath, setPrevPath] = useState(path);
-  const [isSearching, setIsSearching] = useState(false);
-  const [query, setQuery] = useState('');
-  const searchInputRef = useRef(null);
-  const blurTimeoutRef = useRef(null);
   const onExpand = useCallback((group, isOpen) => {
     setOpenedGroup(isOpen ? group : null);
   }, []);
@@ -47,53 +40,32 @@ function Sidebar() {
     if (path !== prevPath) {
       setOpenedGroup(null);
       setPrevPath(path);
-      setIsSearching(false);
-      setQuery('');
-      clearTimeout(blurTimeoutRef.current);
     }
   }, [path]);
 
-  const startSearch = useCallback(e => {
-    e.preventDefault();
-    e.stopPropagation();
-    setOpenedGroup('components');
-    setIsSearching(true);
-  }, []);
-
-  const stopSearch = useCallback(() => {
-    setIsSearching(false);
-    setQuery('');
-  }, []);
-
-  const onSearchBlur = useCallback(() => {
-    clearTimeout(blurTimeoutRef.current);
-    blurTimeoutRef.current = setTimeout(stopSearch, 100);
-  }, [stopSearch]);
-
-  const onSearchFocus = useCallback(() => {
-    clearTimeout(blurTimeoutRef.current);
-  }, []);
-
-  useEffect(() => {
-    if (!isSearching) return;
-    searchInputRef.current?.focus?.();
-  }, [isSearching]);
+  const q = searchQuery.trim().toLowerCase();
 
   const renderGroup = useCallback(
     ({ items, ...group }) => {
       if (!items) return null;
 
-      const isOpen = openedGroup
-        ? openedGroup === group.id
-        : new RegExp(`^/${group.id}`).test(path);
-      const canSearch = group.id === 'components';
-      const q = query.trim().toLowerCase();
-      const visibleItems =
-        canSearch && q
-          ? items.filter(({ id, label }) =>
-              (label || id).toLowerCase().includes(q)
-            )
-          : items;
+      const groupLabel =
+        typeof group.label === 'string' ? group.label : group.id;
+      const groupMatches = Boolean(q) && groupLabel.toLowerCase().includes(q);
+      let visibleItems = items;
+      if (q && !groupMatches) {
+        visibleItems = items.filter(({ id, label }) =>
+          (label || id).toLowerCase().includes(q)
+        );
+      }
+
+      if (q && visibleItems.length === 0) return null;
+
+      const isOpen =
+        Boolean(q) ||
+        (openedGroup
+          ? openedGroup === group.id
+          : new RegExp(`^/${group.id}`).test(path));
 
       return (
         <Expand
@@ -103,43 +75,8 @@ function Sidebar() {
           key={group.id}
           header={
             <>
-              {canSearch && isSearching ? (
-                <span
-                  className={S.searchInput}
-                  onBlur={onSearchBlur}
-                  onFocus={onSearchFocus}
-                  onClick={e => e.stopPropagation()}
-                  onMouseDown={e => e.stopPropagation()}
-                >
-                  <Input
-                    ref={searchInputRef}
-                    variant="clean"
-                    placeholder="Search..."
-                    size="s"
-                    value={query}
-                    onChange={(e, val) => setQuery(String(val ?? ''))}
-                    onBlur={onSearchBlur}
-                    onFocus={onSearchFocus}
-                  />
-                </span>
-              ) : (
-                <>
-                  <I18N id={group.label} />
-                  <Gap />
-                </>
-              )}
-
-              {canSearch && !isSearching && (
-                <Button
-                  className={S.search}
-                  variant="text"
-                  size="s"
-                  onClick={startSearch}
-                  onMouseDown={e => e.stopPropagation()}
-                >
-                  <Icon type="search" size="s" />
-                </Button>
-              )}
+              <I18N id={group.label} />
+              <Gap />
             </>
           }
           headerClassName={S.itemHeader}
@@ -155,11 +92,11 @@ function Sidebar() {
               innerClassName={S.itemContentInner}
             >
               {visibleItems.map(({ id, label }) => {
-                const path = `/${group.id}/${id}`;
+                const itemPath = `/${group.id}/${id}`;
 
                 return (
                   <Fragment key={id}>
-                    <SidebarLink path={path} label={label || id} />
+                    <SidebarLink path={itemPath} label={label || id} />
                     <div id={`sidebar-item-${id}`} className={S.subItems} />
                   </Fragment>
                 );
@@ -169,7 +106,7 @@ function Sidebar() {
         />
       );
     },
-    [openedGroup, isSearching, query, startSearch, onSearchBlur, onSearchFocus]
+    [openedGroup, onExpand, path, q]
   );
 
   return <div className={S.root}>{NAV_CONFIG.map(renderGroup)}</div>;

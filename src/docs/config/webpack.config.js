@@ -30,6 +30,9 @@ export default (env, argv) => {
         'docs/components': `${paths.docs}/components`,
         uilib: paths.src,
         theme: `${paths.src}/theme.styl`,
+        // lucide-react ships a nested react; force one copy so its hooks share the app dispatcher
+        react: `${paths.modules}/react`,
+        'react-dom': `${paths.modules}/react-dom`,
       },
     },
 

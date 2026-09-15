@@ -12,11 +12,26 @@ body
 
 .configBar
   z-index 1
+  position relative
+  display flex
+  flex-direction column
+  flex-shrink 0
+  padding 0 var(--p-3)
+  min-height 70px
+  background-color var(--decent-color)
+
+.configBarMain
   display flex
   justify-content space-between
   align-items center
-  padding 0 var(--p-3)
+  flex-shrink 0
   min-height 70px
+
+.searchInput
+  position relative
+  flex-shrink 0
+  width 100%
+  padding-bottom var(--p-3)
 
 .version
   padding-left var(--p-3)
@@ -57,8 +72,10 @@ body
     display none
 
 .nav
-  display flex
-  flex-direction column
+  display grid
+  grid-template-rows auto 1fr
+  min-height 0
+  height 100%
 
   @media (min-width: $tablet)
     // transform translateX(var(--p-3))
