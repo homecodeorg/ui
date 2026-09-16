@@ -7,13 +7,9 @@ import { FormattedText } from './FormattedText';
 import S from './FormattedText.styl';
 
 jest.mock('uilib/components/Router/Link/Link', () => ({
-  Link: ({
-    children,
-    href,
-  }: {
-    children: React.ReactNode;
-    href?: string;
-  }) => <a href={href}>{children}</a>,
+  Link: ({ children, href }: { children: React.ReactNode; href?: string }) => (
+    <a href={href}>{children}</a>
+  ),
 }));
 
 jest.mock('uilib/components/Tooltip/Tooltip', () => ({
@@ -97,7 +93,7 @@ Continue? [choice:yes|Yes] [choice:no|No]
 
   test('blank lines become line breaks, not one collapsed text node', () => {
     const { container } = render(
-      <FormattedText text={'First paragraph.\n\nSecond paragraph.'} />,
+      <FormattedText text={'First paragraph.\n\nSecond paragraph.'} />
     );
     const root = container.firstElementChild as HTMLElement;
     const textNodes = Array.from(root.childNodes)
@@ -106,8 +102,30 @@ Continue? [choice:yes|Yes] [choice:no|No]
 
     expect(root.querySelectorAll('br').length).toBeGreaterThanOrEqual(2);
     expect(
-      textNodes.some(t => t?.includes('First') && t.includes('Second')),
+      textNodes.some(t => t?.includes('First') && t.includes('Second'))
     ).toBe(false);
+  });
+
+  test('app http URLs become //app paths (router root), not current-route relative', () => {
+    render(
+      <FormattedText text="See [OFAC](http://localhost:3040/app/investigate/doc/opensanctions%3Aofac-pr-a45ec49b63a696b5af204fc59bdbd9d058d4ba2f)" />
+    );
+
+    expect(screen.getByRole('link', { name: 'OFAC' })).toHaveAttribute(
+      'href',
+      '//app/investigate/doc/opensanctions%3Aofac-pr-a45ec49b63a696b5af204fc59bdbd9d058d4ba2f'
+    );
+  });
+
+  test('external http URLs stay absolute', () => {
+    render(
+      <FormattedText text="See [OS](https://www.opensanctions.org/entities/ofac-pr)" />
+    );
+
+    expect(screen.getByRole('link', { name: 'OS' })).toHaveAttribute(
+      'href',
+      'https://www.opensanctions.org/entities/ofac-pr'
+    );
   });
 
   test('consecutive lines after HR and around links do not collapse', () => {
@@ -128,17 +146,15 @@ Result: {"ok":true,"count":3}
     expect(container.querySelector(`.${S.line}`)).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'uilib' })).toBeInTheDocument();
     expect(
-      screen.getByRole('link', { name: 'https://example.com' }),
+      screen.getByRole('link', { name: 'https://example.com' })
     ).toBeInTheDocument();
     expect(container.querySelector('pre')).toHaveTextContent(/"ok": true/);
     expect(root.querySelectorAll('br').length).toBeGreaterThan(0);
     expect(
-      textNodes.some(
-        t => t.includes('Markdown link') && t.includes('Bare URL'),
-      ),
+      textNodes.some(t => t.includes('Markdown link') && t.includes('Bare URL'))
     ).toBe(false);
     expect(
-      textNodes.some(t => t.includes('Bare URL') && t.includes('Result')),
+      textNodes.some(t => t.includes('Bare URL') && t.includes('Result'))
     ).toBe(false);
   });
 });

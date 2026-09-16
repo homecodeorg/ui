@@ -10,6 +10,20 @@ import S from './Link.styl';
 import * as T from './Link.types';
 
 const isStartFromDoubleSlash = href => /^\/\//.test(href);
+const isHttpHref = (href: string) => /^https?:\/\//i.test(href);
+
+function sameOriginPath(href: string): string | null {
+  if (!isHttpHref(href)) return null;
+  try {
+    const url = new URL(href);
+    if (typeof location === 'undefined' || url.origin !== location.origin) {
+      return null;
+    }
+    return `${url.pathname}${url.search}${url.hash}` || '/';
+  } catch {
+    return null;
+  }
+}
 
 export const Link = ({
   className,
@@ -31,21 +45,26 @@ export const Link = ({
   const domElem = useRef(null);
   const { basePath } = useContext(Context);
 
-  const isExternal = useMemo(() => /\./.test(hrefProp), [hrefProp]);
+  const internalHref = useMemo(() => sameOriginPath(hrefProp), [hrefProp]);
+  const isExternal = useMemo(() => {
+    if (internalHref) return false;
+    if (isHttpHref(hrefProp)) return true;
+    return /\./.test(hrefProp);
+  }, [hrefProp, internalHref]);
   const rootPath = useMemo(() => {
     if (isExternal || isFromRoot) return '';
     return basePath ?? '';
   }, [isExternal, isFromRoot, basePath]);
 
   const href = useMemo(() => {
-    let str = hrefProp;
+    let str = internalHref ?? hrefProp;
 
     if (isFromRoot) str = str.replace(/^\//, '');
 
     if (str === '/') str = '';
 
     return `${rootPath}${str}`;
-  }, [hrefProp, rootPath]);
+  }, [hrefProp, internalHref, isFromRoot, rootPath]);
 
   const handleClick = useCallback(
     e => {

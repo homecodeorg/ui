@@ -14,6 +14,34 @@ type InjectionResult = {
   length: number;
 } | null;
 
+function isAppOriginHost(hostname: string) {
+  if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
+  if (typeof location === 'undefined') return false;
+  return hostname === location.hostname;
+}
+
+export function hrefForFormattedLink(url: string): string {
+  const value = url.trim();
+  if (/^https?:\/\//i.test(value)) {
+    try {
+      const parsed = new URL(value);
+      if (
+        parsed.pathname.startsWith('/app/') &&
+        isAppOriginHost(parsed.hostname)
+      ) {
+        return `/${parsed.pathname}${parsed.search}${parsed.hash}`;
+      }
+    } catch {
+      return value;
+    }
+    return value;
+  }
+  if (value.startsWith('//app/')) return value;
+  if (value.startsWith('/app/')) return `/${value}`;
+  if (value.startsWith('app/')) return `//${value}`;
+  return value;
+}
+
 function findJsonEndExclusive(content: string, start: number): number {
   const first = content[start];
   if (first !== '{' && first !== '[') return -1;
@@ -58,7 +86,7 @@ function findJsonEndExclusive(content: string, start: number): number {
 
 function applyInjectors(
   text: string,
-  injectors: Array<(content: string) => InjectionResult>,
+  injectors: Array<(content: string) => InjectionResult>
 ): React.ReactNode[] {
   let result: React.ReactNode[] = [text];
   injectors.forEach(fn => {
@@ -206,6 +234,7 @@ export function FormattedText({
     if (markdown) {
       let url = markdown[2];
       if (url.startsWith('www.')) url = `https://${url}`;
+      url = hrefForFormattedLink(url);
       return {
         elem: (
           <Tooltip content={url} direction="top">
@@ -223,12 +252,13 @@ export function FormattedText({
     const matches = content.match(
       new RegExp(
         `(https?:\\/\\/[^\\s<>"']+|www\\.[^\\s<>"']+|[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\\.(?:${bareDomainTlds})\\b[^\\s<>"']*)`,
-        'i',
-      ),
+        'i'
+      )
     );
     if (!matches) return null;
     let url = matches[0];
     if (url.startsWith('www.')) url = `https://${url}`;
+    url = hrefForFormattedLink(url);
     return {
       elem: (
         <Tooltip content={url} direction="top">
@@ -296,7 +326,7 @@ export function FormattedText({
                 elem: React.createElement(
                   Tag,
                   {},
-                  ...processCellContent(matches[3], depth + 1),
+                  ...processCellContent(matches[3], depth + 1)
                 ),
                 index: matches.index!,
                 length: matches[0].length,
@@ -326,7 +356,7 @@ export function FormattedText({
 
   const injectTables = (content: string): InjectionResult => {
     const withSep = content.match(
-      /(\n|^)(\|[^\n]+\|[ \t]*\n)(\|[\t :-]+(?:\|[\t :-]+)*\|[ \t]*\n)((?:\|[^\n]+\|[ \t]*\n?)+)/,
+      /(\n|^)(\|[^\n]+\|[ \t]*\n)(\|[\t :-]+(?:\|[\t :-]+)*\|[ \t]*\n)((?:\|[^\n]+\|[ \t]*\n?)+)/
     );
     const withoutSep = withSep
       ? null
@@ -336,13 +366,21 @@ export function FormattedText({
     const hasSeparator = Boolean(withSep);
     const headerRow = matches[2].trim();
     const dataRows = (hasSeparator ? matches[4] : matches[3]).trim();
-    const headers = headerRow.split('|').map(cell => cell.trim()).slice(1, -1);
+    const headers = headerRow
+      .split('|')
+      .map(cell => cell.trim())
+      .slice(1, -1);
     if (headers.length === 0) return null;
     const rows = dataRows
       .split('\n')
       .map(row => row.trim())
       .filter(row => row.startsWith('|') && row.endsWith('|'))
-      .map(row => row.split('|').map(cell => cell.trim()).slice(1, -1))
+      .map(row =>
+        row
+          .split('|')
+          .map(cell => cell.trim())
+          .slice(1, -1)
+      )
       .filter(row => row.length > 0);
     if (rows.length === 0) return null;
     const maxCols = Math.max(headers.length, ...rows.map(row => row.length));
