@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.2](https://github.com/foreverido/uilib/compare/v5.18.1...v5.18.2) (2026-09-16)
+
+
+### Features
+
+* App - Move docs sidebar search to config bar ([86a44f5](https://github.com/foreverido/uilib/commit/86a44f51010add71116109c1be363be521e07ed8))
+
+
+### Bug Fixes
+
+* FormattedText - Route same-origin app links in-app ([266d9a2](https://github.com/foreverido/uilib/commit/266d9a2fce4401ca4531c77423c6851c3b14ca42))
+
 ### [5.18.1](https://github.com/foreverido/uilib/compare/v5.18.0...v5.18.1) (2026-09-14)
 
 
