@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.3](https://github.com/foreverido/uilib/compare/v5.18.2...v5.18.3) (2026-09-19)
+
+
+### Bug Fixes
+
+* Analytics - Inline SDK after /api/client removal ([4d51a13](https://github.com/foreverido/uilib/commit/4d51a13a3402c22bdb6afc22ee09b63366244f55))
+
 ### [5.18.2](https://github.com/foreverido/uilib/compare/v5.18.1...v5.18.2) (2026-09-16)
 
 
