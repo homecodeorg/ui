@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
-
-import { Size } from 'uilib/types';
-import { Props as ScrollProps } from 'uilib/components/Scroll/Scroll.types';
+import { Props as ScrollProps } from '../Scroll/Scroll.types';
+import { Size } from '../../types';
 
 export interface MenuProps extends ScrollProps {
   children: ReactNode;
