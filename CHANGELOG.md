@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.4](https://github.com/foreverido/uilib/compare/v5.18.3...v5.18.4) (2026-09-21)
+
+
+### Bug Fixes
+
+* ThinkingOutline - isControlled/active/inactive states ([8346246](https://github.com/foreverido/uilib/commit/83462461f40aa5cf0ec5f3151c37e79b1a03dfa2))
+
 ### [5.18.3](https://github.com/foreverido/uilib/compare/v5.18.2...v5.18.3) (2026-09-19)
 
 
