@@ -43,14 +43,13 @@
   "type": "module",
   "exports": {
     ".": {
+      "types": "./dist/esm/types/index.d.ts",
       "import": "./dist/esm/index.js",
-      "require": "./dist/esm/index.js",
-      "default": "./dist/esm/index.js",
-      "types": "./dist/esm/types/index.d.ts"
+      "default": "./dist/esm/index.js"
     },
     "./icons": {
-      "import": "./dist/esm/src/components/Icon/icons/index.js",
-      "types": "./dist/esm/types/src/components/Icon/icons/index.d.ts"
+      "types": "./dist/esm/types/src/components/Icon/icons/index.d.ts",
+      "import": "./dist/esm/src/components/Icon/icons/index.js"
     }
   },
   "bugs": {
