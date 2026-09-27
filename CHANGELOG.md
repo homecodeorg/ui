@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.5](https://github.com/foreverido/uilib/compare/v5.18.4...v5.18.5) (2026-09-27)
+
+
+### Bug Fixes
+
+* Package - Put "types" first in exports, refresh caniuse-lite ([86b7f3d](https://github.com/foreverido/uilib/commit/86b7f3d4325b459792cbe8aaaf88f76a3c17be86))
+* TextShimmer - default colors ([868c844](https://github.com/foreverido/uilib/commit/868c844ef9ac5fd42c0f5b240387746e48fa0ecf))
+* ThinkingOutline - Docs example and inactive hover ([851e9d3](https://github.com/foreverido/uilib/commit/851e9d3dc2d3672ee277884a0d12be1a6789fa5b))
+* ThinkinOutline - accessible for pointer events ([f75e16d](https://github.com/foreverido/uilib/commit/f75e16dccfbb1361616b7021a3dd28e68a9579ad))
+
 ### [5.18.4](https://github.com/foreverido/uilib/compare/v5.18.3...v5.18.4) (2026-09-21)
 
 
