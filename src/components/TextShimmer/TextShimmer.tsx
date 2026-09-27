@@ -1,8 +1,8 @@
-import cn from 'classnames';
 import React, { useMemo } from 'react';
 
 import S from './TextShimmer.styl';
 import { TextShimmerProps } from './TextShimmer.types';
+import cn from 'classnames';
 
 function TextShimmerComponent({
   children,
@@ -23,9 +23,9 @@ function TextShimmerComponent({
 
     // Resolve on the gradient so ancestor --txt-sh-* inherit. --decent-color is the surface.
     const fill =
-      'var(--txt-sh-fill, var(--text-shimmer-decent-tone, var(--accent-color)))';
+      'var(--txt-sh-fill, var(--text-shimmer-decent-tone, var(--accent-color-alpha-300)))';
     const highlight =
-      'var(--txt-sh-highlight, var(--text-shimmer-accent-tone, var(--active-color)))';
+      'var(--txt-sh-highlight, var(--text-shimmer-accent-tone, var(--accent-color)))';
     const baseColor = inverted ? highlight : fill;
     const bandColor = inverted ? fill : highlight;
 
