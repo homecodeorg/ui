@@ -1,12 +1,9 @@
 import cn from 'classnames';
 
 import S from './ThinkingOutline.styl';
+import { ThinkingOutlineProps } from './ThinkingOutline.types';
 
-export type ThinkingOutlineProps = {
-  /** When omitted, hover on the outline drives the glow. */
-  active?: boolean;
-  className?: string;
-};
+export type { ThinkingOutlineProps };
 
 export function ThinkingOutline({ active, className }: ThinkingOutlineProps) {
   const isControlled = active !== undefined;

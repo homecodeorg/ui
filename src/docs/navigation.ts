@@ -212,6 +212,10 @@ export default [
         loader: () => import('./examples/TextWithDeferTooltip'),
       },
       {
+        id: 'ThinkingOutline',
+        loader: () => import('./examples/ThinkingOutline'),
+      },
+      {
         id: 'Toggle',
         loader: () => import('./examples/Toggle'),
       },
