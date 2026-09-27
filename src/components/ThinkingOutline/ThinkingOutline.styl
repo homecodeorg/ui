@@ -21,6 +21,7 @@ glowRing(thickness)
   position absolute
   inset 0
   border-radius inherit
+  pointer-events none
   transition opacity 0.5s ease-out
   opacity 0
   animation orbitGlow 3.5s linear infinite
@@ -29,7 +30,7 @@ glowRing(thickness)
   &.interactive
     pointer-events auto
 
-  &:hover
+  &.interactive:hover
   &.active
     opacity 1
     animation-play-state running
