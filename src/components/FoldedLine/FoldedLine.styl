@@ -119,6 +119,10 @@
   line-clamp 1
   text-overflow ellipsis
   overflow hidden
+  // -webkit-box shrink-wraps in WKWebView until the next layout (hover).
+  // A specified width uses the column on the first layout.
+  width 100%
+  min-width 0
   transition opacity 0.1s ease-out
 
   &::before
