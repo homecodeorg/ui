@@ -98,6 +98,29 @@ export default [
       postcss({
         minimize: true,
         modules: true,
+        // Default style-inject appends after the page stylesheet, so library
+        // rules beat the app at equal specificity. Insert before the first
+        // app `<link rel="stylesheet">` / inline `<style>` instead.
+        inject(cssVariableName) {
+          return `
+            if (typeof document !== 'undefined') {
+              var __uilibHead = document.head || document.getElementsByTagName('head')[0];
+              if (__uilibHead) {
+                var __uilibStyle = document.createElement('style');
+                __uilibStyle.setAttribute('data-uilib-css', '');
+                __uilibStyle.appendChild(document.createTextNode(${cssVariableName}));
+                var __uilibLink = __uilibHead.querySelector('link[rel="stylesheet"]');
+                var __uilibInline = __uilibHead.querySelector('style:not([data-uilib-css])');
+                var __uilibAnchor = __uilibLink || __uilibInline;
+                if (__uilibLink && __uilibInline && (__uilibLink.compareDocumentPosition(__uilibInline) & 4) === 0) {
+                  __uilibAnchor = __uilibInline;
+                }
+                if (__uilibAnchor) __uilibHead.insertBefore(__uilibStyle, __uilibAnchor);
+                else __uilibHead.appendChild(__uilibStyle);
+              }
+            }
+          `;
+        },
         // use: {
         //   sass: null,
         //   stylus: null,
