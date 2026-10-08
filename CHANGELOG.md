@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.6](https://github.com/foreverido/uilib/compare/v5.18.5...v5.18.6) (2026-10-08)
+
+
+### Bug Fixes
+
+* FoldedLine - Give the label a width on first layout ([61c26e1](https://github.com/foreverido/uilib/commit/61c26e1f247ac9ecd3610243367bbfe4a76b6dae))
+* Link - Open same-origin file URLs on this host ([a408256](https://github.com/foreverido/uilib/commit/a408256416e3fc11a550fbef14246911c4d4e32a))
+* Link - Show same-origin file links in the docs demo ([d22633d](https://github.com/foreverido/uilib/commit/d22633d39a05958633076383f816605971069027))
+* NestedMenu - icon - do not decrease opacity ([ba1de7f](https://github.com/foreverido/uilib/commit/ba1de7f1747e993be10bb85c693999391ae37a7b))
+* Package - Inject component CSS before page styles ([237d3b9](https://github.com/foreverido/uilib/commit/237d3b9e5f799f8350e749efc6869ad1ac04e512))
+
 ### [5.18.5](https://github.com/foreverido/uilib/compare/v5.18.4...v5.18.5) (2026-09-27)
 
 
