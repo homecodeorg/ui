@@ -9,7 +9,10 @@ const Docs = () => (
   <>
     <p>
       UI component is a customizable anchor element that can be used to create
-      hyperlinks
+      hyperlinks. A single-slash path stays on this host. <code>/api/…</code>{' '}
+      and a path with a file extension open in the browser. <code>//path</code>{' '}
+      skips the router basePath. A dotted name with no scheme is an external
+      host.
     </p>
 
     <span>
