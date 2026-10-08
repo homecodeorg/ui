@@ -6,6 +6,7 @@ import { Icon } from 'uilib/components/Icon/Icon';
 
 import Context from '../context';
 import S from './Link.styl';
+import { isNativeDocumentHref, isRootRelativeHref } from './linkHref';
 
 import * as T from './Link.types';
 
@@ -48,13 +49,17 @@ export const Link = ({
   const internalHref = useMemo(() => sameOriginPath(hrefProp), [hrefProp]);
   const isExternal = useMemo(() => {
     if (internalHref) return false;
+    // A dot in `?filePath=a.pdf` is not a hostname. `http://` + `/api/…`
+    // is parsed as host `api`.
+    if (isRootRelativeHref(hrefProp)) return false;
     if (isHttpHref(hrefProp)) return true;
     return /\./.test(hrefProp);
   }, [hrefProp, internalHref]);
+  const nativeDocumentProp = isNativeDocumentHref(internalHref ?? hrefProp);
   const rootPath = useMemo(() => {
-    if (isExternal || isFromRoot) return '';
+    if (isExternal || isFromRoot || nativeDocumentProp) return '';
     return basePath ?? '';
-  }, [isExternal, isFromRoot, basePath]);
+  }, [isExternal, isFromRoot, nativeDocumentProp, basePath]);
 
   const href = useMemo(() => {
     let str = internalHref ?? hrefProp;
@@ -66,9 +71,12 @@ export const Link = ({
     return `${rootPath}${str}`;
   }, [hrefProp, internalHref, isFromRoot, rootPath]);
 
+  const nativeDocument = isNativeDocumentHref(href);
+
   const handleClick = useCallback(
     e => {
       onClick?.(e, href);
+      if (e.defaultPrevented || nativeDocument) return;
       if (!isExternal && router.path !== href) {
         e.preventDefault();
 
@@ -81,7 +89,7 @@ export const Link = ({
         domElem.current?.blur();
       }
     },
-    [href, isExternal, onClick]
+    [href, isExternal, nativeDocument, onClick]
   );
 
   const isExact = useMemo(() => {
