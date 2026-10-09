@@ -60,13 +60,16 @@ export function DropZone(props: T.Props) {
 
   const handleDrop = useCallback(
     (e: ReactDragEvent<HTMLDivElement>) => {
+      // Capture-phase listeners may already own this drop. A macOS `.app` is a
+      // directory; uploading that File makes fetch throw "Failed to fetch".
+      const handledByPage = e.defaultPrevented;
       e.preventDefault();
       setIsDragging(false);
 
-      if (disabled) return;
+      if (disabled || handledByPage) return;
 
       const list = Array.from(e.dataTransfer.files).filter(f =>
-        matchesAccept(f, accept),
+        matchesAccept(f, accept)
       );
 
       if (props.multiple === true) {
@@ -80,7 +83,7 @@ export function DropZone(props: T.Props) {
         }
       }
     },
-    [accept, disabled, props],
+    [accept, disabled, props]
   );
 
   const handleFileInput = useCallback(
@@ -103,7 +106,7 @@ export function DropZone(props: T.Props) {
       }
       e.target.value = '';
     },
-    [accept, disabled, props],
+    [accept, disabled, props]
   );
 
   useEffect(() => {
@@ -150,7 +153,7 @@ export function DropZone(props: T.Props) {
           className={cn(
             S.dropArea,
             isDragging && S.isDragging,
-            disabled && S.disabled,
+            disabled && S.disabled
           )}
           onDrop={handleDrop}
         >
