@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.7](https://github.com/foreverido/uilib/compare/v5.18.6...v5.18.7) (2026-10-09)
+
+
+### Bug Fixes
+
+* DropZone - Skip a drop the page already accepted ([6c33294](https://github.com/foreverido/uilib/commit/6c332948854f9c350d75114969a2f1fccf6bca09))
+
 ### [5.18.6](https://github.com/foreverido/uilib/compare/v5.18.5...v5.18.6) (2026-10-08)
 
 
