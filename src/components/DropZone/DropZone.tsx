@@ -12,36 +12,14 @@ import { generateUID } from 'uilib/tools/uid';
 
 import S from './DropZone.styl';
 import type * as T from './DropZone.types';
+import {
+  DROP_HIDE_GRACE_MS,
+  dragCarriesFiles,
+  filesForDrop,
+  matchesAccept,
+} from './dropFiles';
 
 export type DropZoneProps = T.Props;
-
-function matchesAcceptPart(file: File, part: string): boolean {
-  const p = part.trim().toLowerCase();
-  if (!p) return false;
-  if (p.startsWith('.')) {
-    return file.name.toLowerCase().endsWith(p);
-  }
-  if (p.includes('/')) {
-    const t = file.type.toLowerCase();
-    if (p.endsWith('/*')) {
-      const prefix = p.slice(0, -1);
-      return t.startsWith(prefix);
-    }
-    return t === p;
-  }
-  return false;
-}
-
-function matchesAccept(file: File, accept: string): boolean {
-  const trimmed = accept.trim();
-  if (!trimmed) return true;
-  const parts = trimmed
-    .split(',')
-    .map(s => s.trim())
-    .filter(Boolean);
-  if (parts.length === 0) return true;
-  return parts.some(part => matchesAcceptPart(file, part));
-}
 
 export function DropZone(props: T.Props) {
   const {
@@ -54,108 +32,137 @@ export function DropZone(props: T.Props) {
     className,
   } = props;
   const [isDragging, setIsDragging] = useState(false);
-  const dropAreaRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const fallbackInputIdRef = useRef(generateUID());
   const inputId = id ?? fallbackInputIdRef.current;
-
-  const handleDrop = useCallback(
-    (e: ReactDragEvent<HTMLDivElement>) => {
-      // Capture-phase listeners may already own this drop. A macOS `.app` is a
-      // directory; uploading that File makes fetch throw "Failed to fetch".
-      const handledByPage = e.defaultPrevented;
-      e.preventDefault();
-      setIsDragging(false);
-
-      if (disabled || handledByPage) return;
-
-      const list = Array.from(e.dataTransfer.files).filter(f =>
-        matchesAccept(f, accept)
-      );
-
-      if (props.multiple === true) {
-        if (list.length > 0) {
-          props.onFiles(list);
-        }
-      } else {
-        const file = list[0];
-        if (file) {
-          props.onFile(file);
-        }
-      }
-    },
-    [accept, disabled, props]
-  );
+  const propsRef = useRef(props);
+  propsRef.current = props;
+  const disabledRef = useRef(disabled);
+  disabledRef.current = disabled;
 
   const handleFileInput = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       if (disabled) return;
-      const raw = e.target.files;
+      const raw = event.target.files;
       if (!raw?.length) return;
 
-      const list = Array.from(raw).filter(f => matchesAccept(f, accept));
+      const list = Array.from(raw).filter(file => matchesAccept(file, accept));
 
       if (props.multiple === true) {
-        if (list.length > 0) {
-          props.onFiles(list);
-        }
+        if (list.length > 0) props.onFiles(list);
       } else {
         const file = list[0];
-        if (file) {
-          props.onFile(file);
-        }
+        if (file) props.onFile(file);
       }
-      e.target.value = '';
+      event.target.value = '';
     },
     [accept, disabled, props]
   );
 
   useEffect(() => {
-    const dialog = dropAreaRef.current?.closest('[role="dialog"]');
-    const targetElement = (dialog as HTMLElement) || document.body;
+    const dialog = rootRef.current?.closest('[role="dialog"]');
+    const target: EventTarget = dialog ?? window;
+    let hideTimer = 0;
+    let snapshotted: File[] | null = null;
 
-    const handleGlobalDragOver = (e: globalThis.DragEvent) => {
-      e.preventDefault();
+    const allowFileDrag = (event: DragEvent) => {
+      const transfer = event.dataTransfer;
+      if (!transfer || !dragCarriesFiles(transfer.types)) return;
+      event.preventDefault();
+      transfer.dropEffect = disabledRef.current ? 'none' : 'copy';
+      if (disabledRef.current) return;
+      window.clearTimeout(hideTimer);
       setIsDragging(true);
     };
 
-    const handleGlobalDragLeave = (e: globalThis.DragEvent) => {
-      if (
-        !e.relatedTarget ||
-        !targetElement.contains(e.relatedTarget as Node)
-      ) {
+    const scheduleHide = () => {
+      window.clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(() => {
         setIsDragging(false);
+      }, DROP_HIDE_GRACE_MS);
+    };
+
+    const onDragLeave = (event: DragEvent) => {
+      const related = event.relatedTarget;
+      if (related instanceof Node) {
+        const host = dialog ?? document;
+        if (host.contains(related)) return;
       }
+      scheduleHide();
     };
 
-    const handleGlobalDrop = () => {
+    const onDropCapture = (event: DragEvent) => {
+      // Snapshot before later capture listeners read `items`. WebKit then
+      // clears `files`, so the bubble handler would see an empty drop.
+      snapshotted = event.dataTransfer
+        ? Array.from(event.dataTransfer.files)
+        : [];
+    };
+
+    const deliver = (event: DragEvent) => {
+      window.clearTimeout(hideTimer);
       setIsDragging(false);
+      const saved = snapshotted;
+      snapshotted = null;
+      const transfer = event.dataTransfer;
+      const claimed = event.defaultPrevented;
+      if (transfer && dragCarriesFiles(transfer.types) && !claimed) {
+        event.preventDefault();
+      }
+      if (claimed || disabledRef.current) return;
+      const current = propsRef.current;
+      const dataTransfer =
+        saved && saved.length > 0
+          ? { types: transfer?.types, files: saved, items: null }
+          : transfer;
+      const files = filesForDrop({
+        defaultPrevented: false,
+        disabled: false,
+        accept: current.accept,
+        multiple: current.multiple === true,
+        dataTransfer,
+      });
+      if (files.length === 0) return;
+      if (current.multiple === true) current.onFiles(files);
+      else current.onFile(files[0]);
     };
 
-    targetElement.addEventListener('dragover', handleGlobalDragOver);
-    targetElement.addEventListener('dragleave', handleGlobalDragLeave);
-    targetElement.addEventListener('drop', handleGlobalDrop);
+    target.addEventListener('dragenter', allowFileDrag, true);
+    target.addEventListener('dragover', allowFileDrag, true);
+    target.addEventListener('dragleave', onDragLeave, true);
+    target.addEventListener('drop', onDropCapture, true);
+    target.addEventListener('drop', deliver);
 
     return () => {
-      targetElement.removeEventListener('dragover', handleGlobalDragOver);
-      targetElement.removeEventListener('dragleave', handleGlobalDragLeave);
-      targetElement.removeEventListener('drop', handleGlobalDrop);
+      window.clearTimeout(hideTimer);
+      target.removeEventListener('dragenter', allowFileDrag, true);
+      target.removeEventListener('dragover', allowFileDrag, true);
+      target.removeEventListener('dragleave', onDragLeave, true);
+      target.removeEventListener('drop', onDropCapture, true);
+      target.removeEventListener('drop', deliver);
     };
   }, []);
+
+  const keepFileDrag = (event: ReactDragEvent<HTMLDivElement>) => {
+    if (!dragCarriesFiles(event.dataTransfer.types)) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = disabled ? 'none' : 'copy';
+  };
 
   const shouldShowDropArea = !ghost || isDragging;
   const multiple = props.multiple === true;
 
   return (
-    <div className={cn(S.root, className)}>
+    <div ref={rootRef} className={cn(S.root, className)}>
       {shouldShowDropArea && (
         <div
-          ref={dropAreaRef}
           className={cn(
             S.dropArea,
             isDragging && S.isDragging,
             disabled && S.disabled
           )}
-          onDrop={handleDrop}
+          onDragEnter={keepFileDrag}
+          onDragOver={keepFileDrag}
         >
           <input
             type="file"
