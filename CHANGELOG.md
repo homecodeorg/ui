@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.8](https://github.com/foreverido/uilib/compare/v5.18.7...v5.18.8) (2026-10-09)
+
+
+### Bug Fixes
+
+* DropZone - Keep the drop target alive on WebKit ([d87819c](https://github.com/foreverido/uilib/commit/d87819c22dbfe8b9614edc8332dcf49ab02fd478))
+
 ### [5.18.7](https://github.com/foreverido/uilib/compare/v5.18.6...v5.18.7) (2026-10-09)
 
 
