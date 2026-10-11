@@ -66,9 +66,11 @@
   overflow hidden
   width calc(100% + var(--p-5))
   padding-right var(--p-5)
+  margin-top calc(var(--p-2) * -1) // compensate the padding-top of the "card-content"
 
   & [data-slot="card-content"]
     padding-right 1px
+    padding-top var(--p-2) // to not cut the first-child input's labels
 
 .centered
 .fullHeight
