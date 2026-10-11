@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.9](https://github.com/foreverido/uilib/compare/v5.18.8...v5.18.9) (2026-10-11)
+
+
+### Bug Fixes
+
+* Card - content padding to not cut the first child input's label ([f6e4f5a](https://github.com/foreverido/uilib/commit/f6e4f5a110f735a90484744cf245d3f77f088f46))
+
 ### [5.18.8](https://github.com/foreverido/uilib/compare/v5.18.7...v5.18.8) (2026-10-09)
 
 
