@@ -1,22 +1,11 @@
 import cn from 'classnames';
-import { ReactNode } from 'react';
 
 import { Button } from 'uilib/components/Button/Button';
-import { Size } from 'uilib/types';
 
 import S from './Chip.styl';
+import * as T from './Chip.types';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
 import { Icon } from 'uilib/components/Icon/Icon';
-
-type Props = {
-  children: ReactNode;
-  className?: string;
-  selected?: boolean;
-  onRemove?: () => void;
-  onClick?: () => void;
-  removeTooltip?: ReactNode;
-  size?: Size;
-};
 
 export function Chip({
   children,
@@ -26,7 +15,7 @@ export function Chip({
   onClick,
   removeTooltip,
   size = 'm',
-}: Props) {
+}: T.Props) {
   const closeIcon = <Icon type="close" size={size} />;
 
   return (
