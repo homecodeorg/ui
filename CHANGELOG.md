@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.10](https://github.com/foreverido/uilib/compare/v5.18.9...v5.18.10) (2026-10-12)
+
+
+### Bug Fixes
+
+* PromptComposer - Dim empty message placeholder ([c9966ea](https://github.com/foreverido/uilib/commit/c9966ead0f5b27be3cc5ae1e613a8933acc9c05e))
+
 ### [5.18.9](https://github.com/foreverido/uilib/compare/v5.18.8...v5.18.9) (2026-10-11)
 
 
