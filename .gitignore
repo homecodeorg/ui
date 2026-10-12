@@ -10,8 +10,10 @@ src/***/*.d.ts
 !src/declarations.d.ts
 
 # development
+graphify-out/
 src/docs/localLib.json
 .vscode/
+.cursor/debug*
 .env
 
 # production
