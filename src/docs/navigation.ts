@@ -63,6 +63,10 @@ export default [
         loader: () => import('./examples/Chat'),
       },
       {
+        id: 'Chip',
+        loader: () => import('./examples/Chip'),
+      },
+      {
         id: 'Checkbox',
         loader: () => import('./examples/Checkbox'),
       },
