@@ -361,7 +361,7 @@ export function Select2(props: T.Props) {
           size={size}
           selected={selectedChipIds?.includes(id)}
           onRemove={() => onItemToggle(id)}
-          onClick={() => onChipClick?.(id)}
+          onClick={onChipClick && (() => onChipClick(id))}
           removeTooltip={selectedChipRemoveTooltip}
         >
           {label}

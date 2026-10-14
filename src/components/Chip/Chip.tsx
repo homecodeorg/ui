@@ -23,8 +23,9 @@ export function Chip({
       className={cn(
         S.chip,
         S[`size_${size}`],
-        className,
-        selected && S.selected
+        onClick && S.clickable,
+        selected && S.selected,
+        className
       )}
       onClick={onClick}
     >
