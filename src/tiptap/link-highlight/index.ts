@@ -1,0 +1,1 @@
+export { createLinkHighlightExtension } from './createLinkHighlightExtension';

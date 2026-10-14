@@ -13,6 +13,7 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import S from './PromptComposer.styl';
+import { createLinkHighlightExtension } from '../../tiptap/link-highlight';
 import {
   DEFAULT_CHAT_SLASH_ITEMS,
   createSlashMentionExtension,
@@ -209,6 +210,7 @@ export function usePromptComposerEditor({
         showOnlyWhenEditable: true,
         emptyNodeClass: S.promptComposerEmptyNode,
       }),
+      createLinkHighlightExtension(S.promptComposerLink),
     ];
 
     for (const cfg of resolvedMentionConfigs) {
