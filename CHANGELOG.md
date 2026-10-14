@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.11](https://github.com/foreverido/uilib/compare/v5.18.3...v5.18.11) (2026-10-14)
+
+
+### Bug Fixes
+
+* Card - content padding to not cut the first child input's label ([be98909](https://github.com/foreverido/uilib/commit/be98909feb51916f681ddc29ccc733dea6e34a39))
+* DropZone - Keep the drop target alive on WebKit ([126006e](https://github.com/foreverido/uilib/commit/126006ea50e976f5d8f34fb0882cf2a1c126971e))
+* DropZone - Skip a drop the page already accepted ([d8668c6](https://github.com/foreverido/uilib/commit/d8668c6703d800967e06efb29ffa21df3e1193b9))
+* FoldedLine - Give the label a width on first layout ([d674668](https://github.com/foreverido/uilib/commit/d6746680e23df7be8188229ab824b51c00603b5f))
+* Link - Open same-origin file URLs on this host ([151ef7d](https://github.com/foreverido/uilib/commit/151ef7d67e23de47b170109ffff1dfe289784dfa))
+* Link - Show same-origin file links in the docs demo ([502e884](https://github.com/foreverido/uilib/commit/502e8845cd6f4e9f1b304529bbb45b6e7c611c44))
+* NestedMenu - icon - do not decrease opacity ([0d446f6](https://github.com/foreverido/uilib/commit/0d446f6ddcd002299db992d7c846dffa6d266f68))
+* Package - Inject component CSS before page styles ([8704236](https://github.com/foreverido/uilib/commit/8704236a69160f5d9e41e10dbc718a32ea44f9b4))
+* Package - Put "types" first in exports, refresh caniuse-lite ([3785a35](https://github.com/foreverido/uilib/commit/3785a35bbde5625f6e757c25aafd611a2b6f69ab))
+* PromptComposer - Dim empty message placeholder ([831db8a](https://github.com/foreverido/uilib/commit/831db8a06fe88a6559824d6b5e5e7c143f0378ba))
+* TextShimmer - default colors ([6019aa8](https://github.com/foreverido/uilib/commit/6019aa841d66f560d00d05545d28dff98e5ae5f7))
+* ThinkingOutline - Docs example and inactive hover ([314a241](https://github.com/foreverido/uilib/commit/314a241b01106878540d7146e3c496b4ef05ccc7))
+* ThinkingOutline - isControlled/active/inactive states ([e5089ed](https://github.com/foreverido/uilib/commit/e5089ed69b689f155af2fdf0264ec9d6f46886d6))
+* ThinkinOutline - accessible for pointer events ([d3ce372](https://github.com/foreverido/uilib/commit/d3ce3721fb0e635e554e9b5ddc72a6fd696a8624))
+
 ### [5.18.10](https://github.com/foreverido/uilib/compare/v5.18.9...v5.18.10) (2026-10-12)
 
 
