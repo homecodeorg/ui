@@ -7,6 +7,7 @@
   align-items center
   box-sizing border-box
   height var(--chip-h)
+  border-radius var(--chip-h)
   gap 2px
   white-space nowrap
   background var(--accent-color-alpha-100)
@@ -24,37 +25,32 @@
 
 .size_xs
   --chip-h $controlSizeXS
-  --chip-pad var(--p-1)
+  --chip-pad var(--p-2)
   padding-left var(--chip-pad)
-  border-radius var(--p-1)
   controlFontSize('xs')
 
 .size_s
   --chip-h $controlSizeS
-  --chip-pad var(--p-3)
+  --chip-pad var(--p-4)
   padding-left var(--chip-pad)
-  border-radius var(--p-3)
   controlFontSize('m')
 
 .size_m
   --chip-h $controlSizeM
   --chip-pad var(--p-5)
   padding-left var(--chip-pad)
-  border-radius var(--p-5)
   controlFontSize('l')
 
 .size_l
   --chip-h $controlSizeL
   --chip-pad var(--p-8)
   padding-left var(--chip-pad)
-  border-radius var(--p-8)
   controlFontSize('xl')
 
 .size_xl
   --chip-h $controlSizeXL
   --chip-pad var(--p-10)
   padding-left var(--chip-pad)
-  border-radius var(--p-10)
   controlFontSize('xl')
 
 .chip.selected
