@@ -119,7 +119,7 @@
     "rollup-plugin-dts": "^5.2.0",
     "rollup-plugin-node-externals": "^5.1.2",
     "rollup-plugin-styles": "^4.0.0",
-    "rollup-plugin-typescript2": "^0.34.1",
+    "rollup-plugin-typescript2": "^0.37.0",
     "standard-version": "^9.5.0",
     "stylus": "^0.59.0",
     "ts-jest": "^29.2.5",
