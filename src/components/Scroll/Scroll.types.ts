@@ -32,6 +32,9 @@ export type Props = ComponentType &
     smooth?: boolean;
     // Whether to automatically hide the scrollbar when not in use (default false).
     autoHide?: boolean;
+    // Keeps the view pinned to the bottom while content grows, with smooth
+    // speed. Pauses while the user scrolls away, resumes at the bottom (y only).
+    autoScroll?: boolean;
     // Offset to apply to the scrollbar.
     offset?: Offset;
     // Called when the <Scroll> component is scrolled.

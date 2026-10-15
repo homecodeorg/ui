@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.18.12](https://github.com/foreverido/uilib/compare/v5.18.11...v5.18.12) (2026-10-14)
+
+
+### Features
+
+* PromptComposer - Highlight URLs in the input ([#4](https://github.com/foreverido/uilib/issues/4)) ([16bda71](https://github.com/foreverido/uilib/commit/16bda71cefdc1f979d4d2d0baf46e56398878012))
+
 ### [5.18.11](https://github.com/foreverido/uilib/compare/v5.18.3...v5.18.11) (2026-10-14)
 
 
