@@ -5,6 +5,7 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import basic from '!!raw-loader!./Basic';
 import nested from '!!raw-loader!./Nested';
+import autoScroll from '!!raw-loader!./AutoScroll';
 import S from './Scroll.styl';
 
 const scope = { helpers, S };
@@ -37,6 +38,7 @@ export default () => (
     examples={[
       { id: 'basic', label: 'Basic', code: basic, scope },
       { id: 'nested', label: 'Nested', code: nested, scope },
+      { id: 'auto-scroll', label: 'Auto scroll', code: autoScroll, scope },
     ]}
     scope={{}}
   />

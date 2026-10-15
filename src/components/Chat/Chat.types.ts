@@ -39,6 +39,8 @@ export type ChatViewProps = {
   footer?: ReactNode;
   footerClassName?: string;
   onButtonClick?: ChatFormattedTextProps['onButtonClick'];
+  // Smoothly follow new content while the user is at the bottom (default true).
+  autoScroll?: boolean;
 };
 
 export type ChatPromptModel = {

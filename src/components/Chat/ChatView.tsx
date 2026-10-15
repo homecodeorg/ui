@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { ChatMessage } from './ChatMessage';
 import type { ChatViewProps } from './types';
 import S from './ChatView.styl';
-import { Scroll } from 'uilib/components/Scroll/Scroll';
+import { Scroll, type ScrollRef } from 'uilib/components/Scroll/Scroll';
 import cn from 'classnames';
 import { isPlanMessageContent } from './content';
 import { scrollTo } from 'uilib/tools/scroll';
@@ -17,23 +17,36 @@ export function ChatView({
   footer,
   onButtonClick,
   footerClassName,
+  autoScroll = true,
 }: ChatViewProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
+  const scrollRef = useRef<ScrollRef>(null);
   const visible = messages.filter(
     message => !isPlanMessageContent(message.content)
   );
 
-  const lastContent = visible[visible.length - 1]?.content;
+  const lastMessage = visible[visible.length - 1];
+  const lastContent = lastMessage?.content;
 
   useEffect(() => {
+    if (autoScroll) return;
     const scroller = listRef.current;
     if (scroller) scrollTo(scroller, 0, scroller.scrollHeight + 80);
-  }, [visible.length, lastContent, isPrompting]);
+  }, [autoScroll, visible.length, lastContent, isPrompting]);
+
+  // A new user message always brings the view back to the bottom
+  useEffect(() => {
+    if (autoScroll && lastMessage?.role === 'USER') {
+      scrollRef.current?.scrollToBottom();
+    }
+  }, [autoScroll, visible.length]);
 
   return (
     <div className={cn(S.root, className)}>
       <Scroll
+        ref={scrollRef}
         y
+        autoScroll={autoScroll}
         fadeSize="l"
         autoHide
         offset={{ y: { after: 30 } }}

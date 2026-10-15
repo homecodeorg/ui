@@ -17,6 +17,7 @@ import S from './Scroll.styl';
 import * as T from './Scroll.types';
 import useEvent from '../../hooks/useEvent';
 import { useDebounce } from '../../hooks/useDebounce';
+import { useAutoScroll } from './useAutoScroll';
 
 const getEventCoords = e => ({
   x: e.clientX,
@@ -48,6 +49,8 @@ export type ScrollProps = T.Props;
 
 export type ScrollRef = {
   innerElem: HTMLDivElement | null;
+  // Scrolls to the bottom and resumes auto-scroll (with `autoScroll` prop).
+  scrollToBottom: () => void;
 };
 
 export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
@@ -69,6 +72,7 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
     onInnerRef,
     thumbClassName,
     autoHide,
+    autoScroll,
     children,
     onScroll,
     ...rest
@@ -82,12 +86,26 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
     y: thumbYRef,
   };
 
-  useImperativeHandle(ref, () => ({
-    innerElem: innerElemRef.current,
-  }));
-
   const [isScrolling, setIsScrolling] = useState(false);
   const [activeAxis, setActiveAxis] = useState(null);
+  const isDraggingRef = useRef(false);
+  isDraggingRef.current = !!activeAxis;
+
+  const autoScrollApi = useAutoScroll({
+    enabled: !!(autoScroll && y),
+    innerRef: innerElemRef,
+    isDraggingRef,
+  });
+
+  useImperativeHandle(ref, () => ({
+    innerElem: innerElemRef.current,
+    scrollToBottom: () => {
+      const elem = innerElemRef.current;
+      if (!elem) return;
+      if (autoScroll && y) autoScrollApi.scrollToBottom();
+      else elem.scrollTo({ top: elem.scrollHeight, behavior: 'smooth' });
+    },
+  }));
   const [coeff, setCoeff] = useState({ x: 0, y: 0 });
   const [hasOffset, setHasOffset] = useState({
     top: false,
@@ -246,7 +264,11 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
           scrollWidth - (scrollLeft + offsetWidth) > OFFSET_THRESHOLD;
       }
 
-      return newHasOffset;
+      const isSame = Object.keys(newHasOffset).every(
+        key => newHasOffset[key] === prev[key]
+      );
+
+      return isSame ? prev : newHasOffset;
     });
   }, [x, y]);
 
@@ -299,6 +321,7 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
       if (innerElemRef.current !== e.target) return;
 
       updateHasOffsets();
+      autoScrollApi.onScroll();
       onScroll?.(e);
       if (!activeAxis) eachAxis(updatePos);
       if (!isScrolling) setIsScrolling(true);
@@ -306,6 +329,7 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
     },
     [
       activeAxis,
+      autoScrollApi.onScroll,
       dropScrollingState,
       eachAxis,
       isScrollSizeChanged,
@@ -340,10 +364,12 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
   const onPointerUp = useCallback(
     e => {
       e.stopPropagation();
+      isDraggingRef.current = false;
       setActiveAxis(null);
+      autoScrollApi.onDragEnd();
       dropScrollingState();
     },
-    [dropScrollingState]
+    [autoScrollApi.onDragEnd, dropScrollingState]
   );
 
   useEffect(() => {
@@ -440,7 +466,7 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
       S.inner,
       innerProps?.className,
       innerClassName,
-      !activeAxis && smooth && S.smooth,
+      !activeAxis && smooth && !autoScroll && S.smooth,
       hasOffset.top && S.hasOffsetTop,
       hasOffset.bottom && S.hasOffsetBottom,
       hasOffset.right && S.hasOffsetRight,
@@ -463,6 +489,7 @@ export const Scroll = forwardRef<ScrollRef, T.Props>(function Scroll(
     innerProps,
     onInnerScroll,
     smooth,
+    autoScroll,
   ]);
 
   const classes = cn(
