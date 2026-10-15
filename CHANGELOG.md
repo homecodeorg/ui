@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.19.0](https://github.com/foreverido/uilib/compare/v5.18.11...v5.19.0) (2026-10-15)
+
+
+### Features
+
+* PromptComposer - Highlight URLs in the input ([#4](https://github.com/foreverido/uilib/issues/4)) ([16bda71](https://github.com/foreverido/uilib/commit/16bda71cefdc1f979d4d2d0baf46e56398878012))
+* **Scroll:** autoScroll prop with smooth follow-to-bottom ([#5](https://github.com/foreverido/uilib/issues/5)) ([97258e3](https://github.com/foreverido/uilib/commit/97258e3ee5f30428321877e3e16809408db7566b))
+
+
+### Bug Fixes
+
+* **build:** upgrade rollup-plugin-typescript2 to 0.37 ([01b6b1e](https://github.com/foreverido/uilib/commit/01b6b1eb5307bd182d3f502f6d66c5b1a1178571))
+
 ### [5.18.12](https://github.com/foreverido/uilib/compare/v5.18.11...v5.18.12) (2026-10-14)
 
 
