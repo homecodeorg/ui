@@ -8,6 +8,7 @@ const INITIAL = [
   {
     id: '1',
     role: 'USER',
+    author: 'Alice',
     content: 'Summarize the last run and list next steps.',
     createdAt: at,
   },
@@ -22,6 +23,7 @@ const INITIAL = [
   {
     id: '3',
     role: 'AGENT',
+    author: 'Assistant',
     content: [
       '## Summary',
       'Build **passed**. Coverage is `91%`.',
@@ -36,30 +38,35 @@ const INITIAL = [
   {
     id: '4',
     role: 'AGENT',
+    author: 'Assistant',
     content: 'Want me to open a PR? [choice:yes|Open PR] [choice:no|Not now]',
     createdAt: at,
   },
   {
     id: '5',
     role: 'USER',
+    author: 'Alice',
     content: 'Yes — open it and ping me when CI is green.',
     createdAt: at,
   },
   {
     id: '6',
     role: 'AGENT',
+    author: 'Assistant',
     content: 'Opened **#482**. I will ping you when CI is green.',
     createdAt: at,
   },
   {
     id: '7',
     role: 'USER',
+    author: 'Bob',
     content: 'Also paste the canary checklist in the PR description.',
     createdAt: at,
   },
   {
     id: '8',
     role: 'AGENT',
+    author: 'Assistant',
     content:
       'Done. Checklist is in the description: smoke, rollback, and watch the error rate for 15 minutes.',
     createdAt: at,
@@ -81,7 +88,13 @@ export default () => {
   const append = (role, content) => {
     setMessages(prev => [
       ...prev,
-      { id: `${Date.now()}-${prev.length}`, role, content, createdAt: new Date() },
+      {
+        id: `${Date.now()}-${prev.length}`,
+        role,
+        author: role === 'USER' ? 'You' : 'Assistant',
+        content,
+        createdAt: new Date(),
+      },
     ]);
   };
 
