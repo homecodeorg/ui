@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.20.0](https://github.com/foreverido/uilib/compare/v5.19.0...v5.20.0) (2026-10-18)
+
+
+### Features
+
+* **Chat:** optional author label on messages ([1418553](https://github.com/foreverido/uilib/commit/1418553e426b4655851997422293d154a068c994))
+
 ## [5.19.0](https://github.com/foreverido/uilib/compare/v5.18.11...v5.19.0) (2026-10-15)
 
 

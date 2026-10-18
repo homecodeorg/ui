@@ -247,6 +247,19 @@ export default () => {
           isStacked
         />
       </div>
+      <div className={S.block}>
+        <div className={S.subtitle}>With author</div>
+        <ChatMessage
+          data={{ id: 'auth-1', role: 'USER', author: 'Alice', content: 'Can everyone see my screen?', createdAt: at }}
+        />
+        <ChatMessage
+          data={{ id: 'auth-2', role: 'USER', author: 'Alice', content: 'The share should be live now.', createdAt: at }}
+          isStacked
+        />
+        <ChatMessage
+          data={{ id: 'auth-3', role: 'AGENT', author: 'Bob', content: 'Yes, loud and clear.', createdAt: at }}
+        />
+      </div>
     </div>
   );
 };

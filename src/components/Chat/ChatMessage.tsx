@@ -19,10 +19,12 @@ export function ChatMessage({
   className,
   onButtonClick,
 }: ChatMessageProps) {
-  const { content, role, createdAt } = data;
+  const { content, role, createdAt, author } = data;
   const id = data.id;
   const isSystem = role === 'SYSTEM';
   const date = createdAt ? new Date(createdAt) : null;
+  const hasDate = Boolean(date) && !Number.isNaN(date!.getTime());
+  const hasAuthor = author != null && author !== '' && !isStacked;
 
   const systemEvent = useMemo(
     () => (isSystem ? parseSystemEvent(content) : null),
@@ -109,12 +111,14 @@ export function ChatMessage({
       className={cn(S.root, S[role], isStacked && S.stacked, className)}
       data-id={id}
     >
-      {date && !Number.isNaN(date.getTime()) && (
+      {(hasAuthor || hasDate) && (
         <div className={S.meta}>
-          {date.toLocaleTimeString(undefined, {
-            hour: 'numeric',
-            minute: '2-digit',
-          })}
+          {hasAuthor && <span className={S.author}>{author}</span>}
+          {hasDate &&
+            date!.toLocaleTimeString(undefined, {
+              hour: 'numeric',
+              minute: '2-digit',
+            })}
         </div>
       )}
       <div className={S.text}>

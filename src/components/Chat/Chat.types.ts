@@ -18,6 +18,8 @@ export type ChatMessageData = {
   role: ChatRole;
   content: string;
   createdAt?: string | Date;
+  /** Sender display name, shown above the bubble. Hidden when `isStacked`. */
+  author?: ReactNode;
 };
 
 export type ChatFormattedTextProps = FormattedTextProps;
