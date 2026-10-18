@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.1](https://github.com/foreverido/uilib/compare/v5.19.0...v5.20.1) (2026-10-18)
+
+
+### Bug Fixes
+
+* Message - author name in meta row  ([#8](https://github.com/foreverido/uilib/issues/8)) ([7ade80b](https://github.com/foreverido/uilib/commit/7ade80ba707f09dcc1c9d1a0e8a157880fb91f84))
+
 ## [5.20.0](https://github.com/foreverido/uilib/compare/v5.19.0...v5.20.0) (2026-10-18)
 
 
