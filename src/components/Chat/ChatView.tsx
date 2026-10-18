@@ -66,6 +66,7 @@ export function ChatView({
           const isStacked =
             Boolean(prev) &&
             prev.role === message.role &&
+            prev.author === message.author &&
             message.role !== 'SYSTEM';
           return (
             <ChatMessage

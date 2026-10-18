@@ -19,7 +19,7 @@ export function ChatMessage({
   className,
   onButtonClick,
 }: ChatMessageProps) {
-  const { content, role, createdAt } = data;
+  const { content, role, createdAt, author } = data;
   const id = data.id;
   const isSystem = role === 'SYSTEM';
   const date = createdAt ? new Date(createdAt) : null;
@@ -109,6 +109,9 @@ export function ChatMessage({
       className={cn(S.root, S[role], isStacked && S.stacked, className)}
       data-id={id}
     >
+      {author != null && author !== '' && !isStacked && (
+        <div className={S.author}>{author}</div>
+      )}
       {date && !Number.isNaN(date.getTime()) && (
         <div className={S.meta}>
           {date.toLocaleTimeString(undefined, {
