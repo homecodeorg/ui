@@ -17,13 +17,26 @@ jest.mock('uilib/components/Tooltip/Tooltip', () => ({
 }));
 
 describe('ChatMessage author', () => {
-  it('renders the author above the message', () => {
-    const { container } = render(
-      <ChatMessage data={{ role: 'USER', author: 'Alice', content: 'Hi' }} />,
+  it('renders the author in the meta row, next to the time', () => {
+    render(
+      <ChatMessage
+        data={{
+          role: 'USER',
+          author: 'Alice',
+          content: 'Hi',
+          createdAt: '2026-08-22T15:04:00.000Z',
+        }}
+      />,
     );
     const author = screen.getByText('Alice');
     expect(author).toHaveClass(S.author);
-    expect(container.firstChild?.firstChild).toBe(author);
+    expect(author.parentElement).toHaveClass(S.meta);
+    expect(author.parentElement?.textContent).toMatch(/^Alice\d/);
+  });
+
+  it('renders the meta row for an author without a date', () => {
+    render(<ChatMessage data={{ role: 'USER', author: 'Alice', content: 'Hi' }} />);
+    expect(screen.getByText('Alice').parentElement).toHaveClass(S.meta);
   });
 
   it('hides the author when stacked', () => {
