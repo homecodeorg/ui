@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.2](https://github.com/foreverido/uilib/compare/v5.20.1...v5.20.2) (2026-10-20)
+
+
+### Bug Fixes
+
+* **NestedMenu:** close on item pick and don't dismiss Dialogue opened from it on touch ([5a146bb](https://github.com/foreverido/uilib/commit/5a146bbf1b769f016de1a4e66a992a466034c064))
+
 ### [5.20.1](https://github.com/foreverido/uilib/compare/v5.19.0...v5.20.1) (2026-10-18)
 
 
