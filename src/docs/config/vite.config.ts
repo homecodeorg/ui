@@ -127,6 +127,23 @@ function analytics(): Plugin {
   };
 }
 
+/**
+ * Dev: link the source SVG as the icon (rasterizing on every start is slow).
+ * `assets/` sits under the Vite root, so the dev server serves it as-is.
+ */
+function devFavicon(): Plugin {
+  return {
+    name: 'uilib:dev-favicon',
+    apply: 'serve',
+    transformIndexHtml(html) {
+      return html.replace(
+        '</head>',
+        '<link rel="icon" type="image/svg+xml" href="/assets/logo.svg" /></head>'
+      );
+    },
+  };
+}
+
 /** Build only: rasterize favicons + web manifest into `assets/` and inject their tags. */
 function favicons(): Plugin {
   const prefix = 'assets/';
@@ -227,6 +244,7 @@ export default defineConfig(({ mode }) => {
       }),
       react(),
       analytics(),
+      devFavicon(),
       favicons(),
     ],
 
