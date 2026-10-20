@@ -174,7 +174,7 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
 
       // Get plain text from clipboard
       const text =
-        (e.clipboardData || window.clipboardData)?.getData('text/plain') || '';
+        (e.clipboardData || (window as any).clipboardData)?.getData('text/plain') || '';
 
       // Insert plain text at cursor position
       if (document.queryCommandSupported('insertText')) {

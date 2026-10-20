@@ -9,7 +9,6 @@ name: Publish to npm
 on:
   push:
     tags: ['v*']
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -30,7 +29,6 @@ jobs:
 
       - name: Install
         run: yarn install --frozen-lockfile
-
 
       - name: Build
         run: yarn build
