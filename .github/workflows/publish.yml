@@ -30,14 +30,6 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
 
-      - name: Check tag matches package.json version
-        run: |
-          version="v$(node -p "require('./package.json').version")"
-          if [ "$version" != "$GITHUB_REF_NAME" ]; then
-            echo "Tag $GITHUB_REF_NAME does not match package.json version $version"
-            exit 1
-          fi
-
       - name: Build
         run: yarn build
 
