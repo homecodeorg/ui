@@ -18,3 +18,5 @@ tsconfig.json
 yarn-error.log
 .vscode/
 .cursor/
+graphify-out/
+.github/
