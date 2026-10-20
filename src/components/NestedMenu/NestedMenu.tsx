@@ -152,14 +152,27 @@ function NestedMenuComponent({
         aria-haspopup={item.submenu ? 'menu' : undefined}
         aria-expanded={item.submenu ? activeId === item.id : undefined}
         onPointerDown={e => {
+          // Touch/pen are handled on click: acting on pointerdown opens a
+          // Dialog under the finger, and the synthesized click then lands on
+          // its overlay and closes it immediately.
+          if (e.button === 0 && e.pointerType === 'mouse') {
+            handleItemClick(item.id, e);
+          }
           // Keep focus off underlying inputs (e.g. ChatSelector search).
+          // After the handler: it reads `defaultPrevented` to let an item's
+          // onClick keep the menu open.
           e.preventDefault();
-          if (e.button === 0) handleItemClick(item.id, e);
+        }}
+        onClick={e => {
+          // Mouse is handled on pointerdown; keyboard on keydown (detail 0).
+          const { pointerType } = e.nativeEvent as PointerEvent;
+          if (e.detail === 0 || pointerType === 'mouse') return;
+          handleItemClick(item.id, e);
         }}
         onKeyDown={e => {
           if (e.key !== 'Enter' && e.key !== ' ') return;
-          e.preventDefault();
           handleItemClick(item.id, e);
+          e.preventDefault();
         }}
       >
         {item.icon && (

@@ -2,6 +2,7 @@ import { Heading, Link } from 'uilib';
 import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
+import withDialogue from '!!raw-loader!./WithDialogue';
 
 const name = 'NestedMenu';
 const Docs = () => (
@@ -23,6 +24,9 @@ export default () => (
   <ComponentLayout
     name={name}
     docs={Docs}
-    examples={[{ id: 'demo', label: 'Demo', code: example }]}
+    examples={[
+      { id: 'demo', label: 'Demo', code: example },
+      { id: 'dialogue', label: 'Opens Dialogue', code: withDialogue },
+    ]}
   />
 );
