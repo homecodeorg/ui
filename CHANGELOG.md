@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.3](https://github.com/homecodeorg/ui/compare/v5.20.2...v5.20.3) (2026-10-20)
+
 ### [5.20.2](https://github.com/foreverido/uilib/compare/v5.20.1...v5.20.2) (2026-10-20)
 
 
