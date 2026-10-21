@@ -50,16 +50,15 @@
 
   @media (max-width: $tablet)
     width calc(100% - var(--p-5))
-    max-width @width
 
   &:has(.dialogClose) [data-slot="card-header"]
     padding-right calc(2rem + var(--p-3))
 
 .size-default
-  max-width 40rem
+  max-width unquote('min(40rem, calc(100% - var(--p-5)))')
 
 .size-login
-  max-width 24rem
+  max-width unquote('min(24rem, calc(100% - var(--p-5)))')
 
 .size-wide
   max-width calc(100% - var(--p-5))

@@ -1,18 +1,17 @@
-import cn from 'classnames';
-import { useEffect, useId, useRef, useState } from 'react';
-
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from 'uilib/components/Card/Card';
+import { useEffect, useId, useRef, useState } from 'react';
+
+import type { Props as DialogueProps } from './Dialogue.types';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Portal } from 'uilib/components/Portal/Portal';
-import { isBrowser } from 'uilib/tools/env';
-
 import S from './Dialogue.styl';
-import type { Props as DialogueProps } from './Dialogue.types';
+import cn from 'classnames';
+import { isBrowser } from 'uilib/tools/env';
 
 const FOOTER_ALIGN_CLASS: Record<
   NonNullable<DialogueProps['footerAlignment']>,
@@ -160,10 +159,11 @@ export function Dialogue({
         )}
         tabIndex={-1}
         style={{
-          width,
-          maxHeight: maxHeight
-            ? `min(${String(maxHeight)}, calc(100% - var(--p-5)))`
-            : undefined,
+          width:
+            width &&
+            `min(${typeof width === 'number' ? `${width}px` : width}, calc(100% - var(--p-5)))`,
+          maxHeight:
+            maxHeight && `min(${String(maxHeight)}, calc(100% - var(--p-5)))`,
         }}
       >
         {(title || subtitle || icon) && (
