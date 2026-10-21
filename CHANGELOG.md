@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.6](https://github.com/homecodeorg/ui/compare/v5.20.5...v5.20.6) (2026-10-21)
+
+
+### Bug Fixes
+
+* **Dialogue:** never exceed viewport width minus gutter on narrow screens ([8762e95](https://github.com/homecodeorg/ui/commit/8762e952028e7a8e64542cf8b44e5e24a7dc026a))
+
 ### [5.20.5](https://github.com/homecodeorg/ui/compare/v5.20.4...v5.20.5) (2026-10-21)
 
 
