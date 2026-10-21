@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.5](https://github.com/homecodeorg/ui/compare/v5.20.4...v5.20.5) (2026-10-21)
+
+
+### Bug Fixes
+
+* Docs - Show favicon in the Vite dev server ([#12](https://github.com/homecodeorg/ui/issues/12)) ([c1684b7](https://github.com/homecodeorg/ui/commit/c1684b7abf5a1cb35a6c4707c170e414e4b3fcc4))
+
 ### [5.20.4](https://github.com/homecodeorg/ui/compare/v5.20.2...v5.20.4) (2026-10-20)
 
 
