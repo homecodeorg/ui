@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.7](https://github.com/homecodeorg/ui/compare/v5.20.6...v5.20.7) (2026-10-22)
+
+
+### Bug Fixes
+
+* dedupe prosemirror-model and prosemirror-transform in yarn.lock ([d05b962](https://github.com/homecodeorg/ui/commit/d05b9620799e0c35675c7c0656590a16cb39b8ad))
+* **PromptComposer:** keep text typed before a link out of the link ([d1d07df](https://github.com/homecodeorg/ui/commit/d1d07dfb1ff39d13970fac02a31ff762e331faa4))
+
 ### [5.20.6](https://github.com/homecodeorg/ui/compare/v5.20.5...v5.20.6) (2026-10-21)
 
 
