@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.8](https://github.com/homecodeorg/ui/compare/v5.20.7...v5.20.8) (2026-10-22)
+
+
+### Features
+
+* **Select2:** match optional option searchText in search ([#14](https://github.com/homecodeorg/ui/issues/14)) ([eed8fd7](https://github.com/homecodeorg/ui/commit/eed8fd73810bdb2f9aefc1cbd2174e83ace703b7))
+
 ### [5.20.7](https://github.com/homecodeorg/ui/compare/v5.20.6...v5.20.7) (2026-10-22)
 
 
