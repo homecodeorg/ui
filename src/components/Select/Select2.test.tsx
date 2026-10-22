@@ -311,6 +311,23 @@ describe('Select2 search', () => {
     expect(getOptionLabels()).toHaveLength(OPTIONS.length);
   });
 
+  test('matches `searchText` besides the label', async () => {
+    const options: T.Option[] = [
+      {
+        id: 'v',
+        label: 'Venice: Uncensored',
+        searchText: 'vendor/dolphin-24b',
+      },
+      { id: 'b', label: 'Bob' },
+    ];
+    render(<Controlled isSearchable label="Label" options={options} />);
+
+    const input = getSearchInput();
+    await userEvent.click(input);
+    await userEvent.type(input, 'DOLPHIN');
+    expect(getOptionLabels()).toEqual(['Venice: Uncensored']);
+  });
+
   test('reports search changes and resets the query after a selection', async () => {
     const onSearchChange = jest.fn();
 
