@@ -13,6 +13,8 @@ export type Option = {
   isGroupHeader?: boolean;
   parentId?: Id;
   label: string;
+  /** Extra text that search matches besides `label` (e.g. an id or alias). */
+  searchText?: string;
   sortingKey?: string | number;
   children?: Option[];
   render?: (label: string) => string;

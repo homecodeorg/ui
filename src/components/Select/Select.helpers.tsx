@@ -31,7 +31,11 @@ function normalize(text: string): string {
 
 export function matchesSearch(option: Option, query: string): boolean {
   if (!query) return true;
-  return normalize(option.label).includes(normalize(query));
+  const q = normalize(query);
+  if (normalize(option.label).includes(q)) return true;
+  return (
+    option.searchText !== undefined && normalize(option.searchText).includes(q)
+  );
 }
 
 export function isSelectable(option: Option | undefined): boolean {
