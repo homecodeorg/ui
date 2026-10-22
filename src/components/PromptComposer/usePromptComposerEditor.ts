@@ -13,7 +13,10 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import S from './PromptComposer.styl';
-import { createLinkHighlightExtension } from '../../tiptap/link-highlight';
+import {
+  NonInclusiveLink,
+  createLinkHighlightExtension,
+} from '../../tiptap/link-highlight';
 import {
   DEFAULT_CHAT_SLASH_ITEMS,
   createSlashMentionExtension,
@@ -204,7 +207,9 @@ export function usePromptComposerEditor({
         blockquote: false,
         codeBlock: false,
         horizontalRule: false,
+        link: false,
       }),
+      NonInclusiveLink,
       Placeholder.configure({
         placeholder: placeholderText,
         showOnlyWhenEditable: true,

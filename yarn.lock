@@ -3002,7 +3002,7 @@
   resolved "https://registry.yarnpkg.com/@tiptap/extension-italic/-/extension-italic-3.32.0.tgz#e3c57bdce778b4f4aad23ce4cd0e816df247eba1"
   integrity sha512-KB/i1xoHilbBGcQ+UotDWhi60KpdCde3RzRIpl2na0Yol4z4Fe2IRWg8ljIrlsssDRwel/fsHJbG7a13EP8oKA==
 
-"@tiptap/extension-link@3.32.0":
+"@tiptap/extension-link@3.32.0", "@tiptap/extension-link@^3.30.5":
   version "3.32.0"
   resolved "https://registry.yarnpkg.com/@tiptap/extension-link/-/extension-link-3.32.0.tgz#1b19e95ce4fbfaf186c5af8bae4ea4165f83c710"
   integrity sha512-DRdQSgWPSEjrDg5EDBB5yxRygHtUVLhceVGzAsTz8RziiFyvcwAvzBHCO9hd9jutjCXQ2DLIuZB8P+aHhFWnpg==
