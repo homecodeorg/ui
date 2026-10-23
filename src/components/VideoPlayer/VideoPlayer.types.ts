@@ -15,6 +15,9 @@ export type Props = ComponentType & {
   muted?: boolean;
   // Loop playback
   loop?: boolean;
+  // Whether the player may take keyboard shortcuts (default true).
+  // Inactive players ignore keys and pause, e.g. off-screen Gallery slots.
+  isActive?: boolean;
   // Called when play/pause state changes
   onPlayChange?: (playing: boolean) => void;
   // Called when current time updates

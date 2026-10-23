@@ -1,7 +1,6 @@
 import {
   Component,
   createRef,
-  useEffect,
   useLayoutEffect,
   useRef,
   useState,
@@ -83,19 +82,13 @@ function VideoItem({
   size: T.Props['size'];
   isActive: boolean;
 }) {
-  const wrapRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (isActive) return;
-    wrapRef.current?.querySelector('video')?.pause();
-  }, [isActive, src]);
-
   return (
-    <div ref={wrapRef} className={cn(S.item, S.videoItem)}>
+    <div className={cn(S.item, S.videoItem)}>
       <VideoPlayer
         src={src}
         size={size}
         storageKey={`Gallery:${src}`}
+        isActive={isActive}
         className={S.video}
       />
     </div>
@@ -280,6 +273,9 @@ export class Gallery extends Component<T.Props> {
   };
 
   onPointerDown = e => {
+    // Pointer on a video belongs to the player (seek, play, volume), not swipe.
+    if ((e.target as HTMLElement).closest?.(`.${S.video}`)) return;
+
     this.startX = e.pageX;
   };
 
@@ -363,6 +359,7 @@ export class Gallery extends Component<T.Props> {
     const { items, movingDirection, isDragging } = this.store;
     const dirName = DIR_NAME[movingDirection];
     const isSingle = this.isSingle();
+    const isVideoActive = items[isSingle ? 0 : 1]?.kind === 'video';
 
     const props = omit(rest, ['items', 'onChange', 'animation', 'startIndex']);
     const classes = cn(
@@ -401,7 +398,7 @@ export class Gallery extends Component<T.Props> {
           ))}
         </div>
 
-        {!isSingle && showArrows && !isDragging && (
+        {!isSingle && showArrows && !isDragging && !isVideoActive && (
           <>
             <Arr
               className={S.left}

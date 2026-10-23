@@ -1,6 +1,7 @@
 import {
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -33,6 +34,7 @@ export function VideoPlayer({
   autoPlay = false,
   muted = false,
   loop = false,
+  isActive = true,
   className,
   onPlayChange,
   onTimeUpdate,
@@ -49,11 +51,11 @@ export function VideoPlayer({
   const volumeHideTimerRef = useRef(0);
   const lastTapRef = useRef(0);
   const singleClickTimerRef = useRef(0);
+  const isActiveRef = useRef(isActive);
+  isActiveRef.current = isActive;
 
-  const playerId = useMemo(
-    () => storageKey ?? src ?? Math.random().toString(36).slice(2),
-    [storageKey, src]
-  );
+  // Per-instance id: two players may share a src/storageKey (e.g. Gallery slots).
+  const playerId = useId();
   const lsKey = H.getStorageKey(src, storageKey);
 
   const [isReady, setIsReady] = useState(false);
@@ -96,8 +98,8 @@ export function VideoPlayer({
   }, []);
 
   const claimKeyboard = useCallback(() => {
-    activePlayerId = playerId;
-  }, [playerId]);
+    if (isActive) activePlayerId = playerId;
+  }, [playerId, isActive]);
 
   const clearVolumeHideTimer = useCallback(() => {
     window.clearTimeout(volumeHideTimerRef.current);
@@ -241,7 +243,7 @@ export function VideoPlayer({
 
   const onKeyDown = useCallback(
     (e: KeyboardEvent) => {
-      if (activePlayerId !== playerId) return;
+      if (!isActive || activePlayerId !== playerId) return;
       if (H.isEditableTarget(e.target)) return;
 
       switch (e.code) {
@@ -270,6 +272,7 @@ export function VideoPlayer({
       }
     },
     [
+      isActive,
       playerId,
       togglePlay,
       debouncedSeekLeft,
@@ -284,6 +287,16 @@ export function VideoPlayer({
     callback: onKeyDown as (event: Event) => void,
     isActive: true,
   });
+
+  useEffect(() => {
+    if (isActive) {
+      activePlayerId = playerId;
+      return;
+    }
+
+    if (activePlayerId === playerId) activePlayerId = null;
+    videoRef.current?.pause();
+  }, [isActive, playerId]);
 
   useEffect(() => {
     const onFullscreenChange = () => {
@@ -334,7 +347,7 @@ export function VideoPlayer({
     setLoadProgress(0);
     setDuration(0);
     durationRef.current = 0;
-    activePlayerId = playerId;
+    if (isActiveRef.current) activePlayerId = playerId;
     syncProgressDom(0);
 
     const stored = H.loadStorage(lsKey);
