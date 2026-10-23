@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.10](https://github.com/homecodeorg/ui/compare/v5.20.9...v5.20.10) (2026-10-23)
+
+
+### Bug Fixes
+
+* **Gallery:** video slides own Space/clicks, no nav arrows over videos ([#16](https://github.com/homecodeorg/ui/issues/16)) ([00d3c63](https://github.com/homecodeorg/ui/commit/00d3c63af8ebd60e240a83301c6cefa903b8a7f5))
+
 ### [5.20.9](https://github.com/homecodeorg/ui/compare/v5.20.8...v5.20.9) (2026-10-23)
 
 
