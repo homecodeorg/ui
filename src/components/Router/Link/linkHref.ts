@@ -14,3 +14,14 @@ export function isNativeDocumentHref(href: string): boolean {
   if (path === '/api' || path.startsWith('/api/')) return true;
   return path.includes('.');
 }
+
+/**
+ * Opens in a new tab. A bare `example.com` is a host, but a dot only in the
+ * query (`//storage?file=a.mp4`) is not.
+ */
+export function isExternalHref(href: string): boolean {
+  if (isRootRelativeHref(href)) return false;
+  if (/^https?:\/\//i.test(href)) return true;
+  const path = href.split(/[?#]/)[0] ?? '';
+  return path.includes('.');
+}
