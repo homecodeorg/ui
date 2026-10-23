@@ -6,7 +6,7 @@ import { Icon } from 'uilib/components/Icon/Icon';
 
 import Context from '../context';
 import S from './Link.styl';
-import { isNativeDocumentHref, isRootRelativeHref } from './linkHref';
+import { isExternalHref, isNativeDocumentHref } from './linkHref';
 
 import * as T from './Link.types';
 
@@ -49,11 +49,7 @@ export const Link = ({
   const internalHref = useMemo(() => sameOriginPath(hrefProp), [hrefProp]);
   const isExternal = useMemo(() => {
     if (internalHref) return false;
-    // A dot in `?filePath=a.pdf` is not a hostname. `http://` + `/api/…`
-    // is parsed as host `api`.
-    if (isRootRelativeHref(hrefProp)) return false;
-    if (isHttpHref(hrefProp)) return true;
-    return /\./.test(hrefProp);
+    return isExternalHref(hrefProp);
   }, [hrefProp, internalHref]);
   const nativeDocumentProp = isNativeDocumentHref(internalHref ?? hrefProp);
   const rootPath = useMemo(() => {

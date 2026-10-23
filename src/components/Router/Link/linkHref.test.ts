@@ -1,4 +1,8 @@
-import { isNativeDocumentHref, isRootRelativeHref } from './linkHref';
+import {
+  isExternalHref,
+  isNativeDocumentHref,
+  isRootRelativeHref,
+} from './linkHref';
 
 describe('isRootRelativeHref', () => {
   test('single slash is same-origin', () => {
@@ -26,5 +30,19 @@ describe('isNativeDocumentHref', () => {
     expect(isNativeDocumentHref('/components/Theme')).toBe(false);
     expect(isNativeDocumentHref('/search?q=foo.bar')).toBe(false);
     expect(isNativeDocumentHref('//agents?id=1')).toBe(false);
+  });
+});
+
+describe('isExternalHref', () => {
+  test('a dot in the query does not make an in-app route external', () => {
+    expect(isExternalHref('//storage?folder=f1&file=u%2Fclip.mp4')).toBe(false);
+    expect(isExternalHref('/api/files/content?filePath=a.pdf')).toBe(false);
+    expect(isExternalHref('search?q=foo.bar')).toBe(false);
+  });
+
+  test('hosts and http URLs are external', () => {
+    expect(isExternalHref('https://example.com')).toBe(true);
+    expect(isExternalHref('example.com/page?x=1')).toBe(true);
+    expect(isExternalHref('//cdn.example.com/a.js')).toBe(true);
   });
 });
