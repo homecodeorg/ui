@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.9](https://github.com/homecodeorg/ui/compare/v5.20.8...v5.20.9) (2026-10-23)
+
+
+### Bug Fixes
+
+* **Popup:** don't close when the trigger itself scrolls ([#15](https://github.com/homecodeorg/ui/issues/15)) ([7084591](https://github.com/homecodeorg/ui/commit/70845912afd36db8b7a89111e5c0f8ffddc07059))
+
 ### [5.20.8](https://github.com/homecodeorg/ui/compare/v5.20.7...v5.20.8) (2026-10-22)
 
 
