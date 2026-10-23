@@ -18,21 +18,30 @@ export function parseQueryParams(qs?: string): Record<string, string> {
 
 export function stringifyQueryParams(params: Record<string, string>): string {
   return Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
+    .map(
+      ([key, value]) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+    )
     .join('&');
 }
 
+/**
+ * Path with `queryParams` applied. A query already in `path`
+ * (`go('/storage?folder=1')`) is kept; `queryParams` override its keys.
+ */
 export function applyQueryParams(
   path,
   queryParams: Record<string, any> | string
 ): string {
-  const clearPath = path.replace(/\?.*/, '/');
-
   if (typeof queryParams === 'string') return queryParams;
 
-  const query = { ...queryParams };
+  const [clearPath, pathQuery = ''] = path.split('?');
+  const query = {
+    ...Object.fromEntries(new URLSearchParams(pathQuery)),
+    ...queryParams,
+  };
 
-  Object.entries(queryParams).forEach(([key, value]) => {
+  Object.entries(query).forEach(([key, value]) => {
     if (value === false) delete query[key];
     else query[key] = value;
   });
