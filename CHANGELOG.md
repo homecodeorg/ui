@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.12](https://github.com/homecodeorg/ui/compare/v5.20.11...v5.20.12) (2026-10-23)
+
+
+### Bug Fixes
+
+* **Router:** go() keeps the query that is in the path ([#18](https://github.com/homecodeorg/ui/issues/18)) ([703c96b](https://github.com/homecodeorg/ui/commit/703c96baa736277a783f4ff95363b194d31438b5))
+
 ### [5.20.11](https://github.com/homecodeorg/ui/compare/v5.20.10...v5.20.11) (2026-10-23)
 
 
