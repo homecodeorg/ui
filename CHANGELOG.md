@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.11](https://github.com/homecodeorg/ui/compare/v5.20.10...v5.20.11) (2026-10-23)
+
+
+### Bug Fixes
+
+* **Link:** a dot in the query no longer makes a link external ([#17](https://github.com/homecodeorg/ui/issues/17)) ([3b5e24b](https://github.com/homecodeorg/ui/commit/3b5e24b2a0e17b39e75d65be06f5a4d49fa6becb))
+
 ### [5.20.10](https://github.com/homecodeorg/ui/compare/v5.20.9...v5.20.10) (2026-10-23)
 
 
