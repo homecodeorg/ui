@@ -443,11 +443,9 @@ export class Popup extends Component<T.Props, T.State> {
       return;
     }
 
-    // if scrolling outside this popup - close it
-    if (
-      !this.isPointerOver(e.target, S.content) &&
-      !H.childs[this.id]?.length
-    ) {
+    // if scrolling outside this popup - close it. A scroll inside the trigger
+    // (a search input scrolling its text while the user types) doesn't move it.
+    if (!this.isHoverInside(e.target) && !H.childs[this.id]?.length) {
       this.close();
     }
   }, 200);

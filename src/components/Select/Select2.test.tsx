@@ -311,6 +311,34 @@ describe('Select2 search', () => {
     expect(getOptionLabels()).toHaveLength(OPTIONS.length);
   });
 
+  test('stays open while the search input scrolls its own text', async () => {
+    render(<Controlled isSearchable label="Label" />);
+
+    const input = getSearchInput();
+    await userEvent.click(input);
+    await userEvent.type(input, 'Al');
+
+    // A long query scrolls the input sideways; that scroll is not the page's.
+    fireEvent.scroll(input);
+    await new Promise(resolve => setTimeout(resolve, 300));
+
+    expect(isOpened()).toBe(true);
+    expect(input.value).toBe('Al');
+    expect(getOptionLabels()).toEqual(['Alice']);
+  });
+
+  test('closes when the page scrolls', async () => {
+    render(<Controlled isSearchable label="Label" />);
+
+    const input = getSearchInput();
+    await userEvent.click(input);
+    await userEvent.type(input, 'Al');
+
+    fireEvent.scroll(document.body);
+
+    await waitFor(() => expect(isOpened()).toBe(false));
+  });
+
   test('matches `searchText` besides the label', async () => {
     const options: T.Option[] = [
       {
