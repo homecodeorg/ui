@@ -5,6 +5,7 @@ import { useEffect, useState, type MouseEvent } from 'react';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Input } from 'uilib/components/Input/Input';
 import { Popup } from 'uilib/components/Popup/Popup';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
 import S from './NestedMenu.styl';
 import cn from 'classnames';
 
@@ -290,7 +291,12 @@ function NestedMenuComponent({
       content={
         <div className={S.list} role="menu">
           {stacked && active ? (
-            <div className={S.stacked}>
+            <Scroll
+              y
+              size={size}
+              className={S.stacked}
+              innerClassName={S.stackedInner}
+            >
               <button
                 type="button"
                 className={S.back}
@@ -300,7 +306,7 @@ function NestedMenuComponent({
                 <span className={S.label}>{active.label}</span>
               </button>
               <div className={S.stackedBody}>{active.submenu}</div>
-            </div>
+            </Scroll>
           ) : searchable ? (
             <>
               <Input
@@ -320,13 +326,18 @@ function NestedMenuComponent({
                   },
                 }}
               />
-              <div className={S.searchList}>
+              <Scroll
+                y
+                size={size}
+                className={S.searchList}
+                innerClassName={S.searchListInner}
+              >
                 {visibleItems.length > 0 ? (
                   renderItems()
                 ) : (
                   <div className={S.searchEmpty}>{searchEmpty}</div>
                 )}
-              </div>
+              </Scroll>
             </>
           ) : (
             renderItems()
