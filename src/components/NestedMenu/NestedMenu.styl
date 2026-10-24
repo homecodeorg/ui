@@ -212,3 +212,54 @@
   .back svg
     width 22px
     height 22px
+
+.search
+  min-width 120px
+  margin-bottom 4px
+
+  // The items set the menu width, not the input's intrinsic size.
+  input
+    width 100%
+    min-width 0
+
+// Match the item rows: Input's own control sizes are taller than menu items.
+searchSize(size, padY, padX, fontSize)
+  $h = 'calc(%s * 2 + %s * 1.2)' % (padY fontSize)
+  .search > label
+    height $h
+    min-height 0
+    padding-left padX
+    font-size fontSize
+    borderRadiusSize(size)
+
+  // Clear button: a square as tall as the field, so the cross is centered.
+  .search > label > button
+    top 0
+    bottom 0
+    height $h
+    min-height 0
+    width $h
+    min-width 0
+    padding 0
+
+.size-xs
+  searchSize('xs', 4px, 8px, 12px)
+.size-s
+  searchSize('s', 4px, 8px, 12px)
+.size-m
+  searchSize('m', 6px, 10px, 13px)
+.size-l
+  searchSize('l', 10px, 14px, 16px)
+.size-xl
+  searchSize('xl', 12px, 16px, 18px)
+
+.searchList
+  display flex
+  flex-direction column
+  gap 1px
+  max-height 320px
+  overflow-y auto
+
+.searchEmpty
+  padding 8px 12px
+  opacity 0.6
