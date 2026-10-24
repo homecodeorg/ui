@@ -214,8 +214,13 @@
     height 22px
 
 .search
-  min-width 180px
+  min-width 120px
   margin-bottom 4px
+
+  // The items set the menu width, not the input's intrinsic size.
+  input
+    width 100%
+    min-width 0
 
 // Match the item rows: Input's own control sizes are taller than menu items.
 searchSize(size, padY, padX, fontSize)
