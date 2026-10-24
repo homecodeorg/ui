@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.14](https://github.com/homecodeorg/ui/compare/v5.20.13...v5.20.14) (2026-10-24)
+
+
+### Features
+
+* Select - trigger arrow - opacity ([fe8ff39](https://github.com/homecodeorg/ui/commit/fe8ff3933cc09d56c91a1ab4e3564b11e1e03391))
+
+
+### Bug Fixes
+
+* **NestedMenu:** use Scroll instead of native scrollbar ([#21](https://github.com/homecodeorg/ui/issues/21)) ([7ebeb2b](https://github.com/homecodeorg/ui/commit/7ebeb2bd77806ee62ec427b9dc7f4876d2475b3a))
+
 ### [5.20.13](https://github.com/homecodeorg/ui/compare/v5.20.12...v5.20.13) (2026-10-24)
 
 
