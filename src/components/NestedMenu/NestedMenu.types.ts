@@ -18,6 +18,8 @@ export type NestedMenuItem = {
   danger?: boolean;
   disabled?: boolean;
   className?: string;
+  /** Text matched by the search field when `label` is not a plain string. */
+  searchText?: string;
 };
 
 export type Props = {
@@ -30,6 +32,11 @@ export type Props = {
   size?: Size;
   className?: string;
   popupProps?: Partial<PopupProps>;
+  /** Show a search field above the items that filters them by label. */
+  searchable?: boolean;
+  searchPlaceholder?: string;
+  /** Shown when nothing matches the search. */
+  searchEmpty?: ReactNode;
 };
 
 export type NestedMenuProps = Props;

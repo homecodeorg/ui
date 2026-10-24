@@ -3,6 +3,7 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 import withDialogue from '!!raw-loader!./WithDialogue';
+import searchable from '!!raw-loader!./Searchable';
 
 const name = 'NestedMenu';
 const Docs = () => (
@@ -27,6 +28,7 @@ export default () => (
     examples={[
       { id: 'demo', label: 'Demo', code: example },
       { id: 'dialogue', label: 'Opens Dialogue', code: withDialogue },
+      { id: 'searchable', label: 'Searchable', code: searchable },
     ]}
   />
 );

@@ -3,6 +3,7 @@ import * as T from './NestedMenu.types';
 import { useEffect, useState, type MouseEvent } from 'react';
 
 import { Icon } from 'uilib/components/Icon/Icon';
+import { Input } from 'uilib/components/Input/Input';
 import { Popup } from 'uilib/components/Popup/Popup';
 import S from './NestedMenu.styl';
 import cn from 'classnames';
@@ -73,6 +74,13 @@ export function NestedMenuItemRow({
   );
 }
 
+function itemSearchText(item: T.NestedMenuItem) {
+  if (item.searchText != null) return item.searchText;
+  return typeof item.label === 'string' || typeof item.label === 'number'
+    ? String(item.label)
+    : '';
+}
+
 function NestedMenuComponent({
   trigger,
   items,
@@ -83,8 +91,16 @@ function NestedMenuComponent({
   className,
   popupProps,
   onItemClick,
+  searchable = false,
+  searchPlaceholder = 'Search',
+  searchEmpty = 'Nothing found',
 }: T.Props) {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const needle = searchable ? query.trim().toLowerCase() : '';
+  const visibleItems = needle
+    ? items.filter(item => itemSearchText(item).toLowerCase().includes(needle))
+    : items;
   const stacked = useMedia(MOBILE_MQ);
   const canHover = useMedia(HOVER_MQ);
   const active = items.find(item => item.id === activeId);
@@ -106,6 +122,7 @@ function NestedMenuComponent({
   useEffect(() => {
     if (!open) {
       setActiveId(null);
+      setQuery('');
       return undefined;
     }
     const onKey = (e: KeyboardEvent) => {
@@ -196,7 +213,7 @@ function NestedMenuComponent({
   }
 
   function renderItems() {
-    return items.map(item => {
+    return visibleItems.map(item => {
       if (item.submenu && !stacked) {
         return (
           <Popup
@@ -284,6 +301,33 @@ function NestedMenuComponent({
               </button>
               <div className={S.stackedBody}>{active.submenu}</div>
             </div>
+          ) : searchable ? (
+            <>
+              <Input
+                className={S.search}
+                size={size}
+                value={query}
+                placeholder={searchPlaceholder}
+                autoFocus
+                hasClear
+                onChange={(_, value) => setQuery(String(value))}
+                controlProps={{
+                  // Enter picks the first match.
+                  onKeyDown: e => {
+                    if (e.key !== 'Enter' || !visibleItems[0]) return;
+                    handleItemClick(visibleItems[0].id, e);
+                    e.preventDefault();
+                  },
+                }}
+              />
+              <div className={S.searchList}>
+                {visibleItems.length > 0 ? (
+                  renderItems()
+                ) : (
+                  <div className={S.searchEmpty}>{searchEmpty}</div>
+                )}
+              </div>
+            </>
           ) : (
             renderItems()
           )}
