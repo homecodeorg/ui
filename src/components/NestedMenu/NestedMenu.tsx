@@ -13,6 +13,8 @@ const MOBILE_MQ = '(max-width: 720px)';
 const HOVER_MQ = '(hover: hover) and (pointer: fine)';
 
 const ICON_SIZE = { xs: 'xs', s: 'xs', m: 'xs', l: 's', xl: 'm' } as const;
+// Scrollbar grows with the menu size, up to `m`.
+const SCROLL_SIZE = { xs: 'xs', s: 's', m: 'm', l: 'm', xl: 'm' } as const;
 
 function useMedia(query: string) {
   const [matches, setMatches] = useState(
@@ -106,6 +108,12 @@ function NestedMenuComponent({
   const canHover = useMedia(HOVER_MQ);
   const active = items.find(item => item.id === activeId);
   const iconSize = ICON_SIZE[size];
+  const scrollProps = {
+    y: true,
+    size: SCROLL_SIZE[size],
+    fadeSize: size,
+    offset: { y: { after: 4 } },
+  };
   const contentClass = cn(S.content, S[`size-${size}`]);
 
   function close() {
@@ -292,8 +300,7 @@ function NestedMenuComponent({
         <div className={S.list} role="menu">
           {stacked && active ? (
             <Scroll
-              y
-              size={size}
+              {...scrollProps}
               className={S.stacked}
               innerClassName={S.stackedInner}
             >
@@ -327,8 +334,7 @@ function NestedMenuComponent({
                 }}
               />
               <Scroll
-                y
-                size={size}
+                {...scrollProps}
                 className={S.searchList}
                 innerClassName={S.searchListInner}
               >
