@@ -112,7 +112,7 @@ function NestedMenuComponent({
     y: true,
     size: SCROLL_SIZE[size],
     fadeSize: size,
-    offset: { y: { after: 4 } },
+    offset: { y: { after: 8 } },
   };
   const contentClass = cn(S.content, S[`size-${size}`]);
 
