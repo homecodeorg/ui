@@ -232,6 +232,10 @@ searchSize(size, padY, padX, fontSize)
     font-size fontSize
     borderRadiusSize(size)
 
+  .searchEmpty
+    padding padY padX
+    font-size fontSize
+
   // Clear button: a square as tall as the field, so the cross is centered.
   .search > label > button
     top 0
@@ -261,5 +265,7 @@ searchSize(size, padY, padX, fontSize)
   overflow-y auto
 
 .searchEmpty
-  padding 8px 12px
   opacity 0.6
+  font-weight 500
+  line-height 1.2
+  white-space nowrap
