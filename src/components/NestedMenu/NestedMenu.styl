@@ -224,12 +224,23 @@
 
 // Match the item rows: Input's own control sizes are taller than menu items.
 searchSize(size, padY, padX, fontSize)
+  $h = 'calc(%s * 2 + %s * 1.2)' % (padY fontSize)
   .search > label
-    height 'calc(%s * 2 + %s * 1.2)' % (padY fontSize)
+    height $h
     min-height 0
     padding-left padX
     font-size fontSize
     borderRadiusSize(size)
+
+  // Clear button: a square as tall as the field, so the cross is centered.
+  .search > label > button
+    top 0
+    bottom 0
+    height $h
+    min-height 0
+    width $h
+    min-width 0
+    padding 0
 
 .size-xs
   searchSize('xs', 4px, 8px, 12px)
