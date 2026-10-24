@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.13](https://github.com/homecodeorg/ui/compare/v5.20.12...v5.20.13) (2026-10-24)
+
+
+### Features
+
+* **NestedMenu:** opt-in search field that filters items ([#19](https://github.com/homecodeorg/ui/issues/19)) ([7dc55ae](https://github.com/homecodeorg/ui/commit/7dc55ae4dabcdffe2511528bbb2ac9461dd78334))
+
+
+### Bug Fixes
+
+* **NestedMenu:** size the empty-search text like menu items ([#20](https://github.com/homecodeorg/ui/issues/20)) ([731ccf5](https://github.com/homecodeorg/ui/commit/731ccf58011ce76a106ef152e3e5c2723d975267))
+
 ### [5.20.12](https://github.com/homecodeorg/ui/compare/v5.20.11...v5.20.12) (2026-10-23)
 
 
