@@ -5,6 +5,7 @@ import { useEffect, useState, type MouseEvent } from 'react';
 import { Icon } from 'uilib/components/Icon/Icon';
 import { Input } from 'uilib/components/Input/Input';
 import { Popup } from 'uilib/components/Popup/Popup';
+import { Scroll } from 'uilib/components/Scroll/Scroll';
 import S from './NestedMenu.styl';
 import cn from 'classnames';
 
@@ -12,6 +13,8 @@ const MOBILE_MQ = '(max-width: 720px)';
 const HOVER_MQ = '(hover: hover) and (pointer: fine)';
 
 const ICON_SIZE = { xs: 'xs', s: 'xs', m: 'xs', l: 's', xl: 'm' } as const;
+// Scrollbar grows with the menu size, up to `m`.
+const SCROLL_SIZE = { xs: 'xs', s: 's', m: 'm', l: 'm', xl: 'm' } as const;
 
 function useMedia(query: string) {
   const [matches, setMatches] = useState(
@@ -105,6 +108,12 @@ function NestedMenuComponent({
   const canHover = useMedia(HOVER_MQ);
   const active = items.find(item => item.id === activeId);
   const iconSize = ICON_SIZE[size];
+  const scrollProps = {
+    y: true,
+    size: SCROLL_SIZE[size],
+    fadeSize: size,
+    offset: { y: { after: 8 } },
+  };
   const contentClass = cn(S.content, S[`size-${size}`]);
 
   function close() {
@@ -290,7 +299,11 @@ function NestedMenuComponent({
       content={
         <div className={S.list} role="menu">
           {stacked && active ? (
-            <div className={S.stacked}>
+            <Scroll
+              {...scrollProps}
+              className={S.stacked}
+              innerClassName={S.stackedInner}
+            >
               <button
                 type="button"
                 className={S.back}
@@ -300,7 +313,7 @@ function NestedMenuComponent({
                 <span className={S.label}>{active.label}</span>
               </button>
               <div className={S.stackedBody}>{active.submenu}</div>
-            </div>
+            </Scroll>
           ) : searchable ? (
             <>
               <Input
@@ -320,13 +333,17 @@ function NestedMenuComponent({
                   },
                 }}
               />
-              <div className={S.searchList}>
+              <Scroll
+                {...scrollProps}
+                className={S.searchList}
+                innerClassName={S.searchListInner}
+              >
                 {visibleItems.length > 0 ? (
                   renderItems()
                 ) : (
                   <div className={S.searchEmpty}>{searchEmpty}</div>
                 )}
-              </div>
+              </Scroll>
             </>
           ) : (
             renderItems()

@@ -122,10 +122,11 @@
   color var(--active-color)
 
 .stacked
+  max-height unquote('min(360px, calc(100vh - 24px))')
+
+.stackedInner
   display flex
   flex-direction column
-  max-height unquote('min(360px, calc(100vh - 24px))')
-  overflow-y auto
 
 .back
   font-weight 650
@@ -258,11 +259,12 @@ searchSize(size, padY, padX, fontSize)
   searchSize('xl', 12px, 16px, 18px)
 
 .searchList
+  max-height 320px
+
+.searchListInner
   display flex
   flex-direction column
   gap 1px
-  max-height 320px
-  overflow-y auto
 
 .searchEmpty
   opacity 0.6
