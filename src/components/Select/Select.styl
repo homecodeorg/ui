@@ -26,8 +26,13 @@ $levelGap = 24px
 .triggerArrow
   margin-left .3em
   margin-right .7em
-  transition transform .2s ease-out
+  opacity 0.3
+  transition .2s ease-out
+  transition-property opacity, transform
   flex-shrink 0
+
+  .root:hover &
+    opacity 1
 
   &.isOpen
     transform rotateX(-180deg)
