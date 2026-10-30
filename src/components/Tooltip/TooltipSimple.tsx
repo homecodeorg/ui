@@ -31,6 +31,11 @@ const useSimplePositionSetup = ({
     if (!trigger || !tooltip) return;
 
     const positionTooltip = () => {
+      // Measure from the corner: an old left near the viewport edge squeezes the
+      // width, wraps the text and makes the tooltip sit too high.
+      tooltip.style.left = '0px';
+      tooltip.style.top = '0px';
+
       const rect = trigger.getBoundingClientRect();
       const tooltipRect = tooltip.getBoundingClientRect();
 
