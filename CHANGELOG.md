@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.15](https://github.com/homecodeorg/ui/compare/v5.20.14...v5.20.15) (2026-10-30)
+
+
+### Bug Fixes
+
+* **Tooltip:** keep trigger text styles when content changes while open ([#22](https://github.com/homecodeorg/ui/issues/22)) ([a8541c2](https://github.com/homecodeorg/ui/commit/a8541c21afa7b8b39f6fbdffb6074c4183e4992d))
+
 ### [5.20.14](https://github.com/homecodeorg/ui/compare/v5.20.13...v5.20.14) (2026-10-24)
 
 
