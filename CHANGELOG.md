@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.16](https://github.com/homecodeorg/ui/compare/v5.20.15...v5.20.16) (2026-10-30)
+
+
+### Bug Fixes
+
+* **Tooltip:** measure size before placing so stale position doesn't wrap text ([#23](https://github.com/homecodeorg/ui/issues/23)) ([e00ae44](https://github.com/homecodeorg/ui/commit/e00ae44c2703b117e6b2070aa902049a30295bac))
+
 ### [5.20.15](https://github.com/homecodeorg/ui/compare/v5.20.14...v5.20.15) (2026-10-30)
 
 
