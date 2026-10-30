@@ -8,6 +8,14 @@ import {
   getTextStyleSource,
 } from './tooltipTextStyles';
 
+function isPopoverOpen(el: HTMLElement) {
+  try {
+    return el.matches(':popover-open');
+  } catch {
+    return false;
+  }
+}
+
 const useSimplePositionSetup = ({
   triggerRef,
   tooltipRef,
@@ -76,6 +84,12 @@ const useSimplePositionSetup = ({
       clearTriggerTextStyles(tooltip);
     };
 
+    // New content while open: keep the trigger's font and re-center on the new size.
+    if (isPopoverOpen(tooltip)) {
+      applyTriggerTextStyles(tooltip, getTextStyleSource(trigger));
+      positionTooltip();
+    }
+
     trigger.addEventListener('mouseenter', showTooltip);
     trigger.addEventListener('mouseleave', hideTooltip);
     trigger.addEventListener('focusin', showTooltip);
@@ -83,7 +97,7 @@ const useSimplePositionSetup = ({
 
     return () => {
       clearTimeout(timeoutRef.current);
-      clearTriggerTextStyles(tooltip);
+      if (!isPopoverOpen(tooltip)) clearTriggerTextStyles(tooltip);
       trigger.removeEventListener('mouseenter', showTooltip);
       trigger.removeEventListener('mouseleave', hideTooltip);
       trigger.removeEventListener('focusin', showTooltip);
