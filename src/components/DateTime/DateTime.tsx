@@ -5,15 +5,12 @@ import { store as i18nStore } from 'uilib/services/i18n';
 
 import * as T from './DateTime.types';
 
-// App language codes that differ from moment's locale ids.
+// Only app language codes that differ from moment's locale ids. Any other
+// code (de, fr, ar, th, ...) already is a moment id and is passed through.
 const MOMENT_LOCALE_ALIASES: Record<string, string> = {
   ua: 'uk',
   jp: 'ja',
   zh: 'zh-cn',
-  cn: 'zh-cn',
-  gr: 'el',
-  cz: 'cs',
-  dk: 'da',
 };
 
 /** Moment locale id for an app language code ("ua" -> "uk"). */
