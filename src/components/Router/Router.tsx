@@ -1,4 +1,5 @@
-import { useContext, useEffect, useMemo } from 'react';
+import { Children, isValidElement, useContext, useEffect, useMemo } from 'react';
+import type { ReactNode } from 'react';
 import { useStore } from 'justorm/react';
 
 import { parseQueryParams } from 'uilib/tools/queryParams';
@@ -30,12 +31,12 @@ export const Router = (props: T.Props) => {
   }, []);
 
   const matchedRoutes = useMemo(() => {
-    const childs: React.ReactNode[] = [];
+    const childs: ReactNode[] = [];
     let noMatchRoute;
     let isRouteMatched = false;
 
-    for (const child of React.Children.toArray(children)) {
-      if (!React.isValidElement(child)) {
+    for (const child of Children.toArray(children)) {
+      if (!isValidElement(child)) {
         childs.push(child);
         continue;
       }
