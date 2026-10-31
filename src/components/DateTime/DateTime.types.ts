@@ -11,6 +11,9 @@ export type Props = {
   //
   // See [moment.js/format](https://momentjs.com/docs/#/displaying/format) for more details.
   format?: string;
-  // locale in which to display the date and time. If no locale is provided, the component will default to 'en' (English).
+  // Locale in which to display the date and time. If no locale is provided, the component
+  // follows the active i18n language (app codes like "ua" map to moment's "uk"), so it
+  // re-renders on a language switch. The app must load the moment locale data
+  // (`import 'moment/locale/uk'`); without it, moment falls back to English.
   locale?: string;
 };
