@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.18](https://github.com/homecodeorg/ui/compare/v5.20.17...v5.20.18) (2026-10-31)
+
+
+### Bug Fixes
+
+* calm down default controls background ([c6bcec7](https://github.com/homecodeorg/ui/commit/c6bcec7efa4f054e237ae5431d248e575951db42))
+
 ### [5.20.17](https://github.com/homecodeorg/ui/compare/v5.20.16...v5.20.17) (2026-10-31)
 
 
