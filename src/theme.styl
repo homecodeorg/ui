@@ -22,11 +22,11 @@ control()
 
   &:hover
   &:focus
-    background-color var(--active-color-alpha-100)
+    background-color var(--active-color-alpha-50)
 
   &[disabled]
     opacity .4
-    background-color var(--accent-color-alpha-100)
+    background-color var(--accent-color-alpha-50)
     pointer-events none
 
 controlButtonVariant(variant)
@@ -34,7 +34,7 @@ controlButtonVariant(variant)
     background-color transparent
 
   if variant == 'default'
-    background-color var(--accent-color-alpha-100)
+    background-color var(--accent-color-alpha-50)
 
   if variant == 'outlined'
     background-color transparent
