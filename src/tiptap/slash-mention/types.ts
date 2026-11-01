@@ -8,6 +8,11 @@ export type SlashCommandItem = {
   description?: string;
   /** Left icon in the slash suggestion list (`<Icon type={icon} />`). */
   icon?: IconType;
+  /**
+   * Image URL shown as a round picture in place of `icon` (e.g. an avatar).
+   * Falls back to `icon` when the image fails to load.
+   */
+  image?: string;
   /** Extra class on inserted mention chip (merged with `slash-mention`). */
   className?: string;
   /** CSS color for chip text; background uses 30% color blend. */
