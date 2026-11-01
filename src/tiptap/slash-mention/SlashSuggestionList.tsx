@@ -7,6 +7,28 @@ import S from './SlashSuggestionList.styl';
 import type { SlashCommandItem } from './types';
 import cn from 'classnames';
 
+function SlashItemIcon({ item }: { item: SlashCommandItem }) {
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => setFailed(false), [item.image]);
+
+  if (item.image && !failed) {
+    return (
+      <img
+        src={item.image}
+        alt=""
+        aria-hidden
+        draggable={false}
+        className={S.itemImage}
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  if (!item.icon) return null;
+  return <Icon type={item.icon} size="s" className={S.itemIcon} />;
+}
+
 export type SlashSuggestionListHandle = {
   onKeyboardEvent: (event: KeyboardEvent) => boolean;
 };
@@ -91,9 +113,7 @@ function SlashSuggestionListInner({
             onClick={() => onPick(idx)}
             textOverflow
           >
-            {item.icon && (
-              <Icon type={item.icon} size="s" className={S.itemIcon} />
-            )}
+            <SlashItemIcon item={item} />
             <span className={S.itemText}>
               <span className={S.itemLabel}>{item.label}</span>
               {item.description && (
