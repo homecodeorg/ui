@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.19](https://github.com/homecodeorg/ui/compare/v5.20.18...v5.20.19) (2026-11-01)
+
+
+### Features
+
+* **slash-mention:** show an image in place of an item's icon ([#26](https://github.com/homecodeorg/ui/issues/26)) ([8725f27](https://github.com/homecodeorg/ui/commit/8725f27e80c9d94c0a608f855ad0db32f7ff4f40))
+
 ### [5.20.18](https://github.com/homecodeorg/ui/compare/v5.20.17...v5.20.18) (2026-10-31)
 
 
