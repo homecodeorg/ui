@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.21](https://github.com/homecodeorg/ui/compare/v5.20.20...v5.20.21) (2026-11-07)
+
+
+### Features
+
+* **formatted-text:** quotes option and extra injectors ([#30](https://github.com/homecodeorg/ui/issues/30)) ([d8b28eb](https://github.com/homecodeorg/ui/commit/d8b28eb351b4bc1d7408fd67f4ff65682def5499))
+
+
+### Bug Fixes
+
+* **prompt-composer:** no placeholder once the composer has content ([#29](https://github.com/homecodeorg/ui/issues/29)) ([0218121](https://github.com/homecodeorg/ui/commit/02181217aeeaa59f8154130eb65fe9c790e7c6cb))
+
 ### [5.20.20](https://github.com/homecodeorg/ui/compare/v5.20.19...v5.20.20) (2026-11-07)
 
 
