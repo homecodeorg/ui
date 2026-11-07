@@ -14,6 +14,10 @@ import StarterKit from '@tiptap/starter-kit';
 
 import S from './PromptComposer.styl';
 import {
+  createPromptBlocksExtension,
+  isInPromptBlock,
+} from '../../tiptap/prompt-blocks';
+import {
   NonInclusiveLink,
   createLinkHighlightExtension,
 } from '../../tiptap/link-highlight';
@@ -35,7 +39,7 @@ import {
 } from './PromptComposer.helpers';
 import {
   PROMPT_COMPOSER_EMPTY_DOC,
-  promptComposerParagraphDoc,
+  promptComposerTextDoc,
 } from './promptComposerDoc';
 
 export type UsePromptComposerEditorOptions = {
@@ -202,9 +206,9 @@ export function usePromptComposerEditor({
     const exts: AnyExtension[] = [
       StarterKit.configure({
         heading: false,
-        bulletList: false,
+        bulletList: { HTMLAttributes: { class: S.promptComposerList } },
         orderedList: false,
-        blockquote: false,
+        blockquote: { HTMLAttributes: { class: S.promptComposerQuote } },
         codeBlock: false,
         horizontalRule: false,
         link: false,
@@ -216,6 +220,7 @@ export function usePromptComposerEditor({
         emptyNodeClass: S.promptComposerEmptyNode,
       }),
       createLinkHighlightExtension(S.promptComposerLink),
+      ...createPromptBlocksExtension({ quoteClassName: S.promptComposerQuote }),
     ];
 
     for (const cfg of resolvedMentionConfigs) {
@@ -296,7 +301,9 @@ export function usePromptComposerEditor({
       if (!activeEditor) return false;
 
       const currentText = activeEditor.getText();
-      const hasNewlines = currentText.includes('\n');
+      // In a list or a quote being typed, Enter adds the next line.
+      const hasNewlines =
+        currentText.includes('\n') || isInPromptBlock(activeEditor.state);
       const isModEnter = event.metaKey || event.ctrlKey;
 
       // Single line: Enter submits. Multiline: Enter inserts a line; Cmd/Ctrl+Enter submits.
@@ -372,12 +379,15 @@ export function usePromptComposerEditor({
 
     const next = prefillMessage;
     if (current === next) return;
+    // A list or quote at the end gets an empty line after it, and the app
+    // trims the prompt on blur. Resetting for that would refocus the editor.
+    if (next !== '' && current.trim() === next.trim()) return;
 
     try {
       if (next === '') {
         editor.commands.setContent(PROMPT_COMPOSER_EMPTY_DOC);
       } else {
-        editor.commands.setContent(promptComposerParagraphDoc(next));
+        editor.commands.setContent(promptComposerTextDoc(next));
       }
     } catch {
       return;

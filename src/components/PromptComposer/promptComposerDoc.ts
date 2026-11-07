@@ -1,18 +1,16 @@
 import type { JSONContent } from '@tiptap/core';
 
+import { promptBlocksDoc } from '../../tiptap/prompt-blocks/promptBlocksText';
+
 export const PROMPT_COMPOSER_EMPTY_DOC: JSONContent = {
   type: 'doc',
   content: [{ type: 'paragraph' }],
 };
 
-export function promptComposerParagraphDoc(text: string): JSONContent {
-  return {
-    type: 'doc',
-    content: [
-      {
-        type: 'paragraph',
-        content: text ? [{ type: 'text', text }] : [],
-      },
-    ],
-  };
+/**
+ * Doc for prefilled text: `> ` lines become read-only quotes and `- ` lines a
+ * bullet list; other text stays as it was.
+ */
+export function promptComposerTextDoc(text: string): JSONContent {
+  return text ? promptBlocksDoc(text) : PROMPT_COMPOSER_EMPTY_DOC;
 }
