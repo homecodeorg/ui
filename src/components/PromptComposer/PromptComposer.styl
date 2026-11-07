@@ -93,6 +93,9 @@ INPUT_MAX_HEIGHT = 200px
       margin 0
 
   div.promptComposerQuote
+    // ProseMirror's own CSS sets `white-space: normal` on contenteditable=false
+    // nodes, which put a locked quote's lines on one line.
+    white-space pre-wrap
     user-select none
     cursor default
 
