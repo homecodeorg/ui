@@ -65,19 +65,6 @@ export type UsePromptComposerEditorResult = {
   trimmedText: string;
 };
 
-/** Last line is the empty one added after a final list or quote. */
-function endsWithTrailingLine(editor: Editor): boolean {
-  const { doc } = editor.state;
-  const last = doc.lastChild;
-  const before = doc.childCount > 1 ? doc.child(doc.childCount - 2) : null;
-  return Boolean(
-    last?.type.name === 'paragraph' &&
-      last.content.size === 0 &&
-      before &&
-      before.type.name !== 'paragraph'
-  );
-}
-
 const PROMPT_COMPOSER_EMPTY_NODE_CLASS = 'promptComposerEmptyNode';
 
 function buildMentionConfigs({
@@ -219,7 +206,7 @@ export function usePromptComposerEditor({
     const exts: AnyExtension[] = [
       StarterKit.configure({
         heading: false,
-        bulletList: { HTMLAttributes: { class: S.promptComposerList } },
+        bulletList: false, // createPromptBlocksExtension brings its own
         orderedList: false,
         blockquote: { HTMLAttributes: { class: S.promptComposerQuote } },
         codeBlock: false,
@@ -233,7 +220,10 @@ export function usePromptComposerEditor({
         emptyNodeClass: S.promptComposerEmptyNode,
       }),
       createLinkHighlightExtension(S.promptComposerLink),
-      ...createPromptBlocksExtension({ quoteClassName: S.promptComposerQuote }),
+      ...createPromptBlocksExtension({
+        quoteClassName: S.promptComposerQuote,
+        listClassName: S.promptComposerList,
+      }),
     ];
 
     for (const cfg of resolvedMentionConfigs) {
@@ -392,17 +382,13 @@ export function usePromptComposerEditor({
 
     const next = prefillMessage;
     if (current === next) return;
-    // A list or quote at the end gets an empty line after it, and the app
-    // trims the prompt on blur. Resetting for that would refocus the editor.
-    if (next !== '' && current === `${next}\n\n` && endsWithTrailingLine(editor))
-      return;
+    // The app trims the prompt on blur, and a list or quote at the end always
+    // has an empty line after it. Resetting for that would refocus the editor
+    // and turn an empty last item into text.
+    if (next !== '' && next === current.trim()) return;
 
     try {
-      if (next === '') {
-        editor.commands.setContent(PROMPT_COMPOSER_EMPTY_DOC);
-      } else {
-        editor.commands.setContent(promptComposerTextDoc(next));
-      }
+      editor.commands.setContent(promptComposerTextDoc(next));
     } catch {
       return;
     }

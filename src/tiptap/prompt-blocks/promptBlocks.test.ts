@@ -8,7 +8,11 @@ import { promptBlocksDoc } from './promptBlocksText';
 function makeEditor(content: object | string = '') {
   return new Editor({
     extensions: [
-      StarterKit.configure({ link: false, orderedList: false }),
+      StarterKit.configure({
+        link: false,
+        orderedList: false,
+        bulletList: false,
+      }),
       ...createPromptBlocksExtension({ quoteClassName: 'quote' }),
     ],
     content: typeof content === 'string' ? `<p>${content}</p>` : content,
@@ -164,13 +168,13 @@ describe('review fixes', () => {
   let editor: Editor;
   afterEach(() => editor.destroy());
 
-  it('Shift+Enter then "- " inside a list item keeps the list', () => {
+  it('Shift+Enter then "- " inside a list item starts the next item', () => {
     editor = makeEditor();
     type(editor, '- milk');
     editor.commands.setHardBreak();
     type(editor, '- x');
     expect(topTypes(editor)).toEqual(['bulletList']);
-    expect(text(editor)).toBe('- milk\n  - x');
+    expect(text(editor)).toBe('- milk\n- x');
   });
 
   it('a quote with a pasted quote inside keeps its text when locked', () => {
@@ -185,5 +189,37 @@ describe('review fixes', () => {
     editor.commands.setTextSelection(editor.state.doc.content.size - 1);
     expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
     expect(editor.state.doc.firstChild!.attrs.text).toContain('a\nb');
+  });
+});
+
+describe('review round 2', () => {
+  let editor: Editor;
+  afterEach(() => editor.destroy());
+
+  it('"* " and "+ " stay text', () => {
+    editor = makeEditor();
+    type(editor, '* note');
+    expect(topTypes(editor)).toEqual(['paragraph']);
+    expect(text(editor)).toBe('* note');
+  });
+
+  it('a paste with blank lines does not grow them', () => {
+    (globalThis as any).ClipboardEvent ??= class extends Event {};
+    editor = makeEditor();
+    editor.view.pasteText('a\n\nb\n\n> q');
+    expect(text(editor)).toBe('a\n\nb\n\n> q');
+  });
+
+  it('undo after a quote locks keeps the quoted text', () => {
+    editor = makeEditor({
+      type: 'doc',
+      content: [{ type: 'paragraph' }, { type: 'paragraph' }],
+    });
+    editor.commands.setTextSelection(1);
+    type(editor, '> said');
+    editor.commands.setTextSelection(editor.state.doc.content.size - 1);
+    expect(topTypes(editor)).toEqual(['promptQuote']);
+    editor.commands.undo();
+    expect(text(editor)).toBe('> said');
   });
 });

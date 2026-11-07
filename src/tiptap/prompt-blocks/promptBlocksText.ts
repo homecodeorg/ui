@@ -120,8 +120,10 @@ export function promptBlocksFromText(
     if (i < groups.length - 1 && lines[lines.length - 1] === '') lines.pop();
     if (lines.length === 0) return;
 
-    if (plainLines === 'split') blocks.push(...lines.map(paragraph));
-    else blocks.push(paragraph(lines.join('\n')));
+    // Like ProseMirror's own paste, blank lines only separate paragraphs.
+    if (plainLines === 'split') {
+      blocks.push(...lines.filter(line => line.trim()).map(paragraph));
+    } else blocks.push(paragraph(lines.join('\n')));
   });
 
   return blocks.length ? blocks : [paragraph('')];

@@ -12,5 +12,5 @@ export const PROMPT_COMPOSER_EMPTY_DOC: JSONContent = {
  * bullet list; other text stays as it was.
  */
 export function promptComposerTextDoc(text: string): JSONContent {
-  return text ? promptBlocksDoc(text) : PROMPT_COMPOSER_EMPTY_DOC;
+  return promptBlocksDoc(text);
 }
