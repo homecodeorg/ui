@@ -6,13 +6,11 @@ import { Table } from 'uilib/components/Table/Table';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
 
 import S from './FormattedText.styl';
-import type { FormattedTextProps } from './FormattedText.types';
-
-type InjectionResult = {
-  elem: React.ReactNode;
-  index: number;
-  length: number;
-} | null;
+import type {
+  FormattedTextProps,
+  InjectionResult,
+  Injector,
+} from './FormattedText.types';
 
 function isAppOriginHost(hostname: string) {
   if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
@@ -42,7 +40,7 @@ export function hrefForFormattedLink(url: string): string {
   return value;
 }
 
-function findJsonEndExclusive(content: string, start: number): number {
+export function findJsonEndExclusive(content: string, start: number): number {
   const first = content[start];
   if (first !== '{' && first !== '[') return -1;
   const stack: string[] = first === '{' ? ['}'] : [']'];
@@ -86,7 +84,7 @@ function findJsonEndExclusive(content: string, start: number): number {
 
 function applyInjectors(
   text: string,
-  injectors: Array<(content: string) => InjectionResult>
+  injectors: Injector[]
 ): React.ReactNode[] {
   let result: React.ReactNode[] = [text];
   injectors.forEach(fn => {
@@ -117,7 +115,33 @@ export function FormattedText({
   text,
   className,
   onButtonClick,
+  quotes,
+  injectors,
+  breaks = true,
 }: FormattedTextProps) {
+  // Without `<br>`s the text keeps its own newlines (pre-wrap), so a block, such
+  // as a table, swallows the blank lines after it instead of showing them.
+  const blankLinesAfter = (content: string, from: number) =>
+    breaks ? 0 : content.slice(from).match(/^\s*/)![0].length;
+
+  /** A run of `> ` lines, grayed with a bar down its left side. */
+  const injectQuote = (content: string): InjectionResult => {
+    const matches = content.match(/(?:^|\n)(>[^\n]*(?:\n>[^\n]*)*)(?:\n|$)/);
+    if (!matches) return null;
+    const lines = matches[1]
+      .split('\n')
+      .map(line => line.replace(/^>[ \t]?/, ''));
+    return {
+      elem: (
+        <div className={S.quote} data-quote>
+          {lines.join('\n')}
+        </div>
+      ),
+      index: matches.index!,
+      length: matches[0].length,
+    };
+  };
+
   const injectLines = (content: string): InjectionResult => {
     const matches = content.match(/(^|\n)---[ \t]*(?:\n|$)/);
     if (!matches) return null;
@@ -315,6 +339,7 @@ export function FormattedText({
   const processCellContent = (value: string, depth = 0): React.ReactNode[] =>
     applyInjectors(value, [
       injectCodeBlock,
+      ...(injectors ?? []),
       injectPrettyJson,
       ...(depth === 0
         ? [
@@ -344,7 +369,12 @@ export function FormattedText({
     ]);
 
   const injectHeading = (content: string): InjectionResult => {
-    const matches = content.match(/(^|\n)(#{1,6})\s+([^\n]+)/);
+    // Without `<br>`s the text keeps its own newlines (pre-wrap), so a heading,
+    // which is a block, swallows the blank lines around it instead of leaving
+    // an extra empty line.
+    const matches = content.match(
+      breaks ? /(^|\n)(#{1,6})\s+([^\n]+)/ : /(^|\n+)(#{1,6})[ \t]+([^\n]+)\n*/
+    );
     if (!matches) return null;
     const Tag = headingTags[Math.min(matches[2].length, 6) - 1];
     return {
@@ -413,7 +443,10 @@ export function FormattedText({
         />
       ),
       index: matches.index! + (matches[1]?.length || 0),
-      length: matches[0].length - (matches[1]?.length || 0),
+      length:
+        matches[0].length -
+        (matches[1]?.length || 0) +
+        blankLinesAfter(content, matches.index! + matches[0].length),
     };
   };
 
@@ -422,7 +455,10 @@ export function FormattedText({
       {applyInjectors(text, [
         injectTables,
         injectCodeBlock,
+        ...(injectors ?? []),
         injectPrettyJson,
+        // After code, so a `> ` line inside a code block stays code.
+        ...(quotes ? [injectQuote] : []),
         injectHeading,
         injectLines,
         injectLinks,
@@ -431,7 +467,7 @@ export function FormattedText({
         injectBullet,
         injectNumbered,
         injectButtons,
-        injectBreaks,
+        ...(breaks ? [injectBreaks] : []),
       ])}
     </div>
   );

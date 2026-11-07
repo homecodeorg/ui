@@ -1,2 +1,6 @@
-export { FormattedText } from './FormattedText';
-export type { FormattedTextProps } from './FormattedText.types';
+export { FormattedText, findJsonEndExclusive } from './FormattedText';
+export type {
+  FormattedTextProps,
+  InjectionResult,
+  Injector,
+} from './FormattedText.types';
