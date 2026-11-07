@@ -40,7 +40,7 @@ export function hrefForFormattedLink(url: string): string {
   return value;
 }
 
-function findJsonEndExclusive(content: string, start: number): number {
+export function findJsonEndExclusive(content: string, start: number): number {
   const first = content[start];
   if (first !== '{' && first !== '[') return -1;
   const stack: string[] = first === '{' ? ['}'] : [']'];
@@ -117,6 +117,7 @@ export function FormattedText({
   onButtonClick,
   quotes,
   injectors,
+  breaks = true,
 }: FormattedTextProps) {
   /** A run of `> ` lines, grayed with a bar down its left side. */
   const injectQuote = (content: string): InjectionResult => {
@@ -333,6 +334,7 @@ export function FormattedText({
   const processCellContent = (value: string, depth = 0): React.ReactNode[] =>
     applyInjectors(value, [
       injectCodeBlock,
+      ...(injectors ?? []),
       injectPrettyJson,
       ...(depth === 0
         ? [
@@ -362,7 +364,12 @@ export function FormattedText({
     ]);
 
   const injectHeading = (content: string): InjectionResult => {
-    const matches = content.match(/(^|\n)(#{1,6})\s+([^\n]+)/);
+    // Without `<br>`s the text keeps its own newlines (pre-wrap), so a heading,
+    // which is a block, swallows the blank lines around it instead of leaving
+    // an extra empty line.
+    const matches = content.match(
+      breaks ? /(^|\n)(#{1,6})\s+([^\n]+)/ : /(^|\n+)(#{1,6})[ \t]+([^\n]+)\n*/
+    );
     if (!matches) return null;
     const Tag = headingTags[Math.min(matches[2].length, 6) - 1];
     return {
@@ -438,9 +445,9 @@ export function FormattedText({
   return (
     <div className={className}>
       {applyInjectors(text, [
-        ...(injectors ?? []),
         injectTables,
         injectCodeBlock,
+        ...(injectors ?? []),
         injectPrettyJson,
         // After code, so a `> ` line inside a code block stays code.
         ...(quotes ? [injectQuote] : []),
@@ -452,7 +459,7 @@ export function FormattedText({
         injectBullet,
         injectNumbered,
         injectButtons,
-        injectBreaks,
+        ...(breaks ? [injectBreaks] : []),
       ])}
     </div>
   );

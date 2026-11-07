@@ -1,4 +1,4 @@
-export { FormattedText } from './FormattedText';
+export { FormattedText, findJsonEndExclusive } from './FormattedText';
 export type {
   FormattedTextProps,
   InjectionResult,

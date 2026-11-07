@@ -262,11 +262,75 @@ Result: {"ok":true,"count":3}
       expect(screen.getByText('**raw**').tagName).toBe('SPAN');
     });
 
+    test('leaves the inside of a code block to the code block', () => {
+      const { container } = render(
+        <FormattedText injectors={[shout]} text={'```\n#tag\n```\n#real'} />
+      );
+
+      expect(container.querySelector('code')).toHaveTextContent('#tag');
+      expect(screen.getAllByText('REAL')).toHaveLength(1);
+      expect(screen.queryByText('TAG')).not.toBeInTheDocument();
+    });
+
+    test('runs before the JSON built-in', () => {
+      const asJson: Injector = content => {
+        const index = content.indexOf('{"a":1}');
+        if (index < 0) return null;
+        return {
+          elem: <em data-testid="own-json">a is 1</em>,
+          index,
+          length: 7,
+        };
+      };
+      const { container } = render(
+        <FormattedText injectors={[asJson]} text={'see {"a":1} here'} />
+      );
+
+      expect(screen.getByTestId('own-json')).toBeInTheDocument();
+      expect(container.querySelector('pre')).not.toBeInTheDocument();
+    });
+
+    test('also runs on the cells of a table', () => {
+      render(
+        <FormattedText
+          injectors={[shout]}
+          text={'| Name |\n| --- |\n| #alpha |\n'}
+        />
+      );
+
+      expect(screen.getByText('ALPHA').tagName).toBe('MARK');
+    });
+
     test('built-ins still work next to extra injectors', () => {
       render(<FormattedText injectors={[shout]} text="#tag and *italic*" />);
 
       expect(screen.getByText('TAG')).toBeInTheDocument();
       expect(screen.getByText('italic').tagName).toBe('EM');
+    });
+  });
+  describe('breaks', () => {
+    test('keeps newlines as text when turned off', () => {
+      const { container } = render(
+        <FormattedText breaks={false} text={'one\ntwo\n\nthree'} />
+      );
+
+      expect(container.querySelector('br')).not.toBeInTheDocument();
+      expect(container.textContent).toBe('one\ntwo\n\nthree');
+    });
+
+    test('turns newlines into <br> by default', () => {
+      const { container } = render(<FormattedText text={'one\ntwo'} />);
+
+      expect(container.querySelectorAll('br')).toHaveLength(1);
+    });
+
+    test('a heading swallows the blank lines around it when newlines stay text', () => {
+      const { container } = render(
+        <FormattedText breaks={false} text={'before\n\n## Title\n\nafter'} />
+      );
+
+      expect(container.querySelector('h2')).toHaveTextContent('Title');
+      expect(container.textContent).toBe('beforeTitleafter');
     });
   });
 });
