@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.20](https://github.com/homecodeorg/ui/compare/v5.20.19...v5.20.20) (2026-11-07)
+
+
+### Features
+
+* **prompt-composer:** "- " bullet lists and read-only "> " quotes ([#27](https://github.com/homecodeorg/ui/issues/27)) ([e59d70b](https://github.com/homecodeorg/ui/commit/e59d70bea351efe06700fa7ca7699e7e8abe27b8))
+
+
+### Bug Fixes
+
+* **prompt-composer:** keep line breaks in a locked quote ([#28](https://github.com/homecodeorg/ui/issues/28)) ([4579a09](https://github.com/homecodeorg/ui/commit/4579a09442fc3d14eb62d3dd4eae1b4674933494))
+
 ### [5.20.19](https://github.com/homecodeorg/ui/compare/v5.20.18...v5.20.19) (2026-11-01)
 
 
