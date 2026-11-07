@@ -54,20 +54,28 @@ function groupLines(lines: string[]): Group[] {
  * item's text (what getText() writes for a multi-line item).
  */
 function buildList(lines: string[], indent = 0): JSONContent {
-  const items: { text: string; nested: string[] }[] = [];
+  type Part = { nested: string[] } | { text: string };
+  const items: { text: string; parts: Part[] }[] = [];
   for (const line of lines) {
     const bullet = line.match(BULLET_LINE);
     const item = items[items.length - 1];
     if ((bullet && bullet[1].length === indent) || !item) {
-      items.push({ text: bullet ? bullet[2] : line.trim(), nested: [] });
+      items.push({ text: bullet ? bullet[2] : line.trim(), parts: [] });
       continue;
     }
     const lineIndent = line.match(/^ */)![0].length;
-    const nestedBullet = bullet && lineIndent === indent + 2;
-    // Text at the item's own indent continues it, even after a nested list.
-    if (!nestedBullet && (lineIndent <= indent + 2 || !item.nested.length)) {
-      item.text += `\n${line.slice(Math.min(lineIndent, indent + 2))}`;
-    } else item.nested.push(line);
+    const last = item.parts[item.parts.length - 1];
+    const startsNested = bullet && lineIndent === indent + 2;
+    if (startsNested || (last && 'nested' in last && lineIndent > indent + 2)) {
+      if (last && 'nested' in last) last.nested.push(line);
+      else item.parts.push({ nested: [line] });
+      continue;
+    }
+    const value = line.slice(Math.min(lineIndent, indent + 2));
+    // Text at the item's own indent continues it, after a nested list too.
+    if (!last) item.text += `\n${value}`;
+    else if ('text' in last) last.text += `\n${value}`;
+    else item.parts.push({ text: value });
   }
   return {
     type: 'bulletList',
@@ -75,7 +83,11 @@ function buildList(lines: string[], indent = 0): JSONContent {
       type: 'listItem',
       content: [
         paragraph(item.text),
-        ...(item.nested.length ? [buildList(item.nested, indent + 2)] : []),
+        ...item.parts.map(part =>
+          'nested' in part
+            ? buildList(part.nested, indent + 2)
+            : paragraph(part.text)
+        ),
       ],
     })),
   };

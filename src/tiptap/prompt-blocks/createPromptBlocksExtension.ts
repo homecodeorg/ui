@@ -222,7 +222,9 @@ export function createPromptBlocksExtension({
               // Quotes sit at the top level or in list items, never inline.
               if (node.type.name !== 'blockquote') return !node.isTextblock;
               const end = pos + node.nodeSize;
-              if (!(from >= pos && to <= end)) drafts.push({ pos, node });
+              // Only once the selection is fully outside: a range reaching
+              // into the quote (Shift+Arrow, drag, select all) keeps it.
+              if (to < pos || from > end) drafts.push({ pos, node });
               return false;
             });
             if (drafts.length === 0) return null;
@@ -236,9 +238,9 @@ export function createPromptBlocksExtension({
                 : paragraphType.create();
               tr.replaceWith(pos, pos + node.nodeSize, replacement);
             }
-            // Kept out of undo history: undo can't reopen a locked quote (it
-            // would lock again at once, as the caret is outside it).
-            return tr.setMeta('addToHistory', false);
+            // In undo history with the edit that left the quote, so undo
+            // takes back the typing and the lock together.
+            return tr;
           },
           props: {
             // StarterKit's `- ` / `> ` rules need the start of a paragraph;
@@ -253,9 +255,9 @@ export function createPromptBlocksExtension({
               if ($marker.parent.type.name !== 'paragraph') return false;
               if ($marker.nodeBefore?.type.name !== 'hardBreak') return false;
               const inBlock = promptBlockAt($marker);
-              // In a quote, `> ` stays text; in a list, `- ` is the next item.
-              if (inBlock === 'blockquote') return false;
-              if (inBlock === 'listItem' && marker === '>') return false;
+              // `> ` in a quote or list stays text; `- ` in a list is the next
+              // item, in a quote it starts a list there.
+              if (inBlock && marker === '>') return false;
 
               const start = (chain: ReturnType<typeof editor.chain>) => {
                 const run = chain.deleteRange({ from: from - 2, to: from });

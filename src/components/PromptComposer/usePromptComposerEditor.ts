@@ -16,6 +16,7 @@ import S from './PromptComposer.styl';
 import {
   createPromptBlocksExtension,
   isInPromptBlock,
+  promptBlocksDoc,
 } from '../../tiptap/prompt-blocks';
 import {
   NonInclusiveLink,
@@ -37,7 +38,6 @@ import {
   safePromptComposerEditorText,
   syncPromptComposerHeight,
 } from './PromptComposer.helpers';
-import { promptBlocksDoc } from '../../tiptap/prompt-blocks/promptBlocksText';
 import { PROMPT_COMPOSER_EMPTY_DOC } from './promptComposerDoc';
 
 export type UsePromptComposerEditorOptions = {

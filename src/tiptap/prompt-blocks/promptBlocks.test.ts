@@ -1,4 +1,5 @@
 import { Editor } from '@tiptap/core';
+import { closeHistory } from '@tiptap/pm/history';
 import { TextSelection } from '@tiptap/pm/state';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -88,10 +89,14 @@ describe('prompt blocks text', () => {
     editor.destroy();
   });
 
-  it('keeps item text that follows a nested list', () => {
-    const list = promptBlocksDoc('- a\n  - b\n  c').content![0];
-    expect(list.content![0].content![0].content![0].text).toBe('a\nc');
-    expect(list.content![0].content![1].content![0].content![0].content![0].text).toBe('b');
+  it('keeps item text that follows a nested list, in order', () => {
+    const item = promptBlocksDoc('- a\n  - b\n  c').content![0].content![0];
+    expect(item.content!.map(n => n.type)).toEqual([
+      'paragraph',
+      'bulletList',
+      'paragraph',
+    ]);
+    expect(roundTrip('- a\n  - b\n  c')).toBe('- a\n  - b\n  c');
   });
 
   it('reads back nested and multi-line list items', () => {
@@ -215,7 +220,7 @@ describe('review round 2', () => {
   });
 
 
-  it('undo after a quote locks keeps the quoted text', () => {
+  it('undo after a quote locks takes back the quote typing', () => {
     editor = makeEditor({
       type: 'doc',
       content: [{ type: 'paragraph' }, { type: 'paragraph' }],
@@ -225,7 +230,7 @@ describe('review round 2', () => {
     editor.commands.setTextSelection(editor.state.doc.content.size - 1);
     expect(topTypes(editor)).toEqual(['promptQuote']);
     editor.commands.undo();
-    expect(text(editor)).toBe('> said');
+    expect(text(editor)).not.toContain('said');
   });
 });
 
@@ -242,5 +247,57 @@ describe('review round 3', () => {
     expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
     expect(text(editor)).toBe('> - item');
     editor.destroy();
+  });
+});
+
+describe('review round 4', () => {
+  let editor: Editor;
+  afterEach(() => editor.destroy());
+
+  it('a locked quote does not block undo of earlier typing', () => {
+    editor = makeEditor({
+      type: 'doc',
+      content: [{ type: 'paragraph' }, { type: 'paragraph' }],
+    });
+    editor.commands.setTextSelection(3);
+    type(editor, 'hello');
+    editor.view.dispatch(closeHistory(editor.state.tr));
+    editor.commands.setTextSelection(1);
+    type(editor, '> said');
+    editor.commands.setTextSelection(editor.state.doc.content.size - 1);
+    expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
+    // Undo walks back through the quote (lock, input rule, `> `), then on.
+    for (let i = 0; i < 5 && text(editor).includes('hello'); i += 1) {
+      editor.commands.undo();
+    }
+    expect(text(editor)).not.toContain('hello');
+  });
+
+  it('a selection reaching into a draft quote keeps it editable', () => {
+    editor = makeEditor('abc');
+    editor.commands.setTextSelection(editor.state.doc.content.size - 1);
+    editor.commands.setHardBreak();
+    type(editor, '> said');
+    const end = editor.state.selection.from;
+    editor.view.dispatch(
+      editor.state.tr.setSelection(
+        TextSelection.create(editor.state.doc, end, 2)
+      )
+    );
+    expect(topTypes(editor)).toContain('blockquote');
+    expect(editor.state.selection.empty).toBe(false);
+  });
+
+  it('Shift+Enter "- " in a quote starts a list in it', () => {
+    editor = makeEditor();
+    type(editor, '> one');
+    editor.commands.setHardBreak();
+    type(editor, '- two');
+    let hasList = false;
+    editor.state.doc.firstChild!.descendants(n => {
+      if (n.type.name === 'bulletList') hasList = true;
+    });
+    expect(hasList).toBe(true);
+    expect(text(editor)).toBe('> one\n> - two');
   });
 });

@@ -1,6 +1,6 @@
 import type { Editor, JSONContent } from '@tiptap/core';
 
-import { promptBlocksDoc } from '../../tiptap/prompt-blocks/promptBlocksText';
+import { promptBlocksDoc } from '../../tiptap/prompt-blocks';
 
 export type PromptComposerInsertOptions = {
   /** Explicit document range to replace before insert. */
