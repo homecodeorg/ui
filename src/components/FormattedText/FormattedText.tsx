@@ -119,6 +119,11 @@ export function FormattedText({
   injectors,
   breaks = true,
 }: FormattedTextProps) {
+  // Without `<br>`s the text keeps its own newlines (pre-wrap), so a block, such
+  // as a table, swallows the blank lines after it instead of showing them.
+  const blankLinesAfter = (content: string, from: number) =>
+    breaks ? 0 : content.slice(from).match(/^\s*/)![0].length;
+
   /** A run of `> ` lines, grayed with a bar down its left side. */
   const injectQuote = (content: string): InjectionResult => {
     const matches = content.match(/(?:^|\n)(>[^\n]*(?:\n>[^\n]*)*)(?:\n|$)/);
@@ -438,7 +443,10 @@ export function FormattedText({
         />
       ),
       index: matches.index! + (matches[1]?.length || 0),
-      length: matches[0].length - (matches[1]?.length || 0),
+      length:
+        matches[0].length -
+        (matches[1]?.length || 0) +
+        blankLinesAfter(content, matches.index! + matches[0].length),
     };
   };
 

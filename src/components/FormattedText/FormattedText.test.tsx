@@ -324,6 +324,26 @@ Result: {"ok":true,"count":3}
       expect(container.querySelectorAll('br')).toHaveLength(1);
     });
 
+    test('a table swallows the blank lines after it when newlines stay text', () => {
+      const { container } = render(
+        <FormattedText
+          breaks={false}
+          text={'| A |\n| --- |\n| 1 |\n\n\nAfter'}
+        />
+      );
+
+      expect(container.querySelector('table')).toBeInTheDocument();
+      expect(container.firstElementChild?.lastChild?.textContent).toBe('After');
+    });
+
+    test('a table keeps the blank lines after it as breaks by default', () => {
+      const { container } = render(
+        <FormattedText text={'| A |\n| --- |\n| 1 |\n\nAfter'} />
+      );
+
+      expect(container.querySelectorAll('br')).toHaveLength(1);
+    });
+
     test('a heading swallows the blank lines around it when newlines stay text', () => {
       const { container } = render(
         <FormattedText breaks={false} text={'before\n\n## Title\n\nafter'} />
