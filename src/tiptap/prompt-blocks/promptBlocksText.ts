@@ -112,6 +112,11 @@ export function promptBlocksFromText(text: string): JSONContent[] {
 
   groups.forEach((group, i) => {
     if (group.kind === 'quote') {
+      // A bare `>` quotes nothing: keep it as an empty line.
+      if (!group.lines.join('').trim()) {
+        blocks.push(paragraph(''));
+        return;
+      }
       blocks.push({
         type: PROMPT_QUOTE_NODE,
         attrs: { text: group.lines.join('\n') },

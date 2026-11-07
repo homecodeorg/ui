@@ -319,3 +319,38 @@ describe('review round 5', () => {
     expect(doc.content![0].content).toHaveLength(2);
   });
 });
+
+describe('review round 6', () => {
+  it('a list item with only a quote in it keeps its text', () => {
+    const editor = makeEditor({
+      type: 'doc',
+      content: [
+        {
+          type: 'bulletList',
+          content: [
+            {
+              type: 'listItem',
+              content: [{ type: 'paragraph', content: [{ type: 'hardBreak' }] }],
+            },
+            {
+              type: 'listItem',
+              content: [
+                { type: 'paragraph' },
+                { type: 'promptQuote', attrs: { text: 'q' } },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    expect(editor.getText().trim()).toBe('- \n  > q');
+    editor.destroy();
+  });
+
+  it('a bare ">" line prefills as an empty line, not an empty quote', () => {
+    expect(promptBlocksDoc('>\nhello').content!.map(n => n.type)).toEqual([
+      'paragraph',
+      'paragraph',
+    ]);
+  });
+});

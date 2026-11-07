@@ -52,6 +52,13 @@ function blockquoteLines(node: PMNode, schema: Schema): string {
   return lines.join('\n');
 }
 
+/** Text of one block: textblocks inline, others by their own serializer. */
+function blockText(node: PMNode, schema: Schema): string {
+  if (node.isTextblock) return inlineText(node, schema);
+  const toText = textSerializers(schema)[node.type.name];
+  return toText ? toText({ node } as Parameters<typeof toText>[0]) : node.textContent;
+}
+
 function bulletListMarkdown(
   list: PMNode,
   schema: Schema,
@@ -59,30 +66,27 @@ function bulletListMarkdown(
 ): string {
   const lines: string[] = [];
   list.forEach(item => {
-    // An empty item is not text yet: `- ` alone must not count as a prompt.
-    if (!item.textContent.trim()) return;
-    let first = true;
+    const itemLines: string[] = [];
+    let hasText = false;
     item.forEach(child => {
       if (child.type.name === 'bulletList') {
-        lines.push(bulletListMarkdown(child, schema, `${indent}  `));
+        const nested = bulletListMarkdown(child, schema, `${indent}  `);
+        if (nested) itemLines.push(nested);
+        hasText ||= Boolean(nested);
         return;
       }
-      const text = child.isTextblock
-        ? inlineText(child, schema)
-        : child.type.name === 'blockquote'
-          ? promptQuoteMarkdown(blockquoteLines(child, schema))
-          : child.type.name === PROMPT_QUOTE_NODE
-            ? promptQuoteMarkdown(String(child.attrs.text ?? ''))
-            : child.textContent;
-      const prefix = first ? `${indent}- ` : `${indent}  `;
-      lines.push(
+      const text = blockText(child, schema);
+      hasText ||= Boolean(text.trim());
+      const prefix = itemLines.length ? `${indent}  ` : `${indent}- `;
+      itemLines.push(
         text
           .split('\n')
           .map((line, i) => (i === 0 ? prefix + line : `${indent}  ${line}`))
           .join('\n')
       );
-      first = false;
     });
+    // An empty item is not text yet: `- ` alone must not count as a prompt.
+    if (hasText) lines.push(...itemLines);
   });
   return lines.join('\n');
 }
