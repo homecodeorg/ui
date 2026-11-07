@@ -13,6 +13,7 @@ import { useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
 import S from './PromptComposer.styl';
+import { promptComposerPlaceholder } from './promptComposerPlaceholder';
 import {
   createPromptBlocksExtension,
   isInPromptBlock,
@@ -213,7 +214,7 @@ export function usePromptComposerEditor({
       }),
       NonInclusiveLink,
       Placeholder.configure({
-        placeholder: placeholderText,
+        placeholder: promptComposerPlaceholder(placeholderText),
         showOnlyWhenEditable: true,
         emptyNodeClass: S.promptComposerEmptyNode,
       }),
