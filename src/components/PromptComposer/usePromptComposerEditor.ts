@@ -14,6 +14,11 @@ import StarterKit from '@tiptap/starter-kit';
 
 import S from './PromptComposer.styl';
 import {
+  createPromptBlocksExtension,
+  isInPromptBlock,
+  promptBlocksDoc,
+} from '../../tiptap/prompt-blocks';
+import {
   NonInclusiveLink,
   createLinkHighlightExtension,
 } from '../../tiptap/link-highlight';
@@ -33,10 +38,7 @@ import {
   safePromptComposerEditorText,
   syncPromptComposerHeight,
 } from './PromptComposer.helpers';
-import {
-  PROMPT_COMPOSER_EMPTY_DOC,
-  promptComposerParagraphDoc,
-} from './promptComposerDoc';
+import { PROMPT_COMPOSER_EMPTY_DOC } from './promptComposerDoc';
 
 export type UsePromptComposerEditorOptions = {
   disabled: boolean;
@@ -202,9 +204,9 @@ export function usePromptComposerEditor({
     const exts: AnyExtension[] = [
       StarterKit.configure({
         heading: false,
-        bulletList: false,
+        bulletList: false, // createPromptBlocksExtension brings its own
         orderedList: false,
-        blockquote: false,
+        blockquote: { HTMLAttributes: { class: S.promptComposerQuote } },
         codeBlock: false,
         horizontalRule: false,
         link: false,
@@ -216,6 +218,10 @@ export function usePromptComposerEditor({
         emptyNodeClass: S.promptComposerEmptyNode,
       }),
       createLinkHighlightExtension(S.promptComposerLink),
+      ...createPromptBlocksExtension({
+        quoteClassName: S.promptComposerQuote,
+        listClassName: S.promptComposerList,
+      }),
     ];
 
     for (const cfg of resolvedMentionConfigs) {
@@ -296,7 +302,9 @@ export function usePromptComposerEditor({
       if (!activeEditor) return false;
 
       const currentText = activeEditor.getText();
-      const hasNewlines = currentText.includes('\n');
+      // In a list or a quote being typed, Enter adds the next line.
+      const hasNewlines =
+        currentText.includes('\n') || isInPromptBlock(activeEditor.state);
       const isModEnter = event.metaKey || event.ctrlKey;
 
       // Single line: Enter submits. Multiline: Enter inserts a line; Cmd/Ctrl+Enter submits.
@@ -372,13 +380,13 @@ export function usePromptComposerEditor({
 
     const next = prefillMessage;
     if (current === next) return;
+    // The app trims the prompt on blur, and a list or quote at the end always
+    // has an empty line after it. Resetting for that would refocus the editor
+    // and turn an empty last item into text.
+    if (next !== '' && next === current.trim()) return;
 
     try {
-      if (next === '') {
-        editor.commands.setContent(PROMPT_COMPOSER_EMPTY_DOC);
-      } else {
-        editor.commands.setContent(promptComposerParagraphDoc(next));
-      }
+      editor.commands.setContent(promptBlocksDoc(next));
     } catch {
       return;
     }

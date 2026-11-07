@@ -1,0 +1,300 @@
+import {
+  Extension,
+  Node,
+  getTextBetween,
+  getTextSerializersFromSchema,
+  wrappingInputRule,
+} from '@tiptap/core';
+import { BulletList } from '@tiptap/extension-list';
+import type { Node as PMNode, ResolvedPos, Schema } from '@tiptap/pm/model';
+import { Plugin, PluginKey } from '@tiptap/pm/state';
+
+import { PROMPT_QUOTE_NODE, promptQuoteMarkdown } from './promptBlocksText';
+
+type TextSerializers = ReturnType<typeof getTextSerializersFromSchema>;
+const serializersBySchema = new WeakMap<Schema, TextSerializers>();
+
+function textSerializers(schema: Schema): TextSerializers {
+  let serializers = serializersBySchema.get(schema);
+  if (!serializers) {
+    serializers = getTextSerializersFromSchema(schema);
+    serializersBySchema.set(schema, serializers);
+  }
+  return serializers;
+}
+
+/** Text of a textblock, with mention chips and hard breaks as text. */
+function inlineText(node: PMNode, schema: Schema): string {
+  return getTextBetween(
+    node,
+    { from: 0, to: node.content.size },
+    { blockSeparator: '\n', textSerializers: textSerializers(schema) }
+  );
+}
+
+/**
+ * Lines of a (draft) blockquote: one per paragraph, a pasted quote's own
+ * lines, and list items as `- ` lines.
+ */
+function blockquoteLines(node: PMNode, schema: Schema): string {
+  const lines: string[] = [];
+  node.forEach(child => {
+    if (child.type.name === PROMPT_QUOTE_NODE) {
+      lines.push(String(child.attrs.text ?? ''));
+    } else if (child.type.name === 'bulletList') {
+      lines.push(bulletListMarkdown(child, schema));
+    } else if (child.isTextblock) {
+      lines.push(inlineText(child, schema));
+    } else {
+      lines.push(blockquoteLines(child, schema));
+    }
+  });
+  return lines.join('\n');
+}
+
+/** Text of one block: textblocks inline, others by their own serializer. */
+function blockText(node: PMNode, schema: Schema): string {
+  if (node.isTextblock) return inlineText(node, schema);
+  const toText = textSerializers(schema)[node.type.name];
+  return toText ? toText({ node } as Parameters<typeof toText>[0]) : node.textContent;
+}
+
+function bulletListMarkdown(
+  list: PMNode,
+  schema: Schema,
+  indent = ''
+): string {
+  const lines: string[] = [];
+  list.forEach(item => {
+    const itemLines: string[] = [];
+    let hasText = false;
+    item.forEach(child => {
+      if (child.type.name === 'bulletList') {
+        const nested = bulletListMarkdown(child, schema, `${indent}  `);
+        if (nested) itemLines.push(nested);
+        hasText ||= Boolean(nested);
+        return;
+      }
+      const text = blockText(child, schema);
+      hasText ||= Boolean(text.trim());
+      const prefix = itemLines.length ? `${indent}  ` : `${indent}- `;
+      itemLines.push(
+        text
+          .split('\n')
+          .map((line, i) => (i === 0 ? prefix + line : `${indent}  ${line}`))
+          .join('\n')
+      );
+    });
+    // An empty item is not text yet: `- ` alone must not count as a prompt.
+    if (hasText) lines.push(...itemLines);
+  });
+  return lines.join('\n');
+}
+
+export type CreatePromptBlocksExtensionOptions = {
+  /** Class of a locked quote and of a quote being typed. */
+  quoteClassName?: string;
+  /** Class of a bullet list. */
+  listClassName?: string;
+};
+
+/** Only `- ` starts a list: `* ` and `+ ` stay text, as getText() writes `- `. */
+const DashBulletList = BulletList.extend({
+  addInputRules() {
+    return [wrappingInputRule({ find: /^\s*-\s$/, type: this.type })];
+  },
+});
+
+/** The innermost of `names` the position is in, if any. */
+function promptBlockAt(
+  $pos: ResolvedPos,
+  names: readonly string[] = ['listItem', 'blockquote']
+): string | null {
+  for (let d = $pos.depth; d > 0; d -= 1) {
+    const name = $pos.node(d).type.name;
+    if (names.includes(name)) return name;
+  }
+  return null;
+}
+
+const inQuote = ($pos: ResolvedPos) => !!promptBlockAt($pos, ['blockquote']);
+
+/**
+ * Locked quote: a read-only block holding the quoted text. It can be
+ * selected and deleted, not edited.
+ */
+function createPromptQuoteNode(className?: string) {
+  return Node.create({
+    name: PROMPT_QUOTE_NODE,
+    group: 'block',
+    atom: true,
+    selectable: true,
+    draggable: false,
+
+    addAttributes() {
+      return {
+        text: {
+          default: '',
+          parseHTML: el => el.textContent ?? '',
+          rendered: false,
+        },
+      };
+    },
+
+    parseHTML() {
+      return [{ tag: 'div[data-prompt-quote]' }];
+    },
+
+    renderHTML({ node }) {
+      return [
+        'div',
+        {
+          'data-prompt-quote': '',
+          contenteditable: 'false',
+          ...(className ? { class: className } : {}),
+        },
+        String(node.attrs.text ?? ''),
+      ];
+    },
+
+    renderText({ node }) {
+      return promptQuoteMarkdown(String(node.attrs.text ?? ''));
+    },
+  });
+}
+
+const lockQuotesKey = new PluginKey('promptLockQuotes');
+
+/**
+ * Markdown-style lines in the prompt composer:
+ * - `- ` at the start of a line starts a bullet list (StarterKit's list);
+ * - `> ` starts a quote that stays editable while the caret is in it and
+ *   turns into a read-only quote block once the caret leaves.
+ *
+ * `getText()` gives both back as markdown (`- item`, `> line`).
+ * Brings its own bullet list: use StarterKit with `bulletList: false` and
+ * `listItem` and `blockquote` enabled.
+ */
+export function createPromptBlocksExtension({
+  quoteClassName,
+  listClassName,
+}: CreatePromptBlocksExtensionOptions = {}) {
+  const PromptBlocks = Extension.create({
+    name: 'promptBlocks',
+
+    extendNodeSchema(extension) {
+      if (extension.name === 'bulletList') {
+        return {
+          toText: ({ node }: { node: PMNode }) =>
+            bulletListMarkdown(node, node.type.schema),
+        };
+      }
+      if (extension.name === 'blockquote') {
+        return {
+          toText: ({ node }: { node: PMNode }) =>
+            promptQuoteMarkdown(blockquoteLines(node, node.type.schema)),
+        };
+      }
+      return {};
+    },
+
+    addProseMirrorPlugins() {
+      const { editor } = this;
+      return [
+        new Plugin({
+          key: lockQuotesKey,
+          appendTransaction: (transactions, oldState, state) => {
+            const docChanged = transactions.some(tr => tr.docChanged);
+            if (!docChanged && !transactions.some(tr => tr.selectionSet)) {
+              return null;
+            }
+            // A caret move can only leave a quote it was in.
+            if (
+              !docChanged &&
+              !inQuote(oldState.selection.$from) &&
+              !inQuote(oldState.selection.$to)
+            ) {
+              return null;
+            }
+            const quoteType = state.schema.nodes[PROMPT_QUOTE_NODE];
+            const paragraphType = state.schema.nodes.paragraph;
+            if (!quoteType || !paragraphType) return null;
+
+            const { from, to } = state.selection;
+            const drafts: { pos: number; node: PMNode }[] = [];
+            state.doc.descendants((node, pos) => {
+              // Quotes sit at the top level or in list items, never inline.
+              if (node.type.name !== 'blockquote') return !node.isTextblock;
+              const end = pos + node.nodeSize;
+              // Only once the selection is fully outside: a range reaching
+              // into the quote (Shift+Arrow, drag, select all) keeps it.
+              if (to < pos || from > end) drafts.push({ pos, node });
+              return false;
+            });
+            if (drafts.length === 0) return null;
+
+            const tr = state.tr;
+            // Right to left, so earlier positions stay valid.
+            for (const { pos, node } of drafts.reverse()) {
+              const text = blockquoteLines(node, state.schema);
+              const replacement = text.trim()
+                ? quoteType.create({ text })
+                : paragraphType.create();
+              tr.replaceWith(pos, pos + node.nodeSize, replacement);
+            }
+            // In undo history with the edit that left the quote, so undo
+            // takes back the typing and the lock together.
+            return tr;
+          },
+          props: {
+            // StarterKit's `- ` / `> ` rules need the start of a paragraph;
+            // this also takes a line started with Shift+Enter (a hard break).
+            handleTextInput: (view, from, to, text) => {
+              if (text !== ' ' || from !== to || view.composing) return false;
+              const { doc } = view.state;
+              if (from < 2) return false;
+              const marker = doc.textBetween(from - 1, from);
+              if (marker !== '>' && marker !== '-') return false;
+              const $marker = doc.resolve(from - 1);
+              if ($marker.parent.type.name !== 'paragraph') return false;
+              if ($marker.nodeBefore?.type.name !== 'hardBreak') return false;
+              const inBlock = promptBlockAt($marker);
+              // `> ` in a quote or list stays text; `- ` in a list is the next
+              // item, in a quote it starts a list there.
+              if (inBlock && marker === '>') return false;
+
+              const start = (chain: ReturnType<typeof editor.chain>) => {
+                const run = chain.deleteRange({ from: from - 2, to: from });
+                if (inBlock === 'listItem') return run.splitListItem('listItem');
+                run.splitBlock();
+                return marker === '>'
+                  ? run.wrapIn('blockquote')
+                  : run.toggleBulletList();
+              };
+              // Handled once the doc changed, even if a later step failed:
+              // the marker is gone, so the default insert would land wrong.
+              const before = view.state.doc;
+              start(editor.chain()).run();
+              return view.state.doc !== before;
+            },
+          },
+        }),
+      ];
+    },
+  });
+
+  return [
+    createPromptQuoteNode(quoteClassName),
+    DashBulletList.configure({
+      HTMLAttributes: listClassName ? { class: listClassName } : {},
+    }),
+    PromptBlocks,
+  ];
+}
+
+/** True when the caret is in a bullet list or a quote being typed. */
+export function isInPromptBlock(state: {
+  selection: { $from: ResolvedPos };
+}): boolean {
+  return promptBlockAt(state.selection.$from) !== null;
+}

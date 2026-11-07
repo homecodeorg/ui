@@ -56,3 +56,49 @@ INPUT_MAX_HEIGHT = 200px
     height 0
     pointer-events none
 
+
+  .promptComposerList
+    margin 0
+    padding-left 1.4em
+    list-style disc
+
+    li
+      margin 0
+
+    p
+      margin 0
+
+  // Quotes look like system rows in a chat: dimmed text, bar on the left.
+  .promptComposerQuote
+    position relative
+    margin 0 0 var(--p-1)
+    padding 2px 0 2px calc(4px + var(--p-2))
+    font-size 85%
+    color var(--accent-color-alpha-600)
+    white-space pre-wrap
+
+    &::before
+      content ''
+      position absolute
+      top 2px
+      bottom 2px
+      left 2px
+      width 4px
+      border-radius 2px
+      background var(--accent-color)
+      opacity .3
+      pointer-events none
+
+    p
+      margin 0
+
+  div.promptComposerQuote
+    user-select none
+    cursor default
+
+    &:global(.ProseMirror-selectednode)
+      border-radius 4px
+      background var(--accent-color-alpha-100)
+
+      &::before
+        opacity .7
