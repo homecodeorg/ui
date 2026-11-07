@@ -301,3 +301,21 @@ describe('review round 4', () => {
     expect(text(editor)).toBe('> one\n> - two');
   });
 });
+
+describe('review round 5', () => {
+  it('an empty bullet or quote gives no text', () => {
+    const editor = makeEditor();
+    type(editor, '- ');
+    expect(editor.getText().trim()).toBe('');
+    editor.commands.setContent('<p></p>');
+    type(editor, '> ');
+    expect(editor.getText().trim()).toBe('');
+    editor.destroy();
+  });
+
+  it('bullets split by a blank line stay one list', () => {
+    const doc = promptBlocksDoc('- a\n\n- b');
+    expect(doc.content!.map(n => n.type)).toEqual(['bulletList', 'paragraph']);
+    expect(doc.content![0].content).toHaveLength(2);
+  });
+});

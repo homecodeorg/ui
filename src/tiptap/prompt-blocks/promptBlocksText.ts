@@ -9,8 +9,12 @@ const BULLET_LINE = /^( *)- (.*)$/;
 /** Indented line under a list item: a nested item or a continued line. */
 const LIST_CHILD_LINE = /^ {2,}\S/;
 
-/** Markdown quote of `text`: `> ` per line, `>` for a blank line. */
+/**
+ * Markdown quote of `text`: `> ` per line, `>` for a blank line, nothing for
+ * an empty quote (so `> ` alone does not count as a prompt).
+ */
 export function promptQuoteMarkdown(text: string): string {
+  if (!text.trim()) return '';
   return text
     .split('\n')
     .map(line => (line.trim() ? `> ${line}` : '>'))
@@ -115,7 +119,12 @@ export function promptBlocksFromText(text: string): JSONContent[] {
       return;
     }
     if (group.kind === 'bullet') {
-      blocks.push(buildList(group.lines));
+      const list = buildList(group.lines);
+      // `- a`, blank line, `- b` is one list, as in markdown.
+      const prev = blocks[blocks.length - 1];
+      if (prev?.type === 'bulletList') {
+        prev.content = [...(prev.content ?? []), ...(list.content ?? [])];
+      } else blocks.push(list);
       return;
     }
 

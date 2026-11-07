@@ -59,6 +59,8 @@ function bulletListMarkdown(
 ): string {
   const lines: string[] = [];
   list.forEach(item => {
+    // An empty item is not text yet: `- ` alone must not count as a prompt.
+    if (!item.textContent.trim()) return;
     let first = true;
     item.forEach(child => {
       if (child.type.name === 'bulletList') {
@@ -99,21 +101,19 @@ const DashBulletList = BulletList.extend({
   },
 });
 
-function inQuote($pos: ResolvedPos): boolean {
-  for (let d = $pos.depth; d > 0; d -= 1) {
-    if ($pos.node(d).type.name === 'blockquote') return true;
-  }
-  return false;
-}
-
-/** The innermost list item or quote the position is in, if any. */
-function promptBlockAt($pos: ResolvedPos): string | null {
+/** The innermost of `names` the position is in, if any. */
+function promptBlockAt(
+  $pos: ResolvedPos,
+  names: readonly string[] = ['listItem', 'blockquote']
+): string | null {
   for (let d = $pos.depth; d > 0; d -= 1) {
     const name = $pos.node(d).type.name;
-    if (name === 'listItem' || name === 'blockquote') return name;
+    if (names.includes(name)) return name;
   }
   return null;
 }
+
+const inQuote = ($pos: ResolvedPos) => !!promptBlockAt($pos, ['blockquote']);
 
 /**
  * Locked quote: a read-only block holding the quoted text. It can be
