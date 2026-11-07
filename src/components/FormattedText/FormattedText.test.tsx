@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 import { FormattedText } from './FormattedText';
+import type { Injector } from './FormattedText.types';
 import S from './FormattedText.styl';
 
 jest.mock('uilib/components/Router/Link/Link', () => ({
@@ -156,5 +157,116 @@ Result: {"ok":true,"count":3}
     expect(
       textNodes.some(t => t.includes('Bare URL') && t.includes('Result'))
     ).toBe(false);
+  });
+  describe('quotes', () => {
+    const quotesOf = (container: HTMLElement) =>
+      Array.from(container.querySelectorAll('[data-quote]')).map(
+        el => el.textContent
+      );
+
+    test('shows a `> ` line as a quote when asked to', () => {
+      const { container } = render(
+        <FormattedText quotes text={'> a passage\n\nwhat is this?'} />
+      );
+
+      expect(quotesOf(container)).toEqual(['a passage']);
+      expect(container.querySelector(`.${S.quote}`)).toBeInTheDocument();
+      expect(container.textContent).toContain('what is this?');
+      expect(container.textContent).not.toContain('>');
+    });
+
+    test('shows each quote of a message separately', () => {
+      const { container } = render(
+        <FormattedText quotes text={'> one\n\n> two\n\nask'} />
+      );
+
+      expect(quotesOf(container)).toEqual(['one', 'two']);
+    });
+
+    test('keeps the lines of one quote together, blank ones too', () => {
+      const { container } = render(
+        <FormattedText quotes text={'> one\n> two\n>\n> three\nask'} />
+      );
+
+      expect(quotesOf(container)).toEqual(['one\ntwo\n\nthree']);
+    });
+
+    test('shows a quote after other text', () => {
+      const { container } = render(
+        <FormattedText quotes text={'see this\n> a passage\nwhy?'} />
+      );
+
+      expect(quotesOf(container)).toEqual(['a passage']);
+      expect(container.textContent).toContain('see this');
+      expect(container.textContent).toContain('why?');
+    });
+
+    test('formats the text around a quote as usual', () => {
+      render(<FormattedText quotes text={'> a passage\n\n**why** so?'} />);
+
+      expect(screen.getByText('why').tagName).toBe('STRONG');
+    });
+
+    test('leaves a `>` inside a code block alone', () => {
+      const { container } = render(
+        <FormattedText quotes text={'```\n> not a quote\n```'} />
+      );
+
+      expect(quotesOf(container)).toEqual([]);
+      expect(container.textContent).toContain('> not a quote');
+    });
+
+    test('leaves `>` text alone when not asked', () => {
+      const { container } = render(<FormattedText text={'> a passage'} />);
+
+      expect(quotesOf(container)).toEqual([]);
+      expect(container.textContent).toContain('> a passage');
+    });
+  });
+
+  describe('injectors', () => {
+    const shout: Injector = content => {
+      const matches = content.match(/#(\w+)/);
+      if (!matches) return null;
+      return {
+        elem: <mark>{matches[1].toUpperCase()}</mark>,
+        index: matches.index!,
+        length: matches[0].length,
+      };
+    };
+
+    test('renders what an extra injector finds', () => {
+      render(
+        <FormattedText injectors={[shout]} text="hello #world and #you" />
+      );
+
+      expect(screen.getByText('WORLD').tagName).toBe('MARK');
+      expect(screen.getByText('YOU').tagName).toBe('MARK');
+    });
+
+    test('tries extra injectors before the built-in ones', () => {
+      const asPlain: Injector = content => {
+        const matches = content.match(/\*\*raw\*\*/);
+        if (!matches) return null;
+        return {
+          elem: <span>{matches[0]}</span>,
+          index: matches.index!,
+          length: matches[0].length,
+        };
+      };
+      const { container } = render(
+        <FormattedText injectors={[asPlain]} text="**raw** and **bold**" />
+      );
+
+      expect(container.querySelector('strong')).toHaveTextContent('bold');
+      expect(screen.getByText('**raw**').tagName).toBe('SPAN');
+    });
+
+    test('built-ins still work next to extra injectors', () => {
+      render(<FormattedText injectors={[shout]} text="#tag and *italic*" />);
+
+      expect(screen.getByText('TAG')).toBeInTheDocument();
+      expect(screen.getByText('italic').tagName).toBe('EM');
+    });
   });
 });

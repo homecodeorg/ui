@@ -6,13 +6,11 @@ import { Table } from 'uilib/components/Table/Table';
 import { Tooltip } from 'uilib/components/Tooltip/Tooltip';
 
 import S from './FormattedText.styl';
-import type { FormattedTextProps } from './FormattedText.types';
-
-type InjectionResult = {
-  elem: React.ReactNode;
-  index: number;
-  length: number;
-} | null;
+import type {
+  FormattedTextProps,
+  InjectionResult,
+  Injector,
+} from './FormattedText.types';
 
 function isAppOriginHost(hostname: string) {
   if (hostname === 'localhost' || hostname === '127.0.0.1') return true;
@@ -86,7 +84,7 @@ function findJsonEndExclusive(content: string, start: number): number {
 
 function applyInjectors(
   text: string,
-  injectors: Array<(content: string) => InjectionResult>
+  injectors: Injector[]
 ): React.ReactNode[] {
   let result: React.ReactNode[] = [text];
   injectors.forEach(fn => {
@@ -117,7 +115,27 @@ export function FormattedText({
   text,
   className,
   onButtonClick,
+  quotes,
+  injectors,
 }: FormattedTextProps) {
+  /** A run of `> ` lines, grayed with a bar down its left side. */
+  const injectQuote = (content: string): InjectionResult => {
+    const matches = content.match(/(?:^|\n)(>[^\n]*(?:\n>[^\n]*)*)(?:\n|$)/);
+    if (!matches) return null;
+    const lines = matches[1]
+      .split('\n')
+      .map(line => line.replace(/^>[ \t]?/, ''));
+    return {
+      elem: (
+        <div className={S.quote} data-quote>
+          {lines.join('\n')}
+        </div>
+      ),
+      index: matches.index!,
+      length: matches[0].length,
+    };
+  };
+
   const injectLines = (content: string): InjectionResult => {
     const matches = content.match(/(^|\n)---[ \t]*(?:\n|$)/);
     if (!matches) return null;
@@ -420,9 +438,12 @@ export function FormattedText({
   return (
     <div className={className}>
       {applyInjectors(text, [
+        ...(injectors ?? []),
         injectTables,
         injectCodeBlock,
         injectPrettyJson,
+        // After code, so a `> ` line inside a code block stays code.
+        ...(quotes ? [injectQuote] : []),
         injectHeading,
         injectLines,
         injectLinks,

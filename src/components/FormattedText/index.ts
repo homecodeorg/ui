@@ -1,2 +1,6 @@
 export { FormattedText } from './FormattedText';
-export type { FormattedTextProps } from './FormattedText.types';
+export type {
+  FormattedTextProps,
+  InjectionResult,
+  Injector,
+} from './FormattedText.types';
