@@ -17,13 +17,6 @@ export function promptQuoteMarkdown(text: string): string {
     .join('\n');
 }
 
-export function hasPromptBlockLines(text: string): boolean {
-  return text
-    .replace(/\r\n?/g, '\n')
-    .split('\n')
-    .some(line => QUOTE_LINE.test(line) || TOP_BULLET_LINE.test(line));
-}
-
 const textContent = (text: string): JSONContent[] =>
   text ? [{ type: 'text', text }] : [];
 
@@ -69,9 +62,12 @@ function buildList(lines: string[], indent = 0): JSONContent {
       items.push({ text: bullet ? bullet[2] : line.trim(), nested: [] });
       continue;
     }
-    const nestedBullet = bullet && bullet[1].length === indent + 2;
-    if (item.nested.length > 0 || nestedBullet) item.nested.push(line);
-    else item.text += `\n${line.slice(indent + 2)}`;
+    const lineIndent = line.match(/^ */)![0].length;
+    const nestedBullet = bullet && lineIndent === indent + 2;
+    // Text at the item's own indent continues it, even after a nested list.
+    if (!nestedBullet && (lineIndent <= indent + 2 || !item.nested.length)) {
+      item.text += `\n${line.slice(Math.min(lineIndent, indent + 2))}`;
+    } else item.nested.push(line);
   }
   return {
     type: 'bulletList',
@@ -90,14 +86,11 @@ function buildList(lines: string[], indent = 0): JSONContent {
  * a bullet list. `getText()` of the result gives `text` back (blocks are
  * joined by a blank line, list items by a newline).
  *
- * `plainLines`: `'joined'` keeps a run of other lines in one paragraph with
- * newlines (how the composer prefill always worked), `'split'` makes one
- * paragraph per line (how a plain-text paste works).
+ * Other lines stay in one paragraph with newlines, as the composer prefill
+ * always worked. A doc never ends on a quote or list: an empty line follows,
+ * so the caret can go there instead of selecting the read-only quote.
  */
-export function promptBlocksFromText(
-  text: string,
-  { plainLines = 'joined' }: { plainLines?: 'joined' | 'split' } = {}
-): JSONContent[] {
+export function promptBlocksFromText(text: string): JSONContent[] {
   const groups = groupLines(text.replace(/\r\n?/g, '\n').split('\n'));
   const blocks: JSONContent[] = [];
 
@@ -120,13 +113,11 @@ export function promptBlocksFromText(
     if (i < groups.length - 1 && lines[lines.length - 1] === '') lines.pop();
     if (lines.length === 0) return;
 
-    // Like ProseMirror's own paste, blank lines only separate paragraphs.
-    if (plainLines === 'split') {
-      blocks.push(...lines.filter(line => line.trim()).map(paragraph));
-    } else blocks.push(paragraph(lines.join('\n')));
+    blocks.push(paragraph(lines.join('\n')));
   });
 
-  return blocks.length ? blocks : [paragraph('')];
+  if (blocks[blocks.length - 1]?.type !== 'paragraph') blocks.push(paragraph(''));
+  return blocks;
 }
 
 export function promptBlocksDoc(text: string): JSONContent {

@@ -48,7 +48,8 @@ describe('prompt blocks text', () => {
     const editor = makeEditor(promptBlocksDoc(text));
     const out = editor.getText();
     editor.destroy();
-    return out;
+    // A doc ending on a list gets an empty line after it.
+    return text.endsWith('\n\n') ? out : out.replace(/\n\n$/, '');
   };
 
   it('keeps plain text as one paragraph', () => {
@@ -73,8 +74,24 @@ describe('prompt blocks text', () => {
     expect(promptBlocksDoc(text).content!.map(n => n.type)).toEqual([
       'paragraph',
       'bulletList',
+      'paragraph',
     ]);
     expect(roundTrip(text)).toBe(text);
+  });
+
+  it('never ends on a quote, so the caret has a line after it', () => {
+    const doc = promptBlocksDoc('> q');
+    expect(doc.content!.map(n => n.type)).toEqual(['promptQuote', 'paragraph']);
+    const editor = makeEditor(doc);
+    editor.commands.focus('end');
+    expect(editor.state.selection.$from.parent.type.name).toBe('paragraph');
+    editor.destroy();
+  });
+
+  it('keeps item text that follows a nested list', () => {
+    const list = promptBlocksDoc('- a\n  - b\n  c').content![0];
+    expect(list.content![0].content![0].content![0].text).toBe('a\nc');
+    expect(list.content![0].content![1].content![0].content![0].content![0].text).toBe('b');
   });
 
   it('reads back nested and multi-line list items', () => {
@@ -131,14 +148,6 @@ describe('typing in the composer', () => {
     expect(text(editor)).toBe('');
   });
 
-  it('pasted "> " lines become a locked quote', () => {
-    // jsdom has no ClipboardEvent; pasteText only needs an Event.
-    (globalThis as any).ClipboardEvent ??= class extends Event {};
-    editor = makeEditor();
-    editor.view.pasteText('> a\n> b\n\nmine');
-    expect(topTypes(editor)).toEqual(['promptQuote', 'paragraph']);
-    expect(text(editor)).toBe('> a\n> b\n\nmine');
-  });
 });
 
 describe('after Shift+Enter', () => {
@@ -177,15 +186,17 @@ describe('review fixes', () => {
     expect(text(editor)).toBe('- milk\n- x');
   });
 
-  it('a quote with a pasted quote inside keeps its text when locked', () => {
-    (globalThis as any).ClipboardEvent ??= class extends Event {};
+  it('a quote with a quote inside keeps its text when locked', () => {
     editor = makeEditor({
       type: 'doc',
       content: [{ type: 'paragraph' }, { type: 'paragraph' }],
     });
     editor.commands.setTextSelection(1);
     type(editor, '> mine');
-    editor.view.pasteText('> a\n> b');
+    editor.commands.insertContent({
+      type: 'promptQuote',
+      attrs: { text: 'a\nb' },
+    });
     editor.commands.setTextSelection(editor.state.doc.content.size - 1);
     expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
     expect(editor.state.doc.firstChild!.attrs.text).toContain('a\nb');
@@ -203,12 +214,6 @@ describe('review round 2', () => {
     expect(text(editor)).toBe('* note');
   });
 
-  it('a paste with blank lines does not grow them', () => {
-    (globalThis as any).ClipboardEvent ??= class extends Event {};
-    editor = makeEditor();
-    editor.view.pasteText('a\n\nb\n\n> q');
-    expect(text(editor)).toBe('a\n\nb\n\n> q');
-  });
 
   it('undo after a quote locks keeps the quoted text', () => {
     editor = makeEditor({
@@ -221,5 +226,21 @@ describe('review round 2', () => {
     expect(topTypes(editor)).toEqual(['promptQuote']);
     editor.commands.undo();
     expect(text(editor)).toBe('> said');
+  });
+});
+
+describe('review round 3', () => {
+  it('a quote with a list in it locks when the caret leaves', () => {
+    const editor = makeEditor({
+      type: 'doc',
+      content: [{ type: 'paragraph' }, { type: 'paragraph' }],
+    });
+    editor.commands.setTextSelection(1);
+    type(editor, '> - item');
+    expect(isInPromptBlock(editor.state)).toBe(true);
+    editor.commands.setTextSelection(editor.state.doc.content.size - 1);
+    expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
+    expect(text(editor)).toBe('> - item');
+    editor.destroy();
   });
 });

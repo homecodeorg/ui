@@ -1,6 +1,6 @@
 import type { Editor, JSONContent } from '@tiptap/core';
 
-import { promptComposerTextDoc } from './promptComposerDoc';
+import { promptBlocksDoc } from '../../tiptap/prompt-blocks/promptBlocksText';
 
 export type PromptComposerInsertOptions = {
   /** Explicit document range to replace before insert. */
@@ -152,7 +152,7 @@ function setPromptComposerEditorText(
   options?: { focus?: boolean; atEnd?: boolean }
 ) {
   if (editor.isDestroyed) return;
-  editor.commands.setContent(promptComposerTextDoc(text));
+  editor.commands.setContent(promptBlocksDoc(text));
 
   if (options?.focus) {
     editor.commands.focus(options.atEnd === false ? 'start' : 'end');

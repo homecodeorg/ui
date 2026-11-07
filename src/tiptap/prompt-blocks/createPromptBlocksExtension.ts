@@ -7,15 +7,9 @@ import {
 } from '@tiptap/core';
 import { BulletList } from '@tiptap/extension-list';
 import type { Node as PMNode, ResolvedPos, Schema } from '@tiptap/pm/model';
-import { Fragment, Slice } from '@tiptap/pm/model';
 import { Plugin, PluginKey } from '@tiptap/pm/state';
 
-import {
-  PROMPT_QUOTE_NODE,
-  hasPromptBlockLines,
-  promptBlocksFromText,
-  promptQuoteMarkdown,
-} from './promptBlocksText';
+import { PROMPT_QUOTE_NODE, promptQuoteMarkdown } from './promptBlocksText';
 
 type TextSerializers = ReturnType<typeof getTextSerializersFromSchema>;
 const serializersBySchema = new WeakMap<Schema, TextSerializers>();
@@ -105,7 +99,14 @@ const DashBulletList = BulletList.extend({
   },
 });
 
-/** The list item or quote the position is in, if any. */
+function inQuote($pos: ResolvedPos): boolean {
+  for (let d = $pos.depth; d > 0; d -= 1) {
+    if ($pos.node(d).type.name === 'blockquote') return true;
+  }
+  return false;
+}
+
+/** The innermost list item or quote the position is in, if any. */
 function promptBlockAt($pos: ResolvedPos): string | null {
   for (let d = $pos.depth; d > 0; d -= 1) {
     const name = $pos.node(d).type.name;
@@ -166,8 +167,7 @@ const lockQuotesKey = new PluginKey('promptLockQuotes');
  * - `> ` starts a quote that stays editable while the caret is in it and
  *   turns into a read-only quote block once the caret leaves.
  *
- * `getText()` gives both back as markdown (`- item`, `> line`), and
- * plain-text pastes with such lines become the same blocks.
+ * `getText()` gives both back as markdown (`- item`, `> line`).
  * Brings its own bullet list: use StarterKit with `bulletList: false` and
  * `listItem` and `blockquote` enabled.
  */
@@ -207,8 +207,8 @@ export function createPromptBlocksExtension({
             // A caret move can only leave a quote it was in.
             if (
               !docChanged &&
-              promptBlockAt(oldState.selection.$from) !== 'blockquote' &&
-              promptBlockAt(oldState.selection.$to) !== 'blockquote'
+              !inQuote(oldState.selection.$from) &&
+              !inQuote(oldState.selection.$to)
             ) {
               return null;
             }
@@ -236,8 +236,8 @@ export function createPromptBlocksExtension({
                 : paragraphType.create();
               tr.replaceWith(pos, pos + node.nodeSize, replacement);
             }
-            // Locking is not an edit: undo goes back to the typing itself,
-            // and the quote stays as typed.
+            // Kept out of undo history: undo can't reopen a locked quote (it
+            // would lock again at once, as the caret is outside it).
             return tr.setMeta('addToHistory', false);
           },
           props: {
@@ -265,31 +265,11 @@ export function createPromptBlocksExtension({
                   ? run.wrapIn('blockquote')
                   : run.toggleBulletList();
               };
-              if (!start(editor.can().chain()).run()) return false;
-              return start(editor.chain()).run();
-            },
-            clipboardTextParser: (text, _context, _plain, view) => {
-              // Null falls back to ProseMirror's own plain-text parser.
-              if (!hasPromptBlockLines(text)) return null as unknown as Slice;
-              const { schema } = view.state;
-              const blocks = promptBlocksFromText(text, {
-                plainLines: 'split',
-              });
-              let fragment: Fragment;
-              try {
-                fragment = Fragment.fromArray(
-                  blocks.map(block => schema.nodeFromJSON(block))
-                );
-              } catch {
-                return null as unknown as Slice;
-              }
-              const first = fragment.firstChild;
-              const last = fragment.lastChild;
-              // Inline into the current line when the paste starts/ends
-              // with plain text, as a plain paste would.
-              const openStart = first?.type.name === 'paragraph' ? 1 : 0;
-              const openEnd = last?.type.name === 'paragraph' ? 1 : 0;
-              return new Slice(fragment, openStart, openEnd);
+              // Handled once the doc changed, even if a later step failed:
+              // the marker is gone, so the default insert would land wrong.
+              const before = view.state.doc;
+              start(editor.chain()).run();
+              return view.state.doc !== before;
             },
           },
         }),

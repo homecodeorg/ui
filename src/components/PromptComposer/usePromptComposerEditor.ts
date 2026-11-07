@@ -37,10 +37,8 @@ import {
   safePromptComposerEditorText,
   syncPromptComposerHeight,
 } from './PromptComposer.helpers';
-import {
-  PROMPT_COMPOSER_EMPTY_DOC,
-  promptComposerTextDoc,
-} from './promptComposerDoc';
+import { promptBlocksDoc } from '../../tiptap/prompt-blocks/promptBlocksText';
+import { PROMPT_COMPOSER_EMPTY_DOC } from './promptComposerDoc';
 
 export type UsePromptComposerEditorOptions = {
   disabled: boolean;
@@ -388,7 +386,7 @@ export function usePromptComposerEditor({
     if (next !== '' && next === current.trim()) return;
 
     try {
-      editor.commands.setContent(promptComposerTextDoc(next));
+      editor.commands.setContent(promptBlocksDoc(next));
     } catch {
       return;
     }

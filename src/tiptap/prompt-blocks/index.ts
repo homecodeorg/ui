@@ -5,7 +5,6 @@ export {
 export type { CreatePromptBlocksExtensionOptions } from './createPromptBlocksExtension';
 export {
   PROMPT_QUOTE_NODE,
-  hasPromptBlockLines,
   promptBlocksDoc,
   promptBlocksFromText,
   promptQuoteMarkdown,
