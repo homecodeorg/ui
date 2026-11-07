@@ -15,25 +15,43 @@ import {
   promptQuoteMarkdown,
 } from './promptBlocksText';
 
+type TextSerializers = ReturnType<typeof getTextSerializersFromSchema>;
+const serializersBySchema = new WeakMap<Schema, TextSerializers>();
+
+function textSerializers(schema: Schema): TextSerializers {
+  let serializers = serializersBySchema.get(schema);
+  if (!serializers) {
+    serializers = getTextSerializersFromSchema(schema);
+    serializersBySchema.set(schema, serializers);
+  }
+  return serializers;
+}
+
 /** Text of a textblock, with mention chips and hard breaks as text. */
 function inlineText(node: PMNode, schema: Schema): string {
   return getTextBetween(
     node,
     { from: 0, to: node.content.size },
-    {
-      blockSeparator: '\n',
-      textSerializers: getTextSerializersFromSchema(schema),
-    }
+    { blockSeparator: '\n', textSerializers: textSerializers(schema) }
   );
 }
 
-/** One line per paragraph of a (draft) blockquote, nested blocks flattened. */
+/**
+ * Lines of a (draft) blockquote: one per paragraph, a pasted quote's own
+ * lines, and list items as `- ` lines.
+ */
 function blockquoteLines(node: PMNode, schema: Schema): string {
   const lines: string[] = [];
-  node.descendants(child => {
-    if (!child.isTextblock) return true;
-    lines.push(inlineText(child, schema));
-    return false;
+  node.forEach(child => {
+    if (child.type.name === PROMPT_QUOTE_NODE) {
+      lines.push(String(child.attrs.text ?? ''));
+    } else if (child.type.name === 'bulletList') {
+      lines.push(bulletListMarkdown(child, schema));
+    } else if (child.isTextblock) {
+      lines.push(inlineText(child, schema));
+    } else {
+      lines.push(blockquoteLines(child, schema));
+    }
   });
   return lines.join('\n');
 }
@@ -53,7 +71,11 @@ function bulletListMarkdown(
       }
       const text = child.isTextblock
         ? inlineText(child, schema)
-        : (child.type.spec.toText?.({ node: child }) ?? child.textContent);
+        : child.type.name === 'blockquote'
+          ? promptQuoteMarkdown(blockquoteLines(child, schema))
+          : child.type.name === PROMPT_QUOTE_NODE
+            ? promptQuoteMarkdown(String(child.attrs.text ?? ''))
+            : child.textContent;
       const prefix = first ? `${indent}- ` : `${indent}  `;
       lines.push(
         text
@@ -166,7 +188,8 @@ export function createPromptBlocksExtension({
             const { from, to } = state.selection;
             const drafts: { pos: number; node: PMNode }[] = [];
             state.doc.descendants((node, pos) => {
-              if (node.type.name !== 'blockquote') return true;
+              // Quotes sit at the top level or in list items, never inline.
+              if (node.type.name !== 'blockquote') return !node.isTextblock;
               const end = pos + node.nodeSize;
               if (!(from >= pos && to <= end)) drafts.push({ pos, node });
               return false;
@@ -182,7 +205,7 @@ export function createPromptBlocksExtension({
                 : paragraphType.create();
               tr.replaceWith(pos, pos + node.nodeSize, replacement);
             }
-            return tr.setMeta('addToHistory', true);
+            return tr;
           },
           props: {
             // StarterKit's `- ` / `> ` rules need the start of a paragraph;
@@ -196,14 +219,22 @@ export function createPromptBlocksExtension({
               const $marker = doc.resolve(from - 1);
               if ($marker.parent.type.name !== 'paragraph') return false;
               if ($marker.nodeBefore?.type.name !== 'hardBreak') return false;
+              // Already in a list or quote: keep typing the marker as text.
+              for (let d = $marker.depth; d > 0; d -= 1) {
+                const name = $marker.node(d).type.name;
+                if (name === 'listItem' || name === 'blockquote') return false;
+              }
 
-              const run = editor
-                .chain()
-                .deleteRange({ from: from - 2, to: from })
-                .splitBlock();
-              if (marker === '>') run.wrapIn('blockquote');
-              else run.toggleBulletList();
-              return run.run();
+              const start = (chain: ReturnType<typeof editor.chain>) => {
+                const run = chain
+                  .deleteRange({ from: from - 2, to: from })
+                  .splitBlock();
+                return marker === '>'
+                  ? run.wrapIn('blockquote')
+                  : run.toggleBulletList();
+              };
+              if (!start(editor.can().chain()).run()) return false;
+              return start(editor.chain()).run();
             },
             clipboardTextParser: (text, _context, _plain, view) => {
               // Null falls back to ProseMirror's own plain-text parser.

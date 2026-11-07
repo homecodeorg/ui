@@ -76,7 +76,6 @@ INPUT_MAX_HEIGHT = 200px
     font-size 85%
     color var(--accent-color-alpha-600)
     white-space pre-wrap
-    cursor default
 
     &::before
       content ''
@@ -95,8 +94,9 @@ INPUT_MAX_HEIGHT = 200px
 
   div.promptComposerQuote
     user-select none
+    cursor default
 
-    &.ProseMirror-selectednode
+    &:global(.ProseMirror-selectednode)
       border-radius 4px
       background var(--accent-color-alpha-100)
 

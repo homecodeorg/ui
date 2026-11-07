@@ -4,7 +4,10 @@ import type { JSONContent } from '@tiptap/core';
 export const PROMPT_QUOTE_NODE = 'promptQuote';
 
 const QUOTE_LINE = /^>(?: (.*)|)$/;
-const BULLET_LINE = /^- (.*)$/;
+const TOP_BULLET_LINE = /^- (.*)$/;
+const BULLET_LINE = /^( *)- (.*)$/;
+/** Indented line under a list item: a nested item or a continued line. */
+const LIST_CHILD_LINE = /^ {2,}\S/;
 
 /** Markdown quote of `text`: `> ` per line, `>` for a blank line. */
 export function promptQuoteMarkdown(text: string): string {
@@ -18,7 +21,7 @@ export function hasPromptBlockLines(text: string): boolean {
   return text
     .replace(/\r\n?/g, '\n')
     .split('\n')
-    .some(line => QUOTE_LINE.test(line) || BULLET_LINE.test(line));
+    .some(line => QUOTE_LINE.test(line) || TOP_BULLET_LINE.test(line));
 }
 
 const textContent = (text: string): JSONContent[] =>
@@ -34,18 +37,52 @@ type Group =
   | { kind: 'bullet'; lines: string[] }
   | { kind: 'plain'; lines: string[] };
 
+/** Bullet groups keep their raw lines (indents included) for buildList. */
 function groupLines(lines: string[]): Group[] {
   const groups: Group[] = [];
   for (const line of lines) {
-    const quote = line.match(QUOTE_LINE);
-    const bullet = quote ? null : line.match(BULLET_LINE);
-    const kind = quote ? 'quote' : bullet ? 'bullet' : 'plain';
-    const value = quote ? (quote[1] ?? '') : bullet ? bullet[1] : line;
     const last = groups[groups.length - 1];
+    const quote = line.match(QUOTE_LINE);
+    const inList = last?.kind === 'bullet';
+    const bullet =
+      !quote &&
+      (TOP_BULLET_LINE.test(line) || (inList && LIST_CHILD_LINE.test(line)));
+    const kind = quote ? 'quote' : bullet ? 'bullet' : 'plain';
+    const value = quote ? (quote[1] ?? '') : line;
     if (last && last.kind === kind) last.lines.push(value);
     else groups.push({ kind, lines: [value] } as Group);
   }
   return groups;
+}
+
+/**
+ * Bullet list from `- item` lines at `indent` spaces. A `- ` line two
+ * spaces deeper starts a nested list; other deeper lines continue the
+ * item's text (what getText() writes for a multi-line item).
+ */
+function buildList(lines: string[], indent = 0): JSONContent {
+  const items: { text: string; nested: string[] }[] = [];
+  for (const line of lines) {
+    const bullet = line.match(BULLET_LINE);
+    const item = items[items.length - 1];
+    if ((bullet && bullet[1].length === indent) || !item) {
+      items.push({ text: bullet ? bullet[2] : line.trim(), nested: [] });
+      continue;
+    }
+    const nestedBullet = bullet && bullet[1].length === indent + 2;
+    if (item.nested.length > 0 || nestedBullet) item.nested.push(line);
+    else item.text += `\n${line.slice(indent + 2)}`;
+  }
+  return {
+    type: 'bulletList',
+    content: items.map(item => ({
+      type: 'listItem',
+      content: [
+        paragraph(item.text),
+        ...(item.nested.length ? [buildList(item.nested, indent + 2)] : []),
+      ],
+    })),
+  };
 }
 
 /**
@@ -73,13 +110,7 @@ export function promptBlocksFromText(
       return;
     }
     if (group.kind === 'bullet') {
-      blocks.push({
-        type: 'bulletList',
-        content: group.lines.map(line => ({
-          type: 'listItem',
-          content: [paragraph(line)],
-        })),
-      });
+      blocks.push(buildList(group.lines));
       return;
     }
 

@@ -72,6 +72,15 @@ describe('prompt blocks text', () => {
     ]);
     expect(roundTrip(text)).toBe(text);
   });
+
+  it('reads back nested and multi-line list items', () => {
+    const text = '- a\n  - b\n    more b\n- c';
+    const list = promptBlocksDoc(text).content![0];
+    expect(list.type).toBe('bulletList');
+    expect(list.content).toHaveLength(2);
+    expect(list.content![0].content![1].type).toBe('bulletList');
+    expect(roundTrip(text)).toBe(text);
+  });
 });
 
 describe('typing in the composer', () => {
@@ -148,5 +157,33 @@ describe('after Shift+Enter', () => {
     type(editor, '- one');
     expect(topTypes(editor)).toEqual(['paragraph', 'bulletList']);
     expect(text(editor)).toBe('todo\n\n- one');
+  });
+});
+
+describe('review fixes', () => {
+  let editor: Editor;
+  afterEach(() => editor.destroy());
+
+  it('Shift+Enter then "- " inside a list item keeps the list', () => {
+    editor = makeEditor();
+    type(editor, '- milk');
+    editor.commands.setHardBreak();
+    type(editor, '- x');
+    expect(topTypes(editor)).toEqual(['bulletList']);
+    expect(text(editor)).toBe('- milk\n  - x');
+  });
+
+  it('a quote with a pasted quote inside keeps its text when locked', () => {
+    (globalThis as any).ClipboardEvent ??= class extends Event {};
+    editor = makeEditor({
+      type: 'doc',
+      content: [{ type: 'paragraph' }, { type: 'paragraph' }],
+    });
+    editor.commands.setTextSelection(1);
+    type(editor, '> mine');
+    editor.view.pasteText('> a\n> b');
+    editor.commands.setTextSelection(editor.state.doc.content.size - 1);
+    expect(editor.state.doc.firstChild!.type.name).toBe('promptQuote');
+    expect(editor.state.doc.firstChild!.attrs.text).toContain('a\nb');
   });
 });
