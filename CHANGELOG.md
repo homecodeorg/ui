@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.22](https://github.com/homecodeorg/ui/compare/v5.20.21...v5.20.22) (2026-11-09)
+
+
+### Features
+
+* **img:** Img component with a broken-image fallback ([#31](https://github.com/homecodeorg/ui/issues/31)) ([23233a9](https://github.com/homecodeorg/ui/commit/23233a9d9fcf763d0d99f22a7dd5e4b9644ff825))
+
 ### [5.20.21](https://github.com/homecodeorg/ui/compare/v5.20.20...v5.20.21) (2026-11-07)
 
 
