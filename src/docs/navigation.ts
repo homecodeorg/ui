@@ -124,6 +124,10 @@ export default [
       },
 
       {
+        id: 'Img',
+        loader: () => import('./examples/Img'),
+      },
+      {
         id: 'Input',
         loader: () => import('./examples/Input'),
       },

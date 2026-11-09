@@ -25,6 +25,7 @@ export * from './GridLayout/GridLayout';
 export * from './Heading/Heading';
 
 export * from './Icon/Icon';
+export * from './Img/Img';
 export * from './Input/Input';
 export * from './InputFile/InputFile';
 export * from './Label/Label';
