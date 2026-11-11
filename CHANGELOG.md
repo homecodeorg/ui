@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.20.23](https://github.com/homecodeorg/ui/compare/v5.20.22...v5.20.23) (2026-11-11)
+
+
+### Features
+
+* **thinking-outline:** stacked gradients, glow intensity and spread ([#32](https://github.com/homecodeorg/ui/issues/32)) ([0b942fa](https://github.com/homecodeorg/ui/commit/0b942facee9bba16b61031603ccfabba35f04a7a))
+
 ### [5.20.22](https://github.com/homecodeorg/ui/compare/v5.20.21...v5.20.22) (2026-11-09)
 
 
