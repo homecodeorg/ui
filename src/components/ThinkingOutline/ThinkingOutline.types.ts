@@ -11,7 +11,7 @@ export type ThinkingOutlineGradient = {
   // Starting point along the orbit, as a fraction of a lap (0..1).
   phase?: number;
   // Per-gradient override of the outline's `thickness`.
-  thickness?: ThinkingOutlineSize;
+  thickness?: number;
   // Per-gradient override of the outline's `spread`.
   spread?: ThinkingOutlineSize;
 };
@@ -22,9 +22,10 @@ export type ThinkingOutlineProps = {
   // Arc layers orbiting together inside one outline. Defaults to a single
   // active-color gradient at speed 1.
   gradients?: ThinkingOutlineGradient[];
-  // Width of the sharp glow line. Default 1.5px.
-  thickness?: ThinkingOutlineSize;
-  // How far the soft bloom reaches beyond the line (blur radius). Default 20px.
+  // Glow intensity outside the border: 1 is the default soft glow, higher
+  // values add a denser, brighter glow (2-4 is a strong look).
+  thickness?: number;
+  // How far the glow reaches from the border (blur radius). Default 20px.
   spread?: ThinkingOutlineSize;
   className?: string;
 };

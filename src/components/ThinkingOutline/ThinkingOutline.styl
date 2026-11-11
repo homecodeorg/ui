@@ -5,18 +5,14 @@
 
 $color = var(--tol-color, var(--active-color))
 $soft = var(--tol-color-soft, var(--active-color-alpha-300))
-$thickness = var(--tol-thickness, 1.5px)
-$spread = var(--tol-spread, 20px)
 
-// Two tapered arcs 180deg apart, clipped to a ring of `thickness` around the inherited radius.
-// Arcs peak at 0deg/180deg so --promptGlowAngle equals their on-screen position
-glowRing(thickness)
-  content ''
-  position absolute
-  inset 0
-  padding thickness
-  border-radius inherit
+// Two tapered arcs 180deg apart, peaking at 0deg/180deg so --promptGlowAngle
+// equals their on-screen position
+arcs()
   background conic-gradient(from var(--promptGlowAngle), $color 0deg, $soft 48deg, transparent 80deg, transparent 100deg, $soft 132deg, $color 180deg, $soft 228deg, transparent 260deg, transparent 280deg, $soft 312deg, $color 360deg)
+
+// Keep only the padding band of an element: content-box is cut out
+ringMask()
   -webkit-mask linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
   -webkit-mask-composite xor
   mask linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)
@@ -43,6 +39,13 @@ glowRing(thickness)
 
 // One orbiting gradient; several can stack inside a root, each with its own speed
 .layer
+  // Glow source width scales with thickness (light emitted outward)
+  --tol-source calc(6px * var(--tol-thickness, 1))
+  // Part of the source that sits outside the border (0 at thickness 1)
+  --tol-outset calc(var(--tol-source) - 6px)
+  // Width of the dense halo's source, all of it outside the border
+  --tol-halo calc(3px * var(--tol-thickness, 1))
+
   position absolute
   inset 0
   border-radius inherit
@@ -51,18 +54,50 @@ glowRing(thickness)
   animation-direction var(--tol-direction, normal)
   animation-play-state paused
 
+  // Sharp line on the border
   &::before
-    glowRing($thickness)
+    content ''
+    position absolute
+    inset 0
+    padding var(--tol-line, 1.5px)
+    border-radius inherit
+    arcs()
+    ringMask()
 
 .bloom
   position absolute
   inset 0
   border-radius inherit
-  opacity .55
-  filter blur($spread)
+  opacity unquote('min(1, calc(0.55 * var(--tol-thickness, 1)))')
+  filter blur(var(--tol-spread, 20px))
+
+  // Source ring grows outward with thickness, so extra light goes outside
+  &::before
+    content ''
+    position absolute
+    inset calc(-1 * var(--tol-outset))
+    padding var(--tol-source)
+    border-radius inherit
+    arcs()
+    ringMask()
+
+// Dense near-border glow under the wide bloom. Off at thickness 1 (the original
+// look) and ramps in above it
+.halo
+  position absolute
+  inset 0
+  border-radius inherit
+  opacity unquote('clamp(0, calc((var(--tol-thickness, 1) - 1) * 0.5), 1)')
+  filter blur(calc(var(--tol-spread, 20px) * 0.3))
 
   &::before
-    glowRing(calc(4 * var(--tol-thickness, 1.5px)))
+    content ''
+    position absolute
+    inset calc(-1 * var(--tol-halo))
+    padding calc(var(--tol-halo) + 1.5px)
+    border-radius inherit
+    arcs()
+    ringMask()
 
 // Equal time per quarter over unequal spans: the 60deg sectors facing the top/bottom
 // edges get twice the time-per-degree of the 120deg sectors around the short ends

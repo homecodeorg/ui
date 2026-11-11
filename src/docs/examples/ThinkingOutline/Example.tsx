@@ -44,18 +44,18 @@ export default () => (
     </div>
 
     <div className={S.block}>
-      <div className={S.subtitle}>thickness=1 · spread=8 (tight)</div>
+      <div className={S.subtitle}>thickness=2 · spread=10 (dense, close)</div>
       <div className={S.host}>
-        <ThinkingOutline active thickness={1} spread={8} />
-        Thin and tight
+        <ThinkingOutline active thickness={2} spread={10} />
+        Dense and close
       </div>
     </div>
 
     <div className={S.block}>
-      <div className={S.subtitle}>thickness=3 · spread=40 (wide)</div>
+      <div className={S.subtitle}>thickness=4 · spread=30 (intense, wide)</div>
       <div className={S.host}>
-        <ThinkingOutline active thickness={3} spread={40} />
-        Thick and wide
+        <ThinkingOutline active thickness={4} spread={30} />
+        Intense and wide
       </div>
     </div>
 
@@ -67,11 +67,11 @@ export default () => (
         <ThinkingOutline
           active
           gradients={[
-            { speed: 0.5, thickness: 4, spread: 36 },
-            { color: '#ffb020', speed: 2, thickness: 1, spread: 6 },
+            { speed: 0.5, thickness: 4, spread: 30 },
+            { color: '#ffb020', speed: 2, thickness: 1, spread: 8 },
           ]}
         />
-        Slow wide + fast thin
+        Slow intense + fast faint
       </div>
     </div>
   </>

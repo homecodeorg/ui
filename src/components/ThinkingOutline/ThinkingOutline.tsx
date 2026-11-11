@@ -21,11 +21,8 @@ const toSize = (size?: ThinkingOutlineSize) =>
   typeof size === 'number' ? `${size}px` : size;
 
 // Unset values stay undefined so the stylesheet defaults (and the root's vars) apply
-const sizeVars = (
-  thickness?: ThinkingOutlineSize,
-  spread?: ThinkingOutlineSize
-) => ({
-  '--tol-thickness': toSize(thickness),
+const glowVars = (thickness?: number, spread?: ThinkingOutlineSize) => ({
+  '--tol-thickness': thickness,
   '--tol-spread': toSize(spread),
 });
 
@@ -40,7 +37,7 @@ function getLayerStyle({
   const duration = BASE_DURATION / (speed > 0 ? speed : 1);
 
   return {
-    ...sizeVars(thickness, spread),
+    ...glowVars(thickness, spread),
     '--tol-color': color,
     '--tol-color-soft':
       color && `color-mix(in srgb, ${color} 30%, transparent)`,
@@ -69,10 +66,11 @@ export function ThinkingOutline({
         !isControlled && S.interactive,
         className
       )}
-      style={sizeVars(thickness, spread) as CSSProperties}
+      style={glowVars(thickness, spread) as CSSProperties}
     >
       {layers.map((gradient, i) => (
         <div key={i} className={S.layer} style={getLayerStyle(gradient)}>
+          <div className={S.halo} />
           <div className={S.bloom} />
         </div>
       ))}
