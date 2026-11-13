@@ -680,7 +680,9 @@ export class Popup extends Component<T.Props, T.State> {
       S[`size-${size}`],
       S[`axis-${axis}`],
       S[`float-${float || 'middle'}`],
-      blur && S.blur,
+      // A closed popup stays mounted at opacity 0; its blur would still cost
+      // a backdrop pass every frame, so blur only while the content is shown.
+      blur && isContentVisible && S.blur,
       round && S.round,
       contentProps.className
     );
