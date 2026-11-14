@@ -1,0 +1,95 @@
+.root
+  display flex
+  flex-direction column
+  gap 16px
+  min-width 0
+
+.body
+  position relative
+  min-width 0
+
+.step
+  display flex
+  flex-direction column
+  gap 16px
+  min-width 0
+
+  &.hidden
+    display none
+
+  &.forward
+    animation stepFromRight .22s ease-out
+
+  &.back
+    animation stepFromLeft .22s ease-out
+
+@keyframes stepFromRight
+  from
+    opacity 0
+    transform translateX(24px)
+  to
+    opacity 1
+    transform none
+
+@keyframes stepFromLeft
+  from
+    opacity 0
+    transform translateX(-24px)
+  to
+    opacity 1
+    transform none
+
+.header
+  display flex
+  flex-direction column
+  gap 4px
+
+.title
+  font-size 1.4em
+  font-weight 600
+  line-height 1.2
+
+.description
+  opacity .6
+  line-height 1.4
+
+.content
+  display flex
+  flex-direction column
+  gap 12px
+  min-width 0
+
+.footer
+  display grid
+  grid-template-columns 1fr auto 1fr
+  align-items center
+  gap 12px
+
+.prev
+.custom
+  justify-self start
+
+.next
+  justify-self end
+  grid-column 3
+
+.placeholder
+  display block
+
+// The Gallery dots, drawn in the footer instead of over the picture.
+.dots
+  position static
+  width auto
+  padding 0
+  mask-image none
+  grid-column 2
+
+.size-s .title
+  font-size 1.15em
+
+.size-l .title
+  font-size 1.7em
+
+@media (prefers-reduced-motion: reduce)
+  .step
+    animation none !important

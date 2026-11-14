@@ -27,3 +27,18 @@
   &.active
     background-color var(--accent-color-alpha-500)
     transform scale(1.2)
+
+.interactive
+  pointer-events auto
+
+  .item
+    padding 0
+    border none
+    cursor pointer
+
+    &:hover:not(.active)
+      background-color var(--accent-color-alpha-400)
+
+    &:focus-visible
+      outline 2px solid var(--active-color)
+      outline-offset 2px
