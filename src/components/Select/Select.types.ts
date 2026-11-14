@@ -65,6 +65,10 @@ export type Props = FormControl<Value> &
     isOpen?: boolean;
     // Whether to close the popup when an option is selected
     closeOnSelect?: boolean;
+    // Render the list in the page instead of a popup: no trigger, the options
+    // are always shown and scrolled to the selected one on mount. With
+    // `isSearchable` the search field sits on top inside the same box.
+    inline?: boolean;
     // CSS class for styling the list items wrapper
     optionsClassName?: string;
     // CSS class that will be applied to every list options
