@@ -10,6 +10,8 @@ export type StepButton =
   | false
   | (Omit<Partial<ButtonProps>, 'onClick'> & {
       onClick?: (e: React.MouseEvent<HTMLButtonElement>) => boolean | void;
+      // data-* attributes go to the button (e.g. data-track)
+      [data: `data-${string}`]: string | undefined;
     });
 
 export type StepperApi = {
