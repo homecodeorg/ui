@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.21.0](https://github.com/homecodeorg/ui/compare/v5.20.24...v5.21.0) (2026-11-14)
+
+
+### Features
+
+* **Stepper:** step-by-step form with Prev/Next and Gallery dots ([#34](https://github.com/homecodeorg/ui/issues/34)) ([e288816](https://github.com/homecodeorg/ui/commit/e288816568fe4431d9ab4c8f648a7250ff034765))
+
 ### [5.20.24](https://github.com/homecodeorg/ui/compare/v5.20.23...v5.20.24) (2026-11-13)
 
 ### [5.20.23](https://github.com/homecodeorg/ui/compare/v5.20.22...v5.20.23) (2026-11-11)
