@@ -113,7 +113,7 @@ export function Stepper({
         variant={isPrev ? 'clear' : 'primary'}
         disabled={stuck}
         {...rest}
-        className={cn(S.button, isPrev ? S.prev : S.next, rest.className)}
+        className={cn(isPrev ? S.prev : S.next, rest.className)}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           if (onClick?.(e) === false || e.defaultPrevented) return;
           if (isPrev) api.prev();
@@ -155,9 +155,11 @@ export function Stepper({
   return (
     <div className={cn(S.root, S[`size-${size}`], className)}>
       <div className={S.body}>
-        {renderAll
-          ? steps.map(s => renderStep(s, s === step))
-          : renderStep(step, true)}
+        {steps.map(s =>
+          s === step || renderAll || s.forceRender
+            ? renderStep(s, s === step)
+            : null
+        )}
       </div>
 
       <div className={cn(S.footer, footerClassName)}>

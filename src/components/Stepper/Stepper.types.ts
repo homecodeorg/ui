@@ -30,6 +30,8 @@ export type Step = {
   // A short line under the title
   description?: ReactNode;
   content?: ReactNode | ((api: StepperApi) => ReactNode);
+  // Stay mounted (hidden) while another step is shown
+  forceRender?: boolean;
   // Overrides the Stepper's Prev button for this step
   prev?: StepButton;
   // Overrides the Stepper's Next button for this step
