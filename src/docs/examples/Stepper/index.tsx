@@ -12,6 +12,8 @@ const Docs = () => (
       be added or removed on the fly; a step's <code>prev</code>/
       <code>next</code> override its buttons (label, props, <code>onClick</code>
       ; return <code>false</code> to stay), or <code>false</code> to hide them.
+      <code>renderPrevButton</code> / <code>renderNextButton</code> draw either
+      side yourself; they get the default button to wrap or replace.
     </p>
 
     <Heading id="props" text="Props" />

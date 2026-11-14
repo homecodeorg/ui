@@ -35,7 +35,8 @@ export function Stepper({
   nextLabel = 'Next',
   prevButtonProps,
   nextButtonProps,
-  renderButtons,
+  renderPrevButton,
+  renderNextButton,
   showDots = true,
   dotsClickable = true,
   renderAll = false,
@@ -113,7 +114,6 @@ export function Stepper({
         variant={isPrev ? 'clear' : 'primary'}
         disabled={stuck}
         {...rest}
-        className={cn(isPrev ? S.prev : S.next, rest.className)}
         onClick={(e: MouseEvent<HTMLButtonElement>) => {
           if (onClick?.(e) === false || e.defaultPrevented) return;
           if (isPrev) api.prev();
@@ -163,11 +163,11 @@ export function Stepper({
       </div>
 
       <div className={cn(S.footer, footerClassName)}>
-        {renderButtons ? (
-          <div className={S.custom}>{renderButtons(api)}</div>
-        ) : (
-          button('prev')
-        )}
+        <div className={S.prev}>
+          {renderPrevButton
+            ? renderPrevButton(api, button('prev'))
+            : button('prev')}
+        </div>
         {showDots && count > 1 && (
           <Dots
             index={index}
@@ -177,7 +177,11 @@ export function Stepper({
             getLabel={i => textOf(steps[i].title) || String(i + 1)}
           />
         )}
-        {!renderButtons && button('next')}
+        <div className={S.next}>
+          {renderNextButton
+            ? renderNextButton(api, button('next'))
+            : button('next')}
+        </div>
       </div>
     </div>
   );

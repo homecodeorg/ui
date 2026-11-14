@@ -56,8 +56,10 @@ export type Props = {
   prevButtonProps?: StepButton;
   // Props for every Next button (a step's `next` wins)
   nextButtonProps?: StepButton;
-  // Draws the footer buttons instead of Prev/Next; the dots stay
-  renderButtons?: (api: StepperApi) => ReactNode;
+  // Draws the left button instead of Prev (gets the default one to wrap or skip)
+  renderPrevButton?: (api: StepperApi, button: ReactNode) => ReactNode;
+  // Draws the right button instead of Next (gets the default one to wrap or skip)
+  renderNextButton?: (api: StepperApi, button: ReactNode) => ReactNode;
   // Dots under the step, like in Gallery
   showDots?: boolean;
   // Clicking a dot opens its step

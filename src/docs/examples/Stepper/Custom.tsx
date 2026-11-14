@@ -3,7 +3,7 @@ import { Button, Stepper } from 'uilib';
 const steps = [1, 2, 3].map(n => ({
   id: n,
   title: `Step ${n}`,
-  description: 'Buttons drawn by renderButtons',
+  description: 'Own buttons on both sides',
   content: <div>Content {n}</div>,
 }));
 
@@ -11,15 +11,19 @@ export default () => (
   <Stepper
     size="s"
     steps={steps}
-    renderButtons={({ prev, next, isFirst, isLast }) => (
+    renderPrevButton={({ prev, isFirst }) => (
+      <Button round size="s" disabled={isFirst} onClick={prev}>
+        Back
+      </Button>
+    )}
+    renderNextButton={({ isLast }, next) => (
       <>
-        <Button round size="s" disabled={isFirst} onClick={prev}>
-          Back
-        </Button>{' '}
-        <Button round size="s" variant="primary" disabled={isLast} onClick={next}>
-          Continue
+        <Button round size="s" variant="clear" disabled={isLast}>
+          Skip
         </Button>
+        {next}
       </>
     )}
+    nextLabel="Continue"
   />
 );
