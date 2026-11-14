@@ -256,10 +256,12 @@ $levelGap = 24px
   margin 0
 
 // Inline: the list sits in the page in a box like the popup's, with the
-// search field (or the label) on top inside it.
+// search field on top inside it. Items keep var(--p-1) from the box edge.
 .inline
   display flex
   flex-direction column
+  gap var(--p-1)
+  padding var(--p-1)
   max-height none
   overflow hidden
   background-color var(--decent-color)
@@ -298,17 +300,26 @@ $levelGap = 24px
   flex none
   position relative
   z-index 1
-  padding 4px 4px 0
 
-.inlineLabel
-  flex none
-  padding 10px 16px 4px
-  font-size 13px
-  color var(--accent-color-alpha-500)
+// The box padding already moves items in, so their own side padding is that much smaller.
+.inline.size-xs .option
+  padding-left 'calc(%s - var(--p-1))' % $controlPaddingXS !important
+  padding-right 'calc(%s - var(--p-1))' % $controlPaddingXS !important
+.inline.size-s .option
+  padding-left 'calc(%s - var(--p-1))' % $controlPaddingS !important
+  padding-right 'calc(%s - var(--p-1))' % $controlPaddingS !important
+.inline.size-m .option
+  padding-left 'calc(%s - var(--p-1))' % $controlPaddingM !important
+  padding-right 'calc(%s - var(--p-1))' % $controlPaddingM !important
+.inline.size-l .option
+  padding-left 'calc(%s - var(--p-1))' % $controlPaddingL !important
+  padding-right 'calc(%s - var(--p-1))' % $controlPaddingL !important
+.inline.size-xl .option
+  padding-left 'calc(%s - var(--p-1))' % $controlPaddingXL !important
+  padding-right 'calc(%s - var(--p-1))' % $controlPaddingXL !important
 
 .inlineChips
   flex none
-  padding 4px 8px
 
 .inlineList
   flex 1 1 auto

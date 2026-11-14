@@ -622,3 +622,11 @@ test('Select2 inline: pressing the picked row keeps it', () => {
   expect(onChange).not.toHaveBeenCalled();
   expect(document.querySelector('.option.isSelected')?.textContent).toBe('Alice');
 });
+
+test('Select2 inline without search pins nothing above the options', () => {
+  render(<Controlled inline label="People" />);
+
+  const box = document.querySelector('.inline')!;
+  expect(box.textContent).not.toContain('People');
+  expect(screen.queryByRole('textbox')).toBeNull();
+});

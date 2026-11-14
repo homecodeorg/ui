@@ -67,7 +67,8 @@ export type Props = FormControl<Value> &
     closeOnSelect?: boolean;
     // Render the list in the page instead of a popup: no trigger, the options
     // are always shown and scrolled to the selected one on mount. With
-    // `isSearchable` the search field sits on top inside the same box.
+    // `isSearchable` the search field (with `label`) sits on top inside the
+    // same box; without it nothing is pinned above the options.
     inline?: boolean;
     // CSS class for styling the list items wrapper
     optionsClassName?: string;

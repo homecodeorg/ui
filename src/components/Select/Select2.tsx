@@ -616,14 +616,12 @@ export function Select2(props: T.Props) {
                 {...inputProps}
                 value={searchVal}
                 onChange={handleSearchChange}
-                label={getFieldLabel(label)}
+                // A floating label would be cut by the box: it is the placeholder here.
+                placeholder={
+                  inputProps?.placeholder ??
+                  (hideFieldLabel ? undefined : getFieldLabel(label))
+                }
               />
-            </div>
-          )}
-          {!isSearchable && !hideFieldLabel && (
-            <div className={S.inlineLabel}>
-              {getFieldLabel(label)}
-              {required && !hideRequiredStar && <RequiredStar size={size} />}
             </div>
           )}
           {hasChips && (

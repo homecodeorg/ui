@@ -11,6 +11,7 @@ export default () => {
       isSearchable
       round
       label="Search"
+      // Without isSearchable nothing is pinned above the options.
       options={OPTIONS}
       value={value}
       onChange={next => next !== null && setValue(next)}
