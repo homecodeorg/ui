@@ -565,3 +565,68 @@ describe('Select2 variant', () => {
     expect(screen.queryByText('Alice', { selector: '.label' })).toBeNull();
   });
 });
+
+describe('Select2 inline', () => {
+  test('shows the options in the page without a trigger', () => {
+    render(<Controlled inline label="People" initialValue="b" />);
+
+    expect(getOptionLabels()).toEqual(OPTIONS.map(o => o.label));
+    expect(document.querySelector('.triggerButton')).toBeNull();
+    expect(document.querySelector('.inline .option.isSelected')?.textContent).toBe('Bob');
+  });
+
+  test('picks on click and keeps the list', async () => {
+    const onChange = jest.fn();
+    render(<Controlled inline initialValue="a" onChange={onChange} />);
+
+    fireEvent.pointerUp(getOptionRow('Carol')!);
+
+    expect(onChange).toHaveBeenCalledWith('c');
+    expect(isOpened()).toBe(true);
+    expect(document.querySelector('.option.isSelected')?.textContent).toBe('Carol');
+  });
+
+  test('search sits inside the box and filters, outside clicks keep it', async () => {
+    render(<Controlled inline isSearchable label="People" />);
+
+    const input = getSearchInput();
+    expect(input.closest('.inline')).not.toBeNull();
+
+    await userEvent.type(input, 'bo');
+    expect(getOptionLabels()).toEqual(['Bob']);
+
+    await userEvent.click(document.body);
+    expect(getOptionLabels()).toEqual(['Bob']);
+    expect(input.value).toBe('bo');
+  });
+
+  test('arrow keys move through the list while focus is inside', async () => {
+    const onChange = jest.fn();
+    render(<Controlled inline initialValue="a" onChange={onChange} />);
+
+    const box = document.querySelector<HTMLElement>('.inline')!;
+    box.focus();
+    await waitFor(() => expect(getFocusedLabel()).toBe('Alice'));
+
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    expect(onChange).toHaveBeenCalledWith('b');
+  });
+});
+
+test('Select2 inline: pressing the picked row keeps it', () => {
+  const onChange = jest.fn();
+  render(<Controlled inline initialValue="a" onChange={onChange} />);
+
+  fireEvent.pointerUp(getOptionRow('Alice')!);
+
+  expect(onChange).not.toHaveBeenCalled();
+  expect(document.querySelector('.option.isSelected')?.textContent).toBe('Alice');
+});
+
+test('Select2 inline without search pins nothing above the options', () => {
+  render(<Controlled inline label="People" />);
+
+  const box = document.querySelector('.inline')!;
+  expect(box.textContent).not.toContain('People');
+  expect(screen.queryByRole('textbox')).toBeNull();
+});

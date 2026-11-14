@@ -3,6 +3,7 @@ import { ComponentLayout, TypesTable } from 'docs/components';
 
 import example from '!!raw-loader!./Example';
 import exampleSelectedChips from '!!raw-loader!./SelectedChips';
+import exampleInline from '!!raw-loader!./Inline';
 import * as helpers from './helpers';
 
 import S from './SelectedChips.styl';
@@ -63,6 +64,7 @@ export default () => (
         label: 'Selected Chips',
         code: exampleSelectedChips,
       },
+      { id: 'inline', label: 'Inline', code: exampleInline },
     ]}
     scope={{ helpers, S }}
   />

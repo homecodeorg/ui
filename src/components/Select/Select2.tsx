@@ -72,6 +72,7 @@ export function Select2(props: T.Props) {
     onClose,
     onFocus,
     onBlur,
+    inline,
   } = props;
 
   const isMultiple = H.isMultiple(value);
@@ -88,6 +89,8 @@ export function Select2(props: T.Props) {
   const [labelClipPath, setLabelClipPath] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [innerSearchVal, setInnerSearchVal] = useState('');
+  /** Inline: keyboard navigation works while focus is inside the list. */
+  const [inlineFocused, setInlineFocused] = useState(false);
 
   const searchVal = props.searchValue ?? innerSearchVal;
   const searchQuery = isSearching ? searchVal : '';
@@ -152,10 +155,15 @@ export function Select2(props: T.Props) {
 
       applySelection(ids, ids);
     } else {
+      // An inline list always shows a pick: pressing the picked row keeps it.
+      if (inline && isSelected(id)) return;
+
       const nextValue = isSelected(id) ? null : id;
 
       applySelection(nextValue === null ? [] : [id], nextValue);
     }
+
+    if (inline) return;
 
     resetSearch();
 
@@ -174,7 +182,7 @@ export function Select2(props: T.Props) {
     applySelection(ids, isMultiple ? ids : (ids[0] ?? null));
 
   const { focusedId, setFocusedId } = useKeyboardNav({
-    isOpen,
+    isOpen: inline ? inlineFocused : isOpen,
     navigableOptions,
     selectedIds,
     onSelect: onItemToggle,
@@ -213,7 +221,7 @@ export function Select2(props: T.Props) {
     setIsSearching(true);
     setInnerSearchVal(val);
     onSearchChange?.(val);
-    openIfEnabled();
+    if (!inline) openIfEnabled();
   };
 
   const handleFocus = e => {
@@ -274,7 +282,7 @@ export function Select2(props: T.Props) {
 
   useEvent({
     event: 'click',
-    isActive: isOpen,
+    isActive: isOpen && !inline,
     callback: e => {
       // The click concluding a press that started inside must not count as an
       // outside click: the portalled popup can mount under the cursor, which
@@ -285,8 +293,31 @@ export function Select2(props: T.Props) {
   });
 
   useEffect(() => {
-    if (!isOpen) resetSearch();
+    if (!isOpen && !inline) resetSearch();
   }, [isOpen]);
+
+  // Inline: on mount the selected option is scrolled into the middle of the list.
+  useEffect(() => {
+    if (!inline) return;
+
+    const frame = requestAnimationFrame(() => {
+      const list = scrollInnerRef.current;
+      const selected = list?.querySelector<HTMLElement>(`.${S.isSelected}`);
+
+      if (!list || !selected) return;
+
+      const listRect = list.getBoundingClientRect();
+      const rect = selected.getBoundingClientRect();
+      const offset = rect.top - listRect.top + list.scrollTop;
+
+      list.scrollTop = Math.max(
+        0,
+        offset - (list.clientHeight - rect.height) / 2
+      );
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [inline]);
 
   useEffect(() => {
     if (props.searchValue === undefined) return;
@@ -523,6 +554,9 @@ export function Select2(props: T.Props) {
     );
   };
 
+  const hasPresetPanel =
+    presets.length > 0 || Boolean(selectAllButton) || Boolean(clearButton);
+
   const optionsList = (
     <div ref={contentRef} data-select-id={instanceId.current}>
       {renderPresets()}
@@ -533,6 +567,9 @@ export function Select2(props: T.Props) {
         className={cn(
           S.options,
           S[`size-${size}`],
+          round && S.round,
+          // The first row touches the box top unless the preset buttons are above it.
+          !hasPresetPanel && S.flushTop,
           optionsClassName,
           scrollProps?.className
         )}
@@ -550,6 +587,83 @@ export function Select2(props: T.Props) {
     S[`size-${size}`],
     variant === 'clear' && S['variant-clear']
   );
+
+  if (inline) {
+    const onInlineBlur = e => {
+      onBlur?.(e);
+      if (!e.currentTarget.contains(e.relatedTarget)) setInlineFocused(false);
+    };
+
+    return (
+      <>
+        <div
+          className={cn(
+            classes,
+            S.inline,
+            round && S.round,
+            blur && S.blur,
+            disabled && S.disabled,
+            isErrorVisible && S.isError
+          )}
+          data-select-id={instanceId.current}
+          tabIndex={isSearchable ? -1 : 0}
+          onFocus={e => {
+            setInlineFocused(true);
+            handleFocus(e);
+          }}
+          onBlur={onInlineBlur}
+        >
+          {isSearchable && (
+            <div className={S.inlineSearch}>
+              <Input
+                size={size}
+                round={round}
+                variant="clean"
+                {...inputProps}
+                value={searchVal}
+                onChange={handleSearchChange}
+                // A floating label would be cut by the box: it is the placeholder here.
+                placeholder={
+                  inputProps?.placeholder ??
+                  (hideFieldLabel ? undefined : getFieldLabel(label))
+                }
+              />
+            </div>
+          )}
+          {hasChips && (
+            <div className={cn(S.chipContainerInner, S.inlineChips)}>
+              {renderSelectedChips()}
+            </div>
+          )}
+          {renderPresets()}
+          <div ref={contentRef} className={S.inlineList}>
+            <Scroll
+              y
+              {...scrollProps}
+              offset={{ y: { before: 6, after: 6 } }}
+              className={cn(
+                S.options,
+                S.inlineOptions,
+                S[`size-${size}`],
+                round && S.round,
+                !isSearchable && !hasChips && !hasPresetPanel && S.flushTop,
+                optionsClassName,
+                scrollProps?.className
+              )}
+              onInnerRef={onScrollInnerRef}
+            >
+              {visibleOptions.map(item => renderOption(item))}
+            </Scroll>
+          </div>
+        </div>
+        {isErrorVisible && (
+          <AssistiveText variant="danger" size={size}>
+            {error as string}
+          </AssistiveText>
+        )}
+      </>
+    );
+  }
 
   return (
     <>
