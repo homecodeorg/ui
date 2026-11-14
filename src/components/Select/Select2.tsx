@@ -554,6 +554,9 @@ export function Select2(props: T.Props) {
     );
   };
 
+  const hasPresetPanel =
+    presets.length > 0 || Boolean(selectAllButton) || Boolean(clearButton);
+
   const optionsList = (
     <div ref={contentRef} data-select-id={instanceId.current}>
       {renderPresets()}
@@ -564,6 +567,9 @@ export function Select2(props: T.Props) {
         className={cn(
           S.options,
           S[`size-${size}`],
+          round && S.round,
+          // The first row touches the box top unless the preset buttons are above it.
+          !hasPresetPanel && S.flushTop,
           optionsClassName,
           scrollProps?.className
         )}
@@ -639,6 +645,8 @@ export function Select2(props: T.Props) {
                 S.options,
                 S.inlineOptions,
                 S[`size-${size}`],
+                round && S.round,
+                !isSearchable && !hasChips && !hasPresetPanel && S.flushTop,
                 optionsClassName,
                 scrollProps?.className
               )}

@@ -331,3 +331,52 @@ $levelGap = 24px
   // Keyboard mode turns off pointer events on the popup list; inline stays clickable.
   :global(.keyboard) &
     pointer-events auto
+
+// Round: the first and last rows follow the box's round corners: the box
+// radius minus the gap between them (none in the popup, var(--p-1) inline),
+// never less than a row's own.
+.options
+  --select-inset 0px
+
+  &.inlineOptions
+    --select-inset var(--p-1)
+
+  &.size-xs
+    --select-row-radius 'calc(%s * 1.5)' % $borderRadiusXS
+    --select-box-radius 'calc(%s * 1.5 * 1.4)' % $borderRadiusXS
+    &.round
+      --select-box-radius 'calc(%s / 2)' % $controlSizeXS
+
+  &.size-s
+    --select-row-radius 'calc(%s * 1.5)' % $borderRadiusS
+    --select-box-radius 'calc(%s * 1.5 * 1.4)' % $borderRadiusS
+    &.round
+      --select-box-radius 'calc(%s / 2)' % $controlSizeS
+
+  &.size-m
+    --select-row-radius 'calc(%s * 1.5)' % $borderRadiusM
+    --select-box-radius 'calc(%s * 1.5 * 1.4)' % $borderRadiusM
+    &.round
+      --select-box-radius 'calc(%s / 2)' % $controlSizeM
+
+  &.size-l
+    --select-row-radius 'calc(%s * 1.5)' % $borderRadiusL
+    --select-box-radius 'calc(%s * 1.5 * 1.4)' % $borderRadiusL
+    &.round
+      --select-box-radius 'calc(%s / 2)' % $controlSizeL
+
+  &.size-xl
+    --select-row-radius 'calc(%s * 1.5)' % $borderRadiusXL
+    --select-box-radius 'calc(%s * 1.5 * 1.4)' % $borderRadiusXL
+    &.round
+      --select-box-radius 'calc(%s / 2)' % $controlSizeXL
+
+  $edgeRadius = 'max(var(--select-row-radius), calc(var(--select-box-radius) - var(--select-inset)))'
+
+  &.round.flushTop .option:first-child
+    border-top-left-radius unquote($edgeRadius)
+    border-top-right-radius unquote($edgeRadius)
+
+  &.round .option:last-child
+    border-bottom-left-radius unquote($edgeRadius)
+    border-bottom-right-radius unquote($edgeRadius)
