@@ -57,6 +57,7 @@ export * from './Scroll/Scroll';
 export * from './Slider/Slider';
 export * from './Shimmer/Shimmer';
 export * from './Spinner/Spinner';
+export * from './Stepper/Stepper';
 export * from './Table/Table';
 export * from './Tabs/Tabs';
 export * from './TextShimmer/TextShimmer';

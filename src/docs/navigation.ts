@@ -204,6 +204,10 @@ export default [
         loader: () => import('./examples/Spinner'),
       },
       {
+        id: 'Stepper',
+        loader: () => import('./examples/Stepper'),
+      },
+      {
         id: 'Table',
         loader: () => import('./examples/Table'),
       },
