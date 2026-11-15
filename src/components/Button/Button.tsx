@@ -26,12 +26,15 @@ export function Button(props: T.Props) {
     onRef,
     ...rest
   } = props;
+  // An icon-only (square) button shows no spinner: its icon pulses instead, and a tooltip
+  // around it can say what is happening.
+  const iconBusy = loading && square;
   const { disabled } = props;
   const classes = cn(
     S.root,
     S[`size-${size}`],
     S[`variant-${variant}`],
-    loading && S.loading,
+    loading && (iconBusy ? S.iconBusy : S.loading),
     checked && S.checked,
     square && S.square,
     round && S.round,
@@ -55,6 +58,11 @@ export function Button(props: T.Props) {
   );
 
   if (disabled) rest.tabIndex = -1;
+  if (iconBusy) {
+    delete rest.onClick;
+    rest['aria-busy'] = true;
+    rest['aria-disabled'] = true;
+  }
 
   useEffect(() => {
     const activeElement = document.activeElement as HTMLButtonElement;
@@ -69,7 +77,7 @@ export function Button(props: T.Props) {
       {prefixElem && <div className={S.prefix}>{prefixElem}</div>}
       {typeof children === 'string' ? <span>{children}</span> : children}
       {postfixElem && <div className={S.postfix}>{postfixElem}</div>}
-      {loading && <Spinner className={cn(S.spinner, S.postfix)} size={size} />}
+      {loading && !iconBusy && <Spinner className={cn(S.spinner, S.postfix)} size={size} />}
     </button>
   );
 }
