@@ -44,6 +44,23 @@ describe('Button', () => {
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
   });
 
+  test('icon-only (square) loading button shows no spinner and ignores clicks', async () => {
+    const onClick = jest.fn();
+    render(
+      <Button square loading onClick={onClick} aria-label="Delete">
+        <svg data-testid="icon" />
+      </Button>
+    );
+    const button = screen.getByRole('button', { name: 'Delete' });
+    expect(button).toHaveClass('iconBusy');
+    expect(button).not.toHaveClass('loading');
+    expect(button).toHaveAttribute('aria-busy', 'true');
+    expect(screen.getByTestId('icon')).toBeInTheDocument();
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+    await userEvent.click(button);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
   test('renders in checked state', () => {
     render(<Button checked>Checked</Button>);
     expect(screen.getByRole('button')).toHaveClass('checked');

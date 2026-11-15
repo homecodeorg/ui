@@ -20,6 +20,19 @@
   &.loading
     pointer-events none
 
+  // Icon-only buttons at work: no spinner, the icon pulses. Hover still reaches the button so a
+  // tooltip can explain; clicks are ignored in Button.tsx.
+  &.iconBusy
+    cursor default
+
+    > *
+      animation buttonIconBusy 1.2s ease-in-out infinite alternate
+
+    @media (prefers-reduced-motion: reduce)
+      > *
+        animation none
+        opacity .5
+
   &.checked
     &
     &:focus
@@ -152,3 +165,9 @@
 
 .spinner
   margin-left var(--p-3)
+
+@keyframes buttonIconBusy
+  from
+    opacity 1
+  to
+    opacity .3
