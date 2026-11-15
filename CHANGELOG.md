@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.2](https://github.com/homecodeorg/ui/compare/v5.21.1...v5.21.2) (2026-11-15)
+
+
+### Bug Fixes
+
+* **Toggle:** pressed style via CSS :active so it never sticks after a touch scroll ([#36](https://github.com/homecodeorg/ui/issues/36)) ([b76545c](https://github.com/homecodeorg/ui/commit/b76545ce3f4a153517e5037aa3c4dcb56efd3029))
+
 ### [5.21.1](https://github.com/homecodeorg/ui/compare/v5.21.0...v5.21.1) (2026-11-14)
 
 
