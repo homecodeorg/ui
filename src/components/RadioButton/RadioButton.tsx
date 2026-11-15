@@ -36,7 +36,6 @@ export const RadioButton: FC<T.Props> = ({
 
   const {
     id: componentId,
-    isActive,
     isFocused,
     handlers,
   } = useToggleState({
@@ -57,17 +56,12 @@ export const RadioButton: FC<T.Props> = ({
     checked && S.checked,
     disabled && S.disabled,
     error && S.hasError,
-    isActive && S.isActive,
     isFocused && S.isFocused,
     className
   );
 
   return (
-    <label
-      className={classes}
-      onPointerDown={handlers.onPointerDown}
-      onPointerUp={handlers.onPointerUp}
-    >
+    <label className={classes}>
       <div className={S.controlWrapper}>
         <input
           className={S.control}

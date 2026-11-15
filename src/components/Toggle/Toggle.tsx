@@ -16,7 +16,7 @@ export function Toggle(props: ToggleProps) {
     ...inputProps
   } = props;
   const { checked, disabled } = inputProps;
-  const { id, isActive, isFocused, handlers } = useToggleState(props);
+  const { id, handlers } = useToggleState(props);
 
   const classes = cn(
     S.root,
@@ -25,17 +25,12 @@ export function Toggle(props: ToggleProps) {
     checked && S.checked,
     disabled && S.disabled,
     // error && S.hasError,
-    isActive && S.isActive,
     // isFocused && S.isFocused,
     className
   );
 
   return (
-    <label
-      className={classes}
-      onPointerDown={handlers.onPointerDown}
-      onPointerUp={handlers.onPointerUp}
-    >
+    <label className={classes}>
       <div className={S.toggleWrapper}>
         <input
           className={S.control}
