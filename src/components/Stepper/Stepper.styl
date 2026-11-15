@@ -97,6 +97,7 @@
 @media (max-width: $tablet)
   .footer
     grid-template-columns 1fr 1fr
+    row-gap 0
 
   .prev
   .next
@@ -109,6 +110,9 @@
     grid-row 2
     grid-column 1 / -1
     justify-self center
+    // The removed row gap goes into the dots line; dots sit in its middle.
+    min-height calc(14px + 12px) // dot (8px + 3px margins) + the footer gap
+    align-items center
 
 .size-s .title
   font-size 1.15em
