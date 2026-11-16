@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.3](https://github.com/homecodeorg/ui/compare/v5.21.2...v5.21.3) (2026-11-16)
+
+
+### Features
+
+* **Stepper:** dots on their own row under the buttons on small screens ([#37](https://github.com/homecodeorg/ui/issues/37)) ([b6eda9c](https://github.com/homecodeorg/ui/commit/b6eda9c0307f08c46829ef5757c98dc95bd418e0))
+* **Tooltip:** reliable delay before showing, documented with an example ([#40](https://github.com/homecodeorg/ui/issues/40)) ([332a7b1](https://github.com/homecodeorg/ui/commit/332a7b14af8f8bd9cb0520a3e5d72c4c94d1846c))
+
+
+### Bug Fixes
+
+* **Button:** icon-only (square) loading buttons pulse the icon instead of a spinner ([#38](https://github.com/homecodeorg/ui/issues/38)) ([0181f17](https://github.com/homecodeorg/ui/commit/0181f17a80608f8b0c70db0446a7774cf8eb777b))
+* **Tabs:** call the latest onChange ([#39](https://github.com/homecodeorg/ui/issues/39)) ([03073c3](https://github.com/homecodeorg/ui/commit/03073c3096fbdb89ed4d083cb70ed0ba13dc6e53))
+
 ### [5.21.2](https://github.com/homecodeorg/ui/compare/v5.21.1...v5.21.2) (2026-11-15)
 
 
