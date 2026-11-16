@@ -5,6 +5,7 @@ import demo from '!!raw-loader!./Example';
 import quotes from '!!raw-loader!./Quotes';
 import injectors from '!!raw-loader!./Injectors';
 import breaks from '!!raw-loader!./Breaks';
+import renderLink from '!!raw-loader!./RenderLink';
 import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
 
 const name = 'FormattedText';
@@ -25,7 +26,9 @@ const Docs = () => (
       <code>null</code>. They run before the other built-in ones, so they can
       take over JSON or links. <code>breaks</code> (on by default) turns
       newlines into <code>&lt;br&gt;</code>; turn it off when the container is{' '}
-      <code>white-space: pre-wrap</code>.
+      <code>white-space: pre-wrap</code>. <code>renderLink</code> replaces the
+      default link (a <code>Link</code> with its URL in a tooltip), e.g. to show
+      a preview card.
     </p>
 
     <Heading id="Props" text="Props" />
@@ -42,6 +45,7 @@ export default () => (
       { id: 'quotes', label: 'Quotes', code: quotes },
       { id: 'injectors', label: 'Injectors', code: injectors },
       { id: 'breaks', label: 'Breaks', code: breaks },
+      { id: 'render-link', label: 'Render link', code: renderLink },
     ]}
     scope={{}}
   />

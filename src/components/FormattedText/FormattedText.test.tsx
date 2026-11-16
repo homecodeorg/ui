@@ -118,6 +118,29 @@ Continue? [choice:yes|Yes] [choice:no|No]
     );
   });
 
+  test('renderLink renders markdown links and bare URLs', () => {
+    const seen: { href: string; text: string }[] = [];
+    render(
+      <FormattedText
+        text="Read [the post](www.example.com/post) or https://example.org/a"
+        renderLink={link => {
+          seen.push(link);
+          return (
+            <a data-testid="custom" href={link.href}>
+              {link.text}
+            </a>
+          );
+        }}
+      />
+    );
+
+    expect(screen.getAllByTestId('custom')).toHaveLength(2);
+    expect(seen).toEqual([
+      { href: 'https://www.example.com/post', text: 'the post' },
+      { href: 'https://example.org/a', text: 'https://example.org/a' },
+    ]);
+  });
+
   test('external http URLs stay absolute', () => {
     render(
       <FormattedText text="See [OS](https://www.opensanctions.org/entities/ofac-pr)" />
