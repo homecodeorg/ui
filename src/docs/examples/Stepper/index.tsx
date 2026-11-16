@@ -8,7 +8,8 @@ const Docs = () => (
   <>
     <p>
       A form split into steps. Each step has a title, a short description, its
-      content, Prev/Next buttons and the Gallery dots between them. Steps can
+      content, Prev/Next buttons and the Gallery dots between them (on small screens
+      the dots move to their own row under the buttons). Steps can
       be added or removed on the fly; a step's <code>prev</code>/
       <code>next</code> override its buttons (label, props, <code>onClick</code>
       ; return <code>false</code> to stay), or <code>false</code> to hide them.
