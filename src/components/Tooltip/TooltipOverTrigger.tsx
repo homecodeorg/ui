@@ -9,6 +9,14 @@ import {
   getTextStyleSource,
 } from './tooltipTextStyles';
 
+function isPopoverOpen(el: HTMLElement) {
+  try {
+    return el.matches(':popover-open');
+  } catch {
+    return false;
+  }
+}
+
 function parsePx(value: string) {
   return Number.parseFloat(value) || 0;
 }
@@ -97,11 +105,16 @@ const useOverTriggerPositionSetup = ({
     const tooltip = tooltipRef.current;
     if (!trigger || !tooltip) return;
 
+    const show = () => {
+      tooltip.showPopover?.();
+      updateOverTriggerPosition();
+    };
+
     const showTooltip = () => {
-      timeoutRef.current = window.setTimeout(() => {
-        tooltip.showPopover?.();
-        updateOverTriggerPosition();
-      }, delay);
+      // Keep a single pending show so a stale timer can't open it after leave.
+      clearTimeout(timeoutRef.current);
+      if (isPopoverOpen(tooltip)) return;
+      timeoutRef.current = window.setTimeout(show, delay);
     };
 
     const hideTooltip = () => {
