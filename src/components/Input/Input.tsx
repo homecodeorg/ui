@@ -402,17 +402,19 @@ export const Input = forwardRef<HTMLInputElement, T.Props>(
 
       if (!content) return null;
 
-      const addonProps = {
-        className: cn(S[name], props[`${name}ClassName`]),
-        key: name,
-      };
       const isString = typeof content === 'string';
       const elem = isString ? <span>{content}</span> : content;
 
-      // @ts-ignore
-      if (isString) addonProps.title = content;
-
-      return <div {...addonProps}>{elem}</div>;
+      // `key` is passed directly: React warns when it arrives via a spread.
+      return (
+        <div
+          key={name}
+          className={cn(S[name], props[`${name}ClassName`])}
+          title={isString ? content : undefined}
+        >
+          {elem}
+        </div>
+      );
     };
 
     useEffect(() => {
