@@ -8,6 +8,7 @@ export interface TooltipProps {
   contentClassName?: string;
   children: React.ReactNode;
   content?: React.ReactNode;
+  /** Milliseconds to wait after hover/focus before the tooltip appears. Leaving cancels it; hiding is never delayed. */
   delay?: number;
   direction?: 'top' | 'bottom' | 'left' | 'right';
   blur?: boolean;

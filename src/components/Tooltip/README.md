@@ -28,6 +28,9 @@ Then use `data-tooltip` attribute anywhere:
 
 // With blur effect
 <button data-tooltip="Glossy tooltip" data-tooltip-blur>Hover me</button>
+
+// With a custom show delay (ms, default 300)
+<button data-tooltip="Slow" data-tooltip-delay="800">Hover me</button>
 ```
 
 ### Method 2: Individual Tooltip Component
@@ -59,11 +62,12 @@ import { Tooltip } from 'components/Tooltip';
 - `data-tooltip`: Tooltip content
 - `data-tooltip-direction`: `top` | `bottom` | `left` | `right` (default: `top`)
 - `data-tooltip-blur`: Enable backdrop blur effect (no value needed)
+- `data-tooltip-delay`: Delay before showing, in ms (default: 300)
 
 ### Tooltip Component
 
 - `content`: Tooltip text or React node
-- `delay`: Delay before showing (ms, default: 0)
+- `delay`: Delay in ms between hover/focus and the tooltip appearing (default: 0). Leaving the trigger before it elapses cancels the show; hiding is immediate.
 - `direction`: `top` | `bottom` | `left` | `right` (default: `top`)
 - `blur`: Enable backdrop blur effect (default: `false`)
 

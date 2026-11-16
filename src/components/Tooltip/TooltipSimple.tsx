@@ -75,12 +75,18 @@ const useSimplePositionSetup = ({
       tooltip.style.top = `${top}px`;
     };
 
+    const show = () => {
+      applyTriggerTextStyles(tooltip, getTextStyleSource(trigger));
+      tooltip.showPopover?.();
+      positionTooltip();
+    };
+
     const showTooltip = () => {
-      timeoutRef.current = window.setTimeout(() => {
-        applyTriggerTextStyles(tooltip, getTextStyleSource(trigger));
-        tooltip.showPopover?.();
-        positionTooltip();
-      }, delay);
+      // mouseenter + focusin both land here: keep a single pending show, so an
+      // orphaned timer can't open the tooltip after the pointer has left.
+      clearTimeout(timeoutRef.current);
+      if (isPopoverOpen(tooltip)) return;
+      timeoutRef.current = window.setTimeout(show, delay);
     };
 
     const hideTooltip = () => {

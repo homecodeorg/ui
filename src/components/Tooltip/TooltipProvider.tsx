@@ -77,6 +77,13 @@ function showTooltip(target: HTMLElement) {
   clearTimeout(hideTimeout!);
   currentTarget = target;
 
+  const delayAttr = Number(target.getAttribute('data-tooltip-delay'));
+  const delay =
+    Number.isFinite(delayAttr) && target.hasAttribute('data-tooltip-delay')
+      ? delayAttr
+      : DELAY;
+
+  clearTimeout(showTimeout!);
   showTimeout = window.setTimeout(() => {
     const tooltip = createTooltipElement();
     tooltip.textContent = content;
@@ -100,7 +107,7 @@ function showTooltip(target: HTMLElement) {
     // Then position it
     const direction = target.getAttribute('data-tooltip-direction') || 'top';
     positionTooltip(tooltip, target, direction);
-  }, DELAY);
+  }, delay);
 }
 
 function hideTooltip() {

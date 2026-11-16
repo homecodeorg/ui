@@ -1,8 +1,8 @@
 import { Heading, Link } from 'uilib';
 import { ComponentLayout } from 'docs/components';
 
-import simple from '!!raw-loader!./Simple';
 import complex from '!!raw-loader!./Complex';
+import delay from '!!raw-loader!./Delay';
 import { TypesTable } from 'uilib/docs/components/TypesNavigator/TypesNavigator';
 
 import S from './styles.styl';
@@ -11,8 +11,9 @@ const name = 'Tooltip';
 const Docs = () => (
   <>
     <p>
-      UI button component with customizable properties such as style, size,
-      loading state, etc.{' '}
+      Shows a hint on hover or focus. Use <code>delay</code> to wait that many
+      milliseconds before it appears; leaving the trigger earlier cancels it,
+      and hiding is always immediate.{' '}
       <Link inline href="/demo">
         Demo
       </Link>
@@ -28,8 +29,8 @@ export default () => (
     name={name}
     docs={Docs}
     examples={[
-      { id: 'demo', label: 'Demo', code: simple },
-      // { id: 'complex', label: 'Complex', code: complex },
+      { id: 'demo', label: 'Demo', code: complex },
+      { id: 'delay', label: 'Delay', code: delay },
     ]}
     scope={{ S }}
   />
