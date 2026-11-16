@@ -21,4 +21,14 @@ export type FormattedTextProps = {
   // Turn each newline into a <br> (default). Turn it off when the container is
   // pre-wrap, so newlines stay in the text and survive copying.
   breaks?: boolean;
+  // Render each link yourself (markdown `[text](href)` and bare URLs), e.g.
+  // with a preview card. By default it is a Link with the URL in a Tooltip.
+  // `href` is already normalised (`www.` gets https, app URLs become `//app/`).
+  renderLink?: (link: FormattedTextLink) => React.ReactNode;
+};
+
+export type FormattedTextLink = {
+  href: string;
+  // The link text: the markdown label, or the URL as written
+  text: string;
 };

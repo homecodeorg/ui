@@ -118,6 +118,7 @@ export function FormattedText({
   quotes,
   injectors,
   breaks = true,
+  renderLink,
 }: FormattedTextProps) {
   // Without `<br>`s the text keeps its own newlines (pre-wrap), so a block, such
   // as a table, swallows the blank lines after it instead of showing them.
@@ -253,6 +254,17 @@ export function FormattedText({
     return null;
   };
 
+  const renderLinkElem = (href: string, text: string): React.ReactNode =>
+    renderLink ? (
+      renderLink({ href, text })
+    ) : (
+      <Tooltip content={href} direction="top">
+        <Link href={href} inline target="_blank">
+          {text}
+        </Link>
+      </Tooltip>
+    );
+
   const injectLinks = (content: string): InjectionResult => {
     const markdown = content.match(/\[([^\]]+)\]\(([^)]+)\)/);
     if (markdown) {
@@ -260,13 +272,7 @@ export function FormattedText({
       if (url.startsWith('www.')) url = `https://${url}`;
       url = hrefForFormattedLink(url);
       return {
-        elem: (
-          <Tooltip content={url} direction="top">
-            <Link href={url} inline target="_blank">
-              {markdown[1]}
-            </Link>
-          </Tooltip>
-        ),
+        elem: renderLinkElem(url, markdown[1]),
         index: markdown.index!,
         length: markdown[0].length,
       };
@@ -284,13 +290,7 @@ export function FormattedText({
     if (url.startsWith('www.')) url = `https://${url}`;
     url = hrefForFormattedLink(url);
     return {
-      elem: (
-        <Tooltip content={url} direction="top">
-          <Link href={url} inline target="_blank">
-            {matches[0]}
-          </Link>
-        </Tooltip>
-      ),
+      elem: renderLinkElem(url, matches[0]),
       index: matches.index!,
       length: matches[0].length,
     };
