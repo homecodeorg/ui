@@ -51,7 +51,9 @@ export function Tabs(props: T.Props) {
       setActiveId(newId);
       onChange?.(newId);
     },
-    [activeId]
+    // onChange too: a memo on activeId alone kept the first onChange it saw, so a parent
+    // whose handler reads its own state got a stale one after an async re-render.
+    [activeId, allowEmpty, onChange]
   );
 
   const tabsContent = [];
