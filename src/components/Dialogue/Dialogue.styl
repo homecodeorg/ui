@@ -51,8 +51,49 @@
   @media (max-width: $tablet)
     width calc(100% - var(--p-5))
 
-  &:has(.dialogClose) [data-slot="card-header"]
-    padding-right calc(2rem + var(--p-3))
+  // The dialogue's spacing lives on its slots instead of on the Card, so the
+  // scroll area reaches the dialogue's edges and its content gets the spacing
+  // back as inner padding. Focus rings, glows and shadows of the content then
+  // have room to render instead of being clipped by the scroll container.
+  // `[role]` lifts specificity over Card's `.root.padding-*`.
+  &[role="dialog"]
+    --dialog-padding: var(--p-5)
+    // header sits higher and footer lower than the content's inset
+    --dialog-edge-padding: calc(var(--dialog-padding) - var(--p-2))
+    padding 0
+    gap 0
+    min-width 0
+
+  & > [data-slot="card-header"]
+    flex-shrink 0
+    min-width 0
+    padding var(--dialog-edge-padding) var(--dialog-padding) 0
+
+  &:has(.dialogClose) > [data-slot="card-header"]
+    padding-right calc(var(--dialog-padding) + 2rem + var(--p-3))
+
+  & > [data-slot="card-scroll"]
+    width auto
+    min-height 0
+    margin 0
+    padding 0
+
+  & > [data-slot="card-scroll"] > * > [data-slot="card-content"]
+  & > [data-slot="card-content"]
+    min-width 0
+    padding var(--dialog-padding)
+    overflow-wrap anywhere
+
+  & > [data-slot="card-footer"]
+    flex-shrink 0
+    min-width 0
+    padding 0 var(--dialog-padding) var(--dialog-edge-padding)
+
+  // Without content the header and footer keep the Card's outer spacing
+  &:not(:has([data-slot="card-content"])) > [data-slot="card-footer"]
+    padding-top var(--dialog-padding)
+  &:not(:has([data-slot="card-content"])):not(:has([data-slot="card-footer"])) > [data-slot="card-header"]
+    padding-bottom var(--dialog-padding)
 
 .size-default
   max-width unquote('min(40rem, calc(100% - var(--p-5)))')
