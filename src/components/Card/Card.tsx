@@ -175,7 +175,14 @@ function CardContent({
   if (noScroll) return contentDiv;
 
   return (
-    <Scroll y autoHide fadeSize="m" className={S.scroll} ref={scrollRef}>
+    <Scroll
+      y
+      autoHide
+      fadeSize="m"
+      className={S.scroll}
+      ref={scrollRef}
+      data-slot="card-scroll"
+    >
       {contentDiv}
     </Scroll>
   );
