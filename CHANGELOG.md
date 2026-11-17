@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.5](https://github.com/homecodeorg/ui/compare/v5.21.4...v5.21.5) (2026-11-17)
+
+
+### Bug Fixes
+
+* **Dialogue:** extend scrollable content to the dialogue edges ([#45](https://github.com/homecodeorg/ui/issues/45)) ([10295db](https://github.com/homecodeorg/ui/commit/10295db0ce5baa9e4f314905574c60e14045190a))
+* **Popup:** keep a popup open when the press that opened it is cancelled ([#44](https://github.com/homecodeorg/ui/issues/44)) ([77295b7](https://github.com/homecodeorg/ui/commit/77295b7a1e518433bf7d55e570918264aeff19f5))
+
 ### [5.21.4](https://github.com/homecodeorg/ui/compare/v5.21.3...v5.21.4) (2026-11-17)
 
 
