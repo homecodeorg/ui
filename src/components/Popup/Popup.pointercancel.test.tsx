@@ -59,4 +59,50 @@ describe('Popup outside press', () => {
       outside.remove();
     }
   );
+
+  it('stays open when the press that opened it ends in pointercancel', () => {
+    const onClose = jest.fn();
+    const outside = document.createElement('button');
+    document.body.appendChild(outside);
+
+    const props = {
+      animated: false,
+      onClose,
+      trigger: <span>open</span>,
+      content: <div>menu</div>,
+    };
+    const { rerender } = render(<Popup isOpen={false} {...props} />);
+
+    // Long-press: the press starts while closed, the menu opens mid-press.
+    pointer('pointerdown', outside);
+    rerender(<Popup isOpen {...props} />);
+    pointer('pointercancel', outside);
+    expect(onClose).not.toHaveBeenCalled();
+
+    // A later outside press still closes it.
+    pointer('pointerdown', outside);
+    pointer('pointercancel', outside);
+    expect(onClose).toHaveBeenCalled();
+    outside.remove();
+  });
+
+  it('stays open when mounted open mid-press and the press is cancelled', () => {
+    const onClose = jest.fn();
+    const outside = document.createElement('button');
+    document.body.appendChild(outside);
+
+    pointer('pointerdown', outside);
+    render(
+      <Popup
+        isOpen
+        animated={false}
+        onClose={onClose}
+        trigger={<span>open</span>}
+        content={<div>menu</div>}
+      />
+    );
+    pointer('pointercancel', outside);
+    expect(onClose).not.toHaveBeenCalled();
+    outside.remove();
+  });
 });

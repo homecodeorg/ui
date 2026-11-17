@@ -47,6 +47,7 @@ export class Popup extends Component<T.Props, T.State> {
   subscribedSizeChange = false;
   pointerDownTarget = null;
   isPointerPressedInside = false;
+  pressStartedOpen = false;
   hoverCloseUnsub: (() => void) | null = null;
   id;
   parentPopupContent;
@@ -94,7 +95,7 @@ export class Popup extends Component<T.Props, T.State> {
     document.addEventListener('pointerup', this.onDocPointerUp, true);
     // A touch the browser takes over (Android long-press, pan) ends in
     // pointercancel with no pointerup, so an outside press must close here too.
-    document.addEventListener('pointercancel', this.onDocPointerUp, true);
+    document.addEventListener('pointercancel', this.onDocPointerCancel, true);
 
     if (parentPopupContent) {
       const rootPopupId =
@@ -170,7 +171,7 @@ export class Popup extends Component<T.Props, T.State> {
     // capture listeners that kept calling close/onClose after portal remounts.
     document.removeEventListener('pointerdown', this.onDocPointerDown, true);
     document.removeEventListener('pointerup', this.onDocPointerUp, true);
-    document.removeEventListener('pointercancel', this.onDocPointerUp, true);
+    document.removeEventListener('pointercancel', this.onDocPointerCancel, true);
     document.removeEventListener('keydown', this.onDocKeyDown, true);
     document.removeEventListener('keyup', this.onDocKeyUp);
 
@@ -345,6 +346,7 @@ export class Popup extends Component<T.Props, T.State> {
       this.pointerDownTarget.closest(`.${S.content}`));
 
   onDocPointerDown = (e: PointerEvent) => {
+    this.pressStartedOpen = this.state.isOpen;
     this.pointerDownTarget = e.target;
     this.isPointerPressedInside = this.isLastClickInside();
     this.timers.after(100, () => (this.pointerDownTarget = null));
@@ -356,6 +358,19 @@ export class Popup extends Component<T.Props, T.State> {
     if (!this.state.isOpen || pressedInside) return;
     if (this.isHoverInside(e.target)) return;
     this.close();
+  };
+
+  // Only a press that began while the popup was open can dismiss it on
+  // cancel. A long-press that opens a popup ends in pointercancel on Android;
+  // closing then would shut the menu it just opened.
+  onDocPointerCancel = (e: PointerEvent) => {
+    const startedOpen = this.pressStartedOpen;
+    this.pressStartedOpen = false;
+    if (!startedOpen) {
+      this.isPointerPressedInside = false;
+      return;
+    }
+    this.onDocPointerUp(e);
   };
 
   isPointerOver(target, elem) {
