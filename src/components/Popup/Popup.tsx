@@ -92,6 +92,9 @@ export class Popup extends Component<T.Props, T.State> {
 
     document.addEventListener('pointerdown', this.onDocPointerDown, true);
     document.addEventListener('pointerup', this.onDocPointerUp, true);
+    // A touch the browser takes over (Android long-press, pan) ends in
+    // pointercancel with no pointerup, so an outside press must close here too.
+    document.addEventListener('pointercancel', this.onDocPointerUp, true);
 
     if (parentPopupContent) {
       const rootPopupId =
@@ -167,6 +170,7 @@ export class Popup extends Component<T.Props, T.State> {
     // capture listeners that kept calling close/onClose after portal remounts.
     document.removeEventListener('pointerdown', this.onDocPointerDown, true);
     document.removeEventListener('pointerup', this.onDocPointerUp, true);
+    document.removeEventListener('pointercancel', this.onDocPointerUp, true);
     document.removeEventListener('keydown', this.onDocKeyDown, true);
     document.removeEventListener('keyup', this.onDocKeyUp);
 
