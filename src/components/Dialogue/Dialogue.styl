@@ -58,6 +58,8 @@
   // `[role]` lifts specificity over Card's `.root.padding-*`.
   &[role="dialog"]
     --dialog-padding: var(--p-5)
+    // header sits higher and footer lower than the content's inset
+    --dialog-edge-padding: calc(var(--dialog-padding) - var(--p-2))
     padding 0
     gap 0
     min-width 0
@@ -65,7 +67,7 @@
   & > [data-slot="card-header"]
     flex-shrink 0
     min-width 0
-    padding var(--dialog-padding) var(--dialog-padding) 0
+    padding var(--dialog-edge-padding) var(--dialog-padding) 0
 
   &:has(.dialogClose) > [data-slot="card-header"]
     padding-right calc(var(--dialog-padding) + 2rem + var(--p-3))
@@ -85,7 +87,7 @@
   & > [data-slot="card-footer"]
     flex-shrink 0
     min-width 0
-    padding 0 var(--dialog-padding) var(--dialog-padding)
+    padding 0 var(--dialog-padding) var(--dialog-edge-padding)
 
   // Without content the header and footer keep the Card's outer spacing
   &:not(:has([data-slot="card-content"])) > [data-slot="card-footer"]
