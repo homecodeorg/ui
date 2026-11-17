@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.4](https://github.com/homecodeorg/ui/compare/v5.21.3...v5.21.4) (2026-11-17)
+
+
+### Features
+
+* **FormattedText:** renderLink prop to render links yourself ([#41](https://github.com/homecodeorg/ui/issues/41)) ([c4b056c](https://github.com/homecodeorg/ui/commit/c4b056c212f8772e0f8568a6a9ef8faa99a2fa81))
+
+
+### Bug Fixes
+
+* **Input:** pass the addon key directly instead of spreading it ([#42](https://github.com/homecodeorg/ui/issues/42)) ([6f30fc9](https://github.com/homecodeorg/ui/commit/6f30fc95c0cf4573572716b901ce9252c460f09f))
+* **Popup:** close on an outside press that ends in pointercancel ([#43](https://github.com/homecodeorg/ui/issues/43)) ([fb1b667](https://github.com/homecodeorg/ui/commit/fb1b6676c15314f93d2abe881b9a255ac38c4018))
+
 ### [5.21.3](https://github.com/homecodeorg/ui/compare/v5.21.2...v5.21.3) (2026-11-16)
 
 
