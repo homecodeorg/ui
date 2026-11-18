@@ -14,6 +14,7 @@ export * from './DateTime/DateTime';
 export * from './Dialogue';
 export * from './Draggable/Draggable';
 export * from './DropZone/DropZone';
+export * from './EmojiSelector/EmojiSelector';
 export * from './Expand/Expand';
 export * from './Flex/Flex';
 export * from './FoldedLine';
