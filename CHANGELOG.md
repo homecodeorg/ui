@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.6](https://github.com/homecodeorg/ui/compare/v5.21.5...v5.21.6) (2026-11-18)
+
+
+### Bug Fixes
+
+* **NestedMenu:** rows follow a round popup's corner radius ([#46](https://github.com/homecodeorg/ui/issues/46)) ([85589b0](https://github.com/homecodeorg/ui/commit/85589b0b886251a1e0e68b6220364841d1a630ac))
+
 ### [5.21.5](https://github.com/homecodeorg/ui/compare/v5.21.4...v5.21.5) (2026-11-17)
 
 
