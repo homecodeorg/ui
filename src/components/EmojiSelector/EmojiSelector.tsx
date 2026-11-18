@@ -3,6 +3,7 @@ import {
   type KeyboardEvent,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -99,6 +100,19 @@ export function EmojiSelector({
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef(new Map<SectionId, HTMLElement>());
+
+  // Inner corners follow the wrapper's (a Popup's) corner radius.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    let el = root?.parentElement;
+    for (let i = 0; el && i < 4; i++, el = el.parentElement) {
+      const radius = parseFloat(getComputedStyle(el).borderBottomLeftRadius);
+      if (radius > 0) {
+        root!.style.setProperty('--emoji-selector-radius', `${radius}px`);
+        return;
+      }
+    }
+  }, []);
 
   // Not autoFocus: in a popup that is still being placed, focusing would
   // scroll the page, and a popup closes on an outside scroll.

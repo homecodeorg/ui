@@ -2,8 +2,14 @@
 
 $cell = 36px
 $columns = 8
+// Space around the search field and around the tab buttons.
+$pad = 8px
+$tabPad = 4px
 
 .root
+  // Corner radius of the wrapper (a Popup), read on mount; inner corners
+  // follow it minus the space between, so they stay concentric.
+  --emoji-selector-radius 12px
   display flex
   flex-direction column
   box-sizing border-box
@@ -18,7 +24,7 @@ $columns = 8
   box-sizing border-box
   width auto
   min-width 0
-  margin 0 8px 6px
+  margin 0 $pad 6px
 
   > label
     box-sizing border-box
@@ -28,6 +34,10 @@ $columns = 8
   input
     width 100%
     min-width 0
+
+// Concentric with the wrapper's corners (beats Input's own radius).
+.root .search > label
+  border-radius unquote('max(4px, calc(var(--emoji-selector-radius) - %s))' % $pad)
 
 .list
   position relative
@@ -96,8 +106,8 @@ $columns = 8
 .tabs
   display flex
   justify-content space-between
-  gap 2px
-  padding 4px 8px
+  gap $tabPad
+  padding $tabPad
   border-top 1px solid var(--accent-color-alpha-100)
 
 .tab
@@ -108,7 +118,8 @@ $columns = 8
   height 28px
   padding 0
   border none
-  border-radius 6px
+  // Concentric with the wrapper's bottom corners; every tab the same.
+  border-radius unquote('max(6px, calc(var(--emoji-selector-radius) - %s))' % $tabPad)
   background none
   font-size 16px
   line-height 1
