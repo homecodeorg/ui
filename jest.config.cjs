@@ -5,6 +5,7 @@ module.exports = {
     '\\.(css|less|sass|scss|styl)$': 'identity-obj-proxy',
     '^justorm/react$': '<rootDir>/node_modules/justorm/react.js',
     '^nanoid$': '<rootDir>/node_modules/nanoid/index.cjs',
+    '^nanoid-esm/non-secure$': '<rootDir>/tests/mocks/nanoidNonSecure.js',
     '^uilib(.*)$': '<rootDir>/src$1',
     '\\.svg$': '<rootDir>/tests/mocks/svgMock.js',
   },

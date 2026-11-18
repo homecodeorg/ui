@@ -84,4 +84,35 @@ describe('EmojiSelector', () => {
     expect(onSelect).toHaveBeenCalledWith('🦄');
     expect(localStorage.getItem('homecode-ui-emoji-recent')).toBeNull();
   });
+
+  it('renders only the rows in view', async () => {
+    render(<EmojiSelector onSelect={jest.fn()} />);
+    await screen.findByRole('button', { name: 'grinning face' });
+    const total = categories.reduce((n, c) => n + c.emojis.length, 0);
+    const rendered = document.querySelectorAll('[data-emoji]').length;
+    expect(rendered).toBeGreaterThan(0);
+    expect(rendered).toBeLessThan(total / 10);
+  });
+
+  it('moves with arrow keys across rows and section titles', async () => {
+    render(<EmojiSelector onSelect={jest.fn()} />);
+    await screen.findByRole('button', { name: 'grinning face' });
+    const search = screen.getByPlaceholderText('Search');
+    search.focus();
+
+    await userEvent.keyboard('{ArrowDown}');
+    expect(document.activeElement).toHaveAttribute('data-emoji', '👍');
+    await userEvent.keyboard('{ArrowRight}');
+    expect(document.activeElement).toHaveAttribute('data-emoji', '❤️');
+    // Over the "Smileys & People" title into its first row, same column.
+    await userEvent.keyboard('{ArrowDown}');
+    expect(document.activeElement).toHaveAttribute('data-emoji', '😃');
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(document.activeElement).toHaveAttribute('data-emoji', '😀');
+    // Left from a row's first emoji goes to the previous row's last one.
+    await userEvent.keyboard('{ArrowLeft}');
+    expect(document.activeElement).toHaveAttribute('data-emoji', '✅');
+    await userEvent.keyboard('{ArrowUp}{ArrowUp}');
+    expect(document.activeElement).toBe(search);
+  });
 });
