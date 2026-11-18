@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.8](https://github.com/homecodeorg/ui/compare/v5.21.7...v5.21.8) (2026-11-18)
+
+
+### Bug Fixes
+
+* **EmojiSelector:** no gap between the search field and the first section title ([#48](https://github.com/homecodeorg/ui/issues/48)) ([a5d5e2b](https://github.com/homecodeorg/ui/commit/a5d5e2ba4bd97af8455a0846da4e1a61437e2930))
+
 ### [5.21.7](https://github.com/homecodeorg/ui/compare/v5.21.6...v5.21.7) (2026-11-18)
 
 
