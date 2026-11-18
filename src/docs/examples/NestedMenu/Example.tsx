@@ -104,7 +104,7 @@ export default () => {
           onOpenChange={setOpen}
           align="end"
           size={size}
-          popupProps={{ blur: true }}
+          popupProps={{ blur: true, round: true }}
           trigger={
             <Button size="s" round>
               Account
