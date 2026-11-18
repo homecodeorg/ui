@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.21.7](https://github.com/homecodeorg/ui/compare/v5.21.6...v5.21.7) (2026-11-18)
+
+
+### Features
+
+* **EmojiSelector:** macOS-like emoji picker ([#47](https://github.com/homecodeorg/ui/issues/47)) ([2d1828a](https://github.com/homecodeorg/ui/commit/2d1828a93b908c5ddd249ad2b6598900dcbbf779))
+
 ### [5.21.6](https://github.com/homecodeorg/ui/compare/v5.21.5...v5.21.6) (2026-11-18)
 
 
