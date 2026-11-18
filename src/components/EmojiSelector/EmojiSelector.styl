@@ -2,8 +2,8 @@
 
 $cell = 36px
 $columns = 8
-// Space around the search field and around the tab buttons.
-$pad = 8px
+// Space between the wrapper's edge and the tab buttons. The search field
+// sits flush against the wrapper's top and sides.
 $tabPad = 4px
 
 .root
@@ -17,14 +17,14 @@ $tabPad = 4px
   max-width 100%
   height 360px
   max-height 100%
-  padding 8px 0 0
+  padding 0
 
 .search
   flex none
   box-sizing border-box
   width auto
   min-width 0
-  margin 0 $pad 6px
+  margin 0 0 4px
 
   > label
     box-sizing border-box
@@ -35,9 +35,11 @@ $tabPad = 4px
     width 100%
     min-width 0
 
-// Concentric with the wrapper's corners (beats Input's own radius).
+// Flush with the wrapper: same top corners (beats Input's own radius),
+// square at the bottom, where the list starts.
 .root .search > label
-  border-radius unquote('max(4px, calc(var(--emoji-selector-radius) - %s))' % $pad)
+  $r = var(--emoji-selector-radius)
+  border-radius $r $r 0 0
 
 .list
   position relative
