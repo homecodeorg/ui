@@ -14,7 +14,16 @@ $columns = 8
   padding 8px 0 0
 
 .search
+  flex none
+  box-sizing border-box
+  width auto
+  min-width 0
   margin 0 8px 6px
+
+  > label
+    box-sizing border-box
+    width 100%
+    min-width 0
 
   input
     width 100%
@@ -31,13 +40,17 @@ $columns = 8
 .section
   padding-bottom 4px
 
-// Sticks while its emoji scroll by, like the macOS picker.
+// Sticks while its emoji scroll by, like the macOS picker. Spans the list's
+// side padding so the emoji pass under it edge to edge.
 .sectionTitle
   position sticky
   top 0
   z-index 1
-  padding 6px 2px 4px
-  background var(--decent-color)
+  margin 0 -8px
+  padding 6px 10px 4px
+  background var(--decent-color-alpha-800)
+  backdrop-filter blur(10px)
+  -webkit-backdrop-filter blur(10px)
   color var(--accent-color-alpha-500)
   font-size 11px
   font-weight 600
@@ -45,14 +58,16 @@ $columns = 8
 
 .grid
   display grid
-  grid-template-columns repeat($columns, $cell)
+  // Cells shrink when the popup is narrower than eight full cells (phones).
+  grid-template-columns repeat($columns, minmax(0, 1fr))
 
 .emoji
   display flex
   align-items center
   justify-content center
-  width $cell
-  height $cell
+  width 100%
+  max-width $cell
+  aspect-ratio 1
   padding 0
   border none
   border-radius 8px

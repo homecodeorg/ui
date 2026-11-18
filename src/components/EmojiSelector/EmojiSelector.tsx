@@ -96,8 +96,18 @@ export function EmojiSelector({
   const [query, setQuery] = useState('');
   const [stored, setStored] = useState(() => readRecent(recentStorageKey));
   const [activeTab, setActiveTab] = useState<SectionId>('recent');
+  const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef(new Map<SectionId, HTMLElement>());
+
+  // Not autoFocus: in a popup that is still being placed, focusing would
+  // scroll the page, and a popup closes on an outside scroll.
+  useEffect(() => {
+    if (!autoFocus) return;
+    rootRef.current
+      ?.querySelector<HTMLInputElement>('input')
+      ?.focus({ preventScroll: true });
+  }, [autoFocus]);
 
   useEffect(() => {
     if (categories) return;
@@ -220,13 +230,12 @@ export function EmojiSelector({
   const isSearching = Boolean(query.trim());
 
   return (
-    <div className={cn(S.root, className)}>
+    <div ref={rootRef} className={cn(S.root, className)}>
       <Input
         className={S.search}
         size="s"
         value={query}
         placeholder={labels.search}
-        autoFocus={autoFocus}
         hasClear
         onChange={(_, value) => {
           setQuery(String(value));
