@@ -99,6 +99,10 @@ export default [
         loader: () => import('./examples/DropZone'),
       },
       {
+        id: 'EmojiSelector',
+        loader: () => import('./examples/EmojiSelector'),
+      },
+      {
         id: 'Form',
         loader: () => import('./examples/Form'),
       },
