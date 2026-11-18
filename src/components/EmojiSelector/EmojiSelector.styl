@@ -41,25 +41,38 @@ $tabPad = 4px
   $r = var(--emoji-selector-radius)
   border-radius $r $r 0 0
 
-.list
+.listWrap
   position relative
   flex 1
   min-height 0
+  // Arrow keys and scrollIntoView keep focused rows below the pinned title.
+  scroll-padding-top var(--emoji-title-height)
+
+// VirtualizedList's scroll box; rows are placed absolutely inside it.
+.list
+  height 100%
   overflow-y auto
   overscroll-behavior contain
-  padding 0 8px 4px
+  scroll-padding-top var(--emoji-title-height)
 
-.section
-  padding-bottom 4px
+.row
+  left 8px
+  right 8px
+  display grid
+  // Cells shrink when the popup is narrower than eight full cells (phones).
+  grid-template-columns repeat($columns, minmax(0, 1fr))
+  align-items center
 
-// Sticks while its emoji scroll by, like the macOS picker. Spans the list's
-// side padding so the emoji pass under it edge to edge.
+// A title row, and the pinned copy on top that shows the section in view
+// (titles can't be sticky in a virtualized list). Spans the list's side
+// padding so the emoji pass under it edge to edge.
 .sectionTitle
-  position sticky
-  top 0
-  z-index 1
-  margin 0 -8px
-  padding 6px 10px 4px
+  left 0
+  right 0
+  box-sizing border-box
+  display flex
+  align-items flex-end
+  padding 0 10px 4px
   background var(--decent-color-alpha-800)
   backdrop-filter blur(10px)
   -webkit-backdrop-filter blur(10px)
@@ -67,11 +80,18 @@ $tabPad = 4px
   font-size 11px
   font-weight 600
   letter-spacing 0.02em
+  white-space nowrap
+  overflow hidden
 
-.grid
-  display grid
-  // Cells shrink when the popup is narrower than eight full cells (phones).
-  grid-template-columns repeat($columns, minmax(0, 1fr))
+.pinned
+  position absolute
+  top 0
+  z-index 1
+  height var(--emoji-title-height)
+  pointer-events none
+
+  &[hidden]
+    display none
 
 .emoji
   display flex
@@ -92,14 +112,19 @@ $tabPad = 4px
   &:hover
     background var(--accent-color-alpha-100)
 
+  // The theme's outline() mixin: an inset ring (a plain `outline` here would
+  // call the mixin with the wrong arguments).
   &:focus-visible
-    outline 2px solid var(--active-color)
-    outline-offset -2px
+    outline(var(--active-color))
 
 .chosen
   background var(--active-color-alpha-200)
 
 .empty
+  position absolute
+  top 0
+  left 0
+  right 0
   padding 24px 8px
   text-align center
   color var(--accent-color-alpha-500)
