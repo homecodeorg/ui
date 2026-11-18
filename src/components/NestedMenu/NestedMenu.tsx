@@ -114,7 +114,13 @@ function NestedMenuComponent({
     fadeSize: size,
     offset: { y: { after: 8 } },
   };
-  const contentClass = cn(S.content, S[`size-${size}`]);
+  // A round popup has a bigger radius than the rows inside it, so the rows
+  // follow its curve (see `.round` in the styles).
+  const contentClass = cn(
+    S.content,
+    S[`size-${size}`],
+    popupProps?.round && S.round,
+  );
 
   function close() {
     onOpenChange(false);
