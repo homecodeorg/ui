@@ -38,7 +38,7 @@ function median(values: number[]): number {
  * The series a dashed series or a band carries on from: the named one, else
  * the only solid series, else none (it starts on its own first point).
  */
-function continuedSeries(
+export function continuedSeries(
   series: ChartSeries[],
   continues: string | undefined,
   self?: ChartSeries
@@ -51,6 +51,38 @@ function continuedSeries(
 }
 
 const xNum = (x: number | string) => Number(x);
+
+/**
+ * A color per series. A forecast (dashed, or one that `continues` another)
+ * takes the color of the series it carries on from; every other series takes
+ * the next palette color, so forecasts don't use up palette slots.
+ */
+export function seriesColors(
+  series: ChartSeries[],
+  palette: string[] = DEFAULT_COLORS
+): string[] {
+  const out: (string | undefined)[] = [];
+  let next = 0;
+  const pick = () => palette[next++ % palette.length] ?? DEFAULT_COLORS[0];
+  const resolve = (i: number, seen: Set<number>): string => {
+    if (out[i]) return out[i]!;
+    const s = series[i];
+    let c = s.color;
+    if (!c && (s.style === 'dashed' || s.continues) && !seen.has(i)) {
+      seen.add(i);
+      const from = continuedSeries(series, s.continues, s);
+      const j = from ? series.indexOf(from) : -1;
+      if (j >= 0) c = resolve(j, seen);
+    }
+    out[i] = c ?? pick();
+    return out[i]!;
+  };
+  // Own colors first, in order, so a forecast listed first can't shift them.
+  series.forEach((s, i) => {
+    if (s.style !== 'dashed' && !s.continues) resolve(i, new Set());
+  });
+  return series.map((_, i) => resolve(i, new Set()));
+}
 
 /**
  * Series and bands with their joins: a continuing series starts at its

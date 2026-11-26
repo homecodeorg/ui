@@ -23,6 +23,7 @@ import {
   chartRows,
   defaultXType,
   formatValue,
+  seriesColors,
   seriesKey,
   timeFormatter,
   withJoins,
@@ -190,8 +191,8 @@ export function Chart({
       />
     ) : null;
 
-  const color = (i: number) =>
-    series[i]?.color ?? colors[i % colors.length] ?? DEFAULT_COLORS[0];
+  const palette = useMemo(() => seriesColors(series, colors), [series, colors]);
+  const color = (i: number) => palette[i] ?? DEFAULT_COLORS[0];
   const bandColor = (i: number) => {
     const band = bands[i];
     if (band.color) return band.color;

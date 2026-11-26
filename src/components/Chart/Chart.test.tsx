@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import { Chart } from './Chart';
 import {
+  seriesColors,
   chartRows,
   formatValue,
   timeFormatter,
@@ -114,6 +115,34 @@ describe('Chart helpers', () => {
     expect(halfYear(T0, true)).toBe('May 1, 2026');
     const years = timeFormatter([{ x: T0 }, { x: T0 + 900 * DAY }], 'en-US');
     expect(years(T0)).toBe('May 2026');
+  });
+});
+
+describe('seriesColors', () => {
+  const pts: [number, number][] = [[T0, 1]];
+  test('a forecast takes the color of the series it continues', () => {
+    expect(
+      seriesColors(
+        [
+          { name: 'A', points: pts },
+          { name: 'B', points: pts },
+          { name: 'A forecast', style: 'dashed', continues: 'A', points: pts },
+          { name: 'C', points: pts },
+        ],
+        ['red', 'green', 'blue']
+      )
+    ).toEqual(['red', 'green', 'red', 'blue']);
+  });
+  test('an unnamed forecast follows the only solid series', () => {
+    expect(
+      seriesColors(
+        [
+          { name: 'F', style: 'dashed', points: pts },
+          { name: 'A', points: pts },
+        ],
+        ['red', 'green']
+      )
+    ).toEqual(['red', 'red']);
   });
 });
 
