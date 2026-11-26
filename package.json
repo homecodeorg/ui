@@ -50,6 +50,11 @@
     "./icons": {
       "types": "./dist/esm/types/src/components/Icon/icons/index.d.ts",
       "import": "./dist/esm/src/components/Icon/icons/index.js"
+    },
+    "./chart": {
+      "types": "./dist/esm/types/chart.d.ts",
+      "import": "./dist/esm/chart.js",
+      "default": "./dist/esm/chart.js"
     }
   },
   "bugs": {
@@ -81,7 +86,13 @@
   "peerDependencies": {
     "justorm": ">=3.0.0-beta-24",
     "react": ">=18.0.0",
-    "react-dom": ">=18.0.0"
+    "react-dom": ">=18.0.0",
+    "recharts": ">=2.15.0"
+  },
+  "peerDependenciesMeta": {
+    "recharts": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",
@@ -114,6 +125,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-live": "^3.1.2",
+    "recharts": "^2.15.0",
     "replace": "^1.2.2",
     "rollup": "^3.17.1",
     "rollup-plugin-delete": "^2.0.0",

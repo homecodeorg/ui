@@ -67,6 +67,10 @@ export default [
         loader: () => import('./examples/Chip'),
       },
       {
+        id: 'Chart',
+        loader: () => import('./examples/Chart'),
+      },
+      {
         id: 'Checkbox',
         loader: () => import('./examples/Checkbox'),
       },
