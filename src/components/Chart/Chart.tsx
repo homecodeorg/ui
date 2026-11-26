@@ -32,19 +32,55 @@ import S from './Chart.styl';
 
 const LABEL_COLOR = 'var(--accent-color-alpha-700)';
 const TICK = { fill: LABEL_COLOR, fontSize: 11 };
-// Spacing of the label and rows is in Chart.styl (`.tooltip`), so host
-// styles for `p`/`ul`/`li` can't stretch it.
-const TOOLTIP_STYLE = {
-  background: 'var(--decent-color-alpha-800)',
-  backdropFilter: 'blur(3px)',
-  WebkitBackdropFilter: 'blur(3px)',
-  border: '1px solid var(--accent-color-alpha-100)',
-  borderRadius: 8,
-  padding: '6px 10px',
-  fontSize: 12,
-  lineHeight: 1.4,
-};
 const MARGIN = { top: 8, right: 8, left: 0, bottom: 0 };
+
+type TooltipEntry = {
+  name?: string | number;
+  value?: number | string | [number, number];
+  color?: string;
+  payload?: { fill?: string };
+};
+
+type TooltipContentProps = {
+  active?: boolean;
+  label?: string | number;
+  payload?: TooltipEntry[];
+  formatLabel?: (label: string | number) => string;
+  formatValue: (value: number | [number, number]) => string;
+};
+
+/** Tooltip as a table: the date on top, then one row per series (name, value). */
+function ChartTooltip({
+  active,
+  label,
+  payload,
+  formatLabel,
+  formatValue,
+}: TooltipContentProps) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className={S.tooltip}>
+      {formatLabel && label !== undefined && (
+        <div className={S.tooltipLabel}>{formatLabel(label)}</div>
+      )}
+      <table className={S.tooltipTable}>
+        <tbody>
+          {payload.map((entry, i) => (
+            <tr
+              key={`${entry.name}-${i}`}
+              style={{ color: entry.color ?? entry.payload?.fill }}
+            >
+              <td className={S.tooltipName}>{entry.name}</td>
+              <td className={S.tooltipValue}>
+                {formatValue(entry.value as number | [number, number])}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 /**
  * Line, area, bar or pie chart from plain series, with optional dashed
@@ -158,13 +194,10 @@ export function Chart({
     isTime ? formatTime(Number(x)) : String(x);
   const tooltipLabel = (x: number | string) =>
     isTime ? formatTime(Number(x), true) : String(x);
-  // recharts passes the `name` prop as the second argument
-  const tooltipValue = (value: number | [number, number], name: string) => [
+  const tooltipValue = (value: number | [number, number]) =>
     Array.isArray(value)
       ? `${fmt(Number(value[0]))} – ${fmt(Number(value[1]))}`
-      : fmt(Number(value)),
-    name,
-  ];
+      : fmt(Number(value));
 
   const axes = [
     <CartesianGrid
@@ -195,11 +228,9 @@ export function Chart({
     />,
     <Tooltip
       key="tooltip"
-      wrapperClassName={S.tooltip}
-      contentStyle={TOOLTIP_STYLE}
-      labelStyle={{ color: LABEL_COLOR }}
-      labelFormatter={tooltipLabel}
-      formatter={tooltipValue}
+      content={
+        <ChartTooltip formatLabel={tooltipLabel} formatValue={tooltipValue} />
+      }
       cursor={
         kind === 'bar'
           ? { fill: 'var(--accent-color-alpha-100)' }
@@ -232,14 +263,7 @@ export function Chart({
             <Cell key={s.name} fill={colors[i % colors.length]} />
           ))}
         </Pie>
-        <Tooltip
-          wrapperClassName={S.tooltip}
-          contentStyle={TOOLTIP_STYLE}
-          formatter={(value: number, name: string) => [
-            fmt(Number(value)),
-            name,
-          ]}
-        />
+        <Tooltip content={<ChartTooltip formatValue={v => fmt(Number(v))} />} />
       </PieChart>
     );
   } else if (kind === 'bar') {
