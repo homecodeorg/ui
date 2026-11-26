@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import { Chart } from './Chart';
 import {
@@ -144,5 +144,34 @@ describe('Chart', () => {
       'https://www.coingecko.com'
     );
     expect(container.querySelector('figure')).toBeTruthy();
+  });
+
+  test('legend items toggle their series off and on', () => {
+    const { getByText } = render(
+      <Chart
+        series={[
+          {
+            name: 'A',
+            points: [
+              [T0, 1],
+              [t(1), 2],
+            ],
+          },
+          {
+            name: 'B',
+            points: [
+              [T0, 3],
+              [t(1), 4],
+            ],
+          },
+        ]}
+      />
+    );
+    const a = getByText('A').closest('button')!;
+    expect(a.getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(a);
+    expect(a.getAttribute('aria-pressed')).toBe('false');
+    fireEvent.click(a);
+    expect(a.getAttribute('aria-pressed')).toBe('true');
   });
 });

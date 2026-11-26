@@ -6,11 +6,6 @@
   box-sizing border-box
 
 .header
-  display flex
-  flex-wrap wrap
-  align-items baseline
-  justify-content space-between
-  gap 4px 12px
   padding 0 0 8px 12px
 
 .title
@@ -21,6 +16,7 @@
   display flex
   flex-wrap wrap
   gap 4px 12px
+  padding 6px 4px 0 12px
   font-size 80%
   color var(--accent-color-alpha-700)
 
@@ -28,6 +24,21 @@
   display inline-flex
   align-items center
   gap 6px
+  margin 0
+  padding 0
+  border none
+  background none
+  font inherit
+  color inherit
+  cursor pointer
+  transition opacity 0.15s
+
+  &:hover
+    color var(--accent-color)
+
+// switched off: hidden from the plot
+.off
+  opacity 0.5
 
 // `color` is the series color
 .swatch

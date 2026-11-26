@@ -47,6 +47,7 @@ type TooltipContentProps = {
   payload?: TooltipEntry[];
   formatLabel?: (label: string | number) => string;
   formatValue: (value: number | [number, number]) => string;
+  hidden?: Set<string>;
 };
 
 /** Tooltip as a table: the date on top, then one row per series (name, value). */
@@ -56,8 +57,10 @@ function ChartTooltip({
   payload,
   formatLabel,
   formatValue,
+  hidden,
 }: TooltipContentProps) {
-  if (!active || !payload?.length) return null;
+  const rows = payload?.filter(e => !hidden?.has(String(e.name))) ?? [];
+  if (!active || !rows.length) return null;
   return (
     <div className={S.tooltip}>
       {formatLabel && label !== undefined && (
@@ -65,7 +68,7 @@ function ChartTooltip({
       )}
       <table className={S.tooltipTable}>
         <tbody>
-          {payload.map((entry, i) => (
+          {rows.map((entry, i) => (
             <tr
               key={`${entry.name}-${i}`}
               style={{ color: entry.color ?? entry.payload?.fill }}
@@ -114,6 +117,16 @@ export function Chart({
     () => chartRows(series, bands, xType),
     [series, bands, xType]
   );
+
+  // Series and bands switched off in the legend, by name.
+  const [hidden, setHidden] = useState<Set<string>>(() => new Set());
+  const toggle = (name: string) =>
+    setHidden(prev => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
 
   // Zoom (time charts): drag across the plot to pick a range, double-click to reset.
   const canZoom = zoom && kind !== 'pie' && isTime;
@@ -229,7 +242,11 @@ export function Chart({
     <Tooltip
       key="tooltip"
       content={
-        <ChartTooltip formatLabel={tooltipLabel} formatValue={tooltipValue} />
+        <ChartTooltip
+          formatLabel={tooltipLabel}
+          formatValue={tooltipValue}
+          hidden={hidden}
+        />
       }
       cursor={
         kind === 'bar'
@@ -276,6 +293,7 @@ export function Chart({
             key={seriesKey(i)}
             dataKey={seriesKey(i)}
             name={s.name}
+            hide={hidden.has(s.name)}
             fill={color(i)}
             fillOpacity={s.style === 'dashed' ? 0.5 : 1}
             radius={[4, 4, 0, 0]}
@@ -294,6 +312,7 @@ export function Chart({
             key={bandKey(i)}
             dataKey={bandKey(i)}
             name={b.name}
+            hide={hidden.has(b.name)}
             type="monotone"
             stroke="none"
             fill={bandColor(i)}
@@ -308,6 +327,7 @@ export function Chart({
           const common = {
             dataKey: seriesKey(i),
             name: s.name,
+            hide: hidden.has(s.name),
             type: 'monotone' as const,
             stroke: color(i),
             strokeWidth: 2,
@@ -356,26 +376,9 @@ export function Chart({
 
   return (
     <figure className={cn(S.root, className)}>
-      {(title || legend.length > 0) && (
+      {title && (
         <figcaption className={S.header}>
-          {title && <span className={S.title}>{title}</span>}
-          {legend.length > 0 && (
-            <span className={S.legend}>
-              {legend.map(item => (
-                <span key={item.name} className={S.legendItem}>
-                  <i
-                    className={cn(
-                      S.swatch,
-                      item.dashed && S.dashed,
-                      item.band && S.band
-                    )}
-                    style={{ color: item.color }}
-                  />
-                  {item.name}
-                </span>
-              ))}
-            </span>
-          )}
+          <span className={S.title}>{title}</span>
         </figcaption>
       )}
       <div
@@ -396,6 +399,32 @@ export function Chart({
           {body}
         </ResponsiveContainer>
       </div>
+      {legend.length > 0 && (
+        <div className={S.legend}>
+          {legend.map(item => {
+            const off = hidden.has(item.name);
+            return (
+              <button
+                key={item.name}
+                type="button"
+                className={cn(S.legendItem, off && S.off)}
+                aria-pressed={!off}
+                onClick={() => toggle(item.name)}
+              >
+                <i
+                  className={cn(
+                    S.swatch,
+                    item.dashed && S.dashed,
+                    item.band && S.band
+                  )}
+                  style={{ color: item.color }}
+                />
+                {item.name}
+              </button>
+            );
+          })}
+        </div>
+      )}
       {source && (
         <div className={S.source}>
           {source.url ? (
