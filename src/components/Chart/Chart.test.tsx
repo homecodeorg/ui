@@ -1,7 +1,8 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import { Chart } from './Chart';
 import {
+  seriesColors,
   chartRows,
   formatValue,
   timeFormatter,
@@ -117,6 +118,34 @@ describe('Chart helpers', () => {
   });
 });
 
+describe('seriesColors', () => {
+  const pts: [number, number][] = [[T0, 1]];
+  test('a forecast takes the color of the series it continues', () => {
+    expect(
+      seriesColors(
+        [
+          { name: 'A', points: pts },
+          { name: 'B', points: pts },
+          { name: 'A forecast', style: 'dashed', continues: 'A', points: pts },
+          { name: 'C', points: pts },
+        ],
+        ['red', 'green', 'blue']
+      )
+    ).toEqual(['red', 'green', 'red', 'blue']);
+  });
+  test('an unnamed forecast follows the only solid series', () => {
+    expect(
+      seriesColors(
+        [
+          { name: 'F', style: 'dashed', points: pts },
+          { name: 'A', points: pts },
+        ],
+        ['red', 'green']
+      )
+    ).toEqual(['red', 'red']);
+  });
+});
+
 describe('Chart', () => {
   test('renders the title, legend and source', () => {
     const { container, getByText } = render(
@@ -144,5 +173,34 @@ describe('Chart', () => {
       'https://www.coingecko.com'
     );
     expect(container.querySelector('figure')).toBeTruthy();
+  });
+
+  test('legend items toggle their series off and on', () => {
+    const { getByText } = render(
+      <Chart
+        series={[
+          {
+            name: 'A',
+            points: [
+              [T0, 1],
+              [t(1), 2],
+            ],
+          },
+          {
+            name: 'B',
+            points: [
+              [T0, 3],
+              [t(1), 4],
+            ],
+          },
+        ]}
+      />
+    );
+    const a = getByText('A').closest('button')!;
+    expect(a.getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(a);
+    expect(a.getAttribute('aria-pressed')).toBe('false');
+    fireEvent.click(a);
+    expect(a.getAttribute('aria-pressed')).toBe('true');
   });
 });
