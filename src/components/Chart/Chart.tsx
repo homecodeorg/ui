@@ -77,10 +77,13 @@ export function Chart({
   const canZoom = zoom && kind !== 'pie' && isTime;
   const [range, setRange] = useState<[number, number] | null>(null);
   const [drag, setDrag] = useState<{ from: number; to: number } | null>(null);
+  // Reset only when the data really changes: hosts often pass new arrays with
+  // the same points on every render (e.g. parsed from a message).
+  const dataKey = `${rows.length}:${rows[0]?.x}:${rows[rows.length - 1]?.x}`;
   useEffect(() => {
     setRange(null);
     setDrag(null);
-  }, [rows]);
+  }, [dataKey]);
   const visibleRows = useMemo(
     () => (range ? rows.slice(range[0], range[1] + 1) : rows),
     [rows, range]
