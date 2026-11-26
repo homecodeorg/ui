@@ -32,11 +32,17 @@ import S from './Chart.styl';
 
 const LABEL_COLOR = 'var(--accent-color-alpha-700)';
 const TICK = { fill: LABEL_COLOR, fontSize: 11 };
+// Spacing of the label and rows is in Chart.styl (`.tooltip`), so host
+// styles for `p`/`ul`/`li` can't stretch it.
 const TOOLTIP_STYLE = {
-  background: 'var(--decent-color, #1a1a1a)',
+  background: 'var(--decent-color-alpha-800)',
+  backdropFilter: 'blur(3px)',
+  WebkitBackdropFilter: 'blur(3px)',
   border: '1px solid var(--accent-color-alpha-100)',
   borderRadius: 8,
+  padding: '6px 10px',
   fontSize: 12,
+  lineHeight: 1.4,
 };
 const MARGIN = { top: 8, right: 8, left: 0, bottom: 0 };
 
@@ -189,6 +195,7 @@ export function Chart({
     />,
     <Tooltip
       key="tooltip"
+      wrapperClassName={S.tooltip}
       contentStyle={TOOLTIP_STYLE}
       labelStyle={{ color: LABEL_COLOR }}
       labelFormatter={tooltipLabel}
@@ -226,6 +233,7 @@ export function Chart({
           ))}
         </Pie>
         <Tooltip
+          wrapperClassName={S.tooltip}
           contentStyle={TOOLTIP_STYLE}
           formatter={(value: number, name: string) => [
             fmt(Number(value)),
