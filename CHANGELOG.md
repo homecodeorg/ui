@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.22.0](https://github.com/homecodeorg/ui/compare/v5.21.8...v5.22.0) (2026-11-26)
+
+
+### Features
+
+* **chart:** Chart component with forecasts, quantile bands and zoom ([#50](https://github.com/homecodeorg/ui/issues/50)) ([20bf4b8](https://github.com/homecodeorg/ui/commit/20bf4b8a59a64d19b9f565bdee0f18d7407e6d6c))
+* **chart:** toggleable legend under the plot, forecasts share their history's color ([#51](https://github.com/homecodeorg/ui/issues/51)) ([8c31b49](https://github.com/homecodeorg/ui/commit/8c31b490be02645bbe68bf47f7bc37d255a4a627))
+
 ### [5.21.8](https://github.com/homecodeorg/ui/compare/v5.21.7...v5.21.8) (2026-11-18)
 
 
