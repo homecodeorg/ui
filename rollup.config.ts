@@ -59,7 +59,7 @@ const { COMPRESS } = process.env;
 export default [
   {
     // preserveModules: true,
-    input: 'index.ts',
+    input: ['index.ts', 'chart.ts'],
     output: [
       // {
       //   dir: pkg.main,
