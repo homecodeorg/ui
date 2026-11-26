@@ -94,9 +94,10 @@
   border-collapse collapse
   border-spacing 0
 
+  // !important: host table styles (e.g. `.page td:first-child`) win otherwise
   td
     padding 1px 0
-    text-align left
+    text-align left !important
     border none
     vertical-align baseline
 
